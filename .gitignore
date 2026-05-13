@@ -5,6 +5,14 @@
 # `git add -f <파일>` 로 강제 추가.
 /*.pdf
 
+# --- Local working drafts -------------------------------------------------
+# 검토 단계의 초안·로드맵 문서는 추적하지 않는다. 확정된 문서만 별도 이름으로 commit.
+*.draft.md
+docs/*draft*.md
+docs/*roadmap*.md
+docs/*WIP*.md
+docs/_*.md
+
 # --- OS --------------------------------------------------------------------
 Thumbs.db
 ehthumbs.db
