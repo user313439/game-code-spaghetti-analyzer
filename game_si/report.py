@@ -282,10 +282,16 @@ def _render_hotspot_table(hotspots, top_n: int) -> str:
         f'</div>'
     )
 
-    def th(label: str, sort: str | None = None, tip: str | None = None) -> str:
+    def th(label: str, sort: str | None = None, tip: str | None = None, num: bool = False) -> str:
         parts = ['<th']
+        classes: list[str] = []
         if sort:
-            parts.append(' data-sort="' + sort + '" class="sortable"')
+            classes.append("sortable")
+            parts.append(' data-sort="' + sort + '"')
+        if num:
+            classes.append("num")
+        if classes:
+            parts.append(' class="' + " ".join(classes) + '"')
         if tip:
             parts.append(' data-tooltip="' + html.escape(tip) + '"')
         parts.append('>')
@@ -308,15 +314,15 @@ def _render_hotspot_table(hotspots, top_n: int) -> str:
     </div>
     <table class="hotspot-table" id="hotspot-table">
         <thead><tr>
-            <th data-tooltip="G-SI 점수 기준 등수">#</th>
+            <th class="num" data-tooltip="G-SI 점수 기준 등수">#</th>
             <th data-tooltip="A(안전, 하위 20%) ~ E(심각, 상위 20%)">등급</th>
-            {th("G-SI", "num", "0~100. 프로젝트 내 분포 백분위. 높을수록 위험")}
-            {th("클래스 FQN", "str", "네임스페이스를 포함한 정규 이름")}
-            {th("CC", "num", "Cyclomatic Complexity. 메서드 안의 if/for/case 등 분기 수. 클래스 단위는 상위 10% 평균")}
-            {th("Coupling", "num", "다른 클래스를 참조하는 수(fan-out) + 참조받는 수(fan-in)")}
-            {th("GlobalState", "num", "전역(static) 변수와 싱글톤 인스턴스에 접근한 횟수")}
-            {th("CycleSize", "num", "순환 참조에 빠진 묶음의 크기. 0이면 순환에 포함되지 않음")}
-            {th("GameLoop", "num", "Tick/Update/Render 같은 진입점으로부터의 가까움. 1.0이면 진입점 그 자체")}
+            {th("G-SI", sort="num", num=True, tip="0~100. 프로젝트 내 분포 백분위. 높을수록 위험")}
+            {th("클래스 FQN", sort="str", tip="네임스페이스를 포함한 정규 이름")}
+            {th("CC", sort="num", num=True, tip="Cyclomatic Complexity. 메서드 안의 if/for/case 등 분기 수. 클래스 단위는 상위 10% 평균")}
+            {th("Coupling", sort="num", num=True, tip="다른 클래스를 참조하는 수(fan-out) + 참조받는 수(fan-in)")}
+            {th("GlobalState", sort="num", num=True, tip="전역(static) 변수와 싱글톤 인스턴스에 접근한 횟수")}
+            {th("CycleSize", sort="num", num=True, tip="순환 참조에 빠진 묶음의 크기. 0이면 순환에 포함되지 않음")}
+            {th("GameLoop", sort="num", num=True, tip="Tick/Update/Render 같은 진입점으로부터의 가까움. 1.0이면 진입점 그 자체")}
             <th data-tooltip="이 클래스가 위험으로 분류된 가장 큰 두 항목">주요 원인</th>
             <th data-tooltip="파일 경로 : 시작 라인">위치</th>
         </tr></thead>
@@ -503,17 +509,38 @@ def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
     """크기 ≥ 2 인 SCC 목록을 표시한다. 각 cycle의 멤버 클래스와 평균 G-SI를 보여준다."""
     intro = (
         '<div class="section-intro">'
-        '<strong>A→B→C→A처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>(Strongly Connected Component, SCC)입니다. '
+        '<strong>A → B → C → A 처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>'
+        '(Strongly Connected Component, SCC)입니다. '
         '순환에 빠진 클래스는 한 곳만 고쳐도 다른 곳이 영향을 받기 쉬워 위험한 패턴입니다. '
         '각 항목을 클릭하면 그 묶음에 속한 클래스 목록이 펼쳐집니다.'
         '</div>'
     )
-    if not metrics.sccs:
-        return intro + '<div class="empty">크기 ≥ 2 인 순환 의존성이 발견되지 않았습니다. ✅ 좋은 신호입니다.</div>'
 
+    total = len(metrics.sccs)
+    if total == 0:
+        count_card = (
+            '<div class="cycle-count cycle-count-zero" '
+            'data-tooltip="크기가 2 이상인 순환 의존성이 하나도 발견되지 않았습니다. 좋은 신호입니다.">'
+            '<div class="cc-number">0</div>'
+            '<div class="cc-label">발견된 순환 묶음 (전체)</div>'
+            '<div class="cc-hint">✅ 좋은 신호 — 클래스들이 한 방향으로 흐름</div>'
+            '</div>'
+        )
+        return intro + count_card
+
+    # 카운트 카드 — 이 숫자가 "전체"임을 명확히
     sccs_sorted = sorted(metrics.sccs, key=len, reverse=True)
+    largest = len(sccs_sorted[0])
+    count_card = (
+        f'<div class="cycle-count" '
+        f'data-tooltip="이 프로젝트 전체에서 발견된 순환 의존성 묶음의 수입니다. 상위 N개가 아니라 전부 표시됩니다.">'
+        f'<div class="cc-number">{total}</div>'
+        f'<div class="cc-label">발견된 순환 묶음 (전체)</div>'
+        f'<div class="cc-hint">가장 큰 묶음의 크기: <strong>{largest}개 클래스</strong></div>'
+        f'</div>'
+    )
 
-    rows = [intro]
+    rows = [intro, count_card]
     for idx, scc in enumerate(sccs_sorted, 1):
         members = sorted(scc)
         si_values = [si_lookup[fqn].si for fqn in members if fqn in si_lookup]
@@ -528,14 +555,20 @@ def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
             for m in members[:20]
         )
         more = f" ... 외 {len(members) - 20}개" if len(members) > 20 else ""
+        tip = (
+            f"이 묶음 안의 {len(scc)}개 클래스는 서로 참조 사슬을 이루고 있어 "
+            f"한 클래스를 수정하면 나머지에도 영향이 갈 수 있습니다."
+        )
         rows.append(
-            f'<details class="cycle-entry"><summary>'
+            f'<details class="cycle-entry" data-tooltip="{html.escape(tip)}"><summary>'
             f'<span class="cycle-rank">#{idx}</span>'
             f'<span class="grade-badge" style="background:{GRADE_COLORS[grade]}">{grade}</span>'
-            f'크기 {len(scc)} · 평균 G-SI {avg_si:.1f} · 최대 {max_si:.1f}'
+            f'<span class="cycle-stat">크기 <strong>{len(scc)}</strong></span>'
+            f'<span class="cycle-stat">평균 G-SI <strong>{avg_si:.1f}</strong></span>'
+            f'<span class="cycle-stat">최대 <strong>{max_si:.1f}</strong></span>'
             f'</summary><ul>{member_html}</ul>{more}</details>'
         )
-    return f'{rows[0]}<div class="cycle-list">{"".join(rows[1:])}</div>'
+    return f'{rows[0]}{rows[1]}<div class="cycle-list">{"".join(rows[2:])}</div>'
 
 
 def _grade(score: float) -> str:
@@ -571,12 +604,12 @@ def _render_module_table(modules) -> str:
     return f'''{intro}
     <table class="module-table">
         <thead><tr>
-            <th data-tooltip="최상위 폴더 이름. 보통 게임 엔진의 한 컴포넌트에 해당">모듈</th>
+            <th data-tooltip="분석 입력 폴더 바로 아래의 1단계 폴더 이름. (root)는 폴더에 들어있지 않고 분석 폴더 바로 아래에 놓인 .cs 파일들">모듈</th>
             <th data-tooltip="모듈 내 클래스 평균을 기준으로 한 등급">등급</th>
-            <th data-tooltip="모듈 내 모든 클래스의 G-SI 평균">평균 G-SI</th>
-            <th data-tooltip="모듈에서 가장 위험한 클래스 하나의 G-SI">최대 G-SI</th>
-            <th data-tooltip="모듈에 속한 .cs 파일 수">파일 수</th>
-            <th data-tooltip="모듈에 속한 클래스 · 구조체 · 인터페이스 · 레코드의 합">클래스 수</th>
+            <th class="num" data-tooltip="모듈 내 모든 클래스의 G-SI 평균">평균 G-SI</th>
+            <th class="num" data-tooltip="모듈에서 가장 위험한 클래스 하나의 G-SI">최대 G-SI</th>
+            <th class="num" data-tooltip="모듈에 속한 .cs 파일 수">파일 수</th>
+            <th class="num" data-tooltip="모듈에 속한 클래스 · 구조체 · 인터페이스 · 레코드의 합">클래스 수</th>
         </tr></thead>
         <tbody>{body}</tbody>
     </table>'''
@@ -626,7 +659,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
   th {{ background: var(--panel2); color: #cbd5e1; font-weight: 600; position: sticky; top: 0; }}
   th.sortable {{ cursor: pointer; user-select: none; }}
   th.sortable::after {{ content: " ↕"; color: var(--muted); font-size: 11px; }}
-  td.num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
+  th.num, td.num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
   td.rank {{ color: var(--muted); }}
   td.fqn {{ font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px; }}
   td.path code {{ font-size: 11px; color: var(--muted); }}
@@ -766,8 +799,18 @@ _HTML_TEMPLATE = r"""<!doctype html>
 
   .help-body .help-tip {{ margin-top: 10px; padding: 8px 12px; background: rgba(96,165,250,0.06);
                            border-radius: 4px; font-size: 12px; }}
+  .cycle-count {{ background: var(--panel2); border-radius: 8px; padding: 16px 20px;
+                  display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px;
+                  border-left: 4px solid #d24343; max-width: 480px; }}
+  .cycle-count-zero {{ border-left-color: #3b8e5a; }}
+  .cc-number {{ font-size: 36px; font-weight: 800; line-height: 1; color: #f1f5f9;
+                font-variant-numeric: tabular-nums; }}
+  .cc-label {{ color: var(--muted); font-size: 13px; }}
+  .cc-hint {{ color: #cbd5e1; font-size: 12px; margin-top: 4px; }}
   .cycle-list details {{ background: var(--panel2); padding: 10px 12px; border-radius: 6px; margin-bottom: 6px; }}
-  .cycle-list summary {{ cursor: pointer; display: flex; gap: 10px; align-items: center; }}
+  .cycle-list summary {{ cursor: pointer; display: flex; gap: 12px; align-items: center; }}
+  .cycle-stat {{ color: #cbd5e1; font-size: 13px; }}
+  .cycle-stat strong {{ color: #f1f5f9; font-variant-numeric: tabular-nums; }}
   .cycle-rank {{ color: var(--muted); font-variant-numeric: tabular-nums; }}
   .cycle-list ul {{ margin: 10px 0 0 24px; padding: 0; }}
   .cycle-list li {{ margin-bottom: 2px; }}
