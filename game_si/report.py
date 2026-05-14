@@ -69,11 +69,13 @@ def _render_html(
     module_rows = sorted(scoring.module_scores, key=lambda m: -m.si_max)
     si_by_fqn = {cs.fqn: cs for cs in scoring.class_scores}
 
-    # 임베드용 데이터 (대시보드 JS에서 사용할 수 있도록 전체 데이터를 객체로 박는다)
+    # 임베드용 데이터 — JS가 Hotspot Table 동적 렌더링, 그래프 검색 등에 사용한다.
     embedded = {
         "project": project_name,
         "analyzed_at": analyzed_at,
-        "scoring": scoring_to_dict(scoring),
+        "hotspot_top_n": top_n,
+        "grade_colors": GRADE_COLORS,
+        "all_classes": json.loads(_hotspot_data_payload(scoring)),
         "cycle_count": len(metrics.sccs),
     }
     embedded_json = json.dumps(embedded, ensure_ascii=False, indent=None, default=_json_default)
@@ -96,26 +98,29 @@ def _render_html(
 
 def _render_help_box() -> str:
     """대시보드 상단에 두는 \"이 대시보드 읽는 법\" 도움말 박스."""
-    return '''<details class="help">
-    <summary>이 대시보드 읽는 법 (펼치기)</summary>
+    return '''<details class="help" open>
+    <summary>이 대시보드 읽는 법 (펼치기 / 접기)</summary>
     <div class="help-body">
         <p><strong>Game Spaghetti Index (G-SI)</strong>는 게임 코드의 각 클래스가
         얼마나 다른 코드와 얽혀 있는지를 0~100점으로 측정한 지표입니다.
         <strong>점수가 높을수록 위험</strong>합니다.</p>
         <ul>
-            <li><strong>Project Health</strong> — 프로젝트 전체에 대한 종합 점수.
-                평균 G-SI, 위험 클래스 비율, 순환 의존성 수, 평균 결합도를 함께 본
-                "이 프로젝트의 스파게티 정도" 한 개입니다.</li>
+            <li><strong>Project Health</strong> — 프로젝트 전체의 종합 점수 하나.
+                평균 G-SI, 위험 클래스 비율, 순환 의존성 수, 평균 결합도 4가지를 합쳐
+                "이 프로젝트의 스파게티 정도"를 한 숫자로 답합니다.</li>
+            <li><strong>Summary 카드</strong> — 분석 규모 요약(클래스/메서드/순환 수, 평균·최대·위험 클래스 수).</li>
             <li><strong>등급 분포 도넛</strong> — 프로젝트 안의 모든 클래스를
-                A(안전) ~ E(심각)로 나눠 보여줍니다. <strong>모든 클래스의 분포</strong>를 한눈에 봅니다.</li>
-            <li><strong>Hotspot Table</strong> — <em>가장 위험한 상위 N개</em>만
-                골라서 보여주는 표입니다. 그래서 등급은 대부분 D나 E이고,
-                이는 정상입니다. 다른 등급의 클래스를 보고 싶다면 등급 필터를 사용하세요.</li>
+                A(안전) ~ E(심각)로 나눠 보여줍니다. 비율 자체는 percentile rank 정의상 거의 균등(A~E 각 20%)에 가깝습니다.</li>
+            <li><strong>Hotspot Table</strong> — <em>가장 위험한 클래스 상위 N개</em>만
+                골라 보여줍니다. 등급 필터를 선택하면 <strong>그 등급 안에서 다시 상위 N개</strong>를 보여주도록
+                표가 재계산됩니다.</li>
             <li><strong>Dependency Graph</strong> — 위험 클래스와 그 이웃들이 어떻게
-                연결되어 있는지 시각화. 마우스를 노드 위에 올리면 자세한 정보가 우측 패널에 나타납니다.</li>
-            <li><strong>Cycle Explorer</strong> — A→B→C→A처럼 순환 참조에 빠진
-                클래스 묶음을 보여줍니다. 순환은 변경 영향을 추적하기 어렵게 만드는
-                대표적 위험 신호입니다.</li>
+                연결되어 있는지 시각화. 위의 검색창에 이름을 치거나 등급을 선택하면 매칭 노드가
+                강조되고, 마우스를 노드 위에 올리면 우측 패널에 상세 정보가 표시됩니다.</li>
+            <li><strong>Cycle Explorer</strong> — <code>A → B → C → A</code> 처럼 서로 참조해서 빙빙 도는
+                클래스 묶음을 보여줍니다. 한 곳만 고쳐도 다른 곳이 영향받기 쉬워 위험한 패턴입니다.</li>
+            <li><strong>Module Summary</strong> — 클래스 단위 점수를 <strong>최상위 폴더 단위로 집계</strong>한 표.
+                "이 폴더(모듈) 안 클래스들이 평균적으로 얼마나 위험한가"를 봅니다.</li>
         </ul>
         <p class="help-grade">
             등급 의미 →
@@ -125,6 +130,7 @@ def _render_help_box() -> str:
             <span class="grade-badge" style="background:#ef7d3c">D</span> 리팩토링 후보 ·
             <span class="grade-badge" style="background:#d24343">E</span> 심각 (변경 전 영향 분석 필요)
         </p>
+        <p class="help-tip">💡 화면 곳곳의 항목에 <strong>마우스를 잠시 올려두면</strong> 그 항목이 무엇인지 설명이 표시됩니다.</p>
     </div>
 </details>'''
 
@@ -146,10 +152,14 @@ def _render_health_hero(scoring: ScoringResult, metrics: MetricsResult) -> str:
             <div class="health-title">Project Health</div>
             <div class="health-desc">{desc}</div>
             <div class="health-stats">
-                <div><span class="hs-label">평균 G-SI</span><span class="hs-value">{ph.avg_si:.1f}</span></div>
-                <div><span class="hs-label">위험(D+E) 비율</span><span class="hs-value">{ph.risk_ratio * 100:.1f}%</span></div>
-                <div><span class="hs-label">순환 의존성</span><span class="hs-value">{ph.cycle_count}</span></div>
-                <div><span class="hs-label">평균 결합도</span><span class="hs-value">{ph.avg_coupling:.2f}</span></div>
+                <div data-tooltip="프로젝트 내 모든 클래스의 G-SI 점수 평균. 종합 점수에 45% 기여">
+                    <span class="hs-label">평균 G-SI</span><span class="hs-value">{ph.avg_si:.1f}</span></div>
+                <div data-tooltip="G-SI 60 이상(D·E 등급)인 클래스의 비율. 종합 점수에 25% 기여">
+                    <span class="hs-label">위험(D+E) 비율</span><span class="hs-value">{ph.risk_ratio * 100:.1f}%</span></div>
+                <div data-tooltip="순환 참조에 빠진 클래스 묶음의 수(크기 ≥ 2). 종합 점수에 15% 기여">
+                    <span class="hs-label">순환 의존성</span><span class="hs-value">{ph.cycle_count}</span></div>
+                <div data-tooltip="클래스 한 개당 평균적으로 몇 개의 다른 클래스와 연결되는지(fan-in + fan-out 평균). 종합 점수에 15% 기여">
+                    <span class="hs-label">평균 결합도</span><span class="hs-value">{ph.avg_coupling:.2f}</span></div>
             </div>
         </div>
     </div>'''
@@ -186,17 +196,24 @@ def _render_summary_cards(scoring: ScoringResult, metrics: MetricsResult) -> str
     risk_count = sum(1 for c in scoring.class_scores if c.grade in ("D", "E"))
 
     cards = [
-        ("분석 클래스", f"{scoring.total_classes:,}"),
-        ("분석 메서드", f"{scoring.total_methods:,}"),
-        ("의존성 순환(SCC ≥ 2)", f"{len(metrics.sccs):,}"),
-        ("평균 G-SI", f"{avg_si:.1f}"),
-        ("최대 G-SI", f"{max_si:.1f}"),
-        ("위험(D/E) 클래스", f"{risk_count:,}"),
+        ("분석 클래스", f"{scoring.total_classes:,}",
+         "Roslyn으로 파싱한 클래스 · 구조체 · 인터페이스 · 레코드의 합계"),
+        ("분석 메서드", f"{scoring.total_methods:,}",
+         "분석된 모든 메서드와 생성자의 합계"),
+        ("의존성 순환(SCC ≥ 2)", f"{len(metrics.sccs):,}",
+         "A→B→C→A처럼 서로 참조해서 빙빙 도는 클래스 묶음의 개수. 적을수록 좋음"),
+        ("평균 G-SI", f"{avg_si:.1f}",
+         "모든 클래스의 G-SI 점수 평균. 0~100, 낮을수록 깔끔한 코드베이스"),
+        ("최대 G-SI", f"{max_si:.1f}",
+         "이 프로젝트에서 가장 위험한 한 클래스의 G-SI 점수"),
+        ("위험(D/E) 클래스", f"{risk_count:,}",
+         "G-SI가 60 이상인 클래스 수. 변경 시 주의가 필요한 클래스"),
     ]
     return "".join(
-        f'<div class="card"><div class="card-label">{html.escape(label)}</div>'
+        f'<div class="card" data-tooltip="{html.escape(tip)}">'
+        f'<div class="card-label">{html.escape(label)}</div>'
         f'<div class="card-value">{html.escape(value)}</div></div>'
-        for label, value in cards
+        for label, value, tip in cards
     )
 
 
@@ -256,59 +273,75 @@ def _render_weights_table(weights: dict[str, float]) -> str:
 
 
 def _render_hotspot_table(hotspots, top_n: int) -> str:
-    rows = []
-    for i, cs in enumerate(hotspots, 1):
-        reasons = ", ".join(cs.top_reasons) if cs.top_reasons else "—"
-        rows.append(
-            f'<tr data-grade="{cs.grade}">'
-            f'<td class="num rank">{i}</td>'
-            f'<td><span class="grade-badge" style="background:{GRADE_COLORS[cs.grade]}">{cs.grade}</span></td>'
-            f'<td class="num">{cs.si:.1f}</td>'
-            f'<td class="fqn" title="{html.escape(cs.fqn)}">{html.escape(cs.fqn)}</td>'
-            f'<td class="num">{cs.raw["cc"]:.1f}</td>'
-            f'<td class="num">{int(cs.raw["coupling"])}</td>'
-            f'<td class="num">{int(cs.raw["global_state"])}</td>'
-            f'<td class="num">{int(cs.raw["dependency_cycle"])}</td>'
-            f'<td class="num">{cs.raw["game_loop_centrality"]:.2f}</td>'
-            f'<td class="reasons">{html.escape(reasons)}</td>'
-            f'<td class="path"><code>{html.escape(cs.file_path)}:{cs.start_line}</code></td>'
-            f'</tr>'
-        )
-    body = "".join(rows) if rows else '<tr><td colspan="11" class="empty">분석된 클래스가 없습니다.</td></tr>'
-
+    """표 골격만 렌더링. 본문은 클라이언트 측에서 등급 필터에 따라 동적으로 그린다."""
     notice = (
         f'<div class="table-notice">'
-        f'<strong>이 표는 G-SI 상위 {top_n}개</strong>만 표시합니다. '
-        f'전체 등급 분포는 위 도넛에서 확인하세요. '
-        f'특정 등급만 보려면 오른쪽 등급 필터를 사용하면 됩니다.'
+        f'기본은 전체 클래스 중 <strong>G-SI 상위 {top_n}개</strong>를 표시합니다. '
+        f'특정 등급(A~E)을 선택하면 <strong>그 등급 안에서</strong> 상위 {top_n}개를 다시 보여줍니다. '
+        f'전체 등급 분포는 위 도넛 차트에서 확인하세요.'
         f'</div>'
     )
 
+    def th(label: str, sort: str | None = None, tip: str | None = None) -> str:
+        parts = ['<th']
+        if sort:
+            parts.append(' data-sort="' + sort + '" class="sortable"')
+        if tip:
+            parts.append(' data-tooltip="' + html.escape(tip) + '"')
+        parts.append('>')
+        parts.append(label)
+        parts.append('</th>')
+        return ''.join(parts)
+
     return f'''{notice}
     <div class="table-controls">
-        <input type="text" id="hotspot-filter" placeholder="필터: FQN 또는 파일 경로 부분 일치">
+        <input type="text" id="hotspot-filter" placeholder="텍스트 검색: FQN 또는 파일 경로 부분 일치">
         <select id="grade-filter">
-            <option value="">전체 등급 (이 표 안에서)</option>
+            <option value="">전체 등급에서 상위 {top_n}</option>
             <option value="E">E 등급만 (심각)</option>
             <option value="D">D 등급만 (리팩토링 후보)</option>
             <option value="C">C 등급만 (보통)</option>
             <option value="B">B 등급만 (일반)</option>
             <option value="A">A 등급만 (안전)</option>
         </select>
+        <span id="hotspot-count" class="hotspot-count"></span>
     </div>
     <table class="hotspot-table" id="hotspot-table">
         <thead><tr>
-            <th>#</th><th>등급</th><th data-sort="num" class="sortable">G-SI</th>
-            <th data-sort="str" class="sortable">클래스 FQN</th>
-            <th data-sort="num" class="sortable">CC</th>
-            <th data-sort="num" class="sortable">Coupling</th>
-            <th data-sort="num" class="sortable">GlobalState</th>
-            <th data-sort="num" class="sortable">CycleSize</th>
-            <th data-sort="num" class="sortable">GameLoop</th>
-            <th>주요 원인</th><th>위치</th>
+            <th data-tooltip="G-SI 점수 기준 등수">#</th>
+            <th data-tooltip="A(안전, 하위 20%) ~ E(심각, 상위 20%)">등급</th>
+            {th("G-SI", "num", "0~100. 프로젝트 내 분포 백분위. 높을수록 위험")}
+            {th("클래스 FQN", "str", "네임스페이스를 포함한 정규 이름")}
+            {th("CC", "num", "Cyclomatic Complexity. 메서드 안의 if/for/case 등 분기 수. 클래스 단위는 상위 10% 평균")}
+            {th("Coupling", "num", "다른 클래스를 참조하는 수(fan-out) + 참조받는 수(fan-in)")}
+            {th("GlobalState", "num", "전역(static) 변수와 싱글톤 인스턴스에 접근한 횟수")}
+            {th("CycleSize", "num", "순환 참조에 빠진 묶음의 크기. 0이면 순환에 포함되지 않음")}
+            {th("GameLoop", "num", "Tick/Update/Render 같은 진입점으로부터의 가까움. 1.0이면 진입점 그 자체")}
+            <th data-tooltip="이 클래스가 위험으로 분류된 가장 큰 두 항목">주요 원인</th>
+            <th data-tooltip="파일 경로 : 시작 라인">위치</th>
         </tr></thead>
-        <tbody>{body}</tbody>
+        <tbody id="hotspot-tbody"></tbody>
     </table>'''
+
+
+def _hotspot_data_payload(scoring) -> str:
+    """모든 클래스 점수를 JS가 다룰 수 있는 가벼운 dict 배열로 직렬화."""
+    payload = []
+    for cs in scoring.class_scores:
+        payload.append({
+            "fqn": cs.fqn,
+            "file_path": cs.file_path,
+            "start_line": cs.start_line,
+            "grade": cs.grade,
+            "si": round(cs.si, 1),
+            "cc": round(cs.raw.get("cc", 0), 1),
+            "coupling": int(cs.raw.get("coupling", 0)),
+            "global_state": int(cs.raw.get("global_state", 0)),
+            "dependency_cycle": int(cs.raw.get("dependency_cycle", 0)),
+            "game_loop_centrality": round(cs.raw.get("game_loop_centrality", 0), 2),
+            "top_reasons": cs.top_reasons,
+        })
+    return json.dumps(payload, ensure_ascii=False)
 
 
 def _render_dependency_graph(
@@ -435,6 +468,19 @@ def _render_dependency_graph(
         (G-SI 상위 {top_n}개 hotspot + 1-홉 이웃) ·
         <em>마우스를 노드에 올리면 우측에 상세 정보가 나타납니다.</em>
     </div>
+    <div class="graph-controls">
+        <input type="text" id="graph-search" placeholder="그래프 안 클래스 검색 (이름의 일부 입력)">
+        <div class="grade-toggle" id="graph-grade-toggle">
+            <span class="gt-label">등급 강조:</span>
+            <button data-grade="" class="gt-btn gt-active">전체</button>
+            <button data-grade="A" class="gt-btn">A</button>
+            <button data-grade="B" class="gt-btn">B</button>
+            <button data-grade="C" class="gt-btn">C</button>
+            <button data-grade="D" class="gt-btn">D</button>
+            <button data-grade="E" class="gt-btn">E</button>
+        </div>
+        <span class="graph-match-count" id="graph-match-count"></span>
+    </div>
     <div class="graph-wrap">
         <svg viewBox="0 0 {width} {height}" preserveAspectRatio="xMidYMid meet" class="depgraph" id="depgraph">
             <defs>
@@ -446,7 +492,8 @@ def _render_dependency_graph(
             <g class="nodes">{''.join(nodes_svg)}</g>
         </svg>
         <aside class="graph-info" id="graph-info">
-            <div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.</div>
+            <div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.<br><br>
+            아래 검색창에 클래스 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>
         </aside>
     </div>
     <script id="graph-node-info" type="application/json">{info_json}</script>'''
@@ -454,12 +501,19 @@ def _render_dependency_graph(
 
 def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
     """크기 ≥ 2 인 SCC 목록을 표시한다. 각 cycle의 멤버 클래스와 평균 G-SI를 보여준다."""
+    intro = (
+        '<div class="section-intro">'
+        '<strong>A→B→C→A처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>(Strongly Connected Component, SCC)입니다. '
+        '순환에 빠진 클래스는 한 곳만 고쳐도 다른 곳이 영향을 받기 쉬워 위험한 패턴입니다. '
+        '각 항목을 클릭하면 그 묶음에 속한 클래스 목록이 펼쳐집니다.'
+        '</div>'
+    )
     if not metrics.sccs:
-        return '<div class="empty">크기 ≥ 2 인 순환 의존성이 발견되지 않았습니다.</div>'
+        return intro + '<div class="empty">크기 ≥ 2 인 순환 의존성이 발견되지 않았습니다. ✅ 좋은 신호입니다.</div>'
 
     sccs_sorted = sorted(metrics.sccs, key=len, reverse=True)
 
-    rows = []
+    rows = [intro]
     for idx, scc in enumerate(sccs_sorted, 1):
         members = sorted(scc)
         si_values = [si_lookup[fqn].si for fqn in members if fqn in si_lookup]
@@ -481,7 +535,7 @@ def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
             f'크기 {len(scc)} · 평균 G-SI {avg_si:.1f} · 최대 {max_si:.1f}'
             f'</summary><ul>{member_html}</ul>{more}</details>'
         )
-    return f'<div class="cycle-list">{"".join(rows)}</div>'
+    return f'{rows[0]}<div class="cycle-list">{"".join(rows[1:])}</div>'
 
 
 def _grade(score: float) -> str:
@@ -494,6 +548,13 @@ def _grade(score: float) -> str:
 
 
 def _render_module_table(modules) -> str:
+    intro = (
+        '<div class="section-intro">'
+        '클래스 단위 점수를 <strong>최상위 폴더(모듈)별로 집계</strong>한 표입니다. '
+        '"이 폴더 안의 클래스들이 평균적으로 얼마나 위험한가"를 한눈에 봅니다. '
+        '평균 G-SI는 모듈 안 클래스들의 점수 평균, 최대 G-SI는 그중 가장 위험한 클래스의 점수입니다.'
+        '</div>'
+    )
     rows = []
     for ms in modules:
         rows.append(
@@ -507,8 +568,16 @@ def _render_module_table(modules) -> str:
             f'</tr>'
         )
     body = "".join(rows) if rows else '<tr><td colspan="6" class="empty">집계할 모듈이 없습니다.</td></tr>'
-    return f'''<table class="module-table">
-        <thead><tr><th>모듈</th><th>등급</th><th>평균 G-SI</th><th>최대 G-SI</th><th>파일 수</th><th>클래스 수</th></tr></thead>
+    return f'''{intro}
+    <table class="module-table">
+        <thead><tr>
+            <th data-tooltip="최상위 폴더 이름. 보통 게임 엔진의 한 컴포넌트에 해당">모듈</th>
+            <th data-tooltip="모듈 내 클래스 평균을 기준으로 한 등급">등급</th>
+            <th data-tooltip="모듈 내 모든 클래스의 G-SI 평균">평균 G-SI</th>
+            <th data-tooltip="모듈에서 가장 위험한 클래스 하나의 G-SI">최대 G-SI</th>
+            <th data-tooltip="모듈에 속한 .cs 파일 수">파일 수</th>
+            <th data-tooltip="모듈에 속한 클래스 · 구조체 · 인터페이스 · 레코드의 합">클래스 수</th>
+        </tr></thead>
         <tbody>{body}</tbody>
     </table>'''
 
@@ -633,11 +702,70 @@ _HTML_TEMPLATE = r"""<!doctype html>
   .help-body .help-grade {{ margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; }}
   .help-body .help-grade .grade-badge {{ margin: 0 4px; }}
 
-  /* Hotspot notice */
+  /* Hotspot notice / count */
   .table-notice {{ background: rgba(96, 165, 250, 0.07); border: 1px solid rgba(96, 165, 250, 0.25);
                    border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px;
                    color: #cbd5e1; }}
   .table-notice strong {{ color: var(--accent); }}
+  .hotspot-count {{ color: var(--muted); font-size: 12px; align-self: center; }}
+
+  /* 섹션 소개 문구 */
+  .section-intro {{ background: rgba(96, 165, 250, 0.05); border-left: 3px solid var(--accent);
+                    padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: #cbd5e1;
+                    border-radius: 0 6px 6px 0; }}
+  .section-intro strong {{ color: #e5e7eb; }}
+  .section-intro code {{ background: rgba(255,255,255,0.08); padding: 1px 6px;
+                          border-radius: 3px; font-size: 12px; }}
+
+  /* Custom tooltip — [data-tooltip] 속성이 있는 요소 hover 시 표시 */
+  [data-tooltip] {{ position: relative; cursor: help; }}
+  [data-tooltip]::after {{
+    content: attr(data-tooltip);
+    position: absolute; left: 50%; bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    background: #020617; color: #f1f5f9; padding: 8px 10px; border-radius: 6px;
+    font-size: 12px; line-height: 1.4; font-weight: 400;
+    white-space: normal; width: max-content; max-width: 260px;
+    text-align: left; pointer-events: none; opacity: 0;
+    transition: opacity 0.12s; z-index: 100;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }}
+  [data-tooltip]:hover::after {{ opacity: 1; }}
+  th[data-tooltip] {{ cursor: help; }}
+
+  /* Graph controls — 검색 + 등급 토글 */
+  .graph-controls {{ display: flex; gap: 12px; align-items: center; margin-bottom: 10px;
+                     flex-wrap: wrap; }}
+  .graph-controls input {{
+    background: var(--panel2); color: var(--fg); border: 1px solid var(--border);
+    padding: 6px 10px; border-radius: 6px; font-size: 13px; flex: 1; min-width: 280px;
+  }}
+  .grade-toggle {{ display: flex; gap: 4px; align-items: center; }}
+  .gt-label {{ color: var(--muted); font-size: 12px; margin-right: 4px; }}
+  .gt-btn {{ background: var(--panel2); color: var(--muted); border: 1px solid var(--border);
+             padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+             cursor: pointer; transition: all 0.1s; }}
+  .gt-btn:hover {{ color: var(--fg); border-color: #475569; }}
+  .gt-btn.gt-active {{ color: #fff; }}
+  .gt-btn[data-grade="A"].gt-active {{ background: #3b8e5a; border-color: #3b8e5a; }}
+  .gt-btn[data-grade="B"].gt-active {{ background: #7fb95a; border-color: #7fb95a; }}
+  .gt-btn[data-grade="C"].gt-active {{ background: #e3b341; border-color: #e3b341; color: #111; }}
+  .gt-btn[data-grade="D"].gt-active {{ background: #ef7d3c; border-color: #ef7d3c; }}
+  .gt-btn[data-grade="E"].gt-active {{ background: #d24343; border-color: #d24343; }}
+  .gt-btn[data-grade=""].gt-active {{ background: var(--accent); border-color: var(--accent); }}
+  .graph-match-count {{ color: var(--muted); font-size: 12px; }}
+
+  /* 검색 매치 강조 */
+  .depgraph .node.search-match circle {{
+    stroke: #fff; stroke-width: 2.5;
+    filter: drop-shadow(0 0 6px rgba(96, 165, 250, 0.9));
+  }}
+  .depgraph .node.search-match text {{ opacity: 1; font-weight: 700; font-size: 11px; fill: #fff; }}
+  .depgraph.has-search .node:not(.search-match):not(.hl):not(.hl-neighbor) {{ opacity: 0.25; }}
+
+  .help-body .help-tip {{ margin-top: 10px; padding: 8px 12px; background: rgba(96,165,250,0.06);
+                           border-radius: 4px; font-size: 12px; }}
   .cycle-list details {{ background: var(--panel2); padding: 10px 12px; border-radius: 6px; margin-bottom: 6px; }}
   .cycle-list summary {{ cursor: pointer; display: flex; gap: 10px; align-items: center; }}
   .cycle-rank {{ color: var(--muted); font-variant-numeric: tabular-nums; }}
@@ -705,52 +833,111 @@ _HTML_TEMPLATE = r"""<!doctype html>
 <script>
 (function() {{
   const dataRoot = {embedded_json};
-  // 향후 W7 그래프에서 dataRoot.scoring을 사용한다.
   window.__GAME_SI__ = dataRoot;
+  const GRADE_COLORS = dataRoot.grade_colors;
+  const TOP_N = dataRoot.hotspot_top_n || 30;
+  const ALL_CLASSES = dataRoot.all_classes || [];
 
-  // ----- Hotspot 테이블 필터 -----
+  // ----- Hotspot Table 동적 렌더링 -----
   const textInput = document.getElementById('hotspot-filter');
   const gradeSelect = document.getElementById('grade-filter');
-  const table = document.getElementById('hotspot-table');
+  const tbody = document.getElementById('hotspot-tbody');
+  const countSpan = document.getElementById('hotspot-count');
 
-  function applyFilters() {{
-    if (!table) return;
+  function escapeHtml(s) {{
+    return String(s).replace(/[&<>"']/g, c => ({{
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }})[c]);
+  }}
+
+  let sortKey = 'si';
+  let sortAsc = false;
+
+  function renderHotspots() {{
+    if (!tbody) return;
     const needle = (textInput.value || '').toLowerCase();
     const grade = gradeSelect.value;
-    table.querySelectorAll('tbody tr').forEach(tr => {{
-      const fqnCell = tr.querySelector('.fqn');
-      const pathCell = tr.querySelector('.path');
-      const text = ((fqnCell ? fqnCell.textContent : '') + ' ' + (pathCell ? pathCell.textContent : '')).toLowerCase();
-      const gradeOk = !grade || tr.getAttribute('data-grade') === grade;
-      const textOk = !needle || text.includes(needle);
-      tr.style.display = (gradeOk && textOk) ? '' : 'none';
-    }});
-  }}
-  if (textInput) textInput.addEventListener('input', applyFilters);
-  if (gradeSelect) gradeSelect.addEventListener('change', applyFilters);
 
-  // ----- 정렬 -----
+    // 1) 등급/텍스트 필터로 후보 추출
+    let candidates = ALL_CLASSES.filter(c => {{
+      if (grade && c.grade !== grade) return false;
+      if (needle) {{
+        const text = (c.fqn + ' ' + c.file_path).toLowerCase();
+        if (!text.includes(needle)) return false;
+      }}
+      return true;
+    }});
+
+    // 2) 정렬
+    candidates.sort((a, b) => {{
+      const av = a[sortKey];
+      const bv = b[sortKey];
+      const cmp = (typeof av === 'number') ? (av - bv) : String(av).localeCompare(String(bv));
+      return cmp * (sortAsc ? 1 : -1);
+    }});
+
+    const totalMatched = candidates.length;
+    const shown = candidates.slice(0, TOP_N);
+
+    // 3) DOM 렌더링
+    if (shown.length === 0) {{
+      tbody.innerHTML = '<tr><td colspan="11" class="empty">조건에 맞는 클래스가 없습니다.</td></tr>';
+    }} else {{
+      tbody.innerHTML = shown.map((c, i) => {{
+        const reasons = (c.top_reasons && c.top_reasons.length) ? c.top_reasons.join(', ') : '—';
+        const color = GRADE_COLORS[c.grade] || '#475569';
+        return `<tr data-grade="${{c.grade}}">
+          <td class="num rank">${{i + 1}}</td>
+          <td><span class="grade-badge" style="background:${{color}}">${{c.grade}}</span></td>
+          <td class="num">${{c.si.toFixed(1)}}</td>
+          <td class="fqn" title="${{escapeHtml(c.fqn)}}">${{escapeHtml(c.fqn)}}</td>
+          <td class="num">${{c.cc.toFixed(1)}}</td>
+          <td class="num">${{c.coupling}}</td>
+          <td class="num">${{c.global_state}}</td>
+          <td class="num">${{c.dependency_cycle}}</td>
+          <td class="num">${{c.game_loop_centrality.toFixed(2)}}</td>
+          <td class="reasons">${{escapeHtml(reasons)}}</td>
+          <td class="path"><code>${{escapeHtml(c.file_path)}}:${{c.start_line}}</code></td>
+        </tr>`;
+      }}).join('');
+    }}
+
+    if (countSpan) {{
+      if (grade || needle) {{
+        countSpan.textContent = `${{shown.length}} / ${{totalMatched}} 개 표시 (전체 ${{ALL_CLASSES.length}})`;
+      }} else {{
+        countSpan.textContent = `${{shown.length}} / ${{ALL_CLASSES.length}} 개 표시`;
+      }}
+    }}
+  }}
+
+  if (textInput) textInput.addEventListener('input', renderHotspots);
+  if (gradeSelect) gradeSelect.addEventListener('change', renderHotspots);
+
+  // 컬럼 정렬: 헤더 클릭으로 sortKey 변경
+  const sortableHeaders = {{
+    2: 'si', 3: 'fqn', 4: 'cc', 5: 'coupling',
+    6: 'global_state', 7: 'dependency_cycle', 8: 'game_loop_centrality'
+  }};
+  const table = document.getElementById('hotspot-table');
   if (table) {{
-    table.querySelectorAll('th.sortable').forEach((th, idx) => {{
-      let asc = false;
+    table.querySelectorAll('th.sortable').forEach(th => {{
       th.addEventListener('click', () => {{
         const colIdx = Array.from(th.parentNode.children).indexOf(th);
-        const numeric = th.getAttribute('data-sort') === 'num';
-        const rows = Array.from(table.querySelectorAll('tbody tr'));
-        rows.sort((a, b) => {{
-          const av = a.children[colIdx].textContent.trim();
-          const bv = b.children[colIdx].textContent.trim();
-          if (numeric) {{
-            return (parseFloat(av) - parseFloat(bv)) * (asc ? 1 : -1);
-          }}
-          return av.localeCompare(bv) * (asc ? 1 : -1);
-        }});
-        const tbody = table.querySelector('tbody');
-        rows.forEach(r => tbody.appendChild(r));
-        asc = !asc;
+        const key = sortableHeaders[colIdx];
+        if (!key) return;
+        if (sortKey === key) {{
+          sortAsc = !sortAsc;
+        }} else {{
+          sortKey = key;
+          sortAsc = (key === 'fqn');  // 이름은 오름차순 디폴트, 수치는 내림차순
+        }}
+        renderHotspots();
       }});
     }});
   }}
+
+  renderHotspots();
 
   // ----- Dependency Graph 인터랙션 -----
   const graphSvg = document.getElementById('depgraph');
@@ -835,9 +1022,62 @@ _HTML_TEMPLATE = r"""<!doctype html>
     allNodes.forEach(node => {{
       node.addEventListener('mouseenter', () => highlight(node));
     }});
+
+    // ----- Dependency Graph 검색 & 등급 토글 -----
+    const graphSearch = document.getElementById('graph-search');
+    const gradeToggle = document.getElementById('graph-grade-toggle');
+    const matchCount = document.getElementById('graph-match-count');
+
+    function getNodeGrade(nodeEl) {{
+      const idx = nodeEl.getAttribute('data-idx');
+      const info = nodeInfo[idx];
+      return info ? info.grade : null;
+    }}
+
+    function applyGraphSearch() {{
+      const needle = (graphSearch ? graphSearch.value : '').trim().toLowerCase();
+      const activeGradeBtn = gradeToggle ? gradeToggle.querySelector('.gt-active') : null;
+      const gradeFilter = activeGradeBtn ? activeGradeBtn.getAttribute('data-grade') : '';
+      const hasFilter = !!(needle || gradeFilter);
+
+      let matched = 0;
+      allNodes.forEach(node => {{
+        const fqn = (node.getAttribute('data-fqn') || '').toLowerCase();
+        const grade = getNodeGrade(node);
+        const textOk = !needle || fqn.includes(needle);
+        const gradeOk = !gradeFilter || grade === gradeFilter;
+        if (hasFilter && textOk && gradeOk) {{
+          node.classList.add('search-match');
+          matched++;
+        }} else {{
+          node.classList.remove('search-match');
+        }}
+      }});
+      graphSvg.classList.toggle('has-search', hasFilter);
+
+      if (matchCount) {{
+        if (hasFilter) {{
+          matchCount.textContent = `${{matched}}개 노드 강조됨`;
+        }} else {{
+          matchCount.textContent = '';
+        }}
+      }}
+    }}
+
+    if (graphSearch) graphSearch.addEventListener('input', applyGraphSearch);
+    if (gradeToggle) {{
+      gradeToggle.querySelectorAll('.gt-btn').forEach(btn => {{
+        btn.addEventListener('click', () => {{
+          gradeToggle.querySelectorAll('.gt-btn').forEach(b => b.classList.remove('gt-active'));
+          btn.classList.add('gt-active');
+          applyGraphSearch();
+        }});
+      }});
+    }}
+
     graphSvg.addEventListener('mouseleave', () => {{
       clearHl();
-      graphInfo.innerHTML = '<div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.</div>';
+      graphInfo.innerHTML = '<div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.<br><br>아래 검색창에 클래스 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>';
     }});
   }}
 }})();
