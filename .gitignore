@@ -38,6 +38,23 @@ obj/
 *.dll
 *.pdb
 
+# --- .NET ------------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.cache
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+
+# --- Benchmark targets & reports ------------------------------------------
+# 외부 오픈소스 코드(분석 대상)와 산출 리포트는 추적하지 않는다.
+# 재현은 benchmarks/manifest.md 의 URL·커밋 해시·명령어로 한다.
+benchmarks/
+reports/
+
 # --- Python (정적 분석 엔진 후보) ------------------------------------------
 __pycache__/
 *.py[cod]

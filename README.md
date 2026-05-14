@@ -40,6 +40,41 @@
 | 학기 | 2026학년도 1학기 |
 | 소속 | 성균관대학교 소프트웨어학과 |
 
-## 상태
+## 사용 방법
 
-🚧 **초기 셋업 단계** — 레포지토리 구조 및 구현 계획 수립 중. 코드 스택(파서, 분석 엔진, 시각화)은 별도 설계 문서에서 확정 예정.
+### 요구 사항
+- .NET 8 SDK
+- Python 3.10 이상
+
+### 빌드
+
+```bash
+# C# 분석 엔진 빌드
+cd csharp-analyzer
+dotnet build
+cd ..
+```
+
+### 분석 실행
+
+```bash
+# 디렉토리 분석
+python -m game_si analyze <대상_경로> --out reports/<프로젝트명>
+
+# 상위 hotspot 콘솔 출력
+python -m game_si analyze <대상_경로> --top 10
+```
+
+분석 결과 JSON 스키마는 [`docs/ast-schema.md`](docs/ast-schema.md), 분석 대상의 재현 정보는 [`docs/benchmark-manifest.md`](docs/benchmark-manifest.md)에 정리되어 있다.
+
+## 디렉토리 구성
+
+```text
+csharp-analyzer/   Roslyn 기반 C# 정적 분석 콘솔 (.NET 8)
+game_si/           Python CLI 및 분석 어댑터
+dashboard/         HTML 대시보드 템플릿 (후속 단계)
+tests/             샘플 코드와 테스트
+docs/              스키마·매니페스트 등 기술 문서
+benchmarks/        외부 분석 대상 (git 추적 제외)
+reports/           분석 산출물 (git 추적 제외)
+```

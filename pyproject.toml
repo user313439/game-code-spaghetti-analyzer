@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "game-si"
+version = "0.1.0"
+description = "Game Spaghetti Index measurement and visualization tool"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "All rights reserved" }
+authors = [
+    { name = "Ahn Youngjin" },
+]
+keywords = ["static-analysis", "game-engine", "code-quality", "spaghetti-index"]
+
+dependencies = [
+    # 외부 라이브러리는 W2 이후 단계에서 필요에 따라 추가한다.
+    # 예) networkx, jinja2, pygit2
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.scripts]
+game-si = "game_si.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["game_si*"]
+exclude = ["tests*", "benchmarks*", "reports*", "dashboard*", "csharp-analyzer*"]
