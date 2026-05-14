@@ -100,6 +100,23 @@ class ModuleScore:
 
 
 @dataclass
+class ProjectHealth:
+    """프로젝트 전체에 대한 단일 종합 점수.
+
+    네 가지 보조 지표(평균 G-SI, 위험 비율, 순환 의존성, 평균 결합도)를 결합한
+    0~100 점이다. 점수는 낮을수록 좋다(=health). 등급 표시는 0~100 그대로의
+    스파게티성을 의미하므로 A(낮음=건강)에서 E(높음=위험)로 매긴다.
+    """
+    score: float                # 0~100 (높을수록 스파게티)
+    grade: str                  # A~E
+    avg_si: float               # 클래스 평균 G-SI
+    risk_ratio: float           # 위험(D+E) 클래스 비율 (0~1)
+    cycle_count: int            # 크기 ≥ 2 SCC 수
+    avg_coupling: float         # 클래스 평균 결합도 (CBO 기반)
+    components: dict[str, float]  # 각 보조 지표가 종합 점수에 기여한 값
+
+
+@dataclass
 class ScoringResult:
     weights: dict[str, float]
     class_scores: list[ClassScore]
@@ -108,6 +125,7 @@ class ScoringResult:
     grade_distribution: dict[str, int]  # {"A": n, ...}
     total_classes: int
     total_methods: int
+    project_health: ProjectHealth | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -184,6 +202,8 @@ def compute_si_static(
     for cs in class_scores:
         grade_dist[cs.grade] += 1
 
+    project_health = _compute_project_health(class_scores, metrics)
+
     return ScoringResult(
         weights=w,
         class_scores=class_scores,
@@ -192,6 +212,73 @@ def compute_si_static(
         grade_distribution=grade_dist,
         total_classes=len(metrics.classes),
         total_methods=len(metrics.methods),
+        project_health=project_health,
+    )
+
+
+def _compute_project_health(class_scores, metrics) -> ProjectHealth:
+    """프로젝트 전체 단일 점수를 산출한다.
+
+    네 가지 보조 지표를 결합한다.
+
+      * avg_si        — 클래스 평균 G-SI (0~100). 그대로 점수에 반영.
+      * risk_ratio    — D/E 등급 클래스 비율을 0~100으로 변환.
+      * cycle_score   — SCC(>=2)가 많을수록 위험. log scale 적용 후 0~100 정규화.
+      * coupling_norm — 평균 결합도를 0~100으로 매핑 (heavy = 10 이상 → 100).
+
+    네 점수의 가중 평균을 최종 점수로 사용한다.
+    """
+    if not class_scores:
+        return ProjectHealth(
+            score=0.0, grade="A",
+            avg_si=0.0, risk_ratio=0.0,
+            cycle_count=0, avg_coupling=0.0,
+            components={},
+        )
+
+    avg_si = sum(c.si for c in class_scores) / len(class_scores)
+    risk_ratio = sum(1 for c in class_scores if c.grade in ("D", "E")) / len(class_scores)
+    cycle_count = len([s for s in metrics.sccs if len(s) >= 2])
+    avg_coupling = sum(c.raw.get("coupling", 0.0) for c in class_scores) / len(class_scores)
+
+    # 각 보조 지표를 0~100 스케일로 정렬
+    risk_score = risk_ratio * 100.0
+    # cycle: 0 → 0, 1 → 약 30, 5 → 약 70, 20+ → 100
+    cycle_score = min(100.0, 30.0 * math.log2(cycle_count + 1))
+    # coupling: 평균 0 → 0, 평균 10 → 100 (10 이상은 모두 100으로 saturate)
+    coupling_norm = min(100.0, avg_coupling * 10.0)
+
+    # 가중 평균: 평균 G-SI가 가장 중요한 시그널이지만, 위험·순환·결합 모두 반영
+    weights = {
+        "avg_si": 0.45,
+        "risk_ratio": 0.25,
+        "cycle_score": 0.15,
+        "coupling_norm": 0.15,
+    }
+    score = (
+        weights["avg_si"] * avg_si
+        + weights["risk_ratio"] * risk_score
+        + weights["cycle_score"] * cycle_score
+        + weights["coupling_norm"] * coupling_norm
+    )
+
+    return ProjectHealth(
+        score=score,
+        grade=_grade(score),
+        avg_si=avg_si,
+        risk_ratio=risk_ratio,
+        cycle_count=cycle_count,
+        avg_coupling=avg_coupling,
+        components={
+            "avg_si": avg_si,
+            "risk_score": risk_score,
+            "cycle_score": cycle_score,
+            "coupling_norm": coupling_norm,
+            "weight_avg_si": weights["avg_si"],
+            "weight_risk_ratio": weights["risk_ratio"],
+            "weight_cycle_score": weights["cycle_score"],
+            "weight_coupling_norm": weights["coupling_norm"],
+        },
     )
 
 
@@ -329,9 +416,22 @@ def _aggregate_modules(file_scores: list[FileScore]) -> list[ModuleScore]:
 
 
 def scoring_to_dict(result: ScoringResult) -> dict[str, Any]:
+    ph = result.project_health
+    project_health_dict = None
+    if ph is not None:
+        project_health_dict = {
+            "score": round(ph.score, 2),
+            "grade": ph.grade,
+            "avg_si": round(ph.avg_si, 2),
+            "risk_ratio": round(ph.risk_ratio, 4),
+            "cycle_count": ph.cycle_count,
+            "avg_coupling": round(ph.avg_coupling, 2),
+            "components": {k: round(v, 4) for k, v in ph.components.items()},
+        }
     return {
-        "schema_version": "si-0.1",
+        "schema_version": "si-0.2",
         "weights": result.weights,
+        "project_health": project_health_dict,
         "total_classes": result.total_classes,
         "total_methods": result.total_methods,
         "grade_distribution": result.grade_distribution,
