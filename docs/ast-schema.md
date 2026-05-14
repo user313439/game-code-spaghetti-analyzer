@@ -1,4 +1,4 @@
-# AST JSON 스키마 (v0.1)
+# AST JSON 스키마 (v0.2)
 
 `csharp-analyzer`가 출력하는 JSON 파일의 형식을 정의한다. 본 스키마는 후속 단계의 Python Metric Engine 입력 형식이며, 모든 단위는 이 문서를 기준으로 직렬화·역직렬화된다.
 
@@ -6,7 +6,7 @@
 
 | 필드 | 타입 | 설명 |
 |---|---|---|
-| `schema_version` | string | 본 스키마의 버전. 본 문서는 `"0.1"`. |
+| `schema_version` | string | 본 스키마의 버전. 본 문서는 `"0.2"`. |
 | `analyzed_at` | string | 분석 수행 시각. ISO-8601 형식 (UTC). |
 | `input_path` | string | 분석 대상의 절대 경로. |
 | `analyzer_version` | string | csharp-analyzer 빌드 버전. |
@@ -44,6 +44,9 @@
 | `start_line`, `end_line` | integer | 타입 선언의 시작·종료 라인 (1-based). |
 | `is_static`, `is_partial`, `is_abstract` | boolean | 수정자(modifier) 여부. |
 | `base_types` | array of string | 상속·구현하는 타입 이름 목록 (구문 그대로). |
+| `referenced_types` | array of string | 클래스 본문에서 `new T(...)` 형태로 등장한 타입 이름. CBO(Coupling) 계산의 입력. |
+| `static_member_accesses` | array of string | `Type.Member` 형태의 정적 멤버 접근 (예: `"GameManager.CurrentPlayer"`). GlobalState 메트릭의 입력. |
+| `singleton_accesses` | array of string | `*.Instance`, `*.Current`, `*.Singleton` 등 싱글톤형 접근자 사용 목록. |
 | `methods` | array of `MethodNode` | 타입의 직접 멤버 메서드와 생성자. |
 
 ## 5. `MethodNode`
@@ -58,6 +61,8 @@
 | `is_static`, `is_async`, `is_override` | boolean | 수정자 여부. |
 | `cyclomatic_complexity` | integer | 본 문서 §7 정의에 따른 CC 값. |
 | `loc` | integer | 메서드의 라인 수 (선언부터 닫는 중괄호까지). |
+| `invoked_names` | array of string | 본문에서 호출된 메서드 이름 (syntactic, 정렬된 unique 집합). 예: `"Foo"`, `"obj.Bar"`. GameLoopCentrality reachability의 입력. |
+| `is_game_loop_entry` | boolean | 메서드 이름이 게임 루프 진입점 패턴(`Tick`, `Update`, `Render`, `Draw`, `On*`, `*Tick`, `*Frame` 등)에 해당하는지 여부. |
 
 ## 6. `AnalysisError`
 
@@ -84,4 +89,5 @@ CC는 다음 규칙으로 계산한다. 시작값은 1이며 다음 노드를 �
 ## 8. 변경 이력
 
 - `0.1` (W1) — 초기 정의. syntactic 분석 기반.
-- (예정) `0.2` — semantic 분석 결과로 호출 그래프 노드 추가.
+- `0.2` (W2) — 호출 관계(`invoked_names`), 참조 타입(`referenced_types`), 정적 접근(`static_member_accesses`), 싱글톤 접근(`singleton_accesses`), 게임 루프 진입점 플래그(`is_game_loop_entry`)를 추가.
+- (예정) `0.3` — semantic 분석(MSBuildWorkspace) 결과로 호출 그래프의 호출 대상을 정규 심볼로 해석.

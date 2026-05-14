@@ -16,6 +16,7 @@ Examples
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import sys
 from pathlib import Path
@@ -26,6 +27,29 @@ from .analyzer import (
     AnalyzerNotFoundError,
     analyze as run_analyzer,
 )
+
+
+def _force_utf8_streams() -> None:
+    """Windows 콘솔(cp949)에서 한글 출력이 깨지지 않도록 stdout/stderr을 UTF-8로 강제한다."""
+    for stream_name in ("stdout", "stderr"):
+        stream = getattr(sys, stream_name, None)
+        if stream is None:
+            continue
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            try:
+                reconfigure(encoding="utf-8", errors="replace")
+                continue
+            except Exception:
+                pass
+        # 폴백: 버퍼를 새 TextIOWrapper로 감싼다.
+        buffer = getattr(stream, "buffer", None)
+        if buffer is not None:
+            setattr(
+                sys,
+                stream_name,
+                io.TextIOWrapper(buffer, encoding="utf-8", errors="replace", line_buffering=True),
+            )
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -63,6 +87,27 @@ def _build_parser() -> argparse.ArgumentParser:
         default=[],
         help="추가로 제외할 디렉토리 이름 (반복 가능)",
     )
+    p_analyze.add_argument(
+        "--no-score",
+        action="store_true",
+        help="G-SI 산출과 대시보드 생성을 건너뛰고 AST JSON만 출력한다.",
+    )
+    p_analyze.add_argument(
+        "--no-html",
+        action="store_true",
+        help="HTML 대시보드를 생성하지 않는다 (JSON만 저장).",
+    )
+    p_analyze.add_argument(
+        "--project-name",
+        default=None,
+        help="대시보드 헤더에 표시할 프로젝트 이름. 기본값은 입력 디렉토리 이름.",
+    )
+    p_analyze.add_argument(
+        "--dashboard-top",
+        type=int,
+        default=30,
+        help="대시보드 Hotspot Table에 표시할 클래스 수 (기본 30).",
+    )
 
     # 후속 주차에서 구현될 명령들 — W1에서는 stub
     p_diff = sub.add_parser("diff", help="(W12+) 두 분석 결과의 G-SI 변화 비교")
@@ -92,6 +137,7 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
         out_dir.mkdir(parents=True, exist_ok=True)
         output_json = out_dir / "ast.json"
 
+    # 1) C# analyzer 실행 → AST JSON
     try:
         result = run_analyzer(input_path=input_path, output_path=output_json, excludes=args.exclude)
     except (AnalyzerNotFoundError, AnalyzerExecutionError) as exc:
@@ -100,7 +146,7 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
 
     summary = result.summary
     print(
-        f"[ok] files={summary.get('total_files')} "
+        f"[ast] files={summary.get('total_files')} "
         f"classes={summary.get('total_classes')} "
         f"methods={summary.get('total_methods')} "
         f"loc={summary.get('total_loc')} "
@@ -108,14 +154,83 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
     )
     if result.errors:
         print(f"[warn] {len(result.errors)} files failed to parse", file=sys.stderr)
-
     if output_json is not None:
-        print(f"[ok] wrote {output_json}")
+        print(f"[ast] wrote {output_json}")
+
+    if args.no_score:
+        if args.top and args.top > 0:
+            _print_top_methods(result.data, args.top)
+        return 0
+
+    # 2) Metric Engine
+    from .metrics import compute_metrics, metrics_to_dict
+    metrics = compute_metrics(result.data)
+    print(
+        f"[metrics] classes={len(metrics.classes)} methods={len(metrics.methods)} "
+        f"sccs(size>=2)={len(metrics.sccs)} "
+        f"class_edges={metrics.class_graph.number_of_edges()}"
+    )
+
+    # 3) G-SI 산출
+    from .si import compute_si_static, scoring_to_dict
+    scoring = compute_si_static(metrics)
+    print(
+        "[si] grade distribution: "
+        + " ".join(f"{g}={scoring.grade_distribution[g]}" for g in "ABCDE")
+    )
+
+    # 4) 결과 저장 (out 디렉토리가 지정된 경우)
+    if out_dir is not None:
+        (out_dir / "metrics.json").write_text(
+            json.dumps(metrics_to_dict(metrics), ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"[metrics] wrote {out_dir / 'metrics.json'}")
+        (out_dir / "scoring.json").write_text(
+            json.dumps(scoring_to_dict(scoring), ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"[si] wrote {out_dir / 'scoring.json'}")
+
+        if not args.no_html:
+            from .report import generate_dashboard
+            project_name = args.project_name or _default_project_name(input_path)
+            html_path = generate_dashboard(
+                project_name=project_name,
+                scoring=scoring,
+                metrics=metrics,
+                output_path=out_dir / "index.html",
+                top_n=args.dashboard_top,
+            )
+            print(f"[dashboard] wrote {html_path}")
 
     if args.top and args.top > 0:
-        _print_top_methods(result.data, args.top)
+        _print_top_classes(scoring, args.top)
 
     return 0
+
+
+def _default_project_name(input_path: Path) -> str:
+    """입력 경로에서 합리적인 프로젝트 이름을 추출한다."""
+    p = input_path.resolve()
+    if p.is_file():
+        return p.parent.name
+    return p.name
+
+
+def _print_top_classes(scoring, top_n: int) -> None:
+    rows = sorted(scoring.class_scores, key=lambda c: -c.si)[:top_n]
+    print()
+    print(f"=== Top {len(rows)} classes by G-SI-Static ===")
+    for i, cs in enumerate(rows, 1):
+        reasons = ", ".join(cs.top_reasons) if cs.top_reasons else "—"
+        print(
+            f"  {i:>2}. [{cs.grade}] G-SI={cs.si:6.2f}  CC={cs.raw['cc']:.1f}  "
+            f"CP={int(cs.raw['coupling']):>3}  GS={int(cs.raw['global_state']):>3}  "
+            f"CL={int(cs.raw['dependency_cycle']):>2}  GLC={cs.raw['game_loop_centrality']:.2f}  "
+            f"{cs.fqn}"
+        )
+        print(f"        reasons: {reasons}")
 
 
 def _print_top_methods(data: dict, top_n: int) -> None:
@@ -153,6 +268,7 @@ def _cmd_stub(name: str) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    _force_utf8_streams()
     parser = _build_parser()
     args = parser.parse_args(argv)
 
