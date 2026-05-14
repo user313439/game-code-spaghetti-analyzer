@@ -262,12 +262,20 @@ def _render_grade_donut(distribution: dict[str, int]) -> str:
 
 
 def _render_weights_table(weights: dict[str, float]) -> str:
+    tooltips = {
+        "cc": "Cyclomatic Complexity — 메서드 안의 if/for/case 등 분기 수",
+        "coupling": "Coupling — 다른 클래스와 얼마나 연결되어 있는지 (fan-in + fan-out)",
+        "dependency_cycle": "DependencyCycle — 순환 참조에 빠졌는지, 묶음의 크기는 얼마인지",
+        "global_state": "GlobalState — 전역/static 변수와 싱글톤 인스턴스에 얼마나 의존하는지",
+        "game_loop_centrality": "GameLoopCentrality — Tick/Update/Render 등 게임 루프 진입점에서 얼마나 가까운지",
+    }
     rows = "".join(
-        f'<tr><td>{html.escape(k)}</td><td class="num">{v:.3f}</td></tr>'
+        f'<tr><td data-tooltip="{html.escape(tooltips.get(k, ""))}">{html.escape(k)}</td>'
+        f'<td class="num">{v:.3f}</td></tr>'
         for k, v in weights.items()
     )
     return f'''<table class="kv-table">
-        <thead><tr><th>항목</th><th>가중치</th></tr></thead>
+        <thead><tr><th>항목</th><th class="num">가중치</th></tr></thead>
         <tbody>{rows}</tbody>
     </table>'''
 
@@ -367,14 +375,30 @@ def _render_dependency_graph(
     if g.number_of_nodes() == 0:
         return '<div class="empty">의존성 그래프를 그릴 노드가 없습니다.</div>'
 
-    # 상위 hotspot 중심으로 부분 그래프 추출 (G-SI 상위 top_n + 그 1-홉 이웃)
+    # 상위 hotspot 중심으로 부분 그래프 추출.
+    #
+    # 큰 코드베이스(예: OpenRA.Mods.Common)에서는 top_n + 1-홉 이웃이 수백 개로 폭발해
+    # 화면이 점들로 덮여 인터랙션이 어렵다. 보기 좋은 범위로 노드 수를 제한한다.
+    MAX_NODES = 150
     hotspot_fqns = [cs.fqn for cs in sorted(scoring.class_scores, key=lambda c: -c.si)[:top_n]]
-    seed = set(hotspot_fqns)
-    expanded: set[str] = set(seed)
+    seed = [fqn for fqn in hotspot_fqns if fqn in g]
+    expanded: list[str] = list(seed)  # 순서 보존을 위해 list 사용
+    seen = set(seed)
+
+    # seed 각각의 1-홉 이웃을 G-SI 점수가 높은 순서로 우선 채운다.
+    si_rank = {cs.fqn: i for i, cs in enumerate(sorted(scoring.class_scores, key=lambda c: -c.si))}
+    neighbor_candidates: list[str] = []
     for fqn in seed:
-        if fqn in g:
-            expanded.update(g.predecessors(fqn))
-            expanded.update(g.successors(fqn))
+        for nb in list(g.predecessors(fqn)) + list(g.successors(fqn)):
+            if nb not in seen:
+                neighbor_candidates.append(nb)
+                seen.add(nb)
+    neighbor_candidates.sort(key=lambda n: si_rank.get(n, 10**9))
+    for nb in neighbor_candidates:
+        if len(expanded) >= MAX_NODES:
+            break
+        expanded.append(nb)
+
     subgraph = g.subgraph(expanded).copy()
 
     if subgraph.number_of_nodes() == 0:
@@ -388,7 +412,7 @@ def _render_dependency_graph(
         seed=42,
     )
 
-    width, height, margin = 1100, 620, 40
+    width, height, margin = 1400, 720, 50
     si_lookup = {cs.fqn: cs for cs in scoring.class_scores}
 
     # 좌표 정규화
@@ -486,7 +510,13 @@ def _render_dependency_graph(
             <button data-grade="E" class="gt-btn">E</button>
         </div>
         <span class="graph-match-count" id="graph-match-count"></span>
+        <div class="graph-zoom" id="graph-zoom">
+            <button id="zoom-in" data-tooltip="확대 (또는 마우스 휠 위)">＋</button>
+            <button id="zoom-out" data-tooltip="축소 (또는 마우스 휠 아래)">−</button>
+            <button id="zoom-reset" data-tooltip="원래 크기로 복귀">리셋</button>
+        </div>
     </div>
+    <div class="graph-tip">💡 <strong>그래프 사용법</strong> — 마우스 휠로 확대/축소, 드래그로 이동, 노드 위에 마우스를 올리면 우측에 상세 정보가 표시됩니다.</div>
     <div class="graph-wrap">
         <svg viewBox="0 0 {width} {height}" preserveAspectRatio="xMidYMid meet" class="depgraph" id="depgraph">
             <defs>
@@ -507,14 +537,8 @@ def _render_dependency_graph(
 
 def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
     """크기 ≥ 2 인 SCC 목록을 표시한다. 각 cycle의 멤버 클래스와 평균 G-SI를 보여준다."""
-    intro = (
-        '<div class="section-intro">'
-        '<strong>A → B → C → A 처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>'
-        '(Strongly Connected Component, SCC)입니다. '
-        '순환에 빠진 클래스는 한 곳만 고쳐도 다른 곳이 영향을 받기 쉬워 위험한 패턴입니다. '
-        '각 항목을 클릭하면 그 묶음에 속한 클래스 목록이 펼쳐집니다.'
-        '</div>'
-    )
+    # 섹션 상단의 ⓘ 토글이 설명을 대체하므로 내부 intro는 비워둔다.
+    intro = ""
 
     total = len(metrics.sccs)
     if total == 0:
@@ -581,13 +605,8 @@ def _grade(score: float) -> str:
 
 
 def _render_module_table(modules) -> str:
-    intro = (
-        '<div class="section-intro">'
-        '클래스 단위 점수를 <strong>최상위 폴더(모듈)별로 집계</strong>한 표입니다. '
-        '"이 폴더 안의 클래스들이 평균적으로 얼마나 위험한가"를 한눈에 봅니다. '
-        '평균 G-SI는 모듈 안 클래스들의 점수 평균, 최대 G-SI는 그중 가장 위험한 클래스의 점수입니다.'
-        '</div>'
-    )
+    # 섹션 상단의 ⓘ 토글이 설명을 대체하므로 내부 intro는 더 이상 그리지 않는다.
+    intro = ""
     rows = []
     for ms in modules:
         rows.append(
@@ -641,7 +660,20 @@ _HTML_TEMPLATE = r"""<!doctype html>
   header .meta {{ color: var(--muted); font-size: 13px; }}
   main {{ padding: 24px 32px; max-width: 1400px; margin: 0 auto; }}
   section {{ margin-bottom: 32px; }}
-  section h2 {{ font-size: 17px; margin: 0 0 12px 0; color: #cbd5e1; }}
+  section h2 {{ font-size: 17px; margin: 0; color: #cbd5e1; }}
+  .sec-head {{ display: flex; gap: 12px; align-items: baseline; margin-bottom: 12px;
+               padding-bottom: 6px; border-bottom: 1px solid var(--border); }}
+  .sec-info {{ background: transparent; color: var(--accent); border: 1px solid var(--border);
+               padding: 2px 10px; border-radius: 999px; font-size: 11px; cursor: pointer;
+               white-space: nowrap; transition: all 0.1s; }}
+  .sec-info:hover {{ background: rgba(96,165,250,0.1); border-color: var(--accent); }}
+  .sec-info[aria-expanded="true"] {{ background: var(--accent); color: #0b1322; border-color: var(--accent); }}
+  .sec-explain {{ background: rgba(96,165,250,0.06); border-left: 3px solid var(--accent);
+                  padding: 10px 14px; margin-bottom: 12px; font-size: 13px; line-height: 1.6;
+                  color: #cbd5e1; border-radius: 0 6px 6px 0; }}
+  .sec-explain strong {{ color: #e5e7eb; }}
+  .sec-explain code {{ background: rgba(255,255,255,0.08); padding: 1px 6px;
+                        border-radius: 3px; font-size: 12px; }}
   .card-row {{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }}
   .card {{ background: var(--panel); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border); }}
   .card-label {{ color: var(--muted); font-size: 12px; }}
@@ -788,6 +820,16 @@ _HTML_TEMPLATE = r"""<!doctype html>
   .gt-btn[data-grade="E"].gt-active {{ background: #d24343; border-color: #d24343; }}
   .gt-btn[data-grade=""].gt-active {{ background: var(--accent); border-color: var(--accent); }}
   .graph-match-count {{ color: var(--muted); font-size: 12px; }}
+  .graph-zoom {{ display: flex; gap: 4px; }}
+  .graph-zoom button {{ background: var(--panel2); color: var(--fg); border: 1px solid var(--border);
+                         padding: 4px 12px; border-radius: 6px; font-size: 13px; cursor: pointer;
+                         font-weight: 600; min-width: 38px; }}
+  .graph-zoom button:hover {{ background: #1f2a3a; border-color: var(--accent); }}
+  .graph-tip {{ background: rgba(96,165,250,0.06); border-radius: 4px;
+                padding: 8px 12px; margin-bottom: 10px; font-size: 12px; color: #cbd5e1; }}
+  .graph-tip strong {{ color: var(--accent); }}
+  .depgraph {{ cursor: grab; }}
+  .depgraph.dragging {{ cursor: grabbing; }}
 
   /* 검색 매치 강조 */
   .depgraph .node.search-match circle {{
@@ -831,17 +873,35 @@ _HTML_TEMPLATE = r"""<!doctype html>
 {help_box}
 
 <section>
-  <h2>Project Health</h2>
+  <div class="sec-head">
+    <h2>Project Health</h2>
+    <button class="sec-info" data-target="help-health" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-health" hidden>
+    <strong>프로젝트 전체의 종합 점수</strong>입니다. 평균 G-SI(45%) + 위험(D+E) 비율(25%) + 순환 의존성 수(15%) + 평균 결합도(15%)를 가중 평균해 0~100 점으로 환산하고 A~E 등급을 부여합니다. 점수가 높을수록 코드가 전반적으로 엉켜 있다는 뜻입니다.
+  </div>
   {health_hero}
 </section>
 
 <section>
-  <h2>Summary</h2>
+  <div class="sec-head">
+    <h2>Summary</h2>
+    <button class="sec-info" data-target="help-summary" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-summary" hidden>
+    분석 규모와 위험 신호를 6개 숫자로 압축한 카드입니다. 카드 각각에 마우스를 올리면 그 숫자가 무엇을 의미하는지 자세한 설명이 나타납니다.
+  </div>
   <div class="card-row">{summary_cards}</div>
 </section>
 
 <section>
-  <h2>등급 분포 및 가중치</h2>
+  <div class="sec-head">
+    <h2>등급 분포 및 가중치</h2>
+    <button class="sec-info" data-target="help-dist" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-dist" hidden>
+    왼쪽 도넛은 프로젝트 안의 <strong>모든 클래스를 A~E 등급으로 나눠 비율</strong>을 보여줍니다. percentile rank 방식이라 보통 5개 등급이 거의 균등하게 분포합니다. 오른쪽 표는 G-SI 산식에서 각 항목이 어느 정도 비중으로 합산되는지를 정리합니다.
+  </div>
   <div class="grid-2">
     <div class="panel">{grade_donut}</div>
     <div class="panel">{weights_table}</div>
@@ -849,22 +909,46 @@ _HTML_TEMPLATE = r"""<!doctype html>
 </section>
 
 <section>
-  <h2>Hotspot Table (G-SI 상위)</h2>
+  <div class="sec-head">
+    <h2>Hotspot Table (G-SI 상위)</h2>
+    <button class="sec-info" data-target="help-hotspot" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-hotspot" hidden>
+    <strong>위험한 순서로 정렬된 클래스 목록</strong>입니다. 텍스트 검색은 FQN과 파일 경로에 적용되고, 등급 필터를 선택하면 <strong>그 등급 안에서</strong> 다시 상위 N개를 골라 표를 새로 그립니다. 컬럼 헤더를 클릭하면 정렬되고, 헤더에 마우스를 올리면 각 컬럼의 의미가 표시됩니다.
+  </div>
   {hotspot_table}
 </section>
 
 <section>
-  <h2>Dependency Graph (G-SI 상위 hotspot 중심)</h2>
+  <div class="sec-head">
+    <h2>Dependency Graph (G-SI 상위 hotspot 중심)</h2>
+    <button class="sec-info" data-target="help-graph" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-graph" hidden>
+    위험 클래스 주변의 <strong>참조 관계</strong>를 시각화한 그래프입니다. 점은 클래스, 선은 한 클래스가 다른 클래스를 참조하는 의존성입니다. 노드 색은 등급, 크기는 결합도에 비례합니다. 노드가 너무 많아지지 않도록 표시 노드 수에 상한을 둡니다. 마우스 휠로 확대·축소, 드래그로 이동할 수 있습니다.
+  </div>
   <div class="panel graph-panel">{dependency_graph}</div>
 </section>
 
 <section>
-  <h2>Cycle Explorer (Strongly Connected Components)</h2>
+  <div class="sec-head">
+    <h2>Cycle Explorer (Strongly Connected Components)</h2>
+    <button class="sec-info" data-target="help-cycle" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-cycle" hidden>
+    <strong>A → B → C → A 처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>(Strongly Connected Component, SCC)을 모은 섹션입니다. 한 곳만 고쳐도 다른 곳이 영향을 받기 쉬워 위험한 패턴입니다. 가장 위 카운트 카드의 숫자가 <strong>전체 묶음 수</strong>이며 상위 N개가 아닙니다.
+  </div>
   <div class="panel">{cycle_explorer}</div>
 </section>
 
 <section>
-  <h2>Module Summary</h2>
+  <div class="sec-head">
+    <h2>Module Summary</h2>
+    <button class="sec-info" data-target="help-module" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-module" hidden>
+    클래스 단위 G-SI 점수를 <strong>최상위 폴더(모듈) 단위로 집계</strong>한 표입니다. "이 폴더 안 클래스들이 평균적으로 얼마나 위험한가"를 한눈에 볼 수 있습니다. <code>(root)</code>는 분석 입력 폴더 바로 아래에 놓인 .cs 파일들을 의미합니다.
+  </div>
   {module_table}
 </section>
 
@@ -1122,7 +1206,87 @@ _HTML_TEMPLATE = r"""<!doctype html>
       clearHl();
       graphInfo.innerHTML = '<div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.<br><br>아래 검색창에 클래스 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>';
     }});
+
+    // ----- Dependency Graph zoom / pan -----
+    const initialVB = graphSvg.getAttribute('viewBox').split(' ').map(Number);
+    let vb = {{ x: initialVB[0], y: initialVB[1], w: initialVB[2], h: initialVB[3] }};
+
+    function applyVB() {{
+      graphSvg.setAttribute('viewBox', `${{vb.x}} ${{vb.y}} ${{vb.w}} ${{vb.h}}`);
+    }}
+
+    function zoomAt(factor, focusX, focusY) {{
+      // focusX/Y in viewBox coords
+      const newW = vb.w / factor;
+      const newH = vb.h / factor;
+      // 최소·최대 줌 제한
+      if (newW < initialVB[2] * 0.1 || newW > initialVB[2] * 4) return;
+      vb.x = focusX - (focusX - vb.x) / factor;
+      vb.y = focusY - (focusY - vb.y) / factor;
+      vb.w = newW;
+      vb.h = newH;
+      applyVB();
+    }}
+
+    graphSvg.addEventListener('wheel', (e) => {{
+      e.preventDefault();
+      const pt = graphSvg.createSVGPoint();
+      pt.x = e.clientX; pt.y = e.clientY;
+      const sp = pt.matrixTransform(graphSvg.getScreenCTM().inverse());
+      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      zoomAt(factor, sp.x, sp.y);
+    }}, {{ passive: false }});
+
+    let dragging = false, dragStart = null;
+    graphSvg.addEventListener('mousedown', (e) => {{
+      if (e.target.closest('.node')) return; // 노드 위에서는 hover 동작 우선
+      dragging = true;
+      dragStart = {{ x: e.clientX, y: e.clientY, vbX: vb.x, vbY: vb.y }};
+      graphSvg.classList.add('dragging');
+    }});
+    window.addEventListener('mousemove', (e) => {{
+      if (!dragging) return;
+      const rect = graphSvg.getBoundingClientRect();
+      const scaleX = vb.w / rect.width;
+      const scaleY = vb.h / rect.height;
+      vb.x = dragStart.vbX - (e.clientX - dragStart.x) * scaleX;
+      vb.y = dragStart.vbY - (e.clientY - dragStart.y) * scaleY;
+      applyVB();
+    }});
+    window.addEventListener('mouseup', () => {{
+      dragging = false;
+      graphSvg.classList.remove('dragging');
+    }});
+
+    const zoomIn = document.getElementById('zoom-in');
+    const zoomOut = document.getElementById('zoom-out');
+    const zoomReset = document.getElementById('zoom-reset');
+    if (zoomIn) zoomIn.addEventListener('click', () => zoomAt(1.25, vb.x + vb.w / 2, vb.y + vb.h / 2));
+    if (zoomOut) zoomOut.addEventListener('click', () => zoomAt(1 / 1.25, vb.x + vb.w / 2, vb.y + vb.h / 2));
+    if (zoomReset) zoomReset.addEventListener('click', () => {{
+      vb = {{ x: initialVB[0], y: initialVB[1], w: initialVB[2], h: initialVB[3] }};
+      applyVB();
+    }});
   }}
+
+  // ----- 섹션 헤더 ⓘ 설명 토글 -----
+  document.querySelectorAll('.sec-info').forEach(btn => {{
+    btn.addEventListener('click', () => {{
+      const targetId = btn.getAttribute('data-target');
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const isHidden = target.hasAttribute('hidden');
+      if (isHidden) {{
+        target.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '✕ 설명 닫기';
+      }} else {{
+        target.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.textContent = 'ⓘ 이 섹션이 뭔가요?';
+      }}
+    }});
+  }});
 }})();
 </script>
 </body>
