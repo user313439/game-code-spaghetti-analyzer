@@ -669,11 +669,16 @@ _HTML_TEMPLATE = r"""<!doctype html>
   .sec-info:hover {{ background: rgba(96,165,250,0.1); border-color: var(--accent); }}
   .sec-info[aria-expanded="true"] {{ background: var(--accent); color: #0b1322; border-color: var(--accent); }}
   .sec-explain {{ background: rgba(96,165,250,0.06); border-left: 3px solid var(--accent);
-                  padding: 10px 14px; margin-bottom: 12px; font-size: 13px; line-height: 1.6;
+                  padding: 14px 18px; margin-bottom: 12px; font-size: 13px; line-height: 1.7;
                   color: #cbd5e1; border-radius: 0 6px 6px 0; }}
   .sec-explain strong {{ color: #e5e7eb; }}
+  .sec-explain em {{ color: var(--accent); font-style: normal; }}
   .sec-explain code {{ background: rgba(255,255,255,0.08); padding: 1px 6px;
                         border-radius: 3px; font-size: 12px; }}
+  .sec-explain p {{ margin: 0 0 10px 0; }}
+  .sec-explain p:last-child {{ margin-bottom: 0; }}
+  .sec-explain ul {{ margin: 6px 0 10px 0; padding-left: 22px; }}
+  .sec-explain li {{ margin-bottom: 4px; }}
   .card-row {{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }}
   .card {{ background: var(--panel); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border); }}
   .card-label {{ color: var(--muted); font-size: 12px; }}
@@ -878,7 +883,15 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-health" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-health" hidden>
-    <strong>프로젝트 전체의 종합 점수</strong>입니다. 평균 G-SI(45%) + 위험(D+E) 비율(25%) + 순환 의존성 수(15%) + 평균 결합도(15%)를 가중 평균해 0~100 점으로 환산하고 A~E 등급을 부여합니다. 점수가 높을수록 코드가 전반적으로 엉켜 있다는 뜻입니다.
+    <p><strong>이 프로젝트의 스파게티 정도를 한 숫자로 답하는 종합 점수</strong>입니다. 0~100 점, 점수가 높을수록 코드가 전반적으로 엉켜 있다는 뜻입니다.</p>
+    <p>다음 네 가지 신호를 가중 평균합니다.</p>
+    <ul>
+      <li><strong>평균 G-SI (45%)</strong> — 프로젝트 안 모든 클래스의 G-SI 점수를 단순 평균. 가장 큰 비중.</li>
+      <li><strong>위험(D+E) 비율 (25%)</strong> — G-SI 60 이상(=D 등급 이상)인 클래스가 전체에서 차지하는 비율을 0~100 점으로 환산.</li>
+      <li><strong>순환 의존성 수 (15%)</strong> — A→B→C→A 처럼 서로 참조해서 빙빙 도는 묶음의 개수. 로그 스케일 적용(0 → 0점, 1 → 30점, 5 → 70점, 20 이상 → 100점).</li>
+      <li><strong>평균 결합도 (15%)</strong> — 클래스 한 개당 평균적으로 몇 개의 다른 클래스와 연결되는지(fan-in+fan-out 평균). 평균 10 이상이면 100점으로 saturate.</li>
+    </ul>
+    <p>등급 기준은 다른 점수와 동일하게 A(0~19) · B(20~39) · C(40~59) · D(60~79) · E(80~100) 입니다. 발표 슬라이드에 "이 프로젝트는 C 등급(47점) — 평균 수준의 코드베이스" 같은 한 줄 요약으로 쓰기 좋은 숫자입니다.</p>
   </div>
   {health_hero}
 </section>
@@ -889,7 +902,16 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-summary" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-summary" hidden>
-    분석 규모와 위험 신호를 6개 숫자로 압축한 카드입니다. 카드 각각에 마우스를 올리면 그 숫자가 무엇을 의미하는지 자세한 설명이 나타납니다.
+    <p>분석 규모와 위험 신호를 6개 숫자로 압축한 카드 묶음입니다.</p>
+    <ul>
+      <li><strong>분석 클래스</strong> — Roslyn으로 파싱한 class · struct · interface · record · enum의 총 개수.</li>
+      <li><strong>분석 메서드</strong> — 분석된 모든 메서드와 생성자(.ctor)의 합. enum 항목, 자동 속성은 카운트하지 않습니다.</li>
+      <li><strong>의존성 순환(SCC ≥ 2)</strong> — 크기가 2 이상인 강한 연결 요소(Strongly Connected Component). 적을수록 좋고, 0이면 의존성이 한 방향으로 흐른다는 좋은 신호입니다.</li>
+      <li><strong>평균 G-SI</strong> — 클래스 단위 G-SI 점수의 단순 평균. Project Health의 가장 큰 입력입니다.</li>
+      <li><strong>최대 G-SI</strong> — 이 프로젝트에서 가장 위험한 한 클래스의 G-SI. 보통 95~100점이 나옵니다 (percentile rank 특성상).</li>
+      <li><strong>위험(D/E) 클래스</strong> — G-SI 60 이상인 클래스의 수. 변경할 때 영향 분석과 테스트 보강이 필요한 클래스들입니다.</li>
+    </ul>
+    <p>각 카드에 마우스를 올리면 동일한 설명이 풍선으로 표시됩니다.</p>
   </div>
   <div class="card-row">{summary_cards}</div>
 </section>
@@ -900,7 +922,9 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-dist" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-dist" hidden>
-    왼쪽 도넛은 프로젝트 안의 <strong>모든 클래스를 A~E 등급으로 나눠 비율</strong>을 보여줍니다. percentile rank 방식이라 보통 5개 등급이 거의 균등하게 분포합니다. 오른쪽 표는 G-SI 산식에서 각 항목이 어느 정도 비중으로 합산되는지를 정리합니다.
+    <p><strong>왼쪽 도넛</strong>은 프로젝트 안의 모든 클래스를 등급별로 나눠 비율을 보여줍니다. G-SI 점수는 프로젝트 내부의 분포에서 percentile rank로 계산하므로, 다섯 등급(A~E)이 각각 약 20% 씩 거의 균등하게 분포하는 것이 정상입니다.</p>
+    <p>이 도넛이 의미하는 것은 절대적인 위험도가 아니라 <strong>"이 프로젝트 안에서의 상대적 위치"</strong>입니다. 다른 프로젝트와 직접 비교하려면 raw 점수 분포(평균 G-SI, 최대 G-SI 등)를 함께 봐야 합니다.</p>
+    <p><strong>오른쪽 표</strong>는 G-SI 산식에서 각 항목이 어느 정도 비중으로 가중 평균되는지 정리한 것입니다. 각 항목 이름에 마우스를 올리면 무엇을 측정하는지 한국어 설명이 풍선으로 나타납니다. 본 작품은 default 가중치로 산식의 신뢰도를 확보하고, 후속 단계에서 데이터 기반 튜닝(<code>--weights tuned</code>) 옵션을 추가할 예정입니다.</p>
   </div>
   <div class="grid-2">
     <div class="panel">{grade_donut}</div>
@@ -914,7 +938,13 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-hotspot" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-hotspot" hidden>
-    <strong>위험한 순서로 정렬된 클래스 목록</strong>입니다. 텍스트 검색은 FQN과 파일 경로에 적용되고, 등급 필터를 선택하면 <strong>그 등급 안에서</strong> 다시 상위 N개를 골라 표를 새로 그립니다. 컬럼 헤더를 클릭하면 정렬되고, 헤더에 마우스를 올리면 각 컬럼의 의미가 표시됩니다.
+    <p><strong>위험한 순서로 정렬된 클래스 목록</strong>입니다. 기본은 전체 클래스 중 G-SI 상위 N개를 보여주며, 두 가지 방법으로 표를 좁힐 수 있습니다.</p>
+    <ul>
+      <li><strong>등급 필터</strong> — A~E 중 하나를 선택하면 <em>그 등급 안에서 다시 상위 N개</em>를 골라 표를 새로 그립니다. "B 등급 안에서 가장 위험한 30개"처럼 봅니다.</li>
+      <li><strong>텍스트 검색</strong> — 클래스의 정규 이름(FQN)이나 파일 경로 일부를 입력하면 일치하는 클래스만 남깁니다. 등급 필터와 동시 적용 가능합니다.</li>
+    </ul>
+    <p><strong>컬럼별 의미</strong> — 헤더에 마우스를 올리면 각 컬럼이 무엇을 측정하는지 설명이 표시됩니다. 컬럼 헤더를 클릭하면 그 항목 기준으로 정렬됩니다(다시 누르면 역순). 우측 카운터는 "현재 보이는 행 수 / 조건을 만족하는 전체 / 프로젝트 전체"를 보여줍니다.</p>
+    <p><strong>주요 원인</strong> 컬럼은 G-SI 점수에 가장 크게 기여한 두 항목을 알려 줍니다. 예를 들어 "cc, global_state" 는 그 클래스가 분기가 많고 전역 상태에 강하게 의존한다는 뜻입니다.</p>
   </div>
   {hotspot_table}
 </section>
@@ -925,7 +955,21 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-graph" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-graph" hidden>
-    위험 클래스 주변의 <strong>참조 관계</strong>를 시각화한 그래프입니다. 점은 클래스, 선은 한 클래스가 다른 클래스를 참조하는 의존성입니다. 노드 색은 등급, 크기는 결합도에 비례합니다. 노드가 너무 많아지지 않도록 표시 노드 수에 상한을 둡니다. 마우스 휠로 확대·축소, 드래그로 이동할 수 있습니다.
+    <p><strong>위험 클래스 주변의 참조 관계</strong>를 점과 선으로 그린 그래프입니다.</p>
+    <ul>
+      <li><strong>점(노드) = 클래스</strong>. 색은 등급(A 녹색 ~ E 빨강), 크기는 결합도(다른 클래스와 연결된 정도)에 비례합니다.</li>
+      <li><strong>선(엣지) = 한 클래스가 다른 클래스를 참조하는 의존성</strong>. 화살표 방향은 "이 클래스를 사용한다"의 방향입니다.</li>
+      <li><strong>표시 범위</strong> — G-SI 상위 hotspot 부터 채우고 그 인접 클래스까지 포함하되, 노드 수가 최대 150개를 넘지 않도록 제한합니다. 그래서 작은 프로젝트는 그래프 전체가, 큰 프로젝트는 가장 위험한 영역만 표시됩니다.</li>
+    </ul>
+    <p><strong>사용법</strong></p>
+    <ul>
+      <li><strong>마우스 휠</strong> — 커서 위치를 중심으로 확대 / 축소.</li>
+      <li><strong>드래그</strong> — 보이는 영역 이동(pan).</li>
+      <li><strong>＋ / − / 리셋 버튼</strong> — 중앙 기준 확대 / 축소 / 처음 배율로 복귀.</li>
+      <li><strong>노드 hover</strong> — 그 클래스가 진해지고 인접 노드 / 엣지만 강조, 나머지는 흐려짐. 우측 패널에 FQN · G-SI · 등급 · 메트릭 · fan-in/out · 인접 클래스 샘플이 표시됩니다.</li>
+      <li><strong>검색</strong> — 이름의 일부를 입력하면 매칭 노드가 흰 후광으로 강조됩니다. 매칭 안 된 노드는 흐려지지만 hover로 인접 관계는 그대로 볼 수 있습니다.</li>
+      <li><strong>등급 강조 버튼</strong> — A~E 중 하나를 누르면 그 등급 노드만 강조. 검색과 동시 적용 가능합니다.</li>
+    </ul>
   </div>
   <div class="panel graph-panel">{dependency_graph}</div>
 </section>
@@ -936,7 +980,10 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-cycle" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-cycle" hidden>
-    <strong>A → B → C → A 처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>(Strongly Connected Component, SCC)을 모은 섹션입니다. 한 곳만 고쳐도 다른 곳이 영향을 받기 쉬워 위험한 패턴입니다. 가장 위 카운트 카드의 숫자가 <strong>전체 묶음 수</strong>이며 상위 N개가 아닙니다.
+    <p><strong>A → B → C → A 처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>(Strongly Connected Component, SCC)을 모은 섹션입니다.</p>
+    <p>일반적으로 의존성은 한 방향으로 흘러야 합니다(예: UI → 로직 → 데이터). 그런데 두 클래스가 서로를 참조하기 시작하면, 한쪽을 수정할 때 반드시 다른 쪽도 함께 신경 써야 합니다. 이런 묶음이 3개, 4개로 커지면 영향 범위 추적이 사실상 불가능에 가까워집니다. 그래서 SCC는 리팩토링 1순위 후보입니다.</p>
+    <p>본 섹션의 <strong>카운트 카드 숫자가 곧 프로젝트 안의 모든 SCC 수</strong>입니다. 상위 N개를 보여주는 것이 아니라 전부 나열합니다. 프로젝트마다 수치가 다른데, 예를 들어 OpenRA.Game 모듈은 5개, OpenRA.Mods.Common 모듈은 4개의 묶음이 있습니다.</p>
+    <p>각 항목을 클릭하면 그 묶음에 속한 클래스 FQN 목록이 펼쳐집니다. 묶음 안의 모든 클래스가 동일한 SCC에 있다는 사실 자체가 이미 위험 신호이므로, 점수가 낮은 클래스라도 함께 정리 대상이 됩니다.</p>
   </div>
   <div class="panel">{cycle_explorer}</div>
 </section>
@@ -947,7 +994,16 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-module" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-module" hidden>
-    클래스 단위 G-SI 점수를 <strong>최상위 폴더(모듈) 단위로 집계</strong>한 표입니다. "이 폴더 안 클래스들이 평균적으로 얼마나 위험한가"를 한눈에 볼 수 있습니다. <code>(root)</code>는 분석 입력 폴더 바로 아래에 놓인 .cs 파일들을 의미합니다.
+    <p>클래스 단위로 계산된 G-SI 점수를 <strong>최상위 폴더(모듈) 단위로 집계</strong>한 표입니다. "이 폴더 안 클래스들이 평균적으로 얼마나 위험한가"를 한눈에 봅니다.</p>
+    <p><strong>컬럼 의미</strong></p>
+    <ul>
+      <li><strong>모듈</strong> — 분석 입력 폴더 바로 아래의 1단계 폴더 이름. 예를 들어 OpenRA.Game을 분석하면 Network, Server, Map 등이 모듈로 잡힙니다. <code>(root)</code>는 폴더 안에 들어있지 않고 분석 폴더 바로 밑에 놓인 .cs 파일들을 한 모듈로 묶은 것입니다.</li>
+      <li><strong>등급</strong> — 모듈 내 클래스 평균 G-SI를 기준으로 한 A~E 등급.</li>
+      <li><strong>평균 G-SI</strong> — 모듈에 속한 모든 클래스의 G-SI 평균. 모듈 전체의 위험도를 가장 잘 대표하는 값입니다.</li>
+      <li><strong>최대 G-SI</strong> — 모듈에서 가장 위험한 클래스 하나의 G-SI. 평균은 낮은데 최대만 높다면 그 모듈에 핀포인트 hotspot이 있다는 신호입니다.</li>
+      <li><strong>파일 수 · 클래스 수</strong> — 모듈에 속한 .cs 파일과 클래스(struct, interface, record 포함)의 개수.</li>
+    </ul>
+    <p>모듈 단위로 보면 어느 컴포넌트가 통째로 정리 대상인지, 아니면 특정 클래스만 문제인지 빠르게 판단할 수 있습니다.</p>
   </div>
   {module_table}
 </section>
@@ -1067,10 +1123,10 @@ _HTML_TEMPLATE = r"""<!doctype html>
   renderHotspots();
 
   // ----- Dependency Graph 인터랙션 -----
+  // GRADE_COLORS는 이미 위에서 dataRoot.grade_colors로 선언되어 있다 (중복 선언 금지).
   const graphSvg = document.getElementById('depgraph');
   const graphInfo = document.getElementById('graph-info');
   const nodeInfoScript = document.getElementById('graph-node-info');
-  const GRADE_COLORS = {{ A: '#3b8e5a', B: '#7fb95a', C: '#e3b341', D: '#ef7d3c', E: '#d24343' }};
   if (graphSvg && graphInfo && nodeInfoScript) {{
     const nodeInfo = JSON.parse(nodeInfoScript.textContent);
     const allNodes = graphSvg.querySelectorAll('.node');
