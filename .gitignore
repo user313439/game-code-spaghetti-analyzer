@@ -49,11 +49,17 @@ project.assets.json
 *.nuget.props
 *.nuget.targets
 
-# --- Benchmark targets & reports ------------------------------------------
-# 외부 오픈소스 코드(분석 대상)와 산출 리포트는 추적하지 않는다.
-# 재현은 benchmarks/manifest.md 의 URL·커밋 해시·명령어로 한다.
+# --- Benchmark targets ----------------------------------------------------
+# 외부 오픈소스 코드(분석 대상)는 본 저장소에 포함하지 않는다.
+# 재현은 docs/benchmark-manifest.md 의 URL·커밋 해시·명령어로 한다.
 benchmarks/
-reports/
+
+# --- Reports --------------------------------------------------------------
+# 분석 결과: HTML 대시보드와 점수 JSON은 추적하여 GitHub Pages로 공개한다.
+# 단, 용량이 큰 raw AST/메트릭 JSON과 임시 sample 결과는 제외한다.
+reports/*/ast.json
+reports/*/metrics.json
+reports/sample-*/
 
 # --- Python (정적 분석 엔진 후보) ------------------------------------------
 __pycache__/

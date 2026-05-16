@@ -40,6 +40,18 @@
 | 학기 | 2026학년도 1학기 |
 | 소속 | 성균관대학교 소프트웨어학과 |
 
+## 분석 사례 (라이브 데모)
+
+본 도구를 오픈소스 게임 엔진 [OpenRA](https://github.com/OpenRA/OpenRA) (Command & Conquer · Red Alert · Dune 2000의 오픈소스 재구현)에 적용한 결과를 다음 위치에서 바로 확인할 수 있다.
+
+- 분석 사례 인덱스: [`reports/index.html`](reports/index.html)
+- OpenRA.Game 모듈 (엔진 코어): [`reports/openra-game/index.html`](reports/openra-game/index.html) — 668 클래스 / 2,793 메서드, Project Health **C 등급 (47.9점)**
+- OpenRA.Mods.Common 모듈 (공용 게임 부품): [`reports/openra-mods-common/index.html`](reports/openra-mods-common/index.html) — 2,194 클래스 / 7,321 메서드, Project Health **C 등급 (46.7점)**
+
+각 HTML 파일은 외부 라이브러리 의존성 없이 단일 파일로 동작한다. 저장소를 clone한 뒤 위 경로의 파일을 브라우저로 열면 결과 대시보드가 그대로 표시된다. GitHub Pages가 활성화되어 있다면 같은 페이지를 URL로도 열 수 있다.
+
+분석 시점의 OpenRA 커밋과 재현 명령은 [`docs/benchmark-manifest.md`](docs/benchmark-manifest.md)에 정리되어 있다.
+
 ## 사용 방법
 
 ### 요구 사항
@@ -76,5 +88,5 @@ dashboard/         HTML 대시보드 템플릿 (후속 단계)
 tests/             샘플 코드와 테스트
 docs/              스키마·매니페스트 등 기술 문서
 benchmarks/        외부 분석 대상 (git 추적 제외)
-reports/           분석 산출물 (git 추적 제외)
+reports/           분석 산출물. HTML 대시보드와 점수 JSON은 추적, 큰 raw 파일은 제외
 ```
