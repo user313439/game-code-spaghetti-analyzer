@@ -97,40 +97,24 @@ def _render_html(
 
 
 def _render_help_box() -> str:
-    """대시보드 상단에 두는 \"이 대시보드 읽는 법\" 도움말 박스."""
+    """대시보드 상단에 두는 \"이 대시보드 읽는 법\" 도움말 박스.
+
+    각 섹션의 상세 설명은 섹션 헤더 옆 ⓘ 토글로 분리되어 있으므로,
+    이 박스는 전체적인 점수 의미와 등급 색상 안내만 담는다.
+    """
     return '''<details class="help" open>
     <summary>이 대시보드 읽는 법 (펼치기 / 접기)</summary>
     <div class="help-body">
-        <p><strong>Game Spaghetti Index (G-SI)</strong>는 게임 코드의 각 클래스가
-        얼마나 다른 코드와 얽혀 있는지를 0~100점으로 측정한 지표입니다.
-        <strong>점수가 높을수록 위험</strong>합니다.</p>
-        <ul>
-            <li><strong>Project Health</strong> — 프로젝트 전체의 종합 점수 하나.
-                평균 G-SI, 위험 클래스 비율, 순환 의존성 수, 평균 결합도 4가지를 합쳐
-                "이 프로젝트의 스파게티 정도"를 한 숫자로 답합니다.</li>
-            <li><strong>Summary 카드</strong> — 분석 규모 요약(클래스/메서드/순환 수, 평균·최대·위험 클래스 수).</li>
-            <li><strong>등급 분포 도넛</strong> — 프로젝트 안의 모든 클래스를
-                A(안전) ~ E(심각)로 나눠 보여줍니다. 비율 자체는 percentile rank 정의상 거의 균등(A~E 각 20%)에 가깝습니다.</li>
-            <li><strong>Hotspot Table</strong> — <em>가장 위험한 클래스 상위 N개</em>만
-                골라 보여줍니다. 등급 필터를 선택하면 <strong>그 등급 안에서 다시 상위 N개</strong>를 보여주도록
-                표가 재계산됩니다.</li>
-            <li><strong>Dependency Graph</strong> — 위험 클래스와 그 이웃들이 어떻게
-                연결되어 있는지 시각화. 위의 검색창에 이름을 치거나 등급을 선택하면 매칭 노드가
-                강조되고, 마우스를 노드 위에 올리면 우측 패널에 상세 정보가 표시됩니다.</li>
-            <li><strong>Cycle Explorer</strong> — <code>A → B → C → A</code> 처럼 서로 참조해서 빙빙 도는
-                클래스 묶음을 보여줍니다. 한 곳만 고쳐도 다른 곳이 영향받기 쉬워 위험한 패턴입니다.</li>
-            <li><strong>Module Summary</strong> — 클래스 단위 점수를 <strong>최상위 폴더 단위로 집계</strong>한 표.
-                "이 폴더(모듈) 안 클래스들이 평균적으로 얼마나 위험한가"를 봅니다.</li>
-        </ul>
+        <p><strong>Game Spaghetti Index (G-SI)</strong>는 게임 코드의 각 클래스가 다른 코드와 얼마나 얽혀 있는지를 0~100점으로 측정한 지표입니다. <strong>점수가 높을수록 위험</strong>합니다.</p>
         <p class="help-grade">
             등급 의미 →
             <span class="grade-badge" style="background:#3b8e5a">A</span> 안전 ·
             <span class="grade-badge" style="background:#7fb95a">B</span> 일반 ·
             <span class="grade-badge" style="background:#e3b341">C</span> 보통 ·
             <span class="grade-badge" style="background:#ef7d3c">D</span> 리팩토링 후보 ·
-            <span class="grade-badge" style="background:#d24343">E</span> 심각 (변경 전 영향 분석 필요)
+            <span class="grade-badge" style="background:#d24343">E</span> 심각
         </p>
-        <p class="help-tip">💡 화면 곳곳의 항목에 <strong>마우스를 잠시 올려두면</strong> 그 항목이 무엇인지 설명이 표시됩니다.</p>
+        <p class="help-tip">💡 각 섹션 제목 옆의 <strong>「ⓘ 이 섹션이 뭔가요?」</strong> 버튼을 누르면 그 섹션이 무엇을 보여주는지 자세한 설명이 나옵니다. 화면 곳곳의 항목에 마우스를 올리면 그 자리에서 짧은 설명이 풍선으로 표시됩니다.</p>
     </div>
 </details>'''
 
@@ -286,7 +270,7 @@ def _render_hotspot_table(hotspots, top_n: int) -> str:
         f'<div class="table-notice">'
         f'기본은 전체 클래스 중 <strong>G-SI 상위 {top_n}개</strong>를 표시합니다. '
         f'특정 등급(A~E)을 선택하면 <strong>그 등급 안에서</strong> 상위 {top_n}개를 다시 보여줍니다. '
-        f'전체 등급 분포는 위 도넛 차트에서 확인하세요.'
+        f'전체 등급 분포는 위 등급 분포 차트에서 확인하세요.'
         f'</div>'
     )
 
@@ -825,6 +809,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
   .gt-btn[data-grade="E"].gt-active {{ background: #d24343; border-color: #d24343; }}
   .gt-btn[data-grade=""].gt-active {{ background: var(--accent); border-color: var(--accent); }}
   .graph-match-count {{ color: var(--muted); font-size: 12px; }}
+  .graph-match-count.warn {{ color: #fbbf24; }}
   .graph-zoom {{ display: flex; gap: 4px; }}
   .graph-zoom button {{ background: var(--panel2); color: var(--fg); border: 1px solid var(--border);
                          padding: 4px 12px; border-radius: 6px; font-size: 13px; cursor: pointer;
@@ -922,8 +907,8 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-dist" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-dist" hidden>
-    <p><strong>왼쪽 도넛</strong>은 프로젝트 안의 모든 클래스를 등급별로 나눠 비율을 보여줍니다. G-SI 점수는 프로젝트 내부의 분포에서 percentile rank로 계산하므로, 다섯 등급(A~E)이 각각 약 20% 씩 거의 균등하게 분포하는 것이 정상입니다.</p>
-    <p>이 도넛이 의미하는 것은 절대적인 위험도가 아니라 <strong>"이 프로젝트 안에서의 상대적 위치"</strong>입니다. 다른 프로젝트와 직접 비교하려면 raw 점수 분포(평균 G-SI, 최대 G-SI 등)를 함께 봐야 합니다.</p>
+    <p><strong>왼쪽 등급 분포 차트</strong>는 프로젝트 안의 모든 클래스를 등급별로 나눠 비율을 보여줍니다. G-SI 점수는 프로젝트 내부의 분포에서 percentile rank로 계산하므로, 다섯 등급(A~E)이 각각 약 20% 씩 거의 균등하게 분포하는 것이 정상입니다.</p>
+    <p>이 차트가 의미하는 것은 절대적인 위험도가 아니라 <strong>"이 프로젝트 안에서의 상대적 위치"</strong>입니다. 다른 프로젝트와 직접 비교하려면 raw 점수 분포(평균 G-SI, 최대 G-SI 등)를 함께 봐야 합니다.</p>
     <p><strong>오른쪽 표</strong>는 G-SI 산식에서 각 항목이 어느 정도 비중으로 가중 평균되는지 정리한 것입니다. 각 항목 이름에 마우스를 올리면 무엇을 측정하는지 한국어 설명이 풍선으로 나타납니다. 본 작품은 default 가중치로 산식의 신뢰도를 확보하고, 후속 단계에서 데이터 기반 튜닝(<code>--weights tuned</code>) 옵션을 추가할 예정입니다.</p>
   </div>
   <div class="grid-2">
@@ -960,6 +945,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
       <li><strong>점(노드) = 클래스</strong>. 색은 등급(A 녹색 ~ E 빨강), 크기는 결합도(다른 클래스와 연결된 정도)에 비례합니다.</li>
       <li><strong>선(엣지) = 한 클래스가 다른 클래스를 참조하는 의존성</strong>. 화살표 방향은 "이 클래스를 사용한다"의 방향입니다.</li>
       <li><strong>표시 범위</strong> — G-SI 상위 hotspot 부터 채우고 그 인접 클래스까지 포함하되, 노드 수가 최대 150개를 넘지 않도록 제한합니다. 그래서 작은 프로젝트는 그래프 전체가, 큰 프로젝트는 가장 위험한 영역만 표시됩니다.</li>
+      <li><strong>A · B 등급 노드가 보이지 않는 이유</strong> — 그래프 자체가 위험 클래스 중심으로 그려지기 때문에 표시 범위 안에는 거의 D · E 등급(과 일부 C)만 포함됩니다. A · B 클래스는 위 등급 분포 차트와 Hotspot Table 등급 필터에서 확인하세요.</li>
     </ul>
     <p><strong>사용법</strong></p>
     <ul>
@@ -1240,9 +1226,19 @@ _HTML_TEMPLATE = r"""<!doctype html>
 
       if (matchCount) {{
         if (hasFilter) {{
-          matchCount.textContent = `${{matched}}개 노드 강조됨`;
+          if (matched === 0) {{
+            const reason = gradeFilter
+              ? `이 그래프에는 ${{gradeFilter}} 등급 노드가 없습니다 (그래프는 위험 클래스 중심 표시)`
+              : `검색어와 일치하는 노드가 없습니다`;
+            matchCount.textContent = reason;
+            matchCount.classList.add('warn');
+          }} else {{
+            matchCount.textContent = `${{matched}}개 노드 강조됨`;
+            matchCount.classList.remove('warn');
+          }}
         }} else {{
           matchCount.textContent = '';
+          matchCount.classList.remove('warn');
         }}
       }}
     }}
