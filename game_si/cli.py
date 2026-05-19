@@ -66,9 +66,9 @@ def _build_parser() -> argparse.ArgumentParser:
     p_analyze.add_argument("input", help="분석할 디렉토리, .cs 파일, 또는 .sln 경로")
     p_analyze.add_argument(
         "--lang",
-        choices=["csharp"],
-        default="csharp",
-        help="분석 대상 언어 (W1 단계에서는 csharp만 지원)",
+        choices=["csharp", "c", "cpp", "auto"],
+        default="auto",
+        help="분석 대상 언어. `auto` 는 디렉토리 내 확장자 분포로 자동 선택한다.",
     )
     p_analyze.add_argument(
         "--out",
@@ -175,14 +175,20 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
         out_dir.mkdir(parents=True, exist_ok=True)
         output_json = out_dir / "ast.json"
 
-    # 1) C# analyzer 실행 → AST JSON
+    lang = _resolve_language(args.lang, input_path)
+    print(f"[ast] language: {lang}")
+
+    # 1) 언어별 analyzer 실행 → AST JSON
     try:
-        result = run_analyzer(input_path=input_path, output_path=output_json, excludes=args.exclude)
-    except (AnalyzerNotFoundError, AnalyzerExecutionError) as exc:
+        if lang == "csharp":
+            result_data, result_errors = _run_csharp(input_path, output_json, args.exclude)
+        else:
+            result_data, result_errors = _run_cpp(input_path, output_json, args.exclude)
+    except (AnalyzerNotFoundError, AnalyzerExecutionError, RuntimeError) as exc:
         print(f"[error] {exc}", file=sys.stderr)
         return 1
 
-    summary = result.summary
+    summary = result_data.get("summary", {})
     print(
         f"[ast] files={summary.get('total_files')} "
         f"classes={summary.get('total_classes')} "
@@ -190,15 +196,20 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
         f"loc={summary.get('total_loc')} "
         f"elapsed={summary.get('elapsed_ms')}ms"
     )
-    if result.errors:
-        print(f"[warn] {len(result.errors)} files failed to parse", file=sys.stderr)
+    if result_errors:
+        print(f"[warn] {len(result_errors)} files failed to parse", file=sys.stderr)
     if output_json is not None:
         print(f"[ast] wrote {output_json}")
 
     if args.no_score:
         if args.top and args.top > 0:
-            _print_top_methods(result.data, args.top)
+            _print_top_methods(result_data, args.top)
         return 0
+
+    # 후속 단계가 사용하는 shim — 기존 코드 호환 (result.data 형태)
+    class _ResultShim:
+        data = result_data
+    result = _ResultShim()
 
     # 2) Metric Engine
     from .metrics import compute_metrics, metrics_to_dict
@@ -246,6 +257,65 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
         _print_top_classes(scoring, args.top)
 
     return 0
+
+
+def _resolve_language(lang_arg: str, input_path: Path) -> str:
+    """`--lang auto` 일 때 디렉토리 내 확장자 분포로 csharp / c / cpp 를 결정한다.
+
+    뒤섞인 경우 (.c 와 .cpp 가 함께 존재) cpp 가 더 일반적이므로 cpp 로 본다.
+    .cs 가 1 개 이상이면 csharp 우선.
+    """
+    if lang_arg != "auto":
+        return lang_arg
+    counts = {"csharp": 0, "c": 0, "cpp": 0}
+    from .cpp_analyzer import C_EXTENSIONS, CPP_EXTENSIONS
+    if input_path.is_file():
+        suf = input_path.suffix.lower()
+        if suf == ".cs":
+            return "csharp"
+        if suf in CPP_EXTENSIONS:
+            return "cpp"
+        if suf in C_EXTENSIONS:
+            return "c"
+        # 기본
+        return "csharp"
+    for p in input_path.rglob("*"):
+        if not p.is_file():
+            continue
+        suf = p.suffix.lower()
+        if suf == ".cs":
+            counts["csharp"] += 1
+        elif suf in CPP_EXTENSIONS:
+            counts["cpp"] += 1
+        elif suf in C_EXTENSIONS:
+            counts["c"] += 1
+    if counts["csharp"] > 0 and counts["csharp"] >= counts["cpp"] + counts["c"]:
+        return "csharp"
+    if counts["cpp"] > 0:
+        return "cpp"
+    if counts["c"] > 0:
+        return "c"
+    # 폴백 (확장자가 하나도 안 잡혔을 때)
+    return "csharp"
+
+
+def _run_csharp(
+    input_path: Path,
+    output_json: Path | None,
+    excludes: list[str],
+) -> tuple[dict, list[dict]]:
+    result = run_analyzer(input_path=input_path, output_path=output_json, excludes=excludes)
+    return result.data, result.errors
+
+
+def _run_cpp(
+    input_path: Path,
+    output_json: Path | None,
+    excludes: list[str],
+) -> tuple[dict, list[dict]]:
+    from .cpp_analyzer import analyze_cpp
+    r = analyze_cpp(input_path=input_path, excludes=excludes, output_path=output_json)
+    return r.data, r.errors
 
 
 def _default_project_name(input_path: Path) -> str:

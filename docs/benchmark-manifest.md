@@ -85,10 +85,64 @@ python -m game_si validate benchmarks/OpenRA \
 
 | 프로젝트 | URL | 라이선스 | 진입 단계 |
 |---|---|---|---|
-| Chocolate Doom | https://github.com/chocolate-doom/chocolate-doom | GPL-2.0 | W11 (Phase 2) |
+| Chocolate Doom | https://github.com/chocolate-doom/chocolate-doom | GPL-2.0 | W11 (Phase 2) — 진입 완료 |
 | OpenRCT2 | https://github.com/OpenRCT2/OpenRCT2 | GPL-3.0 | W12 (Phase 2) |
 
-각 대상의 분석 시점 커밋과 명령은 해당 단계 진입 시 본 문서에 추가한다.
+### 2.1 Chocolate Doom (W11 진입)
+
+| 항목 | 값 |
+|---|---|
+| 저장소 URL | https://github.com/chocolate-doom/chocolate-doom |
+| 라이선스 | GPL-2.0 |
+| 언어 | C (.c/.h) |
+| 분기 | `master` |
+| 분석 시점 커밋 | `c62b634f394e64dd51dec7e6f890496f43a56ade` |
+| 커밋 메시지 | "strife: Mirror the `mouse_fire_countdown` in joystick logic as well (#1796)" (2026-05-16) |
+| 분석 일자 | 2026-05-20 |
+
+**재현 명령**
+
+```bash
+git clone --depth 50 https://github.com/chocolate-doom/chocolate-doom.git benchmarks/chocolate-doom
+cd benchmarks/chocolate-doom
+git checkout c62b634f394e64dd51dec7e6f890496f43a56ade
+cd ../..
+
+python -m game_si analyze benchmarks/chocolate-doom/src --lang c --out reports/chocolate-doom
+```
+
+**측정 결과 (W11 시점, tree-sitter syntactic 분석)**
+
+| 항목 | 값 |
+|---|---|
+| 분석된 `.c` 파일 (compilation unit) | 296 |
+| 함수 정의 | 4,311 |
+| 합산 LOC (비주석·비공백) | 190,440 |
+| 분석 소요 시간 | 약 5.4초 (헤더 제외 본문만) |
+| 파싱 실패 파일 | 0 |
+| 클래스 의존성 그래프 edges | 1,058 (include 기반) |
+| SCC (≥2) | 2 |
+
+**Project Health**: 50.57 / 100 (등급 C). avg_si=50.35, risk_ratio=40.2%, avg_coupling=7.15 (C# OpenRA.Game 의 1.73 대비 4 배). 등급 분포 A 58 / B 60 / C 59 / D 59 / E 60.
+
+**상위 hotspot 정성 검토** (G-SI 상위 10):
+
+| 등급 | G-SI | 파일 | 주요 시그널 |
+|---|---:|---|---|
+| E | 100.00 | `i_system` | 결합도 156 (시스템 인터페이스) |
+| E | 99.66 | `m_misc` | 결합도 116 (유틸 god-module) |
+| E | 99.32 | `strife.p_switch` | CC_top10p=212 (거대 switch) |
+| E | 98.99 | `i_video` | GS=263 (전역 비디오 상태) |
+| E | 98.65 | `z_zone` | 결합도 90 (zone allocator) |
+| E | 98.31 | `m_argv` | CC_top10p=25, 결합도 57 |
+| E | 97.97 | `v_video` | 결합도 62, GS=32 |
+| E | 97.64 | `w_wad` | WAD 로더, 결합도 62 |
+| E | 97.30 | `deh_main` | DeHackEd 메인, 결합도 76 |
+| E | 96.96 | `heretic.g_game` | **GS=546** (게임 전역 상태 god-object) |
+
+Doom 코드를 아는 사람이 즉시 납득 가능한 god-modules 가 상위에 올라온다 — i_system / i_video / z_zone / w_wad 같은 시스템·메모리·WAD 인터페이스, 그리고 g_game 같은 게임 전역 상태 god-object. 정성 평가로는 G-SI 가 C 코드에서도 위험 구간을 합리적으로 식별함을 확인했다.
+
+산출물: `reports/chocolate-doom/{ast,metrics,scoring}.json`, `reports/chocolate-doom/index.html`.
 
 ## 3. 라이선스 및 재배포 원칙
 

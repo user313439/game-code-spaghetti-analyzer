@@ -15,8 +15,11 @@ authors = [
 keywords = ["static-analysis", "game-engine", "code-quality", "spaghetti-index"]
 
 dependencies = [
-    # 외부 라이브러리는 W2 이후 단계에서 필요에 따라 추가한다.
-    # 예) networkx, jinja2, pygit2
+    "networkx>=3.0",        # 클래스/호출 그래프, SCC, spring_layout (W3+)
+    "numpy>=1.24",          # networkx.spring_layout 의 런타임 의존
+    "tree-sitter>=0.23",    # C/C++ AST 파서 (W9+)
+    "tree-sitter-c>=0.23",
+    "tree-sitter-cpp>=0.23",
 ]
 
 [project.optional-dependencies]
