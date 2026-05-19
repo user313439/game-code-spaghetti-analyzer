@@ -156,6 +156,19 @@ def _build_parser() -> argparse.ArgumentParser:
         help="validation.html 헤더에 표시할 프로젝트 이름. 기본값은 --subdir 또는 scoring.json 디렉토리 이름.",
     )
 
+    p_ts = sub.add_parser(
+        "timeseries",
+        help="Phase D: 균등 간격 N개 커밋에서 G-SI 시계열을 측정한다.",
+    )
+    p_ts.add_argument("repo", help="대상 저장소 working tree (예: ./benchmarks/OpenRA)")
+    p_ts.add_argument("--lang", choices=["csharp", "c", "cpp"], required=True, help="분석 언어")
+    p_ts.add_argument("--subdir", default=None, help="저장소 루트로부터 분석 대상 서브 디렉토리 (예: OpenRA.Game)")
+    p_ts.add_argument("--samples", type=int, default=12, help="샘플링할 시점 수 (기본 12)")
+    p_ts.add_argument("--since", help="시작일 (YYYY-MM-DD)")
+    p_ts.add_argument("--until", help="종료일 (YYYY-MM-DD)")
+    p_ts.add_argument("--out", type=Path, required=True, help="timeseries.{json,html} 출력 디렉토리")
+    p_ts.add_argument("--project-name", default=None, help="HTML 헤더 표시용 이름")
+
     p_advise = sub.add_parser(
         "advise",
         help="Phase C: 상위 hotspot 에 대해 Claude Haiku 로 리팩토링 가이드를 받는다.",
@@ -491,6 +504,51 @@ def _cmd_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_timeseries(args: argparse.Namespace) -> int:
+    """W14 Phase D — G-SI 시계열 측정."""
+    from .timeseries import run_timeseries, to_dict, generate_html
+
+    repo = Path(args.repo)
+    if not repo.exists():
+        print(f"[error] repo 경로가 존재하지 않습니다: {repo}", file=sys.stderr)
+        return 1
+    out_dir: Path = args.out
+    out_dir.mkdir(parents=True, exist_ok=True)
+    project_name = args.project_name or out_dir.name
+
+    print(
+        f"[timeseries] project={project_name} repo={repo} lang={args.lang} "
+        f"subdir={args.subdir or '(root)'} samples={args.samples}"
+    )
+    try:
+        result = run_timeseries(
+            repo=repo,
+            lang=args.lang,
+            subdir=args.subdir,
+            samples=args.samples,
+            project_name=project_name,
+            since=args.since,
+            until=args.until,
+            progress=True,
+        )
+    except Exception as exc:
+        print(f"[error] 시계열 분석 실패: {exc}", file=sys.stderr)
+        return 1
+
+    json_path = out_dir / "timeseries.json"
+    html_path = out_dir / "timeseries.html"
+    json_path.write_text(
+        json.dumps(to_dict(result), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    generate_html(result, html_path)
+
+    print(f"[timeseries] points={len(result.points)} (notes={len(result.notes)})")
+    print(f"[timeseries] wrote {json_path}")
+    print(f"[timeseries] wrote {html_path}")
+    return 0
+
+
 def _cmd_advise(args: argparse.Namespace) -> int:
     """W13 Phase C — 상위 hotspot 에 대해 LLM 리팩토링 가이드 수집."""
     from .advisor import Advisor, format_markdown, to_dict
@@ -636,6 +694,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_compare(args)
     if args.command == "advise":
         return _cmd_advise(args)
+    if args.command == "timeseries":
+        return _cmd_timeseries(args)
     if args.command in {"diff"}:
         return _cmd_stub(args.command)
 

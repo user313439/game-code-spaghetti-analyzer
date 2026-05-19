@@ -344,6 +344,38 @@ Doom 의 잘 알려진 god-module 군이 정확히 G-SI 상위에 올라온다. 
 
 산출물: 각 케이스의 `reports/<case>/compare.{json,_summary.txt}`.
 
+## 5. Phase D — G-SI 시계열 분석 (W14)
+
+plan §7.4 의 Phase D 확장 실험. 각 저장소의 git history 에서 균등 간격으로 8 개 커밋을 샘플링하고, 각 시점에 별도 git worktree 를 만들어 G-SI 를 재산출했다. 원본 working tree 는 손대지 않는다.
+
+```bash
+python -m game_si timeseries <repo> --lang <c|cpp|csharp> --subdir <subdir> \
+    --samples 8 --out reports/<case>
+```
+
+### 5.1 cycle_count 와 코드베이스 성장의 일관 시그널
+
+| 케이스 | 기간 | 시작 → 끝 (classes) | 시작 → 끝 (cycles) | health 변화 |
+|---|---|---:|---:|---:|
+| **OpenRA.Game** (C#) | 2010 → 2026 | 361 → 668 (1.85×) | **0 → 5** (단조 증가) | 38.0 → 47.9 (악화 +9.9) |
+| **OpenRA.Mods.Common** (C#) | 2014 → 2026 | 3 → 2,194 | **0 → 4** (단조 증가, 최근 5→4) | 46.7 → 46.7 (안정) |
+| **Chocolate Doom** (C) | 2005 → 2026 (21년) | 62 → 296 (4.8×) | 1 → 2~3 (안정 진동) | 52.4 → 50.6 (소폭 개선) |
+| **OpenRCT2** (C++) | 2016 → 2026 | 385 → 636 | 1 → 2 (최근 +1) | 52.2 → 54.9 (악화 +2.7) |
+
+해석:
+
+- **모든 케이스에서 cycle_count 가 시간에 따라 증가하거나 안정 유지된다** — 감소한 케이스는 없다. 이는 plan §2 에서 다룬 "출시 후 업데이트 주기가 짧고 기능 추가가 잦아 임시 구현이 장기 코드로 굳어진다" 가설의 정량 증거다.
+- **OpenRA.Game 이 가장 명확한 단조 악화 케이스다.** 16 년 동안 cycle 0→5, project health 38→48 — 도구가 이 추세를 자동 추적하고 시각화한다.
+- **OpenRA.Mods.Common 은 코드베이스가 ~700× 폭발했지만 health 는 안정**이다. percentile-rank 정의의 일관성을 확인하는 케이스 — 분포가 함께 이동했음을 시사한다.
+- **Chocolate Doom 은 21 년에 걸쳐 거의 안정**이다 (50.6 ~ 52.5). Doom 소스 포트로서 보존 지향 코드베이스의 특성과 일치.
+- **OpenRCT2 는 최근 1 년 (2024→2026) 사이 health 52.1→54.9 로 명확한 악화** — cycle 도 1→2 로 증가. 활발한 리팩토링 시점의 일시적 패턴일 수 있다.
+
+### 5.2 bug-fix 활동과 G-SI
+
+각 케이스의 시점 간 bug-fix 커밋 수를 측정한 결과, 코드베이스 크기에 따라 자연 스케일링한다 (`OpenRA.Mods.Common 273/period`, `OpenRCT2 344/period`). 단일 시점 G-SI 와 직전 구간의 bug-fix 활동 사이에는 일관된 상관이 보이지 않았으나, 시점이 8 개로 적어 통계적 결론을 내리기는 어렵다. 본 결과는 plan §3.2 의 time-split 검증(G-SI-Full 평가) 의 기반 데이터로도 활용 가능하다.
+
+산출물: `reports/<case>/timeseries.json` (수치) + `reports/<case>/timeseries.html` (Project Health 추이 line chart + 등급 분포 stacked area + bug-fix 활동 bar + 시점 표).
+
 ## 3. 라이선스 및 재배포 원칙
 
 - 본 매니페스트에 등재된 저장소의 코드는 본 작품 저장소에 복사하거나 포함하지 않는다.

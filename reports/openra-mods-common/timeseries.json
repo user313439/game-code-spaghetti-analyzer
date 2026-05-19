@@ -1,0 +1,189 @@
+{
+  "schema_version": "timeseries-0.1",
+  "project": "OpenRA.Mods.Common",
+  "repo": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
+  "subdir": "OpenRA.Mods.Common",
+  "lang": "csharp",
+  "samples": 8,
+  "since": null,
+  "until": null,
+  "points": [
+    {
+      "sha": "3a72153a3d33064c1bead686da38ba4fec234a43",
+      "short_sha": "3a72153a3d",
+      "date": "2014-09-19",
+      "subject": "Create Mods.Common",
+      "health_score": 46.67,
+      "health_grade": "C",
+      "avg_si": 66.67,
+      "risk_ratio": 0.6667,
+      "cycle_count": 0,
+      "classes_total": 3,
+      "methods_total": 15,
+      "grade_distribution": {
+        "A": 0,
+        "B": 1,
+        "C": 0,
+        "D": 1,
+        "E": 1
+      },
+      "bugfix_commits_since_prev": 0,
+      "analysis_elapsed_ms": 195
+    },
+    {
+      "sha": "901e604cf3d0d118c98888f75a7aa90f1f0c6f23",
+      "short_sha": "901e604cf3",
+      "date": "2015-09-03",
+      "subject": "Replace arrays with sets.",
+      "health_score": 44.68,
+      "health_grade": "C",
+      "avg_si": 51.78,
+      "risk_ratio": 0.4007,
+      "cycle_count": 3,
+      "classes_total": 1118,
+      "methods_total": 3335,
+      "grade_distribution": {
+        "A": 199,
+        "B": 248,
+        "C": 223,
+        "D": 223,
+        "E": 225
+      },
+      "bugfix_commits_since_prev": 143,
+      "analysis_elapsed_ms": 2001
+    },
+    {
+      "sha": "f1758e955976b1085713a0023c4f69c255328051",
+      "short_sha": "f1758e9559",
+      "date": "2016-06-16",
+      "subject": "Stream installer copy and raw extraction.",
+      "health_score": 44.68,
+      "health_grade": "C",
+      "avg_si": 51.67,
+      "risk_ratio": 0.4016,
+      "cycle_count": 3,
+      "classes_total": 1235,
+      "methods_total": 3835,
+      "grade_distribution": {
+        "A": 213,
+        "B": 274,
+        "C": 252,
+        "D": 248,
+        "E": 248
+      },
+      "bugfix_commits_since_prev": 175,
+      "analysis_elapsed_ms": 2081
+    },
+    {
+      "sha": "7160c8a1a952bbd0e9210d84006fdffd95b8680f",
+      "short_sha": "7160c8a1a9",
+      "date": "2017-07-08",
+      "subject": "Allow multiple VocFormat streams.",
+      "health_score": 46.67,
+      "health_grade": "C",
+      "avg_si": 51.54,
+      "risk_ratio": 0.4007,
+      "cycle_count": 4,
+      "classes_total": 1500,
+      "methods_total": 4663,
+      "grade_distribution": {
+        "A": 224,
+        "B": 278,
+        "C": 397,
+        "D": 300,
+        "E": 301
+      },
+      "bugfix_commits_since_prev": 163,
+      "analysis_elapsed_ms": 2326
+    },
+    {
+      "sha": "9a15df9dde46ce7257adf3f15ea401135633cf68",
+      "short_sha": "9a15df9dde",
+      "date": "2019-03-23",
+      "subject": "Update bleed update rule folder and update path",
+      "health_score": 46.75,
+      "health_grade": "C",
+      "avg_si": 51.34,
+      "risk_ratio": 0.4001,
+      "cycle_count": 4,
+      "classes_total": 1732,
+      "methods_total": 5240,
+      "grade_distribution": {
+        "A": 226,
+        "B": 460,
+        "C": 353,
+        "D": 346,
+        "E": 347
+      },
+      "bugfix_commits_since_prev": 155,
+      "analysis_elapsed_ms": 2629
+    },
+    {
+      "sha": "36d5ae54213956c6523823d75bcba60645e3f999",
+      "short_sha": "36d5ae5421",
+      "date": "2020-08-15",
+      "subject": "Cache SupportPowersWidget offsets at initialization",
+      "health_score": 46.86,
+      "health_grade": "C",
+      "avg_si": 51.47,
+      "risk_ratio": 0.4003,
+      "cycle_count": 4,
+      "classes_total": 1841,
+      "methods_total": 5833,
+      "grade_distribution": {
+        "A": 231,
+        "B": 505,
+        "C": 368,
+        "D": 368,
+        "E": 369
+      },
+      "bugfix_commits_since_prev": 194,
+      "analysis_elapsed_ms": 2511
+    },
+    {
+      "sha": "f0cf72882576603e5d53c6c22090f28dcd43c1a8",
+      "short_sha": "f0cf728825",
+      "date": "2023-03-08",
+      "subject": "Dispose SequenceSet when we're done with it.",
+      "health_score": 47.92,
+      "health_grade": "C",
+      "avg_si": 51.05,
+      "risk_ratio": 0.4005,
+      "cycle_count": 5,
+      "classes_total": 1990,
+      "methods_total": 6312,
+      "grade_distribution": {
+        "A": 394,
+        "B": 401,
+        "C": 398,
+        "D": 398,
+        "E": 399
+      },
+      "bugfix_commits_since_prev": 220,
+      "analysis_elapsed_ms": 3181
+    },
+    {
+      "sha": "ef92a448b6f65b9f4fde37f23d8c0591a4659b64",
+      "short_sha": "ef92a448b6",
+      "date": "2026-04-16",
+      "subject": "Bump Package 'NuGet.CommandLine' to 6.12.5",
+      "health_score": 46.68,
+      "health_grade": "C",
+      "avg_si": 51.02,
+      "risk_ratio": 0.4002,
+      "cycle_count": 4,
+      "classes_total": 2194,
+      "methods_total": 7321,
+      "grade_distribution": {
+        "A": 313,
+        "B": 560,
+        "C": 443,
+        "D": 439,
+        "E": 439
+      },
+      "bugfix_commits_since_prev": 273,
+      "analysis_elapsed_ms": 3380
+    }
+  ],
+  "notes": []
+}

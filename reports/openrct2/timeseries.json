@@ -1,0 +1,189 @@
+{
+  "schema_version": "timeseries-0.1",
+  "project": "OpenRCT2",
+  "repo": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2",
+  "subdir": "src/openrct2",
+  "lang": "cpp",
+  "samples": 8,
+  "since": null,
+  "until": null,
+  "points": [
+    {
+      "sha": "25bc798ff8bebdbda2b4c4620936118c76b1186d",
+      "short_sha": "25bc798ff8",
+      "date": "2016-12-28",
+      "subject": "Move contents of src into project sub directory",
+      "health_score": 52.19,
+      "health_grade": "C",
+      "avg_si": 50.28,
+      "risk_ratio": 0.4026,
+      "cycle_count": 1,
+      "classes_total": 385,
+      "methods_total": 7004,
+      "grade_distribution": {
+        "A": 76,
+        "B": 77,
+        "C": 77,
+        "D": 77,
+        "E": 78
+      },
+      "bugfix_commits_since_prev": 0,
+      "analysis_elapsed_ms": 17624
+    },
+    {
+      "sha": "9f67fafc433cbb6cbbbd9189d7c0c7eef2ded878",
+      "short_sha": "9f67fafc43",
+      "date": "2017-10-18",
+      "subject": "Add theme support for console background colour.",
+      "health_score": 52.18,
+      "health_grade": "C",
+      "avg_si": 50.37,
+      "risk_ratio": 0.4006,
+      "cycle_count": 1,
+      "classes_total": 357,
+      "methods_total": 6351,
+      "grade_distribution": {
+        "A": 71,
+        "B": 71,
+        "C": 72,
+        "D": 71,
+        "E": 72
+      },
+      "bugfix_commits_since_prev": 500,
+      "analysis_elapsed_ms": 16991
+    },
+    {
+      "sha": "cf44ea7e24439252a5d5fa8f095899fc3aded534",
+      "short_sha": "cf44ea7e24",
+      "date": "2018-12-11",
+      "subject": "Fix #3832: Track piece colour scheme paint not network-safe",
+      "health_score": 52.21,
+      "health_grade": "C",
+      "avg_si": 50.31,
+      "risk_ratio": 0.4026,
+      "cycle_count": 1,
+      "classes_total": 380,
+      "methods_total": 6550,
+      "grade_distribution": {
+        "A": 75,
+        "B": 76,
+        "C": 76,
+        "D": 76,
+        "E": 77
+      },
+      "bugfix_commits_since_prev": 472,
+      "analysis_elapsed_ms": 17972
+    },
+    {
+      "sha": "5456899afc04dcdd045c5e5e39b1bfd0df41e9e6",
+      "short_sha": "5456899afc",
+      "date": "2020-04-24",
+      "subject": "Close #10572: Add cheat to allow building at invalid heights",
+      "health_score": 52.18,
+      "health_grade": "C",
+      "avg_si": 50.27,
+      "risk_ratio": 0.4024,
+      "cycle_count": 1,
+      "classes_total": 410,
+      "methods_total": 6789,
+      "grade_distribution": {
+        "A": 81,
+        "B": 82,
+        "C": 82,
+        "D": 82,
+        "E": 83
+      },
+      "bugfix_commits_since_prev": 466,
+      "analysis_elapsed_ms": 17397
+    },
+    {
+      "sha": "cff87c7d72e15f1261a23b383843d5d168414cf7",
+      "short_sha": "cff87c7d72",
+      "date": "2021-05-29",
+      "subject": "Include correct headers",
+      "health_score": 52.11,
+      "health_grade": "C",
+      "avg_si": 50.21,
+      "risk_ratio": 0.4008,
+      "cycle_count": 1,
+      "classes_total": 514,
+      "methods_total": 7511,
+      "grade_distribution": {
+        "A": 102,
+        "B": 103,
+        "C": 103,
+        "D": 103,
+        "E": 103
+      },
+      "bugfix_commits_since_prev": 331,
+      "analysis_elapsed_ms": 21106
+    },
+    {
+      "sha": "713a05f203316a434ccc562ddebc0f11476197c0",
+      "short_sha": "713a05f203",
+      "date": "2022-11-23",
+      "subject": "Remove obsolete object hacks",
+      "health_score": 52.16,
+      "health_grade": "C",
+      "avg_si": 50.21,
+      "risk_ratio": 0.4026,
+      "cycle_count": 1,
+      "classes_total": 549,
+      "methods_total": 7184,
+      "grade_distribution": {
+        "A": 107,
+        "B": 109,
+        "C": 112,
+        "D": 111,
+        "E": 110
+      },
+      "bugfix_commits_since_prev": 402,
+      "analysis_elapsed_ms": 21632
+    },
+    {
+      "sha": "dc0b0bdbcbb80573fe995454de7343a2bb69e303",
+      "short_sha": "dc0b0bdbcb",
+      "date": "2024-09-30",
+      "subject": "Fix Side-Friction train appearing through slopes (#22857)",
+      "health_score": 52.15,
+      "health_grade": "C",
+      "avg_si": 50.22,
+      "risk_ratio": 0.4021,
+      "cycle_count": 1,
+      "classes_total": 572,
+      "methods_total": 7394,
+      "grade_distribution": {
+        "A": 114,
+        "B": 113,
+        "C": 115,
+        "D": 115,
+        "E": 115
+      },
+      "bugfix_commits_since_prev": 333,
+      "analysis_elapsed_ms": 22135
+    },
+    {
+      "sha": "7a2cddeed1304f284829ffb0c91f31557819c51e",
+      "short_sha": "7a2cddeed1",
+      "date": "2026-05-18",
+      "subject": "Use move semantics in GroupVector::Set (#26579)",
+      "health_score": 54.94,
+      "health_grade": "C",
+      "avg_si": 50.45,
+      "risk_ratio": 0.4041,
+      "cycle_count": 2,
+      "classes_total": 636,
+      "methods_total": 5766,
+      "grade_distribution": {
+        "A": 125,
+        "B": 129,
+        "C": 125,
+        "D": 129,
+        "E": 128
+      },
+      "bugfix_commits_since_prev": 344,
+      "analysis_elapsed_ms": 23469
+    }
+  ],
+  "notes": []
+}
