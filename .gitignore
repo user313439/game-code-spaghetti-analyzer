@@ -11,7 +11,7 @@
 docs/*draft*.md
 docs/*roadmap*.md
 docs/*WIP*.md
-docs/_*.md
+docs/_*
 
 # --- OS --------------------------------------------------------------------
 Thumbs.db

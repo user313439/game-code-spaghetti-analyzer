@@ -83,10 +83,9 @@ python -m game_si analyze <대상_경로> --top 10
 
 ```text
 csharp-analyzer/   Roslyn 기반 C# 정적 분석 콘솔 (.NET 8)
-game_si/           Python CLI 및 분석 어댑터
-dashboard/         HTML 대시보드 템플릿 (후속 단계)
-tests/             샘플 코드와 테스트
-docs/              스키마·매니페스트 등 기술 문서
+game_si/           Python CLI · 분석 어댑터 · 메트릭 엔진 · G-SI 산출 · HTML 대시보드 생성
+tests/samples/     테스트용 샘플 C# 코드
+docs/              ast-schema.md, benchmark-manifest.md (공개용 기술 문서)
+reports/           분석 산출물 — index.html · openra-game/ · openra-mods-common/
 benchmarks/        외부 분석 대상 (git 추적 제외)
-reports/           분석 산출물. HTML 대시보드와 점수 JSON은 추적, 큰 raw 파일은 제외
 ```
