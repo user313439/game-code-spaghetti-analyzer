@@ -43,6 +43,7 @@
       "start_line": 21,
       "end_line": 21,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -70,6 +71,7 @@
       "start_line": 23,
       "end_line": 37,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -97,6 +99,7 @@
       "start_line": 49,
       "end_line": 295,
       "kind": "class",
+      "loc": 163,
       "raw": {
         "cc": 12.0,
         "coupling": 2.0,
@@ -127,6 +130,7 @@
       "start_line": 16,
       "end_line": 32,
       "kind": "class",
+      "loc": 11,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -157,6 +161,7 @@
       "start_line": 18,
       "end_line": 36,
       "kind": "class",
+      "loc": 11,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -187,6 +192,7 @@
       "start_line": 19,
       "end_line": 42,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 2.0,
         "coupling": 2.0,
@@ -217,6 +223,7 @@
       "start_line": 17,
       "end_line": 21,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -247,6 +254,7 @@
       "start_line": 24,
       "end_line": 24,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -274,6 +282,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -301,6 +310,7 @@
       "start_line": 27,
       "end_line": 27,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -328,6 +338,7 @@
       "start_line": 20,
       "end_line": 132,
       "kind": "class",
+      "loc": 19,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -358,6 +369,7 @@
       "start_line": 29,
       "end_line": 93,
       "kind": "class",
+      "loc": 50,
       "raw": {
         "cc": 8.0,
         "coupling": 1.0,
@@ -388,6 +400,7 @@
       "start_line": 95,
       "end_line": 591,
       "kind": "class",
+      "loc": 465,
       "raw": {
         "cc": 26.0,
         "coupling": 7.0,
@@ -418,6 +431,7 @@
       "start_line": 466,
       "end_line": 467,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -445,6 +459,7 @@
       "start_line": 468,
       "end_line": 468,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -472,6 +487,7 @@
       "start_line": 18,
       "end_line": 108,
       "kind": "class",
+      "loc": 76,
       "raw": {
         "cc": 5.0,
         "coupling": 2.0,
@@ -502,6 +518,7 @@
       "start_line": 20,
       "end_line": 27,
       "kind": "interface",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -532,6 +549,7 @@
       "start_line": 29,
       "end_line": 303,
       "kind": "class",
+      "loc": 242,
       "raw": {
         "cc": 7.0,
         "coupling": 4.0,
@@ -562,6 +580,7 @@
       "start_line": 19,
       "end_line": 109,
       "kind": "class",
+      "loc": 68,
       "raw": {
         "cc": 5.0,
         "coupling": 3.0,
@@ -592,6 +611,7 @@
       "start_line": 18,
       "end_line": 26,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -619,6 +639,7 @@
       "start_line": 28,
       "end_line": 35,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -649,6 +670,7 @@
       "start_line": 37,
       "end_line": 41,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -679,6 +701,7 @@
       "start_line": 20,
       "end_line": 261,
       "kind": "class",
+      "loc": 32,
       "raw": {
         "cc": 2.0,
         "coupling": 6.0,
@@ -709,6 +732,7 @@
       "start_line": 24,
       "end_line": 95,
       "kind": "class",
+      "loc": 50,
       "raw": {
         "cc": 6.0,
         "coupling": 4.0,
@@ -739,6 +763,7 @@
       "start_line": 97,
       "end_line": 161,
       "kind": "class",
+      "loc": 56,
       "raw": {
         "cc": 4.0,
         "coupling": 5.0,
@@ -769,6 +794,7 @@
       "start_line": 163,
       "end_line": 211,
       "kind": "class",
+      "loc": 22,
       "raw": {
         "cc": 2.0,
         "coupling": 3.0,
@@ -799,6 +825,7 @@
       "start_line": 213,
       "end_line": 225,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -829,6 +856,7 @@
       "start_line": 23,
       "end_line": 200,
       "kind": "class",
+      "loc": 155,
       "raw": {
         "cc": 9.0,
         "coupling": 6.0,
@@ -859,6 +887,7 @@
       "start_line": 16,
       "end_line": 64,
       "kind": "class",
+      "loc": 37,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -889,6 +918,7 @@
       "start_line": 23,
       "end_line": 280,
       "kind": "class",
+      "loc": 238,
       "raw": {
         "cc": 10.0,
         "coupling": 6.0,
@@ -919,6 +949,7 @@
       "start_line": 19,
       "end_line": 64,
       "kind": "class",
+      "loc": 30,
       "raw": {
         "cc": 4.0,
         "coupling": 2.0,
@@ -949,6 +980,7 @@
       "start_line": 66,
       "end_line": 96,
       "kind": "class",
+      "loc": 20,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -979,6 +1011,7 @@
       "start_line": 68,
       "end_line": 68,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1006,6 +1039,7 @@
       "start_line": 22,
       "end_line": 35,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1033,6 +1067,7 @@
       "start_line": 37,
       "end_line": 69,
       "kind": "class",
+      "loc": 18,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -1060,6 +1095,7 @@
       "start_line": 71,
       "end_line": 71,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -1087,6 +1123,7 @@
       "start_line": 72,
       "end_line": 72,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1114,6 +1151,7 @@
       "start_line": 74,
       "end_line": 267,
       "kind": "class",
+      "loc": 116,
       "raw": {
         "cc": 7.0,
         "coupling": 3.0,
@@ -1144,6 +1182,7 @@
       "start_line": 20,
       "end_line": 258,
       "kind": "class",
+      "loc": 195,
       "raw": {
         "cc": 4.0,
         "coupling": 4.0,
@@ -1174,6 +1213,7 @@
       "start_line": 17,
       "end_line": 59,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -1204,6 +1244,7 @@
       "start_line": 22,
       "end_line": 33,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1231,6 +1272,7 @@
       "start_line": 35,
       "end_line": 42,
       "kind": "class",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1258,6 +1300,7 @@
       "start_line": 44,
       "end_line": 304,
       "kind": "class",
+      "loc": 228,
       "raw": {
         "cc": 8.0,
         "coupling": 4.0,
@@ -1288,6 +1331,7 @@
       "start_line": 46,
       "end_line": 55,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -1315,6 +1359,7 @@
       "start_line": 20,
       "end_line": 316,
       "kind": "class",
+      "loc": 259,
       "raw": {
         "cc": 11.0,
         "coupling": 9.0,
@@ -1345,6 +1390,7 @@
       "start_line": 22,
       "end_line": 31,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -1372,6 +1418,7 @@
       "start_line": 14,
       "end_line": 51,
       "kind": "class",
+      "loc": 28,
       "raw": {
         "cc": 8.0,
         "coupling": 1.0,
@@ -1402,6 +1449,7 @@
       "start_line": 18,
       "end_line": 161,
       "kind": "class",
+      "loc": 118,
       "raw": {
         "cc": 4.0,
         "coupling": 2.0,
@@ -1432,6 +1480,7 @@
       "start_line": 17,
       "end_line": 55,
       "kind": "class",
+      "loc": 24,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -1462,6 +1511,7 @@
       "start_line": 18,
       "end_line": 30,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1489,6 +1539,7 @@
       "start_line": 32,
       "end_line": 38,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1516,6 +1567,7 @@
       "start_line": 40,
       "end_line": 40,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1543,6 +1595,7 @@
       "start_line": 42,
       "end_line": 42,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -1570,6 +1623,7 @@
       "start_line": 44,
       "end_line": 50,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1597,6 +1651,7 @@
       "start_line": 17,
       "end_line": 50,
       "kind": "struct",
+      "loc": 21,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -1624,6 +1679,7 @@
       "start_line": 16,
       "end_line": 38,
       "kind": "struct",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1651,6 +1707,7 @@
       "start_line": 40,
       "end_line": 52,
       "kind": "class",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -1681,6 +1738,7 @@
       "start_line": 20,
       "end_line": 24,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -1711,6 +1769,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -1738,6 +1797,7 @@
       "start_line": 28,
       "end_line": 55,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -1765,6 +1825,7 @@
       "start_line": 44,
       "end_line": 54,
       "kind": "class",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -1795,6 +1856,7 @@
       "start_line": 57,
       "end_line": 122,
       "kind": "class",
+      "loc": 53,
       "raw": {
         "cc": 4.0,
         "coupling": 2.0,
@@ -1825,6 +1887,7 @@
       "start_line": 124,
       "end_line": 159,
       "kind": "class",
+      "loc": 21,
       "raw": {
         "cc": 2.0,
         "coupling": 2.0,
@@ -1855,6 +1918,7 @@
       "start_line": 14,
       "end_line": 31,
       "kind": "class",
+      "loc": 7,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -1882,6 +1946,7 @@
       "start_line": 18,
       "end_line": 24,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1909,6 +1974,7 @@
       "start_line": 26,
       "end_line": 32,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -1936,6 +2002,7 @@
       "start_line": 34,
       "end_line": 34,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1963,6 +2030,7 @@
       "start_line": 36,
       "end_line": 48,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -1990,6 +2058,7 @@
       "start_line": 50,
       "end_line": 83,
       "kind": "interface",
+      "loc": 11,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2020,6 +2089,7 @@
       "start_line": 85,
       "end_line": 107,
       "kind": "interface",
+      "loc": 19,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2050,6 +2120,7 @@
       "start_line": 109,
       "end_line": 114,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2080,6 +2151,7 @@
       "start_line": 116,
       "end_line": 126,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2107,6 +2179,7 @@
       "start_line": 128,
       "end_line": 131,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2134,6 +2207,7 @@
       "start_line": 133,
       "end_line": 144,
       "kind": "interface",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2164,6 +2238,7 @@
       "start_line": 146,
       "end_line": 154,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -2191,6 +2266,7 @@
       "start_line": 156,
       "end_line": 156,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2218,6 +2294,7 @@
       "start_line": 158,
       "end_line": 166,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2245,6 +2322,7 @@
       "start_line": 168,
       "end_line": 175,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2272,6 +2350,7 @@
       "start_line": 177,
       "end_line": 182,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2299,6 +2378,7 @@
       "start_line": 184,
       "end_line": 189,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2326,6 +2406,7 @@
       "start_line": 191,
       "end_line": 194,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2353,6 +2434,7 @@
       "start_line": 196,
       "end_line": 202,
       "kind": "struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2380,6 +2462,7 @@
       "start_line": 18,
       "end_line": 52,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -2407,6 +2490,7 @@
       "start_line": 17,
       "end_line": 28,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 5.0,
@@ -2437,6 +2521,7 @@
       "start_line": 30,
       "end_line": 34,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -2467,6 +2552,7 @@
       "start_line": 36,
       "end_line": 42,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2494,6 +2580,7 @@
       "start_line": 44,
       "end_line": 52,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -2524,6 +2611,7 @@
       "start_line": 54,
       "end_line": 59,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 4.0,
@@ -2554,6 +2642,7 @@
       "start_line": 16,
       "end_line": 17,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2581,6 +2670,7 @@
       "start_line": 19,
       "end_line": 20,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2608,6 +2698,7 @@
       "start_line": 22,
       "end_line": 31,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -2638,6 +2729,7 @@
       "start_line": 33,
       "end_line": 44,
       "kind": "class",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -2668,6 +2760,7 @@
       "start_line": 19,
       "end_line": 255,
       "kind": "class",
+      "loc": 210,
       "raw": {
         "cc": 10.0,
         "coupling": 4.0,
@@ -2698,6 +2791,7 @@
       "start_line": 16,
       "end_line": 56,
       "kind": "class",
+      "loc": 32,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -2725,6 +2819,7 @@
       "start_line": 19,
       "end_line": 36,
       "kind": "interface",
+      "loc": 6,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2755,6 +2850,7 @@
       "start_line": 38,
       "end_line": 41,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2782,6 +2878,7 @@
       "start_line": 43,
       "end_line": 118,
       "kind": "class",
+      "loc": 60,
       "raw": {
         "cc": 3.0,
         "coupling": 3.0,
@@ -2812,6 +2909,7 @@
       "start_line": 17,
       "end_line": 24,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2839,6 +2937,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 4.0,
@@ -2869,6 +2968,7 @@
       "start_line": 28,
       "end_line": 55,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 1.0,
         "coupling": 5.0,
@@ -2899,6 +2999,7 @@
       "start_line": 19,
       "end_line": 171,
       "kind": "class",
+      "loc": 129,
       "raw": {
         "cc": 6.0,
         "coupling": 9.0,
@@ -2929,6 +3030,7 @@
       "start_line": 19,
       "end_line": 23,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -2956,6 +3058,7 @@
       "start_line": 27,
       "end_line": 31,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -2983,6 +3086,7 @@
       "start_line": 33,
       "end_line": 170,
       "kind": "class",
+      "loc": 116,
       "raw": {
         "cc": 7.0,
         "coupling": 11.0,
@@ -3013,6 +3117,7 @@
       "start_line": 17,
       "end_line": 51,
       "kind": "class",
+      "loc": 22,
       "raw": {
         "cc": 1.0,
         "coupling": 6.0,
@@ -3043,6 +3148,7 @@
       "start_line": 53,
       "end_line": 71,
       "kind": "class",
+      "loc": 11,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -3070,6 +3176,7 @@
       "start_line": 73,
       "end_line": 80,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -3097,6 +3204,7 @@
       "start_line": 23,
       "end_line": 182,
       "kind": "class",
+      "loc": 134,
       "raw": {
         "cc": 11.0,
         "coupling": 2.0,
@@ -3127,6 +3235,7 @@
       "start_line": 18,
       "end_line": 428,
       "kind": "class",
+      "loc": 380,
       "raw": {
         "cc": 12.0,
         "coupling": 8.0,
@@ -3157,6 +3266,7 @@
       "start_line": 430,
       "end_line": 435,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -3184,6 +3294,7 @@
       "start_line": 23,
       "end_line": 50,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -3211,6 +3322,7 @@
       "start_line": 52,
       "end_line": 55,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -3238,6 +3350,7 @@
       "start_line": 57,
       "end_line": 75,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -3265,6 +3378,7 @@
       "start_line": 77,
       "end_line": 87,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -3295,6 +3409,7 @@
       "start_line": 89,
       "end_line": 113,
       "kind": "class",
+      "loc": 21,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -3325,6 +3440,7 @@
       "start_line": 17,
       "end_line": 130,
       "kind": "class",
+      "loc": 83,
       "raw": {
         "cc": 4.0,
         "coupling": 5.0,
@@ -3355,6 +3471,7 @@
       "start_line": 19,
       "end_line": 260,
       "kind": "class",
+      "loc": 207,
       "raw": {
         "cc": 16.0,
         "coupling": 3.0,
@@ -3385,6 +3502,7 @@
       "start_line": 18,
       "end_line": 76,
       "kind": "class",
+      "loc": 41,
       "raw": {
         "cc": 3.0,
         "coupling": 3.0,
@@ -3415,6 +3533,7 @@
       "start_line": 19,
       "end_line": 266,
       "kind": "class",
+      "loc": 193,
       "raw": {
         "cc": 9.0,
         "coupling": 4.0,
@@ -3445,6 +3564,7 @@
       "start_line": 246,
       "end_line": 265,
       "kind": "class",
+      "loc": 12,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -3475,6 +3595,7 @@
       "start_line": 16,
       "end_line": 77,
       "kind": "class",
+      "loc": 41,
       "raw": {
         "cc": 4.0,
         "coupling": 4.0,
@@ -3505,6 +3626,7 @@
       "start_line": 19,
       "end_line": 339,
       "kind": "class",
+      "loc": 295,
       "raw": {
         "cc": 14.0,
         "coupling": 3.0,
@@ -3535,6 +3657,7 @@
       "start_line": 16,
       "end_line": 48,
       "kind": "struct",
+      "loc": 14,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -3565,6 +3688,7 @@
       "start_line": 50,
       "end_line": 63,
       "kind": "class",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -3595,6 +3719,7 @@
       "start_line": 14,
       "end_line": 35,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -3625,6 +3750,7 @@
       "start_line": 16,
       "end_line": 19,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -3652,6 +3778,7 @@
       "start_line": 21,
       "end_line": 31,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -3682,6 +3809,7 @@
       "start_line": 20,
       "end_line": 21,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -3709,6 +3837,7 @@
       "start_line": 23,
       "end_line": 26,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -3739,6 +3868,7 @@
       "start_line": 28,
       "end_line": 40,
       "kind": "class",
+      "loc": 9,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -3766,6 +3896,7 @@
       "start_line": 42,
       "end_line": 437,
       "kind": "class",
+      "loc": 293,
       "raw": {
         "cc": 7.5,
         "coupling": 9.0,
@@ -3796,6 +3927,7 @@
       "start_line": 22,
       "end_line": 482,
       "kind": "class",
+      "loc": 389,
       "raw": {
         "cc": 18.0,
         "coupling": 7.0,
@@ -3826,6 +3958,7 @@
       "start_line": 16,
       "end_line": 103,
       "kind": "struct",
+      "loc": 63,
       "raw": {
         "cc": 6.0,
         "coupling": 0.0,
@@ -3856,6 +3989,7 @@
       "start_line": 19,
       "end_line": 45,
       "kind": "class",
+      "loc": 17,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -3883,6 +4017,7 @@
       "start_line": 17,
       "end_line": 23,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -3913,6 +4048,7 @@
       "start_line": 25,
       "end_line": 25,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -3940,6 +4076,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -3967,6 +4104,7 @@
       "start_line": 28,
       "end_line": 35,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -3994,6 +4132,7 @@
       "start_line": 37,
       "end_line": 45,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -4021,6 +4160,7 @@
       "start_line": 47,
       "end_line": 72,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 4.0,
         "coupling": 0.0,
@@ -4051,6 +4191,7 @@
       "start_line": 74,
       "end_line": 74,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -4078,6 +4219,7 @@
       "start_line": 75,
       "end_line": 83,
       "kind": "struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -4105,6 +4247,7 @@
       "start_line": 16,
       "end_line": 23,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -4135,6 +4278,7 @@
       "start_line": 25,
       "end_line": 52,
       "kind": "class",
+      "loc": 20,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -4165,6 +4309,7 @@
       "start_line": 18,
       "end_line": 258,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -4192,6 +4337,7 @@
       "start_line": 260,
       "end_line": 512,
       "kind": "class",
+      "loc": 7,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -4222,6 +4368,7 @@
       "start_line": 21,
       "end_line": 35,
       "kind": "interface",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -4249,6 +4396,7 @@
       "start_line": 37,
       "end_line": 109,
       "kind": "class",
+      "loc": 55,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -4279,6 +4427,7 @@
       "start_line": 124,
       "end_line": 137,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 1.0,
         "coupling": 4.0,
@@ -4309,6 +4458,7 @@
       "start_line": 139,
       "end_line": 139,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 2.0,
@@ -4339,6 +4489,7 @@
       "start_line": 141,
       "end_line": 171,
       "kind": "class",
+      "loc": 19,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -4369,6 +4520,7 @@
       "start_line": 173,
       "end_line": 217,
       "kind": "class",
+      "loc": 37,
       "raw": {
         "cc": 4.0,
         "coupling": 1.0,
@@ -4399,6 +4551,7 @@
       "start_line": 219,
       "end_line": 221,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 2.0,
@@ -4429,6 +4582,7 @@
       "start_line": 223,
       "end_line": 262,
       "kind": "class",
+      "loc": 29,
       "raw": {
         "cc": 2.0,
         "coupling": 4.0,
@@ -4459,6 +4613,7 @@
       "start_line": 264,
       "end_line": 270,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -4489,6 +4644,7 @@
       "start_line": 23,
       "end_line": 23,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -4516,6 +4672,7 @@
       "start_line": 25,
       "end_line": 207,
       "kind": "class",
+      "loc": 153,
       "raw": {
         "cc": 5.5,
         "coupling": 5.0,
@@ -4546,6 +4703,7 @@
       "start_line": 18,
       "end_line": 120,
       "kind": "struct",
+      "loc": 48,
       "raw": {
         "cc": 8.0,
         "coupling": 2.0,
@@ -4576,6 +4734,7 @@
       "start_line": 20,
       "end_line": 60,
       "kind": "struct",
+      "loc": 30,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -4606,6 +4765,7 @@
       "start_line": 18,
       "end_line": 155,
       "kind": "class",
+      "loc": 91,
       "raw": {
         "cc": 4.0,
         "coupling": 3.0,
@@ -4636,6 +4796,7 @@
       "start_line": 158,
       "end_line": 174,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 3.0,
         "coupling": 3.0,
@@ -4666,6 +4827,7 @@
       "start_line": 19,
       "end_line": 77,
       "kind": "class",
+      "loc": 40,
       "raw": {
         "cc": 3.0,
         "coupling": 3.0,
@@ -4696,6 +4858,7 @@
       "start_line": 20,
       "end_line": 168,
       "kind": "class",
+      "loc": 75,
       "raw": {
         "cc": 8.0,
         "coupling": 3.0,
@@ -4726,6 +4889,7 @@
       "start_line": 122,
       "end_line": 167,
       "kind": "struct",
+      "loc": 33,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -4756,6 +4920,7 @@
       "start_line": 29,
       "end_line": 59,
       "kind": "struct",
+      "loc": 23,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -4786,6 +4951,7 @@
       "start_line": 61,
       "end_line": 67,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -4813,6 +4979,7 @@
       "start_line": 69,
       "end_line": 151,
       "kind": "class",
+      "loc": 68,
       "raw": {
         "cc": 12.0,
         "coupling": 2.0,
@@ -4843,6 +5010,7 @@
       "start_line": 71,
       "end_line": 71,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -4870,6 +5038,7 @@
       "start_line": 153,
       "end_line": 1449,
       "kind": "class",
+      "loc": 1119,
       "raw": {
         "cc": 14.2,
         "coupling": 21.0,
@@ -4900,6 +5069,7 @@
       "start_line": 27,
       "end_line": 461,
       "kind": "class",
+      "loc": 377,
       "raw": {
         "cc": 12.0,
         "coupling": 6.0,
@@ -4930,6 +5100,7 @@
       "start_line": 17,
       "end_line": 88,
       "kind": "struct",
+      "loc": 21,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -4960,6 +5131,7 @@
       "start_line": 19,
       "end_line": 58,
       "kind": "struct",
+      "loc": 30,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -4990,6 +5162,7 @@
       "start_line": 20,
       "end_line": 126,
       "kind": "class",
+      "loc": 91,
       "raw": {
         "cc": 7.0,
         "coupling": 1.0,
@@ -5020,6 +5193,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5047,6 +5221,7 @@
       "start_line": 17,
       "end_line": 57,
       "kind": "class",
+      "loc": 17,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -5074,6 +5249,7 @@
       "start_line": 20,
       "end_line": 20,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5101,6 +5277,7 @@
       "start_line": 22,
       "end_line": 22,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5128,6 +5305,7 @@
       "start_line": 23,
       "end_line": 23,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5155,6 +5333,7 @@
       "start_line": 25,
       "end_line": 108,
       "kind": "struct",
+      "loc": 75,
       "raw": {
         "cc": 6.0,
         "coupling": 2.0,
@@ -5185,6 +5364,7 @@
       "start_line": 110,
       "end_line": 255,
       "kind": "class",
+      "loc": 117,
       "raw": {
         "cc": 9.0,
         "coupling": 6.0,
@@ -5215,6 +5395,7 @@
       "start_line": 19,
       "end_line": 81,
       "kind": "class",
+      "loc": 51,
       "raw": {
         "cc": 2.0,
         "coupling": 4.0,
@@ -5245,6 +5426,7 @@
       "start_line": 31,
       "end_line": 31,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5272,6 +5454,7 @@
       "start_line": 34,
       "end_line": 42,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5299,6 +5482,7 @@
       "start_line": 44,
       "end_line": 66,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5326,6 +5510,7 @@
       "start_line": 68,
       "end_line": 780,
       "kind": "class",
+      "loc": 496,
       "raw": {
         "cc": 16.5,
         "coupling": 13.0,
@@ -5356,6 +5541,7 @@
       "start_line": 71,
       "end_line": 200,
       "kind": "class",
+      "loc": 94,
       "raw": {
         "cc": 10.0,
         "coupling": 3.0,
@@ -5386,6 +5572,7 @@
       "start_line": 17,
       "end_line": 64,
       "kind": "class",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -5413,6 +5600,7 @@
       "start_line": 17,
       "end_line": 62,
       "kind": "class",
+      "loc": 20,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -5443,6 +5631,7 @@
       "start_line": 19,
       "end_line": 124,
       "kind": "class",
+      "loc": 36,
       "raw": {
         "cc": 4.0,
         "coupling": 5.0,
@@ -5473,6 +5662,7 @@
       "start_line": 79,
       "end_line": 123,
       "kind": "struct",
+      "loc": 32,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -5503,6 +5693,7 @@
       "start_line": 22,
       "end_line": 25,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -5530,6 +5721,7 @@
       "start_line": 27,
       "end_line": 43,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -5557,6 +5749,7 @@
       "start_line": 52,
       "end_line": 152,
       "kind": "struct",
+      "loc": 49,
       "raw": {
         "cc": 11.0,
         "coupling": 2.0,
@@ -5587,6 +5780,7 @@
       "start_line": 59,
       "end_line": 69,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5614,6 +5808,7 @@
       "start_line": 154,
       "end_line": 178,
       "kind": "class",
+      "loc": 11,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -5641,6 +5836,7 @@
       "start_line": 180,
       "end_line": 189,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -5668,6 +5864,7 @@
       "start_line": 193,
       "end_line": 196,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5695,6 +5892,7 @@
       "start_line": 14,
       "end_line": 37,
       "kind": "struct",
+      "loc": 16,
       "raw": {
         "cc": 4.0,
         "coupling": 1.0,
@@ -5725,6 +5923,7 @@
       "start_line": 39,
       "end_line": 45,
       "kind": "struct",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -5752,6 +5951,7 @@
       "start_line": 24,
       "end_line": 30,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5779,6 +5979,7 @@
       "start_line": 32,
       "end_line": 40,
       "kind": "interface",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -5809,6 +6010,7 @@
       "start_line": 42,
       "end_line": 97,
       "kind": "class",
+      "loc": 40,
       "raw": {
         "cc": 5.0,
         "coupling": 3.0,
@@ -5839,6 +6041,7 @@
       "start_line": 99,
       "end_line": 386,
       "kind": "class",
+      "loc": 254,
       "raw": {
         "cc": 15.0,
         "coupling": 4.0,
@@ -5869,6 +6072,7 @@
       "start_line": 19,
       "end_line": 62,
       "kind": "class",
+      "loc": 35,
       "raw": {
         "cc": 2.0,
         "coupling": 2.0,
@@ -5899,6 +6103,7 @@
       "start_line": 19,
       "end_line": 50,
       "kind": "class",
+      "loc": 17,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -5926,6 +6131,7 @@
       "start_line": 21,
       "end_line": 25,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -5953,6 +6159,7 @@
       "start_line": 52,
       "end_line": 124,
       "kind": "class",
+      "loc": 61,
       "raw": {
         "cc": 5.0,
         "coupling": 4.0,
@@ -5983,6 +6190,7 @@
       "start_line": 22,
       "end_line": 76,
       "kind": "class",
+      "loc": 37,
       "raw": {
         "cc": 2.0,
         "coupling": 2.0,
@@ -6013,6 +6221,7 @@
       "start_line": 78,
       "end_line": 332,
       "kind": "class",
+      "loc": 224,
       "raw": {
         "cc": 9.0,
         "coupling": 4.0,
@@ -6043,6 +6252,7 @@
       "start_line": 22,
       "end_line": 48,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -6070,6 +6280,7 @@
       "start_line": 50,
       "end_line": 264,
       "kind": "class",
+      "loc": 118,
       "raw": {
         "cc": 17.0,
         "coupling": 3.0,
@@ -6100,6 +6311,7 @@
       "start_line": 22,
       "end_line": 153,
       "kind": "class",
+      "loc": 36,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -6130,6 +6342,7 @@
       "start_line": 24,
       "end_line": 112,
       "kind": "class",
+      "loc": 75,
       "raw": {
         "cc": 8.0,
         "coupling": 1.0,
@@ -6160,6 +6373,7 @@
       "start_line": 17,
       "end_line": 35,
       "kind": "class",
+      "loc": 11,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -6187,6 +6401,7 @@
       "start_line": 37,
       "end_line": 89,
       "kind": "class",
+      "loc": 34,
       "raw": {
         "cc": 4.0,
         "coupling": 3.0,
@@ -6217,6 +6432,7 @@
       "start_line": 18,
       "end_line": 18,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6244,6 +6460,7 @@
       "start_line": 20,
       "end_line": 100,
       "kind": "class",
+      "loc": 67,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -6274,6 +6491,7 @@
       "start_line": 18,
       "end_line": 27,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6301,6 +6519,7 @@
       "start_line": 29,
       "end_line": 42,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6328,6 +6547,7 @@
       "start_line": 44,
       "end_line": 50,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -6355,6 +6575,7 @@
       "start_line": 52,
       "end_line": 475,
       "kind": "class",
+      "loc": 374,
       "raw": {
         "cc": 33.0,
         "coupling": 6.0,
@@ -6385,6 +6606,7 @@
       "start_line": 18,
       "end_line": 77,
       "kind": "class",
+      "loc": 52,
       "raw": {
         "cc": 4.0,
         "coupling": 3.0,
@@ -6415,6 +6637,7 @@
       "start_line": 79,
       "end_line": 212,
       "kind": "class",
+      "loc": 122,
       "raw": {
         "cc": 6.0,
         "coupling": 1.0,
@@ -6445,6 +6668,7 @@
       "start_line": 22,
       "end_line": 333,
       "kind": "class",
+      "loc": 205,
       "raw": {
         "cc": 9.0,
         "coupling": 5.0,
@@ -6475,6 +6699,7 @@
       "start_line": 75,
       "end_line": 84,
       "kind": "struct",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -6502,6 +6727,7 @@
       "start_line": 19,
       "end_line": 135,
       "kind": "class",
+      "loc": 90,
       "raw": {
         "cc": 12.0,
         "coupling": 3.0,
@@ -6532,6 +6758,7 @@
       "start_line": 21,
       "end_line": 25,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -6559,6 +6786,7 @@
       "start_line": 19,
       "end_line": 118,
       "kind": "class",
+      "loc": 82,
       "raw": {
         "cc": 6.0,
         "coupling": 2.0,
@@ -6589,6 +6817,7 @@
       "start_line": 21,
       "end_line": 285,
       "kind": "class",
+      "loc": 86,
       "raw": {
         "cc": 8.0,
         "coupling": 4.0,
@@ -6619,6 +6848,7 @@
       "start_line": 117,
       "end_line": 117,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6646,6 +6876,7 @@
       "start_line": 119,
       "end_line": 119,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6673,6 +6904,7 @@
       "start_line": 121,
       "end_line": 162,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 5.0,
@@ -6703,6 +6935,7 @@
       "start_line": 164,
       "end_line": 186,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -6730,6 +6963,7 @@
       "start_line": 188,
       "end_line": 195,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6757,6 +6991,7 @@
       "start_line": 197,
       "end_line": 205,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -6784,6 +7019,7 @@
       "start_line": 207,
       "end_line": 266,
       "kind": "class",
+      "loc": 33,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -6814,6 +7050,7 @@
       "start_line": 22,
       "end_line": 341,
       "kind": "class",
+      "loc": 127,
       "raw": {
         "cc": 12.0,
         "coupling": 6.0,
@@ -6844,6 +7081,7 @@
       "start_line": 164,
       "end_line": 172,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -6871,6 +7109,7 @@
       "start_line": 174,
       "end_line": 182,
       "kind": "struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -6898,6 +7137,7 @@
       "start_line": 184,
       "end_line": 189,
       "kind": "struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -6925,6 +7165,7 @@
       "start_line": 191,
       "end_line": 277,
       "kind": "struct",
+      "loc": 74,
       "raw": {
         "cc": 6.0,
         "coupling": 1.0,
@@ -6955,6 +7196,7 @@
       "start_line": 283,
       "end_line": 340,
       "kind": "struct",
+      "loc": 12,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -6982,6 +7224,7 @@
       "start_line": 16,
       "end_line": 50,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -7012,6 +7255,7 @@
       "start_line": 20,
       "end_line": 430,
       "kind": "class",
+      "loc": 385,
       "raw": {
         "cc": 93.0,
         "coupling": 5.0,
@@ -7042,6 +7286,7 @@
       "start_line": 17,
       "end_line": 29,
       "kind": "interface",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -7072,6 +7317,7 @@
       "start_line": 20,
       "end_line": 65,
       "kind": "class",
+      "loc": 39,
       "raw": {
         "cc": 4.0,
         "coupling": 1.0,
@@ -7102,6 +7348,7 @@
       "start_line": 67,
       "end_line": 92,
       "kind": "struct",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -7129,6 +7376,7 @@
       "start_line": 69,
       "end_line": 75,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -7156,6 +7404,7 @@
       "start_line": 18,
       "end_line": 55,
       "kind": "class",
+      "loc": 19,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -7186,6 +7435,7 @@
       "start_line": 19,
       "end_line": 76,
       "kind": "class",
+      "loc": 48,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -7216,6 +7466,7 @@
       "start_line": 78,
       "end_line": 170,
       "kind": "struct",
+      "loc": 66,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -7243,6 +7494,7 @@
       "start_line": 17,
       "end_line": 49,
       "kind": "class",
+      "loc": 14,
       "raw": {
         "cc": 1.0,
         "coupling": 10.0,
@@ -7273,6 +7525,7 @@
       "start_line": 16,
       "end_line": 40,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 6.0,
         "coupling": 0.0,
@@ -7303,6 +7556,7 @@
       "start_line": 18,
       "end_line": 371,
       "kind": "struct",
+      "loc": 170,
       "raw": {
         "cc": 7.0,
         "coupling": 1.0,
@@ -7333,6 +7587,7 @@
       "start_line": 18,
       "end_line": 44,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -7360,6 +7615,7 @@
       "start_line": 16,
       "end_line": 41,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -7387,6 +7643,7 @@
       "start_line": 19,
       "end_line": 113,
       "kind": "struct",
+      "loc": 53,
       "raw": {
         "cc": 4.0,
         "coupling": 8.0,
@@ -7417,6 +7674,7 @@
       "start_line": 115,
       "end_line": 127,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -7447,6 +7705,7 @@
       "start_line": 18,
       "end_line": 65,
       "kind": "struct",
+      "loc": 19,
       "raw": {
         "cc": 2.0,
         "coupling": 9.0,
@@ -7477,6 +7736,7 @@
       "start_line": 18,
       "end_line": 88,
       "kind": "struct",
+      "loc": 37,
       "raw": {
         "cc": 2.0,
         "coupling": 15.0,
@@ -7507,6 +7767,7 @@
       "start_line": 16,
       "end_line": 71,
       "kind": "struct",
+      "loc": 37,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -7534,6 +7795,7 @@
       "start_line": 17,
       "end_line": 25,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 3.0,
@@ -7564,6 +7826,7 @@
       "start_line": 18,
       "end_line": 88,
       "kind": "class",
+      "loc": 60,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -7594,6 +7857,7 @@
       "start_line": 91,
       "end_line": 188,
       "kind": "struct",
+      "loc": 70,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -7621,6 +7885,7 @@
       "start_line": 17,
       "end_line": 134,
       "kind": "class",
+      "loc": 86,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -7651,6 +7916,7 @@
       "start_line": 19,
       "end_line": 58,
       "kind": "class",
+      "loc": 24,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -7681,6 +7947,7 @@
       "start_line": 18,
       "end_line": 30,
       "kind": "class",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -7708,6 +7975,7 @@
       "start_line": 32,
       "end_line": 129,
       "kind": "class",
+      "loc": 58,
       "raw": {
         "cc": 2.0,
         "coupling": 2.0,
@@ -7738,6 +8006,7 @@
       "start_line": 18,
       "end_line": 106,
       "kind": "class",
+      "loc": 50,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -7765,6 +8034,7 @@
       "start_line": 20,
       "end_line": 66,
       "kind": "struct",
+      "loc": 26,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -7795,6 +8065,7 @@
       "start_line": 18,
       "end_line": 119,
       "kind": "struct",
+      "loc": 87,
       "raw": {
         "cc": 18.0,
         "coupling": 0.0,
@@ -7825,6 +8096,7 @@
       "start_line": 16,
       "end_line": 50,
       "kind": "class",
+      "loc": 21,
       "raw": {
         "cc": 8.0,
         "coupling": 0.0,
@@ -7855,6 +8127,7 @@
       "start_line": 19,
       "end_line": 129,
       "kind": "class",
+      "loc": 82,
       "raw": {
         "cc": 7.0,
         "coupling": 0.0,
@@ -7885,6 +8158,7 @@
       "start_line": 17,
       "end_line": 23,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -7912,6 +8186,7 @@
       "start_line": 29,
       "end_line": 158,
       "kind": "class",
+      "loc": 95,
       "raw": {
         "cc": 10.0,
         "coupling": 1.0,
@@ -7942,6 +8217,7 @@
       "start_line": 22,
       "end_line": 111,
       "kind": "class",
+      "loc": 57,
       "raw": {
         "cc": 4.0,
         "coupling": 0.0,
@@ -7972,6 +8248,7 @@
       "start_line": 16,
       "end_line": 130,
       "kind": "struct",
+      "loc": 68,
       "raw": {
         "cc": 4.0,
         "coupling": 15.0,
@@ -8002,6 +8279,7 @@
       "start_line": 18,
       "end_line": 144,
       "kind": "class",
+      "loc": 93,
       "raw": {
         "cc": 4.0,
         "coupling": 0.0,
@@ -8032,6 +8310,7 @@
       "start_line": 18,
       "end_line": 175,
       "kind": "class",
+      "loc": 96,
       "raw": {
         "cc": 4.0,
         "coupling": 0.0,
@@ -8062,6 +8341,7 @@
       "start_line": 16,
       "end_line": 78,
       "kind": "struct",
+      "loc": 29,
       "raw": {
         "cc": 2.0,
         "coupling": 13.0,
@@ -8092,6 +8372,7 @@
       "start_line": 19,
       "end_line": 168,
       "kind": "class",
+      "loc": 109,
       "raw": {
         "cc": 10.0,
         "coupling": 3.0,
@@ -8122,6 +8403,7 @@
       "start_line": 19,
       "end_line": 170,
       "kind": "class",
+      "loc": 93,
       "raw": {
         "cc": 4.0,
         "coupling": 2.0,
@@ -8152,6 +8434,7 @@
       "start_line": 135,
       "end_line": 142,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -8179,6 +8462,7 @@
       "start_line": 144,
       "end_line": 169,
       "kind": "class",
+      "loc": 16,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -8209,6 +8493,7 @@
       "start_line": 172,
       "end_line": 182,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -8236,6 +8521,7 @@
       "start_line": 16,
       "end_line": 56,
       "kind": "class",
+      "loc": 33,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -8266,6 +8552,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 10.0,
@@ -8296,6 +8583,7 @@
       "start_line": 29,
       "end_line": 32,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -8326,6 +8614,7 @@
       "start_line": 35,
       "end_line": 39,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8353,6 +8642,7 @@
       "start_line": 42,
       "end_line": 43,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8380,6 +8670,7 @@
       "start_line": 45,
       "end_line": 46,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8407,6 +8698,7 @@
       "start_line": 48,
       "end_line": 52,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8434,6 +8726,7 @@
       "start_line": 54,
       "end_line": 58,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8461,6 +8754,7 @@
       "start_line": 76,
       "end_line": 111,
       "kind": "class",
+      "loc": 29,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -8488,6 +8782,7 @@
       "start_line": 113,
       "end_line": 117,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8515,6 +8810,7 @@
       "start_line": 119,
       "end_line": 345,
       "kind": "class",
+      "loc": 191,
       "raw": {
         "cc": 10.0,
         "coupling": 2.0,
@@ -8545,6 +8841,7 @@
       "start_line": 20,
       "end_line": 73,
       "kind": "class",
+      "loc": 41,
       "raw": {
         "cc": 5.0,
         "coupling": 0.0,
@@ -8575,6 +8872,7 @@
       "start_line": 21,
       "end_line": 156,
       "kind": "class",
+      "loc": 120,
       "raw": {
         "cc": 11.0,
         "coupling": 1.0,
@@ -8605,6 +8903,7 @@
       "start_line": 19,
       "end_line": 94,
       "kind": "class",
+      "loc": 44,
       "raw": {
         "cc": 4.0,
         "coupling": 5.0,
@@ -8635,6 +8934,7 @@
       "start_line": 14,
       "end_line": 29,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -8665,6 +8965,7 @@
       "start_line": 17,
       "end_line": 191,
       "kind": "class",
+      "loc": 169,
       "raw": {
         "cc": 27.0,
         "coupling": 0.0,
@@ -8695,6 +8996,7 @@
       "start_line": 24,
       "end_line": 217,
       "kind": "class",
+      "loc": 166,
       "raw": {
         "cc": 22.0,
         "coupling": 0.0,
@@ -8725,6 +9027,7 @@
       "start_line": 219,
       "end_line": 219,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8752,6 +9055,7 @@
       "start_line": 17,
       "end_line": 23,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -8779,6 +9083,7 @@
       "start_line": 19,
       "end_line": 19,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -8806,6 +9111,7 @@
       "start_line": 21,
       "end_line": 105,
       "kind": "class",
+      "loc": 38,
       "raw": {
         "cc": 4.0,
         "coupling": 1.0,
@@ -8836,6 +9142,7 @@
       "start_line": 21,
       "end_line": 138,
       "kind": "class",
+      "loc": 92,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -8866,6 +9173,7 @@
       "start_line": 17,
       "end_line": 85,
       "kind": "class",
+      "loc": 56,
       "raw": {
         "cc": 8.0,
         "coupling": 2.0,
@@ -8896,6 +9204,7 @@
       "start_line": 14,
       "end_line": 81,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8923,6 +9232,7 @@
       "start_line": 33,
       "end_line": 38,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8950,6 +9260,7 @@
       "start_line": 40,
       "end_line": 46,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -8977,6 +9288,7 @@
       "start_line": 48,
       "end_line": 1593,
       "kind": "class",
+      "loc": 1290,
       "raw": {
         "cc": 33.25,
         "coupling": 23.0,
@@ -9007,6 +9319,7 @@
       "start_line": 1507,
       "end_line": 1507,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 5.0,
@@ -9037,6 +9350,7 @@
       "start_line": 1509,
       "end_line": 1521,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -9067,6 +9381,7 @@
       "start_line": 1523,
       "end_line": 1535,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -9097,6 +9412,7 @@
       "start_line": 1537,
       "end_line": 1554,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -9127,6 +9443,7 @@
       "start_line": 1556,
       "end_line": 1577,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -9157,6 +9474,7 @@
       "start_line": 1579,
       "end_line": 1592,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -9187,6 +9505,7 @@
       "start_line": 18,
       "end_line": 18,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -9214,6 +9533,7 @@
       "start_line": 19,
       "end_line": 19,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -9241,6 +9561,7 @@
       "start_line": 20,
       "end_line": 20,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -9268,6 +9589,7 @@
       "start_line": 21,
       "end_line": 21,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9295,6 +9617,7 @@
       "start_line": 22,
       "end_line": 22,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -9322,6 +9645,7 @@
       "start_line": 23,
       "end_line": 23,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -9349,6 +9673,7 @@
       "start_line": 24,
       "end_line": 24,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9376,6 +9701,7 @@
       "start_line": 25,
       "end_line": 25,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -9403,6 +9729,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9433,6 +9760,7 @@
       "start_line": 28,
       "end_line": 28,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -9460,6 +9788,7 @@
       "start_line": 30,
       "end_line": 62,
       "kind": "class",
+      "loc": 25,
       "raw": {
         "cc": 1.0,
         "coupling": 7.0,
@@ -9490,6 +9819,7 @@
       "start_line": 18,
       "end_line": 222,
       "kind": "class",
+      "loc": 170,
       "raw": {
         "cc": 34.0,
         "coupling": 2.0,
@@ -9520,6 +9850,7 @@
       "start_line": 22,
       "end_line": 25,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9547,6 +9878,7 @@
       "start_line": 27,
       "end_line": 34,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9574,6 +9906,7 @@
       "start_line": 36,
       "end_line": 36,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -9601,6 +9934,7 @@
       "start_line": 38,
       "end_line": 480,
       "kind": "class",
+      "loc": 339,
       "raw": {
         "cc": 16.3333,
         "coupling": 2.0,
@@ -9631,6 +9965,7 @@
       "start_line": 17,
       "end_line": 33,
       "kind": "interface",
+      "loc": 12,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9658,6 +9993,7 @@
       "start_line": 35,
       "end_line": 35,
       "kind": "record",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -9685,6 +10021,7 @@
       "start_line": 37,
       "end_line": 37,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -9712,6 +10049,7 @@
       "start_line": 39,
       "end_line": 45,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9739,6 +10077,7 @@
       "start_line": 17,
       "end_line": 39,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -9769,6 +10108,7 @@
       "start_line": 24,
       "end_line": 50,
       "kind": "class",
+      "loc": 19,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -9799,6 +10139,7 @@
       "start_line": 52,
       "end_line": 96,
       "kind": "class",
+      "loc": 34,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -9829,6 +10170,7 @@
       "start_line": 98,
       "end_line": 216,
       "kind": "class",
+      "loc": 96,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -9859,6 +10201,7 @@
       "start_line": 218,
       "end_line": 229,
       "kind": "class",
+      "loc": 7,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9886,6 +10229,7 @@
       "start_line": 231,
       "end_line": 245,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -9913,6 +10257,7 @@
       "start_line": 247,
       "end_line": 361,
       "kind": "class",
+      "loc": 105,
       "raw": {
         "cc": 8.0,
         "coupling": 0.0,
@@ -9943,6 +10288,7 @@
       "start_line": 17,
       "end_line": 52,
       "kind": "class",
+      "loc": 25,
       "raw": {
         "cc": 3.0,
         "coupling": 2.0,
@@ -9973,6 +10319,7 @@
       "start_line": 33,
       "end_line": 33,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -10000,6 +10347,7 @@
       "start_line": 19,
       "end_line": 107,
       "kind": "class",
+      "loc": 83,
       "raw": {
         "cc": 6.0,
         "coupling": 0.0,
@@ -10030,6 +10378,7 @@
       "start_line": 17,
       "end_line": 41,
       "kind": "class",
+      "loc": 16,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -10057,6 +10406,7 @@
       "start_line": 20,
       "end_line": 58,
       "kind": "class",
+      "loc": 29,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -10084,6 +10434,7 @@
       "start_line": 17,
       "end_line": 67,
       "kind": "class",
+      "loc": 32,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -10114,6 +10465,7 @@
       "start_line": 22,
       "end_line": 27,
       "kind": "struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -10141,6 +10493,7 @@
       "start_line": 29,
       "end_line": 29,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -10168,6 +10521,7 @@
       "start_line": 31,
       "end_line": 176,
       "kind": "class",
+      "loc": 122,
       "raw": {
         "cc": 5.0,
         "coupling": 2.0,
@@ -10198,6 +10552,7 @@
       "start_line": 17,
       "end_line": 153,
       "kind": "class",
+      "loc": 98,
       "raw": {
         "cc": 6.0,
         "coupling": 2.0,
@@ -10228,6 +10583,7 @@
       "start_line": 16,
       "end_line": 56,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -10258,6 +10614,7 @@
       "start_line": 17,
       "end_line": 97,
       "kind": "class",
+      "loc": 54,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -10288,6 +10645,7 @@
       "start_line": 17,
       "end_line": 32,
       "kind": "struct",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 4.0,
@@ -10318,6 +10676,7 @@
       "start_line": 16,
       "end_line": 54,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -10348,6 +10707,7 @@
       "start_line": 20,
       "end_line": 121,
       "kind": "class",
+      "loc": 59,
       "raw": {
         "cc": 4.0,
         "coupling": 8.0,
@@ -10378,6 +10738,7 @@
       "start_line": 14,
       "end_line": 19,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10405,6 +10766,7 @@
       "start_line": 22,
       "end_line": 951,
       "kind": "class",
+      "loc": 284,
       "raw": {
         "cc": 44.0,
         "coupling": 7.0,
@@ -10435,6 +10797,7 @@
       "start_line": 30,
       "end_line": 30,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10462,6 +10825,7 @@
       "start_line": 93,
       "end_line": 93,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10489,6 +10853,7 @@
       "start_line": 95,
       "end_line": 109,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10516,6 +10881,7 @@
       "start_line": 111,
       "end_line": 111,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10543,6 +10909,7 @@
       "start_line": 113,
       "end_line": 144,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10570,6 +10937,7 @@
       "start_line": 146,
       "end_line": 159,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10597,6 +10965,7 @@
       "start_line": 161,
       "end_line": 211,
       "kind": "struct",
+      "loc": 38,
       "raw": {
         "cc": 4.0,
         "coupling": 1.0,
@@ -10627,6 +10996,7 @@
       "start_line": 321,
       "end_line": 552,
       "kind": "class",
+      "loc": 210,
       "raw": {
         "cc": 35.0,
         "coupling": 5.0,
@@ -10657,6 +11027,7 @@
       "start_line": 554,
       "end_line": 562,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -10687,6 +11058,7 @@
       "start_line": 564,
       "end_line": 577,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -10717,6 +11089,7 @@
       "start_line": 701,
       "end_line": 701,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -10744,6 +11117,7 @@
       "start_line": 720,
       "end_line": 777,
       "kind": "class",
+      "loc": 48,
       "raw": {
         "cc": 5.0,
         "coupling": 0.0,
@@ -10774,6 +11148,7 @@
       "start_line": 779,
       "end_line": 950,
       "kind": "class",
+      "loc": 167,
       "raw": {
         "cc": 22.0,
         "coupling": 1.0,
@@ -10804,6 +11179,7 @@
       "start_line": 953,
       "end_line": 967,
       "kind": "class",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -10834,6 +11210,7 @@
       "start_line": 969,
       "end_line": 983,
       "kind": "class",
+      "loc": 9,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -10864,6 +11241,7 @@
       "start_line": 20,
       "end_line": 23,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -10894,6 +11272,7 @@
       "start_line": 25,
       "end_line": 33,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -10924,6 +11303,7 @@
       "start_line": 35,
       "end_line": 243,
       "kind": "class",
+      "loc": 141,
       "raw": {
         "cc": 7.0,
         "coupling": 1.0,
@@ -10954,6 +11334,7 @@
       "start_line": 245,
       "end_line": 384,
       "kind": "class",
+      "loc": 116,
       "raw": {
         "cc": 6.0,
         "coupling": 6.0,
@@ -10984,6 +11365,7 @@
       "start_line": 17,
       "end_line": 70,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -11014,6 +11396,7 @@
       "start_line": 72,
       "end_line": 513,
       "kind": "class",
+      "loc": 359,
       "raw": {
         "cc": 14.5,
         "coupling": 6.0,
@@ -11044,6 +11427,7 @@
       "start_line": 74,
       "end_line": 74,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11071,6 +11455,7 @@
       "start_line": 78,
       "end_line": 78,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11098,6 +11483,7 @@
       "start_line": 79,
       "end_line": 79,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -11125,6 +11511,7 @@
       "start_line": 82,
       "end_line": 83,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11152,6 +11539,7 @@
       "start_line": 14,
       "end_line": 16,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11179,6 +11567,7 @@
       "start_line": 18,
       "end_line": 69,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -11209,6 +11598,7 @@
       "start_line": 16,
       "end_line": 38,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11236,6 +11626,7 @@
       "start_line": 40,
       "end_line": 40,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11263,6 +11654,7 @@
       "start_line": 21,
       "end_line": 29,
       "kind": "struct",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -11293,6 +11685,7 @@
       "start_line": 31,
       "end_line": 38,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -11320,6 +11713,7 @@
       "start_line": 40,
       "end_line": 286,
       "kind": "class",
+      "loc": 200,
       "raw": {
         "cc": 6.5,
         "coupling": 7.0,
@@ -11350,6 +11744,7 @@
       "start_line": 19,
       "end_line": 26,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -11377,6 +11772,7 @@
       "start_line": 28,
       "end_line": 88,
       "kind": "class",
+      "loc": 45,
       "raw": {
         "cc": 3.0,
         "coupling": 4.0,
@@ -11407,6 +11803,7 @@
       "start_line": 90,
       "end_line": 96,
       "kind": "struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -11434,6 +11831,7 @@
       "start_line": 17,
       "end_line": 38,
       "kind": "class",
+      "loc": 19,
       "raw": {
         "cc": 4.0,
         "coupling": 0.0,
@@ -11464,6 +11862,7 @@
       "start_line": 14,
       "end_line": 19,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -11491,6 +11890,7 @@
       "start_line": 21,
       "end_line": 29,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -11521,6 +11921,7 @@
       "start_line": 16,
       "end_line": 22,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11548,6 +11949,7 @@
       "start_line": 24,
       "end_line": 43,
       "kind": "class",
+      "loc": 12,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -11575,6 +11977,7 @@
       "start_line": 45,
       "end_line": 46,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11602,6 +12005,7 @@
       "start_line": 48,
       "end_line": 58,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11629,6 +12033,7 @@
       "start_line": 60,
       "end_line": 64,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11656,6 +12061,7 @@
       "start_line": 66,
       "end_line": 67,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11683,6 +12089,7 @@
       "start_line": 69,
       "end_line": 70,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11710,6 +12117,7 @@
       "start_line": 72,
       "end_line": 76,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11737,6 +12145,7 @@
       "start_line": 78,
       "end_line": 92,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -11764,6 +12173,7 @@
       "start_line": 94,
       "end_line": 98,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11791,6 +12201,7 @@
       "start_line": 18,
       "end_line": 18,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11818,6 +12229,7 @@
       "start_line": 19,
       "end_line": 294,
       "kind": "struct",
+      "loc": 132,
       "raw": {
         "cc": 8.0,
         "coupling": 0.0,
@@ -11848,6 +12260,7 @@
       "start_line": 28,
       "end_line": 29,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11875,6 +12288,7 @@
       "start_line": 31,
       "end_line": 40,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -11902,6 +12316,7 @@
       "start_line": 45,
       "end_line": 45,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -11929,6 +12344,7 @@
       "start_line": 47,
       "end_line": 50,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -11956,6 +12372,7 @@
       "start_line": 52,
       "end_line": 62,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -11983,6 +12400,7 @@
       "start_line": 64,
       "end_line": 71,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -12010,6 +12428,7 @@
       "start_line": 73,
       "end_line": 80,
       "kind": "class",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12037,6 +12456,7 @@
       "start_line": 82,
       "end_line": 88,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -12064,6 +12484,7 @@
       "start_line": 90,
       "end_line": 106,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12091,6 +12512,7 @@
       "start_line": 108,
       "end_line": 109,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12121,6 +12543,7 @@
       "start_line": 110,
       "end_line": 111,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12148,6 +12571,7 @@
       "start_line": 112,
       "end_line": 116,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -12178,6 +12602,7 @@
       "start_line": 118,
       "end_line": 118,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12205,6 +12630,7 @@
       "start_line": 119,
       "end_line": 119,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -12232,6 +12658,7 @@
       "start_line": 120,
       "end_line": 120,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12259,6 +12686,7 @@
       "start_line": 122,
       "end_line": 126,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12286,6 +12714,7 @@
       "start_line": 128,
       "end_line": 129,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -12313,6 +12742,7 @@
       "start_line": 131,
       "end_line": 138,
       "kind": "class",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12340,6 +12770,7 @@
       "start_line": 140,
       "end_line": 147,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12367,6 +12798,7 @@
       "start_line": 149,
       "end_line": 149,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12394,6 +12826,7 @@
       "start_line": 150,
       "end_line": 150,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12421,6 +12854,7 @@
       "start_line": 151,
       "end_line": 151,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12448,6 +12882,7 @@
       "start_line": 153,
       "end_line": 154,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -12475,6 +12910,7 @@
       "start_line": 156,
       "end_line": 157,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12502,6 +12938,7 @@
       "start_line": 158,
       "end_line": 159,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12529,6 +12966,7 @@
       "start_line": 161,
       "end_line": 162,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12556,6 +12994,7 @@
       "start_line": 163,
       "end_line": 163,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12586,6 +13025,7 @@
       "start_line": 164,
       "end_line": 164,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12616,6 +13056,7 @@
       "start_line": 165,
       "end_line": 165,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12646,6 +13087,7 @@
       "start_line": 167,
       "end_line": 174,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12673,6 +13115,7 @@
       "start_line": 176,
       "end_line": 180,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -12700,6 +13143,7 @@
       "start_line": 182,
       "end_line": 201,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12727,6 +13171,7 @@
       "start_line": 203,
       "end_line": 207,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -12754,6 +13199,7 @@
       "start_line": 209,
       "end_line": 213,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -12781,6 +13227,7 @@
       "start_line": 215,
       "end_line": 219,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -12808,6 +13255,7 @@
       "start_line": 221,
       "end_line": 225,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12835,6 +13283,7 @@
       "start_line": 227,
       "end_line": 227,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -12862,6 +13311,7 @@
       "start_line": 229,
       "end_line": 229,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -12889,6 +13339,7 @@
       "start_line": 230,
       "end_line": 230,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12916,6 +13367,7 @@
       "start_line": 231,
       "end_line": 231,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12943,6 +13395,7 @@
       "start_line": 233,
       "end_line": 262,
       "kind": "interface",
+      "loc": 22,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -12970,6 +13423,7 @@
       "start_line": 264,
       "end_line": 272,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13000,6 +13454,7 @@
       "start_line": 274,
       "end_line": 278,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -13027,6 +13482,7 @@
       "start_line": 280,
       "end_line": 285,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13054,6 +13510,7 @@
       "start_line": 287,
       "end_line": 287,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13081,6 +13538,7 @@
       "start_line": 288,
       "end_line": 288,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13108,6 +13566,7 @@
       "start_line": 289,
       "end_line": 289,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13135,6 +13594,7 @@
       "start_line": 291,
       "end_line": 292,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13162,6 +13622,7 @@
       "start_line": 294,
       "end_line": 298,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13189,6 +13650,7 @@
       "start_line": 300,
       "end_line": 300,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -13216,6 +13678,7 @@
       "start_line": 301,
       "end_line": 301,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -13243,6 +13706,7 @@
       "start_line": 303,
       "end_line": 306,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13270,6 +13734,7 @@
       "start_line": 308,
       "end_line": 312,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13297,6 +13762,7 @@
       "start_line": 314,
       "end_line": 319,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13324,6 +13790,7 @@
       "start_line": 321,
       "end_line": 321,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -13351,6 +13818,7 @@
       "start_line": 323,
       "end_line": 323,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -13378,6 +13846,7 @@
       "start_line": 325,
       "end_line": 330,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13405,6 +13874,7 @@
       "start_line": 332,
       "end_line": 337,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -13432,6 +13902,7 @@
       "start_line": 339,
       "end_line": 339,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13459,6 +13930,7 @@
       "start_line": 341,
       "end_line": 341,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 26.0,
@@ -13489,6 +13961,7 @@
       "start_line": 343,
       "end_line": 350,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13516,6 +13989,7 @@
       "start_line": 352,
       "end_line": 355,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13543,6 +14017,7 @@
       "start_line": 357,
       "end_line": 357,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -13570,6 +14045,7 @@
       "start_line": 359,
       "end_line": 360,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -13597,6 +14073,7 @@
       "start_line": 362,
       "end_line": 363,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -13624,6 +14101,7 @@
       "start_line": 365,
       "end_line": 365,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -13651,6 +14129,7 @@
       "start_line": 367,
       "end_line": 368,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13678,6 +14157,7 @@
       "start_line": 369,
       "end_line": 370,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13705,6 +14185,7 @@
       "start_line": 372,
       "end_line": 372,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -13735,6 +14216,7 @@
       "start_line": 373,
       "end_line": 373,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13762,6 +14244,7 @@
       "start_line": 374,
       "end_line": 374,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13789,6 +14272,7 @@
       "start_line": 375,
       "end_line": 375,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13819,6 +14303,7 @@
       "start_line": 376,
       "end_line": 376,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13849,6 +14334,7 @@
       "start_line": 378,
       "end_line": 382,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13879,6 +14365,7 @@
       "start_line": 384,
       "end_line": 385,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13906,6 +14393,7 @@
       "start_line": 387,
       "end_line": 391,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13933,6 +14421,7 @@
       "start_line": 393,
       "end_line": 398,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -13960,6 +14449,7 @@
       "start_line": 400,
       "end_line": 405,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -13987,6 +14477,7 @@
       "start_line": 407,
       "end_line": 411,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -14014,6 +14505,7 @@
       "start_line": 413,
       "end_line": 419,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14041,6 +14533,7 @@
       "start_line": 421,
       "end_line": 422,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14071,6 +14564,7 @@
       "start_line": 424,
       "end_line": 425,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14101,6 +14595,7 @@
       "start_line": 427,
       "end_line": 428,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14131,6 +14626,7 @@
       "start_line": 430,
       "end_line": 430,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14161,6 +14657,7 @@
       "start_line": 431,
       "end_line": 431,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14191,6 +14688,7 @@
       "start_line": 433,
       "end_line": 434,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14221,6 +14719,7 @@
       "start_line": 436,
       "end_line": 441,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14251,6 +14750,7 @@
       "start_line": 443,
       "end_line": 447,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14278,6 +14778,7 @@
       "start_line": 449,
       "end_line": 453,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14305,6 +14806,7 @@
       "start_line": 455,
       "end_line": 459,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14332,6 +14834,7 @@
       "start_line": 461,
       "end_line": 465,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14359,6 +14862,7 @@
       "start_line": 467,
       "end_line": 467,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -14386,6 +14890,7 @@
       "start_line": 469,
       "end_line": 475,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14416,6 +14921,7 @@
       "start_line": 477,
       "end_line": 483,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -14443,6 +14949,7 @@
       "start_line": 485,
       "end_line": 491,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -14470,6 +14977,7 @@
       "start_line": 493,
       "end_line": 505,
       "kind": "interface",
+      "loc": 7,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14497,6 +15005,7 @@
       "start_line": 507,
       "end_line": 510,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -14524,6 +15033,7 @@
       "start_line": 512,
       "end_line": 524,
       "kind": "interface",
+      "loc": 8,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14551,6 +15061,7 @@
       "start_line": 529,
       "end_line": 529,
       "kind": "class",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14578,6 +15089,7 @@
       "start_line": 531,
       "end_line": 534,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -14605,6 +15117,7 @@
       "start_line": 536,
       "end_line": 542,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14632,6 +15145,7 @@
       "start_line": 544,
       "end_line": 548,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14659,6 +15173,7 @@
       "start_line": 550,
       "end_line": 553,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -14686,6 +15201,7 @@
       "start_line": 555,
       "end_line": 556,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14713,6 +15229,7 @@
       "start_line": 558,
       "end_line": 564,
       "kind": "interface",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14743,6 +15260,7 @@
       "start_line": 566,
       "end_line": 566,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -14770,6 +15288,7 @@
       "start_line": 567,
       "end_line": 567,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -14797,6 +15316,7 @@
       "start_line": 569,
       "end_line": 573,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -14827,6 +15347,7 @@
       "start_line": 575,
       "end_line": 603,
       "kind": "class",
+      "loc": 16,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -14854,6 +15375,7 @@
       "start_line": 605,
       "end_line": 620,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -14884,6 +15406,7 @@
       "start_line": 622,
       "end_line": 623,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -14911,6 +15434,7 @@
       "start_line": 625,
       "end_line": 626,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -14938,6 +15462,7 @@
       "start_line": 628,
       "end_line": 629,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -14965,6 +15490,7 @@
       "start_line": 632,
       "end_line": 632,
       "kind": "record struct",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -14992,6 +15518,7 @@
       "start_line": 634,
       "end_line": 637,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -15019,6 +15546,7 @@
       "start_line": 639,
       "end_line": 643,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -15046,6 +15574,7 @@
       "start_line": 646,
       "end_line": 646,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -15073,6 +15602,7 @@
       "start_line": 648,
       "end_line": 653,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -15100,6 +15630,7 @@
       "start_line": 655,
       "end_line": 663,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -15130,6 +15661,7 @@
       "start_line": 16,
       "end_line": 37,
       "kind": "class",
+      "loc": 16,
       "raw": {
         "cc": 5.0,
         "coupling": 2.0,
@@ -15160,6 +15692,7 @@
       "start_line": 16,
       "end_line": 37,
       "kind": "class",
+      "loc": 16,
       "raw": {
         "cc": 5.0,
         "coupling": 2.0,
@@ -15190,6 +15723,7 @@
       "start_line": 16,
       "end_line": 37,
       "kind": "class",
+      "loc": 16,
       "raw": {
         "cc": 5.0,
         "coupling": 2.0,
@@ -15220,6 +15754,7 @@
       "start_line": 17,
       "end_line": 48,
       "kind": "class",
+      "loc": 25,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -15250,6 +15785,7 @@
       "start_line": 24,
       "end_line": 187,
       "kind": "class",
+      "loc": 126,
       "raw": {
         "cc": 8.0,
         "coupling": 3.0,
@@ -15280,6 +15816,7 @@
       "start_line": 189,
       "end_line": 196,
       "kind": "class",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -15310,6 +15847,7 @@
       "start_line": 198,
       "end_line": 210,
       "kind": "struct",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -15340,6 +15878,7 @@
       "start_line": 212,
       "end_line": 624,
       "kind": "class",
+      "loc": 325,
       "raw": {
         "cc": 7.6667,
         "coupling": 5.0,
@@ -15370,6 +15909,7 @@
       "start_line": 626,
       "end_line": 645,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 2.0,
         "coupling": 2.0,
@@ -15400,6 +15940,7 @@
       "start_line": 647,
       "end_line": 664,
       "kind": "class",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -15427,6 +15968,7 @@
       "start_line": 666,
       "end_line": 672,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -15457,6 +15999,7 @@
       "start_line": 674,
       "end_line": 695,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -15484,6 +16027,7 @@
       "start_line": 697,
       "end_line": 700,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -15511,6 +16055,7 @@
       "start_line": 20,
       "end_line": 82,
       "kind": "class",
+      "loc": 55,
       "raw": {
         "cc": 7.0,
         "coupling": 1.0,
@@ -15541,6 +16086,7 @@
       "start_line": 27,
       "end_line": 34,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -15568,6 +16114,7 @@
       "start_line": 36,
       "end_line": 649,
       "kind": "class",
+      "loc": 451,
       "raw": {
         "cc": 13.0,
         "coupling": 7.0,
@@ -15598,6 +16145,7 @@
       "start_line": 41,
       "end_line": 47,
       "kind": "struct",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -15625,6 +16173,7 @@
       "start_line": 89,
       "end_line": 96,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -15652,6 +16201,7 @@
       "start_line": 19,
       "end_line": 147,
       "kind": "struct",
+      "loc": 69,
       "raw": {
         "cc": 4.0,
         "coupling": 10.0,
@@ -15682,6 +16232,7 @@
       "start_line": 20,
       "end_line": 290,
       "kind": "class",
+      "loc": 246,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -15712,6 +16263,7 @@
       "start_line": 20,
       "end_line": 146,
       "kind": "struct",
+      "loc": 60,
       "raw": {
         "cc": 3.0,
         "coupling": 5.0,
@@ -15742,6 +16294,7 @@
       "start_line": 16,
       "end_line": 19,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -15769,6 +16322,7 @@
       "start_line": 17,
       "end_line": 21,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -15796,6 +16350,7 @@
       "start_line": 24,
       "end_line": 25,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -15823,6 +16378,7 @@
       "start_line": 27,
       "end_line": 40,
       "kind": "class",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -15850,6 +16406,7 @@
       "start_line": 42,
       "end_line": 295,
       "kind": "class",
+      "loc": 223,
       "raw": {
         "cc": 12.0,
         "coupling": 10.0,
@@ -15880,6 +16437,7 @@
       "start_line": 26,
       "end_line": 640,
       "kind": "class",
+      "loc": 539,
       "raw": {
         "cc": 6.4286,
         "coupling": 2.0,
@@ -15910,6 +16468,7 @@
       "start_line": 301,
       "end_line": 301,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -15937,6 +16496,7 @@
       "start_line": 642,
       "end_line": 679,
       "kind": "struct",
+      "loc": 28,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -15967,6 +16527,7 @@
       "start_line": 26,
       "end_line": 909,
       "kind": "class",
+      "loc": 658,
       "raw": {
         "cc": 8.75,
         "coupling": 16.0,
@@ -15997,6 +16558,7 @@
       "start_line": 30,
       "end_line": 49,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 3.0,
         "coupling": 3.0,
@@ -16027,6 +16589,7 @@
       "start_line": 813,
       "end_line": 826,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -16054,6 +16617,7 @@
       "start_line": 854,
       "end_line": 859,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -16081,6 +16645,7 @@
       "start_line": 861,
       "end_line": 866,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -16108,6 +16673,7 @@
       "start_line": 868,
       "end_line": 873,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -16135,6 +16701,7 @@
       "start_line": 875,
       "end_line": 908,
       "kind": "class",
+      "loc": 21,
       "raw": {
         "cc": 3.0,
         "coupling": 3.0,
@@ -16165,6 +16732,7 @@
       "start_line": 25,
       "end_line": 158,
       "kind": "class",
+      "loc": 127,
       "raw": {
         "cc": 23.0,
         "coupling": 2.0,
@@ -16195,6 +16763,7 @@
       "start_line": 27,
       "end_line": 50,
       "kind": "class",
+      "loc": 13,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -16222,6 +16791,7 @@
       "start_line": 52,
       "end_line": 61,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -16249,6 +16819,7 @@
       "start_line": 63,
       "end_line": 72,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -16276,6 +16847,7 @@
       "start_line": 74,
       "end_line": 85,
       "kind": "class",
+      "loc": 5,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -16303,6 +16875,7 @@
       "start_line": 87,
       "end_line": 201,
       "kind": "class",
+      "loc": 103,
       "raw": {
         "cc": 9.0,
         "coupling": 3.0,
@@ -16333,6 +16906,7 @@
       "start_line": 16,
       "end_line": 44,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 10.0,
         "coupling": 0.0,
@@ -16363,6 +16937,7 @@
       "start_line": 19,
       "end_line": 93,
       "kind": "class",
+      "loc": 63,
       "raw": {
         "cc": 7.0,
         "coupling": 1.0,
@@ -16393,6 +16968,7 @@
       "start_line": 17,
       "end_line": 22,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -16420,6 +16996,7 @@
       "start_line": 24,
       "end_line": 37,
       "kind": "class",
+      "loc": 8,
       "raw": {
         "cc": 2.0,
         "coupling": 1.0,
@@ -16447,6 +17024,7 @@
       "start_line": 31,
       "end_line": 1037,
       "kind": "class",
+      "loc": 888,
       "raw": {
         "cc": 16.25,
         "coupling": 27.0,
@@ -16477,6 +17055,7 @@
       "start_line": 1039,
       "end_line": 1044,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -16504,6 +17083,7 @@
       "start_line": 21,
       "end_line": 236,
       "kind": "class",
+      "loc": 122,
       "raw": {
         "cc": 6.0,
         "coupling": 4.0,
@@ -16534,6 +17114,7 @@
       "start_line": 184,
       "end_line": 235,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -16561,6 +17142,7 @@
       "start_line": 17,
       "end_line": 28,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -16588,6 +17170,7 @@
       "start_line": 30,
       "end_line": 61,
       "kind": "class",
+      "loc": 22,
       "raw": {
         "cc": 5.0,
         "coupling": 2.0,
@@ -16618,6 +17201,7 @@
       "start_line": 18,
       "end_line": 65,
       "kind": "class",
+      "loc": 29,
       "raw": {
         "cc": 8.0,
         "coupling": 1.0,
@@ -16648,6 +17232,7 @@
       "start_line": 18,
       "end_line": 116,
       "kind": "class",
+      "loc": 81,
       "raw": {
         "cc": 8.0,
         "coupling": 3.0,
@@ -16678,6 +17263,7 @@
       "start_line": 20,
       "end_line": 21,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -16705,6 +17291,7 @@
       "start_line": 22,
       "end_line": 58,
       "kind": "class",
+      "loc": 34,
       "raw": {
         "cc": 6.0,
         "coupling": 0.0,
@@ -16735,6 +17322,7 @@
       "start_line": 21,
       "end_line": 106,
       "kind": "class",
+      "loc": 70,
       "raw": {
         "cc": 5.0,
         "coupling": 3.0,
@@ -16765,6 +17353,7 @@
       "start_line": 19,
       "end_line": 55,
       "kind": "class",
+      "loc": 19,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -16792,6 +17381,7 @@
       "start_line": 57,
       "end_line": 68,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -16822,6 +17412,7 @@
       "start_line": 22,
       "end_line": 192,
       "kind": "class",
+      "loc": 145,
       "raw": {
         "cc": 7.0,
         "coupling": 1.0,
@@ -16852,6 +17443,7 @@
       "start_line": 25,
       "end_line": 25,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -16879,6 +17471,7 @@
       "start_line": 21,
       "end_line": 38,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -16906,6 +17499,7 @@
       "start_line": 40,
       "end_line": 48,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -16933,6 +17527,7 @@
       "start_line": 51,
       "end_line": 205,
       "kind": "class",
+      "loc": 112,
       "raw": {
         "cc": 17.0,
         "coupling": 5.0,
@@ -16963,6 +17558,7 @@
       "start_line": 21,
       "end_line": 58,
       "kind": "class",
+      "loc": 30,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -16993,6 +17589,7 @@
       "start_line": 60,
       "end_line": 105,
       "kind": "class",
+      "loc": 25,
       "raw": {
         "cc": 2.0,
         "coupling": 19.0,
@@ -17023,6 +17620,7 @@
       "start_line": 62,
       "end_line": 68,
       "kind": "struct",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -17050,6 +17648,7 @@
       "start_line": 107,
       "end_line": 692,
       "kind": "class",
+      "loc": 547,
       "raw": {
         "cc": 32.5,
         "coupling": 23.0,
@@ -17080,6 +17679,7 @@
       "start_line": 694,
       "end_line": 732,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 1.0,
         "coupling": 6.0,
@@ -17110,6 +17710,7 @@
       "start_line": 734,
       "end_line": 777,
       "kind": "class",
+      "loc": 33,
       "raw": {
         "cc": 8.0,
         "coupling": 4.0,
@@ -17140,6 +17741,7 @@
       "start_line": 779,
       "end_line": 783,
       "kind": "class",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 12.0,
@@ -17170,6 +17772,7 @@
       "start_line": 27,
       "end_line": 27,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 6.0,
@@ -17200,6 +17803,7 @@
       "start_line": 29,
       "end_line": 234,
       "kind": "class",
+      "loc": 162,
       "raw": {
         "cc": 10.0,
         "coupling": 8.0,
@@ -17230,6 +17834,7 @@
       "start_line": 236,
       "end_line": 252,
       "kind": "interface",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -17257,6 +17862,7 @@
       "start_line": 254,
       "end_line": 257,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 0.0,
@@ -17284,6 +17890,7 @@
       "start_line": 17,
       "end_line": 63,
       "kind": "struct",
+      "loc": 32,
       "raw": {
         "cc": 2.0,
         "coupling": 11.0,
@@ -17314,6 +17921,7 @@
       "start_line": 68,
       "end_line": 93,
       "kind": "struct",
+      "loc": 10,
       "raw": {
         "cc": 2.0,
         "coupling": 6.0,
@@ -17344,6 +17952,7 @@
       "start_line": 21,
       "end_line": 188,
       "kind": "class",
+      "loc": 132,
       "raw": {
         "cc": 4.0,
         "coupling": 3.0,
@@ -17374,6 +17983,7 @@
       "start_line": 186,
       "end_line": 187,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17401,6 +18011,7 @@
       "start_line": 19,
       "end_line": 19,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17428,6 +18039,7 @@
       "start_line": 21,
       "end_line": 21,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17455,6 +18067,7 @@
       "start_line": 23,
       "end_line": 312,
       "kind": "class",
+      "loc": 157,
       "raw": {
         "cc": 8.0,
         "coupling": 0.0,
@@ -17485,6 +18098,7 @@
       "start_line": 27,
       "end_line": 33,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17512,6 +18126,7 @@
       "start_line": 35,
       "end_line": 35,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17539,6 +18154,7 @@
       "start_line": 37,
       "end_line": 37,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17566,6 +18182,7 @@
       "start_line": 39,
       "end_line": 336,
       "kind": "class",
+      "loc": 193,
       "raw": {
         "cc": 10.0,
         "coupling": 7.0,
@@ -17596,6 +18213,7 @@
       "start_line": 20,
       "end_line": 116,
       "kind": "class",
+      "loc": 78,
       "raw": {
         "cc": 7.0,
         "coupling": 7.0,
@@ -17626,6 +18244,7 @@
       "start_line": 16,
       "end_line": 55,
       "kind": "class",
+      "loc": 26,
       "raw": {
         "cc": 5.0,
         "coupling": 0.0,
@@ -17656,6 +18275,7 @@
       "start_line": 57,
       "end_line": 57,
       "kind": "record",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -17683,6 +18303,7 @@
       "start_line": 23,
       "end_line": 582,
       "kind": "class",
+      "loc": 441,
       "raw": {
         "cc": 6.6667,
         "coupling": 14.0,
@@ -17713,6 +18334,7 @@
       "start_line": 25,
       "end_line": 25,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17740,6 +18362,7 @@
       "start_line": 391,
       "end_line": 391,
       "kind": "interface",
+      "loc": 1,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -17767,6 +18390,7 @@
       "start_line": 19,
       "end_line": 100,
       "kind": "class",
+      "loc": 69,
       "raw": {
         "cc": 8.0,
         "coupling": 1.0,
@@ -17797,6 +18421,7 @@
       "start_line": 23,
       "end_line": 23,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17824,6 +18449,7 @@
       "start_line": 24,
       "end_line": 24,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17851,6 +18477,7 @@
       "start_line": 25,
       "end_line": 25,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17878,6 +18505,7 @@
       "start_line": 26,
       "end_line": 26,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17905,6 +18533,7 @@
       "start_line": 28,
       "end_line": 28,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17932,6 +18561,7 @@
       "start_line": 30,
       "end_line": 39,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17959,6 +18589,7 @@
       "start_line": 41,
       "end_line": 47,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -17986,6 +18617,7 @@
       "start_line": 49,
       "end_line": 49,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -18013,6 +18645,7 @@
       "start_line": 51,
       "end_line": 88,
       "kind": "class",
+      "loc": 21,
       "raw": {
         "cc": 3.0,
         "coupling": 9.0,
@@ -18043,6 +18676,7 @@
       "start_line": 53,
       "end_line": 58,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -18070,6 +18704,7 @@
       "start_line": 90,
       "end_line": 184,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -18100,6 +18735,7 @@
       "start_line": 186,
       "end_line": 233,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 1.0,
@@ -18127,6 +18763,7 @@
       "start_line": 235,
       "end_line": 283,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 2.0,
@@ -18157,6 +18794,7 @@
       "start_line": 285,
       "end_line": 305,
       "kind": "class",
+      "loc": 4,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -18184,6 +18822,7 @@
       "start_line": 307,
       "end_line": 315,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 2.0,
@@ -18214,6 +18853,7 @@
       "start_line": 317,
       "end_line": 379,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 5.0,
         "coupling": 1.0,
@@ -18244,6 +18884,7 @@
       "start_line": 381,
       "end_line": 538,
       "kind": "class",
+      "loc": 137,
       "raw": {
         "cc": 9.0,
         "coupling": 3.0,
@@ -18274,6 +18915,7 @@
       "start_line": 21,
       "end_line": 283,
       "kind": "class",
+      "loc": 226,
       "raw": {
         "cc": 6.0,
         "coupling": 0.0,
@@ -18304,6 +18946,7 @@
       "start_line": 23,
       "end_line": 24,
       "kind": "class",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -18331,6 +18974,7 @@
       "start_line": 27,
       "end_line": 27,
       "kind": "interface",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 3.0,
@@ -18361,6 +19005,7 @@
       "start_line": 29,
       "end_line": 211,
       "kind": "class",
+      "loc": 145,
       "raw": {
         "cc": 9.0,
         "coupling": 0.0,
@@ -18391,6 +19036,7 @@
       "start_line": 17,
       "end_line": 17,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -18418,6 +19064,7 @@
       "start_line": 19,
       "end_line": 57,
       "kind": "class",
+      "loc": 20,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -18448,6 +19095,7 @@
       "start_line": 18,
       "end_line": 116,
       "kind": "class",
+      "loc": 75,
       "raw": {
         "cc": 4.0,
         "coupling": 1.0,
@@ -18478,6 +19126,7 @@
       "start_line": 21,
       "end_line": 38,
       "kind": "class",
+      "loc": 15,
       "raw": {
         "cc": 3.0,
         "coupling": 0.0,
@@ -18508,6 +19157,7 @@
       "start_line": 43,
       "end_line": 328,
       "kind": "class",
+      "loc": 72,
       "raw": {
         "cc": 3.0,
         "coupling": 4.0,
@@ -18538,6 +19188,7 @@
       "start_line": 137,
       "end_line": 143,
       "kind": "interface",
+      "loc": 2,
       "raw": {
         "cc": 1.0,
         "coupling": 1.0,
@@ -18565,6 +19216,7 @@
       "start_line": 145,
       "end_line": 327,
       "kind": "class",
+      "loc": 107,
       "raw": {
         "cc": 5.0,
         "coupling": 5.0,
@@ -18595,6 +19247,7 @@
       "start_line": 190,
       "end_line": 197,
       "kind": "class",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -18625,6 +19278,7 @@
       "start_line": 199,
       "end_line": 219,
       "kind": "struct",
+      "loc": 11,
       "raw": {
         "cc": 2.0,
         "coupling": 3.0,
@@ -18655,6 +19309,7 @@
       "start_line": 259,
       "end_line": 265,
       "kind": "struct",
+      "loc": 3,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -18685,6 +19340,7 @@
       "start_line": 267,
       "end_line": 285,
       "kind": "struct",
+      "loc": 10,
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
@@ -18715,6 +19371,7 @@
       "start_line": 17,
       "end_line": 89,
       "kind": "class",
+      "loc": 66,
       "raw": {
         "cc": 7.0,
         "coupling": 0.0,
@@ -18745,6 +19402,7 @@
       "start_line": 22,
       "end_line": 278,
       "kind": "struct",
+      "loc": 154,
       "raw": {
         "cc": 8.5,
         "coupling": 5.0,
@@ -18775,6 +19433,7 @@
       "start_line": 24,
       "end_line": 193,
       "kind": "struct",
+      "loc": 107,
       "raw": {
         "cc": 8.0,
         "coupling": 2.0,
@@ -18805,6 +19464,7 @@
       "start_line": 28,
       "end_line": 28,
       "kind": "enum",
+      "loc": 0,
       "raw": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -18832,6 +19492,7 @@
       "start_line": 30,
       "end_line": 633,
       "kind": "class",
+      "loc": 449,
       "raw": {
         "cc": 8.75,
         "coupling": 8.0,
@@ -18862,6 +19523,7 @@
       "start_line": 635,
       "end_line": 649,
       "kind": "struct",
+      "loc": 4,
       "raw": {
         "cc": 2.0,
         "coupling": 0.0,
@@ -18892,6 +19554,7 @@
       "start_line": 20,
       "end_line": 111,
       "kind": "class",
+      "loc": 60,
       "raw": {
         "cc": 6.0,
         "coupling": 1.0,
@@ -18922,6 +19585,7 @@
       "start_line": 16,
       "end_line": 35,
       "kind": "class",
+      "loc": 6,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -18952,6 +19616,7 @@
       "start_line": 20,
       "end_line": 141,
       "kind": "struct",
+      "loc": 69,
       "raw": {
         "cc": 4.0,
         "coupling": 7.0,
@@ -18982,6 +19647,7 @@
       "start_line": 143,
       "end_line": 168,
       "kind": "class",
+      "loc": 23,
       "raw": {
         "cc": 3.0,
         "coupling": 1.0,
@@ -19012,6 +19678,7 @@
       "start_line": 19,
       "end_line": 221,
       "kind": "struct",
+      "loc": 160,
       "raw": {
         "cc": 3.0,
         "coupling": 4.0,
@@ -19042,6 +19709,7 @@
       "start_line": 20,
       "end_line": 182,
       "kind": "struct",
+      "loc": 84,
       "raw": {
         "cc": 3.0,
         "coupling": 13.0,

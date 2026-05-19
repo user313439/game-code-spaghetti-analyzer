@@ -1,0 +1,8280 @@
+{
+  "schema_version": "validate-0.2",
+  "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
+  "subdir": "OpenRA.Game",
+  "since": null,
+  "until": null,
+  "keywords": [
+    "fix",
+    "bug",
+    "crash",
+    "regression",
+    "hotfix",
+    "patch",
+    "defect"
+  ],
+  "total_commits": 6242,
+  "bugfix_commits": 1148,
+  "classes_total": 668,
+  "classes_with_bugfix": 603,
+  "files_total": 226,
+  "files_with_bugfix": 190,
+  "unmatched_change_count": 1150,
+  "class_correlations": [
+    {
+      "name": "si_vs_bugfix",
+      "n": 668,
+      "spearman_rho": -0.1239,
+      "p_value": 0.001814
+    },
+    {
+      "name": "loc_vs_bugfix",
+      "n": 668,
+      "spearman_rho": -0.1852,
+      "p_value": 3e-06
+    },
+    {
+      "name": "cc_vs_bugfix",
+      "n": 668,
+      "spearman_rho": -0.1441,
+      "p_value": 0.000277
+    }
+  ],
+  "file_correlations": [
+    {
+      "name": "file_si_vs_bugfix",
+      "n": 226,
+      "spearman_rho": 0.5797,
+      "p_value": 0.0
+    },
+    {
+      "name": "file_loc_vs_bugfix",
+      "n": 226,
+      "spearman_rho": 0.6988,
+      "p_value": 0.0
+    },
+    {
+      "name": "file_cc_vs_bugfix",
+      "n": 226,
+      "spearman_rho": 0.5517,
+      "p_value": 0.0
+    }
+  ],
+  "top_bugfix_files": [
+    {
+      "path": "Game.cs",
+      "count": 117
+    },
+    {
+      "path": "Server/Server.cs",
+      "count": 80
+    },
+    {
+      "path": "Traits/TraitsInterfaces.cs",
+      "count": 53
+    },
+    {
+      "path": "Map/Map.cs",
+      "count": 48
+    },
+    {
+      "path": "World.cs",
+      "count": 41
+    },
+    {
+      "path": "Network/UnitOrders.cs",
+      "count": 37
+    },
+    {
+      "path": "Graphics/WorldRenderer.cs",
+      "count": 36
+    },
+    {
+      "path": "Graphics/Viewport.cs",
+      "count": 35
+    },
+    {
+      "path": "Actor.cs",
+      "count": 34
+    },
+    {
+      "path": "Widgets/Widget.cs",
+      "count": 28
+    },
+    {
+      "path": "Player.cs",
+      "count": 26
+    },
+    {
+      "path": "Map/MapCache.cs",
+      "count": 24
+    },
+    {
+      "path": "WorldUtils.cs",
+      "count": 22
+    },
+    {
+      "path": "Map/MapPreview.cs",
+      "count": 21
+    },
+    {
+      "path": "GameRules/WeaponInfo.cs",
+      "count": 21
+    },
+    {
+      "path": "ModData.cs",
+      "count": 20
+    },
+    {
+      "path": "Network/Connection.cs",
+      "count": 20
+    },
+    {
+      "path": "Network/OrderManager.cs",
+      "count": 20
+    },
+    {
+      "path": "MiniYaml.cs",
+      "count": 19
+    },
+    {
+      "path": "Network/Session.cs",
+      "count": 19
+    }
+  ],
+  "unmatched_paths_sample": [
+    {
+      "path": "OpenRA.Game.csproj",
+      "count": 42
+    },
+    {
+      "path": "Widgets/WorldInteractionControllerWidget.cs",
+      "count": 35
+    },
+    {
+      "path": "Orders/UnitOrderGenerator.cs",
+      "count": 22
+    },
+    {
+      "path": "Traits/Health.cs",
+      "count": 22
+    },
+    {
+      "path": "Map.cs",
+      "count": 22
+    },
+    {
+      "path": "Sound.cs",
+      "count": 21
+    },
+    {
+      "path": "Chrome.cs",
+      "count": 21
+    },
+    {
+      "path": "Traits/World/Shroud.cs",
+      "count": 18
+    },
+    {
+      "path": "Widgets/ButtonWidget.cs",
+      "count": 18
+    },
+    {
+      "path": "Graphics/Minimap.cs",
+      "count": 18
+    },
+    {
+      "path": "Traits/Mobile.cs",
+      "count": 17
+    },
+    {
+      "path": "Widgets/WidgetUtils.cs",
+      "count": 16
+    },
+    {
+      "path": "GameRules/Settings.cs",
+      "count": 16
+    },
+    {
+      "path": "Traits/World/ResourceLayer.cs",
+      "count": 16
+    },
+    {
+      "path": "Widgets/MapPreviewWidget.cs",
+      "count": 15
+    },
+    {
+      "path": "Traits/Selectable.cs",
+      "count": 14
+    },
+    {
+      "path": "Graphics/TerrainRenderer.cs",
+      "count": 14
+    },
+    {
+      "path": "Graphics/Renderer.cs",
+      "count": 13
+    },
+    {
+      "path": "Selection.cs",
+      "count": 12
+    },
+    {
+      "path": "Graphics/SequenceProvider.cs",
+      "count": 12
+    }
+  ],
+  "rows": [
+    {
+      "fqn": "OpenRA.Activities.ActivityState",
+      "file_path": "Activities/Activity.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Activities.TargetLineNode",
+      "file_path": "Activities/Activity.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Activities.Activity",
+      "file_path": "Activities/Activity.cs",
+      "si": 92.51,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 163,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Activities.CallFunc",
+      "file_path": "Activities/CallFunc.cs",
+      "si": 79.64,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 11,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Effects.DelayedAction",
+      "file_path": "Effects/DelayedAction.cs",
+      "si": 80.99,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 11,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Effects.DelayedImpact",
+      "file_path": "Effects/DelayedImpact.cs",
+      "si": 83.53,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 13,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Effects.IEffect",
+      "file_path": "Effects/IEffect.cs",
+      "si": 84.28,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Effects.ISpatiallyPartitionable",
+      "file_path": "Effects/IEffect.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Effects.IEffectAboveShroud",
+      "file_path": "Effects/IEffect.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Effects.IEffectAnnotation",
+      "file_path": "Effects/IEffect.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.FileFormats.CRC32",
+      "file_path": "FileFormats/CRC32.cs",
+      "si": 77.99,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 19,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.FileFormats.PngIdatStream",
+      "file_path": "FileFormats/Png.cs",
+      "si": 76.5,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 50,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.FileFormats.Png",
+      "file_path": "FileFormats/Png.cs",
+      "si": 97.75,
+      "grade": "E",
+      "cc_max": 26.0,
+      "loc": 465,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.FileFormats.Png.PngColorType",
+      "file_path": "FileFormats/Png.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.FileFormats.Png.PngFilter",
+      "file_path": "FileFormats/Png.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.FileFormats.ReplayMetadata",
+      "file_path": "FileFormats/ReplayMetadata.cs",
+      "si": 74.4,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 76,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.FileSystem.IReadOnlyFileSystem",
+      "file_path": "FileSystem/FileSystem.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.FileSystem.FileSystem",
+      "file_path": "FileSystem/FileSystem.cs",
+      "si": 83.68,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 242,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.FileSystem.Folder",
+      "file_path": "FileSystem/Folder.cs",
+      "si": 91.02,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 68,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.FileSystem.IPackageLoader",
+      "file_path": "FileSystem/IPackage.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.FileSystem.IReadOnlyPackage",
+      "file_path": "FileSystem/IPackage.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.FileSystem.IReadWritePackage",
+      "file_path": "FileSystem/IPackage.cs",
+      "si": 84.28,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.FileSystem.ZipFileLoader",
+      "file_path": "FileSystem/ZipFile.cs",
+      "si": 81.74,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 32,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.FileSystem.ZipFileLoader.ReadOnlyZipFile",
+      "file_path": "FileSystem/ZipFile.cs",
+      "si": 80.54,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 50,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.FileSystem.ZipFileLoader.ReadWriteZipFile",
+      "file_path": "FileSystem/ZipFile.cs",
+      "si": 90.42,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 56,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.FileSystem.ZipFileLoader.ZipFolder",
+      "file_path": "FileSystem/ZipFile.cs",
+      "si": 67.96,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 22,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.FileSystem.ZipFileLoader.StaticStreamDataSource",
+      "file_path": "FileSystem/ZipFile.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.ActorInfo",
+      "file_path": "GameRules/ActorInfo.cs",
+      "si": 89.52,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 155,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.GameRules.MusicInfo",
+      "file_path": "GameRules/MusicInfo.cs",
+      "si": 66.62,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 37,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Ruleset",
+      "file_path": "GameRules/Ruleset.cs",
+      "si": 89.67,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 238,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.GameRules.SoundInfo",
+      "file_path": "GameRules/SoundInfo.cs",
+      "si": 69.31,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 30,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.GameRules.SoundPool",
+      "file_path": "GameRules/SoundInfo.cs",
+      "si": 58.53,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 20,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.GameRules.SoundPool.InterruptType",
+      "file_path": "GameRules/SoundInfo.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.GameRules.ProjectileArgs",
+      "file_path": "GameRules/WeaponInfo.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.GameRules.WarheadArgs",
+      "file_path": "GameRules/WeaponInfo.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 18,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.GameRules.IProjectile",
+      "file_path": "GameRules/WeaponInfo.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.GameRules.IProjectileInfo",
+      "file_path": "GameRules/WeaponInfo.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.GameRules.WeaponInfo",
+      "file_path": "GameRules/WeaponInfo.cs",
+      "si": 82.49,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 116,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.Graphics.Animation",
+      "file_path": "Graphics/Animation.cs",
+      "si": 91.32,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 195,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Graphics.AnimationWithOffset",
+      "file_path": "Graphics/AnimationWithOffset.cs",
+      "si": 81.14,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 26,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.PanelSides",
+      "file_path": "Graphics/ChromeProvider.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.PanelSidesExts",
+      "file_path": "Graphics/ChromeProvider.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.ChromeProvider",
+      "file_path": "Graphics/ChromeProvider.cs",
+      "si": 86.68,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 228,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.ChromeProvider.Collection",
+      "file_path": "Graphics/ChromeProvider.cs",
+      "si": 39.97,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.CursorManager",
+      "file_path": "Graphics/CursorManager.cs",
+      "si": 96.71,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 259,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.CursorManager.Cursor",
+      "file_path": "Graphics/CursorManager.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.CursorSequence",
+      "file_path": "Graphics/CursorSequence.cs",
+      "si": 74.25,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 28,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Graphics.HardwarePalette",
+      "file_path": "Graphics/HardwarePalette.cs",
+      "si": 70.81,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 118,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Graphics.MarkerTileRenderable",
+      "file_path": "Graphics/MarkerTileRenderable.cs",
+      "si": 85.48,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 24,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.IModel",
+      "file_path": "Graphics/Model.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.IModelWidget",
+      "file_path": "Graphics/Model.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.ModelRenderData",
+      "file_path": "Graphics/Model.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.IModelCacheInfo",
+      "file_path": "Graphics/Model.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.IModelCache",
+      "file_path": "Graphics/Model.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.ModelAnimation",
+      "file_path": "Graphics/ModelAnimation.cs",
+      "si": 46.41,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 21,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.ModelVertex",
+      "file_path": "Graphics/ModelVertex.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.ModelShaderBindings",
+      "file_path": "Graphics/ModelVertex.cs",
+      "si": 56.59,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.IPalette",
+      "file_path": "Graphics/Palette.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.IPaletteRemap",
+      "file_path": "Graphics/Palette.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.Palette",
+      "file_path": "Graphics/Palette.cs",
+      "si": 52.25,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 10,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.Palette.ReadOnlyPalette",
+      "file_path": "Graphics/Palette.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.ImmutablePalette",
+      "file_path": "Graphics/Palette.cs",
+      "si": 67.66,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 53,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.MutablePalette",
+      "file_path": "Graphics/Palette.cs",
+      "si": 59.58,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 21,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.PaletteReference",
+      "file_path": "Graphics/PaletteReference.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 7,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.GLProfile",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IPlatform",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IHardwareCursor",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.BlendMode",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IPlatformWindow",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 11,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IGraphicsContext",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IRenderer",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IVertexBuffer",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IIndexBuffer",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IShader",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 55.84,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IShaderBindings",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.TextureScaleFilter",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.ITexture",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IFrameBuffer",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.PrimitiveType",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.WindowMode",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IFont",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.FontGlyph",
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.PlayerColorRemap",
+      "file_path": "Graphics/PlayerColorRemap.cs",
+      "si": 56.74,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 26,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.IRenderable",
+      "file_path": "Graphics/Renderable.cs",
+      "si": 70.36,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Graphics.IPalettedRenderable",
+      "file_path": "Graphics/Renderable.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Graphics.TintModifiers",
+      "file_path": "Graphics/Renderable.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Graphics.IModifyableRenderable",
+      "file_path": "Graphics/Renderable.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Graphics.IFinalizedRenderable",
+      "file_path": "Graphics/Renderable.cs",
+      "si": 86.08,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Graphics.RenderPostProcessPassVertex",
+      "file_path": "Graphics/RenderPostProcessPassVertex.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Graphics.RenderPostProcessPassTexturedVertex",
+      "file_path": "Graphics/RenderPostProcessPassVertex.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Graphics.RenderPostProcessPassShaderBindings",
+      "file_path": "Graphics/RenderPostProcessPassVertex.cs",
+      "si": 56.59,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Graphics.RenderPostProcessPassTexturedShaderBindings",
+      "file_path": "Graphics/RenderPostProcessPassVertex.cs",
+      "si": 56.59,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Graphics.RgbaColorRenderer",
+      "file_path": "Graphics/RgbaColorRenderer.cs",
+      "si": 89.07,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 210,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Graphics.RgbaSpriteRenderer",
+      "file_path": "Graphics/RgbaSpriteRenderer.cs",
+      "si": 52.25,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 32,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.ISpriteSequence",
+      "file_path": "Graphics/SequenceSet.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 6,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.ISpriteSequenceLoader",
+      "file_path": "Graphics/SequenceSet.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.SequenceSet",
+      "file_path": "Graphics/SequenceSet.cs",
+      "si": 69.16,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 60,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Graphics.ShaderVertexAttributeType",
+      "file_path": "Graphics/ShaderBindings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.ShaderVertexAttribute",
+      "file_path": "Graphics/ShaderBindings.cs",
+      "si": 64.52,
+      "grade": "D",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.ShaderBindings",
+      "file_path": "Graphics/ShaderBindings.cs",
+      "si": 72.31,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 15,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.Sheet",
+      "file_path": "Graphics/Sheet.cs",
+      "si": 92.07,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 129,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.SheetOverflowException",
+      "file_path": "Graphics/SheetBuilder.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.SheetType",
+      "file_path": "Graphics/SheetBuilder.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.SheetBuilder",
+      "file_path": "Graphics/SheetBuilder.cs",
+      "si": 93.41,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 116,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Graphics.Sprite",
+      "file_path": "Graphics/Sprite.cs",
+      "si": 77.1,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 22,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.SpriteWithSecondaryData",
+      "file_path": "Graphics/Sprite.cs",
+      "si": 48.2,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 11,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.TextureChannel",
+      "file_path": "Graphics/Sprite.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.SpriteCache",
+      "file_path": "Graphics/SpriteCache.cs",
+      "si": 83.83,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 134,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.SpriteFont",
+      "file_path": "Graphics/SpriteFont.cs",
+      "si": 92.66,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 380,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Graphics.GlyphInfo",
+      "file_path": "Graphics/SpriteFont.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Graphics.SpriteFrameType",
+      "file_path": "Graphics/SpriteLoader.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.ISpriteLoader",
+      "file_path": "Graphics/SpriteLoader.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.ISpriteFrame",
+      "file_path": "Graphics/SpriteLoader.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.FrameCache",
+      "file_path": "Graphics/SpriteLoader.cs",
+      "si": 56.59,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.FrameLoader",
+      "file_path": "Graphics/SpriteLoader.cs",
+      "si": 48.95,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 21,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Graphics.SpriteRenderable",
+      "file_path": "Graphics/SpriteRenderable.cs",
+      "si": 91.17,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 83,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.SpriteRenderer",
+      "file_path": "Graphics/SpriteRenderer.cs",
+      "si": 92.96,
+      "grade": "E",
+      "cc_max": 16.0,
+      "loc": 207,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.Graphics.TargetLineRenderable",
+      "file_path": "Graphics/TargetLineRenderable.cs",
+      "si": 87.43,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 41,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Graphics.TerrainSpriteLayer",
+      "file_path": "Graphics/TerrainSpriteLayer.cs",
+      "si": 93.26,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 193,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Graphics.TerrainSpriteLayer.IndexBufferRc",
+      "file_path": "Graphics/TerrainSpriteLayer.cs",
+      "si": 57.19,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 12,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Graphics.UISpriteRenderable",
+      "file_path": "Graphics/UISpriteRenderable.cs",
+      "si": 90.57,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 41,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Graphics.Util",
+      "file_path": "Graphics/Util.cs",
+      "si": 90.12,
+      "grade": "E",
+      "cc_max": 14.0,
+      "loc": 295,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Graphics.Vertex",
+      "file_path": "Graphics/Vertex.cs",
+      "si": 63.47,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 14,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Graphics.CombinedShaderBindings",
+      "file_path": "Graphics/Vertex.cs",
+      "si": 63.92,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Video.IVideo",
+      "file_path": "Graphics/Video.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Video.IVideoLoader",
+      "file_path": "Graphics/VideoLoader.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Video.VideoLoader",
+      "file_path": "Graphics/VideoLoader.cs",
+      "si": 48.95,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 8,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Graphics.ScrollDirection",
+      "file_path": "Graphics/Viewport.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 35
+    },
+    {
+      "fqn": "OpenRA.Graphics.INotifyViewportZoomExtentsChanged",
+      "file_path": "Graphics/Viewport.cs",
+      "si": 55.84,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 35
+    },
+    {
+      "fqn": "OpenRA.Graphics.ViewportExts",
+      "file_path": "Graphics/Viewport.cs",
+      "si": 40.57,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 9,
+      "bugfix_count": 35
+    },
+    {
+      "fqn": "OpenRA.Graphics.Viewport",
+      "file_path": "Graphics/Viewport.cs",
+      "si": 96.26,
+      "grade": "E",
+      "cc_max": 7.5,
+      "loc": 293,
+      "bugfix_count": 35
+    },
+    {
+      "fqn": "OpenRA.Graphics.WorldRenderer",
+      "file_path": "Graphics/WorldRenderer.cs",
+      "si": 98.35,
+      "grade": "E",
+      "cc_max": 18.0,
+      "loc": 389,
+      "bugfix_count": 36
+    },
+    {
+      "fqn": "OpenRA.Hotkey",
+      "file_path": "Input/Hotkey.cs",
+      "si": 69.01,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 63,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.HotkeyReference",
+      "file_path": "Input/HotkeyReference.cs",
+      "si": 40.87,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 17,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.IInputHandler",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 82.19,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.MouseInputEvent",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.MouseInput",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.MouseButton",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Modifiers",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.ModifiersExts",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 64.07,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 10,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.KeyInputEvent",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.KeyInput",
+      "file_path": "Input/IInputHandler.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.NullInputHandler",
+      "file_path": "Input/InputHandler.cs",
+      "si": 82.19,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.DefaultInputHandler",
+      "file_path": "Input/InputHandler.cs",
+      "si": 83.38,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 20,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Keycode",
+      "file_path": "Input/Keycode.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.KeycodeExts",
+      "file_path": "Input/Keycode.cs",
+      "si": 98.05,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 7,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.IActorInitializer",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ActorInitializer",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 66.32,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 55,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ActorInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 67.07,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 6,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ISingleInstanceInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 49.25,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ValueActorInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 65.72,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.CompositeActorInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 67.37,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 37,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.LocationInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 49.25,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.OwnerInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 70.66,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 29,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.RuntimeFlagInit",
+      "file_path": "Map/ActorInitializer.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ISuppressInitExport",
+      "file_path": "Map/ActorReference.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.ActorReference",
+      "file_path": "Map/ActorReference.cs",
+      "si": 85.78,
+      "grade": "E",
+      "cc_max": 5.5,
+      "loc": 153,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.CellCoordsRegion",
+      "file_path": "Map/CellCoordsRegion.cs",
+      "si": 79.79,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 48,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.CellCoordsRegion.CellCoordsEnumerator",
+      "file_path": "Map/CellCoordsRegion.cs",
+      "si": 65.42,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 30,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.CellLayer",
+      "file_path": "Map/CellLayer.cs",
+      "si": 72.6,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 91,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.CellLayer",
+      "file_path": "Map/CellLayer.cs",
+      "si": 68.26,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 13,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.CellLayerBase",
+      "file_path": "Map/CellLayerBase.cs",
+      "si": 81.29,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 40,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.CellRegion",
+      "file_path": "Map/CellRegion.cs",
+      "si": 82.63,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 75,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.CellRegion.CellRegionEnumerator",
+      "file_path": "Map/CellRegion.cs",
+      "si": 64.37,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 33,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.BinaryDataHeader",
+      "file_path": "Map/Map.cs",
+      "si": 65.57,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 23,
+      "bugfix_count": 48
+    },
+    {
+      "fqn": "OpenRA.MapVisibility",
+      "file_path": "Map/Map.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 48
+    },
+    {
+      "fqn": "OpenRA.MapField",
+      "file_path": "Map/Map.cs",
+      "si": 85.18,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 68,
+      "bugfix_count": 48
+    },
+    {
+      "fqn": "OpenRA.MapField.Type",
+      "file_path": "Map/Map.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 48
+    },
+    {
+      "fqn": "OpenRA.Map",
+      "file_path": "Map/Map.cs",
+      "si": 99.1,
+      "grade": "E",
+      "cc_max": 14.2,
+      "loc": 1119,
+      "bugfix_count": 48
+    },
+    {
+      "fqn": "OpenRA.MapCache",
+      "file_path": "Map/MapCache.cs",
+      "si": 92.81,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 377,
+      "bugfix_count": 24
+    },
+    {
+      "fqn": "OpenRA.MapCoordsRegion",
+      "file_path": "Map/MapCoordsRegion.cs",
+      "si": 57.04,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 21,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.MapCoordsRegion.MapCoordsEnumerator",
+      "file_path": "Map/MapCoordsRegion.cs",
+      "si": 65.42,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 30,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.MapDirectoryTracker",
+      "file_path": "Map/MapDirectoryTracker.cs",
+      "si": 73.05,
+      "grade": "D",
+      "cc_max": 7.0,
+      "loc": 91,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.MapDirectoryTracker.MapAction",
+      "file_path": "Map/MapDirectoryTracker.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.MapGenerationArgs",
+      "file_path": "Map/MapGenerationArgs.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 17,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.MapGridType",
+      "file_path": "Map/MapGrid.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.RampSplit",
+      "file_path": "Map/MapGrid.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.RampCornerHeight",
+      "file_path": "Map/MapGrid.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.CellRamp",
+      "file_path": "Map/MapGrid.cs",
+      "si": 81.59,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 75,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.MapGrid",
+      "file_path": "Map/MapGrid.cs",
+      "si": 90.27,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 117,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.MapPlayers",
+      "file_path": "Map/MapPlayers.cs",
+      "si": 71.11,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 51,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.MapStatus",
+      "file_path": "Map/MapPreview.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.MapClassification",
+      "file_path": "Map/MapPreview.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.RemoteMapData",
+      "file_path": "Map/MapPreview.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.MapPreview",
+      "file_path": "Map/MapPreview.cs",
+      "si": 98.2,
+      "grade": "E",
+      "cc_max": 16.5,
+      "loc": 496,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.MapPreview.InnerData",
+      "file_path": "Map/MapPreview.cs",
+      "si": 88.77,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 94,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "OpenRA.PlayerReference",
+      "file_path": "Map/PlayerReference.cs",
+      "si": 50.0,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ProjectedCellLayer",
+      "file_path": "Map/ProjectedCellLayer.cs",
+      "si": 77.4,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 20,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.ProjectedCellRegion",
+      "file_path": "Map/ProjectedCellRegion.cs",
+      "si": 80.69,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 36,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.ProjectedCellRegion.ProjectedCellRegionEnumerator",
+      "file_path": "Map/ProjectedCellRegion.cs",
+      "si": 64.37,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 32,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.ITerrainLoader",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.ITerrainInfo",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Riser",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 83.23,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 49,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Riser.Connection",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.TerrainTileInfo",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 52.25,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 11,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.TerrainTypeInfo",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.TileSet",
+      "file_path": "Map/TerrainInfo.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.TerrainTile",
+      "file_path": "Map/TileReference.cs",
+      "si": 64.82,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 16,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.ResourceTile",
+      "file_path": "Map/TileReference.cs",
+      "si": 48.2,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Network.ConnectionState",
+      "file_path": "Network/Connection.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.Network.IConnection",
+      "file_path": "Network/Connection.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.Network.EchoConnection",
+      "file_path": "Network/Connection.cs",
+      "si": 72.9,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 40,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.Network.NetworkConnection",
+      "file_path": "Network/Connection.cs",
+      "si": 91.47,
+      "grade": "E",
+      "cc_max": 15.0,
+      "loc": 254,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.Network.ConnectionTarget",
+      "file_path": "Network/ConnectionTarget.cs",
+      "si": 58.98,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 35,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Network.FluentArgument",
+      "file_path": "Network/FluentMessage.cs",
+      "si": 52.4,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 17,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Network.FluentArgument.FluentArgumentType",
+      "file_path": "Network/FluentMessage.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Network.FluentMessage",
+      "file_path": "Network/FluentMessage.cs",
+      "si": 80.24,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 61,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Network.SlotClient",
+      "file_path": "Network/GameSave.cs",
+      "si": 59.58,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 37,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Network.GameSave",
+      "file_path": "Network/GameSave.cs",
+      "si": 89.22,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 224,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Network.GameClient",
+      "file_path": "Network/GameServer.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 13,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Network.GameServer",
+      "file_path": "Network/GameServer.cs",
+      "si": 92.37,
+      "grade": "E",
+      "cc_max": 17.0,
+      "loc": 118,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Network.GeoIP",
+      "file_path": "Network/GeoIP.cs",
+      "si": 59.88,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 36,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Network.GeoIP.IP2LocationReader",
+      "file_path": "Network/GeoIP.cs",
+      "si": 73.8,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 75,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Network.HandshakeRequest",
+      "file_path": "Network/Handshake.cs",
+      "si": 49.4,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 11,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Network.HandshakeResponse",
+      "file_path": "Network/Handshake.cs",
+      "si": 71.86,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 34,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Network.NatStatus",
+      "file_path": "Network/Nat.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Network.Nat",
+      "file_path": "Network/Nat.cs",
+      "si": 60.18,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 67,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.OrderType",
+      "file_path": "Network/Order.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.OrderFields",
+      "file_path": "Network/Order.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.OrderFieldsExts",
+      "file_path": "Network/Order.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Order",
+      "file_path": "Network/Order.cs",
+      "si": 98.8,
+      "grade": "E",
+      "cc_max": 33.0,
+      "loc": 374,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Network.OrderPacket",
+      "file_path": "Network/OrderIO.cs",
+      "si": 78.89,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 52,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Network.OrderIO",
+      "file_path": "Network/OrderIO.cs",
+      "si": 72.75,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 122,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Network.OrderManager",
+      "file_path": "Network/OrderManager.cs",
+      "si": 95.06,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 205,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.Network.OrderManager.ClientOrder",
+      "file_path": "Network/OrderManager.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.Network.ReplayConnection",
+      "file_path": "Network/ReplayConnection.cs",
+      "si": 88.17,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 90,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Network.ReplayConnection.Chunk",
+      "file_path": "Network/ReplayConnection.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Network.ReplayRecorder",
+      "file_path": "Network/ReplayRecorder.cs",
+      "si": 89.97,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 82,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Network.Session",
+      "file_path": "Network/Session.cs",
+      "si": 88.92,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 86,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.ClientState",
+      "file_path": "Network/Session.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.ConnectionQuality",
+      "file_path": "Network/Session.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.Client",
+      "file_path": "Network/Session.cs",
+      "si": 73.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.Slot",
+      "file_path": "Network/Session.cs",
+      "si": 48.2,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.LobbyOptionState",
+      "file_path": "Network/Session.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.MapStatus",
+      "file_path": "Network/Session.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.Session.Global",
+      "file_path": "Network/Session.cs",
+      "si": 66.32,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 33,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.Network.SyncReport",
+      "file_path": "Network/SyncReport.cs",
+      "si": 94.46,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 127,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Network.SyncReport.Report",
+      "file_path": "Network/SyncReport.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Network.SyncReport.TraitReport",
+      "file_path": "Network/SyncReport.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Network.SyncReport.EffectReport",
+      "file_path": "Network/SyncReport.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Network.SyncReport.TypeInfo",
+      "file_path": "Network/SyncReport.cs",
+      "si": 76.65,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 74,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Network.SyncReport.Values",
+      "file_path": "Network/SyncReport.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 12,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Network.TickTime",
+      "file_path": "Network/TickTime.cs",
+      "si": 70.06,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 26,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Network.UnitOrders",
+      "file_path": "Network/UnitOrders.cs",
+      "si": 100.0,
+      "grade": "E",
+      "cc_max": 93.0,
+      "loc": 385,
+      "bugfix_count": 37
+    },
+    {
+      "fqn": "OpenRA.Orders.IOrderGenerator",
+      "file_path": "Orders/IOrderGenerator.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Primitives.ActionQueue",
+      "file_path": "Primitives/ActionQueue.cs",
+      "si": 71.41,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 39,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Primitives.DelayedAction",
+      "file_path": "Primitives/ActionQueue.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Primitives.DelayedAction.DelayedActionTimeComparer",
+      "file_path": "Primitives/ActionQueue.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.ActorInfoDictionary",
+      "file_path": "Primitives/ActorInfoDictionary.cs",
+      "si": 65.42,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 19,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.BitSetAllocator",
+      "file_path": "Primitives/BitSet.cs",
+      "si": 49.7,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 48,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Primitives.BitSet",
+      "file_path": "Primitives/BitSet.cs",
+      "si": 40.57,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 66,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Primitives.Cache",
+      "file_path": "Primitives/Cache.cs",
+      "si": 86.38,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 14,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Primitives.CachedTransform",
+      "file_path": "Primitives/CachedTransform.cs",
+      "si": 84.58,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 15,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.Color",
+      "file_path": "Primitives/Color.cs",
+      "si": 73.65,
+      "grade": "D",
+      "cc_max": 7.0,
+      "loc": 170,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Primitives.ConcurrentCache",
+      "file_path": "Primitives/ConcurrentCache.cs",
+      "si": 34.28,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 13,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.DisposableAction",
+      "file_path": "Primitives/DisposableAction.cs",
+      "si": 40.87,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 13,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.float2",
+      "file_path": "Primitives/float2.cs",
+      "si": 97.31,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 53,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.EWMA",
+      "file_path": "Primitives/float2.cs",
+      "si": 77.99,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 6,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.float3",
+      "file_path": "Primitives/float3.cs",
+      "si": 85.93,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 19,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.int2",
+      "file_path": "Primitives/int2.cs",
+      "si": 98.5,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 37,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Int32Matrix4x4",
+      "file_path": "Primitives/Int32Matrix4x4.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 37,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Primitives.IObservableCollection",
+      "file_path": "Primitives/IObservableCollection.cs",
+      "si": 57.78,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Primitives.LongBitSetAllocator",
+      "file_path": "Primitives/LongBitSet.cs",
+      "si": 50.15,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 60,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Primitives.LongBitSet",
+      "file_path": "Primitives/LongBitSet.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 70,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Primitives.MergedStream",
+      "file_path": "Primitives/MergedStream.cs",
+      "si": 73.5,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 86,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.ObservableCollection",
+      "file_path": "Primitives/ObservableCollection.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 24,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Primitives.ObservableSortedDictionary",
+      "file_path": "Primitives/ObservableDictionary.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Primitives.ObservableDictionary",
+      "file_path": "Primitives/ObservableDictionary.cs",
+      "si": 58.38,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 58,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Primitives.ObservableList",
+      "file_path": "Primitives/ObservableList.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 50,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Primitives.PlayerDictionary",
+      "file_path": "Primitives/PlayerDictionary.cs",
+      "si": 48.95,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 26,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.Polygon",
+      "file_path": "Primitives/Polygon.cs",
+      "si": 89.82,
+      "grade": "E",
+      "cc_max": 18.0,
+      "loc": 87,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Primitives.PredictedCachedTransform",
+      "file_path": "Primitives/PredictedCachedTransform.cs",
+      "si": 86.83,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 21,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.PriorityArray",
+      "file_path": "Primitives/PriorityArray.cs",
+      "si": 66.92,
+      "grade": "D",
+      "cc_max": 7.0,
+      "loc": 82,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.IPriorityQueue",
+      "file_path": "Primitives/PriorityQueue.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Primitives.PriorityQueue",
+      "file_path": "Primitives/PriorityQueue.cs",
+      "si": 78.14,
+      "grade": "D",
+      "cc_max": 10.0,
+      "loc": 95,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Primitives.ReadOnlyAdapterStream",
+      "file_path": "Primitives/ReadOnlyAdapterStream.cs",
+      "si": 55.54,
+      "grade": "C",
+      "cc_max": 4.0,
+      "loc": 57,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Primitives.Rectangle",
+      "file_path": "Primitives/Rectangle.cs",
+      "si": 95.36,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 68,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Primitives.RingBuffer",
+      "file_path": "Primitives/RingBuffer.cs",
+      "si": 71.56,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 93,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.SegmentStream",
+      "file_path": "Primitives/SegmentStream.cs",
+      "si": 67.81,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 96,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Primitives.Size",
+      "file_path": "Primitives/Size.cs",
+      "si": 90.87,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 29,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Primitives.SpatiallyPartitioned",
+      "file_path": "Primitives/SpatiallyPartitioned.cs",
+      "si": 87.87,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 109,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Primitives.TypeDictionary",
+      "file_path": "Primitives/TypeDictionary.cs",
+      "si": 68.86,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 93,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Primitives.TypeDictionary.ITypeContainer",
+      "file_path": "Primitives/TypeDictionary.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Primitives.TypeDictionary.TypeContainer",
+      "file_path": "Primitives/TypeDictionary.cs",
+      "si": 58.23,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 16,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Primitives.TypeExts",
+      "file_path": "Primitives/TypeDictionary.cs",
+      "si": 40.57,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 8,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptActorInterface",
+      "file_path": "Scripting/ScriptActorInterface.cs",
+      "si": 85.03,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 33,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Scripting.IScriptBindable",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 84.73,
+      "grade": "E",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.IScriptNotifyBind",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 82.19,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptPropertyGroupAttribute",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ExposedForDestroyedActors",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptActorPropertyActivityAttribute",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptActorProperties",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptPlayerProperties",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptGlobal",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 29,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptGlobalAttribute",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptContext",
+      "file_path": "Scripting/ScriptContext.cs",
+      "si": 91.92,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 191,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptMemberExts",
+      "file_path": "Scripting/ScriptMemberExts.cs",
+      "si": 58.68,
+      "grade": "C",
+      "cc_max": 5.0,
+      "loc": 41,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptMemberWrapper",
+      "file_path": "Scripting/ScriptMemberWrapper.cs",
+      "si": 82.78,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 120,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptObjectWrapper",
+      "file_path": "Scripting/ScriptObjectWrapper.cs",
+      "si": 78.59,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 44,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Scripting.ScriptPlayerInterface",
+      "file_path": "Scripting/ScriptPlayerInterface.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Scripting.LuaValueExts",
+      "file_path": "Scripting/ScriptTypes.cs",
+      "si": 93.71,
+      "grade": "E",
+      "cc_max": 27.0,
+      "loc": 169,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Server.Connection",
+      "file_path": "Server/Connection.cs",
+      "si": 95.51,
+      "grade": "E",
+      "cc_max": 22.0,
+      "loc": 166,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Server.ReceiveState",
+      "file_path": "Server/Connection.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Server.Exts",
+      "file_path": "Server/Exts.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Server.ILintServerMapPass",
+      "file_path": "Server/MapStatusCache.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.MapStatusCache",
+      "file_path": "Server/MapStatusCache.cs",
+      "si": 67.37,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 38,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.OrderBuffer",
+      "file_path": "Server/OrderBuffer.cs",
+      "si": 86.23,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 92,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Server.PlayerMessageTracker",
+      "file_path": "Server/PlayerMessageTracker.cs",
+      "si": 77.54,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 56,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Server.ProtocolVersion",
+      "file_path": "Server/ProtocolVersion.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.ServerState",
+      "file_path": "Server/Server.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.ServerType",
+      "file_path": "Server/Server.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server",
+      "file_path": "Server/Server.cs",
+      "si": 99.85,
+      "grade": "E",
+      "cc_max": 33.25,
+      "loc": 1290,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server.IServerEvent",
+      "file_path": "Server/Server.cs",
+      "si": 70.36,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server.ConnectionConnectEvent",
+      "file_path": "Server/Server.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server.ConnectionDisconnectEvent",
+      "file_path": "Server/Server.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server.ConnectionPacketEvent",
+      "file_path": "Server/Server.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server.ConnectionPingEvent",
+      "file_path": "Server/Server.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.Server.CallbackEvent",
+      "file_path": "Server/Server.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 80
+    },
+    {
+      "fqn": "OpenRA.Server.IInterpretCommand",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.INotifySyncLobbyInfo",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.INotifyServerStart",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.INotifyServerEmpty",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.INotifyServerShutdown",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.IStartGame",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.IClientJoined",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.IEndGame",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.ITick",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.ServerTrait",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.DebugServerTrait",
+      "file_path": "Server/TraitInterfaces.cs",
+      "si": 79.04,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 25,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Server.VoteKickTracker",
+      "file_path": "Server/VoteKickTracker.cs",
+      "si": 97.9,
+      "grade": "E",
+      "cc_max": 34.0,
+      "loc": 170,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.ISoundLoader",
+      "file_path": "Sound/Sound.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.ISoundFormat",
+      "file_path": "Sound/Sound.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.SoundType",
+      "file_path": "Sound/Sound.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Sound",
+      "file_path": "Sound/Sound.cs",
+      "si": 94.91,
+      "grade": "E",
+      "cc_max": 16.3333,
+      "loc": 339,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.ISoundEngine",
+      "file_path": "Sound/SoundDevice.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 12,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.SoundDevice",
+      "file_path": "Sound/SoundDevice.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.ISoundSource",
+      "file_path": "Sound/SoundDevice.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.ISound",
+      "file_path": "Sound/SoundDevice.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Arguments",
+      "file_path": "Support/Arguments.cs",
+      "si": 57.49,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 15,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Support.AssemblyLoader",
+      "file_path": "Support/AssemblyLoader.cs",
+      "si": 64.67,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.AssemblyLoadContextBuilder",
+      "file_path": "Support/AssemblyLoader.cs",
+      "si": 65.42,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 34,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.ManagedLoadContext",
+      "file_path": "Support/AssemblyLoader.cs",
+      "si": 68.41,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 96,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.ManagedLibrary",
+      "file_path": "Support/AssemblyLoader.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 7,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.NativeLibrary",
+      "file_path": "Support/AssemblyLoader.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.DependencyContextExtensions",
+      "file_path": "Support/AssemblyLoader.cs",
+      "si": 78.29,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 105,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.Benchmark",
+      "file_path": "Support/Benchmark.cs",
+      "si": 85.63,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 25,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Support.Benchmark.BenchmarkPoint",
+      "file_path": "Support/Benchmark.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ExceptionHandler",
+      "file_path": "Support/ExceptionHandler.cs",
+      "si": 77.25,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 83,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Support.HttpClientFactory",
+      "file_path": "Support/HttpClientFactory.cs",
+      "si": 34.28,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 16,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Support.HttpQueryBuilder",
+      "file_path": "Support/HttpQueryBuilder.cs",
+      "si": 46.41,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 29,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.LaunchArguments",
+      "file_path": "Support/LaunchArguments.cs",
+      "si": 66.47,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 32,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.ChannelInfo",
+      "file_path": "Support/Log.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.ChannelData",
+      "file_path": "Support/Log.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Log",
+      "file_path": "Support/Log.cs",
+      "si": 84.88,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 122,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Support.MersenneTwister",
+      "file_path": "Support/MersenneTwister.cs",
+      "si": 72.01,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 98,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Support.PerfHistory",
+      "file_path": "Support/PerfHistory.cs",
+      "si": 86.53,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 15,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Support.PerfItem",
+      "file_path": "Support/PerfItem.cs",
+      "si": 85.33,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 54,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Support.PerfSample",
+      "file_path": "Support/PerfSample.cs",
+      "si": 68.56,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Support.PerfTickLogger",
+      "file_path": "Support/PerfTickLogger.cs",
+      "si": 82.34,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 26,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Support.PerfTimer",
+      "file_path": "Support/PerfTimer.cs",
+      "si": 93.86,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 59,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.RunStatus",
+      "file_path": "Support/Program.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 99.25,
+      "grade": "E",
+      "cc_max": 44.0,
+      "loc": 284,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.CharClass",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Associativity",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Sides",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Grouping",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.TokenType",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Precedence",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.TokenTypeInfo",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 65.87,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 38,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Token",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 99.4,
+      "grade": "E",
+      "cc_max": 35.0,
+      "loc": 210,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.VariableToken",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 96.11,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.NumberToken",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 96.41,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 6,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.ExpressionType",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.AstStack",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 59.13,
+      "grade": "C",
+      "cc_max": 5.0,
+      "loc": 48,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Compiler",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 94.61,
+      "grade": "E",
+      "cc_max": 22.0,
+      "loc": 167,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.BooleanExpression",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Support.IntegerExpression",
+      "file_path": "Support/VariableExpression.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 9,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Traits.ICreatesFrozenActors",
+      "file_path": "Traits/Player/FrozenActorLayer.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Traits.FrozenActorLayerInfo",
+      "file_path": "Traits/Player/FrozenActorLayer.cs",
+      "si": 56.59,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Traits.FrozenActor",
+      "file_path": "Traits/Player/FrozenActorLayer.cs",
+      "si": 89.37,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 141,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Traits.FrozenActorLayer",
+      "file_path": "Traits/Player/FrozenActorLayer.cs",
+      "si": 91.77,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 116,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Traits.ShroudInfo",
+      "file_path": "Traits/Player/Shroud.cs",
+      "si": 63.92,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Traits.Shroud",
+      "file_path": "Traits/Player/Shroud.cs",
+      "si": 95.81,
+      "grade": "E",
+      "cc_max": 14.5,
+      "loc": 359,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Traits.Shroud.SourceType",
+      "file_path": "Traits/Player/Shroud.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Traits.Shroud.ShroudCellType",
+      "file_path": "Traits/Player/Shroud.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Traits.Shroud.ShroudSource",
+      "file_path": "Traits/Player/Shroud.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Traits.Shroud.CellVisibility",
+      "file_path": "Traits/Player/Shroud.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.Traits.DebugVisualizationsInfo",
+      "file_path": "Traits/World/DebugVisualizations.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Traits.DebugVisualizations",
+      "file_path": "Traits/World/DebugVisualizations.cs",
+      "si": 67.51,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 8,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Traits.FactionInfo",
+      "file_path": "Traits/World/Faction.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.Faction",
+      "file_path": "Traits/World/Faction.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.ActorBoundsPair",
+      "file_path": "Traits/World/ScreenMap.cs",
+      "si": 50.45,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Traits.ScreenMapInfo",
+      "file_path": "Traits/World/ScreenMap.cs",
+      "si": 48.2,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Traits.ScreenMap",
+      "file_path": "Traits/World/ScreenMap.cs",
+      "si": 93.56,
+      "grade": "E",
+      "cc_max": 6.5,
+      "loc": 200,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Traits.ScreenShakerInfo",
+      "file_path": "Traits/World/ScreenShaker.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Traits.ScreenShaker",
+      "file_path": "Traits/World/ScreenShaker.cs",
+      "si": 88.32,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 45,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Traits.ShakeEffect",
+      "file_path": "Traits/World/ScreenShaker.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Traits.ActivityUtils",
+      "file_path": "Traits/ActivityUtils.cs",
+      "si": 70.96,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 19,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Traits.DebugPauseStateInfo",
+      "file_path": "Traits/DebugPauseState.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Traits.DebugPauseState",
+      "file_path": "Traits/DebugPauseState.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Traits.LintDictionaryReference",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.ActorReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 41.02,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 12,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.WeaponReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.SequenceReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.CursorReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.GrantedConditionReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.ConsumedConditionReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.PaletteDefinitionAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.PaletteReferenceAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.TraitLocationAttribute",
+      "file_path": "Traits/LintAttributes.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Traits.TargetType",
+      "file_path": "Traits/Target.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Traits.Target",
+      "file_path": "Traits/Target.cs",
+      "si": 80.09,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 132,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "OpenRA.Traits.RequireExplicitImplementationAttribute",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.DamageState",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.DamageType",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IHealthInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IHealth",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.PlayerRelationship",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.PlayerRelationshipExts",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.AttackInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.Damage",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITick",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITickRender",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRender",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 79.64,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IMouseBounds",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IMouseBoundsInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IAutoMouseBounds",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IIssueOrder",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.TargetModifiers",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.TargetModifiersExts",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IOrderTargeter",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IResolveOrder",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IValidateOrder",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IOrderVoice",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyCreated",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyAddedToWorld",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyRemovedFromWorld",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyActorDisposing",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyOwnerChanged",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyEffectiveOwnerChanged",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyOwnerLost",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IVoiced",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IStoresResourcesInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IStoresResources",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IEffectiveOwner",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITooltip",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITooltipInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IProvideTooltipInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IDisabledTrait",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IDefaultVisibilityInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IDefaultVisibility",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IVisibilityModifier",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IActorMap",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 22,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderModifier",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITilesetSpecificPaletteInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IProvidesCursorPaletteInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ILoadsPalettes",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ILoadsPlayerPalettes",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IPaletteModifier",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ISelectionBar",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ISelectionDecorations",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IEditorSelectionLayer",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IEditorPasteLayer",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IMapPreviewSignatureInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IOccupySpaceInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IOccupySpace",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.SubCell",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITemporaryBlockerInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITemporaryBlocker",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IFacing",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IFacingInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITraitInfoInterface",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 97.16,
+      "grade": "E",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.TraitInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.TraitInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ILobbyCustomRulesIgnore",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.Requires",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.NotBefore",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IActivityInterface",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifySelected",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifySelection",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IWorldLoaded",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IPostWorldLoaded",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyGameLoading",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyGameLoaded",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyGameSaved",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 50.3,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IGameSaveTraitData",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ICreatePlayers",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ICreatePlayersInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IAssignSpawnPoints",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IAssignSpawnPointsInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IBotInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IBot",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderOverlay",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyBecomingIdle",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyIdle",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderAboveWorld",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderShroud",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderTerrain",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITerrainLighting",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderAboveShroud",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderAboveShroudWhenSelected",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderAnnotations",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderAnnotationsWhenSelected",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.PostProcessPassType",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRenderPostProcessPass",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 76.2,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.SelectionPriorityModifiers",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ISelectableInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ISelection",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 7,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IControlGroupsInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IControlGroups",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.TargetableType",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITargetableInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITargetable",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ITargetablePositions",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IMoveInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IGameOver",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IWarhead",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 63.32,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRulesetLoaded",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IRulesetLoaded",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ILobbyOptions",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.LobbyOption",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 51.5,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 16,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.LobbyBooleanOption",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 6,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IUnlocksRenderPlayer",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ICreationActivity",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IObservesVariablesInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.VariableObserver",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IObservesVariables",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.INotifyPlayerDisconnected",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.CrushClass",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.ICrushable",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.Traits.IMapGeneratorInfo",
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si": 56.89,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 53
+    },
+    {
+      "fqn": "OpenRA.UtilityCommands.ClearInvalidModRegistrationsCommand",
+      "file_path": "UtilityCommands/ClearInvalidModRegistrationsCommand.cs",
+      "si": 69.91,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 16,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.UtilityCommands.RegisterModCommand",
+      "file_path": "UtilityCommands/RegisterModCommand.cs",
+      "si": 69.91,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 16,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.UtilityCommands.UnregisterModCommand",
+      "file_path": "UtilityCommands/UnregisterModCommand.cs",
+      "si": 69.91,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 16,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Widgets.ChromeMetrics",
+      "file_path": "Widgets/ChromeMetrics.cs",
+      "si": 51.65,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 25,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Widgets.Ui",
+      "file_path": "Widgets/Widget.cs",
+      "si": 94.01,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 126,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.ChromeLogic",
+      "file_path": "Widgets/Widget.cs",
+      "si": 76.8,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.WidgetBounds",
+      "file_path": "Widgets/Widget.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.Widget",
+      "file_path": "Widgets/Widget.cs",
+      "si": 94.16,
+      "grade": "E",
+      "cc_max": 7.6667,
+      "loc": 325,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.ContainerWidget",
+      "file_path": "Widgets/Widget.cs",
+      "si": 58.98,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 13,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.InputWidget",
+      "file_path": "Widgets/Widget.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.WidgetArgs",
+      "file_path": "Widgets/Widget.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.Mediator",
+      "file_path": "Widgets/Widget.cs",
+      "si": 40.57,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 15,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.Widgets.INotificationHandler",
+      "file_path": "Widgets/Widget.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "OpenRA.WidgetLoader",
+      "file_path": "Widgets/WidgetLoader.cs",
+      "si": 72.16,
+      "grade": "D",
+      "cc_max": 7.0,
+      "loc": 55,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.SystemActors",
+      "file_path": "Actor.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 34
+    },
+    {
+      "fqn": "OpenRA.Actor",
+      "file_path": "Actor.cs",
+      "si": 96.56,
+      "grade": "E",
+      "cc_max": 13.0,
+      "loc": 451,
+      "bugfix_count": 34
+    },
+    {
+      "fqn": "OpenRA.Actor.SyncHash",
+      "file_path": "Actor.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 34
+    },
+    {
+      "fqn": "OpenRA.Actor.ConditionState",
+      "file_path": "Actor.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 34
+    },
+    {
+      "fqn": "OpenRA.CPos",
+      "file_path": "CPos.cs",
+      "si": 96.86,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 69,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.CryptoUtil",
+      "file_path": "CryptoUtil.cs",
+      "si": 59.28,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 246,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.CVec",
+      "file_path": "CVec.cs",
+      "si": 79.34,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 60,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.DefaultPlayer",
+      "file_path": "DefaultPlayer.cs",
+      "si": 39.97,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.DescAttribute",
+      "file_path": "DescAttribute.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.ModRegistration",
+      "file_path": "ExternalMods.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ExternalMod",
+      "file_path": "ExternalMods.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.ExternalMods",
+      "file_path": "ExternalMods.cs",
+      "si": 95.21,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 223,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Exts",
+      "file_path": "Exts.cs",
+      "si": 86.98,
+      "grade": "E",
+      "cc_max": 6.4286,
+      "loc": 539,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.Exts.ISqrtRoundMode",
+      "file_path": "Exts.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.LineSplitEnumerator",
+      "file_path": "Exts.cs",
+      "si": 57.49,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 28,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader",
+      "file_path": "FieldLoader.cs",
+      "si": 97.46,
+      "grade": "E",
+      "cc_max": 8.75,
+      "loc": 658,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader.MissingFieldsException",
+      "file_path": "FieldLoader.cs",
+      "si": 68.26,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 6,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader.FieldLoadInfo",
+      "file_path": "FieldLoader.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 6,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader.IgnoreAttribute",
+      "file_path": "FieldLoader.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader.RequireAttribute",
+      "file_path": "FieldLoader.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader.LoadUsingAttribute",
+      "file_path": "FieldLoader.cs",
+      "si": 47.6,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldLoader.SerializeAttribute",
+      "file_path": "FieldLoader.cs",
+      "si": 70.51,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 21,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.FieldSaver",
+      "file_path": "FieldSaver.cs",
+      "si": 93.11,
+      "grade": "E",
+      "cc_max": 23.0,
+      "loc": 127,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.FluentReferenceAttribute",
+      "file_path": "FluentBundle.cs",
+      "si": 34.28,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 13,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.IncludeStaticFluentReferencesAttribute",
+      "file_path": "FluentBundle.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.IncludeChromeLogicArgsFluentReferencesAttribute",
+      "file_path": "FluentBundle.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.IncludeFluentReferencesAttribute",
+      "file_path": "FluentBundle.cs",
+      "si": 34.28,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.FluentBundle",
+      "file_path": "FluentBundle.cs",
+      "si": 83.08,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 103,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.FluentExts",
+      "file_path": "FluentExts.cs",
+      "si": 73.35,
+      "grade": "D",
+      "cc_max": 10.0,
+      "loc": 26,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.FluentProvider",
+      "file_path": "FluentProvider.cs",
+      "si": 71.26,
+      "grade": "D",
+      "cc_max": 7.0,
+      "loc": 63,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.FontData",
+      "file_path": "Fonts.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Fonts",
+      "file_path": "Fonts.cs",
+      "si": 52.25,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 8,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Game",
+      "file_path": "Game.cs",
+      "si": 99.7,
+      "grade": "E",
+      "cc_max": 16.25,
+      "loc": 888,
+      "bugfix_count": 117
+    },
+    {
+      "fqn": "OpenRA.CurrentServerSettings",
+      "file_path": "Game.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 117
+    },
+    {
+      "fqn": "OpenRA.GameInformation",
+      "file_path": "GameInformation.cs",
+      "si": 88.62,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 122,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.GameInformation.Player",
+      "file_path": "GameInformation.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.GameSpeed",
+      "file_path": "GameSpeed.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.GameSpeeds",
+      "file_path": "GameSpeed.cs",
+      "si": 69.91,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 22,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.HotkeyDefinition",
+      "file_path": "HotkeyDefinition.cs",
+      "si": 74.25,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 29,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.HotkeyManager",
+      "file_path": "HotkeyManager.cs",
+      "si": 82.93,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 81,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.HotkeyManager.HotkeySettings",
+      "file_path": "HotkeyManager.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.HttpExtension",
+      "file_path": "HttpExtension.cs",
+      "si": 63.62,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 34,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.InstalledMods",
+      "file_path": "InstalledMods.cs",
+      "si": 76.35,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 70,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Utility",
+      "file_path": "IUtilityCommand.cs",
+      "si": 33.68,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.IUtilityCommand",
+      "file_path": "IUtilityCommand.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.LocalPlayerProfile",
+      "file_path": "LocalPlayerProfile.cs",
+      "si": 81.44,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 145,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.LocalPlayerProfile.LinkState",
+      "file_path": "LocalPlayerProfile.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.ModMetadata",
+      "file_path": "Manifest.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.RendererConstants",
+      "file_path": "Manifest.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.Manifest",
+      "file_path": "Manifest.cs",
+      "si": 92.22,
+      "grade": "E",
+      "cc_max": 17.0,
+      "loc": 112,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.MiniYamlExts",
+      "file_path": "MiniYaml.cs",
+      "si": 49.7,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 30,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.MiniYamlNode",
+      "file_path": "MiniYaml.cs",
+      "si": 98.95,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 25,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.MiniYamlNode.SourceLocation",
+      "file_path": "MiniYaml.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.MiniYaml",
+      "file_path": "MiniYaml.cs",
+      "si": 99.55,
+      "grade": "E",
+      "cc_max": 32.5,
+      "loc": 547,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.MiniYamlNodeBuilder",
+      "file_path": "MiniYaml.cs",
+      "si": 94.31,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 26,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.MiniYamlBuilder",
+      "file_path": "MiniYaml.cs",
+      "si": 95.66,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 33,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.YamlException",
+      "file_path": "MiniYaml.cs",
+      "si": 88.47,
+      "grade": "E",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "OpenRA.IGlobalModData",
+      "file_path": "ModData.cs",
+      "si": 71.71,
+      "grade": "D",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.ModData",
+      "file_path": "ModData.cs",
+      "si": 94.76,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 162,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.ILoadScreen",
+      "file_path": "ModData.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.IFileSystemLoader",
+      "file_path": "ModData.cs",
+      "si": 32.19,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 20
+    },
+    {
+      "fqn": "OpenRA.MPos",
+      "file_path": "MPos.cs",
+      "si": 97.01,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 32,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.PPos",
+      "file_path": "MPos.cs",
+      "si": 79.19,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 10,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.ObjectCreator",
+      "file_path": "ObjectCreator.cs",
+      "si": 77.69,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 132,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.ObjectCreator.UseCtorAttribute",
+      "file_path": "ObjectCreator.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "OpenRA.PlatformType",
+      "file_path": "Platform.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.SupportDirType",
+      "file_path": "Platform.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.Platform",
+      "file_path": "Platform.cs",
+      "si": 83.98,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 157,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "OpenRA.PowerState",
+      "file_path": "Player.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 26
+    },
+    {
+      "fqn": "OpenRA.WinState",
+      "file_path": "Player.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 26
+    },
+    {
+      "fqn": "OpenRA.PlayerBitMask",
+      "file_path": "Player.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 26
+    },
+    {
+      "fqn": "OpenRA.Player",
+      "file_path": "Player.cs",
+      "si": 95.96,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 193,
+      "bugfix_count": 26
+    },
+    {
+      "fqn": "OpenRA.PlayerDatabase",
+      "file_path": "PlayerDatabase.cs",
+      "si": 88.02,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 78,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.PlayerProfile",
+      "file_path": "PlayerProfile.cs",
+      "si": 60.03,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 26,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.PlayerBadge",
+      "file_path": "PlayerProfile.cs",
+      "si": 39.52,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Renderer",
+      "file_path": "Renderer.cs",
+      "si": 98.65,
+      "grade": "E",
+      "cc_max": 6.6667,
+      "loc": 441,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Renderer.RenderType",
+      "file_path": "Renderer.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Renderer.IBatchRenderer",
+      "file_path": "Renderer.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.Traits.SelectableExts",
+      "file_path": "SelectableExts.cs",
+      "si": 76.95,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 69,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.MouseControlStyle",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.MouseScrollType",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.StatusBarsType",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.TargetLinesType",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.MouseActionType",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.MPGameFilters",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.TextNotificationPoolFilters",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.WorldViewport",
+      "file_path": "Settings.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.SettingsModule",
+      "file_path": "Settings.cs",
+      "si": 87.72,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 21,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.SettingsModule.YamlNodeAttribute",
+      "file_path": "Settings.cs",
+      "si": 18.71,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.ServerSettings",
+      "file_path": "Settings.cs",
+      "si": 55.39,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.DebugSettings",
+      "file_path": "Settings.cs",
+      "si": 39.97,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.GraphicSettings",
+      "file_path": "Settings.cs",
+      "si": 57.93,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.SoundSettings",
+      "file_path": "Settings.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.PlayerSettings",
+      "file_path": "Settings.cs",
+      "si": 49.85,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.GameSettings",
+      "file_path": "Settings.cs",
+      "si": 72.46,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 15,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.Settings",
+      "file_path": "Settings.cs",
+      "si": 87.13,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 137,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "OpenRA.StreamExts",
+      "file_path": "StreamExts.cs",
+      "si": 73.95,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 226,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "OpenRA.VerifySyncAttribute",
+      "file_path": "Sync.cs",
+      "si": 19.91,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.ISync",
+      "file_path": "Sync.cs",
+      "si": 57.78,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.Sync",
+      "file_path": "Sync.cs",
+      "si": 87.57,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 145,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "OpenRA.TextNotificationPool",
+      "file_path": "TextNotification.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.TextNotification",
+      "file_path": "TextNotification.cs",
+      "si": 59.88,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 20,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.TextNotificationsManager",
+      "file_path": "TextNotificationsManager.cs",
+      "si": 80.39,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 75,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.SpanExts",
+      "file_path": "TraitDictionary.cs",
+      "si": 48.95,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 15,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary",
+      "file_path": "TraitDictionary.cs",
+      "si": 79.94,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 72,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary.ITraitContainer",
+      "file_path": "TraitDictionary.cs",
+      "si": 46.11,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 2,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary.TraitContainer",
+      "file_path": "TraitDictionary.cs",
+      "si": 87.28,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 107,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary.TraitContainer.MultipleEnumerable",
+      "file_path": "TraitDictionary.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary.TraitContainer.MultipleEnumerator",
+      "file_path": "TraitDictionary.cs",
+      "si": 66.02,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 11,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary.TraitContainer.AllEnumerable",
+      "file_path": "TraitDictionary.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 3,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.TraitDictionary.TraitContainer.AllEnumerator",
+      "file_path": "TraitDictionary.cs",
+      "si": 61.53,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "OpenRA.VoiceExts",
+      "file_path": "VoiceExts.cs",
+      "si": 66.92,
+      "grade": "D",
+      "cc_max": 7.0,
+      "loc": 66,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.WAngle",
+      "file_path": "WAngle.cs",
+      "si": 90.72,
+      "grade": "E",
+      "cc_max": 8.5,
+      "loc": 154,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.WDist",
+      "file_path": "WDist.cs",
+      "si": 78.74,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 107,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.WorldType",
+      "file_path": "World.cs",
+      "si": 16.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 41
+    },
+    {
+      "fqn": "OpenRA.World",
+      "file_path": "World.cs",
+      "si": 97.6,
+      "grade": "E",
+      "cc_max": 8.75,
+      "loc": 449,
+      "bugfix_count": 41
+    },
+    {
+      "fqn": "OpenRA.TraitPair",
+      "file_path": "World.cs",
+      "si": 48.35,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 4,
+      "bugfix_count": 41
+    },
+    {
+      "fqn": "OpenRA.WorldUtils",
+      "file_path": "WorldUtils.cs",
+      "si": 80.84,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 60,
+      "bugfix_count": 22
+    },
+    {
+      "fqn": "OpenRA.WorldViewportSizes",
+      "file_path": "WorldViewportSizes.cs",
+      "si": 68.71,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 6,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.WPos",
+      "file_path": "WPos.cs",
+      "si": 84.43,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 69,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.IEnumerableExtensions",
+      "file_path": "WPos.cs",
+      "si": 58.08,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 23,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "OpenRA.WRot",
+      "file_path": "WRot.cs",
+      "si": 78.44,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 160,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.WVec",
+      "file_path": "WVec.cs",
+      "si": 91.62,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 84,
+      "bugfix_count": 4
+    }
+  ],
+  "file_rows": [
+    {
+      "file_path": "Activities/Activity.cs",
+      "si_max": 92.51,
+      "si_mean": 47.16,
+      "loc_total": 171,
+      "cc_max": 12.0,
+      "class_count": 3,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Activities/CallFunc.cs",
+      "si_max": 79.64,
+      "si_mean": 79.64,
+      "loc_total": 11,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Effects/DelayedAction.cs",
+      "si_max": 80.99,
+      "si_mean": 80.99,
+      "loc_total": 11,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Effects/DelayedImpact.cs",
+      "si_max": 83.53,
+      "si_mean": 83.53,
+      "loc_total": 13,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Effects/IEffect.cs",
+      "si_max": 84.28,
+      "si_mean": 41.36,
+      "loc_total": 4,
+      "cc_max": 1.0,
+      "class_count": 4,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "FileFormats/CRC32.cs",
+      "si_max": 77.99,
+      "si_mean": 77.99,
+      "loc_total": 19,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "FileFormats/Png.cs",
+      "si_max": 97.75,
+      "si_mean": 51.95,
+      "loc_total": 515,
+      "cc_max": 26.0,
+      "class_count": 4,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "FileFormats/ReplayMetadata.cs",
+      "si_max": 74.4,
+      "si_mean": 74.4,
+      "loc_total": 76,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "FileSystem/FileSystem.cs",
+      "si_max": 83.68,
+      "si_mean": 72.61,
+      "loc_total": 247,
+      "cc_max": 7.0,
+      "class_count": 2,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "FileSystem/Folder.cs",
+      "si_max": 91.02,
+      "si_mean": 91.02,
+      "loc_total": 68,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "FileSystem/IPackage.cs",
+      "si_max": 84.28,
+      "si_mean": 63.97,
+      "loc_total": 6,
+      "cc_max": 1.0,
+      "class_count": 3,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "FileSystem/ZipFile.cs",
+      "si_max": 90.42,
+      "si_mean": 75.21,
+      "loc_total": 168,
+      "cc_max": 6.0,
+      "class_count": 5,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "GameRules/ActorInfo.cs",
+      "si_max": 89.52,
+      "si_mean": 89.52,
+      "loc_total": 155,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 18
+    },
+    {
+      "file_path": "GameRules/MusicInfo.cs",
+      "si_max": 66.62,
+      "si_mean": 66.62,
+      "loc_total": 37,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "GameRules/Ruleset.cs",
+      "si_max": 89.67,
+      "si_mean": 89.67,
+      "loc_total": 238,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "GameRules/SoundInfo.cs",
+      "si_max": 69.31,
+      "si_mean": 48.2,
+      "loc_total": 50,
+      "cc_max": 4.0,
+      "class_count": 3,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "GameRules/WeaponInfo.cs",
+      "si_max": 82.49,
+      "si_mean": 43.42,
+      "loc_total": 135,
+      "cc_max": 7.0,
+      "class_count": 5,
+      "bugfix_count": 21
+    },
+    {
+      "file_path": "Graphics/Animation.cs",
+      "si_max": 91.32,
+      "si_mean": 91.32,
+      "loc_total": 195,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 16
+    },
+    {
+      "file_path": "Graphics/AnimationWithOffset.cs",
+      "si_max": 81.14,
+      "si_mean": 81.14,
+      "loc_total": 26,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Graphics/ChromeProvider.cs",
+      "si_max": 86.68,
+      "si_mean": 43.9,
+      "loc_total": 233,
+      "cc_max": 8.0,
+      "class_count": 4,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "Graphics/CursorManager.cs",
+      "si_max": 96.71,
+      "si_mean": 68.11,
+      "loc_total": 259,
+      "cc_max": 11.0,
+      "class_count": 2,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Graphics/CursorSequence.cs",
+      "si_max": 74.25,
+      "si_mean": 74.25,
+      "loc_total": 28,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Graphics/HardwarePalette.cs",
+      "si_max": 70.81,
+      "si_mean": 70.81,
+      "loc_total": 118,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Graphics/MarkerTileRenderable.cs",
+      "si_max": 85.48,
+      "si_mean": 85.48,
+      "loc_total": 24,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/Model.cs",
+      "si_max": 39.52,
+      "si_mean": 30.57,
+      "loc_total": 8,
+      "cc_max": 1.0,
+      "class_count": 5,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Graphics/ModelAnimation.cs",
+      "si_max": 46.41,
+      "si_mean": 46.41,
+      "loc_total": 21,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/ModelVertex.cs",
+      "si_max": 56.59,
+      "si_mean": 45.14,
+      "loc_total": 12,
+      "cc_max": 1.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Graphics/Palette.cs",
+      "si_max": 67.66,
+      "si_mean": 57.09,
+      "loc_total": 91,
+      "cc_max": 4.0,
+      "class_count": 6,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Graphics/PaletteReference.cs",
+      "si_max": 46.11,
+      "si_mean": 46.11,
+      "loc_total": 7,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/PlatformInterfaces.cs",
+      "si_max": 76.2,
+      "si_mean": 33.82,
+      "loc_total": 60,
+      "cc_max": 1.0,
+      "class_count": 18,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/PlayerColorRemap.cs",
+      "si_max": 56.74,
+      "si_mean": 56.74,
+      "loc_total": 26,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Graphics/Renderable.cs",
+      "si_max": 86.08,
+      "si_mean": 58.03,
+      "loc_total": 10,
+      "cc_max": 1.0,
+      "class_count": 5,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Graphics/RenderPostProcessPassVertex.cs",
+      "si_max": 56.59,
+      "si_mean": 37.65,
+      "loc_total": 5,
+      "cc_max": 1.0,
+      "class_count": 4,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Graphics/RgbaColorRenderer.cs",
+      "si_max": 89.07,
+      "si_mean": 89.07,
+      "loc_total": 210,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Graphics/RgbaSpriteRenderer.cs",
+      "si_max": 52.25,
+      "si_mean": 52.25,
+      "loc_total": 32,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/SequenceSet.cs",
+      "si_max": 69.16,
+      "si_mean": 54.89,
+      "loc_total": 67,
+      "cc_max": 3.0,
+      "class_count": 3,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Graphics/ShaderBindings.cs",
+      "si_max": 72.31,
+      "si_mean": 51.2,
+      "loc_total": 15,
+      "cc_max": 1.0,
+      "class_count": 3,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/Sheet.cs",
+      "si_max": 92.07,
+      "si_mean": 92.07,
+      "loc_total": 129,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Graphics/SheetBuilder.cs",
+      "si_max": 93.41,
+      "si_mean": 47.46,
+      "loc_total": 118,
+      "cc_max": 7.0,
+      "class_count": 3,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "Graphics/Sprite.cs",
+      "si_max": 77.1,
+      "si_mean": 47.36,
+      "loc_total": 33,
+      "cc_max": 1.0,
+      "class_count": 3,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Graphics/SpriteCache.cs",
+      "si_max": 83.83,
+      "si_mean": 83.83,
+      "loc_total": 134,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Graphics/SpriteFont.cs",
+      "si_max": 92.66,
+      "si_mean": 66.09,
+      "loc_total": 380,
+      "cc_max": 12.0,
+      "class_count": 2,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "Graphics/SpriteLoader.cs",
+      "si_max": 56.59,
+      "si_mean": 34.25,
+      "loc_total": 26,
+      "cc_max": 3.0,
+      "class_count": 5,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Graphics/SpriteRenderable.cs",
+      "si_max": 91.17,
+      "si_mean": 91.17,
+      "loc_total": 83,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Graphics/SpriteRenderer.cs",
+      "si_max": 92.96,
+      "si_mean": 92.96,
+      "loc_total": 207,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 11
+    },
+    {
+      "file_path": "Graphics/TargetLineRenderable.cs",
+      "si_max": 87.43,
+      "si_mean": 87.43,
+      "loc_total": 41,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Graphics/TerrainSpriteLayer.cs",
+      "si_max": 93.26,
+      "si_mean": 75.22,
+      "loc_total": 205,
+      "cc_max": 9.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Graphics/UISpriteRenderable.cs",
+      "si_max": 90.57,
+      "si_mean": 90.57,
+      "loc_total": 41,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Graphics/Util.cs",
+      "si_max": 90.12,
+      "si_mean": 90.12,
+      "loc_total": 295,
+      "cc_max": 14.0,
+      "class_count": 1,
+      "bugfix_count": 10
+    },
+    {
+      "file_path": "Graphics/Vertex.cs",
+      "si_max": 63.92,
+      "si_mean": 63.7,
+      "loc_total": 17,
+      "cc_max": 1.0,
+      "class_count": 2,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Graphics/Video.cs",
+      "si_max": 76.2,
+      "si_mean": 76.2,
+      "loc_total": 2,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/VideoLoader.cs",
+      "si_max": 48.95,
+      "si_mean": 40.57,
+      "loc_total": 9,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Graphics/Viewport.cs",
+      "si_max": 96.26,
+      "si_mean": 52.36,
+      "loc_total": 303,
+      "cc_max": 7.5,
+      "class_count": 4,
+      "bugfix_count": 35
+    },
+    {
+      "file_path": "Graphics/WorldRenderer.cs",
+      "si_max": 98.35,
+      "si_mean": 98.35,
+      "loc_total": 389,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 36
+    },
+    {
+      "file_path": "Input/Hotkey.cs",
+      "si_max": 69.01,
+      "si_mean": 69.01,
+      "loc_total": 63,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Input/HotkeyReference.cs",
+      "si_max": 40.87,
+      "si_mean": 40.87,
+      "loc_total": 17,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Input/IInputHandler.cs",
+      "si_max": 82.19,
+      "si_mean": 33.7,
+      "loc_total": 14,
+      "cc_max": 4.0,
+      "class_count": 8,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Input/InputHandler.cs",
+      "si_max": 83.38,
+      "si_mean": 82.78,
+      "loc_total": 24,
+      "cc_max": 1.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Input/Keycode.cs",
+      "si_max": 98.05,
+      "si_mean": 57.41,
+      "loc_total": 7,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Map/ActorInitializer.cs",
+      "si_max": 70.66,
+      "si_mean": 59.68,
+      "loc_total": 160,
+      "cc_max": 4.0,
+      "class_count": 9,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Map/ActorReference.cs",
+      "si_max": 85.78,
+      "si_mean": 62.65,
+      "loc_total": 153,
+      "cc_max": 5.5,
+      "class_count": 2,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Map/CellCoordsRegion.cs",
+      "si_max": 79.79,
+      "si_mean": 72.61,
+      "loc_total": 78,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Map/CellLayer.cs",
+      "si_max": 72.6,
+      "si_mean": 70.43,
+      "loc_total": 104,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Map/CellLayerBase.cs",
+      "si_max": 81.29,
+      "si_mean": 81.29,
+      "loc_total": 40,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Map/CellRegion.cs",
+      "si_max": 82.63,
+      "si_mean": 73.5,
+      "loc_total": 108,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Map/Map.cs",
+      "si_max": 99.1,
+      "si_mean": 56.68,
+      "loc_total": 1210,
+      "cc_max": 14.2,
+      "class_count": 5,
+      "bugfix_count": 48
+    },
+    {
+      "file_path": "Map/MapCache.cs",
+      "si_max": 92.81,
+      "si_mean": 92.81,
+      "loc_total": 377,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 24
+    },
+    {
+      "file_path": "Map/MapCoordsRegion.cs",
+      "si_max": 65.42,
+      "si_mean": 61.23,
+      "loc_total": 51,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Map/MapDirectoryTracker.cs",
+      "si_max": 73.05,
+      "si_mean": 44.91,
+      "loc_total": 91,
+      "cc_max": 7.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Map/MapGenerationArgs.cs",
+      "si_max": 33.68,
+      "si_mean": 33.68,
+      "loc_total": 17,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Map/MapGrid.cs",
+      "si_max": 90.27,
+      "si_mean": 44.43,
+      "loc_total": 192,
+      "cc_max": 9.0,
+      "class_count": 5,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Map/MapPlayers.cs",
+      "si_max": 71.11,
+      "si_mean": 71.11,
+      "loc_total": 51,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Map/MapPreview.cs",
+      "si_max": 98.2,
+      "si_mean": 47.46,
+      "loc_total": 590,
+      "cc_max": 16.5,
+      "class_count": 5,
+      "bugfix_count": 21
+    },
+    {
+      "file_path": "Map/PlayerReference.cs",
+      "si_max": 50.0,
+      "si_mean": 50.0,
+      "loc_total": 3,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Map/ProjectedCellLayer.cs",
+      "si_max": 77.4,
+      "si_mean": 77.4,
+      "loc_total": 20,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Map/ProjectedCellRegion.cs",
+      "si_max": 80.69,
+      "si_mean": 72.53,
+      "loc_total": 68,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Map/TerrainInfo.cs",
+      "si_max": 83.23,
+      "si_mean": 38.15,
+      "loc_total": 66,
+      "cc_max": 11.0,
+      "class_count": 7,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Map/TileReference.cs",
+      "si_max": 64.82,
+      "si_mean": 56.51,
+      "loc_total": 17,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Network/Connection.cs",
+      "si_max": 91.47,
+      "si_mean": 60.67,
+      "loc_total": 299,
+      "cc_max": 15.0,
+      "class_count": 4,
+      "bugfix_count": 20
+    },
+    {
+      "file_path": "Network/ConnectionTarget.cs",
+      "si_max": 58.98,
+      "si_mean": 58.98,
+      "loc_total": 35,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Network/FluentMessage.cs",
+      "si_max": 80.24,
+      "si_mean": 49.8,
+      "loc_total": 78,
+      "cc_max": 5.0,
+      "class_count": 3,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Network/GameSave.cs",
+      "si_max": 89.22,
+      "si_mean": 74.4,
+      "loc_total": 261,
+      "cc_max": 9.0,
+      "class_count": 2,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Network/GameServer.cs",
+      "si_max": 92.37,
+      "si_mean": 71.94,
+      "loc_total": 131,
+      "cc_max": 17.0,
+      "class_count": 2,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Network/GeoIP.cs",
+      "si_max": 73.8,
+      "si_mean": 66.84,
+      "loc_total": 111,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Network/Handshake.cs",
+      "si_max": 71.86,
+      "si_mean": 60.63,
+      "loc_total": 45,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Network/Nat.cs",
+      "si_max": 60.18,
+      "si_mean": 38.48,
+      "loc_total": 67,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Network/Order.cs",
+      "si_max": 98.8,
+      "si_mean": 41.13,
+      "loc_total": 378,
+      "cc_max": 33.0,
+      "class_count": 4,
+      "bugfix_count": 16
+    },
+    {
+      "file_path": "Network/OrderIO.cs",
+      "si_max": 78.89,
+      "si_mean": 75.82,
+      "loc_total": 174,
+      "cc_max": 6.0,
+      "class_count": 2,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Network/OrderManager.cs",
+      "si_max": 95.06,
+      "si_mean": 70.59,
+      "loc_total": 209,
+      "cc_max": 9.0,
+      "class_count": 2,
+      "bugfix_count": 20
+    },
+    {
+      "file_path": "Network/ReplayConnection.cs",
+      "si_max": 88.17,
+      "si_mean": 63.84,
+      "loc_total": 90,
+      "cc_max": 12.0,
+      "class_count": 2,
+      "bugfix_count": 16
+    },
+    {
+      "file_path": "Network/ReplayRecorder.cs",
+      "si_max": 89.97,
+      "si_mean": 89.97,
+      "loc_total": 82,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Network/Session.cs",
+      "si_max": 88.92,
+      "si_mean": 42.96,
+      "loc_total": 135,
+      "cc_max": 8.0,
+      "class_count": 8,
+      "bugfix_count": 19
+    },
+    {
+      "file_path": "Network/SyncReport.cs",
+      "si_max": 94.46,
+      "si_mean": 56.86,
+      "loc_total": 213,
+      "cc_max": 12.0,
+      "class_count": 6,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "Network/TickTime.cs",
+      "si_max": 70.06,
+      "si_mean": 70.06,
+      "loc_total": 26,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Network/UnitOrders.cs",
+      "si_max": 100.0,
+      "si_mean": 100.0,
+      "loc_total": 385,
+      "cc_max": 93.0,
+      "class_count": 1,
+      "bugfix_count": 37
+    },
+    {
+      "file_path": "Orders/IOrderGenerator.cs",
+      "si_max": 76.2,
+      "si_mean": 76.2,
+      "loc_total": 9,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Primitives/ActionQueue.cs",
+      "si_max": 71.41,
+      "si_mean": 54.54,
+      "loc_total": 52,
+      "cc_max": 4.0,
+      "class_count": 3,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Primitives/ActorInfoDictionary.cs",
+      "si_max": 65.42,
+      "si_mean": 65.42,
+      "loc_total": 19,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/BitSet.cs",
+      "si_max": 49.7,
+      "si_mean": 45.14,
+      "loc_total": 114,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Primitives/Cache.cs",
+      "si_max": 86.38,
+      "si_mean": 86.38,
+      "loc_total": 14,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Primitives/CachedTransform.cs",
+      "si_max": 84.58,
+      "si_mean": 84.58,
+      "loc_total": 15,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/Color.cs",
+      "si_max": 73.65,
+      "si_mean": 73.65,
+      "loc_total": 170,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "Primitives/ConcurrentCache.cs",
+      "si_max": 34.28,
+      "si_mean": 34.28,
+      "loc_total": 13,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/DisposableAction.cs",
+      "si_max": 40.87,
+      "si_mean": 40.87,
+      "loc_total": 13,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/float2.cs",
+      "si_max": 97.31,
+      "si_mean": 87.65,
+      "loc_total": 59,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Primitives/float3.cs",
+      "si_max": 85.93,
+      "si_mean": 85.93,
+      "loc_total": 19,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Primitives/int2.cs",
+      "si_max": 98.5,
+      "si_mean": 98.5,
+      "loc_total": 37,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/Int32Matrix4x4.cs",
+      "si_max": 51.5,
+      "si_mean": 51.5,
+      "loc_total": 37,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Primitives/IObservableCollection.cs",
+      "si_max": 57.78,
+      "si_mean": 57.78,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Primitives/LongBitSet.cs",
+      "si_max": 51.5,
+      "si_mean": 50.83,
+      "loc_total": 130,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Primitives/MergedStream.cs",
+      "si_max": 73.5,
+      "si_mean": 73.5,
+      "loc_total": 86,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/ObservableCollection.cs",
+      "si_max": 55.39,
+      "si_mean": 55.39,
+      "loc_total": 24,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/ObservableDictionary.cs",
+      "si_max": 58.38,
+      "si_mean": 52.25,
+      "loc_total": 67,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/ObservableList.cs",
+      "si_max": 51.5,
+      "si_mean": 51.5,
+      "loc_total": 50,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Primitives/PlayerDictionary.cs",
+      "si_max": 48.95,
+      "si_mean": 48.95,
+      "loc_total": 26,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/Polygon.cs",
+      "si_max": 89.82,
+      "si_mean": 89.82,
+      "loc_total": 87,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/PredictedCachedTransform.cs",
+      "si_max": 86.83,
+      "si_mean": 86.83,
+      "loc_total": 21,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/PriorityArray.cs",
+      "si_max": 66.92,
+      "si_mean": 66.92,
+      "loc_total": 82,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/PriorityQueue.cs",
+      "si_max": 78.14,
+      "si_mean": 62.12,
+      "loc_total": 98,
+      "cc_max": 10.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Primitives/ReadOnlyAdapterStream.cs",
+      "si_max": 55.54,
+      "si_mean": 55.54,
+      "loc_total": 57,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Primitives/Rectangle.cs",
+      "si_max": 95.36,
+      "si_mean": 95.36,
+      "loc_total": 68,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/RingBuffer.cs",
+      "si_max": 71.56,
+      "si_mean": 71.56,
+      "loc_total": 93,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/SegmentStream.cs",
+      "si_max": 67.81,
+      "si_mean": 67.81,
+      "loc_total": 96,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Primitives/Size.cs",
+      "si_max": 90.87,
+      "si_mean": 90.87,
+      "loc_total": 29,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Primitives/SpatiallyPartitioned.cs",
+      "si_max": 87.87,
+      "si_mean": 87.87,
+      "loc_total": 109,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Primitives/TypeDictionary.cs",
+      "si_max": 68.86,
+      "si_mean": 53.44,
+      "loc_total": 121,
+      "cc_max": 4.0,
+      "class_count": 4,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Scripting/ScriptActorInterface.cs",
+      "si_max": 85.03,
+      "si_mean": 85.03,
+      "loc_total": 33,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Scripting/ScriptContext.cs",
+      "si_max": 91.92,
+      "si_mean": 41.99,
+      "loc_total": 221,
+      "cc_max": 10.0,
+      "class_count": 10,
+      "bugfix_count": 18
+    },
+    {
+      "file_path": "Scripting/ScriptMemberExts.cs",
+      "si_max": 58.68,
+      "si_mean": 58.68,
+      "loc_total": 41,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Scripting/ScriptMemberWrapper.cs",
+      "si_max": 82.78,
+      "si_mean": 82.78,
+      "loc_total": 120,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Scripting/ScriptObjectWrapper.cs",
+      "si_max": 78.59,
+      "si_mean": 78.59,
+      "loc_total": 44,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Scripting/ScriptPlayerInterface.cs",
+      "si_max": 55.39,
+      "si_mean": 55.39,
+      "loc_total": 10,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Scripting/ScriptTypes.cs",
+      "si_max": 93.71,
+      "si_mean": 93.71,
+      "loc_total": 169,
+      "cc_max": 27.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Server/Connection.cs",
+      "si_max": 95.51,
+      "si_mean": 56.14,
+      "loc_total": 166,
+      "cc_max": 22.0,
+      "class_count": 2,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "Server/Exts.cs",
+      "si_max": 32.19,
+      "si_mean": 32.19,
+      "loc_total": 4,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Server/MapStatusCache.cs",
+      "si_max": 67.37,
+      "si_mean": 49.78,
+      "loc_total": 39,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Server/OrderBuffer.cs",
+      "si_max": 86.23,
+      "si_mean": 86.23,
+      "loc_total": 92,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Server/PlayerMessageTracker.cs",
+      "si_max": 77.54,
+      "si_mean": 77.54,
+      "loc_total": 56,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Server/ProtocolVersion.cs",
+      "si_max": 16.77,
+      "si_mean": 16.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Server/Server.cs",
+      "si_max": 99.85,
+      "si_mean": 53.41,
+      "loc_total": 1335,
+      "cc_max": 33.25,
+      "class_count": 9,
+      "bugfix_count": 80
+    },
+    {
+      "file_path": "Server/TraitInterfaces.cs",
+      "si_max": 79.04,
+      "si_mean": 48.71,
+      "loc_total": 34,
+      "cc_max": 1.0,
+      "class_count": 11,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Server/VoteKickTracker.cs",
+      "si_max": 97.9,
+      "si_mean": 97.9,
+      "loc_total": 170,
+      "cc_max": 34.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Sound/Sound.cs",
+      "si_max": 94.91,
+      "si_mean": 44.02,
+      "loc_total": 341,
+      "cc_max": 16.3333,
+      "class_count": 4,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "Sound/SoundDevice.cs",
+      "si_max": 32.19,
+      "si_mean": 24.48,
+      "loc_total": 13,
+      "cc_max": 1.0,
+      "class_count": 4,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Support/Arguments.cs",
+      "si_max": 57.49,
+      "si_mean": 57.49,
+      "loc_total": 15,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Support/AssemblyLoader.cs",
+      "si_max": 78.29,
+      "si_mean": 57.36,
+      "loc_total": 269,
+      "cc_max": 8.0,
+      "class_count": 6,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Support/Benchmark.cs",
+      "si_max": 85.63,
+      "si_mean": 62.58,
+      "loc_total": 25,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Support/ExceptionHandler.cs",
+      "si_max": 77.25,
+      "si_mean": 77.25,
+      "loc_total": 83,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Support/HttpClientFactory.cs",
+      "si_max": 34.28,
+      "si_mean": 34.28,
+      "loc_total": 16,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Support/HttpQueryBuilder.cs",
+      "si_max": 46.41,
+      "si_mean": 46.41,
+      "loc_total": 29,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Support/LaunchArguments.cs",
+      "si_max": 66.47,
+      "si_mean": 66.47,
+      "loc_total": 32,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Support/Log.cs",
+      "si_max": 84.88,
+      "si_mean": 54.64,
+      "loc_total": 122,
+      "cc_max": 5.0,
+      "class_count": 3,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Support/MersenneTwister.cs",
+      "si_max": 72.01,
+      "si_mean": 72.01,
+      "loc_total": 98,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Support/PerfHistory.cs",
+      "si_max": 86.53,
+      "si_mean": 86.53,
+      "loc_total": 15,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Support/PerfItem.cs",
+      "si_max": 85.33,
+      "si_mean": 85.33,
+      "loc_total": 54,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Support/PerfSample.cs",
+      "si_max": 68.56,
+      "si_mean": 68.56,
+      "loc_total": 9,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Support/PerfTickLogger.cs",
+      "si_max": 82.34,
+      "si_mean": 82.34,
+      "loc_total": 26,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Support/PerfTimer.cs",
+      "si_max": 93.86,
+      "si_mean": 93.86,
+      "loc_total": 59,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Support/Program.cs",
+      "si_max": 16.77,
+      "si_mean": 16.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "Support/VariableExpression.cs",
+      "si_max": 99.4,
+      "si_mean": 52.43,
+      "loc_total": 773,
+      "cc_max": 44.0,
+      "class_count": 16,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "Traits/Player/FrozenActorLayer.cs",
+      "si_max": 91.77,
+      "si_mean": 78.48,
+      "loc_total": 259,
+      "cc_max": 7.0,
+      "class_count": 4,
+      "bugfix_count": 18
+    },
+    {
+      "file_path": "Traits/Player/Shroud.cs",
+      "si_max": 95.81,
+      "si_mean": 41.59,
+      "loc_total": 367,
+      "cc_max": 14.5,
+      "class_count": 6,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "Traits/World/DebugVisualizations.cs",
+      "si_max": 67.51,
+      "si_mean": 43.71,
+      "loc_total": 8,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Traits/World/Faction.cs",
+      "si_max": 19.91,
+      "si_mean": 18.34,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Traits/World/ScreenMap.cs",
+      "si_max": 93.56,
+      "si_mean": 64.07,
+      "loc_total": 203,
+      "cc_max": 6.5,
+      "class_count": 3,
+      "bugfix_count": 10
+    },
+    {
+      "file_path": "Traits/World/ScreenShaker.cs",
+      "si_max": 88.32,
+      "si_mean": 58.48,
+      "loc_total": 46,
+      "cc_max": 3.0,
+      "class_count": 3,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Traits/ActivityUtils.cs",
+      "si_max": 70.96,
+      "si_mean": 70.96,
+      "loc_total": 19,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Traits/DebugPauseState.cs",
+      "si_max": 55.39,
+      "si_mean": 51.5,
+      "loc_total": 2,
+      "cc_max": 1.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Traits/LintAttributes.cs",
+      "si_max": 41.02,
+      "si_mean": 22.72,
+      "loc_total": 20,
+      "cc_max": 2.0,
+      "class_count": 10,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Traits/Target.cs",
+      "si_max": 80.09,
+      "si_mean": 48.43,
+      "loc_total": 132,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 16
+    },
+    {
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "si_max": 97.16,
+      "si_mean": 39.47,
+      "loc_total": 176,
+      "cc_max": 2.0,
+      "class_count": 119,
+      "bugfix_count": 53
+    },
+    {
+      "file_path": "UtilityCommands/ClearInvalidModRegistrationsCommand.cs",
+      "si_max": 69.91,
+      "si_mean": 69.91,
+      "loc_total": 16,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "UtilityCommands/RegisterModCommand.cs",
+      "si_max": 69.91,
+      "si_mean": 69.91,
+      "loc_total": 16,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "UtilityCommands/UnregisterModCommand.cs",
+      "si_max": 69.91,
+      "si_mean": 69.91,
+      "loc_total": 16,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Widgets/ChromeMetrics.cs",
+      "si_max": 51.65,
+      "si_mean": 51.65,
+      "loc_total": 25,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Widgets/Widget.cs",
+      "si_max": 94.16,
+      "si_mean": 61.51,
+      "loc_total": 503,
+      "cc_max": 8.0,
+      "class_count": 9,
+      "bugfix_count": 28
+    },
+    {
+      "file_path": "Widgets/WidgetLoader.cs",
+      "si_max": 72.16,
+      "si_mean": 72.16,
+      "loc_total": 55,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Actor.cs",
+      "si_max": 96.56,
+      "si_mean": 44.43,
+      "loc_total": 453,
+      "cc_max": 13.0,
+      "class_count": 4,
+      "bugfix_count": 34
+    },
+    {
+      "file_path": "CPos.cs",
+      "si_max": 96.86,
+      "si_mean": 96.86,
+      "loc_total": 69,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "CryptoUtil.cs",
+      "si_max": 59.28,
+      "si_mean": 59.28,
+      "loc_total": 246,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "CVec.cs",
+      "si_max": 79.34,
+      "si_mean": 79.34,
+      "loc_total": 60,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "DefaultPlayer.cs",
+      "si_max": 39.97,
+      "si_mean": 39.97,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "DescAttribute.cs",
+      "si_max": 18.71,
+      "si_mean": 18.71,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "ExternalMods.cs",
+      "si_max": 95.21,
+      "si_mean": 48.06,
+      "loc_total": 226,
+      "cc_max": 12.0,
+      "class_count": 3,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Exts.cs",
+      "si_max": 86.98,
+      "si_mean": 53.75,
+      "loc_total": 567,
+      "cc_max": 6.4286,
+      "class_count": 3,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "FieldLoader.cs",
+      "si_max": 97.46,
+      "si_mean": 60.95,
+      "loc_total": 697,
+      "cc_max": 8.75,
+      "class_count": 7,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "FieldSaver.cs",
+      "si_max": 93.11,
+      "si_mean": 93.11,
+      "loc_total": 127,
+      "cc_max": 23.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "FluentBundle.cs",
+      "si_max": 83.08,
+      "si_mean": 43.8,
+      "loc_total": 129,
+      "cc_max": 9.0,
+      "class_count": 5,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "FluentExts.cs",
+      "si_max": 73.35,
+      "si_mean": 73.35,
+      "loc_total": 26,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "FluentProvider.cs",
+      "si_max": 71.26,
+      "si_mean": 71.26,
+      "loc_total": 63,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Fonts.cs",
+      "si_max": 52.25,
+      "si_mean": 34.51,
+      "loc_total": 8,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Game.cs",
+      "si_max": 99.7,
+      "si_mean": 58.23,
+      "loc_total": 888,
+      "cc_max": 16.25,
+      "class_count": 2,
+      "bugfix_count": 117
+    },
+    {
+      "file_path": "GameInformation.cs",
+      "si_max": 88.62,
+      "si_mean": 52.7,
+      "loc_total": 122,
+      "cc_max": 6.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "GameSpeed.cs",
+      "si_max": 69.91,
+      "si_mean": 43.34,
+      "loc_total": 22,
+      "cc_max": 5.0,
+      "class_count": 2,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "HotkeyDefinition.cs",
+      "si_max": 74.25,
+      "si_mean": 74.25,
+      "loc_total": 29,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "HotkeyManager.cs",
+      "si_max": 82.93,
+      "si_mean": 61.23,
+      "loc_total": 81,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "HttpExtension.cs",
+      "si_max": 63.62,
+      "si_mean": 63.62,
+      "loc_total": 34,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "InstalledMods.cs",
+      "si_max": 76.35,
+      "si_mean": 76.35,
+      "loc_total": 70,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "IUtilityCommand.cs",
+      "si_max": 61.53,
+      "si_mean": 47.61,
+      "loc_total": 21,
+      "cc_max": 1.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "LocalPlayerProfile.cs",
+      "si_max": 81.44,
+      "si_mean": 49.1,
+      "loc_total": 145,
+      "cc_max": 7.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Manifest.cs",
+      "si_max": 92.22,
+      "si_mean": 50.15,
+      "loc_total": 112,
+      "cc_max": 17.0,
+      "class_count": 3,
+      "bugfix_count": 11
+    },
+    {
+      "file_path": "MiniYaml.cs",
+      "si_max": 99.55,
+      "si_mean": 81.82,
+      "loc_total": 664,
+      "cc_max": 32.5,
+      "class_count": 7,
+      "bugfix_count": 19
+    },
+    {
+      "file_path": "ModData.cs",
+      "si_max": 94.76,
+      "si_mean": 57.71,
+      "loc_total": 167,
+      "cc_max": 10.0,
+      "class_count": 4,
+      "bugfix_count": 20
+    },
+    {
+      "file_path": "MPos.cs",
+      "si_max": 97.01,
+      "si_mean": 88.1,
+      "loc_total": 42,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "ObjectCreator.cs",
+      "si_max": 77.69,
+      "si_mean": 48.2,
+      "loc_total": 132,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "Platform.cs",
+      "si_max": 83.98,
+      "si_mean": 39.17,
+      "loc_total": 157,
+      "cc_max": 8.0,
+      "class_count": 3,
+      "bugfix_count": 18
+    },
+    {
+      "file_path": "Player.cs",
+      "si_max": 95.96,
+      "si_mean": 36.57,
+      "loc_total": 193,
+      "cc_max": 10.0,
+      "class_count": 4,
+      "bugfix_count": 26
+    },
+    {
+      "file_path": "PlayerDatabase.cs",
+      "si_max": 88.02,
+      "si_mean": 88.02,
+      "loc_total": 78,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "PlayerProfile.cs",
+      "si_max": 60.03,
+      "si_mean": 49.78,
+      "loc_total": 26,
+      "cc_max": 5.0,
+      "class_count": 2,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Renderer.cs",
+      "si_max": 98.65,
+      "si_mean": 53.84,
+      "loc_total": 442,
+      "cc_max": 6.6667,
+      "class_count": 3,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "SelectableExts.cs",
+      "si_max": 76.95,
+      "si_mean": 76.95,
+      "loc_total": 69,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Settings.cs",
+      "si_max": 87.72,
+      "si_mean": 38.2,
+      "loc_total": 185,
+      "cc_max": 9.0,
+      "class_count": 17,
+      "bugfix_count": 12
+    },
+    {
+      "file_path": "StreamExts.cs",
+      "si_max": 73.95,
+      "si_mean": 73.95,
+      "loc_total": 226,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "Sync.cs",
+      "si_max": 87.57,
+      "si_mean": 55.09,
+      "loc_total": 145,
+      "cc_max": 9.0,
+      "class_count": 3,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "TextNotification.cs",
+      "si_max": 59.88,
+      "si_mean": 38.33,
+      "loc_total": 20,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "TextNotificationsManager.cs",
+      "si_max": 80.39,
+      "si_mean": 80.39,
+      "loc_total": 75,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "TraitDictionary.cs",
+      "si_max": 87.28,
+      "si_mean": 64.11,
+      "loc_total": 223,
+      "cc_max": 5.0,
+      "class_count": 8,
+      "bugfix_count": 11
+    },
+    {
+      "file_path": "VoiceExts.cs",
+      "si_max": 66.92,
+      "si_mean": 66.92,
+      "loc_total": 66,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "WAngle.cs",
+      "si_max": 90.72,
+      "si_mean": 90.72,
+      "loc_total": 154,
+      "cc_max": 8.5,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "WDist.cs",
+      "si_max": 78.74,
+      "si_mean": 78.74,
+      "loc_total": 107,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "World.cs",
+      "si_max": 97.6,
+      "si_mean": 54.24,
+      "loc_total": 453,
+      "cc_max": 8.75,
+      "class_count": 3,
+      "bugfix_count": 41
+    },
+    {
+      "file_path": "WorldUtils.cs",
+      "si_max": 80.84,
+      "si_mean": 80.84,
+      "loc_total": 60,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 22
+    },
+    {
+      "file_path": "WorldViewportSizes.cs",
+      "si_max": 68.71,
+      "si_mean": 68.71,
+      "loc_total": 6,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "WPos.cs",
+      "si_max": 84.43,
+      "si_mean": 71.25,
+      "loc_total": 92,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "WRot.cs",
+      "si_max": 78.44,
+      "si_mean": 78.44,
+      "loc_total": 160,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "WVec.cs",
+      "si_max": 91.62,
+      "si_mean": 91.62,
+      "loc_total": 84,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    }
+  ],
+  "notes": [
+    "bug-fix 변경 파일 중 1150 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음."
+  ]
+}

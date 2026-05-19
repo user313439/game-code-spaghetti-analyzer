@@ -1,0 +1,34 @@
+=== G-SI Validation (Phase A) ===
+repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
+subdir:         OpenRA.Game
+date range:     * .. *
+commits seen:   6242
+bug-fix found:  1148
+classes total:  668  (with bug-fix: 603)
+files total:    226  (with bug-fix: 190)
+unmatched changes (non-class files): 1150
+
+Class-level Spearman correlation (vs file bug-fix count):
+  si_vs_bugfix            n= 668  rho= -0.1239  p=0.001814
+  loc_vs_bugfix           n= 668  rho= -0.1852  p=2.688e-06
+  cc_vs_bugfix            n= 668  rho= -0.1441  p=0.0002772
+
+File-level Spearman correlation (vs file bug-fix count):
+  file_si_vs_bugfix       n= 226  rho= +0.5797  p=0
+  file_loc_vs_bugfix      n= 226  rho= +0.6988  p=0
+  file_cc_vs_bugfix       n= 226  rho= +0.5517  p=0
+
+Top bug-fix touched analysis files:
+   117  Game.cs
+    80  Server/Server.cs
+    53  Traits/TraitsInterfaces.cs
+    48  Map/Map.cs
+    41  World.cs
+    37  Network/UnitOrders.cs
+    36  Graphics/WorldRenderer.cs
+    35  Graphics/Viewport.cs
+    34  Actor.cs
+    28  Widgets/Widget.cs
+
+Notes:
+  - bug-fix 변경 파일 중 1150 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.

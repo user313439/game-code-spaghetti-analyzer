@@ -1,0 +1,34 @@
+=== G-SI Validation (Phase A) ===
+repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
+subdir:         OpenRA.Mods.Common
+date range:     * .. *
+commits seen:   6815
+bug-fix found:  1323
+classes total:  2194  (with bug-fix: 1804)
+files total:    1080  (with bug-fix: 832)
+unmatched changes (non-class files): 549
+
+Class-level Spearman correlation (vs file bug-fix count):
+  si_vs_bugfix            n=2194  rho= +0.0745  p=0.0006917
+  loc_vs_bugfix           n=2194  rho= +0.0267  p=0.2253
+  cc_vs_bugfix            n=2194  rho= +0.0241  p=0.2736
+
+File-level Spearman correlation (vs file bug-fix count):
+  file_si_vs_bugfix       n=1080  rho= +0.5405  p=0
+  file_loc_vs_bugfix      n=1080  rho= +0.6129  p=0
+  file_cc_vs_bugfix       n=1080  rho= +0.5265  p=0
+
+Top bug-fix touched analysis files:
+    51  Traits/Mobile.cs
+    50  Traits/Air/Aircraft.cs
+    36  ServerTraits/LobbyCommands.cs
+    28  Activities/Move/Move.cs
+    26  Widgets/Logic/Lobby/LobbyLogic.cs
+    22  Widgets/Logic/Lobby/LobbyUtils.cs
+    21  Traits/AutoTarget.cs
+    21  Traits/Cargo.cs
+    20  Widgets/Logic/AssetBrowserLogic.cs
+    20  TraitsInterfaces.cs
+
+Notes:
+  - bug-fix 변경 파일 중 549 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.

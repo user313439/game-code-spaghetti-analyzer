@@ -46,6 +46,41 @@ W1 단계에서는 `OpenRA.Game` 모듈을 1차 대상으로 한다. 후속 단�
 
 CC 분포는 일반적인 코드베이스 분포에 부합한다 (CC=1이 58.4%, CC≥21이 0.8%).
 
+### 1.4 Phase A 검증 결과 (W8, 2026-05-20)
+
+Plan §7.1 의 Phase A 핵심 정량 검증을 본 매니페스트의 커밋(`8f2138c7`) 기준으로 수행했다. 검증 명령은 다음과 같다.
+
+```bash
+python -m game_si validate benchmarks/OpenRA \
+    --scoring reports/openra-game/scoring.json --subdir OpenRA.Game
+python -m game_si validate benchmarks/OpenRA \
+    --scoring reports/openra-mods-common/scoring.json --subdir OpenRA.Mods.Common
+```
+
+본 시점 기준으로 `OpenRA.Game` 의 git history 6,242 커밋, `OpenRA.Mods.Common` 의 6,815 커밋이 스캔되었으며, 각 모듈에서 1,148 / 1,323 개의 bug-fix 커밋이 키워드 매칭으로 식별되었다 (`fix typo`/`fix indent` 등 사소한 수정은 제외).
+
+| 모듈 | 분석 단위 | n | G-SI ρ | LOC ρ | CC ρ |
+|---|---|---:|---:|---:|---:|
+| OpenRA.Game | 파일 | 226 | **+0.580** | +0.699 | +0.552 |
+| OpenRA.Game | 클래스 | 668 | −0.124 | −0.185 | −0.144 |
+| OpenRA.Mods.Common | 파일 | 1,080 | **+0.541** | +0.613 | +0.527 |
+| OpenRA.Mods.Common | 클래스 | 2,194 | **+0.075** (p<0.001) | +0.027 (n.s.) | +0.024 (n.s.) |
+
+(모든 파일 단위 p-value 는 1e-6 이하로 측정되었다. ρ는 Spearman 순위 상관계수.)
+
+해석 요약은 다음과 같다.
+
+- **파일 단위에서 G-SI 가 bug-fix 빈도와 강한 양의 상관을 보인다.** 두 모듈 모두 ρ≈+0.55 ± 0.04 범위로, LOC 단독(+0.61~0.70) 보다 약간 낮지만 CC 단독(+0.53~0.55) 과 동등 수준이다. Plan RQ1 을 지지하는 일관된 신호다.
+- **클래스 단위에서는 단위 부적합 효과가 관찰된다.** 한 파일에 다수 클래스가 포함된 경우(예: `TraitsInterfaces.cs` 의 50+개 인터페이스) 모든 클래스가 동일한 bug-fix 카운트를 공유한다. 이는 plan §13 에서 명시한 "분석 단위 부적합" 시나리오의 실측 예로, OpenRA.Game 케이스에서는 음의 상관, OpenRA.Mods.Common 케이스에서는 약한 양의 상관으로 나타났다.
+- **OpenRA.Mods.Common 클래스 단위에서는 G-SI 만 통계적으로 유의(p<0.001)했고 LOC/CC 단독은 유의성 미달이었다.** 큰 n(=2,194) 에서도 추가 설명력이 검출된다는 점에서 plan RQ2 (G-SI 가 LOC/CC 단독 대비 추가 설명력) 의 약하지만 일관된 근거가 된다.
+- **bug-fix 커밋의 비-클래스 변경 (자산/설정/주석 등) 은 OpenRA.Game 1,150 회, OpenRA.Mods.Common 549 회** 로 측정되었다. 이는 정적 분석 대상 외 변경이며, 분석기 신호 외부의 자연 noise 로 분류된다.
+
+세부 산출물은 다음 위치에 저장된다.
+
+- 텍스트 요약: `reports/openra-game/validation_summary.txt`, `reports/openra-mods-common/validation_summary.txt`
+- JSON 원본: `reports/openra-{game,mods-common}/validation.json`
+- HTML 시각화 (산점도 포함): `reports/openra-{game,mods-common}/validation.html`
+
 ## 2. 후속 분석 대상
 
 | 프로젝트 | URL | 라이선스 | 진입 단계 |

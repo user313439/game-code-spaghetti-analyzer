@@ -114,9 +114,47 @@ def _build_parser() -> argparse.ArgumentParser:
     p_diff.add_argument("baseline_json")
     p_diff.add_argument("latest_json")
 
-    p_validate = sub.add_parser("validate", help="(W13+) Git 변경 이력으로 G-SI 검증")
-    p_validate.add_argument("repo")
-    p_validate.add_argument("--since", help="검증에 사용할 시점 (YYYY-MM-DD)")
+    p_validate = sub.add_parser(
+        "validate",
+        help="Phase A: bug-fix 커밋 빈도와 G-SI의 Spearman 상관을 측정한다.",
+    )
+    p_validate.add_argument("repo", help="대상 git working tree 경로 (예: ./benchmarks/OpenRA)")
+    p_validate.add_argument(
+        "--scoring",
+        type=Path,
+        required=True,
+        help="이미 산출된 scoring.json 경로 (analyze 의 출력)",
+    )
+    p_validate.add_argument(
+        "--subdir",
+        default=None,
+        help="저장소 루트로부터 분석 대상 서브 디렉토리 (예: OpenRA.Game). "
+             "지정하면 git log 가 해당 경로로 제한되고, scoring.json 의 상대 경로와 매핑된다.",
+    )
+    p_validate.add_argument("--since", help="시작일 (YYYY-MM-DD)")
+    p_validate.add_argument("--until", help="종료일 (YYYY-MM-DD)")
+    p_validate.add_argument(
+        "--out",
+        type=Path,
+        default=None,
+        help="validation.json/validation_summary.txt 출력 디렉토리. 기본은 scoring.json 디렉토리.",
+    )
+    p_validate.add_argument(
+        "--max-commits",
+        type=int,
+        default=0,
+        help="안전 상한 (0=무제한). git log 가 너무 클 때 사용.",
+    )
+    p_validate.add_argument(
+        "--no-html",
+        action="store_true",
+        help="validation.html 생성을 건너뛰고 JSON/summary 만 출력한다.",
+    )
+    p_validate.add_argument(
+        "--project-name",
+        default=None,
+        help="validation.html 헤더에 표시할 프로젝트 이름. 기본값은 --subdir 또는 scoring.json 디렉토리 이름.",
+    )
 
     p_compare = sub.add_parser("compare", help="(W16+) 외부 도구 결과와 G-SI 비교")
     p_compare.add_argument("our_json")
@@ -258,6 +296,96 @@ def _print_top_methods(data: dict, top_n: int) -> None:
         print(f"        {r['path']}:{r['line']}")
 
 
+def _cmd_validate(args: argparse.Namespace) -> int:
+    """W8 Phase A — bug-fix 커밋 빈도와 G-SI 점수의 Spearman 상관 측정.
+
+    필수 입력:
+      * ``repo``       — 대상 저장소 working tree (git CLI 가 해석 가능해야 함)
+      * ``--scoring``  — analyze 가 산출한 scoring.json
+    선택 입력:
+      * ``--subdir``   — 저장소 루트로부터 분석 대상 서브 디렉토리
+      * ``--since``    — 검증 기간 시작일 (YYYY-MM-DD)
+      * ``--until``    — 검증 기간 종료일
+      * ``--out``      — 결과 출력 디렉토리 (기본: scoring.json 디렉토리)
+    """
+    from .gitlog import collect_bugfix_commits
+    from .validate import (
+        format_text_summary,
+        load_scoring,
+        run_validation,
+        to_dict,
+    )
+
+    repo_path = Path(args.repo)
+    if not repo_path.exists():
+        print(f"[error] repo 경로가 존재하지 않습니다: {repo_path}", file=sys.stderr)
+        return 1
+    if not (repo_path / ".git").exists():
+        print(f"[warn] {repo_path}/.git 가 없습니다. git working tree 가 맞는지 확인하라.", file=sys.stderr)
+
+    scoring_path: Path = args.scoring
+    if not scoring_path.exists():
+        print(f"[error] scoring.json 이 존재하지 않습니다: {scoring_path}", file=sys.stderr)
+        return 1
+
+    out_dir: Path = args.out if args.out is not None else scoring_path.parent
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"[validate] repo={repo_path}")
+    print(f"[validate] scoring={scoring_path}")
+    if args.subdir:
+        print(f"[validate] subdir={args.subdir}")
+    if args.since or args.until:
+        print(f"[validate] date range: {args.since or '*'} .. {args.until or '*'}")
+
+    try:
+        gitlog = collect_bugfix_commits(
+            repo_path=repo_path,
+            since=args.since,
+            until=args.until,
+            path_filter=args.subdir,
+            max_commits=(args.max_commits or None),
+        )
+    except RuntimeError as exc:
+        print(f"[error] git log 실패: {exc}", file=sys.stderr)
+        return 1
+
+    print(
+        f"[validate] commits scanned: {gitlog.total_commits}, "
+        f"bug-fix commits: {len(gitlog.bugfix_commits)}, "
+        f"unique touched paths: {len(gitlog.file_touch_counts)}"
+    )
+
+    scoring = load_scoring(scoring_path)
+    result = run_validation(scoring=scoring, gitlog=gitlog, subdir=args.subdir)
+
+    json_path = out_dir / "validation.json"
+    summary_path = out_dir / "validation_summary.txt"
+    json_path.write_text(
+        json.dumps(to_dict(result), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    summary_text = format_text_summary(result)
+    summary_path.write_text(summary_text + "\n", encoding="utf-8")
+
+    print()
+    print(summary_text)
+    print()
+    print(f"[validate] wrote {json_path}")
+    print(f"[validate] wrote {summary_path}")
+
+    if not args.no_html:
+        from .validate_report import generate_validation_html
+        html_name = args.project_name or args.subdir or out_dir.name
+        html_path = generate_validation_html(
+            result=result,
+            output_path=out_dir / "validation.html",
+            project_name=html_name,
+        )
+        print(f"[validate] wrote {html_path}")
+    return 0
+
+
 def _cmd_stub(name: str) -> int:
     print(
         f"[info] '{name}' 명령은 후속 주차에서 구현될 예정입니다.\n"
@@ -274,7 +402,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "analyze":
         return _cmd_analyze(args)
-    if args.command in {"diff", "validate", "compare"}:
+    if args.command == "validate":
+        return _cmd_validate(args)
+    if args.command in {"diff", "compare"}:
         return _cmd_stub(args.command)
 
     parser.print_help(sys.stderr)

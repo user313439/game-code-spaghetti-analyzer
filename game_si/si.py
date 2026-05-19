@@ -65,6 +65,8 @@ class ClassScore:
     start_line: int
     end_line: int
     kind: str
+    # 클래스 LOC = 소속 메서드 LOC 합. 검증(validate)에서 baseline 지표로 사용.
+    loc: int = 0
     # raw 메트릭 값 (대시보드에서 표시)
     raw: dict[str, float] = field(default_factory=dict)
     # 표준화된 값
@@ -185,6 +187,7 @@ def compute_si_static(
             start_line=c.start_line,
             end_line=c.end_line,
             kind=c.kind,
+            loc=sum(m.loc for m in c.methods),
             raw=raw,
             z=z,
             raw_score=raw_score,
@@ -444,6 +447,7 @@ def scoring_to_dict(result: ScoringResult) -> dict[str, Any]:
                 "start_line": cs.start_line,
                 "end_line": cs.end_line,
                 "kind": cs.kind,
+                "loc": cs.loc,
                 "raw": {k: round(v, 4) for k, v in cs.raw.items()},
                 "z": {k: round(v, 4) for k, v in cs.z.items()},
                 "raw_score": round(cs.raw_score, 4),
