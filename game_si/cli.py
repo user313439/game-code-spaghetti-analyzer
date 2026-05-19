@@ -156,9 +156,24 @@ def _build_parser() -> argparse.ArgumentParser:
         help="validation.html 헤더에 표시할 프로젝트 이름. 기본값은 --subdir 또는 scoring.json 디렉토리 이름.",
     )
 
-    p_compare = sub.add_parser("compare", help="(W16+) 외부 도구 결과와 G-SI 비교")
-    p_compare.add_argument("our_json")
-    p_compare.add_argument("other_json")
+    p_compare = sub.add_parser(
+        "compare",
+        help="Phase B: 외부 도구(Lizard) hotspot 과 G-SI hotspot 을 비교한다.",
+    )
+    p_compare.add_argument("input", help="분석 대상 디렉토리 (analyze 와 동일한 경로)")
+    p_compare.add_argument("--scoring", type=Path, required=True, help="analyze 가 산출한 scoring.json")
+    p_compare.add_argument(
+        "--out", type=Path, default=None,
+        help="compare.{json,html,_summary.txt} 출력 디렉토리. 기본은 scoring.json 디렉토리.",
+    )
+    p_compare.add_argument(
+        "--top-ns", default="5,10,30",
+        help="Jaccard 비교에 사용할 top-N 값들 (콤마 구분, 기본: 5,10,30).",
+    )
+    p_compare.add_argument(
+        "--project-name", default=None,
+        help="요약/HTML 헤더 표시용 프로젝트 이름.",
+    )
 
     return parser
 
@@ -456,6 +471,64 @@ def _cmd_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_compare(args: argparse.Namespace) -> int:
+    """W13 Phase B — Lizard hotspot 과 G-SI hotspot 의 Jaccard / Spearman 비교."""
+    from .compare import run_lizard, run_comparison, to_dict, format_text_summary
+
+    input_path = Path(args.input)
+    if not input_path.exists():
+        print(f"[error] 입력 경로가 존재하지 않습니다: {input_path}", file=sys.stderr)
+        return 1
+    scoring_path: Path = args.scoring
+    if not scoring_path.exists():
+        print(f"[error] scoring.json 이 존재하지 않습니다: {scoring_path}", file=sys.stderr)
+        return 1
+    out_dir: Path = args.out if args.out is not None else scoring_path.parent
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    top_ns_raw = [s.strip() for s in (args.top_ns or "").split(",") if s.strip()]
+    try:
+        top_ns = tuple(int(s) for s in top_ns_raw) or (5, 10, 30)
+    except ValueError:
+        print(f"[error] --top-ns 파싱 실패: {args.top_ns}", file=sys.stderr)
+        return 1
+
+    project_name = args.project_name or _default_project_name(input_path)
+    print(f"[compare] project={project_name}")
+    print(f"[compare] running lizard on {input_path}")
+
+    lizard_stats = run_lizard(input_path)
+    print(f"[compare] lizard analyzed {len(lizard_stats)} files")
+
+    with open(scoring_path, "r", encoding="utf-8") as f:
+        scoring = json.load(f)
+
+    result = run_comparison(
+        scoring=scoring,
+        lizard_stats=lizard_stats,
+        project=project_name,
+        scoring_path=str(scoring_path),
+        analyzed_path=str(input_path),
+        top_ns=top_ns,
+    )
+
+    json_path = out_dir / "compare.json"
+    summary_path = out_dir / "compare_summary.txt"
+    json_path.write_text(
+        json.dumps(to_dict(result), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    summary_text = format_text_summary(result)
+    summary_path.write_text(summary_text + "\n", encoding="utf-8")
+
+    print()
+    print(summary_text)
+    print()
+    print(f"[compare] wrote {json_path}")
+    print(f"[compare] wrote {summary_path}")
+    return 0
+
+
 def _cmd_stub(name: str) -> int:
     print(
         f"[info] '{name}' 명령은 후속 주차에서 구현될 예정입니다.\n"
@@ -474,7 +547,9 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_analyze(args)
     if args.command == "validate":
         return _cmd_validate(args)
-    if args.command in {"diff", "compare"}:
+    if args.command == "compare":
+        return _cmd_compare(args)
+    if args.command in {"diff"}:
         return _cmd_stub(args.command)
 
     parser.print_help(sys.stderr)

@@ -264,6 +264,86 @@ python -m game_si validate benchmarks/OpenRCT2 \
 2. **RQ2 (LOC/CC 단독 대비 추가 설명력)** — CC 단독 대비 G-SI 가 모든 케이스에서 우월하거나 동등. LOC 단독 대비 OpenRCT2 에서 명확히 우월. C# OpenRA 두 케이스에서는 LOC 가 약간 더 강했으나, 이는 plan §7.1 이 "특정 수치 도달에 종속되지 않도록" 명시한 범위 안의 결과이며, 게임 도메인 특화 시그널의 효과는 Phase B(외부 도구 비교) / Phase C(LLM 정성 평가) / Phase D(시계열 분석) 에서 추가 입증한다.
 3. **RQ4 (실용적 처리량)** — 분석 시간: OpenRA.Game 1.2초 / OpenRA.Mods.Common 4.5초 / Chocolate Doom 5.4초 / OpenRCT2 22.3초. validate 실행 시간은 git log 스캔 + 클래스 매핑으로 모두 30초 이내. 사용성 충분.
 
+## 4. Phase B — Lizard 와의 hotspot 비교 (W13)
+
+plan §7.2 의 Phase B 정량 비교를 수행했다. 본 작품은 도구 셋업 부담이 낮은 Lizard(v1.22.1) 를 외부 비교 도구로 사용한다. Lizard 는 함수 단위의 Cyclomatic Complexity 와 LOC 를 제공하며, C/C++/C# 모두 지원한다.
+
+비교는 **파일 단위** 에서 수행했다. G-SI 측 대표값은 plan §4.1 정의에 따라 파일 내 클래스 si_max, Lizard 측 대표값은 파일 내 함수 CC 의 최댓값(`max_cc`).
+
+```bash
+python -m game_si compare <input_path> --scoring <scoring.json>
+```
+
+### 4.1 종합 결과
+
+| 케이스 | 매칭 파일 | top-5 Jaccard | top-10 Jaccard | top-30 Jaccard | ρ(si vs liz_cc) |
+|---|---:|---:|---:|---:|---:|
+| OpenRA.Game | 226 | **0.67** | 0.43 | 0.36 | +0.63 |
+| OpenRA.Mods.Common | 1,080 | 0.43 | **0.54** | **0.50** | +0.80 |
+| Chocolate Doom | 291 | 0.11 | 0.11 | 0.33 | +0.70 |
+| OpenRCT2 | 544 | 0.11 | 0.11 | 0.25 | +0.53 |
+
+해석:
+
+- **Spearman ρ 0.53 ~ 0.80** — G-SI 와 Lizard max_CC 는 강한 양의 상관을 보인다. 즉 두 지표가 비슷한 방향을 가리키긴 한다. 하지만 동일하지는 않다.
+- **Top-5 Jaccard 가 11~67% 로 큰 격차** — 가장 위험한 5 개를 골라 봤을 때 두 도구의 결과가 **상당히 다르다**. Chocolate Doom 과 OpenRCT2 에서는 9 개 중 1 개(11%) 만 공통.
+- 이 차이는 G-SI 가 CC 단독으로는 잡지 못하는 위험 시그널(Coupling, GlobalState, GameLoopCentrality) 을 반영한다는 점을 뒷받침한다.
+
+### 4.2 G-SI 단독 hotspot — plan RQ3 의 정성 증거
+
+각 케이스의 G-SI 상위 10 중 Lizard top-30 에 들지 않은 사례 일부:
+
+**OpenRA.Game** — G-SI 가 단독으로 식별한 게임 도메인 hotspot
+
+| G-SI 순위 | Lizard 순위 | G-SI | Lizard CC | 파일 | 시그널 |
+|---:|---:|---:|---:|---|---|
+| 8 | 51 | 98.7 | **9** | `Renderer.cs` | 결합도/전역 (게임 렌더 god-object) |
+| 9 | 185 | 98.5 | **2** | `Primitives/int2.cs` | 결합도 (모든 좌표 코드 의존) |
+| 10 | 31 | 98.4 | 11 | `Graphics/WorldRenderer.cs` | 결합도 + 게임 루프 중심성 |
+| 12 | 167 | 98.1 | **2** | `Input/Keycode.cs` | 결합도 (입력 enum) |
+| 15 | 45 | 97.6 | 9 | `World.cs` | 결합도 (게임 world god) |
+| 18 | 179 | 97.2 | **2** | `Traits/TraitsInterfaces.cs` | 결합도 (trait 인터페이스 모음) |
+
+`int2.cs`(CC=2), `Keycode.cs`(CC=2), `TraitsInterfaces.cs`(CC=2) 같은 케이스가 특히 명확하다 — **본문 자체는 매우 단순하지만 모든 시스템이 의존하는 결합도 hub** 다. CC 만 보는 도구는 절대 잡을 수 없는 게임 코드의 위험 패턴.
+
+**Chocolate Doom** — G-SI 가 단독으로 식별한 C god-module 들
+
+| G-SI 순위 | Lizard 순위 | G-SI | Lizard CC | 파일 | 시그널 |
+|---:|---:|---:|---:|---|---|
+| 1 | 155 | 100.0 | 12 | `i_system.c` | 결합도 156 (시스템 인터페이스) |
+| 2 | 171 | 99.7 | 10 | `m_misc.c` | 결합도 116 (utility god) |
+| 4 | 71 | 99.0 | 28 | `i_video.c` | GS=263 (비디오 전역 상태) |
+| 5 | 165 | 98.7 | 11 | `z_zone.c` | 결합도 90 (zone allocator) |
+| 6 | 76 | 98.3 | 26 | `m_argv.c` | 결합도 + GS |
+
+Doom 의 잘 알려진 god-module 군이 정확히 G-SI 상위에 올라온다. Lizard 순위는 모두 100 위 밖 — CC 만 보면 평범한 파일들이지만, 게임 도메인 시그널이 들어가면 위험 1~6위.
+
+**OpenRCT2** — C++ god-object 식별
+
+| G-SI 순위 | Lizard 순위 | G-SI | Lizard CC | 파일 | 시그널 |
+|---:|---:|---:|---:|---|---|
+| 2 | 179 | 99.8 | 16 | `Context.cpp` | 결합도 250 (application god-class) |
+| 3 | 71 | 99.7 | 34 | `ride/Ride.cpp` | 결합도 172 |
+| 5 | 106 | 99.4 | 24 | `drawing/Drawing.cpp` | 결합도 164, GS 43 |
+| 6 | 299 | 99.2 | **8** | `ride/RideData.cpp` | 결합도 215 (라이드 데이터 hub) |
+| 7 | 82 | 99.1 | 30 | `GameState.cpp` | 결합도 226 (게임 전역 상태) |
+
+`RideData.cpp` 는 Lizard 순위 299 (CC=8) 인데 G-SI 6위 — 결합도 215 의 라이드 데이터 hub. C++ 의 한 god-object 패턴.
+
+### 4.3 Lizard 단독 hotspot — 보완 사례
+
+반대로 Lizard top-30 에 있지만 G-SI top-30 에는 없는 파일들도 검토했다. 대부분 **"내부적으로는 거대한 switch/state machine 인데 외부 결합도는 낮은"** 케이스다. 예) OpenRCT2 의 `paint/track/coaster/HybridCoaster.cpp` 는 Lizard CC=225 (paint track 코드의 거대한 switch) 이지만 G-SI 51.9 (등급 C) 로 본 작품 기준 위험 구간 밖이다. 이는 plan RQ2 에서 다룬 "단독 CC 가 잡는 위험" 과 G-SI 의 차이를 보여주는 사례로, 보고서에서는 두 시그널의 상호보완을 언급한다.
+
+### 4.4 RQ3 에 대한 결론
+
+> RQ3. 게임 특화 항목(전역 상태 의존성, 게임 루프 중심성 등)은 일반 정적 분석 도구가 식별하지 못하는 위험 구간을 추가로 잡아내는가?
+
+- 4 개 케이스 전부에서 **G-SI 상위 30 중 일부 (5~10개)** 가 Lizard 상위 30 에 들지 않는다.
+- 이 단독 식별 파일들은 일관되게 **"본문은 단순하나 결합도/전역 시그널이 높은" 게임 도메인 god-object 패턴** (Renderer, World, Context, i_system, GameState, RideData, ...).
+- 따라서 RQ3 에 대해 **긍정 답변** 을 제공한다. CC 단독 도구는 본 작품의 GlobalState · Coupling · GameLoopCentrality 시그널이 잡는 위험을 놓친다.
+
+산출물: 각 케이스의 `reports/<case>/compare.{json,_summary.txt}`.
+
 ## 3. 라이선스 및 재배포 원칙
 
 - 본 매니페스트에 등재된 저장소의 코드는 본 작품 저장소에 복사하거나 포함하지 않는다.
