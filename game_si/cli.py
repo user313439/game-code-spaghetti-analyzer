@@ -156,6 +156,26 @@ def _build_parser() -> argparse.ArgumentParser:
         help="validation.html 헤더에 표시할 프로젝트 이름. 기본값은 --subdir 또는 scoring.json 디렉토리 이름.",
     )
 
+    p_advise = sub.add_parser(
+        "advise",
+        help="Phase C: 상위 hotspot 에 대해 Claude Haiku 로 리팩토링 가이드를 받는다.",
+    )
+    p_advise.add_argument("--scoring", type=Path, required=True, help="analyze 가 산출한 scoring.json")
+    p_advise.add_argument(
+        "--ast", type=Path, default=None,
+        help="코드 스니펫 추출에 사용할 ast.json. 기본은 scoring.json 옆의 ast.json.",
+    )
+    p_advise.add_argument("--top", type=int, default=5, help="조언을 받을 상위 hotspot 수 (기본 5, 권장 5~10)")
+    p_advise.add_argument(
+        "--out", type=Path, default=None,
+        help="advisor.{json,md} 출력 디렉토리. 기본은 scoring.json 디렉토리.",
+    )
+    p_advise.add_argument("--project-name", default=None, help="리포트 헤더 표시용 이름")
+    p_advise.add_argument(
+        "--model", default="claude-haiku-4-5",
+        help="Anthropic 모델 ID (기본: claude-haiku-4-5).",
+    )
+
     p_compare = sub.add_parser(
         "compare",
         help="Phase B: 외부 도구(Lizard) hotspot 과 G-SI hotspot 을 비교한다.",
@@ -471,6 +491,71 @@ def _cmd_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_advise(args: argparse.Namespace) -> int:
+    """W13 Phase C — 상위 hotspot 에 대해 LLM 리팩토링 가이드 수집."""
+    from .advisor import Advisor, format_markdown, to_dict
+
+    scoring_path: Path = args.scoring
+    if not scoring_path.exists():
+        print(f"[error] scoring.json 이 존재하지 않습니다: {scoring_path}", file=sys.stderr)
+        return 1
+
+    ast_path: Path | None = args.ast or (scoring_path.parent / "ast.json")
+    ast_data: dict | None = None
+    if ast_path is not None and ast_path.exists():
+        with open(ast_path, "r", encoding="utf-8") as f:
+            ast_data = json.load(f)
+    else:
+        print(f"[warn] ast.json 가용하지 않음 — 지표만으로 답변. ({ast_path})", file=sys.stderr)
+
+    out_dir: Path = args.out if args.out is not None else scoring_path.parent
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    project_name = args.project_name or scoring_path.parent.name
+    print(f"[advise] project={project_name}  model={args.model}  top={args.top}")
+
+    try:
+        advisor = Advisor(model=args.model)
+    except RuntimeError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
+
+    with open(scoring_path, "r", encoding="utf-8") as f:
+        scoring = json.load(f)
+
+    try:
+        result = advisor.advise_top_n(
+            scoring=scoring,
+            ast_data=ast_data,
+            project=project_name,
+            top_n=args.top,
+            progress=True,
+        )
+    except Exception as exc:
+        print(f"[error] Advisor 호출 실패: {exc}", file=sys.stderr)
+        return 1
+
+    json_path = out_dir / "advisor.json"
+    md_path = out_dir / "advisor.md"
+    json_path.write_text(
+        json.dumps(to_dict(result), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    md_path.write_text(format_markdown(result), encoding="utf-8")
+
+    print()
+    print(
+        f"[advise] tokens: input={result.total_usage['input_tokens']:,} "
+        f"output={result.total_usage['output_tokens']:,} "
+        f"cache_write={result.total_usage['cache_creation_input_tokens']:,} "
+        f"cache_read={result.total_usage['cache_read_input_tokens']:,}"
+    )
+    print(f"[advise] 예상 비용: ${result.estimated_cost_usd:.4f} USD")
+    print(f"[advise] wrote {json_path}")
+    print(f"[advise] wrote {md_path}")
+    return 0
+
+
 def _cmd_compare(args: argparse.Namespace) -> int:
     """W13 Phase B — Lizard hotspot 과 G-SI hotspot 의 Jaccard / Spearman 비교."""
     from .compare import run_lizard, run_comparison, to_dict, format_text_summary
@@ -549,6 +634,8 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_validate(args)
     if args.command == "compare":
         return _cmd_compare(args)
+    if args.command == "advise":
+        return _cmd_advise(args)
     if args.command in {"diff"}:
         return _cmd_stub(args.command)
 
