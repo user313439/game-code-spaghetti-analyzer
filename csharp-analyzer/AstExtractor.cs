@@ -1,7 +1,8 @@
-// 단일 C# 파일의 SyntaxTree로부터 클래스·메서드 노드를 추출한다.
+// SemanticModel 기반 AST 추출 (W14 후속 개선 1-A).
 //
-// 본 추출기는 W1 단계에서는 syntactic 분석만 수행한다.
-// MSBuildWorkspace를 사용한 semantic 분석(타입 해석, 호출 그래프)은 W2 이후에 별도 모듈로 추가한다.
+// 같은 Compilation 안의 type/method symbol 은 SemanticModel 로 정확한 FQN 을
+// 해석한다. 외부 dll 의 type 은 SymbolInfo 가 null 이거나 partial 일 수 있어
+// 그 경우엔 syntactic 텍스트로 fallback 한다.
 
 namespace CSharpAnalyzer;
 
@@ -11,10 +12,13 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public static class AstExtractor
 {
-    public static FileNode ExtractFromFile(string absolutePath, string? relativePath = null)
+    public static FileNode ExtractFromTree(
+        string absolutePath,
+        string relativePath,
+        SyntaxTree tree,
+        SemanticModel model)
     {
-        var source = File.ReadAllText(absolutePath);
-        var tree = CSharpSyntaxTree.ParseText(source, path: absolutePath);
+        var source = tree.GetText().ToString();
         var root = (CompilationUnitSyntax)tree.GetRoot();
 
         var fileNode = new FileNode
@@ -26,7 +30,7 @@ public static class AstExtractor
 
         foreach (var typeDecl in root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>())
         {
-            var classNode = ExtractTypeDeclaration(typeDecl);
+            var classNode = ExtractTypeDeclaration(typeDecl, model);
             if (classNode != null)
             {
                 fileNode.Classes.Add(classNode);
@@ -36,16 +40,38 @@ public static class AstExtractor
         return fileNode;
     }
 
-    private static ClassNode? ExtractTypeDeclaration(BaseTypeDeclarationSyntax typeDecl)
+    // 후방 호환: 단일 파일을 독립적으로 파싱하는 옛 진입점. semantic 없이 syntactic 으로만 분석.
+    public static FileNode ExtractFromFile(string absolutePath, string? relativePath = null)
+    {
+        var source = File.ReadAllText(absolutePath);
+        var tree = CSharpSyntaxTree.ParseText(source, path: absolutePath);
+        var compilation = CSharpCompilation.Create(
+            "Standalone",
+            new[] { tree },
+            new[] { MetadataReference.CreateFromFile(typeof(object).Assembly.Location) });
+        var model = compilation.GetSemanticModel(tree, ignoreAccessibility: true);
+        return ExtractFromTree(absolutePath, relativePath ?? absolutePath, tree, model);
+    }
+
+    private static ClassNode? ExtractTypeDeclaration(BaseTypeDeclarationSyntax typeDecl, SemanticModel model)
     {
         var lineSpan = typeDecl.GetLocation().GetLineSpan();
         var modifiers = typeDecl.Modifiers.Select(m => m.Text).ToHashSet();
 
+        // semantic 으로 type symbol 을 받아 정확한 FQN 을 구성
+        var typeSymbol = model.GetDeclaredSymbol(typeDecl) as INamedTypeSymbol;
+        var fqn = typeSymbol != null
+            ? FormatFqn(typeSymbol)
+            : BuildFullyQualifiedNameSyntactic(typeDecl);
+        var ns = typeSymbol?.ContainingNamespace?.IsGlobalNamespace == false
+            ? typeSymbol.ContainingNamespace.ToDisplayString()
+            : GetEnclosingNamespaceSyntactic(typeDecl);
+
         var classNode = new ClassNode
         {
             Name = typeDecl.Identifier.Text,
-            FullyQualifiedName = BuildFullyQualifiedName(typeDecl),
-            Namespace = GetEnclosingNamespace(typeDecl),
+            FullyQualifiedName = fqn,
+            Namespace = string.IsNullOrEmpty(ns) ? null : ns,
             Kind = DetermineKind(typeDecl),
             StartLine = lineSpan.StartLinePosition.Line + 1,
             EndLine = lineSpan.EndLinePosition.Line + 1,
@@ -54,8 +80,19 @@ public static class AstExtractor
             IsAbstract = modifiers.Contains("abstract"),
         };
 
-        // base types
-        if (typeDecl.BaseList != null)
+        // base types — semantic 으로 base + interfaces 를 FQN 으로 추출
+        if (typeSymbol != null)
+        {
+            if (typeSymbol.BaseType != null && typeSymbol.BaseType.SpecialType != SpecialType.System_Object)
+            {
+                classNode.BaseTypes.Add(FormatFqn(typeSymbol.BaseType));
+            }
+            foreach (var iface in typeSymbol.Interfaces)
+            {
+                classNode.BaseTypes.Add(FormatFqn(iface));
+            }
+        }
+        else if (typeDecl.BaseList != null)
         {
             foreach (var bt in typeDecl.BaseList.Types)
             {
@@ -63,8 +100,8 @@ public static class AstExtractor
             }
         }
 
-        // 클래스 본문 전체를 순회하여 참조 타입 / 정적 접근 / 싱글톤 접근을 수집한다.
-        var classWalker = new MethodBodyWalker();
+        // 클래스 본문 전체를 순회하여 참조 타입 / 정적 접근 / 싱글톤 접근을 수집
+        var classWalker = new MethodBodyWalker(model);
         classWalker.Visit(typeDecl);
         classNode.ReferencedTypes.AddRange(classWalker.CreatedTypes.OrderBy(s => s));
         classNode.StaticMemberAccesses.AddRange(classWalker.StaticAccesses.OrderBy(s => s));
@@ -77,11 +114,11 @@ public static class AstExtractor
             {
                 if (memberDecl is MethodDeclarationSyntax method)
                 {
-                    classNode.Methods.Add(ExtractMethod(method));
+                    classNode.Methods.Add(ExtractMethod(method, model));
                 }
                 else if (memberDecl is ConstructorDeclarationSyntax ctor)
                 {
-                    classNode.Methods.Add(ExtractConstructor(ctor));
+                    classNode.Methods.Add(ExtractConstructor(ctor, model));
                 }
             }
         }
@@ -89,13 +126,13 @@ public static class AstExtractor
         return classNode;
     }
 
-    private static MethodNode ExtractMethod(MethodDeclarationSyntax method)
+    private static MethodNode ExtractMethod(MethodDeclarationSyntax method, SemanticModel model)
     {
         var lineSpan = method.GetLocation().GetLineSpan();
         var modifiers = method.Modifiers.Select(m => m.Text).ToHashSet();
 
         var ccWalker = new CyclomaticComplexityWalker();
-        var bodyWalker = new MethodBodyWalker();
+        var bodyWalker = new MethodBodyWalker(model);
         if (method.Body != null)
         {
             ccWalker.Visit(method.Body);
@@ -123,27 +160,19 @@ public static class AstExtractor
             IsGameLoopEntry = IsGameLoopEntryName(method.Identifier.Text),
         };
 
-        // 호출된 메서드 이름을 결정적인 순서로 저장한다.
         node.InvokedNames.AddRange(bodyWalker.InvokedNames.OrderBy(s => s));
         return node;
     }
 
-    /// <summary>
-    /// 메서드 이름이 게임 루프 진입점 패턴에 해당하는지 판정한다.
-    /// 본 작품은 OpenRA 및 일반 C# 게임 코드를 우선 대상으로 하며,
-    /// Unity 전용(예: Awake, FixedUpdate)은 §6.1 확장 detector에서 추가한다.
-    /// </summary>
     private static bool IsGameLoopEntryName(string name)
     {
         if (string.IsNullOrEmpty(name)) return false;
 
-        // 정확히 일치하는 진입점 이름.
         if (name is "Tick" or "Update" or "LateUpdate" or "FixedUpdate"
             or "Render" or "Draw" or "Awake" or "Start"
             or "MainLoop" or "GameLoop")
             return true;
 
-        // 패턴: "On*" (이벤트/콜백 핸들러), "*Tick", "*Frame"
         if (name.StartsWith("On", StringComparison.Ordinal) && name.Length > 2 && char.IsUpper(name[2]))
             return true;
         if (name.EndsWith("Tick", StringComparison.Ordinal) && name.Length > 4)
@@ -154,13 +183,13 @@ public static class AstExtractor
         return false;
     }
 
-    private static MethodNode ExtractConstructor(ConstructorDeclarationSyntax ctor)
+    private static MethodNode ExtractConstructor(ConstructorDeclarationSyntax ctor, SemanticModel model)
     {
         var lineSpan = ctor.GetLocation().GetLineSpan();
         var modifiers = ctor.Modifiers.Select(m => m.Text).ToHashSet();
 
         var ccWalker = new CyclomaticComplexityWalker();
-        var bodyWalker = new MethodBodyWalker();
+        var bodyWalker = new MethodBodyWalker(model);
         if (ctor.Body != null)
         {
             ccWalker.Visit(ctor.Body);
@@ -197,12 +226,25 @@ public static class AstExtractor
         return $"{method.ReturnType} {method.Identifier.Text}({parameters})";
     }
 
-    private static string BuildFullyQualifiedName(BaseTypeDeclarationSyntax typeDecl)
+    /// <summary>
+    /// INamedTypeSymbol 의 FQN 을 "Namespace.OuterType.TypeName" 형식으로 구성.
+    /// global namespace 는 빈 문자열로 처리하고, 제네릭은 단순 이름만 (예: List).
+    /// </summary>
+    public static string FormatFqn(INamedTypeSymbol symbol)
     {
-        var ns = GetEnclosingNamespace(typeDecl);
+        var format = new SymbolDisplayFormat(
+            globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
+            typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+            genericsOptions: SymbolDisplayGenericsOptions.None,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+        return symbol.ToDisplayString(format);
+    }
+
+    private static string BuildFullyQualifiedNameSyntactic(BaseTypeDeclarationSyntax typeDecl)
+    {
+        var ns = GetEnclosingNamespaceSyntactic(typeDecl);
         var typeName = typeDecl.Identifier.Text;
 
-        // 중첩 타입의 경우 부모 타입 이름도 포함
         var enclosingTypes = new List<string>();
         SyntaxNode? parent = typeDecl.Parent;
         while (parent != null)
@@ -218,7 +260,7 @@ public static class AstExtractor
         return string.IsNullOrEmpty(ns) ? $"{nestedPath}{typeName}" : $"{ns}.{nestedPath}{typeName}";
     }
 
-    private static string? GetEnclosingNamespace(SyntaxNode node)
+    private static string? GetEnclosingNamespaceSyntactic(SyntaxNode node)
     {
         SyntaxNode? parent = node.Parent;
         while (parent != null)
@@ -244,7 +286,6 @@ public static class AstExtractor
 
     private static int CountLoc(string source)
     {
-        // 비어있지 않고 주석만으로 구성되지 않은 줄을 LOC로 본다.
         var lines = source.Split('\n');
         var loc = 0;
         var inBlockComment = false;

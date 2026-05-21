@@ -1,12 +1,13 @@
-// 메서드 본문을 순회하여 다음 시그널을 수집한다.
+// SemanticModel 기반 walker (W14 후속 개선 1-A).
 //
-// - 호출된 메서드 이름 (InvocationExpression)
-// - 객체 생성 (ObjectCreationExpression)으로 참조된 타입 이름
-// - static mutable 멤버 접근 (heuristic)
-// - 싱글톤형 인스턴스 접근 (예: Foo.Instance)
-//
-// 본 walker는 syntactic 분석만 수행하므로 정확도가 제한적이다.
-// 후속 단계에서 semantic 분석(MSBuildWorkspace) 도입 시 정밀도가 향상된다.
+// 본 walker 는 다음을 수집한다.
+//   InvokedNames     — 호출된 메서드의 정확한 ContainingType FQN + 메서드 이름
+//                      (예: "OpenRA.Network.Server.AcceptConnection"). semantic 실패 시
+//                      syntactic 텍스트로 fallback.
+//   CreatedTypes     — ObjectCreation 의 정확한 type FQN. semantic 실패 시 텍스트.
+//   StaticAccesses   — semantic 으로 IsStatic 확인된 멤버 접근. syntactic 휴리스틱은
+//                      fallback.
+//   SingletonAccesses — 이름 휴리스틱 그대로 (Instance / Current 등).
 
 namespace CSharpAnalyzer;
 
@@ -16,6 +17,13 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public sealed class MethodBodyWalker : CSharpSyntaxWalker
 {
+    private readonly SemanticModel _model;
+
+    public MethodBodyWalker(SemanticModel model)
+    {
+        _model = model;
+    }
+
     public HashSet<string> InvokedNames { get; } = new(StringComparer.Ordinal);
     public HashSet<string> CreatedTypes { get; } = new(StringComparer.Ordinal);
     public HashSet<string> StaticAccesses { get; } = new(StringComparer.Ordinal);
@@ -23,13 +31,27 @@ public sealed class MethodBodyWalker : CSharpSyntaxWalker
 
     public override void VisitInvocationExpression(InvocationExpressionSyntax node)
     {
-        string callee = node.Expression switch
+        // semantic 으로 호출 대상 method symbol 을 해석. 성공하면 ContainingType
+        // 의 정확한 FQN 을 prefix 로 붙여 같은 프로젝트 내 클래스 그래프 매칭에
+        // 활용된다 (예: "Foo.Bar.Method" 형태). 실패 시 syntactic 텍스트.
+        var info = _model.GetSymbolInfo(node);
+        ISymbol? sym = info.Symbol ?? info.CandidateSymbols.FirstOrDefault();
+        string callee;
+        if (sym is IMethodSymbol method && method.ContainingType != null)
         {
-            IdentifierNameSyntax id => id.Identifier.Text,
-            MemberAccessExpressionSyntax ma => $"{ma.Expression}.{ma.Name.Identifier.Text}",
-            GenericNameSyntax gn => gn.Identifier.Text,
-            _ => node.Expression.ToString(),
-        };
+            var typeFqn = AstExtractor.FormatFqn(method.ContainingType);
+            callee = string.IsNullOrEmpty(typeFqn) ? method.Name : $"{typeFqn}.{method.Name}";
+        }
+        else
+        {
+            callee = node.Expression switch
+            {
+                IdentifierNameSyntax id => id.Identifier.Text,
+                MemberAccessExpressionSyntax ma => $"{ma.Expression}.{ma.Name.Identifier.Text}",
+                GenericNameSyntax gn => gn.Identifier.Text,
+                _ => node.Expression.ToString(),
+            };
+        }
         if (!string.IsNullOrWhiteSpace(callee)) InvokedNames.Add(callee);
 
         base.VisitInvocationExpression(node);
@@ -37,25 +59,45 @@ public sealed class MethodBodyWalker : CSharpSyntaxWalker
 
     public override void VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
     {
-        var typeName = node.Type.ToString();
-        if (!string.IsNullOrWhiteSpace(typeName)) CreatedTypes.Add(typeName);
+        // semantic 으로 type symbol 해석. 성공하면 FQN, 실패 시 텍스트.
+        var typeInfo = _model.GetTypeInfo(node.Type);
+        if (typeInfo.Type is INamedTypeSymbol named)
+        {
+            CreatedTypes.Add(AstExtractor.FormatFqn(named));
+        }
+        else
+        {
+            var typeName = node.Type.ToString();
+            if (!string.IsNullOrWhiteSpace(typeName)) CreatedTypes.Add(typeName);
+        }
         base.VisitObjectCreationExpression(node);
     }
 
     public override void VisitMemberAccessExpression(MemberAccessExpressionSyntax node)
     {
-        // 다음 두 가지 휴리스틱을 적용한다.
-        //
-        // (1) `Type.MEMBER` 형태이고 Type이 대문자로 시작하면 static 접근 후보로 본다.
-        //     (semantic 분석이 없으면 인스턴스 vs 정적 구분은 정확히 알 수 없으므로 보수적 추정.)
-        // (2) `Foo.Instance` 처럼 마지막 멤버 이름이 일반적인 싱글톤 시그니처면
-        //     싱글톤 접근으로 분류한다.
         var memberName = node.Name.Identifier.Text;
         var leftExpr = node.Expression.ToString();
 
-        if (IsLikelyType(leftExpr))
+        // semantic 으로 static 멤버 접근을 정확히 판정.
+        var symbolInfo = _model.GetSymbolInfo(node);
+        ISymbol? sym = symbolInfo.Symbol ?? symbolInfo.CandidateSymbols.FirstOrDefault();
+        bool isStaticAccess = sym switch
         {
-            StaticAccesses.Add($"{leftExpr}.{memberName}");
+            IFieldSymbol f => f.IsStatic && !f.IsConst && !f.IsReadOnly,
+            IPropertySymbol p => p.IsStatic,
+            IMethodSymbol m => m.IsStatic,
+            null => IsLikelyType(leftExpr),  // semantic 실패 시 휴리스틱
+            _ => false,
+        };
+        if (isStaticAccess)
+        {
+            // semantic 으로 containing type FQN 까지 얻을 수 있으면 그것을 prefix 로
+            string prefix = leftExpr;
+            if (sym?.ContainingType is INamedTypeSymbol containing)
+            {
+                prefix = AstExtractor.FormatFqn(containing);
+            }
+            StaticAccesses.Add($"{prefix}.{memberName}");
         }
 
         if (IsSingletonAccessor(memberName))
@@ -68,10 +110,8 @@ public sealed class MethodBodyWalker : CSharpSyntaxWalker
 
     private static bool IsLikelyType(string expression)
     {
-        // 좌측 표현이 단일 식별자이고 PascalCase로 시작하면 타입으로 추정한다.
         if (string.IsNullOrEmpty(expression)) return false;
         if (!char.IsUpper(expression[0])) return false;
-        // 단순 식별자이거나 점으로만 구성된 경로 (Foo, Foo.Bar)면 타입성으로 본다.
         foreach (var ch in expression)
         {
             if (!(char.IsLetterOrDigit(ch) || ch == '_' || ch == '.')) return false;
@@ -81,7 +121,6 @@ public sealed class MethodBodyWalker : CSharpSyntaxWalker
 
     private static bool IsSingletonAccessor(string memberName)
     {
-        // 보편적으로 사용되는 싱글톤 접근자 이름.
         return memberName is "Instance" or "Current" or "Singleton" or "Shared"
             or "Default" or "Main" or "Active";
     }

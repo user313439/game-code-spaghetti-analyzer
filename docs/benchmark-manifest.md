@@ -596,6 +596,68 @@ PR 이 main 으로 머지될 때 다음 흐름:
 
 이 결과는 보고서 한계 절에 "메트릭 세분화의 효과는 분석 단위에 의존" 이라는 정직한 발견으로 인용한다.
 
+## 10c. Roslyn semantic 분석 도입 (W14 후속 개선 1-A — 간단한 부분)
+
+plan §5.1 의 "C# semantic model 활용" 의 간단한 부분을 구현했다. csharp-analyzer 가 모든 .cs 파일을 한 `CSharpCompilation` 으로 묶어 `SemanticModel` 을 사용한다 — `MSBuildWorkspace` 와 csproj references 없이 같은 프로젝트 내 type/method symbol 의 정확한 FQN 을 해석한다 (외부 dll 의 type 은 syntactic fallback).
+
+### 구현
+- `Program.cs`: file-by-file 처리 → 모든 SyntaxTree 를 한 Compilation 으로 묶기
+- `AstExtractor.cs`: `ExtractFromTree(SyntaxTree, SemanticModel)` 시그니처 도입. base + interfaces 를 INamedTypeSymbol 로 FQN 추출.
+- `MethodBodyWalker.cs`: SymbolInfo / TypeInfo 로 invocation 의 정확한 ContainingType FQN, ObjectCreation 의 type FQN, static 접근의 정확한 판정.
+
+### 측정된 효과
+
+**그래프 정확도 (정확한 FQN 매칭 효과)**:
+
+| 케이스 | class_edges (이전 → 이후) | Δ |
+|---|---|---:|
+| OpenRA.Game | 575 → 596 | +3.7% |
+| OpenRA.Mods.Common | 2,389 → 2,420 | +1.3% |
+| 기타 | (변화 ≤ ±1%) | |
+
+- `invoked_names` 가 단순 메서드 이름 (예: `HandleClient`) → 정확한 ContainingType FQN 포함 (예: `OpenRA.Server.Server.HandleClient`) 로 갱신.
+- `base_types` 가 BaseType + 모든 Interface 의 정확한 FQN 으로 갱신.
+- static 멤버 접근의 IsStatic 판정이 휴리스틱(이름 휴리스틱) → semantic 정확.
+- 분석 시간: OpenRA.Game 1.2 초 → 7.6 초 (6 배 — semantic model 빌드 비용).
+
+**tune LOPO 검증 향상**:
+
+| | LOPO ρ (syntactic 만) | LOPO ρ (semantic 도입) | Δ |
+|---|---:|---:|---:|
+| default | +0.5173 | +0.5198 | +0.0025 |
+| **tuned** | **+0.5302** | **+0.5486** | **+0.0184** |
+| **Δ(tuned − default)** | **+0.0130** | **+0.0288** | **+0.0158** (2.2 배) |
+
+**핵심 발견**: tuned 와 default 의 격차(Δρ) 가 **+0.0130 → +0.0288 로 2.2 배** 가 되었다. semantic 정확도 향상이 **tuned 가중치의 효과를 더 잘 드러나게** 한 것이다. tuned weights 자체도 갱신:
+
+| | cc | coupling | dependency_cycle | global_state | game_loop_centrality |
+|---|---:|---:|---:|---:|---:|
+| syntactic 만 | 0.40 | 0.10 | 0.20 | 0.25 | 0.05 |
+| **semantic 도입** | **0.40** | **0.20** | **0.05** | **0.30** | **0.05** |
+
+Coupling 가중치가 0.10 → 0.20 으로 회복, GlobalState 가 0.25 → 0.30 으로 강화. DependencyCycle 은 0.20 → 0.05 — semantic 분석으로 그래프 정확도가 올라가면서 **Coupling 이 더 신뢰할 만한 시그널이 되어 DepCycle 자리를 차지**한 것으로 보인다.
+
+**케이스별 변화**:
+
+| 케이스 | tuned ρ (이전) | tuned ρ (semantic) | Δ |
+|---|---:|---:|---:|
+| OpenRA.Game | +0.6313 | **+0.6613** | **+0.0300** |
+| OpenRA.Mods.Common | +0.5730 | +0.5674 | -0.0056 |
+| OpenRA.Mods.Cnc | +0.4756 | +0.4653 | -0.0103 |
+| OpenRA.Mods.D2k | +0.5047 | +0.4834 | -0.0213 |
+| OpenRA.Platforms.Default | +0.6866 | +0.6834 | -0.0032 |
+| Chocolate Doom (영향 없음, C 코드) | +0.5933 | +0.6090 | +0.0157 |
+| **OpenRCT2** | +0.4295 | **+0.4727** | **+0.0432** |
+
+OpenRA.Game (+0.030), OpenRCT2 (+0.043) — 큰 케이스에서 크게 개선. 작은 모듈들 (Mods.Cnc/D2k) 은 약간 악화 — tuned weight 가 다양한 케이스에 적응하는 과정의 자연스러운 trade-off.
+
+### 해석
+
+1. **plan §5.1 spec 완전 충족** — "C# semantic model 활용" 이 실제 측정 가능한 효과로 완성. 보고서 §5.1 에 "syntactic-only 한계 → semantic 도입 → tuned LOPO Δρ 2.2 배 향상" 흐름이 그대로 인용 가능.
+2. **OpenRA.Game / OpenRCT2 큰 케이스의 명확한 개선** — Coupling 정확도 향상이 큰 코드베이스에서 더 잘 드러난다.
+3. **MSBuildWorkspace 까지 가지 않은 이유 명시** — csproj 자동 로드 + 외부 references 까지 가는 완전한 semantic 분석은 plan §13 위험 표 ("MSBuildWorkspace 셋업의 까다로움") 의 범위에서 의도적 분리. 보고서 §향후 작업에 "외부 dll references 까지 처리 시 추가 개선 가능" 명시.
+4. **작은 모듈에서의 trade-off** — semantic 정확도 향상이 모든 케이스에 동일하게 도움 되는 게 아님을 솔직히 보고. 코드 규모와 dependency 복잡도가 클수록 효과 큼.
+
 ## 10. 종합 — plan 마일스톤 매핑
 
 | plan 절 | 마일스톤 | 상태 | 본 매니페스트 위치 |

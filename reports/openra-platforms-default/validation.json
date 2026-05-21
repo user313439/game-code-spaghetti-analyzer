@@ -24,8 +24,8 @@
     {
       "name": "si_vs_bugfix",
       "n": 33,
-      "spearman_rho": -0.0005,
-      "p_value": 0.997822
+      "spearman_rho": 0.0171,
+      "p_value": 0.927482
     },
     {
       "name": "loc_vs_bugfix",
@@ -44,8 +44,8 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 18,
-      "spearman_rho": 0.5575,
-      "p_value": 0.017925
+      "spearman_rho": 0.5692,
+      "p_value": 0.015044
     },
     {
       "name": "file_loc_vs_bugfix",
@@ -137,7 +137,7 @@
     {
       "fqn": "OpenRA.Platforms.Default.DummySoundEngine",
       "file_path": "DummySoundEngine.cs",
-      "si": 54.55,
+      "si": 57.58,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 30,
@@ -182,8 +182,8 @@
     {
       "fqn": "OpenRA.Platforms.Default.FreeTypeFont",
       "file_path": "FreeTypeFont.cs",
-      "si": 60.61,
-      "grade": "D",
+      "si": 51.52,
+      "grade": "C",
       "cc_max": 5.0,
       "loc": 71,
       "bugfix_count": 3
@@ -254,7 +254,7 @@
     {
       "fqn": "OpenRA.Platforms.Default.OpenAlAsyncLoadSound",
       "file_path": "OpenAlSoundEngine.cs",
-      "si": 72.73,
+      "si": 78.79,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 112,
@@ -263,8 +263,8 @@
     {
       "fqn": "OpenRA.Platforms.Default.OpenGL",
       "file_path": "OpenGL.cs",
-      "si": 78.79,
-      "grade": "D",
+      "si": 81.82,
+      "grade": "E",
       "cc_max": 18.0,
       "loc": 298,
       "bugfix_count": 7
@@ -335,8 +335,8 @@
     {
       "fqn": "OpenRA.Platforms.Default.Texture",
       "file_path": "Texture.cs",
-      "si": 81.82,
-      "grade": "E",
+      "si": 72.73,
+      "grade": "D",
       "cc_max": 5.0,
       "loc": 157,
       "bugfix_count": 3
@@ -362,8 +362,8 @@
     {
       "fqn": "OpenRA.Platforms.Default.ThreadedGraphicsContext.Message",
       "file_path": "ThreadedGraphicsContext.cs",
-      "si": 57.58,
-      "grade": "C",
+      "si": 60.61,
+      "grade": "D",
       "cc_max": 8.0,
       "loc": 89,
       "bugfix_count": 9
@@ -416,7 +416,7 @@
     {
       "fqn": "OpenRA.Platforms.Default.VertexBuffer",
       "file_path": "VertexBuffer.cs",
-      "si": 51.52,
+      "si": 54.55,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 94,
@@ -435,8 +435,8 @@
     },
     {
       "file_path": "DummySoundEngine.cs",
-      "si_max": 54.55,
-      "si_mean": 36.36,
+      "si_max": 57.58,
+      "si_mean": 37.37,
       "loc_total": 32,
       "cc_max": 1.0,
       "class_count": 3,
@@ -453,8 +453,8 @@
     },
     {
       "file_path": "FreeTypeFont.cs",
-      "si_max": 60.61,
-      "si_mean": 33.34,
+      "si_max": 51.52,
+      "si_mean": 28.79,
       "loc_total": 81,
       "cc_max": 5.0,
       "class_count": 2,
@@ -481,7 +481,7 @@
     {
       "file_path": "OpenAlSoundEngine.cs",
       "si_max": 90.91,
-      "si_mean": 56.36,
+      "si_mean": 57.58,
       "loc_total": 499,
       "cc_max": 9.0,
       "class_count": 5,
@@ -489,8 +489,8 @@
     },
     {
       "file_path": "OpenGL.cs",
-      "si_max": 78.79,
-      "si_mean": 40.91,
+      "si_max": 81.82,
+      "si_mean": 42.42,
       "loc_total": 298,
       "cc_max": 18.0,
       "class_count": 2,
@@ -552,8 +552,8 @@
     },
     {
       "file_path": "Texture.cs",
-      "si_max": 81.82,
-      "si_mean": 81.82,
+      "si_max": 72.73,
+      "si_mean": 72.73,
       "loc_total": 157,
       "cc_max": 5.0,
       "class_count": 1,
@@ -571,7 +571,7 @@
     {
       "file_path": "ThreadedGraphicsContext.cs",
       "si_max": 84.85,
-      "si_mean": 38.96,
+      "si_mean": 39.39,
       "loc_total": 600,
       "cc_max": 8.0,
       "class_count": 7,
@@ -579,8 +579,8 @@
     },
     {
       "file_path": "VertexBuffer.cs",
-      "si_max": 51.52,
-      "si_mean": 51.52,
+      "si_max": 54.55,
+      "si_mean": 54.55,
       "loc_total": 94,
       "cc_max": 2.0,
       "class_count": 1,

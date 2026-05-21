@@ -24,8 +24,8 @@
     {
       "name": "si_vs_bugfix",
       "n": 278,
-      "spearman_rho": 0.1044,
-      "p_value": 0.091411
+      "spearman_rho": 0.1078,
+      "p_value": 0.081278
     },
     {
       "name": "loc_vs_bugfix",
@@ -44,8 +44,8 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 140,
-      "spearman_rho": 0.3641,
-      "p_value": 1.4e-05
+      "spearman_rho": 0.3681,
+      "p_value": 1.1e-05
     },
     {
       "name": "file_loc_vs_bugfix",
@@ -228,7 +228,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Activities.Infiltrate",
       "file_path": "Activities/Infiltrate.cs",
-      "si": 91.01,
+      "si": 91.73,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 48,
@@ -237,7 +237,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Activities.Leap",
       "file_path": "Activities/Leap.cs",
-      "si": 80.22,
+      "si": 80.58,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 81,
@@ -246,7 +246,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Activities.LeapAttack",
       "file_path": "Activities/LeapAttack.cs",
-      "si": 98.92,
+      "si": 99.28,
       "grade": "E",
       "cc_max": 23.0,
       "loc": 128,
@@ -264,8 +264,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.AudLoader",
       "file_path": "AudioLoaders/AudLoader.cs",
-      "si": 44.96,
-      "grade": "C",
+      "si": 38.49,
+      "grade": "B",
       "cc_max": 3.0,
       "loc": 27,
       "bugfix_count": 3
@@ -273,7 +273,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.AudFormat",
       "file_path": "AudioLoaders/AudLoader.cs",
-      "si": 35.61,
+      "si": 35.25,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 9,
@@ -282,7 +282,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocLoader",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 29.86,
+      "si": 29.5,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 15,
@@ -291,7 +291,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocFormat",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 97.84,
+      "si": 98.2,
       "grade": "E",
       "cc_max": 27.0,
       "loc": 246,
@@ -300,7 +300,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocFormat.VocFileHeader",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 7.19,
+      "si": 6.83,
       "grade": "A",
       "cc_max": 1.0,
       "loc": 9,
@@ -309,7 +309,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocFormat.VocBlock",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -318,7 +318,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocFormat.VocSampleBlock",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -327,7 +327,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocFormat.VocLoopBlock",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -336,7 +336,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.AudioLoaders.VocFormat.VocStream",
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si": 49.64,
+      "si": 47.48,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 23,
@@ -345,7 +345,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Effects.ConyardChronoVortex",
       "file_path": "Effects/ConyardChronoVortex.cs",
-      "si": 83.45,
+      "si": 83.09,
       "grade": "E",
       "cc_max": 4.0,
       "loc": 26,
@@ -354,7 +354,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Effects.GpsDotEffect",
       "file_path": "Effects/GpsDotEffect.cs",
-      "si": 92.09,
+      "si": 92.81,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 67,
@@ -363,7 +363,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Effects.GpsDotEffect.DotState",
       "file_path": "Effects/GpsDotEffect.cs",
-      "si": 38.85,
+      "si": 38.49,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 9,
@@ -372,7 +372,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Effects.GpsSatellite",
       "file_path": "Effects/GpsSatellite.cs",
-      "si": 60.07,
+      "si": 60.43,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 29,
@@ -381,7 +381,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Effects.SatelliteLaunch",
       "file_path": "Effects/SatelliteLaunch.cs",
-      "si": 78.42,
+      "si": 78.78,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 28,
@@ -390,7 +390,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.SoundFlags",
       "file_path": "FileFormats/AudReader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -399,7 +399,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.SoundFormat",
       "file_path": "FileFormats/AudReader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -408,7 +408,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.AudChunk",
       "file_path": "FileFormats/AudReader.cs",
-      "si": 7.55,
+      "si": 7.19,
       "grade": "A",
       "cc_max": 2.0,
       "loc": 11,
@@ -417,8 +417,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.AudReader",
       "file_path": "FileFormats/AudReader.cs",
-      "si": 80.58,
-      "grade": "E",
+      "si": 75.54,
+      "grade": "D",
       "cc_max": 6.0,
       "loc": 46,
       "bugfix_count": 2
@@ -426,7 +426,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.AudReader.ImaAdpcmAudStream",
       "file_path": "FileFormats/AudReader.cs",
-      "si": 48.56,
+      "si": 46.76,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 44,
@@ -435,7 +435,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.AudReader.WestwoodCompressedAudStream",
       "file_path": "FileFormats/AudReader.cs",
-      "si": 44.96,
+      "si": 43.88,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 32,
@@ -444,7 +444,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.Blowfish",
       "file_path": "FileFormats/Blowfish.cs",
-      "si": 64.03,
+      "si": 64.75,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 106,
@@ -453,7 +453,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.BlowfishKeyProvider",
       "file_path": "FileFormats/BlowfishKeyProvider.cs",
-      "si": 72.3,
+      "si": 71.94,
       "grade": "D",
       "cc_max": 6.0,
       "loc": 425,
@@ -462,7 +462,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.BlowfishKeyProvider.PublicKey",
       "file_path": "FileFormats/BlowfishKeyProvider.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -471,7 +471,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.HvaReader",
       "file_path": "FileFormats/HvaReader.cs",
-      "si": 59.71,
+      "si": 57.55,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 38,
@@ -480,7 +480,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.IdxEntry",
       "file_path": "FileFormats/IdxEntry.cs",
-      "si": 29.86,
+      "si": 29.5,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 18,
@@ -489,7 +489,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.IdxReader",
       "file_path": "FileFormats/IdxReader.cs",
-      "si": 48.56,
+      "si": 43.17,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 21,
@@ -498,7 +498,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.LCWCompression",
       "file_path": "FileFormats/LCWCompression.cs",
-      "si": 55.76,
+      "si": 53.24,
       "grade": "C",
       "cc_max": 12.0,
       "loc": 139,
@@ -507,7 +507,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.LZOCompression",
       "file_path": "FileFormats/LZOCompression.cs",
-      "si": 94.96,
+      "si": 95.68,
       "grade": "E",
       "cc_max": 37.0,
       "loc": 213,
@@ -516,7 +516,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.VqaVideo",
       "file_path": "FileFormats/VqaVideo.cs",
-      "si": 96.04,
+      "si": 94.6,
       "grade": "E",
       "cc_max": 20.0,
       "loc": 471,
@@ -525,7 +525,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.NormalType",
       "file_path": "FileFormats/VxlReader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -534,7 +534,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.VxlElement",
       "file_path": "FileFormats/VxlReader.cs",
-      "si": 10.07,
+      "si": 9.35,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -543,7 +543,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.VxlLimb",
       "file_path": "FileFormats/VxlReader.cs",
-      "si": 10.07,
+      "si": 9.35,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -552,7 +552,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.VxlReader",
       "file_path": "FileFormats/VxlReader.cs",
-      "si": 89.57,
+      "si": 86.69,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 115,
@@ -561,7 +561,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.WsaVideo",
       "file_path": "FileFormats/WsaVideo.cs",
-      "si": 82.73,
+      "si": 80.58,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 110,
@@ -570,7 +570,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.XccGlobalDatabase",
       "file_path": "FileFormats/XccGlobalDatabase.cs",
-      "si": 52.52,
+      "si": 50.72,
       "grade": "C",
       "cc_max": 6.0,
       "loc": 35,
@@ -579,7 +579,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.XccLocalDatabase",
       "file_path": "FileFormats/XccLocalDatabase.cs",
-      "si": 67.27,
+      "si": 61.51,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 44,
@@ -588,7 +588,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileFormats.XORDeltaCompression",
       "file_path": "FileFormats/XORDeltaCompression.cs",
-      "si": 51.8,
+      "si": 49.28,
       "grade": "C",
       "cc_max": 12.0,
       "loc": 62,
@@ -597,7 +597,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.BigLoader",
       "file_path": "FileSystem/BigFile.cs",
-      "si": 41.01,
+      "si": 58.27,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 15,
@@ -606,8 +606,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.BigLoader.BigFile",
       "file_path": "FileSystem/BigFile.cs",
-      "si": 48.56,
-      "grade": "C",
+      "si": 62.59,
+      "grade": "D",
       "cc_max": 4.0,
       "loc": 51,
       "bugfix_count": 3
@@ -615,8 +615,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.BigLoader.BigFile.Entry",
       "file_path": "FileSystem/BigFile.cs",
-      "si": 8.27,
-      "grade": "A",
+      "si": 56.83,
+      "grade": "C",
       "cc_max": 2.0,
       "loc": 12,
       "bugfix_count": 3
@@ -624,7 +624,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.MegV3Loader",
       "file_path": "FileSystem/MegFile.cs",
-      "si": 43.17,
+      "si": 42.09,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 18,
@@ -633,7 +633,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.MegV3Loader.MegFile",
       "file_path": "FileSystem/MegFile.cs",
-      "si": 57.91,
+      "si": 56.12,
       "grade": "C",
       "cc_max": 7.0,
       "loc": 75,
@@ -642,7 +642,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.MixLoader",
       "file_path": "FileSystem/MixFile.cs",
-      "si": 98.2,
+      "si": 97.48,
       "grade": "E",
       "cc_max": 5.0,
       "loc": 16,
@@ -651,7 +651,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.MixLoader.MixFile",
       "file_path": "FileSystem/MixFile.cs",
-      "si": 99.28,
+      "si": 98.56,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 173,
@@ -660,7 +660,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.PackageHashType",
       "file_path": "FileSystem/PackageEntry.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -669,7 +669,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.PackageEntry",
       "file_path": "FileSystem/PackageEntry.cs",
-      "si": 86.33,
+      "si": 83.45,
       "grade": "E",
       "cc_max": 11.0,
       "loc": 80,
@@ -678,7 +678,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.PakFileLoader",
       "file_path": "FileSystem/Pak.cs",
-      "si": 41.01,
+      "si": 58.27,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 11,
@@ -687,8 +687,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.PakFileLoader.Entry",
       "file_path": "FileSystem/Pak.cs",
-      "si": 6.83,
-      "grade": "A",
+      "si": 48.2,
+      "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 2
@@ -696,8 +696,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.FileSystem.PakFileLoader.PakFile",
       "file_path": "FileSystem/Pak.cs",
-      "si": 49.28,
-      "grade": "C",
+      "si": 67.27,
+      "grade": "D",
       "cc_max": 5.0,
       "loc": 47,
       "bugfix_count": 2
@@ -705,7 +705,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ChronoVortexRenderable",
       "file_path": "Graphics/ChronoVortexRenderable.cs",
-      "si": 69.78,
+      "si": 70.14,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 31,
@@ -714,7 +714,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ClassicSpriteSequenceLoader",
       "file_path": "Graphics/ClassicSpriteSequence.cs",
-      "si": 55.4,
+      "si": 52.88,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 5,
@@ -723,7 +723,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ClassicSpriteSequence",
       "file_path": "Graphics/ClassicSpriteSequence.cs",
-      "si": 63.31,
+      "si": 64.03,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 12,
@@ -732,7 +732,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ClassicTilesetSpecificSpriteSequenceLoader",
       "file_path": "Graphics/ClassicTilesetSpecificSpriteSequence.cs",
-      "si": 55.4,
+      "si": 52.88,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 5,
@@ -741,7 +741,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ClassicTilesetSpecificSpriteSequence",
       "file_path": "Graphics/ClassicTilesetSpecificSpriteSequence.cs",
-      "si": 81.29,
+      "si": 81.65,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 52,
@@ -750,7 +750,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ModelPreview",
       "file_path": "Graphics/ModelActorPreview.cs",
-      "si": 87.05,
+      "si": 87.41,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 38,
@@ -759,7 +759,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ModelRenderable",
       "file_path": "Graphics/ModelRenderable.cs",
-      "si": 88.49,
+      "si": 89.57,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 71,
@@ -768,7 +768,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.ModelRenderable.FinalizedModelRenderable",
       "file_path": "Graphics/ModelRenderable.cs",
-      "si": 89.21,
+      "si": 90.29,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 156,
@@ -777,7 +777,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.TeslaZapRenderable",
       "file_path": "Graphics/TeslaZapRenderable.cs",
-      "si": 85.97,
+      "si": 86.33,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 110,
@@ -786,7 +786,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.UIModelRenderable",
       "file_path": "Graphics/UIModelRenderable.cs",
-      "si": 84.53,
+      "si": 85.25,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 33,
@@ -795,8 +795,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.UIModelRenderable.FinalizedUIModelRenderable",
       "file_path": "Graphics/UIModelRenderable.cs",
-      "si": 79.86,
-      "grade": "D",
+      "si": 81.29,
+      "grade": "E",
       "cc_max": 3.0,
       "loc": 64,
       "bugfix_count": 1
@@ -804,7 +804,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Graphics.Limb",
       "file_path": "Graphics/Voxel.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -831,7 +831,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Installer.ExtractMixSourceAction",
       "file_path": "Installer/ExtractMixSourceAction.cs",
-      "si": 72.66,
+      "si": 73.74,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 45,
@@ -858,7 +858,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Projectiles.TeslaZapInfo",
       "file_path": "Projectiles/TeslaZap.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -867,7 +867,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Projectiles.TeslaZap",
       "file_path": "Projectiles/TeslaZap.cs",
-      "si": 85.25,
+      "si": 85.97,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 27,
@@ -876,7 +876,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Scripting.ChronosphereProperties",
       "file_path": "Scripting/Properties/ChronosphereProperties.cs",
-      "si": 10.43,
+      "si": 9.71,
       "grade": "A",
       "cc_max": 6.0,
       "loc": 24,
@@ -885,7 +885,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Scripting.DisguiseProperties",
       "file_path": "Scripting/Properties/DisguiseProperties.cs",
-      "si": 8.63,
+      "si": 7.91,
       "grade": "A",
       "cc_max": 1.0,
       "loc": 16,
@@ -894,7 +894,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Scripting.InfiltrateProperties",
       "file_path": "Scripting/Properties/InfiltrateProperties.cs",
-      "si": 46.4,
+      "si": 45.68,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 16,
@@ -903,7 +903,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Scripting.IonCannonProperties",
       "file_path": "Scripting/Properties/IonCannonProperties.cs",
-      "si": 7.91,
+      "si": 7.55,
       "grade": "A",
       "cc_max": 1.0,
       "loc": 10,
@@ -912,7 +912,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpD2Loader",
       "file_path": "SpriteLoaders/ShpD2Loader.cs",
-      "si": 66.55,
+      "si": 60.07,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 76,
@@ -921,7 +921,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpD2Loader.FormatFlags",
       "file_path": "SpriteLoaders/ShpD2Loader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -930,7 +930,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpD2Loader.ShpD2Frame",
       "file_path": "SpriteLoaders/ShpD2Loader.cs",
-      "si": 66.55,
+      "si": 60.07,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 50,
@@ -939,7 +939,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpRemasteredLoader",
       "file_path": "SpriteLoaders/ShpRemasteredLoader.cs",
-      "si": 29.86,
+      "si": 29.5,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 20,
@@ -948,7 +948,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpRemasteredSprite",
       "file_path": "SpriteLoaders/ShpRemasteredLoader.cs",
-      "si": 64.39,
+      "si": 66.55,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 63,
@@ -957,7 +957,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpTDLoader",
       "file_path": "SpriteLoaders/ShpTDLoader.cs",
-      "si": 50.72,
+      "si": 48.92,
       "grade": "C",
       "cc_max": 6.0,
       "loc": 47,
@@ -966,7 +966,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpTDSprite",
       "file_path": "SpriteLoaders/ShpTDLoader.cs",
-      "si": 96.4,
+      "si": 96.04,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 112,
@@ -975,7 +975,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpTDSprite.Format",
       "file_path": "SpriteLoaders/ShpTDLoader.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -993,7 +993,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.ShpTDSprite.ImageHeader",
       "file_path": "SpriteLoaders/ShpTDLoader.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 17,
@@ -1002,7 +1002,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.TmpRALoader",
       "file_path": "SpriteLoaders/TmpRALoader.cs",
-      "si": 43.17,
+      "si": 42.09,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 57,
@@ -1011,7 +1011,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.TmpRALoader.TmpRAFrame",
       "file_path": "SpriteLoaders/TmpRALoader.cs",
-      "si": 35.61,
+      "si": 35.25,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 10,
@@ -1020,7 +1020,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.TmpTDLoader",
       "file_path": "SpriteLoaders/TmpTDLoader.cs",
-      "si": 43.17,
+      "si": 42.09,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 54,
@@ -1029,7 +1029,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.TmpTDLoader.TmpTDFrame",
       "file_path": "SpriteLoaders/TmpTDLoader.cs",
-      "si": 35.61,
+      "si": 35.25,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 10,
@@ -1038,7 +1038,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.TmpTSLoader",
       "file_path": "SpriteLoaders/TmpTSLoader.cs",
-      "si": 65.11,
+      "si": 65.83,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 79,
@@ -1047,7 +1047,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.SpriteLoaders.TmpTSLoader.TmpTSDepthFrame",
       "file_path": "SpriteLoaders/TmpTSLoader.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 4,
@@ -1065,7 +1065,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackLeapInfo",
       "file_path": "Traits/Attack/AttackLeap.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1074,7 +1074,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackLeap",
       "file_path": "Traits/Attack/AttackLeap.cs",
-      "si": 74.82,
+      "si": 75.18,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 28,
@@ -1083,7 +1083,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackPopupTurretedInfo",
       "file_path": "Traits/Attack/AttackPopupTurreted.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1092,7 +1092,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackPopupTurreted",
       "file_path": "Traits/Attack/AttackPopupTurreted.cs",
-      "si": 66.55,
+      "si": 60.07,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 69,
@@ -1101,7 +1101,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackPopupTurreted.PopupState",
       "file_path": "Traits/Attack/AttackPopupTurreted.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -1110,7 +1110,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTDGunboatTurretedInfo",
       "file_path": "Traits/Attack/AttackTDGunboatTurreted.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1119,7 +1119,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTDGunboatTurreted",
       "file_path": "Traits/Attack/AttackTDGunboatTurreted.cs",
-      "si": 57.55,
+      "si": 55.76,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 6,
@@ -1128,7 +1128,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTDGunboatTurreted.AttackTDGunboatTurretedActivity",
       "file_path": "Traits/Attack/AttackTDGunboatTurreted.cs",
-      "si": 75.9,
+      "si": 76.62,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 34,
@@ -1137,7 +1137,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTeslaInfo",
       "file_path": "Traits/Attack/AttackTesla.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1146,7 +1146,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTesla",
       "file_path": "Traits/Attack/AttackTesla.cs",
-      "si": 89.93,
+      "si": 91.01,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 29,
@@ -1155,7 +1155,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTesla.ChargeAttack",
       "file_path": "Traits/Attack/AttackTesla.cs",
-      "si": 88.85,
+      "si": 89.93,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 49,
@@ -1164,7 +1164,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackTesla.ChargeFire",
       "file_path": "Traits/Attack/AttackTesla.cs",
-      "si": 82.37,
+      "si": 80.94,
       "grade": "E",
       "cc_max": 4.0,
       "loc": 18,
@@ -1173,7 +1173,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ClonesProducedUnitsInfo",
       "file_path": "Traits/Buildings/ClonesProducedUnits.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1182,7 +1182,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ClonesProducedUnits",
       "file_path": "Traits/Buildings/ClonesProducedUnits.cs",
-      "si": 71.94,
+      "si": 73.02,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 36,
@@ -1191,7 +1191,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GrantConditionOnJumpjetLayerInfo",
       "file_path": "Traits/Conditions/GrantConditionOnJumpjetLayer.cs",
-      "si": 38.85,
+      "si": 38.49,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 9,
@@ -1200,7 +1200,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GrantConditionOnJumpjetLayer",
       "file_path": "Traits/Conditions/GrantConditionOnJumpjetLayer.cs",
-      "si": 63.67,
+      "si": 65.11,
       "grade": "D",
       "cc_max": 9.0,
       "loc": 22,
@@ -1209,7 +1209,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForCashInfo",
       "file_path": "Traits/Infiltration/InfiltrateForCash.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1218,7 +1218,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForCash",
       "file_path": "Traits/Infiltration/InfiltrateForCash.cs",
-      "si": 62.95,
+      "si": 64.39,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 30,
@@ -1227,7 +1227,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForDecorationInfo",
       "file_path": "Traits/Infiltration/InfiltrateForDecoration.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1236,8 +1236,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForDecoration",
       "file_path": "Traits/Infiltration/InfiltrateForDecoration.cs",
-      "si": 41.01,
-      "grade": "C",
+      "si": 39.93,
+      "grade": "B",
       "cc_max": 2.0,
       "loc": 18,
       "bugfix_count": 3
@@ -1245,7 +1245,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForExplorationInfo",
       "file_path": "Traits/Infiltration/InfiltrateForExploration.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1254,7 +1254,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForExploration",
       "file_path": "Traits/Infiltration/InfiltrateForExploration.cs",
-      "si": 53.24,
+      "si": 53.96,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 26,
@@ -1263,7 +1263,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForPowerOutageInfo",
       "file_path": "Traits/Infiltration/InfiltrateForPowerOutage.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1272,7 +1272,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForPowerOutage",
       "file_path": "Traits/Infiltration/InfiltrateForPowerOutage.cs",
-      "si": 71.22,
+      "si": 71.58,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 27,
@@ -1281,7 +1281,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForSupportPowerInfo",
       "file_path": "Traits/Infiltration/InfiltrateForSupportPower.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1290,7 +1290,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForSupportPower",
       "file_path": "Traits/Infiltration/InfiltrateForSupportPower.cs",
-      "si": 50.0,
+      "si": 48.56,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 25,
@@ -1299,7 +1299,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForSupportPowerResetInfo",
       "file_path": "Traits/Infiltration/InfiltrateForSupportPowerReset.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1308,7 +1308,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForSupportPowerReset",
       "file_path": "Traits/Infiltration/InfiltrateForSupportPowerReset.cs",
-      "si": 53.24,
+      "si": 53.96,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 25,
@@ -1317,7 +1317,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForTransformInfo",
       "file_path": "Traits/Infiltration/InfiltrateForTransform.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1326,7 +1326,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrateForTransform",
       "file_path": "Traits/Infiltration/InfiltrateForTransform.cs",
-      "si": 38.85,
+      "si": 38.49,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 25,
@@ -1335,7 +1335,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltratesInfo",
       "file_path": "Traits/Infiltration/Infiltrates.cs",
-      "si": 41.73,
+      "si": 40.65,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 1,
@@ -1344,7 +1344,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Infiltrates",
       "file_path": "Traits/Infiltration/Infiltrates.cs",
-      "si": 91.73,
+      "si": 92.45,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 53,
@@ -1353,7 +1353,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.InfiltrationOrderTargeter",
       "file_path": "Traits/Infiltration/Infiltrates.cs",
-      "si": 29.86,
+      "si": 29.5,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 21,
@@ -1371,7 +1371,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoshiftPostProcessEffect",
       "file_path": "Traits/PaletteEffects/ChronoshiftPostProcessEffect.cs",
-      "si": 61.15,
+      "si": 61.87,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 18,
@@ -1389,7 +1389,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.LightPaletteRotator",
       "file_path": "Traits/PaletteEffects/LightPaletteRotator.cs",
-      "si": 62.59,
+      "si": 63.31,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 19,
@@ -1398,7 +1398,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.IRenderActorPreviewVoxelsInfo",
       "file_path": "Traits/Render/RenderVoxels.cs",
-      "si": 90.29,
+      "si": 90.65,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 2,
@@ -1407,7 +1407,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.RenderVoxelsInfo",
       "file_path": "Traits/Render/RenderVoxels.cs",
-      "si": 65.11,
+      "si": 65.83,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 23,
@@ -1416,7 +1416,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.RenderVoxels",
       "file_path": "Traits/Render/RenderVoxels.cs",
-      "si": 92.81,
+      "si": 89.21,
       "grade": "E",
       "cc_max": 3.0,
       "loc": 55,
@@ -1425,7 +1425,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.RenderVoxels.AnimationWrapper",
       "file_path": "Traits/Render/RenderVoxels.cs",
-      "si": 65.47,
+      "si": 66.19,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 16,
@@ -1434,7 +1434,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.WithBuildingBibInfo",
       "file_path": "Traits/Render/WithBuildingBib.cs",
-      "si": 73.02,
+      "si": 72.3,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 47,
@@ -1443,7 +1443,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.WithBuildingBib",
       "file_path": "Traits/Render/WithBuildingBib.cs",
-      "si": 43.88,
+      "si": 43.17,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 43,
@@ -1452,7 +1452,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.HideBibPreviewInit",
       "file_path": "Traits/Render/WithBuildingBib.cs",
-      "si": 10.07,
+      "si": 9.35,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -1461,7 +1461,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithCargoInfo",
       "file_path": "Traits/Render/WithCargo.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1470,7 +1470,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithCargo",
       "file_path": "Traits/Render/WithCargo.cs",
-      "si": 76.26,
+      "si": 76.98,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 90,
@@ -1479,7 +1479,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithDisguisingInfantryBodyInfo",
       "file_path": "Traits/Render/WithDisguisingInfantryBody.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1488,7 +1488,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithDisguisingInfantryBody",
       "file_path": "Traits/Render/WithDisguisingInfantryBody.cs",
-      "si": 82.01,
+      "si": 82.37,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 43,
@@ -1497,8 +1497,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithEmbeddedTurretSpriteBodyInfo",
       "file_path": "Traits/Render/WithEmbeddedTurretSpriteBody.cs",
-      "si": 41.01,
-      "grade": "C",
+      "si": 39.93,
+      "grade": "B",
       "cc_max": 2.0,
       "loc": 15,
       "bugfix_count": 3
@@ -1506,8 +1506,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithEmbeddedTurretSpriteBody",
       "file_path": "Traits/Render/WithEmbeddedTurretSpriteBody.cs",
-      "si": 41.01,
-      "grade": "C",
+      "si": 39.93,
+      "grade": "B",
       "cc_max": 2.0,
       "loc": 22,
       "bugfix_count": 3
@@ -1515,7 +1515,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithGunboatBodyInfo",
       "file_path": "Traits/Render/WithGunboatBody.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1524,7 +1524,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithGunboatBody",
       "file_path": "Traits/Render/WithGunboatBody.cs",
-      "si": 76.98,
+      "si": 78.06,
       "grade": "D",
       "cc_max": 6.0,
       "loc": 46,
@@ -1533,7 +1533,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithHarvesterSpriteBodyInfo",
       "file_path": "Traits/Render/WithHarvesterSpriteBody.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1551,7 +1551,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithLandingCraftAnimationInfo",
       "file_path": "Traits/Render/WithLandingCraftAnimation.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1569,7 +1569,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithSplitAttackPaletteInfantryBodyInfo",
       "file_path": "Traits/Render/WithSplitAttackPaletteInfantryBody.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1578,7 +1578,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithSplitAttackPaletteInfantryBody",
       "file_path": "Traits/Render/WithSplitAttackPaletteInfantryBody.cs",
-      "si": 48.92,
+      "si": 47.12,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 19,
@@ -1587,7 +1587,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithTeslaChargeAnimationInfo",
       "file_path": "Traits/Render/WithTeslaChargeAnimation.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1596,7 +1596,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithTeslaChargeAnimation",
       "file_path": "Traits/Render/WithTeslaChargeAnimation.cs",
-      "si": 55.4,
+      "si": 52.88,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 9,
@@ -1605,7 +1605,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithTeslaChargeOverlayInfo",
       "file_path": "Traits/Render/WithTeslaChargeOverlay.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1614,7 +1614,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithTeslaChargeOverlay",
       "file_path": "Traits/Render/WithTeslaChargeOverlay.cs",
-      "si": 57.55,
+      "si": 55.76,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 25,
@@ -1623,7 +1623,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelBarrelInfo",
       "file_path": "Traits/Render/WithVoxelBarrel.cs",
-      "si": 61.51,
+      "si": 62.23,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 21,
@@ -1632,7 +1632,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelBarrel",
       "file_path": "Traits/Render/WithVoxelBarrel.cs",
-      "si": 45.68,
+      "si": 45.32,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 31,
@@ -1641,7 +1641,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelBodyInfo",
       "file_path": "Traits/Render/WithVoxelBody.cs",
-      "si": 55.4,
+      "si": 52.88,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 10,
@@ -1650,7 +1650,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelBody",
       "file_path": "Traits/Render/WithVoxelBody.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 17,
@@ -1659,7 +1659,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelTurretInfo",
       "file_path": "Traits/Render/WithVoxelTurret.cs",
-      "si": 58.27,
+      "si": 56.83,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 15,
@@ -1677,7 +1677,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelUnloadBodyInfo",
       "file_path": "Traits/Render/WithVoxelUnloadBody.cs",
-      "si": 57.55,
+      "si": 55.76,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 10,
@@ -1686,7 +1686,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelUnloadBody",
       "file_path": "Traits/Render/WithVoxelUnloadBody.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 33,
@@ -1695,7 +1695,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelWalkerBodyInfo",
       "file_path": "Traits/Render/WithVoxelWalkerBody.cs",
-      "si": 57.55,
+      "si": 55.76,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 12,
@@ -1704,7 +1704,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.WithVoxelWalkerBody",
       "file_path": "Traits/Render/WithVoxelWalkerBody.cs",
-      "si": 87.77,
+      "si": 88.49,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 40,
@@ -1713,7 +1713,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Render.BodyAnimationFrameInit",
       "file_path": "Traits/Render/WithVoxelWalkerBody.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 2,
@@ -1722,7 +1722,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackOrderPowerInfo",
       "file_path": "Traits/SupportPowers/AttackOrderPower.cs",
-      "si": 36.69,
+      "si": 35.97,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1731,7 +1731,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.AttackOrderPower",
       "file_path": "Traits/SupportPowers/AttackOrderPower.cs",
-      "si": 58.63,
+      "si": 57.19,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 26,
@@ -1740,7 +1740,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.SelectAttackPowerTarget",
       "file_path": "Traits/SupportPowers/AttackOrderPower.cs",
-      "si": 71.22,
+      "si": 71.58,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 62,
@@ -1758,7 +1758,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoshiftPower",
       "file_path": "Traits/SupportPowers/ChronoshiftPower.cs",
-      "si": 94.24,
+      "si": 95.32,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 67,
@@ -1767,7 +1767,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoshiftPower.SelectChronoshiftTarget",
       "file_path": "Traits/SupportPowers/ChronoshiftPower.cs",
-      "si": 86.69,
+      "si": 88.13,
       "grade": "E",
       "cc_max": 5.0,
       "loc": 56,
@@ -1776,7 +1776,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoshiftPower.SelectDestination",
       "file_path": "Traits/SupportPowers/ChronoshiftPower.cs",
-      "si": 93.17,
+      "si": 93.53,
       "grade": "E",
       "cc_max": 11.0,
       "loc": 152,
@@ -1785,7 +1785,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DropPodsPowerInfo",
       "file_path": "Traits/SupportPowers/DropPodsPower.cs",
-      "si": 38.85,
+      "si": 38.49,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 11,
@@ -1794,7 +1794,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DropPodsPower",
       "file_path": "Traits/SupportPowers/DropPodsPower.cs",
-      "si": 75.54,
+      "si": 76.26,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 98,
@@ -1803,7 +1803,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GpsPowerInfo",
       "file_path": "Traits/SupportPowers/GpsPower.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1812,7 +1812,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GpsPower",
       "file_path": "Traits/SupportPowers/GpsPower.cs",
-      "si": 87.41,
+      "si": 87.05,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 50,
@@ -1821,7 +1821,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GrantPrerequisiteChargeDrainPowerInfo",
       "file_path": "Traits/SupportPowers/GrantPrerequisiteChargeDrainPower.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 5,
@@ -1830,7 +1830,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GrantPrerequisiteChargeDrainPower",
       "file_path": "Traits/SupportPowers/GrantPrerequisiteChargeDrainPower.cs",
-      "si": 80.94,
+      "si": 82.73,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 31,
@@ -1839,7 +1839,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GrantPrerequisiteChargeDrainPower.DischargeableSupportPowerInstance",
       "file_path": "Traits/SupportPowers/GrantPrerequisiteChargeDrainPower.cs",
-      "si": 79.5,
+      "si": 79.86,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 85,
@@ -1848,7 +1848,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.IonCannonPowerInfo",
       "file_path": "Traits/SupportPowers/IonCannonPower.cs",
-      "si": 38.85,
+      "si": 38.49,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 11,
@@ -1857,7 +1857,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.IonCannonPower",
       "file_path": "Traits/SupportPowers/IonCannonPower.cs",
-      "si": 60.43,
+      "si": 60.79,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 33,
@@ -1875,7 +1875,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoVortexRenderer",
       "file_path": "Traits/World/ChronoVortexRenderer.cs",
-      "si": 74.1,
+      "si": 74.46,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 73,
@@ -1884,7 +1884,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.JumpjetActorLayerInfo",
       "file_path": "Traits/World/JumpjetActorLayer.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1893,7 +1893,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.JumpjetActorLayer",
       "file_path": "Traits/World/JumpjetActorLayer.cs",
-      "si": 60.79,
+      "si": 61.15,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 58,
@@ -1911,7 +1911,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.JumpjetLocomotor",
       "file_path": "Traits/World/JumpjetLocomotor.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 2,
@@ -1920,7 +1920,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ModelRenderProxy",
       "file_path": "Traits/World/ModelRenderer.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 7,
@@ -1938,7 +1938,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ModelRenderer",
       "file_path": "Traits/World/ModelRenderer.cs",
-      "si": 94.6,
+      "si": 94.96,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 315,
@@ -1956,7 +1956,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ShroudPalette",
       "file_path": "Traits/World/ShroudPalette.cs",
-      "si": 51.08,
+      "si": 50.36,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 6,
@@ -1965,7 +1965,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSEditorResourceLayerInfo",
       "file_path": "Traits/World/TSEditorResourceLayer.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -1974,7 +1974,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSEditorResourceLayer",
       "file_path": "Traits/World/TSEditorResourceLayer.cs",
-      "si": 70.14,
+      "si": 70.5,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 77,
@@ -1992,7 +1992,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSMapGeneratorInfo.Parameters",
       "file_path": "Traits/World/TSMapGenerator.cs",
-      "si": 78.06,
+      "si": 78.42,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 111,
@@ -2001,7 +2001,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSMapGenerator",
       "file_path": "Traits/World/TSMapGenerator.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 6,
@@ -2010,7 +2010,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSResourceLayerInfo",
       "file_path": "Traits/World/TSResourceLayer.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2037,8 +2037,8 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSShroudPalette",
       "file_path": "Traits/World/TSShroudPalette.cs",
-      "si": 41.01,
-      "grade": "C",
+      "si": 39.93,
+      "grade": "B",
       "cc_max": 2.0,
       "loc": 12,
       "bugfix_count": 5
@@ -2055,7 +2055,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSTiberiumRenderer",
       "file_path": "Traits/World/TSTiberiumRenderer.cs",
-      "si": 51.44,
+      "si": 49.64,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 42,
@@ -2073,7 +2073,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSVeinsRenderer",
       "file_path": "Traits/World/TSVeinsRenderer.cs",
-      "si": 90.65,
+      "si": 87.77,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 229,
@@ -2082,7 +2082,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TSVeinsRenderer.Adjacency",
       "file_path": "Traits/World/TSVeinsRenderer.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2100,7 +2100,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.VoxelCache",
       "file_path": "Traits/World/VoxelCache.cs",
-      "si": 71.58,
+      "si": 69.78,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 75,
@@ -2109,7 +2109,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.VoxelNormalsPaletteInfo",
       "file_path": "Traits/World/VoxelNormalsPalette.cs",
-      "si": 36.69,
+      "si": 34.17,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2118,7 +2118,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.VoxelNormalsPalette",
       "file_path": "Traits/World/VoxelNormalsPalette.cs",
-      "si": 48.56,
+      "si": 44.96,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 26,
@@ -2136,7 +2136,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.WithResourceAnimation",
       "file_path": "Traits/World/WithResourceAnimation.cs",
-      "si": 77.7,
+      "si": 79.14,
       "grade": "D",
       "cc_max": 7.0,
       "loc": 41,
@@ -2145,7 +2145,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoshiftableInfo",
       "file_path": "Traits/Chronoshiftable.cs",
-      "si": 43.17,
+      "si": 42.09,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 6,
@@ -2154,7 +2154,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Chronoshiftable",
       "file_path": "Traits/Chronoshiftable.cs",
-      "si": 93.53,
+      "si": 93.88,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 108,
@@ -2163,7 +2163,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ChronoshiftReturnInit",
       "file_path": "Traits/Chronoshiftable.cs",
-      "si": 50.36,
+      "si": 48.2,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2172,7 +2172,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ClassicFacingBodyOrientationInfo",
       "file_path": "Traits/ClassicFacingBodyOrientation.cs",
-      "si": 52.16,
+      "si": 50.0,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 9,
@@ -2181,7 +2181,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ClassicFacingBodyOrientation",
       "file_path": "Traits/ClassicFacingBodyOrientation.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 2,
@@ -2190,7 +2190,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.CloneableType",
       "file_path": "Traits/Cloneable.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2199,7 +2199,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.CloneableInfo",
       "file_path": "Traits/Cloneable.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2208,7 +2208,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Cloneable",
       "file_path": "Traits/Cloneable.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2217,7 +2217,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ConyardChronoReturnInfo",
       "file_path": "Traits/ConyardChronoReturn.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2235,7 +2235,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DisguiseTooltipInfo",
       "file_path": "Traits/Disguise.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2244,7 +2244,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DisguiseTooltip",
       "file_path": "Traits/Disguise.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 6,
@@ -2253,7 +2253,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.RevealDisguiseType",
       "file_path": "Traits/Disguise.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2262,7 +2262,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DisguiseInfo",
       "file_path": "Traits/Disguise.cs",
-      "si": 45.68,
+      "si": 43.53,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 1,
@@ -2271,7 +2271,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.Disguise",
       "file_path": "Traits/Disguise.cs",
-      "si": 93.88,
+      "si": 92.09,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 159,
@@ -2280,7 +2280,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DisguiseOrderTargeter",
       "file_path": "Traits/Disguise.cs",
-      "si": 38.85,
+      "si": 38.49,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 25,
@@ -2289,7 +2289,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DrainPrerequisitePowerOnDamageInfo",
       "file_path": "Traits/DrainPrerequisitePowerOnDamage.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2298,7 +2298,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.DrainPrerequisitePowerOnDamage",
       "file_path": "Traits/DrainPrerequisitePowerOnDamage.cs",
-      "si": 71.22,
+      "si": 71.58,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 22,
@@ -2307,7 +2307,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.EdibleByLeapInfo",
       "file_path": "Traits/EdibleByLeap.cs",
-      "si": 6.83,
+      "si": 6.47,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2316,7 +2316,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.EdibleByLeap",
       "file_path": "Traits/EdibleByLeap.cs",
-      "si": 28.06,
+      "si": 26.98,
       "grade": "B",
       "cc_max": 4.0,
       "loc": 12,
@@ -2325,7 +2325,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.EnergyWallInfo",
       "file_path": "Traits/EnergyWall.cs",
-      "si": 35.61,
+      "si": 29.5,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 9,
@@ -2334,7 +2334,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.EnergyWall",
       "file_path": "Traits/EnergyWall.cs",
-      "si": 73.74,
+      "si": 72.66,
       "grade": "D",
       "cc_max": 6.0,
       "loc": 48,
@@ -2343,7 +2343,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.FrozenUnderFogUpdatedByGpsInfo",
       "file_path": "Traits/FrozenUnderFogUpdatedByGps.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2361,7 +2361,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.FrozenUnderFogUpdatedByGps.Traits",
       "file_path": "Traits/FrozenUnderFogUpdatedByGps.cs",
-      "si": 27.34,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 6,
@@ -2370,7 +2370,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GpsDotInfo",
       "file_path": "Traits/GpsDot.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2379,7 +2379,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GpsDot",
       "file_path": "Traits/GpsDot.cs",
-      "si": 55.4,
+      "si": 52.88,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 16,
@@ -2388,7 +2388,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.GpsWatcherInfo",
       "file_path": "Traits/GpsWatcher.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2397,7 +2397,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.IOnGpsRefreshed",
       "file_path": "Traits/GpsWatcher.cs",
-      "si": 59.35,
+      "si": 58.63,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 1,
@@ -2415,7 +2415,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.HarvesterHuskModifierInfo",
       "file_path": "Traits/HarvesterHuskModifier.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2424,7 +2424,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.HarvesterHuskModifier",
       "file_path": "Traits/HarvesterHuskModifier.cs",
-      "si": 29.86,
+      "si": 29.5,
       "grade": "B",
       "cc_max": 2.0,
       "loc": 8,
@@ -2433,7 +2433,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.MadTankInfo",
       "file_path": "Traits/MadTank.cs",
-      "si": 46.76,
+      "si": 46.04,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 15,
@@ -2442,7 +2442,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.MadTank",
       "file_path": "Traits/MadTank.cs",
-      "si": 73.38,
+      "si": 74.1,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 33,
@@ -2451,7 +2451,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.MadTank.DetonationSequence",
       "file_path": "Traits/MadTank.cs",
-      "si": 88.13,
+      "si": 88.85,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 88,
@@ -2460,7 +2460,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.PortableChronoInfo",
       "file_path": "Traits/PortableChrono.cs",
-      "si": 36.69,
+      "si": 35.97,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2469,7 +2469,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.PortableChrono",
       "file_path": "Traits/PortableChrono.cs",
-      "si": 98.56,
+      "si": 98.92,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 67,
@@ -2478,7 +2478,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.PortableChronoOrderTargeter",
       "file_path": "Traits/PortableChrono.cs",
-      "si": 48.56,
+      "si": 46.76,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 22,
@@ -2487,7 +2487,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.PortableChronoOrderGenerator",
       "file_path": "Traits/PortableChrono.cs",
-      "si": 75.18,
+      "si": 75.9,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 55,
@@ -2496,7 +2496,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ResourcePurifierInfo",
       "file_path": "Traits/ResourcePurifier.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2505,7 +2505,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.ResourcePurifier",
       "file_path": "Traits/ResourcePurifier.cs",
-      "si": 76.62,
+      "si": 77.7,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 41,
@@ -2514,7 +2514,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TDGunboatInfo",
       "file_path": "Traits/TDGunboat.cs",
-      "si": 41.73,
+      "si": 40.65,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 16,
@@ -2532,7 +2532,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TransferTimedExternalConditionOnTransformInfo",
       "file_path": "Traits/TransferTimedExternalConditionOnTransform.cs",
-      "si": 23.02,
+      "si": 22.66,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2541,7 +2541,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TransferTimedExternalConditionOnTransform",
       "file_path": "Traits/TransferTimedExternalConditionOnTransform.cs",
-      "si": 62.59,
+      "si": 63.31,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 21,
@@ -2550,7 +2550,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TransformsNearResourcesInfo",
       "file_path": "Traits/TransformsNearResources.cs",
-      "si": 27.34,
+      "si": 26.62,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 1,
@@ -2559,7 +2559,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.TransformsNearResources",
       "file_path": "Traits/TransformsNearResources.cs",
-      "si": 82.01,
+      "si": 82.37,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 46,
@@ -2568,7 +2568,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.ConvertPngToShpCommand",
       "file_path": "UtilityCommands/ConvertPngToShpCommand.cs",
-      "si": 27.7,
+      "si": 27.34,
       "grade": "B",
       "cc_max": 4.0,
       "loc": 29,
@@ -2577,7 +2577,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.Glob",
       "file_path": "UtilityCommands/Glob.cs",
-      "si": 79.14,
+      "si": 74.82,
       "grade": "D",
       "cc_max": 18.0,
       "loc": 99,
@@ -2586,7 +2586,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.ImportGen1MapCommand",
       "file_path": "UtilityCommands/ImportGen1MapCommand.cs",
-      "si": 97.48,
+      "si": 97.84,
       "grade": "E",
       "cc_max": 13.5,
       "loc": 420,
@@ -2595,7 +2595,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.ImportGen2MapCommand",
       "file_path": "UtilityCommands/ImportGen2MapCommand.cs",
-      "si": 95.32,
+      "si": 94.24,
       "grade": "E",
       "cc_max": 13.0,
       "loc": 496,
@@ -2613,7 +2613,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.ImportTiberianDawnMapCommand",
       "file_path": "UtilityCommands/ImportTiberianDawnMapCommand.cs",
-      "si": 74.46,
+      "si": 73.38,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 120,
@@ -2631,7 +2631,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.LegacyRulesImporter",
       "file_path": "UtilityCommands/LegacyRulesImporter.cs",
-      "si": 95.68,
+      "si": 96.4,
       "grade": "E",
       "cc_max": 35.0,
       "loc": 178,
@@ -2640,7 +2640,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.ImportLegacySequenceCommand",
       "file_path": "UtilityCommands/LegacySequenceImporter.cs",
-      "si": 83.09,
+      "si": 84.53,
       "grade": "E",
       "cc_max": 19.0,
       "loc": 243,
@@ -2649,7 +2649,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.ImportLegacyTilesetCommand",
       "file_path": "UtilityCommands/LegacyTilesetImporter.cs",
-      "si": 79.14,
+      "si": 79.5,
       "grade": "D",
       "cc_max": 18.0,
       "loc": 164,
@@ -2658,7 +2658,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.UtilityCommands.RemapShpCommand",
       "file_path": "UtilityCommands/RemapShpCommand.cs",
-      "si": 61.87,
+      "si": 63.67,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 58,
@@ -2667,7 +2667,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.VideoLoaders.VqaLoader",
       "file_path": "VideoLoaders/VqaLoader.cs",
-      "si": 43.88,
+      "si": 43.17,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 39,
@@ -2676,7 +2676,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.VideoLoaders.WsaLoader",
       "file_path": "VideoLoaders/WsaLoader.cs",
-      "si": 56.12,
+      "si": 54.32,
       "grade": "C",
       "cc_max": 7.0,
       "loc": 48,
@@ -2685,7 +2685,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Widgets.Logic.PreReleaseWarningPrompt",
       "file_path": "Widgets/Logic/PreReleaseWarningPrompt.cs",
-      "si": 8.99,
+      "si": 8.27,
       "grade": "A",
       "cc_max": 3.0,
       "loc": 14,
@@ -2694,7 +2694,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Widgets.ModelWidget",
       "file_path": "Widgets/ModelWidget.cs",
-      "si": 92.45,
+      "si": 93.17,
       "grade": "E",
       "cc_max": 12.0,
       "loc": 127,
@@ -2712,7 +2712,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Traits.INotifyTeslaCharging",
       "file_path": "TraitsInterfaces.cs",
-      "si": 55.4,
+      "si": 52.88,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 1,
@@ -2721,7 +2721,7 @@
     {
       "fqn": "OpenRA.Mods.Cnc.Util",
       "file_path": "Util.cs",
-      "si": 46.04,
+      "si": 44.6,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 257,
@@ -2731,8 +2731,8 @@
   "file_rows": [
     {
       "file_path": "Activities/Infiltrate.cs",
-      "si_max": 91.01,
-      "si_mean": 91.01,
+      "si_max": 91.73,
+      "si_mean": 91.73,
       "loc_total": 48,
       "cc_max": 8.0,
       "class_count": 1,
@@ -2740,8 +2740,8 @@
     },
     {
       "file_path": "Activities/Leap.cs",
-      "si_max": 80.22,
-      "si_mean": 80.22,
+      "si_max": 80.58,
+      "si_mean": 80.58,
       "loc_total": 81,
       "cc_max": 6.0,
       "class_count": 1,
@@ -2749,8 +2749,8 @@
     },
     {
       "file_path": "Activities/LeapAttack.cs",
-      "si_max": 98.92,
-      "si_mean": 98.92,
+      "si_max": 99.28,
+      "si_mean": 99.28,
       "loc_total": 128,
       "cc_max": 23.0,
       "class_count": 1,
@@ -2767,8 +2767,8 @@
     },
     {
       "file_path": "AudioLoaders/AudLoader.cs",
-      "si_max": 44.96,
-      "si_mean": 40.28,
+      "si_max": 38.49,
+      "si_mean": 36.87,
       "loc_total": 36,
       "cc_max": 3.0,
       "class_count": 2,
@@ -2776,8 +2776,8 @@
     },
     {
       "file_path": "AudioLoaders/VocLoader.cs",
-      "si_max": 97.84,
-      "si_mean": 29.29,
+      "si_max": 98.2,
+      "si_mean": 28.77,
       "loc_total": 293,
       "cc_max": 27.0,
       "class_count": 7,
@@ -2785,8 +2785,8 @@
     },
     {
       "file_path": "Effects/ConyardChronoVortex.cs",
-      "si_max": 83.45,
-      "si_mean": 83.45,
+      "si_max": 83.09,
+      "si_mean": 83.09,
       "loc_total": 26,
       "cc_max": 4.0,
       "class_count": 1,
@@ -2794,8 +2794,8 @@
     },
     {
       "file_path": "Effects/GpsDotEffect.cs",
-      "si_max": 92.09,
-      "si_mean": 65.47,
+      "si_max": 92.81,
+      "si_mean": 65.65,
       "loc_total": 76,
       "cc_max": 10.0,
       "class_count": 2,
@@ -2803,8 +2803,8 @@
     },
     {
       "file_path": "Effects/GpsSatellite.cs",
-      "si_max": 60.07,
-      "si_mean": 60.07,
+      "si_max": 60.43,
+      "si_mean": 60.43,
       "loc_total": 29,
       "cc_max": 2.0,
       "class_count": 1,
@@ -2812,8 +2812,8 @@
     },
     {
       "file_path": "Effects/SatelliteLaunch.cs",
-      "si_max": 78.42,
-      "si_mean": 78.42,
+      "si_max": 78.78,
+      "si_mean": 78.78,
       "loc_total": 28,
       "cc_max": 3.0,
       "class_count": 1,
@@ -2821,8 +2821,8 @@
     },
     {
       "file_path": "FileFormats/AudReader.cs",
-      "si_max": 80.58,
-      "si_mean": 32.55,
+      "si_max": 75.54,
+      "si_mean": 31.05,
       "loc_total": 133,
       "cc_max": 6.0,
       "class_count": 6,
@@ -2830,8 +2830,8 @@
     },
     {
       "file_path": "FileFormats/Blowfish.cs",
-      "si_max": 64.03,
-      "si_mean": 64.03,
+      "si_max": 64.75,
+      "si_mean": 64.75,
       "loc_total": 106,
       "cc_max": 5.0,
       "class_count": 1,
@@ -2839,8 +2839,8 @@
     },
     {
       "file_path": "FileFormats/BlowfishKeyProvider.cs",
-      "si_max": 72.3,
-      "si_mean": 39.56,
+      "si_max": 71.94,
+      "si_mean": 39.2,
       "loc_total": 425,
       "cc_max": 6.0,
       "class_count": 2,
@@ -2848,8 +2848,8 @@
     },
     {
       "file_path": "FileFormats/HvaReader.cs",
-      "si_max": 59.71,
-      "si_mean": 59.71,
+      "si_max": 57.55,
+      "si_mean": 57.55,
       "loc_total": 38,
       "cc_max": 5.0,
       "class_count": 1,
@@ -2857,8 +2857,8 @@
     },
     {
       "file_path": "FileFormats/IdxEntry.cs",
-      "si_max": 29.86,
-      "si_mean": 29.86,
+      "si_max": 29.5,
+      "si_mean": 29.5,
       "loc_total": 18,
       "cc_max": 2.0,
       "class_count": 1,
@@ -2866,8 +2866,8 @@
     },
     {
       "file_path": "FileFormats/IdxReader.cs",
-      "si_max": 48.56,
-      "si_mean": 48.56,
+      "si_max": 43.17,
+      "si_mean": 43.17,
       "loc_total": 21,
       "cc_max": 4.0,
       "class_count": 1,
@@ -2875,8 +2875,8 @@
     },
     {
       "file_path": "FileFormats/LCWCompression.cs",
-      "si_max": 55.76,
-      "si_mean": 55.76,
+      "si_max": 53.24,
+      "si_mean": 53.24,
       "loc_total": 139,
       "cc_max": 12.0,
       "class_count": 1,
@@ -2884,8 +2884,8 @@
     },
     {
       "file_path": "FileFormats/LZOCompression.cs",
-      "si_max": 94.96,
-      "si_mean": 94.96,
+      "si_max": 95.68,
+      "si_mean": 95.68,
       "loc_total": 213,
       "cc_max": 37.0,
       "class_count": 1,
@@ -2893,8 +2893,8 @@
     },
     {
       "file_path": "FileFormats/VqaVideo.cs",
-      "si_max": 96.04,
-      "si_mean": 96.04,
+      "si_max": 94.6,
+      "si_mean": 94.6,
       "loc_total": 471,
       "cc_max": 20.0,
       "class_count": 1,
@@ -2902,8 +2902,8 @@
     },
     {
       "file_path": "FileFormats/VxlReader.cs",
-      "si_max": 89.57,
-      "si_mean": 29.13,
+      "si_max": 86.69,
+      "si_mean": 27.96,
       "loc_total": 115,
       "cc_max": 9.0,
       "class_count": 4,
@@ -2911,8 +2911,8 @@
     },
     {
       "file_path": "FileFormats/WsaVideo.cs",
-      "si_max": 82.73,
-      "si_mean": 82.73,
+      "si_max": 80.58,
+      "si_mean": 80.58,
       "loc_total": 110,
       "cc_max": 6.0,
       "class_count": 1,
@@ -2920,8 +2920,8 @@
     },
     {
       "file_path": "FileFormats/XccGlobalDatabase.cs",
-      "si_max": 52.52,
-      "si_mean": 52.52,
+      "si_max": 50.72,
+      "si_mean": 50.72,
       "loc_total": 35,
       "cc_max": 6.0,
       "class_count": 1,
@@ -2929,8 +2929,8 @@
     },
     {
       "file_path": "FileFormats/XccLocalDatabase.cs",
-      "si_max": 67.27,
-      "si_mean": 67.27,
+      "si_max": 61.51,
+      "si_mean": 61.51,
       "loc_total": 44,
       "cc_max": 3.0,
       "class_count": 1,
@@ -2938,8 +2938,8 @@
     },
     {
       "file_path": "FileFormats/XORDeltaCompression.cs",
-      "si_max": 51.8,
-      "si_mean": 51.8,
+      "si_max": 49.28,
+      "si_mean": 49.28,
       "loc_total": 62,
       "cc_max": 12.0,
       "class_count": 1,
@@ -2947,8 +2947,8 @@
     },
     {
       "file_path": "FileSystem/BigFile.cs",
-      "si_max": 48.56,
-      "si_mean": 32.61,
+      "si_max": 62.59,
+      "si_mean": 59.23,
       "loc_total": 78,
       "cc_max": 4.0,
       "class_count": 3,
@@ -2956,8 +2956,8 @@
     },
     {
       "file_path": "FileSystem/MegFile.cs",
-      "si_max": 57.91,
-      "si_mean": 50.54,
+      "si_max": 56.12,
+      "si_mean": 49.11,
       "loc_total": 93,
       "cc_max": 7.0,
       "class_count": 2,
@@ -2965,8 +2965,8 @@
     },
     {
       "file_path": "FileSystem/MixFile.cs",
-      "si_max": 99.28,
-      "si_mean": 98.74,
+      "si_max": 98.56,
+      "si_mean": 98.02,
       "loc_total": 189,
       "cc_max": 9.0,
       "class_count": 2,
@@ -2974,8 +2974,8 @@
     },
     {
       "file_path": "FileSystem/PackageEntry.cs",
-      "si_max": 86.33,
-      "si_mean": 46.58,
+      "si_max": 83.45,
+      "si_mean": 44.96,
       "loc_total": 80,
       "cc_max": 11.0,
       "class_count": 2,
@@ -2983,8 +2983,8 @@
     },
     {
       "file_path": "FileSystem/Pak.cs",
-      "si_max": 49.28,
-      "si_mean": 32.37,
+      "si_max": 67.27,
+      "si_mean": 57.91,
       "loc_total": 58,
       "cc_max": 5.0,
       "class_count": 3,
@@ -2992,8 +2992,8 @@
     },
     {
       "file_path": "Graphics/ChronoVortexRenderable.cs",
-      "si_max": 69.78,
-      "si_mean": 69.78,
+      "si_max": 70.14,
+      "si_mean": 70.14,
       "loc_total": 31,
       "cc_max": 3.0,
       "class_count": 1,
@@ -3001,8 +3001,8 @@
     },
     {
       "file_path": "Graphics/ClassicSpriteSequence.cs",
-      "si_max": 63.31,
-      "si_mean": 59.36,
+      "si_max": 64.03,
+      "si_mean": 58.45,
       "loc_total": 17,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3010,8 +3010,8 @@
     },
     {
       "file_path": "Graphics/ClassicTilesetSpecificSpriteSequence.cs",
-      "si_max": 81.29,
-      "si_mean": 68.34,
+      "si_max": 81.65,
+      "si_mean": 67.27,
       "loc_total": 57,
       "cc_max": 9.0,
       "class_count": 2,
@@ -3019,8 +3019,8 @@
     },
     {
       "file_path": "Graphics/ModelActorPreview.cs",
-      "si_max": 87.05,
-      "si_mean": 87.05,
+      "si_max": 87.41,
+      "si_mean": 87.41,
       "loc_total": 38,
       "cc_max": 2.0,
       "class_count": 1,
@@ -3028,8 +3028,8 @@
     },
     {
       "file_path": "Graphics/ModelRenderable.cs",
-      "si_max": 89.21,
-      "si_mean": 88.85,
+      "si_max": 90.29,
+      "si_mean": 89.93,
       "loc_total": 227,
       "cc_max": 6.0,
       "class_count": 2,
@@ -3037,8 +3037,8 @@
     },
     {
       "file_path": "Graphics/TeslaZapRenderable.cs",
-      "si_max": 85.97,
-      "si_mean": 85.97,
+      "si_max": 86.33,
+      "si_mean": 86.33,
       "loc_total": 110,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3046,8 +3046,8 @@
     },
     {
       "file_path": "Graphics/UIModelRenderable.cs",
-      "si_max": 84.53,
-      "si_mean": 82.19,
+      "si_max": 85.25,
+      "si_mean": 83.27,
       "loc_total": 97,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3056,7 +3056,7 @@
     {
       "file_path": "Graphics/Voxel.cs",
       "si_max": 58.99,
-      "si_mean": 32.91,
+      "si_mean": 32.73,
       "loc_total": 77,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3073,8 +3073,8 @@
     },
     {
       "file_path": "Installer/ExtractMixSourceAction.cs",
-      "si_max": 72.66,
-      "si_mean": 72.66,
+      "si_max": 73.74,
+      "si_mean": 73.74,
       "loc_total": 45,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3100,8 +3100,8 @@
     },
     {
       "file_path": "Projectiles/TeslaZap.cs",
-      "si_max": 85.25,
-      "si_mean": 54.13,
+      "si_max": 85.97,
+      "si_mean": 54.31,
       "loc_total": 28,
       "cc_max": 6.0,
       "class_count": 2,
@@ -3109,8 +3109,8 @@
     },
     {
       "file_path": "Scripting/Properties/ChronosphereProperties.cs",
-      "si_max": 10.43,
-      "si_mean": 10.43,
+      "si_max": 9.71,
+      "si_mean": 9.71,
       "loc_total": 24,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3118,8 +3118,8 @@
     },
     {
       "file_path": "Scripting/Properties/DisguiseProperties.cs",
-      "si_max": 8.63,
-      "si_mean": 8.63,
+      "si_max": 7.91,
+      "si_mean": 7.91,
       "loc_total": 16,
       "cc_max": 1.0,
       "class_count": 1,
@@ -3127,8 +3127,8 @@
     },
     {
       "file_path": "Scripting/Properties/InfiltrateProperties.cs",
-      "si_max": 46.4,
-      "si_mean": 46.4,
+      "si_max": 45.68,
+      "si_mean": 45.68,
       "loc_total": 16,
       "cc_max": 3.0,
       "class_count": 1,
@@ -3136,8 +3136,8 @@
     },
     {
       "file_path": "Scripting/Properties/IonCannonProperties.cs",
-      "si_max": 7.91,
-      "si_mean": 7.91,
+      "si_max": 7.55,
+      "si_mean": 7.55,
       "loc_total": 10,
       "cc_max": 1.0,
       "class_count": 1,
@@ -3145,8 +3145,8 @@
     },
     {
       "file_path": "SpriteLoaders/ShpD2Loader.cs",
-      "si_max": 66.55,
-      "si_mean": 46.64,
+      "si_max": 60.07,
+      "si_mean": 42.2,
       "loc_total": 126,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3154,8 +3154,8 @@
     },
     {
       "file_path": "SpriteLoaders/ShpRemasteredLoader.cs",
-      "si_max": 64.39,
-      "si_mean": 47.12,
+      "si_max": 66.55,
+      "si_mean": 48.02,
       "loc_total": 83,
       "cc_max": 8.0,
       "class_count": 2,
@@ -3163,8 +3163,8 @@
     },
     {
       "file_path": "SpriteLoaders/ShpTDLoader.cs",
-      "si_max": 96.4,
-      "si_mean": 53.09,
+      "si_max": 96.04,
+      "si_mean": 52.44,
       "loc_total": 252,
       "cc_max": 15.0,
       "class_count": 5,
@@ -3172,8 +3172,8 @@
     },
     {
       "file_path": "SpriteLoaders/TmpRALoader.cs",
-      "si_max": 43.17,
-      "si_mean": 39.39,
+      "si_max": 42.09,
+      "si_mean": 38.67,
       "loc_total": 67,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3181,8 +3181,8 @@
     },
     {
       "file_path": "SpriteLoaders/TmpTDLoader.cs",
-      "si_max": 43.17,
-      "si_mean": 39.39,
+      "si_max": 42.09,
+      "si_mean": 38.67,
       "loc_total": 64,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3199,7 +3199,7 @@
     },
     {
       "file_path": "Traits/Attack/AttackLeap.cs",
-      "si_max": 74.82,
+      "si_max": 75.18,
       "si_mean": 48.92,
       "loc_total": 29,
       "cc_max": 4.0,
@@ -3208,8 +3208,8 @@
     },
     {
       "file_path": "Traits/Attack/AttackPopupTurreted.cs",
-      "si_max": 66.55,
-      "si_mean": 33.57,
+      "si_max": 60.07,
+      "si_mean": 31.05,
       "loc_total": 70,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3217,8 +3217,8 @@
     },
     {
       "file_path": "Traits/Attack/AttackTDGunboatTurreted.cs",
-      "si_max": 75.9,
-      "si_mean": 52.16,
+      "si_max": 76.62,
+      "si_mean": 51.68,
       "loc_total": 41,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3226,8 +3226,8 @@
     },
     {
       "file_path": "Traits/Attack/AttackTesla.cs",
-      "si_max": 89.93,
-      "si_mean": 71.04,
+      "si_max": 91.01,
+      "si_mean": 71.14,
       "loc_total": 97,
       "cc_max": 7.0,
       "class_count": 4,
@@ -3235,8 +3235,8 @@
     },
     {
       "file_path": "Traits/Buildings/ClonesProducedUnits.cs",
-      "si_max": 71.94,
-      "si_mean": 47.48,
+      "si_max": 73.02,
+      "si_mean": 47.84,
       "loc_total": 37,
       "cc_max": 11.0,
       "class_count": 2,
@@ -3244,8 +3244,8 @@
     },
     {
       "file_path": "Traits/Conditions/GrantConditionOnJumpjetLayer.cs",
-      "si_max": 63.67,
-      "si_mean": 51.26,
+      "si_max": 65.11,
+      "si_mean": 51.8,
       "loc_total": 31,
       "cc_max": 9.0,
       "class_count": 2,
@@ -3253,8 +3253,8 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForCash.cs",
-      "si_max": 62.95,
-      "si_mean": 42.98,
+      "si_max": 64.39,
+      "si_mean": 43.52,
       "loc_total": 31,
       "cc_max": 7.0,
       "class_count": 2,
@@ -3262,8 +3262,8 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForDecoration.cs",
-      "si_max": 41.01,
-      "si_mean": 32.02,
+      "si_max": 39.93,
+      "si_mean": 31.3,
       "loc_total": 19,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3271,8 +3271,8 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForExploration.cs",
-      "si_max": 53.24,
-      "si_mean": 38.13,
+      "si_max": 53.96,
+      "si_mean": 38.31,
       "loc_total": 27,
       "cc_max": 5.0,
       "class_count": 2,
@@ -3280,7 +3280,7 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForPowerOutage.cs",
-      "si_max": 71.22,
+      "si_max": 71.58,
       "si_mean": 47.12,
       "loc_total": 28,
       "cc_max": 4.0,
@@ -3289,8 +3289,8 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForSupportPower.cs",
-      "si_max": 50.0,
-      "si_mean": 36.51,
+      "si_max": 48.56,
+      "si_mean": 35.61,
       "loc_total": 26,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3298,8 +3298,8 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForSupportPowerReset.cs",
-      "si_max": 53.24,
-      "si_mean": 38.13,
+      "si_max": 53.96,
+      "si_mean": 38.31,
       "loc_total": 26,
       "cc_max": 5.0,
       "class_count": 2,
@@ -3307,8 +3307,8 @@
     },
     {
       "file_path": "Traits/Infiltration/InfiltrateForTransform.cs",
-      "si_max": 38.85,
-      "si_mean": 30.94,
+      "si_max": 38.49,
+      "si_mean": 30.58,
       "loc_total": 26,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3316,8 +3316,8 @@
     },
     {
       "file_path": "Traits/Infiltration/Infiltrates.cs",
-      "si_max": 91.73,
-      "si_mean": 54.44,
+      "si_max": 92.45,
+      "si_mean": 54.2,
       "loc_total": 75,
       "cc_max": 6.0,
       "class_count": 3,
@@ -3325,8 +3325,8 @@
     },
     {
       "file_path": "Traits/PaletteEffects/ChronoshiftPostProcessEffect.cs",
-      "si_max": 61.15,
-      "si_mean": 47.66,
+      "si_max": 61.87,
+      "si_mean": 48.02,
       "loc_total": 19,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3334,8 +3334,8 @@
     },
     {
       "file_path": "Traits/PaletteEffects/LightPaletteRotator.cs",
-      "si_max": 62.59,
-      "si_mean": 48.38,
+      "si_max": 63.31,
+      "si_mean": 48.74,
       "loc_total": 20,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3343,8 +3343,8 @@
     },
     {
       "file_path": "Traits/Render/RenderVoxels.cs",
-      "si_max": 92.81,
-      "si_mean": 78.42,
+      "si_max": 90.65,
+      "si_mean": 77.97,
       "loc_total": 96,
       "cc_max": 4.0,
       "class_count": 4,
@@ -3352,8 +3352,8 @@
     },
     {
       "file_path": "Traits/Render/WithBuildingBib.cs",
-      "si_max": 73.02,
-      "si_mean": 42.32,
+      "si_max": 72.3,
+      "si_mean": 41.61,
       "loc_total": 90,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3361,7 +3361,7 @@
     },
     {
       "file_path": "Traits/Render/WithCargo.cs",
-      "si_max": 76.26,
+      "si_max": 76.98,
       "si_mean": 51.8,
       "loc_total": 91,
       "cc_max": 8.0,
@@ -3370,7 +3370,7 @@
     },
     {
       "file_path": "Traits/Render/WithDisguisingInfantryBody.cs",
-      "si_max": 82.01,
+      "si_max": 82.37,
       "si_mean": 52.52,
       "loc_total": 44,
       "cc_max": 8.0,
@@ -3379,8 +3379,8 @@
     },
     {
       "file_path": "Traits/Render/WithEmbeddedTurretSpriteBody.cs",
-      "si_max": 41.01,
-      "si_mean": 41.01,
+      "si_max": 39.93,
+      "si_mean": 39.93,
       "loc_total": 37,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3388,8 +3388,8 @@
     },
     {
       "file_path": "Traits/Render/WithGunboatBody.cs",
-      "si_max": 76.98,
-      "si_mean": 50.0,
+      "si_max": 78.06,
+      "si_mean": 50.36,
       "loc_total": 47,
       "cc_max": 6.0,
       "class_count": 2,
@@ -3398,7 +3398,7 @@
     {
       "file_path": "Traits/Render/WithHarvesterSpriteBody.cs",
       "si_max": 69.06,
-      "si_mean": 46.04,
+      "si_mean": 45.86,
       "loc_total": 17,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3407,7 +3407,7 @@
     {
       "file_path": "Traits/Render/WithLandingCraftAnimation.cs",
       "si_max": 67.99,
-      "si_mean": 45.5,
+      "si_mean": 45.32,
       "loc_total": 44,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3415,8 +3415,8 @@
     },
     {
       "file_path": "Traits/Render/WithSplitAttackPaletteInfantryBody.cs",
-      "si_max": 48.92,
-      "si_mean": 35.97,
+      "si_max": 47.12,
+      "si_mean": 34.89,
       "loc_total": 20,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3424,8 +3424,8 @@
     },
     {
       "file_path": "Traits/Render/WithTeslaChargeAnimation.cs",
-      "si_max": 55.4,
-      "si_mean": 39.21,
+      "si_max": 52.88,
+      "si_mean": 37.77,
       "loc_total": 10,
       "cc_max": 1.0,
       "class_count": 2,
@@ -3433,8 +3433,8 @@
     },
     {
       "file_path": "Traits/Render/WithTeslaChargeOverlay.cs",
-      "si_max": 57.55,
-      "si_mean": 40.28,
+      "si_max": 55.76,
+      "si_mean": 39.21,
       "loc_total": 26,
       "cc_max": 1.0,
       "class_count": 2,
@@ -3442,8 +3442,8 @@
     },
     {
       "file_path": "Traits/Render/WithVoxelBarrel.cs",
-      "si_max": 61.51,
-      "si_mean": 53.59,
+      "si_max": 62.23,
+      "si_mean": 53.77,
       "loc_total": 52,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3451,8 +3451,8 @@
     },
     {
       "file_path": "Traits/Render/WithVoxelBody.cs",
-      "si_max": 55.4,
-      "si_mean": 39.21,
+      "si_max": 52.88,
+      "si_mean": 37.77,
       "loc_total": 27,
       "cc_max": 1.0,
       "class_count": 2,
@@ -3460,8 +3460,8 @@
     },
     {
       "file_path": "Traits/Render/WithVoxelTurret.cs",
-      "si_max": 58.27,
-      "si_mean": 46.22,
+      "si_max": 56.83,
+      "si_mean": 45.5,
       "loc_total": 26,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3469,8 +3469,8 @@
     },
     {
       "file_path": "Traits/Render/WithVoxelUnloadBody.cs",
-      "si_max": 57.55,
-      "si_mean": 42.45,
+      "si_max": 55.76,
+      "si_mean": 41.19,
       "loc_total": 43,
       "cc_max": 1.0,
       "class_count": 2,
@@ -3478,8 +3478,8 @@
     },
     {
       "file_path": "Traits/Render/WithVoxelWalkerBody.cs",
-      "si_max": 87.77,
-      "si_mean": 56.11,
+      "si_max": 88.49,
+      "si_mean": 55.64,
       "loc_total": 54,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3487,8 +3487,8 @@
     },
     {
       "file_path": "Traits/SupportPowers/AttackOrderPower.cs",
-      "si_max": 71.22,
-      "si_mean": 55.51,
+      "si_max": 71.58,
+      "si_mean": 54.91,
       "loc_total": 89,
       "cc_max": 4.0,
       "class_count": 3,
@@ -3496,8 +3496,8 @@
     },
     {
       "file_path": "Traits/SupportPowers/ChronoshiftPower.cs",
-      "si_max": 94.24,
-      "si_mean": 77.07,
+      "si_max": 95.32,
+      "si_mean": 77.79,
       "loc_total": 276,
       "cc_max": 11.0,
       "class_count": 4,
@@ -3505,8 +3505,8 @@
     },
     {
       "file_path": "Traits/SupportPowers/DropPodsPower.cs",
-      "si_max": 75.54,
-      "si_mean": 57.2,
+      "si_max": 76.26,
+      "si_mean": 57.38,
       "loc_total": 109,
       "cc_max": 8.0,
       "class_count": 2,
@@ -3514,8 +3514,8 @@
     },
     {
       "file_path": "Traits/SupportPowers/GpsPower.cs",
-      "si_max": 87.41,
-      "si_mean": 55.21,
+      "si_max": 87.05,
+      "si_mean": 54.85,
       "loc_total": 51,
       "cc_max": 9.0,
       "class_count": 2,
@@ -3523,8 +3523,8 @@
     },
     {
       "file_path": "Traits/SupportPowers/GrantPrerequisiteChargeDrainPower.cs",
-      "si_max": 80.94,
-      "si_mean": 61.15,
+      "si_max": 82.73,
+      "si_mean": 61.75,
       "loc_total": 121,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3532,7 +3532,7 @@
     },
     {
       "file_path": "Traits/SupportPowers/IonCannonPower.cs",
-      "si_max": 60.43,
+      "si_max": 60.79,
       "si_mean": 49.64,
       "loc_total": 44,
       "cc_max": 3.0,
@@ -3541,8 +3541,8 @@
     },
     {
       "file_path": "Traits/World/ChronoVortexRenderer.cs",
-      "si_max": 74.1,
-      "si_mean": 54.13,
+      "si_max": 74.46,
+      "si_mean": 54.31,
       "loc_total": 74,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3550,8 +3550,8 @@
     },
     {
       "file_path": "Traits/World/JumpjetActorLayer.cs",
-      "si_max": 60.79,
-      "si_mean": 44.06,
+      "si_max": 61.15,
+      "si_mean": 43.88,
       "loc_total": 59,
       "cc_max": 5.0,
       "class_count": 2,
@@ -3560,7 +3560,7 @@
     {
       "file_path": "Traits/World/JumpjetLocomotor.cs",
       "si_max": 34.17,
-      "si_mean": 28.59,
+      "si_mean": 28.41,
       "loc_total": 3,
       "cc_max": 1.0,
       "class_count": 2,
@@ -3568,7 +3568,7 @@
     },
     {
       "file_path": "Traits/World/ModelRenderer.cs",
-      "si_max": 94.6,
+      "si_max": 94.96,
       "si_mean": 50.6,
       "loc_total": 323,
       "cc_max": 9.0,
@@ -3577,8 +3577,8 @@
     },
     {
       "file_path": "Traits/World/ShroudPalette.cs",
-      "si_max": 51.08,
-      "si_mean": 42.62,
+      "si_max": 50.36,
+      "si_mean": 42.27,
       "loc_total": 7,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3586,8 +3586,8 @@
     },
     {
       "file_path": "Traits/World/TSEditorResourceLayer.cs",
-      "si_max": 70.14,
-      "si_mean": 48.74,
+      "si_max": 70.5,
+      "si_mean": 48.56,
       "loc_total": 78,
       "cc_max": 7.0,
       "class_count": 2,
@@ -3605,7 +3605,7 @@
     {
       "file_path": "Traits/World/TSResourceLayer.cs",
       "si_max": 69.42,
-      "si_mean": 48.38,
+      "si_mean": 48.02,
       "loc_total": 81,
       "cc_max": 9.0,
       "class_count": 2,
@@ -3613,8 +3613,8 @@
     },
     {
       "file_path": "Traits/World/TSShroudPalette.cs",
-      "si_max": 41.01,
-      "si_mean": 37.59,
+      "si_max": 39.93,
+      "si_mean": 37.05,
       "loc_total": 13,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3622,8 +3622,8 @@
     },
     {
       "file_path": "Traits/World/TSTiberiumRenderer.cs",
-      "si_max": 51.44,
-      "si_mean": 42.8,
+      "si_max": 49.64,
+      "si_mean": 41.91,
       "loc_total": 43,
       "cc_max": 5.0,
       "class_count": 2,
@@ -3631,8 +3631,8 @@
     },
     {
       "file_path": "Traits/World/TSVeinsRenderer.cs",
-      "si_max": 90.65,
-      "si_mean": 60.55,
+      "si_max": 87.77,
+      "si_mean": 59.47,
       "loc_total": 288,
       "cc_max": 15.0,
       "class_count": 3,
@@ -3640,8 +3640,8 @@
     },
     {
       "file_path": "Traits/World/VoxelCache.cs",
-      "si_max": 71.58,
-      "si_mean": 52.88,
+      "si_max": 69.78,
+      "si_mean": 51.98,
       "loc_total": 76,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3649,8 +3649,8 @@
     },
     {
       "file_path": "Traits/World/VoxelNormalsPalette.cs",
-      "si_max": 48.56,
-      "si_mean": 42.62,
+      "si_max": 44.96,
+      "si_mean": 39.56,
       "loc_total": 27,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3658,8 +3658,8 @@
     },
     {
       "file_path": "Traits/World/WithResourceAnimation.cs",
-      "si_max": 77.7,
-      "si_mean": 55.94,
+      "si_max": 79.14,
+      "si_mean": 56.66,
       "loc_total": 42,
       "cc_max": 7.0,
       "class_count": 2,
@@ -3667,8 +3667,8 @@
     },
     {
       "file_path": "Traits/Chronoshiftable.cs",
-      "si_max": 93.53,
-      "si_mean": 62.35,
+      "si_max": 93.88,
+      "si_mean": 61.39,
       "loc_total": 114,
       "cc_max": 7.0,
       "class_count": 3,
@@ -3676,8 +3676,8 @@
     },
     {
       "file_path": "Traits/ClassicFacingBodyOrientation.cs",
-      "si_max": 52.16,
-      "si_mean": 37.59,
+      "si_max": 50.0,
+      "si_mean": 36.33,
       "loc_total": 11,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3685,8 +3685,8 @@
     },
     {
       "file_path": "Traits/Cloneable.cs",
-      "si_max": 6.83,
-      "si_mean": 6.83,
+      "si_max": 6.47,
+      "si_mean": 6.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 3,
@@ -3695,7 +3695,7 @@
     {
       "file_path": "Traits/ConyardChronoReturn.cs",
       "si_max": 96.76,
-      "si_mean": 62.05,
+      "si_mean": 61.69,
       "loc_total": 151,
       "cc_max": 13.0,
       "class_count": 2,
@@ -3703,8 +3703,8 @@
     },
     {
       "file_path": "Traits/Disguise.cs",
-      "si_max": 93.88,
-      "si_mean": 38.55,
+      "si_max": 92.09,
+      "si_mean": 37.65,
       "loc_total": 192,
       "cc_max": 10.0,
       "class_count": 6,
@@ -3712,7 +3712,7 @@
     },
     {
       "file_path": "Traits/DrainPrerequisitePowerOnDamage.cs",
-      "si_max": 71.22,
+      "si_max": 71.58,
       "si_mean": 47.12,
       "loc_total": 23,
       "cc_max": 4.0,
@@ -3721,8 +3721,8 @@
     },
     {
       "file_path": "Traits/EdibleByLeap.cs",
-      "si_max": 28.06,
-      "si_mean": 17.45,
+      "si_max": 26.98,
+      "si_mean": 16.73,
       "loc_total": 12,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3730,8 +3730,8 @@
     },
     {
       "file_path": "Traits/EnergyWall.cs",
-      "si_max": 73.74,
-      "si_mean": 54.67,
+      "si_max": 72.66,
+      "si_mean": 51.08,
       "loc_total": 57,
       "cc_max": 6.0,
       "class_count": 2,
@@ -3740,7 +3740,7 @@
     {
       "file_path": "Traits/FrozenUnderFogUpdatedByGps.cs",
       "si_max": 91.37,
-      "si_mean": 47.24,
+      "si_mean": 45.56,
       "loc_total": 48,
       "cc_max": 6.0,
       "class_count": 3,
@@ -3748,8 +3748,8 @@
     },
     {
       "file_path": "Traits/GpsDot.cs",
-      "si_max": 55.4,
-      "si_mean": 39.21,
+      "si_max": 52.88,
+      "si_mean": 37.77,
       "loc_total": 17,
       "cc_max": 1.0,
       "class_count": 2,
@@ -3758,7 +3758,7 @@
     {
       "file_path": "Traits/GpsWatcher.cs",
       "si_max": 67.63,
-      "si_mean": 51.44,
+      "si_mean": 50.96,
       "loc_total": 59,
       "cc_max": 8.0,
       "class_count": 3,
@@ -3766,8 +3766,8 @@
     },
     {
       "file_path": "Traits/HarvesterHuskModifier.cs",
-      "si_max": 29.86,
-      "si_mean": 26.44,
+      "si_max": 29.5,
+      "si_mean": 26.08,
       "loc_total": 9,
       "cc_max": 2.0,
       "class_count": 2,
@@ -3775,8 +3775,8 @@
     },
     {
       "file_path": "Traits/MadTank.cs",
-      "si_max": 88.13,
-      "si_mean": 69.42,
+      "si_max": 88.85,
+      "si_mean": 69.66,
       "loc_total": 136,
       "cc_max": 10.0,
       "class_count": 3,
@@ -3784,8 +3784,8 @@
     },
     {
       "file_path": "Traits/PortableChrono.cs",
-      "si_max": 98.56,
-      "si_mean": 64.75,
+      "si_max": 98.92,
+      "si_mean": 64.39,
       "loc_total": 145,
       "cc_max": 6.0,
       "class_count": 4,
@@ -3793,8 +3793,8 @@
     },
     {
       "file_path": "Traits/ResourcePurifier.cs",
-      "si_max": 76.62,
-      "si_mean": 49.82,
+      "si_max": 77.7,
+      "si_mean": 50.18,
       "loc_total": 42,
       "cc_max": 4.0,
       "class_count": 2,
@@ -3803,7 +3803,7 @@
     {
       "file_path": "Traits/TDGunboat.cs",
       "si_max": 85.61,
-      "si_mean": 63.67,
+      "si_mean": 63.13,
       "loc_total": 147,
       "cc_max": 4.6667,
       "class_count": 2,
@@ -3811,8 +3811,8 @@
     },
     {
       "file_path": "Traits/TransferTimedExternalConditionOnTransform.cs",
-      "si_max": 62.59,
-      "si_mean": 42.8,
+      "si_max": 63.31,
+      "si_mean": 42.98,
       "loc_total": 22,
       "cc_max": 3.0,
       "class_count": 2,
@@ -3820,8 +3820,8 @@
     },
     {
       "file_path": "Traits/TransformsNearResources.cs",
-      "si_max": 82.01,
-      "si_mean": 54.68,
+      "si_max": 82.37,
+      "si_mean": 54.5,
       "loc_total": 47,
       "cc_max": 8.0,
       "class_count": 2,
@@ -3829,8 +3829,8 @@
     },
     {
       "file_path": "UtilityCommands/ConvertPngToShpCommand.cs",
-      "si_max": 27.7,
-      "si_mean": 27.7,
+      "si_max": 27.34,
+      "si_mean": 27.34,
       "loc_total": 29,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3838,8 +3838,8 @@
     },
     {
       "file_path": "UtilityCommands/Glob.cs",
-      "si_max": 79.14,
-      "si_mean": 79.14,
+      "si_max": 74.82,
+      "si_mean": 74.82,
       "loc_total": 99,
       "cc_max": 18.0,
       "class_count": 1,
@@ -3847,8 +3847,8 @@
     },
     {
       "file_path": "UtilityCommands/ImportGen1MapCommand.cs",
-      "si_max": 97.48,
-      "si_mean": 97.48,
+      "si_max": 97.84,
+      "si_mean": 97.84,
       "loc_total": 420,
       "cc_max": 13.5,
       "class_count": 1,
@@ -3856,8 +3856,8 @@
     },
     {
       "file_path": "UtilityCommands/ImportGen2MapCommand.cs",
-      "si_max": 95.32,
-      "si_mean": 95.32,
+      "si_max": 94.24,
+      "si_mean": 94.24,
       "loc_total": 496,
       "cc_max": 13.0,
       "class_count": 1,
@@ -3874,8 +3874,8 @@
     },
     {
       "file_path": "UtilityCommands/ImportTiberianDawnMapCommand.cs",
-      "si_max": 74.46,
-      "si_mean": 74.46,
+      "si_max": 73.38,
+      "si_mean": 73.38,
       "loc_total": 120,
       "cc_max": 8.0,
       "class_count": 1,
@@ -3892,8 +3892,8 @@
     },
     {
       "file_path": "UtilityCommands/LegacyRulesImporter.cs",
-      "si_max": 95.68,
-      "si_mean": 95.68,
+      "si_max": 96.4,
+      "si_mean": 96.4,
       "loc_total": 178,
       "cc_max": 35.0,
       "class_count": 1,
@@ -3901,8 +3901,8 @@
     },
     {
       "file_path": "UtilityCommands/LegacySequenceImporter.cs",
-      "si_max": 83.09,
-      "si_mean": 83.09,
+      "si_max": 84.53,
+      "si_mean": 84.53,
       "loc_total": 243,
       "cc_max": 19.0,
       "class_count": 1,
@@ -3910,8 +3910,8 @@
     },
     {
       "file_path": "UtilityCommands/LegacyTilesetImporter.cs",
-      "si_max": 79.14,
-      "si_mean": 79.14,
+      "si_max": 79.5,
+      "si_mean": 79.5,
       "loc_total": 164,
       "cc_max": 18.0,
       "class_count": 1,
@@ -3919,8 +3919,8 @@
     },
     {
       "file_path": "UtilityCommands/RemapShpCommand.cs",
-      "si_max": 61.87,
-      "si_mean": 61.87,
+      "si_max": 63.67,
+      "si_mean": 63.67,
       "loc_total": 58,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3928,8 +3928,8 @@
     },
     {
       "file_path": "VideoLoaders/VqaLoader.cs",
-      "si_max": 43.88,
-      "si_mean": 43.88,
+      "si_max": 43.17,
+      "si_mean": 43.17,
       "loc_total": 39,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3937,8 +3937,8 @@
     },
     {
       "file_path": "VideoLoaders/WsaLoader.cs",
-      "si_max": 56.12,
-      "si_mean": 56.12,
+      "si_max": 54.32,
+      "si_mean": 54.32,
       "loc_total": 48,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3946,8 +3946,8 @@
     },
     {
       "file_path": "Widgets/Logic/PreReleaseWarningPrompt.cs",
-      "si_max": 8.99,
-      "si_mean": 8.99,
+      "si_max": 8.27,
+      "si_mean": 8.27,
       "loc_total": 14,
       "cc_max": 3.0,
       "class_count": 1,
@@ -3955,8 +3955,8 @@
     },
     {
       "file_path": "Widgets/ModelWidget.cs",
-      "si_max": 92.45,
-      "si_mean": 92.45,
+      "si_max": 93.17,
+      "si_mean": 93.17,
       "loc_total": 127,
       "cc_max": 12.0,
       "class_count": 1,
@@ -3973,8 +3973,8 @@
     },
     {
       "file_path": "TraitsInterfaces.cs",
-      "si_max": 55.4,
-      "si_mean": 55.4,
+      "si_max": 52.88,
+      "si_mean": 52.88,
       "loc_total": 1,
       "cc_max": 1.0,
       "class_count": 1,
@@ -3982,8 +3982,8 @@
     },
     {
       "file_path": "Util.cs",
-      "si_max": 46.04,
-      "si_mean": 46.04,
+      "si_max": 44.6,
+      "si_mean": 44.6,
       "loc_total": 257,
       "cc_max": 4.0,
       "class_count": 1,

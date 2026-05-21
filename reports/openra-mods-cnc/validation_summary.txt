@@ -9,12 +9,12 @@ files total:    140  (with bug-fix: 119)
 unmatched changes (non-class files): 326
 
 Class-level Spearman correlation (vs file bug-fix count):
-  si_vs_bugfix            n= 278  rho= +0.1044  p=0.09141
+  si_vs_bugfix            n= 278  rho= +0.1078  p=0.08128
   loc_vs_bugfix           n= 278  rho= +0.1478  p=0.01649
   cc_vs_bugfix            n= 278  rho= +0.1444  p=0.01913
 
 File-level Spearman correlation (vs file bug-fix count):
-  file_si_vs_bugfix       n= 140  rho= +0.3641  p=1.435e-05
+  file_si_vs_bugfix       n= 140  rho= +0.3681  p=1.128e-05
   file_loc_vs_bugfix      n= 140  rho= +0.5714  p=1.532e-13
   file_cc_vs_bugfix       n= 140  rho= +0.4920  p=9.149e-10
 

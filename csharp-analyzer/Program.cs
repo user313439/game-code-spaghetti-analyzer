@@ -3,13 +3,17 @@
 // 입력: 단일 .cs 파일, .cs 파일이 포함된 디렉토리, 또는 .sln 솔루션 경로
 // 출력: AST·메트릭 결과를 담은 JSON (stdout 또는 --output 으로 지정된 파일)
 //
-// W1 단계에서는 syntactic 분석만 수행한다.
-// MSBuildWorkspace를 통한 semantic 분석은 후속 단계에서 추가한다.
+// 분석 방식: 모든 .cs 파일을 한 CSharpCompilation 으로 묶어 SemanticModel 을
+// 활용한다 (W14 후속 개선 1-A). MSBuildWorkspace 와 csproj references 없이
+// 같은 프로젝트 내 type/method symbol 의 정확한 FQN 을 해석한다. 외부 dll
+// 의 reference 는 syntactic fallback 으로 처리.
 
 namespace CSharpAnalyzer;
 
 using System.Diagnostics;
 using System.Text.Json;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 
 internal sealed class Program
 {
@@ -47,17 +51,46 @@ internal sealed class Program
                 ? Path.GetFullPath(options.InputPath)
                 : Path.GetDirectoryName(Path.GetFullPath(options.InputPath)) ?? options.InputPath;
 
+            // 1) 모든 파일을 SyntaxTree 로 파싱.
+            var trees = new List<(string AbsPath, string Relative, SyntaxTree Tree)>();
             foreach (var file in files)
             {
                 try
                 {
+                    var source = File.ReadAllText(file);
+                    var tree = CSharpSyntaxTree.ParseText(source, path: file);
                     var relative = Path.GetRelativePath(rootForRelative, file).Replace('\\', '/');
-                    var node = AstExtractor.ExtractFromFile(file, relative);
-                    result.Files.Add(node);
+                    trees.Add((file, relative, tree));
                 }
                 catch (Exception ex)
                 {
                     result.Errors.Add(new AnalysisError { Path = file, Message = ex.Message });
+                }
+            }
+
+            // 2) 모든 SyntaxTree 를 한 Compilation 으로 묶기. 시스템 기본 reference 만
+            //    추가 — 외부 dll 은 syntactic fallback 으로 처리. csproj 자동 로드는
+            //    plan §5.1 의 MSBuildWorkspace 도입 시 보강된다.
+            var compilation = CSharpCompilation.Create(
+                assemblyName: "CSharpAnalyzerCompilation",
+                syntaxTrees: trees.Select(t => t.Tree),
+                references: new[] {
+                    MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                },
+                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+            // 3) 각 파일에 대해 SemanticModel 을 받아 추출.
+            foreach (var (absPath, relative, tree) in trees)
+            {
+                try
+                {
+                    var model = compilation.GetSemanticModel(tree, ignoreAccessibility: true);
+                    var node = AstExtractor.ExtractFromTree(absPath, relative, tree, model);
+                    result.Files.Add(node);
+                }
+                catch (Exception ex)
+                {
+                    result.Errors.Add(new AnalysisError { Path = absPath, Message = ex.Message });
                 }
             }
 

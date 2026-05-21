@@ -11,31 +11,31 @@
   },
   "tuned_weights": {
     "cc": 0.4,
-    "coupling": 0.1,
-    "dependency_cycle": 0.2,
-    "global_state": 0.25,
+    "coupling": 0.2,
+    "dependency_cycle": 0.05,
+    "global_state": 0.3,
     "game_loop_centrality": 0.05
   },
   "per_case_default_rho": {
-    "OpenRA.Game": 0.5756,
-    "OpenRA.Mods.Common": 0.5451,
-    "OpenRA.Mods.Cnc": 0.367,
-    "OpenRA.Mods.D2k": 0.5082,
+    "OpenRA.Game": 0.5986,
+    "OpenRA.Mods.Common": 0.5421,
+    "OpenRA.Mods.Cnc": 0.3703,
+    "OpenRA.Mods.D2k": 0.4991,
     "OpenRA.Server": NaN,
     "OpenRA.Platforms.Default": 0.5829,
-    "Chocolate Doom": 0.5815,
-    "OpenRCT2": 0.4606
+    "Chocolate Doom": 0.5851,
+    "OpenRCT2": 0.4604
   },
   "per_case_tuned_rho": {
-    "OpenRA.Game": 0.6313,
-    "OpenRA.Mods.Common": 0.573,
-    "OpenRA.Mods.Cnc": 0.4756,
-    "OpenRA.Mods.D2k": 0.5047,
+    "OpenRA.Game": 0.6613,
+    "OpenRA.Mods.Common": 0.5674,
+    "OpenRA.Mods.Cnc": 0.4653,
+    "OpenRA.Mods.D2k": 0.4834,
     "OpenRA.Server": NaN,
-    "OpenRA.Platforms.Default": 0.6866,
-    "Chocolate Doom": 0.5933,
-    "OpenRCT2": 0.4295
+    "OpenRA.Platforms.Default": 0.6834,
+    "Chocolate Doom": 0.609,
+    "OpenRCT2": 0.4727
   },
-  "lopo_default_rho": 0.5173,
-  "lopo_tuned_rho": 0.5302
+  "lopo_default_rho": 0.5198,
+  "lopo_tuned_rho": 0.5486
 }

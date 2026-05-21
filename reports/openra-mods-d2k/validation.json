@@ -24,8 +24,8 @@
     {
       "name": "si_vs_bugfix",
       "n": 48,
-      "spearman_rho": 0.141,
-      "p_value": 0.354917
+      "spearman_rho": 0.1289,
+      "p_value": 0.398335
     },
     {
       "name": "loc_vs_bugfix",
@@ -44,8 +44,8 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 23,
-      "spearman_rho": 0.5128,
-      "p_value": 0.013862
+      "spearman_rho": 0.4915,
+      "p_value": 0.019423
     },
     {
       "name": "file_loc_vs_bugfix",
@@ -237,7 +237,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Activities.SwallowActor",
       "file_path": "Activities/SwallowActor.cs",
-      "si": 91.67,
+      "si": 89.58,
       "grade": "E",
       "cc_max": 12.0,
       "loc": 119,
@@ -264,7 +264,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Graphics.SonicBlastRenderable",
       "file_path": "Graphics/SonicBlastRenderable.cs",
-      "si": 64.58,
+      "si": 70.83,
       "grade": "D",
       "cc_max": 1.0,
       "loc": 28,
@@ -273,7 +273,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader",
       "file_path": "PackageLoaders/D2kSoundResources.cs",
-      "si": 66.67,
+      "si": 68.75,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 11,
@@ -282,7 +282,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader.D2kSoundResources",
       "file_path": "PackageLoaders/D2kSoundResources.cs",
-      "si": 77.08,
+      "si": 79.17,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 44,
@@ -336,7 +336,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader.Frame",
       "file_path": "SpriteLoaders/R8Loader.cs",
-      "si": 68.75,
+      "si": 64.58,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 69,
@@ -363,7 +363,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreviewPreview",
       "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
-      "si": 72.92,
+      "si": 75.0,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 53,
@@ -453,7 +453,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.BuildableTerrainLayer",
       "file_path": "Traits/World/BuildableTerrainLayer.cs",
-      "si": 75.0,
+      "si": 77.08,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 91,
@@ -498,7 +498,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRenderer",
       "file_path": "Traits/World/D2kResourceRenderer.cs",
-      "si": 79.17,
+      "si": 62.5,
       "grade": "D",
       "cc_max": 9.0,
       "loc": 69,
@@ -525,7 +525,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.SonicBlastRenderer",
       "file_path": "Traits/World/SonicBlastRenderer.cs",
-      "si": 70.83,
+      "si": 72.92,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 48,
@@ -543,7 +543,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallow",
       "file_path": "Traits/AttackSwallow.cs",
-      "si": 89.58,
+      "si": 87.5,
       "grade": "E",
       "cc_max": 5.0,
       "loc": 27,
@@ -606,7 +606,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.SpiceBloom",
       "file_path": "Traits/SpiceBloom.cs",
-      "si": 87.5,
+      "si": 91.67,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 87,
@@ -651,7 +651,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Widgets.Logic.PurchaseWidgetLogic",
       "file_path": "Widgets/Logic/PurchaseWidgetLogic.cs",
-      "si": 62.5,
+      "si": 66.67,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 50,
@@ -661,8 +661,8 @@
   "file_rows": [
     {
       "file_path": "Activities/SwallowActor.cs",
-      "si_max": 91.67,
-      "si_mean": 47.92,
+      "si_max": 89.58,
+      "si_mean": 46.88,
       "loc_total": 119,
       "cc_max": 12.0,
       "class_count": 2,
@@ -679,8 +679,8 @@
     },
     {
       "file_path": "Graphics/SonicBlastRenderable.cs",
-      "si_max": 64.58,
-      "si_mean": 64.58,
+      "si_max": 70.83,
+      "si_mean": 70.83,
       "loc_total": 28,
       "cc_max": 1.0,
       "class_count": 1,
@@ -688,8 +688,8 @@
     },
     {
       "file_path": "PackageLoaders/D2kSoundResources.cs",
-      "si_max": 77.08,
-      "si_mean": 67.36,
+      "si_max": 79.17,
+      "si_mean": 68.75,
       "loc_total": 55,
       "cc_max": 3.0,
       "class_count": 3,
@@ -707,7 +707,7 @@
     {
       "file_path": "SpriteLoaders/R8Loader.cs",
       "si_max": 83.33,
-      "si_mean": 66.67,
+      "si_mean": 65.28,
       "loc_total": 125,
       "cc_max": 10.0,
       "class_count": 3,
@@ -715,8 +715,8 @@
     },
     {
       "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
-      "si_max": 72.92,
-      "si_mean": 47.92,
+      "si_max": 75.0,
+      "si_mean": 48.61,
       "loc_total": 61,
       "cc_max": 11.0,
       "class_count": 3,
@@ -760,8 +760,8 @@
     },
     {
       "file_path": "Traits/World/BuildableTerrainLayer.cs",
-      "si_max": 75.0,
-      "si_mean": 59.38,
+      "si_max": 77.08,
+      "si_mean": 60.41,
       "loc_total": 92,
       "cc_max": 5.0,
       "class_count": 2,
@@ -778,8 +778,8 @@
     },
     {
       "file_path": "Traits/World/D2kResourceRenderer.cs",
-      "si_max": 79.17,
-      "si_mean": 42.36,
+      "si_max": 62.5,
+      "si_mean": 36.81,
       "loc_total": 70,
       "cc_max": 9.0,
       "class_count": 3,
@@ -787,8 +787,8 @@
     },
     {
       "file_path": "Traits/World/SonicBlastRenderer.cs",
-      "si_max": 70.83,
-      "si_mean": 57.29,
+      "si_max": 72.92,
+      "si_mean": 58.34,
       "loc_total": 49,
       "cc_max": 2.0,
       "class_count": 2,
@@ -796,8 +796,8 @@
     },
     {
       "file_path": "Traits/AttackSwallow.cs",
-      "si_max": 89.58,
-      "si_mean": 46.53,
+      "si_max": 87.5,
+      "si_mean": 45.83,
       "loc_total": 40,
       "cc_max": 5.0,
       "class_count": 3,
@@ -823,8 +823,8 @@
     },
     {
       "file_path": "Traits/SpiceBloom.cs",
-      "si_max": 87.5,
-      "si_mean": 70.83,
+      "si_max": 91.67,
+      "si_mean": 72.22,
       "loc_total": 130,
       "cc_max": 7.0,
       "class_count": 3,
@@ -859,8 +859,8 @@
     },
     {
       "file_path": "Widgets/Logic/PurchaseWidgetLogic.cs",
-      "si_max": 62.5,
-      "si_mean": 62.5,
+      "si_max": 66.67,
+      "si_mean": 66.67,
       "loc_total": 50,
       "cc_max": 8.0,
       "class_count": 1,
