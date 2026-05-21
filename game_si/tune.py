@@ -125,13 +125,20 @@ def _zscore_columns(matrix: list[dict[str, float]]) -> list[dict[str, float]]:
     return out
 
 
+MIN_SAMPLES_FOR_CORRELATION = 5  # n<5 인 케이스는 평가 불가 (insufficient samples)
+
+
 def evaluate_weights(case: CaseData, weights: dict[str, float]) -> float:
     """주어진 가중치로 file 단위 G-SI(raw_score) 산출 후 bug-fix 와 Spearman ρ.
+
+    matched files 가 ``MIN_SAMPLES_FOR_CORRELATION`` (5) 미만이면 NaN.
+    LOPO 평균 등 후속 집계에서는 NaN 케이스를 명시적으로 제외하며, 텍스트
+    요약에서는 "excluded: insufficient samples (n<5)" 로 표시한다.
 
     Percentile rank 변환은 단조 함수라 Spearman 값에는 영향 없음 → 생략.
     """
     matched_files = [f for f in case.raw_by_file if f in case.bugfix_by_file]
-    if len(matched_files) < 5:
+    if len(matched_files) < MIN_SAMPLES_FOR_CORRELATION:
         return float("nan")
     rows = [case.raw_by_file[f] for f in matched_files]
     z_rows = _zscore_columns(rows)
@@ -139,6 +146,11 @@ def evaluate_weights(case: CaseData, weights: dict[str, float]) -> float:
     bug = [float(case.bugfix_by_file[f]) for f in matched_files]
     rho, _ = spearman(si_scores, bug)
     return rho
+
+
+def matched_files_count(case: CaseData) -> int:
+    """case 의 raw_by_file 중 bug-fix 데이터가 있는 파일 수."""
+    return sum(1 for f in case.raw_by_file if f in case.bugfix_by_file)
 
 
 # ---------------------------------------------------------------------------
@@ -242,20 +254,37 @@ def run_tune(cases: list[CaseData]) -> TuneResult:
 
 
 def to_dict(r: TuneResult) -> dict:
+    import math
+    excluded = [
+        name for name in r.per_case_default_rho
+        if math.isnan(r.per_case_default_rho[name])
+        or math.isnan(r.per_case_tuned_rho.get(name, float("nan")))
+    ]
     return {
-        "schema_version": "tune-0.1",
+        "schema_version": "tune-0.2",
         "grid_size": r.grid_size,
         "n_evaluated": r.n_evaluated,
+        "min_samples_for_correlation": MIN_SAMPLES_FOR_CORRELATION,
         "default_weights": r.default_weights,
         "tuned_weights": r.tuned_weights,
-        "per_case_default_rho": {k: round(v, 4) for k, v in r.per_case_default_rho.items()},
-        "per_case_tuned_rho": {k: round(v, 4) for k, v in r.per_case_tuned_rho.items()},
+        "per_case_default_rho": {
+            k: (None if math.isnan(v) else round(v, 4))
+            for k, v in r.per_case_default_rho.items()
+        },
+        "per_case_tuned_rho": {
+            k: (None if math.isnan(v) else round(v, 4))
+            for k, v in r.per_case_tuned_rho.items()
+        },
+        "excluded_cases": excluded,
+        "excluded_reason": "insufficient samples (n < 5 files with bugfix data)",
         "lopo_default_rho": round(r.lopo_default_rho, 4),
         "lopo_tuned_rho": round(r.lopo_tuned_rho, 4),
+        "lopo_note": "excluded cases are skipped in LOPO averages",
     }
 
 
 def format_summary(r: TuneResult) -> str:
+    import math
     out: list[str] = []
     out.append("=== Weight Tuning (plan §4.6) ===")
     out.append(f"grid size: {r.grid_size:,} candidates")
@@ -264,15 +293,29 @@ def format_summary(r: TuneResult) -> str:
     out.append("default weights: " + " ".join(f"{k}={v:.2f}" for k, v in r.default_weights.items()))
     out.append("tuned weights:   " + " ".join(f"{k}={v:.2f}" for k, v in r.tuned_weights.items()))
     out.append("")
-    out.append("per-case file-level Spearman ρ (vs file bug-fix count):")
-    out.append(f"  {'case':<24} {'default':>8} {'tuned':>8} {'Δ':>7}")
+    out.append(f"per-case file-level Spearman ρ (vs file bug-fix count, n≥{MIN_SAMPLES_FOR_CORRELATION} required):")
+    out.append(f"  {'case':<26} {'default':>10} {'tuned':>10} {'Δ':>8}")
+    excluded: list[str] = []
     for name in r.per_case_default_rho:
         d = r.per_case_default_rho[name]
         t = r.per_case_tuned_rho.get(name, float("nan"))
+        if math.isnan(d) or math.isnan(t):
+            out.append(
+                f"  {name:<26} {'excluded: insufficient samples (n<5)':>42}"
+            )
+            excluded.append(name)
+            continue
         diff = t - d
-        out.append(f"  {name:<24} {d:>+8.4f} {t:>+8.4f} {diff:>+7.4f}")
+        out.append(f"  {name:<26} {d:>+10.4f} {t:>+10.4f} {diff:>+8.4f}")
     out.append("")
-    out.append("LOPO (Leave-One-Project-Out) cross-validation:")
+    if excluded:
+        out.append(
+            "* excluded 케이스는 분석 가능한 파일 수가 5 개 미만이라 Spearman "
+            "상관계수가 통계적으로 평가 불가능하다. 단일 진입점 프로그램 "
+            "구조에서 G-SI 동작을 보여주는 표본 부족 사례로 별도 표시한다."
+        )
+        out.append("")
+    out.append("LOPO (Leave-One-Project-Out) cross-validation [excluded 케이스 제외]:")
     out.append(f"  default (avg of per-case ρ):  {r.lopo_default_rho:+.4f}")
     out.append(f"  tuned (hold-out ρ avg):       {r.lopo_tuned_rho:+.4f}")
     delta = r.lopo_tuned_rho - r.lopo_default_rho

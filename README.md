@@ -6,25 +6,33 @@
 
 게임 코드는 매 프레임 도는 게임 루프, 잦은 업데이트, 깊은 결합으로 인해 일반 정적 분석 지표(CC, LOC) 가 잡지 못하는 위험 패턴이 누적된다. 본 작품은 다섯 가지 메트릭(CC · Coupling · DependencyCycle · GlobalState · GameLoopCentrality) 을 가중합한 **G-SI** 점수를 프로젝트 내부 percentile rank 로 변환하여 0~100 점으로 표현하고, 단일 파일 HTML 대시보드로 시각화한다.
 
-## 핵심 결과 (4 케이스 검증)
+## 핵심 결과 (3 게임 프로젝트 / 4 본격 케이스 검증)
 
-| 케이스 | 언어 | 규모 | Project Health | Phase A G-SI ρ (vs bug-fix) |
-|---|---|---|---:|---:|
-| [OpenRA.Game](reports/openra-game/index.html) | C# | 668 클래스 / 2.8K 메서드 / 32K LOC | C (48.6) | **+0.580** (p<1e-6) |
-| [OpenRA.Mods.Common](reports/openra-mods-common/index.html) | C# | 2,194 클래스 / 7.3K 메서드 / 117K LOC | C (46.8) | **+0.541** (p<1e-6) |
-| [Chocolate Doom](reports/chocolate-doom/index.html) | C | 296 파일 / 4.3K 함수 / 190K LOC | C (50.6) | **+0.582** (p<1e-6) |
-| [OpenRCT2](reports/openrct2/index.html) | C++ | 636 단위 / 5.8K 함수 / 486K LOC | C (54.8) | **+0.458** (p<1e-13) |
+본 작품은 **OpenRA, Chocolate Doom, OpenRCT2** 를 대상으로 G-SI 를 적용했다. OpenRA 는 여러 내부 모듈로 나누어 분석했으며, C 기반 Chocolate Doom 과 C/C++ 기반 OpenRCT2 를 추가해 **언어와 구조가 다른 게임에서도 동일 지표가 동작함을 확인**했다. 검증에 사용한 분석 단위는 총 8 개 (OpenRA 6 모듈 + Doom 1 + RCT2 1) 이며, 그 중 OpenRA.Server (분석 가능 파일 1 개) 는 통계적 검증 단위로는 표본 부족이라 별도 표시한다 (§Limitations 참고).
 
-**검증 요약** (자세한 내용은 [docs/benchmark-manifest.md](docs/benchmark-manifest.md) §3~§6):
+**4 본격 케이스 — 파일 단위 Spearman ρ (vs bug-fix touch count)**:
 
-- **RQ1 (위험 구간 식별의 일관성)** — 4/4 케이스에서 G-SI 가 bug-fix 빈도와 유의한 양의 상관, ρ=+0.46 ~ +0.58 (모두 p<1e-13).
-- **RQ2 (LOC/CC 단독 대비 추가 설명력)** — OpenRCT2 에서 G-SI(+0.458) > LOC(+0.406) > CC(+0.368) 로 G-SI 가 두 baseline 모두 능가. Chocolate Doom 에서 CC 단독 대비 Δρ +0.11.
-- **RQ3 (게임 특화 시그널의 추가 식별력)** — Lizard 와 hotspot top-5 Jaccard 가 0.11~0.67. G-SI 만 식별하는 god-object 패턴 (예: OpenRA `Renderer.cs`(CC=9), Chocolate Doom `i_system.c`(CC=12)) 다수.
+| 케이스 | 언어 | 규모 | Project Health | G-SI ρ | LOC ρ | CC ρ |
+|---|---|---|---:|---:|---:|---:|
+| [OpenRA.Game](reports/openra-game/index.html) | C# | 668 클래스 / 2.8K 메서드 / 32K LOC | C (48.6) | **+0.580** | +0.699 | +0.552 |
+| [OpenRA.Mods.Common](reports/openra-mods-common/index.html) | C# | 2,194 클래스 / 7.3K 메서드 / 117K LOC | C (46.8) | **+0.541** | +0.613 | +0.527 |
+| [Chocolate Doom](reports/chocolate-doom/index.html) | C | 296 파일 / 4.3K 함수 / 190K LOC | C (50.6) | **+0.582** | +0.616 | +0.468 |
+| [OpenRCT2](reports/openrct2/index.html) | C++ | 636 단위 / 5.8K 함수 / 486K LOC | C (54.8) | **+0.458** | +0.406 | +0.368 |
+
+(모든 ρ 는 **파일 단위** Spearman 순위 상관계수, p<1e-6. 자세한 내용은 [docs/benchmark-manifest.md](docs/benchmark-manifest.md) §3.)
+
+**검증 요약**:
+
+- **RQ1 (위험 구간 식별의 일관성)** — 4/4 케이스에서 G-SI 가 bug-fix 빈도와 의미 있는 양의 상관 (파일 단위 ρ=+0.46 ~ +0.58, 모두 p<1e-13).
+- **RQ2 (LOC/CC 와의 관계 — 보완 지표 관점)** — 케이스에 따라 G-SI 가 LOC/CC 보다 우월하기도 (OpenRCT2: G-SI +0.458 > LOC +0.406 > CC +0.368) 하고, LOC 가 더 강한 신호를 보이기도 (OpenRA.Game: LOC +0.699 > G-SI +0.580) 한다. **본 작품의 입장은 "G-SI 가 LOC/CC 를 대체"하는 것이 아니라 "기존 지표가 설명하지 못하는 게임 코드 특화 위험(게임 루프 결합, 전역 상태, 의존성 순환) 을 함께 설명하는 보완 지표" 라는 것이다**.
+- **RQ3 (게임 특화 시그널의 추가 식별력)** — Phase B (Lizard 비교, plan §7.2) 에서 G-SI top-N 과 Lizard CC top-N 의 Jaccard 가 0.11~0.67 으로 격차 있음. **G-SI 만 식별하는 god-object 패턴** 다수 (예: OpenRA `Renderer.cs` CC=9 인데 결합도 100+, Chocolate Doom `i_system.c` CC=12 인데 결합도 156).
 - **RQ4 (실용적 처리량)** — 최대 케이스(OpenRCT2 486K LOC) 도 22 초 분석, 검증·비교·시계열 모두 30 초 이내.
+
+**클래스 단위 vs 파일 단위**: 같은 케이스도 분석 단위에 따라 결과가 달라진다. 예) OpenRA.Game 에서 **파일 단위 ρ=+0.58** 이지만 **클래스 단위 ρ=-0.12** — `TraitsInterfaces.cs` 같은 한 파일에 인터페이스 50 개가 들어있어 한 bug-fix 카운트를 공유하는 효과. 모든 ρ 인용 시 단위를 함께 표기한다 ([docs/benchmark-manifest.md §3](docs/benchmark-manifest.md) 표 참고).
 
 추가 차원:
 - **시계열 (Phase D)** — 4/4 케이스에서 시간 흐름에 따라 `cycle_count` 가 증가하거나 안정 유지 (감소 케이스 없음). OpenRA.Game 은 16 년 동안 cycles 0→5, project health 38→48 단조 악화.
-- **LLM 가이드 (Phase C)** — Claude Haiku 4.5 로 20 hotspot 정성 분석. 총 비용 $0.27, 모든 응답이 JSON schema 통과, 게임 도메인 패턴 (DOS 호환성, god-module, 거대 switch, 레거시 마이그레이션) 인지.
+- **LLM 가이드 (Phase C)** — Claude Haiku 4.5 로 20 hotspot 정성 분석. 모든 응답이 JSON schema 통과, 게임 도메인 패턴 (DOS 호환성, god-module, 거대 switch, 레거시 마이그레이션) 인지. 자동 코드 수정은 본 작품 범위 외(plan §6.4).
 
 ## CLI
 
@@ -133,6 +141,22 @@ python -m game_si validate benchmarks/chocolate-doom \
 
 자세한 재현 명령은 [docs/benchmark-manifest.md](docs/benchmark-manifest.md) 의 각 케이스 절에 정리되어 있다.
 
+## 결과 확인하기 (초보자도 OK — 브라우저 더블클릭)
+
+| 보고 싶은 것 | 파일 |
+|---|---|
+| **전체 결과 한눈에 (한국어 마크다운)** | [docs/benchmark-manifest.md](docs/benchmark-manifest.md) §3~§10 |
+| 전체 결과 대시보드 | [reports/index.html](reports/index.html) |
+| OpenRA.Game 분석 (엔진 코어) | [reports/openra-game/index.html](reports/openra-game/index.html) |
+| OpenRA.Mods.Common (게임 모드 공용) | [reports/openra-mods-common/index.html](reports/openra-mods-common/index.html) |
+| Chocolate Doom 분석 (C 소스 포트) | [reports/chocolate-doom/index.html](reports/chocolate-doom/index.html) |
+| OpenRCT2 분석 (C/C++ 재구현) | [reports/openrct2/index.html](reports/openrct2/index.html) |
+| G-SI ↔ bug-fix 상관 그래프 (Phase A) | `reports/<case>/validation.html` |
+| Lizard 와의 비교 결과 (Phase B) | `reports/<case>/compare_summary.txt` |
+| LLM 리팩토링 제안 (Phase C) | `reports/<case>/advisor.md` 또는 각 대시보드 하단 |
+| G-SI 시간 흐름 변화 (Phase D) | `reports/<case>/timeseries.html` |
+| 단계별 진행 점검표 | [docs/progress_checklist.md](docs/progress_checklist.md) |
+
 ## 산출물 위치
 
 | 위치 | 내용 |
@@ -179,6 +203,30 @@ benchmarks/        외부 분석 대상 (git 추적 제외, 재현은 manifest �
 - [docs/benchmark-manifest.md](docs/benchmark-manifest.md) — 분석 대상 메타정보 + Phase A/B/C/D 측정 결과 종합
 - [docs/ast-schema.md](docs/ast-schema.md) — AST JSON 스키마 v0.2 (csharp-analyzer · cpp_analyzer 공통)
 - [docs/phase_e_survey.md](docs/phase_e_survey.md) — Phase E 사용자 피드백 설문 가이드 + 양식 (선택)
+
+## 한계 (Limitations) — 보강 / 향후 / 현실적 어려움
+
+본 작품의 한계를 정직하게 분류한다.
+
+### 현재 구현에서 보완된 부분
+- **표본 부족 케이스 명시 처리** — OpenRA.Server 처럼 분석 가능 파일 수 < 5 인 케이스는 `tune` 결과에서 `excluded: insufficient samples` 로 표시되며 LOPO 평균에서 명시적으로 제외된다.
+- **NaN/평가 불가 자동 경고** — `validate`, `tune` 명령이 n 부족 시 NaN 대신 사람이 읽을 수 있는 사유 문자열을 출력한다.
+- **파일/클래스 단위 결과 분리** — 모든 ρ 값을 파일 단위와 클래스 단위로 함께 보고 (매니페스트 §3, §8). 단위에 따라 결과가 바뀌는 케이스(OpenRA.Game) 도 솔직히 표시.
+- **unmatched change count** — validate 결과에 bug-fix 변경 중 분석 단위와 매칭 안 된 파일 수와 비율을 함께 보고.
+- **결과 확인용 HTML/MD/summary** — 위 "결과 확인하기" 절에 정리.
+
+### 향후 개발 가능한 부분
+- **더 많은 게임 프로젝트 추가** — Unity 샘플(plan §8.4 선택 후보), Godot, MonoGame 등.
+- **C/C++ semantic 분석 고도화** — 현재 tree-sitter syntactic 기반. `compile_commands.json` + clang tooling 도입 시 매크로·템플릿 정밀 분석.
+- **bug-fix 커밋 → 원인 파일 매칭 정확도** — 현재는 변경된 모든 파일을 균등 가중. blame 기반 정밀 매칭 가능.
+- **리팩토링 제안 적용 전후 G-SI 변화 비교** — Phase D 의 시계열 + Phase C 의 advice 를 결합한 후속 실험.
+- **시간 단위 G-SI 추세와 실제 issue tracker 데이터 결합** — bug 리포트의 라벨/심각도까지 활용한 다층 검증.
+
+### 현실적으로 어려운 부분
+- **SonarQube 수준의 범용 정적 분석기 완성도** — 본 작품은 게임 도메인 특화 도구로 포지셔닝. 범용 분석기는 별도 영역.
+- **모든 언어·게임 구조 완벽 분석** — 동적 dispatch (event handler, reflection), 매크로 metaprogramming 등은 정적 분석의 본질적 한계.
+- **bug-fix 커밋 → 원인 코드 100% 정확 매칭** — 커밋 메시지 휴리스틱 의 한계는 본질적이며, 어떤 도구도 완벽 매칭은 불가.
+- **정적 분석으로 런타임 버그·실제 플레이 안정성 증명** — 본 작품 범위 외. 정적 분석은 위험 신호 식별이며 실제 안정성은 동적·QA 검증이 별도 필요.
 
 ## 라이선스 / 표절 방지
 

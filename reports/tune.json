@@ -1,7 +1,8 @@
 {
-  "schema_version": "tune-0.1",
+  "schema_version": "tune-0.2",
   "grid_size": 2226,
   "n_evaluated": 2226,
+  "min_samples_for_correlation": 5,
   "default_weights": {
     "cc": 0.3,
     "coupling": 0.25,
@@ -21,7 +22,7 @@
     "OpenRA.Mods.Common": 0.5421,
     "OpenRA.Mods.Cnc": 0.3703,
     "OpenRA.Mods.D2k": 0.4991,
-    "OpenRA.Server": NaN,
+    "OpenRA.Server": null,
     "OpenRA.Platforms.Default": 0.5829,
     "Chocolate Doom": 0.5851,
     "OpenRCT2": 0.4604
@@ -31,11 +32,16 @@
     "OpenRA.Mods.Common": 0.5674,
     "OpenRA.Mods.Cnc": 0.4653,
     "OpenRA.Mods.D2k": 0.4834,
-    "OpenRA.Server": NaN,
+    "OpenRA.Server": null,
     "OpenRA.Platforms.Default": 0.6834,
     "Chocolate Doom": 0.609,
     "OpenRCT2": 0.4727
   },
+  "excluded_cases": [
+    "OpenRA.Server"
+  ],
+  "excluded_reason": "insufficient samples (n < 5 files with bugfix data)",
   "lopo_default_rho": 0.5198,
-  "lopo_tuned_rho": 0.5486
+  "lopo_tuned_rho": 0.5486,
+  "lopo_note": "excluded cases are skipped in LOPO averages"
 }

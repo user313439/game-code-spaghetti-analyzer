@@ -117,11 +117,6 @@ def _render_refactoring_guide(advisor_data: dict | None) -> str:
         return '<section id="refactoring-guide-empty" class="hidden-section"></section>'
 
     model = html.escape(str(advisor_data.get("model", "claude-haiku-4-5")))
-    usage = advisor_data.get("total_usage", {}) or {}
-    cost = advisor_data.get("estimated_cost_usd", 0.0)
-    cache_read = int(usage.get("cache_read_input_tokens", 0))
-    cache_total = cache_read + int(usage.get("cache_creation_input_tokens", 0))
-    hit_rate = (cache_read / cache_total * 100.0) if cache_total else 0.0
 
     cards = []
     for idx, row in enumerate(rows, 1):
@@ -167,15 +162,20 @@ def _render_refactoring_guide(advisor_data: dict | None) -> str:
         '<section>'
         '<div class="sec-head">'
         '<h2>AI 리팩토링 가이드</h2>'
-        f'<span class="advice-meta">model=<code>{model}</code> · '
-        f'cost ≈ ${float(cost):.4f} · cache hit ≈ {hit_rate:.0f}%</span>'
+        '<button class="sec-info" data-target="help-advise" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>'
+        f'<span class="advice-meta">model=<code>{model}</code></span>'
         '</div>'
-        '<div class="sec-explain" style="display:block">'
-        '<p>상위 hotspot 에 대해 <em>Claude Haiku 4.5</em> 가 (1) 위험 원인, '
-        '(2) 리팩토링 방향, (3) 테스트 우선순위를 제안합니다. 모든 응답은 '
-        '<strong>지표 근거 + 의존성 그래프 컨텍스트</strong>를 활용한 것이며, '
-        '자동 코드 수정은 본 작품 범위 외(plan §6.4)입니다. 추측 한계는 '
-        '각 카드 하단의 "불확실성" 절에 명시됩니다.</p></div>'
+        '<div class="sec-explain" id="help-advise" hidden>'
+        '<p>각 카드는 <strong>G-SI 상위 hotspot 한 개</strong>에 대한 LLM 의 정성 분석입니다. '
+        '카드를 클릭하면 펼쳐집니다. 각 카드는 다음 네 섹션으로 구성됩니다.</p>'
+        '<ul>'
+        '<li><strong>위험 원인</strong> — 왜 이 코드가 위험한지. 지표 수치(CC, 결합도, SCC 크기, GlobalState)를 직접 인용합니다.</li>'
+        '<li><strong>리팩토링 방향</strong> — 게임 도메인 맥락(게임 루프 핫 패스, god-object, 거대 switch 등)을 반영한 구체적 제안. <em>코드를 직접 만들지는 않습니다</em> (plan §6.4).</li>'
+        '<li><strong>테스트 우선순위</strong> — 안전한 변경을 위해 먼저 작성·강화할 테스트. characterisation test / golden master / performance regression 같은 게임·레거시 코드 적합한 유형을 권고합니다.</li>'
+        '<li><strong>불확실성</strong> — 모델이 명시한 추측 한계. 의존성 그래프 일부만 봤다거나 스니펫이 짧다거나 등.</li>'
+        '</ul>'
+        '<p>본 가이드는 <em>의사결정 보조용</em> 입니다. 실제 리팩토링은 사람이 의존성 그래프와 영향 범위를 직접 확인한 뒤 진행해야 합니다.</p>'
+        '</div>'
         + "".join(cards)
         + '</section>'
     )

@@ -5,18 +5,20 @@ evaluated: 2,226
 default weights: cc=0.30 coupling=0.25 dependency_cycle=0.15 global_state=0.15 game_loop_centrality=0.15
 tuned weights:   cc=0.40 coupling=0.20 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
 
-per-case file-level Spearman ρ (vs file bug-fix count):
-  case                      default    tuned       Δ
-  OpenRA.Game               +0.5986  +0.6613 +0.0626
-  OpenRA.Mods.Common        +0.5421  +0.5674 +0.0253
-  OpenRA.Mods.Cnc           +0.3703  +0.4653 +0.0951
-  OpenRA.Mods.D2k           +0.4991  +0.4834 -0.0157
-  OpenRA.Server                +nan     +nan    +nan
-  OpenRA.Platforms.Default  +0.5829  +0.6834 +0.1005
-  Chocolate Doom            +0.5851  +0.6090 +0.0239
-  OpenRCT2                  +0.4604  +0.4727 +0.0122
+per-case file-level Spearman ρ (vs file bug-fix count, n≥5 required):
+  case                          default      tuned        Δ
+  OpenRA.Game                   +0.5986    +0.6613  +0.0626
+  OpenRA.Mods.Common            +0.5421    +0.5674  +0.0253
+  OpenRA.Mods.Cnc               +0.3703    +0.4653  +0.0951
+  OpenRA.Mods.D2k               +0.4991    +0.4834  -0.0157
+  OpenRA.Server                    excluded: insufficient samples (n<5)
+  OpenRA.Platforms.Default      +0.5829    +0.6834  +0.1005
+  Chocolate Doom                +0.5851    +0.6090  +0.0239
+  OpenRCT2                      +0.4604    +0.4727  +0.0122
 
-LOPO (Leave-One-Project-Out) cross-validation:
+* excluded 케이스는 분석 가능한 파일 수가 5 개 미만이라 Spearman 상관계수가 통계적으로 평가 불가능하다. 단일 진입점 프로그램 구조에서 G-SI 동작을 보여주는 표본 부족 사례로 별도 표시한다.
+
+LOPO (Leave-One-Project-Out) cross-validation [excluded 케이스 제외]:
   default (avg of per-case ρ):  +0.5198
   tuned (hold-out ρ avg):       +0.5486
   Δ (tuned − default):          +0.0288
