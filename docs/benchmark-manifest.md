@@ -222,6 +222,8 @@ python -m game_si analyze benchmarks/OpenRCT2/src/openrct2 --lang cpp \
 
 `Context`(C++ 클래스) 가 별도 ClassNode 로 추출되어 god-object 시그널을 정확히 잡았다 — C++ namespace/class 추출 경로 검증. `park.Legacy` 의 CC_top10p=568 같은 극단치는 거대 switch 문(레거시 저장 포맷 마이그레이션) 으로, 게임 코드의 자연스러운 위험 패턴이다. 코스터 페인트 코드(`paint.track.coaster.*`) 가 hotspot 으로 잡힌 것은 OpenRCT2 의 알려진 복잡 영역과 일치한다.
 
+**namespace 추적 (W14 후속 개선)**: `cpp_analyzer.py` 의 `_extract_cpp_classes` 가 class/struct 의 ancestor chain 을 따라 enclosing `namespace_definition` 노드들을 누적해 FQN 을 ``Namespace.Class`` 형식으로 구성한다. C++17 nested namespace (`namespace A::B::C`) 와 nested class 도 동일하게 처리. 본 개선으로 OpenRCT2 의 C++ class 중 **68 개가 namespace 포함 FQN** 으로 갱신되었다 (`OpenRCT2.Context`, `OpenRCT2.GameActions.GameActionEntry`, `OpenRCT2.GameActions.QueuedGameAction`, `OpenRCT2.AssetPackLoadContext` 등). 동명 클래스가 namespace 로 구분되므로 metrics 의 클래스 의존성 그래프 매칭 정확도가 향상된다.
+
 산출물: `reports/openrct2/{ast,metrics,scoring}.json`, `reports/openrct2/index.html`.
 
 **Phase A 검증 결과 (W12, 동일 커밋 기준)**

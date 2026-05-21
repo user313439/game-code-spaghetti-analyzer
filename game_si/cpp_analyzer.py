@@ -402,7 +402,12 @@ def _extract_cpp_classes(
 ) -> list[dict]:
     """C++ `class_specifier` / `struct_specifier` 를 ClassNode 리스트로 변환.
 
-    namespace 추적은 본 PoC 범위 밖. fully_qualified_name 은 단순 이름과 같다.
+    **namespace 추적**: 각 class/struct 의 ancestor chain 에서 `namespace_definition`
+    노드들의 이름을 누적해 FQN 을 ``Namespace.Class`` 형식으로 구성한다.
+    C++17 nested namespace (``namespace A::B { ... }``) 도 `::` → `.` 로 변환.
+
+    **nested class 추적**: 외부 class/struct 안의 class/struct 도 ancestor chain
+    에서 인지해 FQN 에 포함 (예: ``OuterClass.InnerStruct``).
     """
     out: list[dict] = []
     for n in _walk(root):
@@ -415,6 +420,12 @@ def _extract_cpp_classes(
         body = n.child_by_field_name("body")
         if body is None:
             continue
+
+        ns_chain, outer_classes = _enclosing_scopes(n, src)
+        prefix_parts = ns_chain + outer_classes
+        fqn = ".".join(prefix_parts + [name]) if prefix_parts else name
+        namespace_text = ".".join(ns_chain) if ns_chain else None
+
         methods: list[dict] = []
         for c in body.children:
             if c.type == "function_definition":
@@ -424,8 +435,8 @@ def _extract_cpp_classes(
         base_types = _extract_base_clause(n, src)
         out.append({
             "name": name,
-            "fully_qualified_name": name,  # namespace 추적 미구현
-            "namespace": None,
+            "fully_qualified_name": fqn,
+            "namespace": namespace_text,
             "kind": "class" if n.type == "class_specifier" else "struct",
             "start_line": n.start_point[0] + 1,
             "end_line": n.end_point[0] + 1,
@@ -439,6 +450,38 @@ def _extract_cpp_classes(
             "methods": methods,
         })
     return out
+
+
+def _enclosing_scopes(class_node: Node, src: bytes) -> tuple[list[str], list[str]]:
+    """class_node 의 ancestor chain 을 따라 enclosing namespace + outer class 누적.
+
+    Returns
+    -------
+    (namespaces, outer_classes) — 둘 다 outermost → innermost 순서.
+
+    nested namespace (``namespace A::B::C { ... }``) 는 `::` 를 `.` 로 변환해
+    단일 항목으로 추가한다.
+    """
+    namespaces: list[str] = []
+    outers: list[str] = []
+    cur = class_node.parent
+    while cur is not None:
+        if cur.type == "namespace_definition":
+            name_node = cur.child_by_field_name("name")
+            if name_node is not None:
+                ns_text = src[name_node.start_byte:name_node.end_byte].decode("utf-8", "replace")
+                # C++17 nested-namespace (A::B::C) → 단일 dotted string
+                ns_text = ns_text.replace("::", ".").strip()
+                if ns_text:
+                    namespaces.append(ns_text)
+        elif cur.type in ("class_specifier", "struct_specifier"):
+            outer_name = cur.child_by_field_name("name")
+            if outer_name is not None:
+                outers.append(
+                    src[outer_name.start_byte:outer_name.end_byte].decode("utf-8", "replace")
+                )
+        cur = cur.parent
+    return list(reversed(namespaces)), list(reversed(outers))
 
 
 def _extract_base_clause(class_node: Node, src: bytes) -> list[str]:

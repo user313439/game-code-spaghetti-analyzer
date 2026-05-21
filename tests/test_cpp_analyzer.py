@@ -69,7 +69,9 @@ def test_headers_excluded():
     assert "render.c" in by_path
     # render.h 는 body 가 없으므로 분석 단위에 포함되지 않는다.
     assert "render.h" not in by_path
-    assert r["summary"]["total_files"] == 2
+    # namespaces.cpp 는 namespace 추적 테스트용 파일 (추가 분석 단위)
+    assert "namespaces.cpp" in by_path
+    assert r["summary"]["total_files"] == 3
 
 
 # ---------------------------------------------------------------------------
@@ -144,3 +146,54 @@ def test_includes_become_referenced_types():
     # 본문 파일 stem(="render") 이 ref 에 들어가야 metrics.py 의 클래스 그래프가
     # 이를 다른 compilation_unit 으로 매핑해 fan-out 으로 잡을 수 있다.
     assert "render" in cls["referenced_types"]
+
+
+# ---------------------------------------------------------------------------
+# C++ namespace 추적
+# ---------------------------------------------------------------------------
+
+
+def _all_classes(data: dict) -> dict[str, dict]:
+    """fqn -> class node 매핑."""
+    out: dict[str, dict] = {}
+    for f in data["files"]:
+        for c in f["classes"]:
+            out[c["fully_qualified_name"]] = c
+    return out
+
+
+def test_cpp_namespace_tracking():
+    r = analyze_cpp(SAMPLE_DIR).data
+    by_fqn = _all_classes(r)
+
+    # namespace OpenRA { class Actor { ... } } 가 OpenRA.Actor 로
+    assert "OpenRA.Actor" in by_fqn
+    actor = by_fqn["OpenRA.Actor"]
+    assert actor["namespace"] == "OpenRA"
+    assert actor["name"] == "Actor"
+    assert actor["kind"] == "class"
+
+    # 중첩 namespace
+    assert "OpenRA.Network.Server" in by_fqn
+    server = by_fqn["OpenRA.Network.Server"]
+    assert server["namespace"] == "OpenRA.Network"
+
+
+def test_cpp_nested_namespace_specifier():
+    """C++17 nested namespace (A::B) 가 단일 점-구분 문자열로."""
+    r = analyze_cpp(SAMPLE_DIR).data
+    by_fqn = _all_classes(r)
+    assert "Game.Physics.Collider" in by_fqn
+    c = by_fqn["Game.Physics.Collider"]
+    assert c["namespace"] == "Game.Physics"
+
+
+def test_cpp_nested_class():
+    """Outer class 안의 struct 도 FQN 에 outer 포함."""
+    r = analyze_cpp(SAMPLE_DIR).data
+    by_fqn = _all_classes(r)
+    # Game::Physics::Collider 안의 struct Bounds → "Game.Physics.Collider.Bounds"
+    assert "Game.Physics.Collider.Bounds" in by_fqn
+    b = by_fqn["Game.Physics.Collider.Bounds"]
+    assert b["namespace"] == "Game.Physics"
+    assert b["kind"] == "struct"
