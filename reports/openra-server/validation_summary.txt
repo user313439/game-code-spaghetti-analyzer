@@ -1,0 +1,25 @@
+=== G-SI Validation (Phase A) ===
+repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
+subdir:         OpenRA.Server
+date range:     * .. *
+commits seen:   137
+bug-fix found:  28
+classes total:  1  (with bug-fix: 1)
+files total:    1  (with bug-fix: 1)
+unmatched changes (non-class files): 21
+
+Class-level Spearman correlation (vs file bug-fix count):
+  si_vs_bugfix            n=   1  rho=     nan  p=—
+  loc_vs_bugfix           n=   1  rho=     nan  p=—
+  cc_vs_bugfix            n=   1  rho=     nan  p=—
+
+File-level Spearman correlation (vs file bug-fix count):
+  file_si_vs_bugfix       n=   1  rho=     nan  p=—
+  file_loc_vs_bugfix      n=   1  rho=     nan  p=—
+  file_cc_vs_bugfix       n=   1  rho=     nan  p=—
+
+Top bug-fix touched analysis files:
+     9  Program.cs
+
+Notes:
+  - bug-fix 변경 파일 중 21 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.

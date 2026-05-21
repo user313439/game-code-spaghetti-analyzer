@@ -3,18 +3,22 @@ grid size: 2,226 candidates
 evaluated: 2,226
 
 default weights: cc=0.30 coupling=0.25 dependency_cycle=0.15 global_state=0.15 game_loop_centrality=0.15
-tuned weights:   cc=0.30 coupling=0.30 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
+tuned weights:   cc=0.40 coupling=0.10 dependency_cycle=0.20 global_state=0.25 game_loop_centrality=0.05
 
 per-case file-level Spearman ρ (vs file bug-fix count):
   case                      default    tuned       Δ
-  OpenRA.Game               +0.5756  +0.6454 +0.0698
-  OpenRA.Mods.Common        +0.5451  +0.5677 +0.0226
-  Chocolate Doom            +0.5815  +0.6186 +0.0370
-  OpenRCT2                  +0.4606  +0.4812 +0.0206
+  OpenRA.Game               +0.5756  +0.6313 +0.0558
+  OpenRA.Mods.Common        +0.5451  +0.5730 +0.0279
+  OpenRA.Mods.Cnc           +0.3670  +0.4756 +0.1086
+  OpenRA.Mods.D2k           +0.5082  +0.5047 -0.0035
+  OpenRA.Server                +nan     +nan    +nan
+  OpenRA.Platforms.Default  +0.5829  +0.6866 +0.1037
+  Chocolate Doom            +0.5815  +0.5933 +0.0118
+  OpenRCT2                  +0.4606  +0.4295 -0.0311
 
 LOPO (Leave-One-Project-Out) cross-validation:
-  default (avg of per-case ρ):  +0.5407
-  tuned (hold-out ρ avg):       +0.5706
-  Δ (tuned − default):          +0.0299
+  default (avg of per-case ρ):  +0.5173
+  tuned (hold-out ρ avg):       +0.5302
+  Δ (tuned − default):          +0.0130
 
 → tuned weights 가 LOPO 검증에서 default 대비 개선됨.

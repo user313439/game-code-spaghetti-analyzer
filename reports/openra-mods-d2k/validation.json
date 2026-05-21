@@ -1,0 +1,873 @@
+{
+  "schema_version": "validate-0.2",
+  "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
+  "subdir": "OpenRA.Mods.D2k",
+  "since": null,
+  "until": null,
+  "keywords": [
+    "fix",
+    "bug",
+    "crash",
+    "regression",
+    "hotfix",
+    "patch",
+    "defect"
+  ],
+  "total_commits": 579,
+  "bugfix_commits": 97,
+  "classes_total": 48,
+  "classes_with_bugfix": 47,
+  "files_total": 23,
+  "files_with_bugfix": 22,
+  "unmatched_change_count": 78,
+  "class_correlations": [
+    {
+      "name": "si_vs_bugfix",
+      "n": 48,
+      "spearman_rho": 0.141,
+      "p_value": 0.354917
+    },
+    {
+      "name": "loc_vs_bugfix",
+      "n": 48,
+      "spearman_rho": 0.0029,
+      "p_value": 0.984987
+    },
+    {
+      "name": "cc_vs_bugfix",
+      "n": 48,
+      "spearman_rho": 0.025,
+      "p_value": 0.870665
+    }
+  ],
+  "file_correlations": [
+    {
+      "name": "file_si_vs_bugfix",
+      "n": 23,
+      "spearman_rho": 0.5128,
+      "p_value": 0.013862
+    },
+    {
+      "name": "file_loc_vs_bugfix",
+      "n": 23,
+      "spearman_rho": 0.4752,
+      "p_value": 0.024786
+    },
+    {
+      "name": "file_cc_vs_bugfix",
+      "n": 23,
+      "spearman_rho": 0.4858,
+      "p_value": 0.021195
+    }
+  ],
+  "top_bugfix_files": [
+    {
+      "path": "UtilityCommands/D2kMapImporter.cs",
+      "count": 9
+    },
+    {
+      "path": "Activities/SwallowActor.cs",
+      "count": 9
+    },
+    {
+      "path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "count": 7
+    },
+    {
+      "path": "Traits/AttackSwallow.cs",
+      "count": 7
+    },
+    {
+      "path": "Traits/World/BuildableTerrainLayer.cs",
+      "count": 5
+    },
+    {
+      "path": "Traits/SpiceBloom.cs",
+      "count": 5
+    },
+    {
+      "path": "Traits/Sandworm.cs",
+      "count": 5
+    },
+    {
+      "path": "Traits/AttractsWorms.cs",
+      "count": 4
+    },
+    {
+      "path": "Traits/Buildings/D2kBuilding.cs",
+      "count": 4
+    },
+    {
+      "path": "Traits/World/D2kResourceRenderer.cs",
+      "count": 3
+    },
+    {
+      "path": "SpriteLoaders/R8Loader.cs",
+      "count": 3
+    },
+    {
+      "path": "Traits/World/SonicBlastRenderer.cs",
+      "count": 2
+    },
+    {
+      "path": "PackageLoaders/D2kSoundResources.cs",
+      "count": 2
+    },
+    {
+      "path": "Traits/Player/HarvesterInsurance.cs",
+      "count": 2
+    },
+    {
+      "path": "Traits/World/D2kMapGenerator.cs",
+      "count": 1
+    },
+    {
+      "path": "Graphics/SonicBlastRenderable.cs",
+      "count": 1
+    },
+    {
+      "path": "Projectiles/SonicBlast.cs",
+      "count": 1
+    },
+    {
+      "path": "Graphics/D2kSpriteSequence.cs",
+      "count": 1
+    },
+    {
+      "path": "UtilityCommands/ImportD2kMapCommand.cs",
+      "count": 1
+    },
+    {
+      "path": "Traits/Render/WithCrumbleOverlay.cs",
+      "count": 1
+    }
+  ],
+  "unmatched_paths_sample": [
+    {
+      "path": "Widgets/Logic/D2kExtractGameFilesLogic.cs",
+      "count": 9
+    },
+    {
+      "path": "OpenRA.Mods.D2k.csproj",
+      "count": 8
+    },
+    {
+      "path": "Widgets/BuildPaletteWidget.cs",
+      "count": 5
+    },
+    {
+      "path": "Widgets/Logic/IngameChromeLogic.cs",
+      "count": 5
+    },
+    {
+      "path": "Traits/Carryable.cs",
+      "count": 4
+    },
+    {
+      "path": "Widgets/MoneyBinWidget.cs",
+      "count": 3
+    },
+    {
+      "path": "WormManager.cs",
+      "count": 3
+    },
+    {
+      "path": "D2kResourceLayer.cs",
+      "count": 3
+    },
+    {
+      "path": "D2kLoadScreen.cs",
+      "count": 3
+    },
+    {
+      "path": "Traits/World/D2kFogPalette.cs",
+      "count": 2
+    },
+    {
+      "path": "Traits/World/PaletteFromScaledPalette.cs",
+      "count": 2
+    },
+    {
+      "path": "Traits/Carryall.cs",
+      "count": 2
+    },
+    {
+      "path": "Widgets/SlidingContainerWidget.cs",
+      "count": 2
+    },
+    {
+      "path": "Widgets/SupportPowerBinWidget.cs",
+      "count": 2
+    },
+    {
+      "path": "AttackSwallow.cs",
+      "count": 2
+    },
+    {
+      "path": "SwallowActor.cs",
+      "count": 2
+    },
+    {
+      "path": "FogPaletteFromR8.cs",
+      "count": 2
+    },
+    {
+      "path": "Widgets/Logic/D2kInstallLogic.cs",
+      "count": 2
+    },
+    {
+      "path": "Traits/World/D2kResourceLayer.cs",
+      "count": 1
+    },
+    {
+      "path": "Traits/WormSpawner.cs",
+      "count": 1
+    }
+  ],
+  "rows": [
+    {
+      "fqn": "OpenRA.Mods.D2k.Activities.AttackState",
+      "file_path": "Activities/SwallowActor.cs",
+      "si": 4.17,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Activities.SwallowActor",
+      "file_path": "Activities/SwallowActor.cs",
+      "si": 91.67,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 119,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Graphics.D2kSpriteSequenceLoader",
+      "file_path": "Graphics/D2kSpriteSequence.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Graphics.D2kSpriteSequence",
+      "file_path": "Graphics/D2kSpriteSequence.cs",
+      "si": 54.17,
+      "grade": "C",
+      "cc_max": 8.0,
+      "loc": 70,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Graphics.SonicBlastRenderable",
+      "file_path": "Graphics/SonicBlastRenderable.cs",
+      "si": 64.58,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 28,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader",
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "si": 66.67,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 11,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader.D2kSoundResources",
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "si": 77.08,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 44,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader.D2kSoundResources.Entry",
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "si": 58.33,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Projectiles.SonicBlastInfo",
+      "file_path": "Projectiles/SonicBlast.cs",
+      "si": 43.75,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 4,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Projectiles.SonicBlast",
+      "file_path": "Projectiles/SonicBlast.cs",
+      "si": 95.83,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 74,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader",
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "si": 83.33,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 45,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader.RemappableFrame",
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "si": 47.92,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 11,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader.Frame",
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "si": 68.75,
+      "grade": "D",
+      "cc_max": 10.0,
+      "loc": 69,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreviewInfo",
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "si": 60.42,
+      "grade": "D",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreview",
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "si": 10.42,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreviewPreview",
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "si": 72.92,
+      "grade": "D",
+      "cc_max": 11.0,
+      "loc": 53,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Buildings.D2kBuildingInfo",
+      "file_path": "Traits/Buildings/D2kBuilding.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Buildings.D2kBuilding",
+      "file_path": "Traits/Buildings/D2kBuilding.cs",
+      "si": 97.92,
+      "grade": "E",
+      "cc_max": 24.0,
+      "loc": 93,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.HarvesterInsuranceInfo",
+      "file_path": "Traits/Player/HarvesterInsurance.cs",
+      "si": 31.25,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.HarvesterInsurance",
+      "file_path": "Traits/Player/HarvesterInsurance.cs",
+      "si": 52.08,
+      "grade": "C",
+      "cc_max": 4.0,
+      "loc": 18,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithCrumbleOverlayInfo",
+      "file_path": "Traits/Render/WithCrumbleOverlay.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithCrumbleOverlay",
+      "file_path": "Traits/Render/WithCrumbleOverlay.cs",
+      "si": 33.33,
+      "grade": "B",
+      "cc_max": 2.0,
+      "loc": 23,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithDeliveryOverlayInfo",
+      "file_path": "Traits/Render/WithDeliveryOverlay.cs",
+      "si": 31.25,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithDeliveryOverlay",
+      "file_path": "Traits/Render/WithDeliveryOverlay.cs",
+      "si": 45.83,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 25,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.BuildableTerrainLayerInfo",
+      "file_path": "Traits/World/BuildableTerrainLayer.cs",
+      "si": 43.75,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.BuildableTerrainLayer",
+      "file_path": "Traits/World/BuildableTerrainLayer.cs",
+      "si": 75.0,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 91,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGeneratorInfo",
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "si": 100.0,
+      "grade": "E",
+      "cc_max": 33.0,
+      "loc": 409,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGeneratorInfo.Parameters",
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "si": 50.0,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 32,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGenerator",
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 6,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRendererInfo",
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "si": 43.75,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRenderer",
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "si": 79.17,
+      "grade": "D",
+      "cc_max": 9.0,
+      "loc": 69,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRenderer.ClearSides",
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "si": 4.17,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SonicBlastRendererInfo",
+      "file_path": "Traits/World/SonicBlastRenderer.cs",
+      "si": 43.75,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SonicBlastRenderer",
+      "file_path": "Traits/World/SonicBlastRenderer.cs",
+      "si": 70.83,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 48,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallowInfo",
+      "file_path": "Traits/AttackSwallow.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallow",
+      "file_path": "Traits/AttackSwallow.cs",
+      "si": 89.58,
+      "grade": "E",
+      "cc_max": 5.0,
+      "loc": 27,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallow.SwallowTarget",
+      "file_path": "Traits/AttackSwallow.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 12,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttractsWormsInfo",
+      "file_path": "Traits/AttractsWorms.cs",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttractsWorms",
+      "file_path": "Traits/AttractsWorms.cs",
+      "si": 56.25,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 38,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SandwormInfo",
+      "file_path": "Traits/Sandworm.cs",
+      "si": 31.25,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Sandworm",
+      "file_path": "Traits/Sandworm.cs",
+      "si": 85.42,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 93,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SpiceBloomInfo",
+      "file_path": "Traits/SpiceBloom.cs",
+      "si": 43.75,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 8,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SpiceBloom",
+      "file_path": "Traits/SpiceBloom.cs",
+      "si": 87.5,
+      "grade": "E",
+      "cc_max": 6.0,
+      "loc": 87,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.FireProjectilesEffect",
+      "file_path": "Traits/SpiceBloom.cs",
+      "si": 81.25,
+      "grade": "E",
+      "cc_max": 7.0,
+      "loc": 35,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.UtilityCommands.D2kMapImporter",
+      "file_path": "UtilityCommands/D2kMapImporter.cs",
+      "si": 93.75,
+      "grade": "E",
+      "cc_max": 33.0,
+      "loc": 242,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.UtilityCommands.ImportD2kMapCommand",
+      "file_path": "UtilityCommands/ImportD2kMapCommand.cs",
+      "si": 8.33,
+      "grade": "A",
+      "cc_max": 2.0,
+      "loc": 20,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Warheads.DamagesConcreteWarhead",
+      "file_path": "Warheads/DamagesConcreteWarhead.cs",
+      "si": 6.25,
+      "grade": "A",
+      "cc_max": 2.0,
+      "loc": 11,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Widgets.Logic.PurchaseWidgetLogic",
+      "file_path": "Widgets/Logic/PurchaseWidgetLogic.cs",
+      "si": 62.5,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 50,
+      "bugfix_count": 0
+    }
+  ],
+  "file_rows": [
+    {
+      "file_path": "Activities/SwallowActor.cs",
+      "si_max": 91.67,
+      "si_mean": 47.92,
+      "loc_total": 119,
+      "cc_max": 12.0,
+      "class_count": 2,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "Graphics/D2kSpriteSequence.cs",
+      "si_max": 54.17,
+      "si_mean": 39.59,
+      "loc_total": 75,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Graphics/SonicBlastRenderable.cs",
+      "si_max": 64.58,
+      "si_mean": 64.58,
+      "loc_total": 28,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "si_max": 77.08,
+      "si_mean": 67.36,
+      "loc_total": 55,
+      "cc_max": 3.0,
+      "class_count": 3,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Projectiles/SonicBlast.cs",
+      "si_max": 95.83,
+      "si_mean": 69.79,
+      "loc_total": 78,
+      "cc_max": 5.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "si_max": 83.33,
+      "si_mean": 66.67,
+      "loc_total": 125,
+      "cc_max": 10.0,
+      "class_count": 3,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "si_max": 72.92,
+      "si_mean": 47.92,
+      "loc_total": 61,
+      "cc_max": 11.0,
+      "class_count": 3,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Traits/Buildings/D2kBuilding.cs",
+      "si_max": 97.92,
+      "si_mean": 61.46,
+      "loc_total": 94,
+      "cc_max": 24.0,
+      "class_count": 2,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Traits/Player/HarvesterInsurance.cs",
+      "si_max": 52.08,
+      "si_mean": 41.66,
+      "loc_total": 19,
+      "cc_max": 4.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Traits/Render/WithCrumbleOverlay.cs",
+      "si_max": 33.33,
+      "si_mean": 29.16,
+      "loc_total": 24,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Traits/Render/WithDeliveryOverlay.cs",
+      "si_max": 45.83,
+      "si_mean": 38.54,
+      "loc_total": 26,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Traits/World/BuildableTerrainLayer.cs",
+      "si_max": 75.0,
+      "si_mean": 59.38,
+      "loc_total": 92,
+      "cc_max": 5.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "si_max": 100.0,
+      "si_mean": 58.33,
+      "loc_total": 447,
+      "cc_max": 33.0,
+      "class_count": 3,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "si_max": 79.17,
+      "si_mean": 42.36,
+      "loc_total": 70,
+      "cc_max": 9.0,
+      "class_count": 3,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Traits/World/SonicBlastRenderer.cs",
+      "si_max": 70.83,
+      "si_mean": 57.29,
+      "loc_total": 49,
+      "cc_max": 2.0,
+      "class_count": 2,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "Traits/AttackSwallow.cs",
+      "si_max": 89.58,
+      "si_mean": 46.53,
+      "loc_total": 40,
+      "cc_max": 5.0,
+      "class_count": 3,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Traits/AttractsWorms.cs",
+      "si_max": 56.25,
+      "si_mean": 40.62,
+      "loc_total": 39,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "Traits/Sandworm.cs",
+      "si_max": 85.42,
+      "si_mean": 58.34,
+      "loc_total": 94,
+      "cc_max": 8.0,
+      "class_count": 2,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Traits/SpiceBloom.cs",
+      "si_max": 87.5,
+      "si_mean": 70.83,
+      "loc_total": 130,
+      "cc_max": 7.0,
+      "class_count": 3,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "UtilityCommands/D2kMapImporter.cs",
+      "si_max": 93.75,
+      "si_mean": 93.75,
+      "loc_total": 242,
+      "cc_max": 33.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "UtilityCommands/ImportD2kMapCommand.cs",
+      "si_max": 8.33,
+      "si_mean": 8.33,
+      "loc_total": 20,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Warheads/DamagesConcreteWarhead.cs",
+      "si_max": 6.25,
+      "si_mean": 6.25,
+      "loc_total": 11,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "Widgets/Logic/PurchaseWidgetLogic.cs",
+      "si_max": 62.5,
+      "si_mean": 62.5,
+      "loc_total": 50,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    }
+  ],
+  "notes": [
+    "bug-fix 변경 파일 중 78 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음."
+  ]
+}

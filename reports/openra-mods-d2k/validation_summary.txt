@@ -1,0 +1,34 @@
+=== G-SI Validation (Phase A) ===
+repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
+subdir:         OpenRA.Mods.D2k
+date range:     * .. *
+commits seen:   579
+bug-fix found:  97
+classes total:  48  (with bug-fix: 47)
+files total:    23  (with bug-fix: 22)
+unmatched changes (non-class files): 78
+
+Class-level Spearman correlation (vs file bug-fix count):
+  si_vs_bugfix            n=  48  rho= +0.1410  p=0.3549
+  loc_vs_bugfix           n=  48  rho= +0.0029  p=0.985
+  cc_vs_bugfix            n=  48  rho= +0.0250  p=0.8707
+
+File-level Spearman correlation (vs file bug-fix count):
+  file_si_vs_bugfix       n=  23  rho= +0.5128  p=0.01386
+  file_loc_vs_bugfix      n=  23  rho= +0.4752  p=0.02479
+  file_cc_vs_bugfix       n=  23  rho= +0.4858  p=0.02119
+
+Top bug-fix touched analysis files:
+     9  UtilityCommands/D2kMapImporter.cs
+     9  Activities/SwallowActor.cs
+     7  Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs
+     7  Traits/AttackSwallow.cs
+     5  Traits/World/BuildableTerrainLayer.cs
+     5  Traits/SpiceBloom.cs
+     5  Traits/Sandworm.cs
+     4  Traits/AttractsWorms.cs
+     4  Traits/Buildings/D2kBuilding.cs
+     3  Traits/World/D2kResourceRenderer.cs
+
+Notes:
+  - bug-fix 변경 파일 중 78 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.
