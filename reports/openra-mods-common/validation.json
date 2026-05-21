@@ -25,7 +25,7 @@
       "name": "si_vs_bugfix",
       "n": 2194,
       "spearman_rho": 0.0745,
-      "p_value": 0.000692
+      "p_value": 0.000691
     },
     {
       "name": "loc_vs_bugfix",
@@ -246,7 +246,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Activities.Fly",
       "file_path": "Activities/Air/Fly.cs",
-      "si": 99.18,
+      "si": 99.13,
       "grade": "E",
       "cc_max": 38.0,
       "loc": 238,
@@ -255,7 +255,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Activities.FlyAttack",
       "file_path": "Activities/Air/FlyAttack.cs",
-      "si": 97.99,
+      "si": 98.09,
       "grade": "E",
       "cc_max": 35.0,
       "loc": 172,
@@ -471,7 +471,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Activities.Attack",
       "file_path": "Activities/Attack.cs",
-      "si": 96.9,
+      "si": 96.86,
       "grade": "E",
       "cc_max": 23.0,
       "loc": 225,
@@ -588,7 +588,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Activities.FindAndDeliverResources",
       "file_path": "Activities/FindAndDeliverResources.cs",
-      "si": 96.58,
+      "si": 96.54,
       "grade": "E",
       "cc_max": 22.0,
       "loc": 216,
@@ -642,7 +642,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Activities.LayMines",
       "file_path": "Activities/LayMines.cs",
-      "si": 96.22,
+      "si": 96.17,
       "grade": "E",
       "cc_max": 21.0,
       "loc": 193,
@@ -714,7 +714,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Activities.Resupply",
       "file_path": "Activities/Resupply.cs",
-      "si": 98.09,
+      "si": 98.18,
       "grade": "E",
       "cc_max": 31.0,
       "loc": 273,
@@ -1074,7 +1074,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.EditorDefaultBrush",
       "file_path": "EditorBrushes/EditorDefaultBrush.cs",
-      "si": 98.54,
+      "si": 98.63,
       "grade": "E",
       "cc_max": 37.0,
       "loc": 212,
@@ -1785,7 +1785,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Graphics.DefaultSpriteSequence",
       "file_path": "Graphics/DefaultSpriteSequence.cs",
-      "si": 96.03,
+      "si": 95.99,
       "grade": "E",
       "cc_max": 20.0,
       "loc": 347,
@@ -2811,7 +2811,7 @@
     {
       "fqn": "OpenRA.Mods.Common.MapGenerator.RampTiler",
       "file_path": "MapGenerator/RampTiler.cs",
-      "si": 98.5,
+      "si": 98.59,
       "grade": "E",
       "cc_max": 40.0,
       "loc": 301,
@@ -2874,7 +2874,7 @@
     {
       "fqn": "OpenRA.Mods.Common.MapGenerator.Terraformer",
       "file_path": "MapGenerator/Terraformer.cs",
-      "si": 99.45,
+      "si": 99.5,
       "grade": "E",
       "cc_max": 28.4,
       "loc": 1886,
@@ -2928,7 +2928,7 @@
     {
       "fqn": "OpenRA.Mods.Common.MapGenerator.TilingPath",
       "file_path": "MapGenerator/TilingPath.cs",
-      "si": 99.77,
+      "si": 99.68,
       "grade": "E",
       "cc_max": 64.0,
       "loc": 1046,
@@ -3072,7 +3072,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Orders.PlaceBuildingOrderGenerator",
       "file_path": "Orders/PlaceBuildingOrderGenerator.cs",
-      "si": 96.72,
+      "si": 96.67,
       "grade": "E",
       "cc_max": 16.0,
       "loc": 214,
@@ -3243,7 +3243,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Pathfinder.GraphEdge",
       "file_path": "Pathfinder/IPathGraph.cs",
-      "si": 95.76,
+      "si": 96.22,
       "grade": "E",
       "cc_max": 4.0,
       "loc": 18,
@@ -3252,7 +3252,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Pathfinder.GraphConnection",
       "file_path": "Pathfinder/IPathGraph.cs",
-      "si": 96.54,
+      "si": 96.9,
       "grade": "E",
       "cc_max": 3.0,
       "loc": 15,
@@ -3333,7 +3333,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Projectiles.Bullet",
       "file_path": "Projectiles/Bullet.cs",
-      "si": 96.63,
+      "si": 96.58,
       "grade": "E",
       "cc_max": 16.0,
       "loc": 220,
@@ -3405,7 +3405,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Projectiles.Missile",
       "file_path": "Projectiles/Missile.cs",
-      "si": 98.36,
+      "si": 98.4,
       "grade": "E",
       "cc_max": 38.0,
       "loc": 701,
@@ -4107,7 +4107,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Server.LobbyCommands",
       "file_path": "ServerTraits/LobbyCommands.cs",
-      "si": 96.08,
+      "si": 96.03,
       "grade": "E",
       "cc_max": 16.6667,
       "loc": 1224,
@@ -4368,7 +4368,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.Aircraft",
       "file_path": "Traits/Air/Aircraft.cs",
-      "si": 99.68,
+      "si": 99.64,
       "grade": "E",
       "cc_max": 17.0,
       "loc": 785,
@@ -4476,7 +4476,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.AttackBase",
       "file_path": "Traits/Attack/AttackBase.cs",
-      "si": 95.94,
+      "si": 95.9,
       "grade": "E",
       "cc_max": 12.0,
       "loc": 287,
@@ -4530,7 +4530,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.AttackFollow.AttackActivity",
       "file_path": "Traits/Attack/AttackFollow.cs",
-      "si": 98.45,
+      "si": 98.5,
       "grade": "E",
       "cc_max": 44.0,
       "loc": 206,
@@ -4692,7 +4692,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.AirIdleState",
       "file_path": "Traits/BotModules/Squads/States/AirStates.cs",
-      "si": 99.0,
+      "si": 99.18,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 62,
@@ -4701,7 +4701,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.AirAttackState",
       "file_path": "Traits/BotModules/Squads/States/AirStates.cs",
-      "si": 99.13,
+      "si": 98.54,
       "grade": "E",
       "cc_max": 11.0,
       "loc": 41,
@@ -4710,7 +4710,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.AirFleeState",
       "file_path": "Traits/BotModules/Squads/States/AirStates.cs",
-      "si": 98.86,
+      "si": 99.0,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 25,
@@ -4728,7 +4728,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.GroundUnitsIdleState",
       "file_path": "Traits/BotModules/Squads/States/GroundStates.cs",
-      "si": 99.64,
+      "si": 99.82,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 34,
@@ -4746,7 +4746,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.GroundUnitsAttackState",
       "file_path": "Traits/BotModules/Squads/States/GroundStates.cs",
-      "si": 99.5,
+      "si": 99.36,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 47,
@@ -4755,7 +4755,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.GroundUnitsFleeState",
       "file_path": "Traits/BotModules/Squads/States/GroundStates.cs",
-      "si": 99.32,
+      "si": 99.45,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 10,
@@ -4764,7 +4764,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.UnitsForProtectionIdleState",
       "file_path": "Traits/BotModules/Squads/States/ProtectionStates.cs",
-      "si": 98.31,
+      "si": 97.99,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 3,
@@ -4773,7 +4773,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.UnitsForProtectionAttackState",
       "file_path": "Traits/BotModules/Squads/States/ProtectionStates.cs",
-      "si": 98.68,
+      "si": 98.27,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 37,
@@ -4782,7 +4782,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BotModules.Squads.UnitsForProtectionFleeState",
       "file_path": "Traits/BotModules/Squads/States/ProtectionStates.cs",
-      "si": 98.22,
+      "si": 97.9,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 10,
@@ -4854,7 +4854,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BaseBuilderBotModule",
       "file_path": "Traits/BotModules/BaseBuilderBotModule.cs",
-      "si": 98.13,
+      "si": 98.22,
       "grade": "E",
       "cc_max": 18.0,
       "loc": 348,
@@ -4908,7 +4908,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.HarvesterBotModule",
       "file_path": "Traits/BotModules/HarvesterBotModule.cs",
-      "si": 98.04,
+      "si": 98.13,
       "grade": "E",
       "cc_max": 31.0,
       "loc": 355,
@@ -4944,7 +4944,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.McvExpansionManagerBotModule",
       "file_path": "Traits/BotModules/McvExpansionManagerBotModule.cs",
-      "si": 98.63,
+      "si": 98.72,
       "grade": "E",
       "cc_max": 36.0,
       "loc": 664,
@@ -5070,7 +5070,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.UnitBuilderBotModule",
       "file_path": "Traits/BotModules/UnitBuilderBotModule.cs",
-      "si": 96.13,
+      "si": 96.08,
       "grade": "E",
       "cc_max": 16.0,
       "loc": 188,
@@ -7689,7 +7689,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.BulkProductionQueue",
       "file_path": "Traits/Player/BulkProductionQueue.cs",
-      "si": 96.76,
+      "si": 96.72,
       "grade": "E",
       "cc_max": 22.0,
       "loc": 258,
@@ -8139,7 +8139,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.ProductionQueue",
       "file_path": "Traits/Player/ProductionQueue.cs",
-      "si": 98.4,
+      "si": 98.45,
       "grade": "E",
       "cc_max": 15.0,
       "loc": 508,
@@ -10605,7 +10605,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.ClassicMapGeneratorInfo",
       "file_path": "Traits/World/ClassicMapGenerator.cs",
-      "si": 99.36,
+      "si": 99.32,
       "grade": "E",
       "cc_max": 50.0,
       "loc": 516,
@@ -11019,7 +11019,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.Locomotor",
       "file_path": "Traits/World/Locomotor.cs",
-      "si": 96.17,
+      "si": 96.13,
       "grade": "E",
       "cc_max": 26.0,
       "loc": 352,
@@ -12162,7 +12162,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.AutoTarget",
       "file_path": "Traits/AutoTarget.cs",
-      "si": 97.9,
+      "si": 97.95,
       "grade": "E",
       "cc_max": 31.0,
       "loc": 309,
@@ -12630,7 +12630,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.Cloak",
       "file_path": "Traits/Cloak.cs",
-      "si": 98.81,
+      "si": 98.86,
       "grade": "E",
       "cc_max": 23.0,
       "loc": 217,
@@ -13692,7 +13692,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Traits.Minelayer",
       "file_path": "Traits/Minelayer.cs",
-      "si": 95.99,
+      "si": 95.94,
       "grade": "E",
       "cc_max": 13.0,
       "loc": 116,
@@ -15258,7 +15258,7 @@
     {
       "fqn": "OpenRA.Mods.Common.UpdateRules.UpdateRule",
       "file_path": "UpdateRules/UpdateRule.cs",
-      "si": 95.81,
+      "si": 95.76,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 9,
@@ -15456,7 +15456,7 @@
     {
       "fqn": "OpenRA.Mods.Common.UtilityCommands.CheckExplicitInterfacesCommand",
       "file_path": "UtilityCommands/CheckExplicitInterfacesCommand.cs",
-      "si": 95.85,
+      "si": 95.81,
       "grade": "E",
       "cc_max": 27.0,
       "loc": 100,
@@ -16410,7 +16410,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.GameInfoStatsLogic",
       "file_path": "Widgets/Logic/Ingame/GameInfoStatsLogic.cs",
-      "si": 98.77,
+      "si": 98.81,
       "grade": "E",
       "cc_max": 56.0,
       "loc": 248,
@@ -17013,7 +17013,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.AssetBrowserLogic",
       "file_path": "Widgets/Logic/AssetBrowserLogic.cs",
-      "si": 99.82,
+      "si": 99.77,
       "grade": "E",
       "cc_max": 64.0,
       "loc": 665,
@@ -17166,7 +17166,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.LoadGameBrowserLogic",
       "file_path": "Widgets/Logic/LoadGameBrowserLogic.cs",
-      "si": 98.72,
+      "si": 98.77,
       "grade": "E",
       "cc_max": 30.0,
       "loc": 833,
@@ -17238,7 +17238,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.MainMenuLogic",
       "file_path": "Widgets/Logic/MainMenuLogic.cs",
-      "si": 97.95,
+      "si": 98.04,
       "grade": "E",
       "cc_max": 17.0,
       "loc": 481,
@@ -17274,7 +17274,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.MapChooserLogic",
       "file_path": "Widgets/Logic/MapChooserLogic.cs",
-      "si": 96.86,
+      "si": 96.81,
       "grade": "E",
       "cc_max": 30.0,
       "loc": 516,
@@ -17472,7 +17472,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.ServerListLogic",
       "file_path": "Widgets/Logic/ServerListLogic.cs",
-      "si": 98.18,
+      "si": 98.31,
       "grade": "E",
       "cc_max": 36.0,
       "loc": 731,
@@ -17562,7 +17562,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.ButtonWidget",
       "file_path": "Widgets/ButtonWidget.cs",
-      "si": 96.81,
+      "si": 96.76,
       "grade": "E",
       "cc_max": 17.0,
       "loc": 205,
@@ -17868,7 +17868,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.ObserverProductionIconsWidget",
       "file_path": "Widgets/ObserverProductionIconsWidget.cs",
-      "si": 95.9,
+      "si": 95.85,
       "grade": "E",
       "cc_max": 15.0,
       "loc": 222,
@@ -17913,7 +17913,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.ProductionPaletteWidget",
       "file_path": "Widgets/ProductionPaletteWidget.cs",
-      "si": 98.59,
+      "si": 98.68,
       "grade": "E",
       "cc_max": 17.0,
       "loc": 469,
@@ -17949,7 +17949,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.ProductionTabsWidget",
       "file_path": "Widgets/ProductionTabsWidget.cs",
-      "si": 96.67,
+      "si": 96.63,
       "grade": "E",
       "cc_max": 16.0,
       "loc": 223,
@@ -18219,7 +18219,7 @@
     {
       "fqn": "OpenRA.Mods.Common.Widgets.ViewportControllerWidget",
       "file_path": "Widgets/ViewportControllerWidget.cs",
-      "si": 98.27,
+      "si": 98.36,
       "grade": "E",
       "cc_max": 27.0,
       "loc": 381,
@@ -19993,8 +19993,8 @@
     },
     {
       "file_path": "Activities/Air/Fly.cs",
-      "si_max": 99.18,
-      "si_mean": 99.18,
+      "si_max": 99.13,
+      "si_mean": 99.13,
       "loc_total": 238,
       "cc_max": 38.0,
       "class_count": 1,
@@ -20002,8 +20002,8 @@
     },
     {
       "file_path": "Activities/Air/FlyAttack.cs",
-      "si_max": 97.99,
-      "si_mean": 87.86,
+      "si_max": 98.09,
+      "si_mean": 87.89,
       "loc_total": 246,
       "cc_max": 35.0,
       "class_count": 3,
@@ -20173,8 +20173,8 @@
     },
     {
       "file_path": "Activities/Attack.cs",
-      "si_max": 96.9,
-      "si_mean": 52.48,
+      "si_max": 96.86,
+      "si_mean": 52.47,
       "loc_total": 225,
       "cc_max": 23.0,
       "class_count": 2,
@@ -20245,8 +20245,8 @@
     },
     {
       "file_path": "Activities/FindAndDeliverResources.cs",
-      "si_max": 96.58,
-      "si_mean": 96.58,
+      "si_max": 96.54,
+      "si_mean": 96.54,
       "loc_total": 216,
       "cc_max": 22.0,
       "class_count": 1,
@@ -20290,8 +20290,8 @@
     },
     {
       "file_path": "Activities/LayMines.cs",
-      "si_max": 96.22,
-      "si_mean": 96.22,
+      "si_max": 96.17,
+      "si_mean": 96.17,
       "loc_total": 193,
       "cc_max": 21.0,
       "class_count": 1,
@@ -20344,8 +20344,8 @@
     },
     {
       "file_path": "Activities/Resupply.cs",
-      "si_max": 98.09,
-      "si_mean": 98.09,
+      "si_max": 98.18,
+      "si_mean": 98.18,
       "loc_total": 273,
       "cc_max": 31.0,
       "class_count": 1,
@@ -20515,8 +20515,8 @@
     },
     {
       "file_path": "EditorBrushes/EditorDefaultBrush.cs",
-      "si_max": 98.54,
-      "si_mean": 58.01,
+      "si_max": 98.63,
+      "si_mean": 58.02,
       "loc_total": 440,
       "cc_max": 37.0,
       "class_count": 9,
@@ -20821,8 +20821,8 @@
     },
     {
       "file_path": "Graphics/DefaultSpriteSequence.cs",
-      "si_max": 96.03,
-      "si_mean": 41.04,
+      "si_max": 95.99,
+      "si_mean": 41.03,
       "loc_total": 386,
       "cc_max": 20.0,
       "class_count": 5,
@@ -21613,8 +21613,8 @@
     },
     {
       "file_path": "MapGenerator/RampTiler.cs",
-      "si_max": 98.5,
-      "si_mean": 67.45,
+      "si_max": 98.59,
+      "si_mean": 67.47,
       "loc_total": 592,
       "cc_max": 40.0,
       "class_count": 4,
@@ -21631,7 +21631,7 @@
     },
     {
       "file_path": "MapGenerator/Terraformer.cs",
-      "si_max": 99.45,
+      "si_max": 99.5,
       "si_mean": 27.26,
       "loc_total": 1893,
       "cc_max": 28.4,
@@ -21640,8 +21640,8 @@
     },
     {
       "file_path": "MapGenerator/TilingPath.cs",
-      "si_max": 99.77,
-      "si_mean": 57.44,
+      "si_max": 99.68,
+      "si_mean": 57.42,
       "loc_total": 1145,
       "cc_max": 64.0,
       "class_count": 4,
@@ -21712,8 +21712,8 @@
     },
     {
       "file_path": "Orders/PlaceBuildingOrderGenerator.cs",
-      "si_max": 96.72,
-      "si_mean": 51.71,
+      "si_max": 96.67,
+      "si_mean": 51.7,
       "loc_total": 251,
       "cc_max": 16.0,
       "class_count": 5,
@@ -21802,8 +21802,8 @@
     },
     {
       "file_path": "Pathfinder/IPathGraph.cs",
-      "si_max": 96.54,
-      "si_mean": 49.16,
+      "si_max": 96.9,
+      "si_mean": 49.33,
       "loc_total": 38,
       "cc_max": 4.0,
       "class_count": 5,
@@ -21847,8 +21847,8 @@
     },
     {
       "file_path": "Projectiles/Bullet.cs",
-      "si_max": 96.63,
-      "si_mean": 71.9,
+      "si_max": 96.58,
+      "si_mean": 71.88,
       "loc_total": 221,
       "cc_max": 16.0,
       "class_count": 2,
@@ -21883,8 +21883,8 @@
     },
     {
       "file_path": "Projectiles/Missile.cs",
-      "si_max": 98.36,
-      "si_mean": 48.71,
+      "si_max": 98.4,
+      "si_mean": 48.72,
       "loc_total": 702,
       "cc_max": 38.0,
       "class_count": 3,
@@ -22405,8 +22405,8 @@
     },
     {
       "file_path": "ServerTraits/LobbyCommands.cs",
-      "si_max": 96.08,
-      "si_mean": 96.08,
+      "si_max": 96.03,
+      "si_mean": 96.03,
       "loc_total": 1224,
       "cc_max": 16.6667,
       "class_count": 1,
@@ -22513,8 +22513,8 @@
     },
     {
       "file_path": "Traits/Air/Aircraft.cs",
-      "si_max": 99.68,
-      "si_mean": 69.8,
+      "si_max": 99.64,
+      "si_mean": 69.79,
       "loc_total": 951,
       "cc_max": 17.0,
       "class_count": 5,
@@ -22549,8 +22549,8 @@
     },
     {
       "file_path": "Traits/Attack/AttackBase.cs",
-      "si_max": 95.94,
-      "si_mean": 63.05,
+      "si_max": 95.9,
+      "si_mean": 63.04,
       "loc_total": 388,
       "cc_max": 19.0,
       "class_count": 4,
@@ -22567,8 +22567,8 @@
     },
     {
       "file_path": "Traits/Attack/AttackFollow.cs",
-      "si_max": 98.45,
-      "si_mean": 84.41,
+      "si_max": 98.5,
+      "si_mean": 84.43,
       "loc_total": 373,
       "cc_max": 44.0,
       "class_count": 3,
@@ -22639,8 +22639,8 @@
     },
     {
       "file_path": "Traits/BotModules/Squads/States/AirStates.cs",
-      "si_max": 99.13,
-      "si_mean": 94.25,
+      "si_max": 99.18,
+      "si_mean": 94.18,
       "loc_total": 183,
       "cc_max": 11.0,
       "class_count": 4,
@@ -22648,8 +22648,8 @@
     },
     {
       "file_path": "Traits/BotModules/Squads/States/GroundStates.cs",
-      "si_max": 99.73,
-      "si_mean": 95.83,
+      "si_max": 99.82,
+      "si_mean": 95.86,
       "loc_total": 206,
       "cc_max": 10.0,
       "class_count": 5,
@@ -22657,8 +22657,8 @@
     },
     {
       "file_path": "Traits/BotModules/Squads/States/ProtectionStates.cs",
-      "si_max": 98.68,
-      "si_mean": 98.4,
+      "si_max": 98.27,
+      "si_mean": 98.05,
       "loc_total": 50,
       "cc_max": 6.0,
       "class_count": 3,
@@ -22702,8 +22702,8 @@
     },
     {
       "file_path": "Traits/BotModules/BaseBuilderBotModule.cs",
-      "si_max": 98.13,
-      "si_mean": 68.75,
+      "si_max": 98.22,
+      "si_mean": 68.8,
       "loc_total": 349,
       "cc_max": 18.0,
       "class_count": 2,
@@ -22729,8 +22729,8 @@
     },
     {
       "file_path": "Traits/BotModules/HarvesterBotModule.cs",
-      "si_max": 98.04,
-      "si_mean": 53.6,
+      "si_max": 98.13,
+      "si_mean": 53.63,
       "loc_total": 364,
       "cc_max": 31.0,
       "class_count": 3,
@@ -22738,8 +22738,8 @@
     },
     {
       "file_path": "Traits/BotModules/McvExpansionManagerBotModule.cs",
-      "si_max": 98.63,
-      "si_mean": 49.38,
+      "si_max": 98.72,
+      "si_mean": 49.41,
       "loc_total": 665,
       "cc_max": 36.0,
       "class_count": 3,
@@ -22792,8 +22792,8 @@
     },
     {
       "file_path": "Traits/BotModules/UnitBuilderBotModule.cs",
-      "si_max": 96.13,
-      "si_mean": 67.75,
+      "si_max": 96.08,
+      "si_mean": 67.73,
       "loc_total": 189,
       "cc_max": 16.0,
       "class_count": 2,
@@ -23989,8 +23989,8 @@
     },
     {
       "file_path": "Traits/Player/BulkProductionQueue.cs",
-      "si_max": 96.76,
-      "si_mean": 68.07,
+      "si_max": 96.72,
+      "si_mean": 68.05,
       "loc_total": 259,
       "cc_max": 22.0,
       "class_count": 2,
@@ -24178,8 +24178,8 @@
     },
     {
       "file_path": "Traits/Player/ProductionQueue.cs",
-      "si_max": 98.4,
-      "si_mean": 66.06,
+      "si_max": 98.45,
+      "si_mean": 66.08,
       "loc_total": 581,
       "cc_max": 16.0,
       "class_count": 4,
@@ -25286,7 +25286,7 @@
     {
       "file_path": "Traits/World/ClassicMapGenerator.cs",
       "si_max": 99.54,
-      "si_mean": 77.92,
+      "si_mean": 77.91,
       "loc_total": 756,
       "cc_max": 79.0,
       "class_count": 3,
@@ -25447,7 +25447,7 @@
     },
     {
       "file_path": "Traits/World/Locomotor.cs",
-      "si_max": 96.17,
+      "si_max": 96.13,
       "si_mean": 37.43,
       "loc_total": 392,
       "cc_max": 26.0,
@@ -25888,8 +25888,8 @@
     },
     {
       "file_path": "Traits/AutoTarget.cs",
-      "si_max": 97.9,
-      "si_mean": 44.68,
+      "si_max": 97.95,
+      "si_mean": 44.69,
       "loc_total": 355,
       "cc_max": 31.0,
       "class_count": 6,
@@ -26050,8 +26050,8 @@
     },
     {
       "file_path": "Traits/Cloak.cs",
-      "si_max": 98.81,
-      "si_mean": 35.73,
+      "si_max": 98.86,
+      "si_mean": 35.74,
       "loc_total": 218,
       "cc_max": 23.0,
       "class_count": 5,
@@ -26473,8 +26473,8 @@
     },
     {
       "file_path": "Traits/Minelayer.cs",
-      "si_max": 95.99,
-      "si_mean": 64.77,
+      "si_max": 95.94,
+      "si_mean": 64.75,
       "loc_total": 255,
       "cc_max": 13.0,
       "class_count": 4,
@@ -27310,8 +27310,8 @@
     },
     {
       "file_path": "UpdateRules/UpdateRule.cs",
-      "si_max": 95.81,
-      "si_mean": 31.88,
+      "si_max": 95.76,
+      "si_mean": 31.87,
       "loc_total": 12,
       "cc_max": 1.0,
       "class_count": 4,
@@ -27454,8 +27454,8 @@
     },
     {
       "file_path": "UtilityCommands/CheckExplicitInterfacesCommand.cs",
-      "si_max": 95.85,
-      "si_mean": 95.85,
+      "si_max": 95.81,
+      "si_mean": 95.81,
       "loc_total": 100,
       "cc_max": 27.0,
       "class_count": 1,
@@ -28183,8 +28183,8 @@
     },
     {
       "file_path": "Widgets/Logic/Ingame/GameInfoStatsLogic.cs",
-      "si_max": 98.77,
-      "si_mean": 98.77,
+      "si_max": 98.81,
+      "si_mean": 98.81,
       "loc_total": 248,
       "cc_max": 56.0,
       "class_count": 1,
@@ -28642,8 +28642,8 @@
     },
     {
       "file_path": "Widgets/Logic/AssetBrowserLogic.cs",
-      "si_max": 99.82,
-      "si_mean": 53.94,
+      "si_max": 99.77,
+      "si_mean": 53.92,
       "loc_total": 665,
       "cc_max": 64.0,
       "class_count": 2,
@@ -28768,8 +28768,8 @@
     },
     {
       "file_path": "Widgets/Logic/LoadGameBrowserLogic.cs",
-      "si_max": 98.72,
-      "si_mean": 24.05,
+      "si_max": 98.77,
+      "si_mean": 24.06,
       "loc_total": 833,
       "cc_max": 30.0,
       "class_count": 6,
@@ -28795,8 +28795,8 @@
     },
     {
       "file_path": "Widgets/Logic/MainMenuLogic.cs",
-      "si_max": 97.95,
-      "si_mean": 31.85,
+      "si_max": 98.04,
+      "si_mean": 31.87,
       "loc_total": 481,
       "cc_max": 17.0,
       "class_count": 4,
@@ -28804,8 +28804,8 @@
     },
     {
       "file_path": "Widgets/Logic/MapChooserLogic.cs",
-      "si_max": 96.86,
-      "si_mean": 96.86,
+      "si_max": 96.81,
+      "si_mean": 96.81,
       "loc_total": 516,
       "cc_max": 30.0,
       "class_count": 1,
@@ -28939,8 +28939,8 @@
     },
     {
       "file_path": "Widgets/Logic/ServerListLogic.cs",
-      "si_max": 98.18,
-      "si_mean": 53.12,
+      "si_max": 98.31,
+      "si_mean": 53.19,
       "loc_total": 731,
       "cc_max": 36.0,
       "class_count": 2,
@@ -29020,8 +29020,8 @@
     },
     {
       "file_path": "Widgets/ButtonWidget.cs",
-      "si_max": 96.81,
-      "si_mean": 96.81,
+      "si_max": 96.76,
+      "si_mean": 96.76,
       "loc_total": 205,
       "cc_max": 17.0,
       "class_count": 1,
@@ -29272,8 +29272,8 @@
     },
     {
       "file_path": "Widgets/ObserverProductionIconsWidget.cs",
-      "si_max": 95.9,
-      "si_mean": 95.9,
+      "si_max": 95.85,
+      "si_mean": 95.85,
       "loc_total": 222,
       "cc_max": 15.0,
       "class_count": 1,
@@ -29308,8 +29308,8 @@
     },
     {
       "file_path": "Widgets/ProductionPaletteWidget.cs",
-      "si_max": 98.59,
-      "si_mean": 42.91,
+      "si_max": 98.68,
+      "si_mean": 42.94,
       "loc_total": 469,
       "cc_max": 17.0,
       "class_count": 3,
@@ -29317,8 +29317,8 @@
     },
     {
       "file_path": "Widgets/ProductionTabsWidget.cs",
-      "si_max": 96.67,
-      "si_mean": 63.17,
+      "si_max": 96.63,
+      "si_mean": 63.16,
       "loc_total": 251,
       "cc_max": 16.0,
       "class_count": 3,
@@ -29506,8 +29506,8 @@
     },
     {
       "file_path": "Widgets/ViewportControllerWidget.cs",
-      "si_max": 98.27,
-      "si_mean": 53.17,
+      "si_max": 98.36,
+      "si_mean": 53.22,
       "loc_total": 381,
       "cc_max": 27.0,
       "class_count": 2,

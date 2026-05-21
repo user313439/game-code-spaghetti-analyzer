@@ -569,6 +569,33 @@ PR 이 main 으로 머지될 때 다음 흐름:
 
 본 yaml 은 도구의 워크플로 통합 가능성을 보여 주는 **샘플**이다. 실제 사용 시 분석 대상(`ANALYZE_PATH`, `REPO_SUBDIR`) 과 임계치(`FAIL_THRESHOLD`) 를 프로젝트에 맞게 수정한다.
 
+## 10b. DependencyCycle 세분화 (W14 후속 개선 2-A)
+
+`metrics.py` 의 `_compute_cycle_membership` 가 각 SCC 멤버에 대해 SCC 내부에서 자신이 관여한 in/out edge 수(`cycle_edges`)를 추가로 계산한다. raw 메트릭은 다음과 같이 갱신되었다.
+
+```text
+이전: dependency_cycle = cycle_size  (SCC 멤버 binary + 크기)
+현재: dependency_cycle = cycle_size + cycle_edges  (SCC 내부 깊이까지 반영)
+```
+
+본 개선의 동기: §8.2 에서 4 케이스 tuned 가 DepCycle 에 0.05 만 부여한 이유 중 하나가 "SCC 멤버십이 binary 신호" 였다는 진단. 같은 SCC 안의 hub 와 peripheral 클래스를 구분하지 못했기 때문이다.
+
+### 효과 (OpenRA.Game 사례, n=11 cycle 클래스)
+
+| dependency_cycle 값 | 클래스 수 | 대표 클래스 |
+|---:|---:|---|
+| 7 (SCC hub) | 1 | `OpenRA.Support.VariableExpression.Token` |
+| 5 | 2 | `VariableToken`, `NumberToken` (Token 의 직접 자식) |
+| 4 (peripheral) | 8 | `int2`, `float2`, `MiniYaml`, `MiniYamlNode`, `CPos`, `MPos` 등 |
+
+이전엔 모든 cycle 클래스가 동일한 SCC 크기 값을 받았는데, 본 개선으로 **같은 cycle 안의 god-class(Token, 5-node SCC의 hub)와 peripheral 클래스가 차별화**되어 클래스 단위 G-SI ranking 에 반영된다.
+
+### 솔직한 한계
+
+8-케이스 tune 의 **file 단위 ρ 결과는 거의 변화 없음** (LOPO ρ 동일, weight 동일). file 단위 max 로 집계하면 SCC 안의 미세 차별화가 흡수되기 때문이다. 본 개선의 가치는 **클래스 단위 ranking** 의 정확도 향상에 한정된다 — 사용자가 대시보드에서 hotspot 을 클릭해 자세히 볼 때 SCC 안의 어느 클래스가 더 위험한지 구분되는 효과.
+
+이 결과는 보고서 한계 절에 "메트릭 세분화의 효과는 분석 단위에 의존" 이라는 정직한 발견으로 인용한다.
+
 ## 10. 종합 — plan 마일스톤 매핑
 
 | plan 절 | 마일스톤 | 상태 | 본 매니페스트 위치 |

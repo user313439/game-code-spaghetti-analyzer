@@ -54,11 +54,11 @@
       "z": {
         "cc": -0.3318,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4086,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3847,
+      "raw_score": -0.3841,
       "si": 28.04,
       "grade": "B",
       "top_reasons": []
@@ -82,11 +82,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4721,
+      "raw_score": -0.4715,
       "si": 12.16,
       "grade": "A",
       "top_reasons": []
@@ -110,11 +110,11 @@
       "z": {
         "cc": -0.7103,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": 0.585
       },
-      "raw_score": -0.2592,
+      "raw_score": -0.2586,
       "si": 42.23,
       "grade": "C",
       "top_reasons": [
@@ -134,19 +134,19 @@
       "raw": {
         "cc": 8.0,
         "coupling": 16.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 41.0,
         "global_state": 38.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.458,
         "coupling": 0.5855,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.6606,
         "global_state": -0.206,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3518,
-      "si": 78.04,
+      "raw_score": 0.3295,
+      "si": 77.7,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -165,19 +165,19 @@
       "raw": {
         "cc": 14.0,
         "coupling": 22.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 47.0,
         "global_state": 91.0,
         "game_loop_centrality": 1.0
       },
       "z": {
         "cc": -0.2057,
         "coupling": 0.9824,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.106,
         "global_state": 0.3308,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 1.2846,
-      "si": 96.28,
+      "raw_score": 1.329,
+      "si": 96.96,
       "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
@@ -203,12 +203,12 @@
       "z": {
         "cc": -0.2477,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4795,
         "game_loop_centrality": 0.585
       },
-      "raw_score": -0.1354,
-      "si": 56.42,
+      "raw_score": -0.1348,
+      "si": 56.76,
       "grade": "C",
       "top_reasons": [
         "game_loop_centrality",
@@ -227,20 +227,20 @@
       "raw": {
         "cc": 16.0,
         "coupling": 19.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 36.0,
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.1216,
         "coupling": 0.7839,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.2895,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4446,
-      "si": 83.11,
-      "grade": "E",
+      "raw_score": 0.3666,
+      "si": 79.39,
+      "grade": "D",
       "top_reasons": [
         "dependency_cycle",
         "coupling"
@@ -258,19 +258,19 @@
       "raw": {
         "cc": 13.0,
         "coupling": 76.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 39.0,
         "global_state": 14.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.2477,
         "coupling": 4.5542,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.5122,
         "global_state": -0.4491,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.3706,
-      "si": 97.3,
+      "raw_score": 1.326,
+      "si": 96.62,
       "grade": "E",
       "top_reasons": [
         "coupling",
@@ -296,11 +296,11 @@
       "z": {
         "cc": -0.5,
         "coupling": 0.4532,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.231,
+      "raw_score": -0.2304,
       "si": 46.96,
       "grade": "C",
       "top_reasons": [
@@ -320,19 +320,19 @@
       "raw": {
         "cc": 22.0,
         "coupling": 34.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 40.0,
         "global_state": 27.0,
         "game_loop_centrality": 0.3333
       },
       "z": {
         "cc": 0.1308,
         "coupling": 1.7761,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.5864,
         "global_state": -0.3174,
         "game_loop_centrality": 1.187
       },
-      "raw_score": 1.0352,
-      "si": 93.92,
+      "raw_score": 1.0016,
+      "si": 92.91,
       "grade": "E",
       "top_reasons": [
         "coupling",
@@ -358,11 +358,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4255,
+      "raw_score": -0.4249,
       "si": 22.64,
       "grade": "B",
       "top_reasons": []
@@ -386,12 +386,12 @@
       "z": {
         "cc": 0.355,
         "coupling": 0.1886,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.5289,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4273,
-      "si": 82.43,
+      "raw_score": 0.4279,
+      "si": 83.45,
       "grade": "E",
       "top_reasons": [
         "global_state",
@@ -417,11 +417,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -445,11 +445,11 @@
       "z": {
         "cc": 1.1821,
         "coupling": 0.9824,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4524,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 1.2397,
+      "raw_score": 1.2403,
       "si": 95.61,
       "grade": "E",
       "top_reasons": [
@@ -476,12 +476,12 @@
       "z": {
         "cc": -0.5,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3107,
-      "si": 37.16,
+      "raw_score": -0.3101,
+      "si": 37.5,
       "grade": "B",
       "top_reasons": [
         "coupling",
@@ -507,11 +507,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4547,
+      "raw_score": -0.4541,
       "si": 16.89,
       "grade": "A",
       "top_reasons": []
@@ -535,11 +535,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4627,
+      "raw_score": -0.4621,
       "si": 14.86,
       "grade": "A",
       "top_reasons": []
@@ -563,11 +563,11 @@
       "z": {
         "cc": -0.3739,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.387,
+      "raw_score": -0.3864,
       "si": 26.69,
       "grade": "B",
       "top_reasons": []
@@ -591,11 +591,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -619,11 +619,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4255,
+      "raw_score": -0.4249,
       "si": 22.64,
       "grade": "B",
       "top_reasons": []
@@ -647,11 +647,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.52,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4188,
+      "raw_score": -0.4182,
       "si": 24.32,
       "grade": "B",
       "top_reasons": []
@@ -675,11 +675,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4375,
+      "raw_score": -0.4369,
       "si": 19.59,
       "grade": "A",
       "top_reasons": []
@@ -703,11 +703,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4547,
+      "raw_score": -0.4541,
       "si": 16.89,
       "grade": "A",
       "top_reasons": []
@@ -731,11 +731,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4673,
+      "raw_score": -0.4667,
       "si": 14.19,
       "grade": "A",
       "top_reasons": []
@@ -759,11 +759,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4673,
+      "raw_score": -0.4667,
       "si": 14.19,
       "grade": "A",
       "top_reasons": []
@@ -787,11 +787,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -815,11 +815,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -843,11 +843,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -871,11 +871,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -899,12 +899,12 @@
       "z": {
         "cc": 1.0139,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4929,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2369,
-      "si": 74.66,
+      "raw_score": 0.2375,
+      "si": 74.32,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -930,11 +930,11 @@
       "z": {
         "cc": -0.4159,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0136,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3011,
+      "raw_score": -0.3005,
       "si": 39.19,
       "grade": "B",
       "top_reasons": []
@@ -958,11 +958,11 @@
       "z": {
         "cc": 1.6306,
         "coupling": 0.387,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 5.3348,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.2805,
+      "raw_score": 1.2811,
       "si": 95.95,
       "grade": "E",
       "top_reasons": [
@@ -989,11 +989,11 @@
       "z": {
         "cc": -0.437,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4271,
+      "raw_score": -0.4265,
       "si": 21.62,
       "grade": "B",
       "top_reasons": []
@@ -1017,12 +1017,12 @@
       "z": {
         "cc": 0.3831,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.2802,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0488,
-      "si": 66.89,
+      "raw_score": 0.0494,
+      "si": 67.23,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -1048,11 +1048,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -1076,12 +1076,12 @@
       "z": {
         "cc": 0.4251,
         "coupling": 0.3209,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.3871,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4602,
-      "si": 83.45,
+      "raw_score": 0.4608,
+      "si": 84.12,
       "grade": "E",
       "top_reasons": [
         "global_state",
@@ -1107,11 +1107,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.523,
+      "raw_score": -0.5224,
       "si": 9.12,
       "grade": "A",
       "top_reasons": []
@@ -1135,12 +1135,12 @@
       "z": {
         "cc": 0.3831,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1522,
-      "si": 54.05,
+      "raw_score": -0.1516,
+      "si": 54.73,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -1166,12 +1166,12 @@
       "z": {
         "cc": 0.9718,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0286,
-      "si": 65.54,
+      "raw_score": 0.0292,
+      "si": 65.88,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -1197,12 +1197,12 @@
       "z": {
         "cc": 0.1167,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.125,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1911,
-      "si": 50.0,
+      "raw_score": -0.1905,
+      "si": 50.34,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -1228,12 +1228,12 @@
       "z": {
         "cc": 0.4672,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1558,
-      "si": 53.38,
+      "raw_score": -0.1552,
+      "si": 53.72,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -1259,11 +1259,11 @@
       "z": {
         "cc": 3.4529,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.7595,
+      "raw_score": 0.7601,
       "si": 89.86,
       "grade": "E",
       "top_reasons": [
@@ -1290,11 +1290,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.446,
+      "raw_score": -0.4454,
       "si": 18.24,
       "grade": "A",
       "top_reasons": []
@@ -1318,11 +1318,11 @@
       "z": {
         "cc": 0.0887,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.7996,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1388,
+      "raw_score": 0.1394,
       "si": 70.95,
       "grade": "D",
       "top_reasons": [
@@ -1349,11 +1349,11 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0472,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2202,
+      "raw_score": -0.2196,
       "si": 48.99,
       "grade": "C",
       "top_reasons": [
@@ -1380,12 +1380,12 @@
       "z": {
         "cc": 0.7615,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4086,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0236,
-      "si": 62.16,
+      "raw_score": -0.023,
+      "si": 62.84,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -1411,11 +1411,11 @@
       "z": {
         "cc": 0.0046,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2492,
+      "raw_score": -0.2486,
       "si": 43.92,
       "grade": "C",
       "top_reasons": [
@@ -1442,11 +1442,11 @@
       "z": {
         "cc": -0.2337,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5099,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3539,
+      "raw_score": -0.3533,
       "si": 30.74,
       "grade": "B",
       "top_reasons": []
@@ -1470,11 +1470,11 @@
       "z": {
         "cc": -0.3823,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5099,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3489,
+      "raw_score": -0.3483,
       "si": 31.42,
       "grade": "B",
       "top_reasons": []
@@ -1498,12 +1498,12 @@
       "z": {
         "cc": -0.0375,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.574,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0333,
-      "si": 61.49,
+      "raw_score": -0.0327,
+      "si": 62.16,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -1529,11 +1529,11 @@
       "z": {
         "cc": -0.0375,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1858,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2464,
+      "raw_score": -0.2458,
       "si": 44.26,
       "grade": "C",
       "top_reasons": []
@@ -1557,12 +1557,12 @@
       "z": {
         "cc": 1.7077,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2465,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3507,
-      "si": 77.7,
+      "raw_score": 0.3513,
+      "si": 78.38,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -1588,11 +1588,11 @@
       "z": {
         "cc": 4.2098,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2972,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.0276,
+      "raw_score": 1.0282,
       "si": 93.24,
       "grade": "E",
       "top_reasons": [
@@ -1619,11 +1619,11 @@
       "z": {
         "cc": -0.2477,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3868,
+      "raw_score": -0.3862,
       "si": 27.03,
       "grade": "B",
       "top_reasons": []
@@ -1647,11 +1647,11 @@
       "z": {
         "cc": -0.458,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4182,
+      "raw_score": -0.4176,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -1675,13 +1675,13 @@
       "z": {
         "cc": 0.7615,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5403,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0599,
-      "si": 59.8,
-      "grade": "C",
+      "raw_score": -0.0593,
+      "si": 60.47,
+      "grade": "D",
       "top_reasons": [
         "cc",
         "game_loop_centrality"
@@ -1706,11 +1706,11 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0845,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2399,
+      "raw_score": -0.2393,
       "si": 45.61,
       "grade": "C",
       "top_reasons": []
@@ -1734,12 +1734,12 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.5638,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0931,
-      "si": 58.45,
+      "raw_score": -0.0925,
+      "si": 59.12,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -1765,12 +1765,12 @@
       "z": {
         "cc": -0.2898,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.6882,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0251,
-      "si": 65.2,
+      "raw_score": 0.0257,
+      "si": 65.54,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -1796,12 +1796,12 @@
       "z": {
         "cc": -0.3318,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0877,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.4001,
-      "si": 81.42,
+      "raw_score": 0.4007,
+      "si": 82.09,
       "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
@@ -1827,11 +1827,11 @@
       "z": {
         "cc": -0.2898,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0439,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2678,
+      "raw_score": -0.2672,
       "si": 40.88,
       "grade": "C",
       "top_reasons": []
@@ -1855,12 +1855,12 @@
       "z": {
         "cc": 1.6026,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.4653,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4932,
-      "si": 84.8,
+      "raw_score": 0.4938,
+      "si": 85.47,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -1886,11 +1886,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5808,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5202,
+      "raw_score": -0.5196,
       "si": 9.46,
       "grade": "A",
       "top_reasons": []
@@ -1914,12 +1914,12 @@
       "z": {
         "cc": 0.4251,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4423,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0361,
-      "si": 65.88,
+      "raw_score": 0.0367,
+      "si": 66.22,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -1945,11 +1945,11 @@
       "z": {
         "cc": -0.0375,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0541,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1275,
+      "raw_score": -0.1269,
       "si": 57.09,
       "grade": "C",
       "top_reasons": []
@@ -1973,11 +1973,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -2001,12 +2001,12 @@
       "z": {
         "cc": -0.2477,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5504,
         "game_loop_centrality": 1.187
       },
-      "raw_score": -0.0723,
-      "si": 59.12,
+      "raw_score": -0.0717,
+      "si": 59.8,
       "grade": "C",
       "top_reasons": [
         "game_loop_centrality",
@@ -2032,11 +2032,11 @@
       "z": {
         "cc": 0.8456,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.2757,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 1.1807,
+      "raw_score": 1.1813,
       "si": 94.59,
       "grade": "E",
       "top_reasons": [
@@ -2063,12 +2063,12 @@
       "z": {
         "cc": -0.4159,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3681,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3212,
-      "si": 35.47,
+      "raw_score": -0.3206,
+      "si": 35.81,
       "grade": "B",
       "top_reasons": []
     },
@@ -2091,11 +2091,11 @@
       "z": {
         "cc": 0.355,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 3.633,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.5268,
+      "raw_score": 0.5274,
       "si": 86.15,
       "grade": "E",
       "top_reasons": [
@@ -2115,19 +2115,19 @@
       "raw": {
         "cc": 10.0,
         "coupling": 6.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 36.0,
         "global_state": 3.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.3739,
         "coupling": -0.076,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.2895,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1585,
-      "si": 72.3,
+      "raw_score": 0.0805,
+      "si": 69.26,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -2153,13 +2153,13 @@
       "z": {
         "cc": 0.4391,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.5391,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3714,
-      "si": 79.05,
-      "grade": "D",
+      "raw_score": 0.372,
+      "si": 80.07,
+      "grade": "E",
       "top_reasons": [
         "global_state",
         "cc"
@@ -2184,12 +2184,12 @@
       "z": {
         "cc": 0.2569,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.108,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0479,
-      "si": 60.81,
+      "raw_score": -0.0473,
+      "si": 61.49,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -2215,11 +2215,11 @@
       "z": {
         "cc": 0.1728,
         "coupling": 0.6516,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.5132,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.8633,
+      "raw_score": 0.8639,
       "si": 92.57,
       "grade": "E",
       "top_reasons": [
@@ -2246,11 +2246,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3398,
+      "raw_score": -0.3392,
       "si": 32.43,
       "grade": "B",
       "top_reasons": [
@@ -2277,11 +2277,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4547,
+      "raw_score": -0.4541,
       "si": 16.89,
       "grade": "A",
       "top_reasons": []
@@ -2305,11 +2305,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5403,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4014,
+      "raw_score": -0.4008,
       "si": 26.01,
       "grade": "B",
       "top_reasons": []
@@ -2333,11 +2333,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.52,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3857,
+      "raw_score": -0.3851,
       "si": 27.7,
       "grade": "B",
       "top_reasons": []
@@ -2361,11 +2361,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4592,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3814,
+      "raw_score": -0.3808,
       "si": 28.38,
       "grade": "B",
       "top_reasons": []
@@ -2389,11 +2389,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4381,
+      "raw_score": -0.4375,
       "si": 18.92,
       "grade": "A",
       "top_reasons": []
@@ -2417,11 +2417,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4342,
+      "raw_score": -0.4336,
       "si": 20.95,
       "grade": "B",
       "top_reasons": []
@@ -2445,11 +2445,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4216,
+      "raw_score": -0.421,
       "si": 23.31,
       "grade": "B",
       "top_reasons": []
@@ -2473,11 +2473,11 @@
       "z": {
         "cc": -0.3739,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2668,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3264,
+      "raw_score": -0.3258,
       "si": 34.12,
       "grade": "B",
       "top_reasons": []
@@ -2501,12 +2501,12 @@
       "z": {
         "cc": 2.2194,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 4.9397,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.3317,
-      "si": 96.96,
+      "raw_score": 1.3323,
+      "si": 97.3,
       "grade": "E",
       "top_reasons": [
         "global_state",
@@ -2532,11 +2532,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -2560,12 +2560,12 @@
       "z": {
         "cc": -0.0585,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.0703,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0147,
-      "si": 62.5,
+      "raw_score": -0.0141,
+      "si": 63.18,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -2591,11 +2591,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -2619,11 +2619,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.523,
+      "raw_score": -0.5224,
       "si": 9.12,
       "grade": "A",
       "top_reasons": []
@@ -2647,12 +2647,12 @@
       "z": {
         "cc": 1.3783,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.9515,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.6146,
-      "si": 88.51,
+      "raw_score": 0.6152,
+      "si": 88.85,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -2678,11 +2678,11 @@
       "z": {
         "cc": 0.0887,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2405,
+      "raw_score": -0.2399,
       "si": 44.93,
       "grade": "C",
       "top_reasons": [
@@ -2709,11 +2709,11 @@
       "z": {
         "cc": 0.5092,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1267,
+      "raw_score": -0.1261,
       "si": 57.43,
       "grade": "C",
       "top_reasons": [
@@ -2740,11 +2740,11 @@
       "z": {
         "cc": -0.1309,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2972,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2581,
+      "raw_score": -0.2575,
       "si": 42.91,
       "grade": "C",
       "top_reasons": []
@@ -2768,11 +2768,11 @@
       "z": {
         "cc": 0.2149,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2315,
+      "raw_score": -0.2309,
       "si": 46.62,
       "grade": "C",
       "top_reasons": [
@@ -2799,12 +2799,12 @@
       "z": {
         "cc": 2.8221,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5099,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.5959,
-      "si": 88.18,
+      "raw_score": 0.5965,
+      "si": 88.51,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -2830,11 +2830,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.446,
+      "raw_score": -0.4454,
       "si": 18.24,
       "grade": "A",
       "top_reasons": []
@@ -2858,11 +2858,11 @@
       "z": {
         "cc": 0.4882,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.063,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2651,
+      "raw_score": 0.2657,
       "si": 75.34,
       "grade": "D",
       "top_reasons": [
@@ -2889,11 +2889,11 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1148,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2445,
+      "raw_score": -0.2439,
       "si": 44.59,
       "grade": "C",
       "top_reasons": []
@@ -2917,12 +2917,12 @@
       "z": {
         "cc": 1.3292,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2567,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1529,
-      "si": 71.96,
+      "raw_score": 0.1535,
+      "si": 71.62,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -2948,11 +2948,11 @@
       "z": {
         "cc": 0.0046,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2492,
+      "raw_score": -0.2486,
       "si": 43.92,
       "grade": "C",
       "top_reasons": [
@@ -2979,12 +2979,12 @@
       "z": {
         "cc": -0.2645,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1959,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3161,
-      "si": 36.49,
+      "raw_score": -0.3155,
+      "si": 36.82,
       "grade": "B",
       "top_reasons": []
     },
@@ -3007,11 +3007,11 @@
       "z": {
         "cc": -0.3907,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3649,
+      "raw_score": -0.3643,
       "si": 29.39,
       "grade": "B",
       "top_reasons": []
@@ -3035,12 +3035,12 @@
       "z": {
         "cc": -0.2057,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4625,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.15,
-      "si": 55.07,
+      "raw_score": -0.1495,
+      "si": 55.74,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -3066,11 +3066,11 @@
       "z": {
         "cc": 0.0887,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4694,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2677,
+      "raw_score": -0.2671,
       "si": 41.55,
       "grade": "C",
       "top_reasons": [
@@ -3097,12 +3097,12 @@
       "z": {
         "cc": 1.5185,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.1586,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3216,
-      "si": 76.35,
+      "raw_score": 0.3222,
+      "si": 77.03,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -3128,12 +3128,12 @@
       "z": {
         "cc": 2.6539,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3174,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.5743,
-      "si": 87.5,
+      "raw_score": 0.5749,
+      "si": 87.84,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -3159,11 +3159,11 @@
       "z": {
         "cc": -0.1636,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3451,
+      "raw_score": -0.3445,
       "si": 31.76,
       "grade": "B",
       "top_reasons": []
@@ -3187,11 +3187,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4694,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4238,
+      "raw_score": -0.4232,
       "si": 22.97,
       "grade": "B",
       "top_reasons": []
@@ -3215,12 +3215,12 @@
       "z": {
         "cc": 1.4764,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3782,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1789,
-      "si": 73.31,
+      "raw_score": 0.1795,
+      "si": 72.64,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -3246,11 +3246,11 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0743,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2384,
+      "raw_score": -0.2378,
       "si": 45.95,
       "grade": "C",
       "top_reasons": []
@@ -3274,11 +3274,11 @@
       "z": {
         "cc": -0.1636,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.1283,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2041,
+      "raw_score": -0.2035,
       "si": 49.66,
       "grade": "C",
       "top_reasons": [
@@ -3305,11 +3305,11 @@
       "z": {
         "cc": -0.458,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.9082,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1754,
+      "raw_score": -0.1748,
       "si": 51.69,
       "grade": "C",
       "top_reasons": [
@@ -3336,12 +3336,12 @@
       "z": {
         "cc": -0.3318,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0371,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.3925,
-      "si": 80.41,
+      "raw_score": 0.3931,
+      "si": 81.08,
       "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
@@ -3367,12 +3367,12 @@
       "z": {
         "cc": 0.8456,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0067,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0639,
-      "si": 67.57,
+      "raw_score": 0.0645,
+      "si": 67.91,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -3398,12 +3398,12 @@
       "z": {
         "cc": 1.6026,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.0399,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4129,
-      "si": 82.09,
+      "raw_score": 0.4135,
+      "si": 83.11,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -3429,12 +3429,12 @@
       "z": {
         "cc": 0.4251,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.5132,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0137,
-      "si": 64.53,
+      "raw_score": 0.0143,
+      "si": 64.86,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -3460,12 +3460,12 @@
       "z": {
         "cc": 0.5513,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.6854,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1105,
-      "si": 69.26,
+      "raw_score": 0.1111,
+      "si": 69.93,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -3491,12 +3491,12 @@
       "z": {
         "cc": 0.0467,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.4653,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0926,
-      "si": 68.58,
+      "raw_score": 0.0932,
+      "si": 69.59,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -3522,11 +3522,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -3550,11 +3550,11 @@
       "z": {
         "cc": -0.4475,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5504,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4407,
+      "raw_score": -0.4401,
       "si": 18.58,
       "grade": "A",
       "top_reasons": []
@@ -3578,12 +3578,12 @@
       "z": {
         "cc": 0.3971,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.3162,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3254,
-      "si": 76.69,
+      "raw_score": 0.326,
+      "si": 77.36,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -3609,12 +3609,12 @@
       "z": {
         "cc": 0.4251,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.108,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.014,
-      "si": 62.84,
+      "raw_score": -0.0134,
+      "si": 63.51,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -3640,11 +3640,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3233,
+      "raw_score": -0.3227,
       "si": 35.14,
       "grade": "B",
       "top_reasons": [
@@ -3671,11 +3671,11 @@
       "z": {
         "cc": -0.2898,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0237,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2647,
+      "raw_score": -0.2642,
       "si": 41.89,
       "grade": "C",
       "top_reasons": []
@@ -3699,11 +3699,11 @@
       "z": {
         "cc": 1.7077,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 5.2942,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.2314,
+      "raw_score": 1.232,
       "si": 95.27,
       "grade": "E",
       "top_reasons": [
@@ -3730,12 +3730,12 @@
       "z": {
         "cc": -0.2267,
         "coupling": 0.4532,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4119,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0014,
-      "si": 63.85,
+      "raw_score": 0.002,
+      "si": 64.53,
       "grade": "D",
       "top_reasons": [
         "coupling",
@@ -3761,11 +3761,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -3789,12 +3789,12 @@
       "z": {
         "cc": -0.1636,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.1283,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1876,
-      "si": 50.34,
+      "raw_score": -0.187,
+      "si": 50.68,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -3820,11 +3820,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -3848,11 +3848,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.523,
+      "raw_score": -0.5224,
       "si": 9.12,
       "grade": "A",
       "top_reasons": []
@@ -3876,11 +3876,11 @@
       "z": {
         "cc": 0.9718,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.1947,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.5292,
+      "raw_score": 0.5298,
       "si": 86.49,
       "grade": "E",
       "top_reasons": [
@@ -3907,12 +3907,12 @@
       "z": {
         "cc": -0.5453,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.0934,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0404,
-      "si": 61.15,
+      "raw_score": -0.0398,
+      "si": 61.82,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -3938,12 +3938,12 @@
       "z": {
         "cc": 0.299,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2161,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1501,
-      "si": 54.73,
+      "raw_score": -0.1495,
+      "si": 55.41,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -3969,12 +3969,12 @@
       "z": {
         "cc": -0.0375,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4491,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3025,
-      "si": 38.18,
+      "raw_score": -0.3019,
+      "si": 38.51,
       "grade": "B",
       "top_reasons": []
     },
@@ -3997,11 +3997,11 @@
       "z": {
         "cc": 0.2569,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2354,
+      "raw_score": -0.2348,
       "si": 46.28,
       "grade": "C",
       "top_reasons": [
@@ -4028,11 +4028,11 @@
       "z": {
         "cc": 0.1258,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3681,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2248,
+      "raw_score": -0.2242,
       "si": 47.64,
       "grade": "C",
       "top_reasons": [
@@ -4059,11 +4059,11 @@
       "z": {
         "cc": 0.1728,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1655,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1803,
+      "raw_score": -0.1797,
       "si": 51.35,
       "grade": "C",
       "top_reasons": [
@@ -4090,12 +4090,12 @@
       "z": {
         "cc": 3.6632,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5403,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.8271,
-      "si": 90.88,
+      "raw_score": 0.8277,
+      "si": 91.22,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -4121,11 +4121,11 @@
       "z": {
         "cc": -0.0795,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3333,
+      "raw_score": -0.3327,
       "si": 33.45,
       "grade": "B",
       "top_reasons": []
@@ -4149,11 +4149,11 @@
       "z": {
         "cc": 1.7287,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 3.5115,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.8545,
+      "raw_score": 0.8551,
       "si": 92.23,
       "grade": "E",
       "top_reasons": [
@@ -4180,12 +4180,12 @@
       "z": {
         "cc": 1.2241,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1148,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1757,
-      "si": 72.97,
+      "raw_score": 0.1763,
+      "si": 72.3,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -4211,12 +4211,12 @@
       "z": {
         "cc": 1.925,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1148,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3529,
-      "si": 78.38,
+      "raw_score": 0.3535,
+      "si": 78.72,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -4242,12 +4242,12 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4694,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3142,
-      "si": 36.82,
+      "raw_score": -0.3136,
+      "si": 37.16,
       "grade": "B",
       "top_reasons": []
     },
@@ -4270,11 +4270,11 @@
       "z": {
         "cc": -0.2547,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2972,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3449,
+      "raw_score": -0.3443,
       "si": 32.09,
       "grade": "B",
       "top_reasons": []
@@ -4298,12 +4298,12 @@
       "z": {
         "cc": -0.1356,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.8171,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0593,
-      "si": 60.14,
+      "raw_score": -0.0587,
+      "si": 60.81,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -4329,11 +4329,11 @@
       "z": {
         "cc": 0.0887,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4694,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2677,
+      "raw_score": -0.2671,
       "si": 41.55,
       "grade": "C",
       "top_reasons": [
@@ -4360,11 +4360,11 @@
       "z": {
         "cc": 3.4108,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.358,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.7788,
+      "raw_score": 0.7794,
       "si": 90.2,
       "grade": "E",
       "top_reasons": [
@@ -4391,11 +4391,11 @@
       "z": {
         "cc": -0.458,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2769,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3863,
+      "raw_score": -0.3857,
       "si": 27.36,
       "grade": "B",
       "top_reasons": []
@@ -4419,12 +4419,12 @@
       "z": {
         "cc": -0.0375,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3072,
-      "si": 37.5,
+      "raw_score": -0.3066,
+      "si": 37.84,
       "grade": "B",
       "top_reasons": []
     },
@@ -4447,11 +4447,11 @@
       "z": {
         "cc": 0.1728,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2576,
+      "raw_score": -0.257,
       "si": 43.24,
       "grade": "C",
       "top_reasons": [
@@ -4478,11 +4478,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4694,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4569,
+      "raw_score": -0.4563,
       "si": 15.2,
       "grade": "A",
       "top_reasons": []
@@ -4506,12 +4506,12 @@
       "z": {
         "cc": 2.1913,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3782,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3933,
-      "si": 80.74,
+      "raw_score": 0.3939,
+      "si": 81.42,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -4537,12 +4537,12 @@
       "z": {
         "cc": 0.1308,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0371,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.146,
-      "si": 55.74,
+      "raw_score": -0.1454,
+      "si": 56.42,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -4568,11 +4568,11 @@
       "z": {
         "cc": -0.0795,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0541,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2228,
+      "raw_score": -0.2222,
       "si": 48.31,
       "grade": "C",
       "top_reasons": []
@@ -4596,11 +4596,11 @@
       "z": {
         "cc": -0.1636,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.1181,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2222,
+      "raw_score": -0.2216,
       "si": 48.65,
       "grade": "C",
       "top_reasons": [
@@ -4627,12 +4627,12 @@
       "z": {
         "cc": -0.458,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.0703,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1511,
-      "si": 54.39,
+      "raw_score": -0.1505,
+      "si": 55.07,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -4658,13 +4658,13 @@
       "z": {
         "cc": -0.3318,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0371,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.376,
-      "si": 79.73,
-      "grade": "D",
+      "raw_score": 0.3765,
+      "si": 80.41,
+      "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
         "global_state"
@@ -4689,12 +4689,12 @@
       "z": {
         "cc": 1.14,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.1181,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1524,
-      "si": 71.62,
+      "raw_score": 0.153,
+      "si": 71.28,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -4720,12 +4720,12 @@
       "z": {
         "cc": 1.5185,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.0196,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4012,
-      "si": 81.76,
+      "raw_score": 0.4018,
+      "si": 82.43,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -4751,12 +4751,12 @@
       "z": {
         "cc": 0.4251,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4828,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0074,
-      "si": 63.18,
+      "raw_score": -0.0068,
+      "si": 63.85,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -4782,12 +4782,12 @@
       "z": {
         "cc": 0.2359,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.8778,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0778,
-      "si": 68.24,
+      "raw_score": 0.0784,
+      "si": 68.92,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -4813,11 +4813,11 @@
       "z": {
         "cc": -0.029,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.6302,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2612,
+      "raw_score": 0.2618,
       "si": 75.0,
       "grade": "D",
       "top_reasons": [
@@ -4844,12 +4844,12 @@
       "z": {
         "cc": 0.0046,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.1789,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1626,
-      "si": 53.04,
+      "raw_score": -0.162,
+      "si": 52.7,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -4875,11 +4875,11 @@
       "z": {
         "cc": 0.0467,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3073,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2229,
+      "raw_score": -0.2223,
       "si": 47.97,
       "grade": "C",
       "top_reasons": [
@@ -4906,11 +4906,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -4934,11 +4934,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4795,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4214,
+      "raw_score": -0.4208,
       "si": 23.65,
       "grade": "B",
       "top_reasons": []
@@ -4962,11 +4962,11 @@
       "z": {
         "cc": -0.2687,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0338,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2765,
+      "raw_score": -0.2759,
       "si": 40.2,
       "grade": "C",
       "top_reasons": []
@@ -4990,11 +4990,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5051,
+      "raw_score": -0.5045,
       "si": 10.47,
       "grade": "A",
       "top_reasons": []
@@ -5018,11 +5018,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4342,
+      "raw_score": -0.4336,
       "si": 20.95,
       "grade": "B",
       "top_reasons": []
@@ -5046,11 +5046,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4682,
+      "raw_score": -0.4676,
       "si": 12.84,
       "grade": "A",
       "top_reasons": []
@@ -5067,20 +5067,20 @@
       "raw": {
         "cc": 0.0,
         "coupling": 5.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 34.0,
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.7944,
         "coupling": -0.1421,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.1411,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0113,
-      "si": 64.19,
-      "grade": "D",
+      "raw_score": -0.089,
+      "si": 59.46,
+      "grade": "C",
       "top_reasons": [
         "dependency_cycle",
         "coupling"
@@ -5098,19 +5098,19 @@
       "raw": {
         "cc": 13.0,
         "coupling": 21.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 36.0,
         "global_state": 28.0,
         "game_loop_centrality": 0.25
       },
       "z": {
         "cc": -0.2477,
         "coupling": 0.9162,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.2895,
         "global_state": -0.3073,
         "game_loop_centrality": 0.8107
       },
-      "raw_score": 0.6517,
-      "si": 89.53,
+      "raw_score": 0.5737,
+      "si": 87.5,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -5129,19 +5129,19 @@
       "raw": {
         "cc": 16.0,
         "coupling": 22.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 38.0,
         "global_state": 120.0,
         "game_loop_centrality": 0.25
       },
       "z": {
         "cc": -0.1216,
         "coupling": 0.9824,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.438,
         "global_state": 0.6246,
         "game_loop_centrality": 0.8107
       },
-      "raw_score": 0.8459,
-      "si": 91.55,
+      "raw_score": 0.7901,
+      "si": 90.54,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -5167,11 +5167,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4508,
+      "raw_score": -0.4502,
       "si": 17.23,
       "grade": "A",
       "top_reasons": []
@@ -5195,11 +5195,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": 0.387,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3359,
+      "raw_score": -0.3353,
       "si": 33.11,
       "grade": "B",
       "top_reasons": [
@@ -5226,12 +5226,12 @@
       "z": {
         "cc": -0.2582,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.2425,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0173,
-      "si": 64.86,
+      "raw_score": 0.0179,
+      "si": 65.2,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -5257,11 +5257,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1452,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3256,
+      "raw_score": -0.325,
       "si": 34.8,
       "grade": "B",
       "top_reasons": []
@@ -5285,11 +5285,11 @@
       "z": {
         "cc": -0.6682,
         "coupling": 0.3209,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2994,
+      "raw_score": -0.2988,
       "si": 39.53,
       "grade": "B",
       "top_reasons": [
@@ -5316,11 +5316,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4351,
+      "raw_score": -0.4345,
       "si": 20.27,
       "grade": "B",
       "top_reasons": []
@@ -5337,19 +5337,19 @@
       "raw": {
         "cc": 8.0,
         "coupling": 20.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 37.0,
         "global_state": 79.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.458,
         "coupling": 0.8501,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.3638,
         "global_state": 0.2093,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4803,
-      "si": 83.78,
+      "raw_score": 0.4134,
+      "si": 82.77,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -5368,18 +5368,18 @@
       "raw": {
         "cc": 12.0,
         "coupling": 156.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 63.0,
         "global_state": 22.0,
         "game_loop_centrality": 0.3333
       },
       "z": {
         "cc": -0.2898,
         "coupling": 9.8459,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 4.2935,
         "global_state": -0.3681,
         "game_loop_centrality": 1.187
       },
-      "raw_score": 2.9189,
+      "raw_score": 3.1414,
       "si": 100.0,
       "grade": "E",
       "top_reasons": [
@@ -5406,12 +5406,12 @@
       "z": {
         "cc": -0.7103,
         "coupling": 1.7761,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5302,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 0.3844,
-      "si": 80.07,
+      "raw_score": 0.385,
+      "si": 80.74,
       "grade": "E",
       "top_reasons": [
         "coupling",
@@ -5430,18 +5430,18 @@
       "raw": {
         "cc": 19.3333,
         "coupling": 54.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 51.0,
         "global_state": 263.0,
         "game_loop_centrality": 1.0
       },
       "z": {
         "cc": 0.0186,
         "coupling": 3.099,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.4028,
         "global_state": 2.0731,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 2.1423,
+      "raw_score": 2.2313,
       "si": 98.99,
       "grade": "E",
       "top_reasons": [
@@ -5468,11 +5468,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.358,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.374,
+      "raw_score": -0.3734,
       "si": 29.05,
       "grade": "B",
       "top_reasons": []
@@ -5496,11 +5496,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4351,
+      "raw_score": -0.4345,
       "si": 20.27,
       "grade": "B",
       "top_reasons": []
@@ -5517,18 +5517,18 @@
       "raw": {
         "cc": 25.0,
         "coupling": 57.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 50.0,
         "global_state": 28.0,
         "game_loop_centrality": 0.5
       },
       "z": {
         "cc": 0.2569,
         "coupling": 3.2974,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.3286,
         "global_state": -0.3073,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 1.5677,
+      "raw_score": 1.6456,
       "si": 98.31,
       "grade": "E",
       "top_reasons": [
@@ -5555,12 +5555,12 @@
       "z": {
         "cc": -0.5841,
         "coupling": 1.1146,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": 0.585
       },
-      "raw_score": 0.0446,
-      "si": 66.22,
+      "raw_score": 0.0452,
+      "si": 66.55,
       "grade": "D",
       "top_reasons": [
         "coupling",
@@ -5586,11 +5586,11 @@
       "z": {
         "cc": -0.458,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3507,
+      "raw_score": -0.3501,
       "si": 31.08,
       "grade": "B",
       "top_reasons": []
@@ -5607,19 +5607,19 @@
       "raw": {
         "cc": 13.5,
         "coupling": 28.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 43.0,
         "global_state": 40.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.2267,
         "coupling": 1.3792,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.8091,
         "global_state": -0.1858,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.6227,
-      "si": 88.85,
+      "raw_score": 0.6226,
+      "si": 89.19,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -5645,12 +5645,12 @@
       "z": {
         "cc": -0.7103,
         "coupling": 1.5777,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.9082,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2119,
-      "si": 73.99,
+      "raw_score": 0.2125,
+      "si": 73.65,
       "grade": "D",
       "top_reasons": [
         "coupling",
@@ -5669,20 +5669,20 @@
       "raw": {
         "cc": 3.0,
         "coupling": 8.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 36.0,
         "global_state": 0.0,
         "game_loop_centrality": 0.5
       },
       "z": {
         "cc": -0.6682,
         "coupling": 0.0563,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.2895,
         "global_state": -0.5909,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 0.4374,
-      "si": 82.77,
-      "grade": "E",
+      "raw_score": 0.3593,
+      "si": 79.05,
+      "grade": "D",
       "top_reasons": [
         "dependency_cycle",
         "game_loop_centrality"
@@ -5700,18 +5700,18 @@
       "raw": {
         "cc": 10.0,
         "coupling": 116.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 58.0,
         "global_state": 0.0,
         "game_loop_centrality": 0.5
       },
       "z": {
         "cc": -0.3739,
         "coupling": 7.2,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.9224,
         "global_state": -0.5909,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 2.3116,
+      "raw_score": 2.4785,
       "si": 99.66,
       "grade": "E",
       "top_reasons": [
@@ -5738,11 +5738,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3594,
+      "raw_score": -0.3588,
       "si": 30.41,
       "grade": "B",
       "top_reasons": []
@@ -5766,11 +5766,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5178,
+      "raw_score": -0.5172,
       "si": 10.14,
       "grade": "A",
       "top_reasons": []
@@ -5794,12 +5794,12 @@
       "z": {
         "cc": -0.2898,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3168,
-      "si": 36.15,
+      "raw_score": -0.3162,
+      "si": 36.49,
       "grade": "B",
       "top_reasons": []
     },
@@ -5822,12 +5822,12 @@
       "z": {
         "cc": 1.098,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2465,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2008,
-      "si": 73.65,
+      "raw_score": 0.2014,
+      "si": 73.31,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -5846,19 +5846,19 @@
       "raw": {
         "cc": 13.6667,
         "coupling": 26.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 53.0,
         "global_state": 148.0,
         "game_loop_centrality": 0.3333
       },
       "z": {
         "cc": -0.2197,
         "coupling": 1.2469,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.5513,
         "global_state": 0.9082,
         "game_loop_centrality": 1.187
       },
-      "raw_score": 0.9816,
-      "si": 92.91,
+      "raw_score": 1.0928,
+      "si": 93.92,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -5877,19 +5877,19 @@
       "raw": {
         "cc": 13.0,
         "coupling": 12.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 41.0,
         "global_state": 15.0,
         "game_loop_centrality": 0.25
       },
       "z": {
         "cc": -0.2477,
         "coupling": 0.3209,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.6606,
         "global_state": -0.439,
         "game_loop_centrality": 0.8107
       },
-      "raw_score": 0.4832,
-      "si": 84.12,
+      "raw_score": 0.4608,
+      "si": 84.46,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -5915,11 +5915,11 @@
       "z": {
         "cc": -0.6682,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3596,
+      "raw_score": -0.359,
       "si": 30.07,
       "grade": "B",
       "top_reasons": [
@@ -5939,19 +5939,19 @@
       "raw": {
         "cc": 13.0,
         "coupling": 10.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 41.0,
         "global_state": 49.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.2477,
         "coupling": 0.1886,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.6606,
         "global_state": -0.0946,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3324,
-      "si": 77.03,
+      "raw_score": 0.31,
+      "si": 76.69,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -5970,19 +5970,19 @@
       "raw": {
         "cc": 3.0,
         "coupling": 9.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 40.0,
         "global_state": 1.0,
         "game_loop_centrality": 0.3333
       },
       "z": {
         "cc": -0.6682,
         "coupling": 0.1225,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.5864,
         "global_state": -0.5808,
         "game_loop_centrality": 1.187
       },
-      "raw_score": 0.3426,
-      "si": 77.36,
+      "raw_score": 0.309,
+      "si": 76.35,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -6001,19 +6001,19 @@
       "raw": {
         "cc": 2.0,
         "coupling": 5.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 37.0,
         "global_state": 18.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.7103,
         "coupling": -0.1421,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.3638,
         "global_state": -0.4086,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0639,
-      "si": 67.23,
+      "raw_score": -0.0031,
+      "si": 64.19,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -6032,19 +6032,19 @@
       "raw": {
         "cc": 5.0,
         "coupling": 9.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 41.0,
         "global_state": 4.0,
         "game_loop_centrality": 0.3333
       },
       "z": {
         "cc": -0.5841,
         "coupling": 0.1225,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.6606,
         "global_state": -0.5504,
         "game_loop_centrality": 1.187
       },
-      "raw_score": 0.3723,
-      "si": 79.39,
+      "raw_score": 0.35,
+      "si": 78.04,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -6063,20 +6063,20 @@
       "raw": {
         "cc": 1.0,
         "coupling": 3.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 34.0,
         "global_state": 4.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.7523,
         "coupling": -0.2744,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.1411,
         "global_state": -0.5504,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0031,
-      "si": 63.51,
-      "grade": "D",
+      "raw_score": -0.1034,
+      "si": 58.45,
+      "grade": "C",
       "top_reasons": [
         "dependency_cycle",
         "game_loop_centrality"
@@ -6094,19 +6094,19 @@
       "raw": {
         "cc": 10.6667,
         "coupling": 15.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 43.0,
         "global_state": 70.0,
         "game_loop_centrality": 0.25
       },
       "z": {
         "cc": -0.3458,
         "coupling": 0.5193,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.8091,
         "global_state": 0.1181,
         "game_loop_centrality": 0.8107
       },
-      "raw_score": 0.5869,
-      "si": 87.84,
+      "raw_score": 0.5868,
+      "si": 88.18,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -6125,19 +6125,19 @@
       "raw": {
         "cc": 0.0,
         "coupling": 10.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 41.0,
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.7944,
         "coupling": 0.1886,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.6606,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.094,
-      "si": 68.92,
+      "raw_score": 0.0716,
+      "si": 68.24,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -6156,18 +6156,18 @@
       "raw": {
         "cc": 18.5,
         "coupling": 18.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 46.0,
         "global_state": 180.0,
         "game_loop_centrality": 0.5
       },
       "z": {
         "cc": -0.0164,
         "coupling": 0.7178,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.0317,
         "global_state": 1.2324,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 1.0718,
+      "raw_score": 1.1051,
       "si": 94.26,
       "grade": "E",
       "top_reasons": [
@@ -6187,19 +6187,19 @@
       "raw": {
         "cc": 21.5,
         "coupling": 7.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 39.0,
         "global_state": 6.0,
         "game_loop_centrality": 0.25
       },
       "z": {
         "cc": 0.1097,
         "coupling": -0.0098,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.5122,
         "global_state": -0.5302,
         "game_loop_centrality": 0.8107
       },
-      "raw_score": 0.494,
-      "si": 85.14,
+      "raw_score": 0.4494,
+      "si": 83.78,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -6225,11 +6225,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4051,
+      "raw_score": -0.4045,
       "si": 25.68,
       "grade": "B",
       "top_reasons": []
@@ -6246,19 +6246,19 @@
       "raw": {
         "cc": 1.0,
         "coupling": 4.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 13.0,
         "global_state": 4.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.7523,
         "coupling": -0.2083,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.5825,
         "global_state": -0.5504,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3012,
-      "si": 38.85,
+      "raw_score": -0.3207,
+      "si": 35.47,
       "grade": "B",
       "top_reasons": [
         "dependency_cycle",
@@ -6277,19 +6277,19 @@
       "raw": {
         "cc": 9.0,
         "coupling": 5.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 13.0,
         "global_state": 36.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.4159,
         "coupling": -0.1421,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.5825,
         "global_state": -0.2263,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1351,
-      "si": 56.76,
+      "raw_score": -0.1546,
+      "si": 54.05,
       "grade": "C",
       "top_reasons": [
         "dependency_cycle",
@@ -6308,19 +6308,19 @@
       "raw": {
         "cc": 3.0,
         "coupling": 10.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 17.0,
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.6682,
         "coupling": 0.1886,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.8794,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1828,
-      "si": 51.01,
+      "raw_score": -0.1578,
+      "si": 53.04,
       "grade": "C",
       "top_reasons": [
         "dependency_cycle",
@@ -6339,23 +6339,23 @@
       "raw": {
         "cc": 9.0,
         "coupling": 13.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 19.0,
         "global_state": 136.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.4159,
         "coupling": 0.387,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 1.0278,
         "global_state": 0.7867,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1491,
-      "si": 71.28,
+      "raw_score": 0.1964,
+      "si": 72.97,
       "grade": "D",
       "top_reasons": [
-        "global_state",
-        "dependency_cycle"
+        "dependency_cycle",
+        "global_state"
       ]
     },
     {
@@ -6370,18 +6370,18 @@
       "raw": {
         "cc": 9.0,
         "coupling": 9.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 15.0,
         "global_state": 9.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.4159,
         "coupling": 0.1225,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.7309,
         "global_state": -0.4998,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.11,
+      "raw_score": -0.1072,
       "si": 58.11,
       "grade": "C",
       "top_reasons": [
@@ -6408,11 +6408,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": 0.5193,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.52,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2165,
+      "raw_score": -0.2159,
       "si": 49.32,
       "grade": "C",
       "top_reasons": [
@@ -6432,19 +6432,19 @@
       "raw": {
         "cc": 5.0,
         "coupling": 23.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 26.0,
         "global_state": 45.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.5841,
         "coupling": 1.0485,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 1.5473,
         "global_state": -0.1351,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1258,
-      "si": 69.59,
+      "raw_score": 0.251,
+      "si": 74.66,
       "grade": "D",
       "top_reasons": [
         "coupling",
@@ -6463,19 +6463,19 @@
       "raw": {
         "cc": 5.0,
         "coupling": 7.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 14.0,
         "global_state": 16.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.5841,
         "coupling": -0.0098,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.6567,
         "global_state": -0.4289,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1829,
-      "si": 50.68,
+      "raw_score": -0.1912,
+      "si": 50.0,
       "grade": "C",
       "top_reasons": [
         "dependency_cycle",
@@ -6494,19 +6494,19 @@
       "raw": {
         "cc": 10.5,
         "coupling": 11.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 14.0,
         "global_state": 130.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.3528,
         "coupling": 0.2547,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.6567,
         "global_state": 0.7259,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1259,
-      "si": 69.93,
+      "raw_score": 0.1175,
+      "si": 70.27,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -6532,11 +6532,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -6553,18 +6553,18 @@
       "raw": {
         "cc": 8.0,
         "coupling": 6.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 14.0,
         "global_state": 64.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.458,
         "coupling": -0.076,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.6567,
         "global_state": 0.0574,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0886,
+      "raw_score": -0.097,
       "si": 58.78,
       "grade": "C",
       "top_reasons": [
@@ -6584,19 +6584,19 @@
       "raw": {
         "cc": 9.5,
         "coupling": 6.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 13.0,
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.3949,
         "coupling": -0.076,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.5825,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1639,
-      "si": 52.7,
+      "raw_score": -0.1834,
+      "si": 51.01,
       "grade": "C",
       "top_reasons": [
         "dependency_cycle",
@@ -6615,19 +6615,19 @@
       "raw": {
         "cc": 9.5,
         "coupling": 6.0,
-        "dependency_cycle": 11.0,
+        "dependency_cycle": 13.0,
         "global_state": 19.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.3949,
         "coupling": -0.076,
-        "dependency_cycle": 0.7123,
+        "dependency_cycle": 0.5825,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1381,
-      "si": 56.08,
+      "raw_score": -0.1576,
+      "si": 53.38,
       "grade": "C",
       "top_reasons": [
         "dependency_cycle",
@@ -6653,11 +6653,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5808,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4658,
+      "raw_score": -0.4652,
       "si": 14.53,
       "grade": "A",
       "top_reasons": []
@@ -6681,11 +6681,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5808,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4279,
+      "raw_score": -0.4273,
       "si": 21.28,
       "grade": "B",
       "top_reasons": []
@@ -6709,11 +6709,11 @@
       "z": {
         "cc": -0.3739,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.3022,
+      "raw_score": 0.3028,
       "si": 76.01,
       "grade": "D",
       "top_reasons": [
@@ -6740,12 +6740,12 @@
       "z": {
         "cc": 0.355,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.2656,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.3713,
-      "si": 78.72,
+      "raw_score": 0.3719,
+      "si": 79.73,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -6771,11 +6771,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -6799,12 +6799,12 @@
       "z": {
         "cc": 0.9298,
         "coupling": 1.0485,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.1615,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 1.2869,
-      "si": 96.62,
+      "raw_score": 1.2875,
+      "si": 96.28,
       "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
@@ -6830,12 +6830,12 @@
       "z": {
         "cc": -0.4159,
         "coupling": 0.0563,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.302,
-      "si": 38.51,
+      "raw_score": -0.3014,
+      "si": 38.85,
       "grade": "B",
       "top_reasons": [
         "coupling",
@@ -6861,11 +6861,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4547,
+      "raw_score": -0.4541,
       "si": 16.89,
       "grade": "A",
       "top_reasons": []
@@ -6889,11 +6889,11 @@
       "z": {
         "cc": -0.3739,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.387,
+      "raw_score": -0.3864,
       "si": 26.69,
       "grade": "B",
       "top_reasons": []
@@ -6917,11 +6917,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4255,
+      "raw_score": -0.4249,
       "si": 22.64,
       "grade": "B",
       "top_reasons": []
@@ -6945,11 +6945,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.52,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4188,
+      "raw_score": -0.4182,
       "si": 24.32,
       "grade": "B",
       "top_reasons": []
@@ -6973,11 +6973,11 @@
       "z": {
         "cc": -0.5421,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5605,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4375,
+      "raw_score": -0.4369,
       "si": 19.59,
       "grade": "A",
       "top_reasons": []
@@ -7001,11 +7001,11 @@
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4547,
+      "raw_score": -0.4541,
       "si": 16.89,
       "grade": "A",
       "top_reasons": []
@@ -7029,11 +7029,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -7057,11 +7057,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4673,
+      "raw_score": -0.4667,
       "si": 14.19,
       "grade": "A",
       "top_reasons": []
@@ -7085,11 +7085,11 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4673,
+      "raw_score": -0.4667,
       "si": 14.19,
       "grade": "A",
       "top_reasons": []
@@ -7113,11 +7113,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -7141,11 +7141,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -7169,11 +7169,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -7197,12 +7197,12 @@
       "z": {
         "cc": 0.4672,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.3337,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2155,
-      "si": 74.32,
+      "raw_score": 0.2161,
+      "si": 73.99,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -7228,12 +7228,12 @@
       "z": {
         "cc": -0.4159,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0439,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3056,
-      "si": 37.84,
+      "raw_score": -0.305,
+      "si": 38.18,
       "grade": "B",
       "top_reasons": []
     },
@@ -7256,11 +7256,11 @@
       "z": {
         "cc": 1.529,
         "coupling": 0.4532,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 4.808,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.1875,
+      "raw_score": 1.1881,
       "si": 94.93,
       "grade": "E",
       "top_reasons": [
@@ -7287,11 +7287,11 @@
       "z": {
         "cc": -0.3949,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4144,
+      "raw_score": -0.4138,
       "si": 25.34,
       "grade": "B",
       "top_reasons": []
@@ -7315,12 +7315,12 @@
       "z": {
         "cc": 0.3831,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.4727,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0777,
-      "si": 67.91,
+      "raw_score": 0.0783,
+      "si": 68.58,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -7346,11 +7346,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -7374,12 +7374,12 @@
       "z": {
         "cc": 0.5597,
         "coupling": 0.4532,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.2352,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.5108,
-      "si": 85.47,
+      "raw_score": 0.5114,
+      "si": 85.81,
       "grade": "E",
       "top_reasons": [
         "global_state",
@@ -7405,11 +7405,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.523,
+      "raw_score": -0.5224,
       "si": 9.12,
       "grade": "A",
       "top_reasons": []
@@ -7433,11 +7433,11 @@
       "z": {
         "cc": -0.5,
         "coupling": 0.1225,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4187,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2879,
+      "raw_score": -0.2873,
       "si": 39.86,
       "grade": "B",
       "top_reasons": [
@@ -7464,12 +7464,12 @@
       "z": {
         "cc": 0.3831,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1522,
-      "si": 54.05,
+      "raw_score": -0.1516,
+      "si": 54.73,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -7495,11 +7495,11 @@
       "z": {
         "cc": 2.9062,
         "coupling": 0.7178,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.5841,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.0333,
+      "raw_score": 1.0339,
       "si": 93.58,
       "grade": "E",
       "top_reasons": [
@@ -7526,11 +7526,11 @@
       "z": {
         "cc": 2.5277,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2972,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.556,
+      "raw_score": 0.5566,
       "si": 87.16,
       "grade": "E",
       "top_reasons": [
@@ -7557,11 +7557,11 @@
       "z": {
         "cc": 0.0887,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1756,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.5529,
+      "raw_score": 0.5535,
       "si": 86.82,
       "grade": "E",
       "top_reasons": [
@@ -7588,11 +7588,11 @@
       "z": {
         "cc": 0.4251,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1684,
+      "raw_score": -0.1678,
       "si": 52.36,
       "grade": "C",
       "top_reasons": [
@@ -7619,11 +7619,11 @@
       "z": {
         "cc": 3.4108,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3276,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.8495,
+      "raw_score": 0.8501,
       "si": 91.89,
       "grade": "E",
       "top_reasons": [
@@ -7650,11 +7650,11 @@
       "z": {
         "cc": -0.5,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.446,
+      "raw_score": -0.4454,
       "si": 18.24,
       "grade": "A",
       "top_reasons": []
@@ -7678,12 +7678,12 @@
       "z": {
         "cc": 0.1097,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.0022,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1755,
-      "si": 72.64,
+      "raw_score": 0.1761,
+      "si": 71.96,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -7709,11 +7709,11 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0237,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2308,
+      "raw_score": -0.2302,
       "si": 47.3,
       "grade": "C",
       "top_reasons": []
@@ -7737,12 +7737,12 @@
       "z": {
         "cc": 0.6564,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2263,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0278,
-      "si": 61.82,
+      "raw_score": -0.0272,
+      "si": 62.5,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -7768,11 +7768,11 @@
       "z": {
         "cc": 0.2569,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.3985,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1735,
+      "raw_score": -0.1729,
       "si": 52.03,
       "grade": "C",
       "top_reasons": [
@@ -7799,11 +7799,11 @@
       "z": {
         "cc": -0.1636,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5403,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3375,
+      "raw_score": -0.3369,
       "si": 32.77,
       "grade": "B",
       "top_reasons": []
@@ -7827,11 +7827,11 @@
       "z": {
         "cc": -0.315,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5099,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3287,
+      "raw_score": -0.3281,
       "si": 33.78,
       "grade": "B",
       "top_reasons": []
@@ -7855,13 +7855,13 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.5537,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0615,
-      "si": 59.46,
-      "grade": "C",
+      "raw_score": -0.0609,
+      "si": 60.14,
+      "grade": "D",
       "top_reasons": [
         "global_state",
         "coupling"
@@ -7886,11 +7886,11 @@
       "z": {
         "cc": -0.0375,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.2668,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2586,
+      "raw_score": -0.258,
       "si": 42.57,
       "grade": "C",
       "top_reasons": []
@@ -7914,12 +7914,12 @@
       "z": {
         "cc": 3.0954,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0877,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.8337,
-      "si": 91.22,
+      "raw_score": 0.8343,
+      "si": 91.55,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -7945,11 +7945,11 @@
       "z": {
         "cc": 8.1207,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.1554,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 2.3048,
+      "raw_score": 2.3054,
       "si": 99.32,
       "grade": "E",
       "top_reasons": [
@@ -7976,11 +7976,11 @@
       "z": {
         "cc": -0.1636,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3616,
+      "raw_score": -0.361,
       "si": 29.73,
       "grade": "B",
       "top_reasons": []
@@ -8004,11 +8004,11 @@
       "z": {
         "cc": -0.458,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4182,
+      "raw_score": -0.4176,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -8032,11 +8032,11 @@
       "z": {
         "cc": 1.6026,
         "coupling": -0.076,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.52,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.2781,
+      "raw_score": 0.2787,
       "si": 75.68,
       "grade": "D",
       "top_reasons": [
@@ -8063,11 +8063,11 @@
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0845,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2399,
+      "raw_score": -0.2393,
       "si": 45.61,
       "grade": "C",
       "top_reasons": []
@@ -8091,12 +8091,12 @@
       "z": {
         "cc": 0.0046,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.574,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.0537,
-      "si": 60.47,
+      "raw_score": -0.0531,
+      "si": 61.15,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -8122,12 +8122,12 @@
       "z": {
         "cc": -0.0795,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.9414,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1262,
-      "si": 70.27,
+      "raw_score": 0.1268,
+      "si": 70.61,
       "grade": "D",
       "top_reasons": [
         "global_state",
@@ -8153,12 +8153,12 @@
       "z": {
         "cc": -0.3318,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.189,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.3987,
-      "si": 81.08,
+      "raw_score": 0.3993,
+      "si": 81.76,
       "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
@@ -8184,11 +8184,11 @@
       "z": {
         "cc": -0.2898,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.0642,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.2708,
+      "raw_score": -0.2702,
       "si": 40.54,
       "grade": "C",
       "top_reasons": []
@@ -8212,12 +8212,12 @@
       "z": {
         "cc": 1.6026,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 1.4653,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.4932,
-      "si": 84.8,
+      "raw_score": 0.4938,
+      "si": 85.47,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -8243,11 +8243,11 @@
       "z": {
         "cc": -0.7523,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5186,
+      "raw_score": -0.518,
       "si": 9.8,
       "grade": "A",
       "top_reasons": []
@@ -8271,12 +8271,12 @@
       "z": {
         "cc": 0.4251,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.503,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.0453,
-      "si": 66.55,
+      "raw_score": 0.0459,
+      "si": 66.89,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -8302,12 +8302,12 @@
       "z": {
         "cc": -0.1846,
         "coupling": -0.0098,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.108,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1473,
-      "si": 55.41,
+      "raw_score": -0.1467,
+      "si": 56.08,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -8333,11 +8333,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5508,
+      "raw_score": -0.5502,
       "si": 4.39,
       "grade": "A",
       "top_reasons": []
@@ -8361,11 +8361,11 @@
       "z": {
         "cc": -0.3318,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3263,
+      "raw_score": -0.3257,
       "si": 34.46,
       "grade": "B",
       "top_reasons": []
@@ -8389,12 +8389,12 @@
       "z": {
         "cc": 1.5816,
         "coupling": 0.1886,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 2.5188,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.7938,
-      "si": 90.54,
+      "raw_score": 0.7944,
+      "si": 90.88,
       "grade": "E",
       "top_reasons": [
         "cc",
@@ -8420,11 +8420,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5343,
+      "raw_score": -0.5337,
       "si": 7.77,
       "grade": "A",
       "top_reasons": []
@@ -8448,11 +8448,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4682,
+      "raw_score": -0.4676,
       "si": 12.84,
       "grade": "A",
       "top_reasons": []
@@ -8476,11 +8476,11 @@
       "z": {
         "cc": -0.6682,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4799,
+      "raw_score": -0.4793,
       "si": 11.49,
       "grade": "A",
       "top_reasons": []
@@ -8497,19 +8497,19 @@
       "raw": {
         "cc": 3.0,
         "coupling": 10.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 40.0,
         "global_state": 28.0,
         "game_loop_centrality": 0.5
       },
       "z": {
         "cc": -0.6682,
         "coupling": 0.1886,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.5864,
         "global_state": -0.3073,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 0.513,
-      "si": 85.81,
+      "raw_score": 0.4795,
+      "si": 84.8,
       "grade": "E",
       "top_reasons": [
         "dependency_cycle",
@@ -8528,19 +8528,19 @@
       "raw": {
         "cc": 10.0,
         "coupling": 62.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 41.0,
         "global_state": 32.0,
         "game_loop_centrality": 0.5
       },
       "z": {
         "cc": -0.3739,
         "coupling": 3.6282,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.6606,
         "global_state": -0.2668,
         "game_loop_centrality": 1.9395
       },
-      "raw_score": 1.4673,
-      "si": 97.97,
+      "raw_score": 1.4449,
+      "si": 97.64,
       "grade": "E",
       "top_reasons": [
         "coupling",
@@ -8559,19 +8559,19 @@
       "raw": {
         "cc": 3.0,
         "coupling": 9.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 36.0,
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.6682,
         "coupling": 0.1225,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 2.2895,
         "global_state": -0.4896,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 0.1305,
-      "si": 70.61,
+      "raw_score": 0.0524,
+      "si": 67.57,
       "grade": "D",
       "top_reasons": [
         "dependency_cycle",
@@ -8597,12 +8597,12 @@
       "z": {
         "cc": -0.6262,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5707,
         "game_loop_centrality": 0.4345
       },
-      "raw_score": -0.3183,
-      "si": 35.81,
+      "raw_score": -0.3177,
+      "si": 36.15,
       "grade": "B",
       "top_reasons": [
         "game_loop_centrality",
@@ -8628,11 +8628,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.5012,
+      "raw_score": -0.5006,
       "si": 10.81,
       "grade": "A",
       "top_reasons": []
@@ -8656,11 +8656,11 @@
       "z": {
         "cc": -0.7103,
         "coupling": -0.2744,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5808,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4745,
+      "raw_score": -0.4739,
       "si": 11.82,
       "grade": "A",
       "top_reasons": []
@@ -8684,11 +8684,11 @@
       "z": {
         "cc": -0.7944,
         "coupling": -0.2083,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5909,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.4847,
+      "raw_score": -0.4841,
       "si": 11.15,
       "grade": "A",
       "top_reasons": []
@@ -8712,11 +8712,11 @@
       "z": {
         "cc": 0.0046,
         "coupling": 0.2547,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.5403,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.1216,
+      "raw_score": -0.121,
       "si": 57.77,
       "grade": "C",
       "top_reasons": [
@@ -8743,12 +8743,12 @@
       "z": {
         "cc": 0.299,
         "coupling": -0.1421,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": 0.0472,
         "game_loop_centrality": 4.1971
       },
-      "raw_score": 0.6329,
-      "si": 89.19,
+      "raw_score": 0.6334,
+      "si": 89.53,
       "grade": "E",
       "top_reasons": [
         "game_loop_centrality",
@@ -8767,19 +8767,19 @@
       "raw": {
         "cc": 13.0,
         "coupling": 62.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 48.0,
         "global_state": 60.0,
         "game_loop_centrality": 0.3333
       },
       "z": {
         "cc": -0.2477,
         "coupling": 3.6282,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.1802,
         "global_state": 0.0168,
         "game_loop_centrality": 1.187
       },
-      "raw_score": 1.4348,
-      "si": 97.64,
+      "raw_score": 1.4903,
+      "si": 97.97,
       "grade": "E",
       "top_reasons": [
         "coupling",
@@ -8805,11 +8805,11 @@
       "z": {
         "cc": -0.3739,
         "coupling": -0.3406,
-        "dependency_cycle": -0.3864,
+        "dependency_cycle": -0.3824,
         "global_state": -0.4998,
         "game_loop_centrality": -0.318
       },
-      "raw_score": -0.3779,
+      "raw_score": -0.3773,
       "si": 28.72,
       "grade": "B",
       "top_reasons": []
@@ -8826,18 +8826,18 @@
       "raw": {
         "cc": 11.0,
         "coupling": 90.0,
-        "dependency_cycle": 32.0,
+        "dependency_cycle": 48.0,
         "global_state": 38.0,
         "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.3318,
         "coupling": 5.4803,
-        "dependency_cycle": 2.8099,
+        "dependency_cycle": 3.1802,
         "global_state": -0.206,
         "game_loop_centrality": -0.318
       },
-      "raw_score": 1.6134,
+      "raw_score": 1.6689,
       "si": 98.65,
       "grade": "E",
       "top_reasons": [
@@ -8874,40 +8874,40 @@
     {
       "file_path": "d_iwad.c",
       "module": "(root)",
-      "si_mean": 78.04,
-      "si_max": 78.04,
+      "si_mean": 77.7,
+      "si_max": 77.7,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "d_loop.c",
       "module": "(root)",
-      "si_mean": 96.28,
-      "si_max": 96.28,
+      "si_mean": 96.96,
+      "si_max": 96.96,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "d_mode.c",
       "module": "(root)",
-      "si_mean": 56.42,
-      "si_max": 56.42,
+      "si_mean": 56.76,
+      "si_max": 56.76,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "deh_io.c",
       "module": "(root)",
-      "si_mean": 83.11,
-      "si_max": 83.11,
-      "grade": "E",
+      "si_mean": 79.39,
+      "si_max": 79.39,
+      "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "deh_main.c",
       "module": "(root)",
-      "si_mean": 97.3,
-      "si_max": 97.3,
+      "si_mean": 96.62,
+      "si_max": 96.62,
       "grade": "E",
       "class_count": 1
     },
@@ -8922,8 +8922,8 @@
     {
       "file_path": "deh_str.c",
       "module": "(root)",
-      "si_mean": 93.92,
-      "si_max": 93.92,
+      "si_mean": 92.91,
+      "si_max": 92.91,
       "grade": "E",
       "class_count": 1
     },
@@ -8938,8 +8938,8 @@
     {
       "file_path": "doom/am_map.c",
       "module": "doom",
-      "si_mean": 82.43,
-      "si_max": 82.43,
+      "si_mean": 83.45,
+      "si_max": 83.45,
       "grade": "E",
       "class_count": 1
     },
@@ -8962,8 +8962,8 @@
     {
       "file_path": "doom/d_net.c",
       "module": "doom",
-      "si_mean": 37.16,
-      "si_max": 37.16,
+      "si_mean": 37.5,
+      "si_max": 37.5,
       "grade": "B",
       "class_count": 1
     },
@@ -9082,8 +9082,8 @@
     {
       "file_path": "doom/f_finale.c",
       "module": "doom",
-      "si_mean": 74.66,
-      "si_max": 74.66,
+      "si_mean": 74.32,
+      "si_max": 74.32,
       "grade": "D",
       "class_count": 1
     },
@@ -9114,8 +9114,8 @@
     {
       "file_path": "doom/hu_stuff.c",
       "module": "doom",
-      "si_mean": 66.89,
-      "si_max": 66.89,
+      "si_mean": 67.23,
+      "si_max": 67.23,
       "grade": "D",
       "class_count": 1
     },
@@ -9130,8 +9130,8 @@
     {
       "file_path": "doom/m_menu.c",
       "module": "doom",
-      "si_mean": 83.45,
-      "si_max": 83.45,
+      "si_mean": 84.12,
+      "si_max": 84.12,
       "grade": "E",
       "class_count": 1
     },
@@ -9146,32 +9146,32 @@
     {
       "file_path": "doom/p_ceilng.c",
       "module": "doom",
-      "si_mean": 54.05,
-      "si_max": 54.05,
+      "si_mean": 54.73,
+      "si_max": 54.73,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "doom/p_doors.c",
       "module": "doom",
-      "si_mean": 65.54,
-      "si_max": 65.54,
+      "si_mean": 65.88,
+      "si_max": 65.88,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "doom/p_enemy.c",
       "module": "doom",
-      "si_mean": 50.0,
-      "si_max": 50.0,
+      "si_mean": 50.34,
+      "si_max": 50.34,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "doom/p_floor.c",
       "module": "doom",
-      "si_mean": 53.38,
-      "si_max": 53.38,
+      "si_mean": 53.72,
+      "si_max": 53.72,
       "grade": "C",
       "class_count": 1
     },
@@ -9210,8 +9210,8 @@
     {
       "file_path": "doom/p_mobj.c",
       "module": "doom",
-      "si_mean": 62.16,
-      "si_max": 62.16,
+      "si_mean": 62.84,
+      "si_max": 62.84,
       "grade": "D",
       "class_count": 1
     },
@@ -9242,8 +9242,8 @@
     {
       "file_path": "doom/p_setup.c",
       "module": "doom",
-      "si_mean": 61.49,
-      "si_max": 61.49,
+      "si_mean": 62.16,
+      "si_max": 62.16,
       "grade": "D",
       "class_count": 1
     },
@@ -9258,8 +9258,8 @@
     {
       "file_path": "doom/p_spec.c",
       "module": "doom",
-      "si_mean": 77.7,
-      "si_max": 77.7,
+      "si_mean": 78.38,
+      "si_max": 78.38,
       "grade": "D",
       "class_count": 1
     },
@@ -9290,9 +9290,9 @@
     {
       "file_path": "doom/p_user.c",
       "module": "doom",
-      "si_mean": 59.8,
-      "si_max": 59.8,
-      "grade": "C",
+      "si_mean": 60.47,
+      "si_max": 60.47,
+      "grade": "D",
       "class_count": 1
     },
     {
@@ -9306,24 +9306,24 @@
     {
       "file_path": "doom/r_data.c",
       "module": "doom",
-      "si_mean": 58.45,
-      "si_max": 58.45,
+      "si_mean": 59.12,
+      "si_max": 59.12,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "doom/r_draw.c",
       "module": "doom",
-      "si_mean": 65.2,
-      "si_max": 65.2,
+      "si_mean": 65.54,
+      "si_max": 65.54,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "doom/r_main.c",
       "module": "doom",
-      "si_mean": 81.42,
-      "si_max": 81.42,
+      "si_mean": 82.09,
+      "si_max": 82.09,
       "grade": "E",
       "class_count": 1
     },
@@ -9338,8 +9338,8 @@
     {
       "file_path": "doom/r_segs.c",
       "module": "doom",
-      "si_mean": 84.8,
-      "si_max": 84.8,
+      "si_mean": 85.47,
+      "si_max": 85.47,
       "grade": "E",
       "class_count": 1
     },
@@ -9354,8 +9354,8 @@
     {
       "file_path": "doom/r_things.c",
       "module": "doom",
-      "si_mean": 65.88,
-      "si_max": 65.88,
+      "si_mean": 66.22,
+      "si_max": 66.22,
       "grade": "D",
       "class_count": 1
     },
@@ -9378,8 +9378,8 @@
     {
       "file_path": "doom/st_lib.c",
       "module": "doom",
-      "si_mean": 59.12,
-      "si_max": 59.12,
+      "si_mean": 59.8,
+      "si_max": 59.8,
       "grade": "C",
       "class_count": 1
     },
@@ -9394,8 +9394,8 @@
     {
       "file_path": "doom/statdump.c",
       "module": "doom",
-      "si_mean": 35.47,
-      "si_max": 35.47,
+      "si_mean": 35.81,
+      "si_max": 35.81,
       "grade": "B",
       "class_count": 1
     },
@@ -9410,24 +9410,24 @@
     {
       "file_path": "gusconf.c",
       "module": "(root)",
-      "si_mean": 72.3,
-      "si_max": 72.3,
+      "si_mean": 69.26,
+      "si_max": 69.26,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "heretic/am_map.c",
       "module": "heretic",
-      "si_mean": 79.05,
-      "si_max": 79.05,
-      "grade": "D",
+      "si_mean": 80.07,
+      "si_max": 80.07,
+      "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "heretic/ct_chat.c",
       "module": "heretic",
-      "si_mean": 60.81,
-      "si_max": 60.81,
+      "si_mean": 61.49,
+      "si_max": 61.49,
       "grade": "D",
       "class_count": 1
     },
@@ -9514,8 +9514,8 @@
     {
       "file_path": "heretic/g_game.c",
       "module": "heretic",
-      "si_mean": 96.96,
-      "si_max": 96.96,
+      "si_mean": 97.3,
+      "si_max": 97.3,
       "grade": "E",
       "class_count": 1
     },
@@ -9530,8 +9530,8 @@
     {
       "file_path": "heretic/in_lude.c",
       "module": "heretic",
-      "si_mean": 62.5,
-      "si_max": 62.5,
+      "si_mean": 63.18,
+      "si_max": 63.18,
       "grade": "D",
       "class_count": 1
     },
@@ -9554,8 +9554,8 @@
     {
       "file_path": "heretic/mn_menu.c",
       "module": "heretic",
-      "si_mean": 88.51,
-      "si_max": 88.51,
+      "si_mean": 88.85,
+      "si_max": 88.85,
       "grade": "E",
       "class_count": 1
     },
@@ -9594,8 +9594,8 @@
     {
       "file_path": "heretic/p_inter.c",
       "module": "heretic",
-      "si_mean": 88.18,
-      "si_max": 88.18,
+      "si_mean": 88.51,
+      "si_max": 88.51,
       "grade": "E",
       "class_count": 1
     },
@@ -9626,8 +9626,8 @@
     {
       "file_path": "heretic/p_mobj.c",
       "module": "heretic",
-      "si_mean": 71.96,
-      "si_max": 71.96,
+      "si_mean": 71.62,
+      "si_max": 71.62,
       "grade": "D",
       "class_count": 1
     },
@@ -9642,8 +9642,8 @@
     {
       "file_path": "heretic/p_pspr.c",
       "module": "heretic",
-      "si_mean": 36.49,
-      "si_max": 36.49,
+      "si_mean": 36.82,
+      "si_max": 36.82,
       "grade": "B",
       "class_count": 1
     },
@@ -9658,8 +9658,8 @@
     {
       "file_path": "heretic/p_setup.c",
       "module": "heretic",
-      "si_mean": 55.07,
-      "si_max": 55.07,
+      "si_mean": 55.74,
+      "si_max": 55.74,
       "grade": "C",
       "class_count": 1
     },
@@ -9674,16 +9674,16 @@
     {
       "file_path": "heretic/p_spec.c",
       "module": "heretic",
-      "si_mean": 76.35,
-      "si_max": 76.35,
+      "si_mean": 77.03,
+      "si_max": 77.03,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "heretic/p_switch.c",
       "module": "heretic",
-      "si_mean": 87.5,
-      "si_max": 87.5,
+      "si_mean": 87.84,
+      "si_max": 87.84,
       "grade": "E",
       "class_count": 1
     },
@@ -9706,8 +9706,8 @@
     {
       "file_path": "heretic/p_user.c",
       "module": "heretic",
-      "si_mean": 73.31,
-      "si_max": 73.31,
+      "si_mean": 72.64,
+      "si_max": 72.64,
       "grade": "D",
       "class_count": 1
     },
@@ -9738,48 +9738,48 @@
     {
       "file_path": "heretic/r_main.c",
       "module": "heretic",
-      "si_mean": 80.41,
-      "si_max": 80.41,
+      "si_mean": 81.08,
+      "si_max": 81.08,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "heretic/r_plane.c",
       "module": "heretic",
-      "si_mean": 67.57,
-      "si_max": 67.57,
+      "si_mean": 67.91,
+      "si_max": 67.91,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "heretic/r_segs.c",
       "module": "heretic",
-      "si_mean": 82.09,
-      "si_max": 82.09,
+      "si_mean": 83.11,
+      "si_max": 83.11,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "heretic/r_things.c",
       "module": "heretic",
-      "si_mean": 64.53,
-      "si_max": 64.53,
+      "si_mean": 64.86,
+      "si_max": 64.86,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "heretic/s_sound.c",
       "module": "heretic",
-      "si_mean": 69.26,
-      "si_max": 69.26,
+      "si_mean": 69.93,
+      "si_max": 69.93,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "heretic/sb_bar.c",
       "module": "heretic",
-      "si_mean": 68.58,
-      "si_max": 68.58,
+      "si_mean": 69.59,
+      "si_max": 69.59,
       "grade": "D",
       "class_count": 1
     },
@@ -9802,16 +9802,16 @@
     {
       "file_path": "hexen/am_map.c",
       "module": "hexen",
-      "si_mean": 76.69,
-      "si_max": 76.69,
+      "si_mean": 77.36,
+      "si_max": 77.36,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "hexen/ct_chat.c",
       "module": "hexen",
-      "si_mean": 62.84,
-      "si_max": 62.84,
+      "si_mean": 63.51,
+      "si_max": 63.51,
       "grade": "D",
       "class_count": 1
     },
@@ -9842,8 +9842,8 @@
     {
       "file_path": "hexen/h2_main.c",
       "module": "hexen",
-      "si_mean": 63.85,
-      "si_max": 63.85,
+      "si_mean": 64.53,
+      "si_max": 64.53,
       "grade": "D",
       "class_count": 1
     },
@@ -9858,8 +9858,8 @@
     {
       "file_path": "hexen/in_lude.c",
       "module": "hexen",
-      "si_mean": 50.34,
-      "si_max": 50.34,
+      "si_mean": 50.68,
+      "si_max": 50.68,
       "grade": "C",
       "class_count": 1
     },
@@ -9890,24 +9890,24 @@
     {
       "file_path": "hexen/p_acs.c",
       "module": "hexen",
-      "si_mean": 61.15,
-      "si_max": 61.15,
+      "si_mean": 61.82,
+      "si_max": 61.82,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "hexen/p_anim.c",
       "module": "hexen",
-      "si_mean": 54.73,
-      "si_max": 54.73,
+      "si_mean": 55.41,
+      "si_max": 55.41,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "hexen/p_ceilng.c",
       "module": "hexen",
-      "si_mean": 38.18,
-      "si_max": 38.18,
+      "si_mean": 38.51,
+      "si_max": 38.51,
       "grade": "B",
       "class_count": 1
     },
@@ -9938,8 +9938,8 @@
     {
       "file_path": "hexen/p_inter.c",
       "module": "hexen",
-      "si_mean": 90.88,
-      "si_max": 90.88,
+      "si_mean": 91.22,
+      "si_max": 91.22,
       "grade": "E",
       "class_count": 1
     },
@@ -9962,24 +9962,24 @@
     {
       "file_path": "hexen/p_maputl.c",
       "module": "hexen",
-      "si_mean": 72.97,
-      "si_max": 72.97,
+      "si_mean": 72.3,
+      "si_max": 72.3,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "hexen/p_mobj.c",
       "module": "hexen",
-      "si_mean": 78.38,
-      "si_max": 78.38,
+      "si_mean": 78.72,
+      "si_max": 78.72,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "hexen/p_plats.c",
       "module": "hexen",
-      "si_mean": 36.82,
-      "si_max": 36.82,
+      "si_mean": 37.16,
+      "si_max": 37.16,
       "grade": "B",
       "class_count": 1
     },
@@ -9994,8 +9994,8 @@
     {
       "file_path": "hexen/p_setup.c",
       "module": "hexen",
-      "si_mean": 60.14,
-      "si_max": 60.14,
+      "si_mean": 60.81,
+      "si_max": 60.81,
       "grade": "D",
       "class_count": 1
     },
@@ -10026,8 +10026,8 @@
     {
       "file_path": "hexen/p_telept.c",
       "module": "hexen",
-      "si_mean": 37.5,
-      "si_max": 37.5,
+      "si_mean": 37.84,
+      "si_max": 37.84,
       "grade": "B",
       "class_count": 1
     },
@@ -10050,16 +10050,16 @@
     {
       "file_path": "hexen/p_user.c",
       "module": "hexen",
-      "si_mean": 80.74,
-      "si_max": 80.74,
+      "si_mean": 81.42,
+      "si_max": 81.42,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "hexen/po_man.c",
       "module": "hexen",
-      "si_mean": 55.74,
-      "si_max": 55.74,
+      "si_mean": 56.42,
+      "si_max": 56.42,
       "grade": "C",
       "class_count": 1
     },
@@ -10082,48 +10082,48 @@
     {
       "file_path": "hexen/r_draw.c",
       "module": "hexen",
-      "si_mean": 54.39,
-      "si_max": 54.39,
+      "si_mean": 55.07,
+      "si_max": 55.07,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "hexen/r_main.c",
       "module": "hexen",
-      "si_mean": 79.73,
-      "si_max": 79.73,
-      "grade": "D",
+      "si_mean": 80.41,
+      "si_max": 80.41,
+      "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "hexen/r_plane.c",
       "module": "hexen",
-      "si_mean": 71.62,
-      "si_max": 71.62,
+      "si_mean": 71.28,
+      "si_max": 71.28,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "hexen/r_segs.c",
       "module": "hexen",
-      "si_mean": 81.76,
-      "si_max": 81.76,
+      "si_mean": 82.43,
+      "si_max": 82.43,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "hexen/r_things.c",
       "module": "hexen",
-      "si_mean": 63.18,
-      "si_max": 63.18,
+      "si_mean": 63.85,
+      "si_max": 63.85,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "hexen/s_sound.c",
       "module": "hexen",
-      "si_mean": 68.24,
-      "si_max": 68.24,
+      "si_mean": 68.92,
+      "si_max": 68.92,
       "grade": "D",
       "class_count": 1
     },
@@ -10138,8 +10138,8 @@
     {
       "file_path": "hexen/sc_man.c",
       "module": "hexen",
-      "si_mean": 53.04,
-      "si_max": 53.04,
+      "si_mean": 52.7,
+      "si_max": 52.7,
       "grade": "C",
       "class_count": 1
     },
@@ -10202,24 +10202,24 @@
     {
       "file_path": "i_glob.c",
       "module": "(root)",
-      "si_mean": 64.19,
-      "si_max": 64.19,
-      "grade": "D",
+      "si_mean": 59.46,
+      "si_max": 59.46,
+      "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "i_input.c",
       "module": "(root)",
-      "si_mean": 89.53,
-      "si_max": 89.53,
+      "si_mean": 87.5,
+      "si_max": 87.5,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "i_joystick.c",
       "module": "(root)",
-      "si_mean": 91.55,
-      "si_max": 91.55,
+      "si_mean": 90.54,
+      "si_max": 90.54,
       "grade": "E",
       "class_count": 1
     },
@@ -10242,8 +10242,8 @@
     {
       "file_path": "i_oplmusic.c",
       "module": "(root)",
-      "si_mean": 64.86,
-      "si_max": 64.86,
+      "si_mean": 65.2,
+      "si_max": 65.2,
       "grade": "D",
       "class_count": 1
     },
@@ -10274,8 +10274,8 @@
     {
       "file_path": "i_sound.c",
       "module": "(root)",
-      "si_mean": 83.78,
-      "si_max": 83.78,
+      "si_mean": 82.77,
+      "si_max": 82.77,
       "grade": "E",
       "class_count": 1
     },
@@ -10290,8 +10290,8 @@
     {
       "file_path": "i_timer.c",
       "module": "(root)",
-      "si_mean": 80.07,
-      "si_max": 80.07,
+      "si_mean": 80.74,
+      "si_max": 80.74,
       "grade": "E",
       "class_count": 1
     },
@@ -10330,8 +10330,8 @@
     {
       "file_path": "m_bbox.c",
       "module": "(root)",
-      "si_mean": 66.22,
-      "si_max": 66.22,
+      "si_mean": 66.55,
+      "si_max": 66.55,
       "grade": "D",
       "class_count": 1
     },
@@ -10346,25 +10346,25 @@
     {
       "file_path": "m_config.c",
       "module": "(root)",
-      "si_mean": 88.85,
-      "si_max": 88.85,
+      "si_mean": 89.19,
+      "si_max": 89.19,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "m_controls.c",
       "module": "(root)",
-      "si_mean": 73.99,
-      "si_max": 73.99,
+      "si_mean": 73.65,
+      "si_max": 73.65,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "m_fixed.c",
       "module": "(root)",
-      "si_mean": 82.77,
-      "si_max": 82.77,
-      "grade": "E",
+      "si_mean": 79.05,
+      "si_max": 79.05,
+      "grade": "D",
       "class_count": 1
     },
     {
@@ -10394,32 +10394,32 @@
     {
       "file_path": "midifile.c",
       "module": "(root)",
-      "si_mean": 36.15,
-      "si_max": 36.15,
+      "si_mean": 36.49,
+      "si_max": 36.49,
       "grade": "B",
       "class_count": 1
     },
     {
       "file_path": "mus2mid.c",
       "module": "(root)",
-      "si_mean": 73.65,
-      "si_max": 73.65,
+      "si_mean": 73.31,
+      "si_max": 73.31,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "net_client.c",
       "module": "(root)",
-      "si_mean": 92.91,
-      "si_max": 92.91,
+      "si_mean": 93.92,
+      "si_max": 93.92,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "net_common.c",
       "module": "(root)",
-      "si_mean": 84.12,
-      "si_max": 84.12,
+      "si_mean": 84.46,
+      "si_max": 84.46,
       "grade": "E",
       "class_count": 1
     },
@@ -10434,56 +10434,56 @@
     {
       "file_path": "net_gui.c",
       "module": "(root)",
-      "si_mean": 77.03,
-      "si_max": 77.03,
+      "si_mean": 76.69,
+      "si_max": 76.69,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "net_io.c",
       "module": "(root)",
-      "si_mean": 77.36,
-      "si_max": 77.36,
+      "si_mean": 76.35,
+      "si_max": 76.35,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "net_loop.c",
       "module": "(root)",
-      "si_mean": 67.23,
-      "si_max": 67.23,
+      "si_mean": 64.19,
+      "si_max": 64.19,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "net_packet.c",
       "module": "(root)",
-      "si_mean": 79.39,
-      "si_max": 79.39,
+      "si_mean": 78.04,
+      "si_max": 78.04,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "net_petname.c",
       "module": "(root)",
-      "si_mean": 63.51,
-      "si_max": 63.51,
-      "grade": "D",
+      "si_mean": 58.45,
+      "si_max": 58.45,
+      "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "net_query.c",
       "module": "(root)",
-      "si_mean": 87.84,
-      "si_max": 87.84,
+      "si_mean": 88.18,
+      "si_max": 88.18,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "net_sdl.c",
       "module": "(root)",
-      "si_mean": 68.92,
-      "si_max": 68.92,
+      "si_mean": 68.24,
+      "si_max": 68.24,
       "grade": "D",
       "class_count": 1
     },
@@ -10498,8 +10498,8 @@
     {
       "file_path": "net_structrw.c",
       "module": "(root)",
-      "si_mean": 85.14,
-      "si_max": 85.14,
+      "si_mean": 83.78,
+      "si_max": 83.78,
       "grade": "E",
       "class_count": 1
     },
@@ -10514,32 +10514,32 @@
     {
       "file_path": "setup/compatibility.c",
       "module": "setup",
-      "si_mean": 38.85,
-      "si_max": 38.85,
+      "si_mean": 35.47,
+      "si_max": 35.47,
       "grade": "B",
       "class_count": 1
     },
     {
       "file_path": "setup/display.c",
       "module": "setup",
-      "si_mean": 56.76,
-      "si_max": 56.76,
+      "si_mean": 54.05,
+      "si_max": 54.05,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "setup/execute.c",
       "module": "setup",
-      "si_mean": 51.01,
-      "si_max": 51.01,
+      "si_mean": 53.04,
+      "si_max": 53.04,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "setup/joystick.c",
       "module": "setup",
-      "si_mean": 71.28,
-      "si_max": 71.28,
+      "si_mean": 72.97,
+      "si_max": 72.97,
       "grade": "D",
       "class_count": 1
     },
@@ -10562,24 +10562,24 @@
     {
       "file_path": "setup/mode.c",
       "module": "setup",
-      "si_mean": 69.59,
-      "si_max": 69.59,
+      "si_mean": 74.66,
+      "si_max": 74.66,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "setup/mouse.c",
       "module": "setup",
-      "si_mean": 50.68,
-      "si_max": 50.68,
+      "si_mean": 50.0,
+      "si_max": 50.0,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "setup/multiplayer.c",
       "module": "setup",
-      "si_mean": 69.93,
-      "si_max": 69.93,
+      "si_mean": 70.27,
+      "si_max": 70.27,
       "grade": "D",
       "class_count": 1
     },
@@ -10602,16 +10602,16 @@
     {
       "file_path": "setup/txt_joyaxis.c",
       "module": "setup",
-      "si_mean": 52.7,
-      "si_max": 52.7,
+      "si_mean": 51.01,
+      "si_max": 51.01,
       "grade": "C",
       "class_count": 1
     },
     {
       "file_path": "setup/txt_joybinput.c",
       "module": "setup",
-      "si_mean": 56.08,
-      "si_max": 56.08,
+      "si_mean": 53.38,
+      "si_max": 53.38,
       "grade": "C",
       "class_count": 1
     },
@@ -10642,8 +10642,8 @@
     {
       "file_path": "strife/am_map.c",
       "module": "strife",
-      "si_mean": 78.72,
-      "si_max": 78.72,
+      "si_mean": 79.73,
+      "si_max": 79.73,
       "grade": "D",
       "class_count": 1
     },
@@ -10658,16 +10658,16 @@
     {
       "file_path": "strife/d_main.c",
       "module": "strife",
-      "si_mean": 96.62,
-      "si_max": 96.62,
+      "si_mean": 96.28,
+      "si_max": 96.28,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "strife/d_net.c",
       "module": "strife",
-      "si_mean": 38.51,
-      "si_max": 38.51,
+      "si_mean": 38.85,
+      "si_max": 38.85,
       "grade": "B",
       "class_count": 1
     },
@@ -10770,16 +10770,16 @@
     {
       "file_path": "strife/f_finale.c",
       "module": "strife",
-      "si_mean": 74.32,
-      "si_max": 74.32,
+      "si_mean": 73.99,
+      "si_max": 73.99,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "strife/f_wipe.c",
       "module": "strife",
-      "si_mean": 37.84,
-      "si_max": 37.84,
+      "si_mean": 38.18,
+      "si_max": 38.18,
       "grade": "B",
       "class_count": 1
     },
@@ -10802,8 +10802,8 @@
     {
       "file_path": "strife/hu_stuff.c",
       "module": "strife",
-      "si_mean": 67.91,
-      "si_max": 67.91,
+      "si_mean": 68.58,
+      "si_max": 68.58,
       "grade": "D",
       "class_count": 1
     },
@@ -10818,8 +10818,8 @@
     {
       "file_path": "strife/m_menu.c",
       "module": "strife",
-      "si_mean": 85.47,
-      "si_max": 85.47,
+      "si_mean": 85.81,
+      "si_max": 85.81,
       "grade": "E",
       "class_count": 1
     },
@@ -10842,8 +10842,8 @@
     {
       "file_path": "strife/p_ceilng.c",
       "module": "strife",
-      "si_mean": 54.05,
-      "si_max": 54.05,
+      "si_mean": 54.73,
+      "si_max": 54.73,
       "grade": "C",
       "class_count": 1
     },
@@ -10898,8 +10898,8 @@
     {
       "file_path": "strife/p_map.c",
       "module": "strife",
-      "si_mean": 72.64,
-      "si_max": 72.64,
+      "si_mean": 71.96,
+      "si_max": 71.96,
       "grade": "D",
       "class_count": 1
     },
@@ -10914,8 +10914,8 @@
     {
       "file_path": "strife/p_mobj.c",
       "module": "strife",
-      "si_mean": 61.82,
-      "si_max": 61.82,
+      "si_mean": 62.5,
+      "si_max": 62.5,
       "grade": "D",
       "class_count": 1
     },
@@ -10946,9 +10946,9 @@
     {
       "file_path": "strife/p_setup.c",
       "module": "strife",
-      "si_mean": 59.46,
-      "si_max": 59.46,
-      "grade": "C",
+      "si_mean": 60.14,
+      "si_max": 60.14,
+      "grade": "D",
       "class_count": 1
     },
     {
@@ -10962,8 +10962,8 @@
     {
       "file_path": "strife/p_spec.c",
       "module": "strife",
-      "si_mean": 91.22,
-      "si_max": 91.22,
+      "si_mean": 91.55,
+      "si_max": 91.55,
       "grade": "E",
       "class_count": 1
     },
@@ -11010,24 +11010,24 @@
     {
       "file_path": "strife/r_data.c",
       "module": "strife",
-      "si_mean": 60.47,
-      "si_max": 60.47,
+      "si_mean": 61.15,
+      "si_max": 61.15,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "strife/r_draw.c",
       "module": "strife",
-      "si_mean": 70.27,
-      "si_max": 70.27,
+      "si_mean": 70.61,
+      "si_max": 70.61,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "strife/r_main.c",
       "module": "strife",
-      "si_mean": 81.08,
-      "si_max": 81.08,
+      "si_mean": 81.76,
+      "si_max": 81.76,
       "grade": "E",
       "class_count": 1
     },
@@ -11042,8 +11042,8 @@
     {
       "file_path": "strife/r_segs.c",
       "module": "strife",
-      "si_mean": 84.8,
-      "si_max": 84.8,
+      "si_mean": 85.47,
+      "si_max": 85.47,
       "grade": "E",
       "class_count": 1
     },
@@ -11058,16 +11058,16 @@
     {
       "file_path": "strife/r_things.c",
       "module": "strife",
-      "si_mean": 66.55,
-      "si_max": 66.55,
+      "si_mean": 66.89,
+      "si_max": 66.89,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "strife/s_sound.c",
       "module": "strife",
-      "si_mean": 55.41,
-      "si_max": 55.41,
+      "si_mean": 56.08,
+      "si_max": 56.08,
       "grade": "C",
       "class_count": 1
     },
@@ -11090,8 +11090,8 @@
     {
       "file_path": "strife/st_stuff.c",
       "module": "strife",
-      "si_mean": 90.54,
-      "si_max": 90.54,
+      "si_mean": 90.88,
+      "si_max": 90.88,
       "grade": "E",
       "class_count": 1
     },
@@ -11122,32 +11122,32 @@
     {
       "file_path": "v_diskicon.c",
       "module": "(root)",
-      "si_mean": 85.81,
-      "si_max": 85.81,
+      "si_mean": 84.8,
+      "si_max": 84.8,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "v_video.c",
       "module": "(root)",
-      "si_mean": 97.97,
-      "si_max": 97.97,
+      "si_mean": 97.64,
+      "si_max": 97.64,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "w_checksum.c",
       "module": "(root)",
-      "si_mean": 70.61,
-      "si_max": 70.61,
+      "si_mean": 67.57,
+      "si_max": 67.57,
       "grade": "D",
       "class_count": 1
     },
     {
       "file_path": "w_file.c",
       "module": "(root)",
-      "si_mean": 35.81,
-      "si_max": 35.81,
+      "si_mean": 36.15,
+      "si_max": 36.15,
       "grade": "B",
       "class_count": 1
     },
@@ -11186,16 +11186,16 @@
     {
       "file_path": "w_merge.c",
       "module": "(root)",
-      "si_mean": 89.19,
-      "si_max": 89.19,
+      "si_mean": 89.53,
+      "si_max": 89.53,
       "grade": "E",
       "class_count": 1
     },
     {
       "file_path": "w_wad.c",
       "module": "(root)",
-      "si_mean": 97.64,
-      "si_max": 97.64,
+      "si_mean": 97.97,
+      "si_max": 97.97,
       "grade": "E",
       "class_count": 1
     },
@@ -11219,7 +11219,7 @@
   "module_scores": [
     {
       "module": "(root)",
-      "si_mean": 59.54,
+      "si_mean": 59.05,
       "si_max": 100.0,
       "grade": "C",
       "class_count": 68,
@@ -11227,7 +11227,7 @@
     },
     {
       "module": "doom",
-      "si_mean": 44.3,
+      "si_mean": 44.47,
       "si_max": 95.95,
       "grade": "C",
       "class_count": 59,
@@ -11235,15 +11235,15 @@
     },
     {
       "module": "heretic",
-      "si_mean": 49.07,
-      "si_max": 96.96,
+      "si_mean": 49.25,
+      "si_max": 97.3,
       "grade": "C",
       "class_count": 47,
       "file_count": 47
     },
     {
       "module": "hexen",
-      "si_mean": 52.09,
+      "si_mean": 52.29,
       "si_max": 95.27,
       "grade": "C",
       "class_count": 48,
@@ -11251,15 +11251,15 @@
     },
     {
       "module": "setup",
-      "si_mean": 48.45,
-      "si_max": 71.28,
+      "si_mean": 48.31,
+      "si_max": 74.66,
       "grade": "C",
       "class_count": 15,
       "file_count": 15
     },
     {
       "module": "strife",
-      "si_mean": 45.92,
+      "si_mean": 46.04,
       "si_max": 99.32,
       "grade": "C",
       "class_count": 59,

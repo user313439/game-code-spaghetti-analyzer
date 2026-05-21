@@ -163,13 +163,13 @@ def compute_si_static(
             total_methods=0,
         )
 
-    # 1) raw 추출
+    # 1) raw 추출 — dependency_cycle 는 SCC 크기 + SCC 내부 edge 수 결합 (W14 후속 개선)
     rows: list[dict[str, float]] = []
     for c in metrics.classes:
         rows.append({
             "cc": float(_class_cc_representative(c)),
             "coupling": float(c.coupling),
-            "dependency_cycle": float(c.cycle_size if c.cycle_member else 0),
+            "dependency_cycle": float(c.cycle_size + c.cycle_edges if c.cycle_member else 0),
             "global_state": float(c.global_state),
             "game_loop_centrality": float(c.game_loop_centrality),
         })
@@ -253,14 +253,14 @@ def compute_si_full(
             total_methods=0,
         )
 
-    # 1) raw 추출 — change_risk 까지 포함
+    # 1) raw 추출 — change_risk 까지 포함. dependency_cycle 는 _compute_si_static 과 동일하게 세분화.
     rows: list[dict[str, float]] = []
     for c in metrics.classes:
         cr = float(change_risk_by_file.get(c.file_path.replace("\\", "/"), 0.0))
         rows.append({
             "cc": float(_class_cc_representative(c)),
             "coupling": float(c.coupling),
-            "dependency_cycle": float(c.cycle_size if c.cycle_member else 0),
+            "dependency_cycle": float(c.cycle_size + c.cycle_edges if c.cycle_member else 0),
             "global_state": float(c.global_state),
             "game_loop_centrality": float(c.game_loop_centrality),
             "change_risk": cr,

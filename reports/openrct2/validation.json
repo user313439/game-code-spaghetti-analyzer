@@ -24,7 +24,7 @@
     {
       "name": "si_vs_bugfix",
       "n": 636,
-      "spearman_rho": 0.323,
+      "spearman_rho": 0.3224,
       "p_value": 0.0
     },
     {
@@ -44,7 +44,7 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 544,
-      "spearman_rho": 0.4583,
+      "spearman_rho": 0.4598,
       "p_value": 0.0
     },
     {
@@ -228,7 +228,7 @@
     {
       "fqn": "actions.cheats.CheatSetAction",
       "file_path": "actions/cheats/CheatSetAction.cpp",
-      "si": 74.37,
+      "si": 74.69,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -237,7 +237,7 @@
     {
       "fqn": "actions.footpath.FootpathAdditionPlaceAction",
       "file_path": "actions/footpath/FootpathAdditionPlaceAction.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -246,7 +246,7 @@
     {
       "fqn": "actions.footpath.FootpathAdditionRemoveAction",
       "file_path": "actions/footpath/FootpathAdditionRemoveAction.cpp",
-      "si": 55.5,
+      "si": 55.82,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -255,7 +255,7 @@
     {
       "fqn": "actions.footpath.FootpathLayoutPlaceAction",
       "file_path": "actions/footpath/FootpathLayoutPlaceAction.cpp",
-      "si": 61.95,
+      "si": 62.26,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -264,7 +264,7 @@
     {
       "fqn": "actions.footpath.FootpathPlaceAction",
       "file_path": "actions/footpath/FootpathPlaceAction.cpp",
-      "si": 71.86,
+      "si": 72.17,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -273,7 +273,7 @@
     {
       "fqn": "actions.footpath.FootpathRemoveAction",
       "file_path": "actions/footpath/FootpathRemoveAction.cpp",
-      "si": 60.53,
+      "si": 60.38,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -282,23 +282,23 @@
     {
       "fqn": "actions.GameAction",
       "file_path": "actions/GameAction.cpp",
-      "si": 61.95,
+      "si": 61.64,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 28
     },
     {
-      "fqn": "GameActionEntry",
+      "fqn": "OpenRCT2.GameActions.GameActionEntry",
       "file_path": "actions/GameActionRegistry.cpp",
-      "si": 80.66,
+      "si": 80.97,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 0
     },
     {
-      "fqn": "StringVariantVisitor",
+      "fqn": "OpenRCT2.GameActions.StringVariantVisitor",
       "file_path": "actions/GameActionResult.cpp",
       "si": 4.25,
       "grade": "A",
@@ -307,7 +307,7 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "QueuedGameAction",
+      "fqn": "OpenRCT2.GameActions.QueuedGameAction",
       "file_path": "actions/GameActionRunner.cpp",
       "si": 37.89,
       "grade": "B",
@@ -316,7 +316,7 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "ActionLogContext",
+      "fqn": "OpenRCT2.GameActions.ActionLogContext",
       "file_path": "actions/GameActionRunner.cpp",
       "si": 35.53,
       "grade": "B",
@@ -354,7 +354,7 @@
     {
       "fqn": "actions.general.LoadOrQuitAction",
       "file_path": "actions/general/LoadOrQuitAction.cpp",
-      "si": 48.74,
+      "si": 48.9,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -363,7 +363,7 @@
     {
       "fqn": "actions.general.MapChangeSizeAction",
       "file_path": "actions/general/MapChangeSizeAction.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -390,7 +390,7 @@
     {
       "fqn": "actions.general.TileModifyAction",
       "file_path": "actions/general/TileModifyAction.cpp",
-      "si": 54.09,
+      "si": 53.77,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -426,7 +426,7 @@
     {
       "fqn": "actions.park.LandBuyRightsAction",
       "file_path": "actions/park/LandBuyRightsAction.cpp",
-      "si": 57.86,
+      "si": 58.02,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -435,7 +435,7 @@
     {
       "fqn": "actions.park.LandSetRightsAction",
       "file_path": "actions/park/LandSetRightsAction.cpp",
-      "si": 61.95,
+      "si": 62.11,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -453,7 +453,7 @@
     {
       "fqn": "actions.park.ParkEntranceRemoveAction",
       "file_path": "actions/park/ParkEntranceRemoveAction.cpp",
-      "si": 55.03,
+      "si": 55.19,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -489,7 +489,7 @@
     {
       "fqn": "actions.park.ParkSetLoanAction",
       "file_path": "actions/park/ParkSetLoanAction.cpp",
-      "si": 51.89,
+      "si": 52.04,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -507,7 +507,7 @@
     {
       "fqn": "actions.park.ParkSetParameterAction",
       "file_path": "actions/park/ParkSetParameterAction.cpp",
-      "si": 53.46,
+      "si": 52.99,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -516,7 +516,7 @@
     {
       "fqn": "actions.park.ParkSetResearchFundingAction",
       "file_path": "actions/park/ParkSetResearchFundingAction.cpp",
-      "si": 51.89,
+      "si": 52.04,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -543,7 +543,7 @@
     {
       "fqn": "actions.peep.PeepPickupAction",
       "file_path": "actions/peep/PeepPickupAction.cpp",
-      "si": 50.16,
+      "si": 50.31,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -570,7 +570,7 @@
     {
       "fqn": "actions.peep.StaffHireNewAction",
       "file_path": "actions/peep/StaffHireNewAction.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -579,7 +579,7 @@
     {
       "fqn": "actions.peep.StaffSetColourAction",
       "file_path": "actions/peep/StaffSetColourAction.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -606,7 +606,7 @@
     {
       "fqn": "actions.peep.StaffSetOrdersAction",
       "file_path": "actions/peep/StaffSetOrdersAction.cpp",
-      "si": 51.89,
+      "si": 52.04,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -624,7 +624,7 @@
     {
       "fqn": "actions.ride.MazePlaceTrackAction",
       "file_path": "actions/ride/MazePlaceTrackAction.cpp",
-      "si": 60.53,
+      "si": 61.16,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -633,7 +633,7 @@
     {
       "fqn": "actions.ride.MazeSetTrackAction",
       "file_path": "actions/ride/MazeSetTrackAction.cpp",
-      "si": 62.58,
+      "si": 63.52,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -642,7 +642,7 @@
     {
       "fqn": "actions.ride.RideCreateAction",
       "file_path": "actions/ride/RideCreateAction.cpp",
-      "si": 59.28,
+      "si": 59.75,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -651,7 +651,7 @@
     {
       "fqn": "actions.ride.RideDemolishAction",
       "file_path": "actions/ride/RideDemolishAction.cpp",
-      "si": 64.94,
+      "si": 65.57,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -660,7 +660,7 @@
     {
       "fqn": "actions.ride.RideEntranceExitPlaceAction",
       "file_path": "actions/ride/RideEntranceExitPlaceAction.cpp",
-      "si": 65.88,
+      "si": 66.51,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -669,7 +669,7 @@
     {
       "fqn": "actions.ride.RideEntranceExitRemoveAction",
       "file_path": "actions/ride/RideEntranceExitRemoveAction.cpp",
-      "si": 55.03,
+      "si": 55.19,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -714,7 +714,7 @@
     {
       "fqn": "actions.ride.RideSetPriceAction",
       "file_path": "actions/ride/RideSetPriceAction.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -741,7 +741,7 @@
     {
       "fqn": "actions.ride.RideSetVehicleAction",
       "file_path": "actions/ride/RideSetVehicleAction.cpp",
-      "si": 60.53,
+      "si": 61.01,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -759,7 +759,7 @@
     {
       "fqn": "actions.scenery.BannerPlaceAction",
       "file_path": "actions/scenery/BannerPlaceAction.cpp",
-      "si": 38.36,
+      "si": 38.21,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -768,7 +768,7 @@
     {
       "fqn": "actions.scenery.BannerRemoveAction",
       "file_path": "actions/scenery/BannerRemoveAction.cpp",
-      "si": 56.6,
+      "si": 56.92,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -804,7 +804,7 @@
     {
       "fqn": "actions.scenery.LargeSceneryPlaceAction",
       "file_path": "actions/scenery/LargeSceneryPlaceAction.cpp",
-      "si": 68.08,
+      "si": 68.24,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -840,7 +840,7 @@
     {
       "fqn": "actions.scenery.SignSetNameAction",
       "file_path": "actions/scenery/SignSetNameAction.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -858,7 +858,7 @@
     {
       "fqn": "actions.scenery.SmallSceneryPlaceAction",
       "file_path": "actions/scenery/SmallSceneryPlaceAction.cpp",
-      "si": 69.03,
+      "si": 69.97,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -867,7 +867,7 @@
     {
       "fqn": "actions.scenery.SmallSceneryRemoveAction",
       "file_path": "actions/scenery/SmallSceneryRemoveAction.cpp",
-      "si": 62.58,
+      "si": 63.05,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -876,7 +876,7 @@
     {
       "fqn": "actions.scenery.SmallScenerySetColourAction",
       "file_path": "actions/scenery/SmallScenerySetColourAction.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -885,7 +885,7 @@
     {
       "fqn": "actions.scenery.WallPlaceAction",
       "file_path": "actions/scenery/WallPlaceAction.cpp",
-      "si": 71.86,
+      "si": 72.33,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -894,7 +894,7 @@
     {
       "fqn": "actions.scenery.WallRemoveAction",
       "file_path": "actions/scenery/WallRemoveAction.cpp",
-      "si": 57.86,
+      "si": 57.7,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -921,7 +921,7 @@
     {
       "fqn": "actions.terraform.LandLowerAction",
       "file_path": "actions/terraform/LandLowerAction.cpp",
-      "si": 39.31,
+      "si": 39.47,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -930,7 +930,7 @@
     {
       "fqn": "actions.terraform.LandRaiseAction",
       "file_path": "actions/terraform/LandRaiseAction.cpp",
-      "si": 39.31,
+      "si": 39.47,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -939,7 +939,7 @@
     {
       "fqn": "actions.terraform.LandSetHeightAction",
       "file_path": "actions/terraform/LandSetHeightAction.cpp",
-      "si": 67.3,
+      "si": 67.61,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -948,7 +948,7 @@
     {
       "fqn": "actions.terraform.LandSmoothAction",
       "file_path": "actions/terraform/LandSmoothAction.cpp",
-      "si": 39.31,
+      "si": 39.47,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -957,7 +957,7 @@
     {
       "fqn": "actions.terraform.SurfaceSetStyleAction",
       "file_path": "actions/terraform/SurfaceSetStyleAction.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -966,7 +966,7 @@
     {
       "fqn": "actions.terraform.WaterLowerAction",
       "file_path": "actions/terraform/WaterLowerAction.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -975,7 +975,7 @@
     {
       "fqn": "actions.terraform.WaterRaiseAction",
       "file_path": "actions/terraform/WaterRaiseAction.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -984,7 +984,7 @@
     {
       "fqn": "actions.terraform.WaterSetHeightAction",
       "file_path": "actions/terraform/WaterSetHeightAction.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1002,7 +1002,7 @@
     {
       "fqn": "actions.track.TrackPlaceAction",
       "file_path": "actions/track/TrackPlaceAction.cpp",
-      "si": 69.03,
+      "si": 69.5,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -1011,7 +1011,7 @@
     {
       "fqn": "actions.track.TrackRemoveAction",
       "file_path": "actions/track/TrackRemoveAction.cpp",
-      "si": 60.53,
+      "si": 61.01,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -1020,14 +1020,14 @@
     {
       "fqn": "actions.track.TrackSetBrakeSpeedAction",
       "file_path": "actions/track/TrackSetBrakeSpeedAction.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 0
     },
     {
-      "fqn": "AssetPackLoadContext",
+      "fqn": "OpenRCT2.AssetPackLoadContext",
       "file_path": "AssetPack.cpp",
       "si": 27.83,
       "grade": "B",
@@ -1038,14 +1038,14 @@
     {
       "fqn": "AssetPackManager",
       "file_path": "AssetPackManager.cpp",
-      "si": 55.03,
+      "si": 55.19,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 1
     },
     {
-      "fqn": "AudioParams",
+      "fqn": "OpenRCT2.Audio.AudioParams",
       "file_path": "audio/Audio.cpp",
       "si": 37.58,
       "grade": "B",
@@ -1054,7 +1054,7 @@
       "bugfix_count": 15
     },
     {
-      "fqn": "DummyAudioContext",
+      "fqn": "OpenRCT2.Audio.DummyAudioContext",
       "file_path": "audio/DummyAudioContext.cpp",
       "si": 4.4,
       "grade": "A",
@@ -1065,7 +1065,7 @@
     {
       "fqn": "Cheats",
       "file_path": "Cheats.cpp",
-      "si": 94.81,
+      "si": 94.97,
       "grade": "E",
       "cc_max": 52.0,
       "loc": 305,
@@ -1083,7 +1083,7 @@
     {
       "fqn": "command_line.ConvertCommand",
       "file_path": "command_line/ConvertCommand.cpp",
-      "si": 34.28,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1101,7 +1101,7 @@
     {
       "fqn": "command_line.RootCommands",
       "file_path": "command_line/RootCommands.cpp",
-      "si": 35.53,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1119,7 +1119,7 @@
     {
       "fqn": "command_line.SimulateCommands",
       "file_path": "command_line/SimulateCommands.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1155,7 +1155,7 @@
     {
       "fqn": "command_line.sprite.SpriteCommands",
       "file_path": "command_line/sprite/SpriteCommands.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1191,7 +1191,7 @@
     {
       "fqn": "command_line.sprite.SpriteExportAll",
       "file_path": "command_line/sprite/SpriteExportAll.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1209,7 +1209,7 @@
     {
       "fqn": "command_line.sprite.SpriteFile",
       "file_path": "command_line/sprite/SpriteFile.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -1225,9 +1225,9 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "LanguageConfigEnum",
+      "fqn": "OpenRCT2.Config.LanguageConfigEnum",
       "file_path": "config/Config.cpp",
-      "si": 41.51,
+      "si": 41.98,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 17,
@@ -1281,7 +1281,7 @@
     {
       "fqn": "IniReader",
       "file_path": "config/IniReader.cpp",
-      "si": 42.3,
+      "si": 42.77,
       "grade": "C",
       "cc_max": 11.0,
       "loc": 273,
@@ -1315,7 +1315,7 @@
       "bugfix_count": 3
     },
     {
-      "fqn": "Context",
+      "fqn": "OpenRCT2.Context",
       "file_path": "Context.cpp",
       "si": 99.84,
       "grade": "E",
@@ -1324,10 +1324,10 @@
       "bugfix_count": 69
     },
     {
-      "fqn": "CrashAdditionalFileRegistration",
+      "fqn": "OpenRCT2.Context.CrashAdditionalFileRegistration",
       "file_path": "Context.cpp",
-      "si": 62.89,
-      "grade": "D",
+      "si": 58.81,
+      "grade": "C",
       "cc_max": 1.0,
       "loc": 10,
       "bugfix_count": 69
@@ -1344,7 +1344,7 @@
     {
       "fqn": "core.Compression",
       "file_path": "core/Compression.cpp",
-      "si": 53.46,
+      "si": 52.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -1353,7 +1353,7 @@
     {
       "fqn": "core.Console",
       "file_path": "core/Console.cpp",
-      "si": 82.7,
+      "si": 83.49,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -1371,7 +1371,7 @@
     {
       "fqn": "DerReader",
       "file_path": "core/Crypt.CNG.cpp",
-      "si": 22.64,
+      "si": 22.8,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 76,
@@ -1389,14 +1389,14 @@
     {
       "fqn": "CngRsaKey",
       "file_path": "core/Crypt.CNG.cpp",
-      "si": 22.64,
+      "si": 22.8,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 188,
       "bugfix_count": 5
     },
     {
-      "fqn": "RsaKeyParams",
+      "fqn": "CngRsaKey.RsaKeyParams",
       "file_path": "core/Crypt.CNG.cpp",
       "si": 19.18,
       "grade": "A",
@@ -1416,7 +1416,7 @@
     {
       "fqn": "OpenRCT2FNV1aAlgorithm",
       "file_path": "core/Crypt.OpenRCT2.cpp",
-      "si": 80.35,
+      "si": 80.5,
       "grade": "E",
       "cc_max": 5.0,
       "loc": 59,
@@ -1425,7 +1425,7 @@
     {
       "fqn": "OpenSSLHashAlgorithm",
       "file_path": "core/Crypt.OpenSSL.cpp",
-      "si": 79.09,
+      "si": 79.25,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 57,
@@ -1461,7 +1461,7 @@
     {
       "fqn": "core.File",
       "file_path": "core/File.cpp",
-      "si": 78.77,
+      "si": 79.87,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -1470,7 +1470,7 @@
     {
       "fqn": "core.FileScanner",
       "file_path": "core/FileScanner.cpp",
-      "si": 74.53,
+      "si": 74.06,
       "grade": "D",
       "cc_max": 12.0,
       "loc": 107,
@@ -1495,7 +1495,7 @@
       "bugfix_count": 8
     },
     {
-      "fqn": "DirectoryState",
+      "fqn": "FileScannerBase.DirectoryState",
       "file_path": "core/FileScanner.cpp",
       "si": 9.28,
       "grade": "A",
@@ -1506,7 +1506,7 @@
     {
       "fqn": "FileScannerWindows",
       "file_path": "core/FileScanner.cpp",
-      "si": 29.72,
+      "si": 29.56,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 41,
@@ -1515,7 +1515,7 @@
     {
       "fqn": "FileScannerAndroidAssets",
       "file_path": "core/FileScanner.cpp",
-      "si": 36.01,
+      "si": 35.85,
       "grade": "B",
       "cc_max": 8.0,
       "loc": 48,
@@ -1524,7 +1524,7 @@
     {
       "fqn": "FileScannerUnix",
       "file_path": "core/FileScanner.cpp",
-      "si": 29.72,
+      "si": 29.56,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 62,
@@ -1533,7 +1533,7 @@
     {
       "fqn": "core.FileStream",
       "file_path": "core/FileStream.cpp",
-      "si": 82.08,
+      "si": 82.7,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -1542,7 +1542,7 @@
     {
       "fqn": "core.FileWatcher",
       "file_path": "core/FileWatcher.cpp",
-      "si": 42.61,
+      "si": 43.08,
       "grade": "C",
       "cc_max": 13.0,
       "loc": 138,
@@ -1551,7 +1551,7 @@
     {
       "fqn": "core.Guard",
       "file_path": "core/Guard.cpp",
-      "si": 91.98,
+      "si": 92.45,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -1567,7 +1567,7 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "WriteThis",
+      "fqn": "OpenRCT2.Http.WriteThis",
       "file_path": "core/Http.cURL.cpp",
       "si": 6.76,
       "grade": "A",
@@ -1587,7 +1587,7 @@
     {
       "fqn": "core.Imaging",
       "file_path": "core/Imaging.cpp",
-      "si": 53.46,
+      "si": 53.14,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -1596,8 +1596,8 @@
     {
       "fqn": "core.IStream",
       "file_path": "core/IStream.cpp",
-      "si": 79.72,
-      "grade": "D",
+      "si": 80.19,
+      "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 3
@@ -1605,7 +1605,7 @@
     {
       "fqn": "core.JobPool",
       "file_path": "core/JobPool.cpp",
-      "si": 64.31,
+      "si": 64.94,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 108,
@@ -1614,7 +1614,7 @@
     {
       "fqn": "core.Json",
       "file_path": "core/Json.cpp",
-      "si": 76.89,
+      "si": 77.83,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -1623,7 +1623,7 @@
     {
       "fqn": "core.MemoryStream",
       "file_path": "core/MemoryStream.cpp",
-      "si": 84.43,
+      "si": 85.06,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -1632,7 +1632,7 @@
     {
       "fqn": "core.Path",
       "file_path": "core/Path.cpp",
-      "si": 88.52,
+      "si": 89.15,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -1668,7 +1668,7 @@
     {
       "fqn": "core.String",
       "file_path": "core/String.cpp",
-      "si": 95.28,
+      "si": 95.75,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -1677,7 +1677,7 @@
     {
       "fqn": "core.StringBuilder",
       "file_path": "core/StringBuilder.cpp",
-      "si": 58.18,
+      "si": 57.86,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 47,
@@ -1686,7 +1686,7 @@
     {
       "fqn": "core.StringReader",
       "file_path": "core/StringReader.cpp",
-      "si": 48.9,
+      "si": 48.43,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 39,
@@ -1704,7 +1704,7 @@
     {
       "fqn": "core.UTF8",
       "file_path": "core/UTF8.cpp",
-      "si": 63.52,
+      "si": 64.62,
       "grade": "D",
       "cc_max": 6.0,
       "loc": 80,
@@ -1713,7 +1713,7 @@
     {
       "fqn": "core.Zip",
       "file_path": "core/Zip.cpp",
-      "si": 69.65,
+      "si": 68.08,
       "grade": "D",
       "cc_max": 4.0,
       "loc": 41,
@@ -1722,16 +1722,16 @@
     {
       "fqn": "ZipArchive",
       "file_path": "core/Zip.cpp",
-      "si": 32.55,
+      "si": 32.7,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 126,
       "bugfix_count": 2
     },
     {
-      "fqn": "ZipItemStream",
+      "fqn": "ZipArchive.ZipItemStream",
       "file_path": "core/Zip.cpp",
-      "si": 45.28,
+      "si": 45.75,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 133,
@@ -1740,7 +1740,7 @@
     {
       "fqn": "ZipArchive",
       "file_path": "core/ZipAndroid.cpp",
-      "si": 32.55,
+      "si": 32.7,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 208,
@@ -1749,7 +1749,7 @@
     {
       "fqn": "Date",
       "file_path": "Date.cpp",
-      "si": 90.57,
+      "si": 90.41,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 112,
@@ -1776,7 +1776,7 @@
     {
       "fqn": "drawing.BlendColourMap",
       "file_path": "drawing/BlendColourMap.cpp",
-      "si": 46.7,
+      "si": 46.23,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -1794,7 +1794,7 @@
     {
       "fqn": "drawing.ColourMap",
       "file_path": "drawing/ColourMap.cpp",
-      "si": 51.89,
+      "si": 51.1,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -1848,7 +1848,7 @@
     {
       "fqn": "drawing.Font",
       "file_path": "drawing/Font.cpp",
-      "si": 83.02,
+      "si": 82.08,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 136,
@@ -1857,14 +1857,14 @@
     {
       "fqn": "drawing.Image",
       "file_path": "drawing/Image.cpp",
-      "si": 75.47,
+      "si": 75.31,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 180,
       "bugfix_count": 5
     },
     {
-      "fqn": "RLECode",
+      "fqn": "OpenRCT2.Drawing.RLECode",
       "file_path": "drawing/ImageImporter.cpp",
       "si": 9.28,
       "grade": "A",
@@ -1882,7 +1882,7 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "LightListEntry",
+      "fqn": "OpenRCT2.Drawing.LightFx.LightListEntry",
       "file_path": "drawing/LightFX.cpp",
       "si": 35.53,
       "grade": "B",
@@ -1893,7 +1893,7 @@
     {
       "fqn": "drawing.Line",
       "file_path": "drawing/Line.cpp",
-      "si": 42.45,
+      "si": 42.92,
       "grade": "C",
       "cc_max": 18.0,
       "loc": 138,
@@ -1902,7 +1902,7 @@
     {
       "fqn": "drawing.NewDrawing",
       "file_path": "drawing/NewDrawing.cpp",
-      "si": 55.66,
+      "si": 57.39,
       "grade": "C",
       "cc_max": 3.5,
       "loc": 209,
@@ -1911,7 +1911,7 @@
     {
       "fqn": "drawing.Rectangle",
       "file_path": "drawing/Rectangle.cpp",
-      "si": 53.46,
+      "si": 52.99,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -1927,7 +1927,7 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "DrawScrollText",
+      "fqn": "OpenRCT2.Drawing.ScrollingText.DrawScrollText",
       "file_path": "drawing/ScrollingText.cpp",
       "si": 24.53,
       "grade": "B",
@@ -1947,7 +1947,7 @@
     {
       "fqn": "drawing.Text",
       "file_path": "drawing/Text.cpp",
-      "si": 66.67,
+      "si": 66.82,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 99,
@@ -1956,7 +1956,7 @@
     {
       "fqn": "StaticLayout",
       "file_path": "drawing/Text.cpp",
-      "si": 83.65,
+      "si": 83.81,
       "grade": "E",
       "cc_max": 5.0,
       "loc": 44,
@@ -2010,7 +2010,7 @@
     {
       "fqn": "drawing.WeatherDrawer",
       "file_path": "drawing/WeatherDrawer.cpp",
-      "si": 60.85,
+      "si": 60.69,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 133,
@@ -2019,7 +2019,7 @@
     {
       "fqn": "drawing.X8DrawingEngine",
       "file_path": "drawing/X8DrawingEngine.cpp",
-      "si": 91.04,
+      "si": 90.88,
       "grade": "E",
       "cc_max": 12.0,
       "loc": 537,
@@ -2028,7 +2028,7 @@
     {
       "fqn": "Editor",
       "file_path": "Editor.cpp",
-      "si": 78.14,
+      "si": 78.46,
       "grade": "D",
       "cc_max": 1.0,
       "loc": 4,
@@ -2037,7 +2037,7 @@
     {
       "fqn": "EditorObjectSelectionSession",
       "file_path": "EditorObjectSelectionSession.cpp",
-      "si": 87.74,
+      "si": 87.58,
       "grade": "E",
       "cc_max": 24.0,
       "loc": 661,
@@ -2046,7 +2046,7 @@
     {
       "fqn": "entity.Balloon",
       "file_path": "entity/Balloon.cpp",
-      "si": 70.6,
+      "si": 70.28,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2055,7 +2055,7 @@
     {
       "fqn": "entity.Duck",
       "file_path": "entity/Duck.cpp",
-      "si": 68.08,
+      "si": 67.92,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2073,7 +2073,7 @@
     {
       "fqn": "entity.EntityRegistry",
       "file_path": "entity/EntityRegistry.cpp",
-      "si": 96.07,
+      "si": 96.23,
       "grade": "E",
       "cc_max": 4.0,
       "loc": 73,
@@ -2082,7 +2082,7 @@
     {
       "fqn": "entity.EntityTweener",
       "file_path": "entity/EntityTweener.cpp",
-      "si": 61.95,
+      "si": 62.11,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2091,16 +2091,16 @@
     {
       "fqn": "entity.Fountain",
       "file_path": "entity/Fountain.cpp",
-      "si": 68.08,
+      "si": 67.92,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 2
     },
     {
-      "fqn": "ItemPref",
+      "fqn": "OpenRCT2.ItemPref",
       "file_path": "entity/Guest.cpp",
-      "si": 54.25,
+      "si": 55.97,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2109,7 +2109,7 @@
     {
       "fqn": "entity.Litter",
       "file_path": "entity/Litter.cpp",
-      "si": 64.94,
+      "si": 64.31,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2118,7 +2118,7 @@
     {
       "fqn": "entity.MoneyEffect",
       "file_path": "entity/MoneyEffect.cpp",
-      "si": 71.07,
+      "si": 70.6,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2127,7 +2127,7 @@
     {
       "fqn": "entity.Particle",
       "file_path": "entity/Particle.cpp",
-      "si": 67.3,
+      "si": 66.98,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2136,7 +2136,7 @@
     {
       "fqn": "entity.PatrolArea",
       "file_path": "entity/PatrolArea.cpp",
-      "si": 67.3,
+      "si": 66.67,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2145,7 +2145,7 @@
     {
       "fqn": "entity.Peep",
       "file_path": "entity/Peep.cpp",
-      "si": 86.79,
+      "si": 87.11,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -2163,7 +2163,7 @@
     {
       "fqn": "FileClassifier",
       "file_path": "FileClassifier.cpp",
-      "si": 75.0,
+      "si": 74.21,
       "grade": "D",
       "cc_max": 13.0,
       "loc": 190,
@@ -2172,7 +2172,7 @@
     {
       "fqn": "Game",
       "file_path": "Game.cpp",
-      "si": 98.11,
+      "si": 98.58,
       "grade": "E",
       "cc_max": 7.3333,
       "loc": 533,
@@ -2190,8 +2190,8 @@
     {
       "fqn": "GameStateSnapshots",
       "file_path": "GameStateSnapshots.cpp",
-      "si": 65.09,
-      "grade": "D",
+      "si": 41.82,
+      "grade": "C",
       "cc_max": 1.0,
       "loc": 4,
       "bugfix_count": 7
@@ -2199,7 +2199,7 @@
     {
       "fqn": "GameStateSnapshot_t",
       "file_path": "GameStateSnapshots.cpp",
-      "si": 62.11,
+      "si": 63.21,
       "grade": "D",
       "cc_max": 20.0,
       "loc": 89,
@@ -2208,8 +2208,8 @@
     {
       "fqn": "GameStateSnapshots",
       "file_path": "GameStateSnapshots.cpp",
-      "si": 70.13,
-      "grade": "D",
+      "si": 84.59,
+      "grade": "E",
       "cc_max": 16.5,
       "loc": 585,
       "bugfix_count": 7
@@ -2217,7 +2217,7 @@
     {
       "fqn": "Input",
       "file_path": "Input.cpp",
-      "si": 64.94,
+      "si": 65.41,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2226,7 +2226,7 @@
     {
       "fqn": "interface.Chat",
       "file_path": "interface/Chat.cpp",
-      "si": 95.75,
+      "si": 95.44,
       "grade": "E",
       "cc_max": 14.0,
       "loc": 252,
@@ -2262,7 +2262,7 @@
     {
       "fqn": "interface.Fonts",
       "file_path": "interface/Fonts.cpp",
-      "si": 59.43,
+      "si": 59.59,
       "grade": "C",
       "cc_max": 7.0,
       "loc": 57,
@@ -2280,7 +2280,7 @@
     {
       "fqn": "ConsoleCommand",
       "file_path": "interface/InteractiveConsole.cpp",
-      "si": 56.92,
+      "si": 58.49,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2289,7 +2289,7 @@
     {
       "fqn": "interface.Screenshot",
       "file_path": "interface/Screenshot.cpp",
-      "si": 94.97,
+      "si": 94.81,
       "grade": "E",
       "cc_max": 20.0,
       "loc": 585,
@@ -2298,7 +2298,7 @@
     {
       "fqn": "interface.StdInOutConsole",
       "file_path": "interface/StdInOutConsole.cpp",
-      "si": 81.92,
+      "si": 81.45,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 138,
@@ -2307,7 +2307,7 @@
     {
       "fqn": "interface.Viewport",
       "file_path": "interface/Viewport.cpp",
-      "si": 91.51,
+      "si": 91.82,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -2316,7 +2316,7 @@
     {
       "fqn": "interface.Window",
       "file_path": "interface/Window.cpp",
-      "si": 71.86,
+      "si": 72.01,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2325,7 +2325,7 @@
     {
       "fqn": "interface.WindowBase",
       "file_path": "interface/WindowBase.cpp",
-      "si": 64.94,
+      "si": 64.47,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2334,7 +2334,7 @@
     {
       "fqn": "interface.ZoomLevel",
       "file_path": "interface/ZoomLevel.cpp",
-      "si": 49.06,
+      "si": 50.79,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 41,
@@ -2343,7 +2343,7 @@
     {
       "fqn": "localisation.Currency",
       "file_path": "localisation/Currency.cpp",
-      "si": 50.16,
+      "si": 50.0,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2361,8 +2361,8 @@
     {
       "fqn": "localisation.Formatter",
       "file_path": "localisation/Formatter.cpp",
-      "si": 58.65,
-      "grade": "C",
+      "si": 60.22,
+      "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 0
@@ -2370,7 +2370,7 @@
     {
       "fqn": "localisation.Formatting",
       "file_path": "localisation/Formatting.cpp",
-      "si": 81.45,
+      "si": 81.92,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -2386,9 +2386,9 @@
       "bugfix_count": 7
     },
     {
-      "fqn": "LanguagePack",
+      "fqn": "OpenRCT2.LanguagePack",
       "file_path": "localisation/LanguagePack.cpp",
-      "si": 69.5,
+      "si": 68.55,
       "grade": "D",
       "cc_max": 12.0,
       "loc": 221,
@@ -2406,7 +2406,7 @@
     {
       "fqn": "localisation.LocalisationService",
       "file_path": "localisation/LocalisationService.cpp",
-      "si": 81.29,
+      "si": 81.76,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 10,
@@ -2415,7 +2415,7 @@
     {
       "fqn": "management.Award",
       "file_path": "management/Award.cpp",
-      "si": 87.11,
+      "si": 86.79,
       "grade": "E",
       "cc_max": 11.5,
       "loc": 556,
@@ -2433,7 +2433,7 @@
     {
       "fqn": "management.Finance",
       "file_path": "management/Finance.cpp",
-      "si": 94.18,
+      "si": 94.34,
       "grade": "E",
       "cc_max": 6.0,
       "loc": 254,
@@ -2442,7 +2442,7 @@
     {
       "fqn": "management.Marketing",
       "file_path": "management/Marketing.cpp",
-      "si": 92.3,
+      "si": 91.98,
       "grade": "E",
       "cc_max": 15.0,
       "loc": 217,
@@ -2451,7 +2451,7 @@
     {
       "fqn": "management.NewsItem",
       "file_path": "management/NewsItem.cpp",
-      "si": 89.62,
+      "si": 89.94,
       "grade": "E",
       "cc_max": 13.3333,
       "loc": 401,
@@ -2460,7 +2460,7 @@
     {
       "fqn": "management.Research",
       "file_path": "management/Research.cpp",
-      "si": 95.6,
+      "si": 95.28,
       "grade": "E",
       "cc_max": 12.6,
       "loc": 917,
@@ -2469,7 +2469,7 @@
     {
       "fqn": "network.DiscordService",
       "file_path": "network/DiscordService.cpp",
-      "si": 55.03,
+      "si": 54.72,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2487,8 +2487,8 @@
     {
       "fqn": "network.NetworkBase",
       "file_path": "network/NetworkBase.cpp",
-      "si": 79.72,
-      "grade": "D",
+      "si": 81.13,
+      "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 137
@@ -2505,7 +2505,7 @@
     {
       "fqn": "network.NetworkConnection",
       "file_path": "network/NetworkConnection.cpp",
-      "si": 50.16,
+      "si": 50.31,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2514,7 +2514,7 @@
     {
       "fqn": "network.NetworkGroup",
       "file_path": "network/NetworkGroup.cpp",
-      "si": 47.64,
+      "si": 47.17,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2557,9 +2557,9 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "NetworkServerAdvertiser",
+      "fqn": "OpenRCT2.Network.NetworkServerAdvertiser",
       "file_path": "network/NetworkServerAdvertiser.cpp",
-      "si": 60.69,
+      "si": 61.79,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 70,
@@ -2584,7 +2584,7 @@
       "bugfix_count": 8
     },
     {
-      "fqn": "WSA",
+      "fqn": "OpenRCT2.Network.WSA",
       "file_path": "network/Socket.cpp",
       "si": 18.4,
       "grade": "A",
@@ -2593,7 +2593,7 @@
       "bugfix_count": 8
     },
     {
-      "fqn": "SocketException",
+      "fqn": "OpenRCT2.Network.SocketException",
       "file_path": "network/Socket.cpp",
       "si": 9.43,
       "grade": "A",
@@ -2602,7 +2602,7 @@
       "bugfix_count": 8
     },
     {
-      "fqn": "NetworkEndpoint",
+      "fqn": "OpenRCT2.Network.NetworkEndpoint",
       "file_path": "network/Socket.cpp",
       "si": 13.05,
       "grade": "A",
@@ -2611,25 +2611,25 @@
       "bugfix_count": 8
     },
     {
-      "fqn": "Socket",
+      "fqn": "OpenRCT2.Network.Socket",
       "file_path": "network/Socket.cpp",
-      "si": 59.59,
+      "si": 59.43,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 54,
       "bugfix_count": 8
     },
     {
-      "fqn": "TcpSocket",
+      "fqn": "OpenRCT2.Network.TcpSocket",
       "file_path": "network/Socket.cpp",
-      "si": 41.98,
+      "si": 42.45,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 380,
       "bugfix_count": 8
     },
     {
-      "fqn": "UdpSocket",
+      "fqn": "OpenRCT2.Network.UdpSocket",
       "file_path": "network/Socket.cpp",
       "si": 29.25,
       "grade": "B",
@@ -2640,7 +2640,7 @@
     {
       "fqn": "object.AudioObject",
       "file_path": "object/AudioObject.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -2649,7 +2649,7 @@
     {
       "fqn": "object.AudioSampleTable",
       "file_path": "object/AudioSampleTable.cpp",
-      "si": 51.89,
+      "si": 52.2,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2658,16 +2658,16 @@
     {
       "fqn": "object.BannerObject",
       "file_path": "object/BannerObject.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 5
     },
     {
-      "fqn": "RawClimateMonth",
+      "fqn": "OpenRCT2.RawClimateMonth",
       "file_path": "object/ClimateObject.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -2685,7 +2685,7 @@
     {
       "fqn": "object.EntranceObject",
       "file_path": "object/EntranceObject.cpp",
-      "si": 56.6,
+      "si": 56.45,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2694,7 +2694,7 @@
     {
       "fqn": "object.FootpathObject",
       "file_path": "object/FootpathObject.cpp",
-      "si": 63.99,
+      "si": 63.36,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2703,7 +2703,7 @@
     {
       "fqn": "object.FootpathRailingsObject",
       "file_path": "object/FootpathRailingsObject.cpp",
-      "si": 59.28,
+      "si": 58.96,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2712,17 +2712,17 @@
     {
       "fqn": "object.FootpathSurfaceObject",
       "file_path": "object/FootpathSurfaceObject.cpp",
-      "si": 65.88,
+      "si": 65.72,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 1
     },
     {
-      "fqn": "ImageTable::RequiredImage",
+      "fqn": "OpenRCT2.ImageTable::RequiredImage",
       "file_path": "object/ImageTable.cpp",
-      "si": 39.94,
-      "grade": "B",
+      "si": 40.09,
+      "grade": "C",
       "cc_max": 5.0,
       "loc": 37,
       "bugfix_count": 7
@@ -2730,7 +2730,7 @@
     {
       "fqn": "object.LargeSceneryObject",
       "file_path": "object/LargeSceneryObject.cpp",
-      "si": 57.86,
+      "si": 57.23,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2739,7 +2739,7 @@
     {
       "fqn": "object.MusicObject",
       "file_path": "object/MusicObject.cpp",
-      "si": 65.88,
+      "si": 66.04,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2748,7 +2748,7 @@
     {
       "fqn": "object.Object",
       "file_path": "object/Object.cpp",
-      "si": 73.74,
+      "si": 73.58,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2757,43 +2757,43 @@
     {
       "fqn": "object.ObjectEntryManager",
       "file_path": "object/ObjectEntryManager.cpp",
-      "si": 73.27,
+      "si": 72.96,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 0
     },
     {
-      "fqn": "IFileDataRetriever",
+      "fqn": "OpenRCT2.IFileDataRetriever",
       "file_path": "object/ObjectFactory.cpp",
-      "si": 45.44,
+      "si": 47.01,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 17
     },
     {
-      "fqn": "FileSystemDataRetriever",
+      "fqn": "OpenRCT2.FileSystemDataRetriever",
       "file_path": "object/ObjectFactory.cpp",
-      "si": 47.33,
+      "si": 48.27,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 21,
       "bugfix_count": 17
     },
     {
-      "fqn": "ZipDataRetriever",
+      "fqn": "OpenRCT2.ZipDataRetriever",
       "file_path": "object/ObjectFactory.cpp",
-      "si": 45.91,
+      "si": 47.33,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 13,
       "bugfix_count": 17
     },
     {
-      "fqn": "ReadObjectContext",
+      "fqn": "OpenRCT2.ReadObjectContext",
       "file_path": "object/ObjectFactory.cpp",
-      "si": 46.07,
+      "si": 47.48,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 69,
@@ -2802,14 +2802,14 @@
     {
       "fqn": "object.ObjectList",
       "file_path": "object/ObjectList.cpp",
-      "si": 77.2,
+      "si": 77.67,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 2
     },
     {
-      "fqn": "ObjectToLoad",
+      "fqn": "OpenRCT2.ObjectToLoad",
       "file_path": "object/ObjectManager.cpp",
       "si": 37.58,
       "grade": "B",
@@ -2818,45 +2818,45 @@
       "bugfix_count": 18
     },
     {
-      "fqn": "ObjectManager",
+      "fqn": "OpenRCT2.ObjectManager",
       "file_path": "object/ObjectManager.cpp",
-      "si": 90.72,
+      "si": 91.35,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 668,
       "bugfix_count": 18
     },
     {
-      "fqn": "ObjectEntryHash",
+      "fqn": "OpenRCT2.ObjectEntryHash",
       "file_path": "object/ObjectRepository.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 20
     },
     {
-      "fqn": "ObjectEntryEqual",
+      "fqn": "OpenRCT2.ObjectEntryEqual",
       "file_path": "object/ObjectRepository.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 20
     },
     {
-      "fqn": "ObjectFileIndex",
+      "fqn": "OpenRCT2.ObjectFileIndex",
       "file_path": "object/ObjectRepository.cpp",
-      "si": 44.18,
+      "si": 44.65,
       "grade": "C",
       "cc_max": 6.0,
       "loc": 76,
       "bugfix_count": 20
     },
     {
-      "fqn": "ObjectRepository",
+      "fqn": "OpenRCT2.ObjectRepository",
       "file_path": "object/ObjectRepository.cpp",
-      "si": 86.64,
+      "si": 86.95,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 394,
@@ -2874,7 +2874,7 @@
     {
       "fqn": "object.PathAdditionObject",
       "file_path": "object/PathAdditionObject.cpp",
-      "si": 56.6,
+      "si": 56.29,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2883,7 +2883,7 @@
     {
       "fqn": "object.PeepAnimationsObject",
       "file_path": "object/PeepAnimationsObject.cpp",
-      "si": 69.97,
+      "si": 69.65,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2892,7 +2892,7 @@
     {
       "fqn": "object.PeepNamesObject",
       "file_path": "object/PeepNamesObject.cpp",
-      "si": 53.46,
+      "si": 52.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2908,9 +2908,9 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "LegacyAnimationParameters",
+      "fqn": "OpenRCT2.LegacyAnimationParameters",
       "file_path": "object/RideObject.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -2919,7 +2919,7 @@
     {
       "fqn": "object.ScenarioMetaObject",
       "file_path": "object/ScenarioMetaObject.cpp",
-      "si": 57.86,
+      "si": 57.23,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2937,7 +2937,7 @@
     {
       "fqn": "object.SmallSceneryObject",
       "file_path": "object/SmallSceneryObject.cpp",
-      "si": 57.86,
+      "si": 57.55,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -2946,7 +2946,7 @@
     {
       "fqn": "object.StationObject",
       "file_path": "object/StationObject.cpp",
-      "si": 71.07,
+      "si": 70.91,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2955,7 +2955,7 @@
     {
       "fqn": "object.StringTable",
       "file_path": "object/StringTable.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -2964,7 +2964,7 @@
     {
       "fqn": "object.TerrainEdgeObject",
       "file_path": "object/TerrainEdgeObject.cpp",
-      "si": 61.95,
+      "si": 61.64,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2973,7 +2973,7 @@
     {
       "fqn": "object.TerrainSurfaceObject",
       "file_path": "object/TerrainSurfaceObject.cpp",
-      "si": 61.95,
+      "si": 61.32,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -2982,7 +2982,7 @@
     {
       "fqn": "object.WallObject",
       "file_path": "object/WallObject.cpp",
-      "si": 56.6,
+      "si": 56.29,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -3000,7 +3000,7 @@
     {
       "fqn": "object.WaterObject",
       "file_path": "object/WaterObject.cpp",
-      "si": 55.5,
+      "si": 55.66,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -3009,7 +3009,7 @@
     {
       "fqn": "OpenRCT2",
       "file_path": "OpenRCT2.cpp",
-      "si": 94.03,
+      "si": 93.87,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 8,
@@ -3052,7 +3052,7 @@
       "bugfix_count": 2
     },
     {
-      "fqn": "LitterSprite",
+      "fqn": "OpenRCT2.LitterSprite",
       "file_path": "paint/entity/Paint.Litter.cpp",
       "si": 6.76,
       "grade": "A",
@@ -3072,7 +3072,7 @@
     {
       "fqn": "paint.entity.Paint.Staff",
       "file_path": "paint/entity/Paint.Staff.cpp",
-      "si": 32.7,
+      "si": 32.86,
       "grade": "B",
       "cc_max": 7.0,
       "loc": 43,
@@ -3081,7 +3081,7 @@
     {
       "fqn": "paint.Paint",
       "file_path": "paint/Paint.cpp",
-      "si": 97.8,
+      "si": 98.43,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 626,
@@ -3099,7 +3099,7 @@
     {
       "fqn": "paint.Painter",
       "file_path": "paint/Painter.cpp",
-      "si": 71.38,
+      "si": 71.54,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 168,
@@ -3117,7 +3117,7 @@
     {
       "fqn": "paint.support.MetalSupports",
       "file_path": "paint/support/MetalSupports.cpp",
-      "si": 87.58,
+      "si": 87.89,
       "grade": "E",
       "cc_max": 21.0,
       "loc": 201,
@@ -3153,7 +3153,7 @@
     {
       "fqn": "paint.support.WoodenSupports",
       "file_path": "paint/support/WoodenSupports.cpp",
-      "si": 86.48,
+      "si": 86.64,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 162,
@@ -3180,7 +3180,7 @@
     {
       "fqn": "paint.tile_element.Paint.Banner",
       "file_path": "paint/tile_element/Paint.Banner.cpp",
-      "si": 42.77,
+      "si": 43.24,
       "grade": "C",
       "cc_max": 8.0,
       "loc": 73,
@@ -3189,7 +3189,7 @@
     {
       "fqn": "paint.tile_element.Paint.Entrance",
       "file_path": "paint/tile_element/Paint.Entrance.cpp",
-      "si": 56.76,
+      "si": 58.33,
       "grade": "C",
       "cc_max": 22.0,
       "loc": 313,
@@ -3198,7 +3198,7 @@
     {
       "fqn": "paint.tile_element.Paint.LargeScenery",
       "file_path": "paint/tile_element/Paint.LargeScenery.cpp",
-      "si": 50.31,
+      "si": 53.3,
       "grade": "C",
       "cc_max": 19.0,
       "loc": 345,
@@ -3207,7 +3207,7 @@
     {
       "fqn": "paint.tile_element.Paint.Path",
       "file_path": "paint/tile_element/Paint.Path.cpp",
-      "si": 76.42,
+      "si": 76.73,
       "grade": "D",
       "cc_max": 38.0,
       "loc": 893,
@@ -3216,7 +3216,7 @@
     {
       "fqn": "FootpathPaintInfo",
       "file_path": "paint/tile_element/Paint.Path.cpp",
-      "si": 40.09,
+      "si": 40.25,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -3225,7 +3225,7 @@
     {
       "fqn": "paint.tile_element.Paint.PathAddition",
       "file_path": "paint/tile_element/Paint.PathAddition.cpp",
-      "si": 43.4,
+      "si": 43.87,
       "grade": "C",
       "cc_max": 18.0,
       "loc": 262,
@@ -3234,7 +3234,7 @@
     {
       "fqn": "paint.tile_element.Paint.SmallScenery",
       "file_path": "paint/tile_element/Paint.SmallScenery.cpp",
-      "si": 68.24,
+      "si": 69.34,
       "grade": "D",
       "cc_max": 36.0,
       "loc": 326,
@@ -3243,7 +3243,7 @@
     {
       "fqn": "paint.tile_element.Paint.Surface",
       "file_path": "paint/tile_element/Paint.Surface.cpp",
-      "si": 93.24,
+      "si": 92.92,
       "grade": "E",
       "cc_max": 86.0,
       "loc": 1353,
@@ -3252,7 +3252,7 @@
     {
       "fqn": "TunnelDescriptor",
       "file_path": "paint/tile_element/Paint.Surface.cpp",
-      "si": 39.31,
+      "si": 39.47,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -3261,7 +3261,7 @@
     {
       "fqn": "TileDescriptor",
       "file_path": "paint/tile_element/Paint.Surface.cpp",
-      "si": 39.31,
+      "si": 39.47,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -3270,7 +3270,7 @@
     {
       "fqn": "TileSurfaceBoundaryData",
       "file_path": "paint/tile_element/Paint.Surface.cpp",
-      "si": 39.31,
+      "si": 39.47,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -3279,7 +3279,7 @@
     {
       "fqn": "paint.tile_element.Paint.TileElement",
       "file_path": "paint/tile_element/Paint.TileElement.cpp",
-      "si": 81.13,
+      "si": 81.29,
       "grade": "E",
       "cc_max": 49.0,
       "loc": 325,
@@ -3288,7 +3288,7 @@
     {
       "fqn": "paint.tile_element.Paint.Tunnel",
       "file_path": "paint/tile_element/Paint.Tunnel.cpp",
-      "si": 34.75,
+      "si": 34.91,
       "grade": "B",
       "cc_max": 9.0,
       "loc": 210,
@@ -3297,7 +3297,7 @@
     {
       "fqn": "paint.tile_element.Paint.Wall",
       "file_path": "paint/tile_element/Paint.Wall.cpp",
-      "si": 47.17,
+      "si": 48.11,
       "grade": "C",
       "cc_max": 17.0,
       "loc": 298,
@@ -3315,7 +3315,7 @@
     {
       "fqn": "paint.track.coaster.AlpineCoaster",
       "file_path": "paint/track/coaster/AlpineCoaster.cpp",
-      "si": 51.89,
+      "si": 52.04,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -3324,7 +3324,7 @@
     {
       "fqn": "paint.track.coaster.BobsleighCoaster",
       "file_path": "paint/track/coaster/BobsleighCoaster.cpp",
-      "si": 91.82,
+      "si": 91.67,
       "grade": "E",
       "cc_max": 53.5,
       "loc": 4056,
@@ -3351,7 +3351,7 @@
     {
       "fqn": "paint.track.coaster.ClassicWoodenTwisterRollerCoaster",
       "file_path": "paint/track/coaster/ClassicWoodenTwisterRollerCoaster.cpp",
-      "si": 76.26,
+      "si": 76.1,
       "grade": "D",
       "cc_max": 26.5,
       "loc": 326,
@@ -3360,7 +3360,7 @@
     {
       "fqn": "paint.track.coaster.CompactInvertedCoaster",
       "file_path": "paint/track/coaster/CompactInvertedCoaster.cpp",
-      "si": 96.86,
+      "si": 96.7,
       "grade": "E",
       "cc_max": 43.8182,
       "loc": 9569,
@@ -3369,7 +3369,7 @@
     {
       "fqn": "paint.track.coaster.CorkscrewRollerCoaster",
       "file_path": "paint/track/coaster/CorkscrewRollerCoaster.cpp",
-      "si": 98.43,
+      "si": 98.11,
       "grade": "E",
       "cc_max": 45.64,
       "loc": 20590,
@@ -3396,7 +3396,7 @@
     {
       "fqn": "paint.track.coaster.HeartlineTwisterCoaster",
       "file_path": "paint/track/coaster/HeartlineTwisterCoaster.cpp",
-      "si": 84.75,
+      "si": 84.28,
       "grade": "E",
       "cc_max": 31.0,
       "loc": 1663,
@@ -3405,7 +3405,7 @@
     {
       "fqn": "paint.track.coaster.HybridCoaster",
       "file_path": "paint/track/coaster/HybridCoaster.cpp",
-      "si": 51.89,
+      "si": 52.04,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -3414,7 +3414,7 @@
     {
       "fqn": "paint.track.coaster.InvertedHairpinCoaster",
       "file_path": "paint/track/coaster/InvertedHairpinCoaster.cpp",
-      "si": 84.91,
+      "si": 84.75,
       "grade": "E",
       "cc_max": 26.5,
       "loc": 1366,
@@ -3423,7 +3423,7 @@
     {
       "fqn": "paint.track.coaster.InvertedImpulseCoaster",
       "file_path": "paint/track/coaster/InvertedImpulseCoaster.cpp",
-      "si": 77.52,
+      "si": 77.2,
       "grade": "D",
       "cc_max": 20.0,
       "loc": 743,
@@ -3432,7 +3432,7 @@
     {
       "fqn": "paint.track.coaster.InvertedRollerCoaster",
       "file_path": "paint/track/coaster/InvertedRollerCoaster.cpp",
-      "si": 98.27,
+      "si": 97.96,
       "grade": "E",
       "cc_max": 44.9286,
       "loc": 11291,
@@ -3441,7 +3441,7 @@
     {
       "fqn": "paint.track.coaster.JuniorRollerCoaster",
       "file_path": "paint/track/coaster/JuniorRollerCoaster.cpp",
-      "si": 96.54,
+      "si": 96.38,
       "grade": "E",
       "cc_max": 17.8889,
       "loc": 2998,
@@ -3450,7 +3450,7 @@
     {
       "fqn": "paint.track.coaster.LatticeTriangleTrack",
       "file_path": "paint/track/coaster/LatticeTriangleTrack.cpp",
-      "si": 96.38,
+      "si": 96.54,
       "grade": "E",
       "cc_max": 46.56,
       "loc": 19625,
@@ -3459,7 +3459,7 @@
     {
       "fqn": "paint.track.coaster.LatticeTriangleTrackAlt",
       "file_path": "paint/track/coaster/LatticeTriangleTrackAlt.cpp",
-      "si": 43.55,
+      "si": 44.03,
       "grade": "C",
       "cc_max": 12.0,
       "loc": 230,
@@ -3468,7 +3468,7 @@
     {
       "fqn": "paint.track.coaster.LayDownRollerCoasterInverted",
       "file_path": "paint/track/coaster/LayDownRollerCoasterInverted.cpp",
-      "si": 93.08,
+      "si": 92.77,
       "grade": "E",
       "cc_max": 38.9,
       "loc": 8129,
@@ -3477,7 +3477,7 @@
     {
       "fqn": "paint.track.coaster.LimLaunchedRollerCoaster",
       "file_path": "paint/track/coaster/LimLaunchedRollerCoaster.cpp",
-      "si": 91.67,
+      "si": 91.51,
       "grade": "E",
       "cc_max": 69.0,
       "loc": 5953,
@@ -3486,7 +3486,7 @@
     {
       "fqn": "paint.track.coaster.LoopingRollerCoaster",
       "file_path": "paint/track/coaster/LoopingRollerCoaster.cpp",
-      "si": 96.23,
+      "si": 96.07,
       "grade": "E",
       "cc_max": 48.8462,
       "loc": 10280,
@@ -3495,7 +3495,7 @@
     {
       "fqn": "paint.track.coaster.MineRide",
       "file_path": "paint/track/coaster/MineRide.cpp",
-      "si": 91.19,
+      "si": 90.72,
       "grade": "E",
       "cc_max": 49.8571,
       "loc": 5442,
@@ -3504,7 +3504,7 @@
     {
       "fqn": "paint.track.coaster.MineTrainCoaster",
       "file_path": "paint/track/coaster/MineTrainCoaster.cpp",
-      "si": 93.71,
+      "si": 93.4,
       "grade": "E",
       "cc_max": 48.6667,
       "loc": 7171,
@@ -3513,7 +3513,7 @@
     {
       "fqn": "paint.track.coaster.MiniRollerCoaster",
       "file_path": "paint/track/coaster/MiniRollerCoaster.cpp",
-      "si": 95.44,
+      "si": 95.13,
       "grade": "E",
       "cc_max": 46.0769,
       "loc": 8994,
@@ -3522,7 +3522,7 @@
     {
       "fqn": "paint.track.coaster.MiniSuspendedCoaster",
       "file_path": "paint/track/coaster/MiniSuspendedCoaster.cpp",
-      "si": 84.28,
+      "si": 83.96,
       "grade": "E",
       "cc_max": 30.5,
       "loc": 2169,
@@ -3531,7 +3531,7 @@
     {
       "fqn": "paint.track.coaster.MultiDimensionRollerCoaster",
       "file_path": "paint/track/coaster/MultiDimensionRollerCoaster.cpp",
-      "si": 94.34,
+      "si": 94.18,
       "grade": "E",
       "cc_max": 47.7778,
       "loc": 7681,
@@ -3558,7 +3558,7 @@
     {
       "fqn": "paint.track.coaster.ReverserRollerCoaster",
       "file_path": "paint/track/coaster/ReverserRollerCoaster.cpp",
-      "si": 86.01,
+      "si": 85.85,
       "grade": "E",
       "cc_max": 35.0,
       "loc": 1354,
@@ -3576,7 +3576,7 @@
     {
       "fqn": "paint.track.coaster.SingleRailRollerCoaster",
       "file_path": "paint/track/coaster/SingleRailRollerCoaster.cpp",
-      "si": 51.89,
+      "si": 52.04,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -3585,7 +3585,7 @@
     {
       "fqn": "paint.track.coaster.StandUpRollerCoaster",
       "file_path": "paint/track/coaster/StandUpRollerCoaster.cpp",
-      "si": 97.33,
+      "si": 97.17,
       "grade": "E",
       "cc_max": 48.087,
       "loc": 18528,
@@ -3612,7 +3612,7 @@
     {
       "fqn": "paint.track.coaster.TwisterRollerCoaster",
       "file_path": "paint/track/coaster/TwisterRollerCoaster.cpp",
-      "si": 98.58,
+      "si": 98.27,
       "grade": "E",
       "cc_max": 45.68,
       "loc": 20309,
@@ -3621,7 +3621,7 @@
     {
       "fqn": "paint.track.coaster.VirginiaReel",
       "file_path": "paint/track/coaster/VirginiaReel.cpp",
-      "si": 77.04,
+      "si": 76.89,
       "grade": "D",
       "cc_max": 16.0,
       "loc": 317,
@@ -3630,7 +3630,7 @@
     {
       "fqn": "paint.track.coaster.WildMouse",
       "file_path": "paint/track/coaster/WildMouse.cpp",
-      "si": 53.62,
+      "si": 54.4,
       "grade": "C",
       "cc_max": 17.0,
       "loc": 786,
@@ -3639,7 +3639,7 @@
     {
       "fqn": "paint.track.coaster.WoodenRollerCoaster",
       "file_path": "paint/track/coaster/WoodenRollerCoaster.cpp",
-      "si": 86.95,
+      "si": 86.48,
       "grade": "E",
       "cc_max": 47.0,
       "loc": 568,
@@ -3648,7 +3648,7 @@
     {
       "fqn": "paint.track.coaster.WoodenWildMouse",
       "file_path": "paint/track/coaster/WoodenWildMouse.cpp",
-      "si": 76.1,
+      "si": 76.26,
       "grade": "D",
       "cc_max": 16.0,
       "loc": 604,
@@ -3666,7 +3666,7 @@
     {
       "fqn": "paint.track.gentle.Circus",
       "file_path": "paint/track/gentle/Circus.cpp",
-      "si": 67.61,
+      "si": 67.45,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 105,
@@ -3675,7 +3675,7 @@
     {
       "fqn": "paint.track.gentle.CrookedHouse",
       "file_path": "paint/track/gentle/CrookedHouse.cpp",
-      "si": 66.35,
+      "si": 66.19,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 102,
@@ -3684,7 +3684,7 @@
     {
       "fqn": "paint.track.gentle.Dodgems",
       "file_path": "paint/track/gentle/Dodgems.cpp",
-      "si": 63.36,
+      "si": 62.89,
       "grade": "D",
       "cc_max": 9.0,
       "loc": 75,
@@ -3693,7 +3693,7 @@
     {
       "fqn": "paint.track.gentle.FerrisWheel",
       "file_path": "paint/track/gentle/FerrisWheel.cpp",
-      "si": 72.17,
+      "si": 71.38,
       "grade": "D",
       "cc_max": 14.0,
       "loc": 134,
@@ -3702,7 +3702,7 @@
     {
       "fqn": "paint.track.gentle.FlyingSaucers",
       "file_path": "paint/track/gentle/FlyingSaucers.cpp",
-      "si": 55.19,
+      "si": 55.5,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 36,
@@ -3711,7 +3711,7 @@
     {
       "fqn": "paint.track.gentle.GhostTrain",
       "file_path": "paint/track/gentle/GhostTrain.cpp",
-      "si": 80.97,
+      "si": 80.66,
       "grade": "E",
       "cc_max": 18.0,
       "loc": 395,
@@ -3720,7 +3720,7 @@
     {
       "fqn": "paint.track.gentle.HauntedHouse",
       "file_path": "paint/track/gentle/HauntedHouse.cpp",
-      "si": 64.15,
+      "si": 63.68,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 103,
@@ -3729,7 +3729,7 @@
     {
       "fqn": "paint.track.gentle.Maze",
       "file_path": "paint/track/gentle/Maze.cpp",
-      "si": 79.25,
+      "si": 78.62,
       "grade": "D",
       "cc_max": 30.0,
       "loc": 140,
@@ -3738,7 +3738,7 @@
     {
       "fqn": "paint.track.gentle.MerryGoRound",
       "file_path": "paint/track/gentle/MerryGoRound.cpp",
-      "si": 68.55,
+      "si": 68.4,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 151,
@@ -3747,7 +3747,7 @@
     {
       "fqn": "paint.track.gentle.MiniGolf",
       "file_path": "paint/track/gentle/MiniGolf.cpp",
-      "si": 83.18,
+      "si": 82.55,
       "grade": "E",
       "cc_max": 19.0,
       "loc": 627,
@@ -3774,7 +3774,7 @@
     {
       "fqn": "paint.track.gentle.ObservationTower",
       "file_path": "paint/track/gentle/ObservationTower.cpp",
-      "si": 65.25,
+      "si": 64.78,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 115,
@@ -3783,7 +3783,7 @@
     {
       "fqn": "paint.track.gentle.SpaceRings",
       "file_path": "paint/track/gentle/SpaceRings.cpp",
-      "si": 73.9,
+      "si": 73.43,
       "grade": "D",
       "cc_max": 18.0,
       "loc": 154,
@@ -3792,7 +3792,7 @@
     {
       "fqn": "paint.track.gentle.SpiralSlide",
       "file_path": "paint/track/gentle/SpiralSlide.cpp",
-      "si": 72.48,
+      "si": 71.7,
       "grade": "D",
       "cc_max": 17.0,
       "loc": 200,
@@ -3801,7 +3801,7 @@
     {
       "fqn": "paint.track.shops.Facility",
       "file_path": "paint/track/shops/Facility.cpp",
-      "si": 40.25,
+      "si": 40.57,
       "grade": "C",
       "cc_max": 11.0,
       "loc": 62,
@@ -3810,7 +3810,7 @@
     {
       "fqn": "paint.track.shops.Shop",
       "file_path": "paint/track/shops/Shop.cpp",
-      "si": 58.81,
+      "si": 59.12,
       "grade": "C",
       "cc_max": 7.0,
       "loc": 50,
@@ -3819,7 +3819,7 @@
     {
       "fqn": "paint.track.thrill.3dCinema",
       "file_path": "paint/track/thrill/3dCinema.cpp",
-      "si": 41.67,
+      "si": 42.14,
       "grade": "C",
       "cc_max": 11.0,
       "loc": 103,
@@ -3828,7 +3828,7 @@
     {
       "fqn": "paint.track.thrill.Enterprise",
       "file_path": "paint/track/thrill/Enterprise.cpp",
-      "si": 74.06,
+      "si": 73.9,
       "grade": "D",
       "cc_max": 17.0,
       "loc": 156,
@@ -3837,7 +3837,7 @@
     {
       "fqn": "paint.track.thrill.GoKarts",
       "file_path": "paint/track/thrill/GoKarts.cpp",
-      "si": 92.77,
+      "si": 92.3,
       "grade": "E",
       "cc_max": 19.5,
       "loc": 1510,
@@ -3846,7 +3846,7 @@
     {
       "fqn": "paint.track.thrill.LaunchedFreefall",
       "file_path": "paint/track/thrill/LaunchedFreefall.cpp",
-      "si": 66.82,
+      "si": 66.35,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 116,
@@ -3855,7 +3855,7 @@
     {
       "fqn": "paint.track.thrill.MagicCarpet",
       "file_path": "paint/track/thrill/MagicCarpet.cpp",
-      "si": 89.78,
+      "si": 89.62,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 199,
@@ -3864,7 +3864,7 @@
     {
       "fqn": "paint.track.thrill.MotionSimulator",
       "file_path": "paint/track/thrill/MotionSimulator.cpp",
-      "si": 67.61,
+      "si": 67.45,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 115,
@@ -3873,7 +3873,7 @@
     {
       "fqn": "paint.track.thrill.RotoDrop",
       "file_path": "paint/track/thrill/RotoDrop.cpp",
-      "si": 69.81,
+      "si": 69.03,
       "grade": "D",
       "cc_max": 13.0,
       "loc": 125,
@@ -3882,7 +3882,7 @@
     {
       "fqn": "paint.track.thrill.SwingingInverterShip",
       "file_path": "paint/track/thrill/SwingingInverterShip.cpp",
-      "si": 72.33,
+      "si": 71.86,
       "grade": "D",
       "cc_max": 13.0,
       "loc": 131,
@@ -3891,7 +3891,7 @@
     {
       "fqn": "paint.track.thrill.SwingingShip",
       "file_path": "paint/track/thrill/SwingingShip.cpp",
-      "si": 82.39,
+      "si": 82.23,
       "grade": "E",
       "cc_max": 32.0,
       "loc": 245,
@@ -3900,7 +3900,7 @@
     {
       "fqn": "paint.track.thrill.TopSpin",
       "file_path": "paint/track/thrill/TopSpin.cpp",
-      "si": 70.28,
+      "si": 70.13,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 217,
@@ -3909,7 +3909,7 @@
     {
       "fqn": "paint.track.thrill.Twist",
       "file_path": "paint/track/thrill/Twist.cpp",
-      "si": 72.01,
+      "si": 71.07,
       "grade": "D",
       "cc_max": 15.0,
       "loc": 149,
@@ -3927,8 +3927,8 @@
     {
       "fqn": "paint.track.transport.Chairlift",
       "file_path": "paint/track/transport/Chairlift.cpp",
-      "si": 80.19,
-      "grade": "E",
+      "si": 79.4,
+      "grade": "D",
       "cc_max": 20.0,
       "loc": 583,
       "bugfix_count": 2
@@ -3936,7 +3936,7 @@
     {
       "fqn": "paint.track.transport.Lift",
       "file_path": "paint/track/transport/Lift.cpp",
-      "si": 63.05,
+      "si": 62.58,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 108,
@@ -3945,7 +3945,7 @@
     {
       "fqn": "paint.track.transport.MiniatureRailway",
       "file_path": "paint/track/transport/MiniatureRailway.cpp",
-      "si": 89.94,
+      "si": 89.78,
       "grade": "E",
       "cc_max": 24.5,
       "loc": 1310,
@@ -3954,7 +3954,7 @@
     {
       "fqn": "FloorDescriptor",
       "file_path": "paint/track/transport/MiniatureRailway.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -3963,7 +3963,7 @@
     {
       "fqn": "paint.track.transport.Monorail",
       "file_path": "paint/track/transport/Monorail.cpp",
-      "si": 85.06,
+      "si": 85.22,
       "grade": "E",
       "cc_max": 23.0,
       "loc": 817,
@@ -3972,8 +3972,8 @@
     {
       "fqn": "paint.track.transport.SuspendedMonorail",
       "file_path": "paint/track/transport/SuspendedMonorail.cpp",
-      "si": 80.5,
-      "grade": "E",
+      "si": 79.72,
+      "grade": "D",
       "cc_max": 30.5,
       "loc": 1957,
       "bugfix_count": 2
@@ -3981,7 +3981,7 @@
     {
       "fqn": "paint.track.water.BoatHire",
       "file_path": "paint/track/water/BoatHire.cpp",
-      "si": 76.73,
+      "si": 76.42,
       "grade": "D",
       "cc_max": 26.0,
       "loc": 1228,
@@ -3990,7 +3990,7 @@
     {
       "fqn": "paint.track.water.DinghySlide",
       "file_path": "paint/track/water/DinghySlide.cpp",
-      "si": 77.83,
+      "si": 77.36,
       "grade": "D",
       "cc_max": 20.0,
       "loc": 875,
@@ -3999,7 +3999,7 @@
     {
       "fqn": "paint.track.water.DinghySlideCovered",
       "file_path": "paint/track/water/DinghySlideCovered.cpp",
-      "si": 48.27,
+      "si": 49.69,
       "grade": "C",
       "cc_max": 18.5,
       "loc": 803,
@@ -4008,7 +4008,7 @@
     {
       "fqn": "paint.track.water.LogFlume",
       "file_path": "paint/track/water/LogFlume.cpp",
-      "si": 80.82,
+      "si": 80.03,
       "grade": "E",
       "cc_max": 21.0,
       "loc": 845,
@@ -4017,7 +4017,7 @@
     {
       "fqn": "paint.track.water.RiverRapids",
       "file_path": "paint/track/water/RiverRapids.cpp",
-      "si": 77.67,
+      "si": 77.52,
       "grade": "D",
       "cc_max": 18.0,
       "loc": 548,
@@ -4026,7 +4026,7 @@
     {
       "fqn": "paint.track.water.SplashBoats",
       "file_path": "paint/track/water/SplashBoats.cpp",
-      "si": 83.81,
+      "si": 83.33,
       "grade": "E",
       "cc_max": 19.0,
       "loc": 728,
@@ -4035,7 +4035,7 @@
     {
       "fqn": "paint.track.water.SubmarineRide",
       "file_path": "paint/track/water/SubmarineRide.cpp",
-      "si": 66.04,
+      "si": 65.25,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 158,
@@ -4044,14 +4044,14 @@
     {
       "fqn": "paint.track_pieces.QuarterHelix",
       "file_path": "paint/track_pieces/QuarterHelix.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 0
     },
     {
-      "fqn": "PitchInfo",
+      "fqn": "OpenRCT2.PitchInfo",
       "file_path": "paint/vehicle/Vehicle.ClassicMiniSpinning.cpp",
       "si": 9.28,
       "grade": "A",
@@ -4152,7 +4152,7 @@
     {
       "fqn": "paint.VirtualFloor",
       "file_path": "paint/VirtualFloor.cpp",
-      "si": 88.84,
+      "si": 88.52,
       "grade": "E",
       "cc_max": 36.0,
       "loc": 354,
@@ -4170,25 +4170,25 @@
     {
       "fqn": "park.ParkFile",
       "file_path": "park/ParkFile.cpp",
-      "si": 69.18,
+      "si": 68.71,
       "grade": "D",
       "cc_max": 9.0,
       "loc": 63,
       "bugfix_count": 19
     },
     {
-      "fqn": "ParkFile",
+      "fqn": "OpenRCT2.ParkFile",
       "file_path": "park/ParkFile.cpp",
-      "si": 89.15,
-      "grade": "E",
+      "si": 77.04,
+      "grade": "D",
       "cc_max": 22.0,
       "loc": 2022,
       "bugfix_count": 19
     },
     {
-      "fqn": "LegacyFootpathMapping",
+      "fqn": "OpenRCT2.ParkFile.LegacyFootpathMapping",
       "file_path": "park/ParkFile.cpp",
-      "si": 55.97,
+      "si": 56.76,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4197,7 +4197,7 @@
     {
       "fqn": "ParkFileImporter",
       "file_path": "park/ParkFile.cpp",
-      "si": 55.97,
+      "si": 56.76,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4206,8 +4206,8 @@
     {
       "fqn": "park.ParkPreview",
       "file_path": "park/ParkPreview.cpp",
-      "si": 60.53,
-      "grade": "D",
+      "si": 39.47,
+      "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 2
@@ -4215,14 +4215,14 @@
     {
       "fqn": "ParkImporter",
       "file_path": "ParkImporter.cpp",
-      "si": 72.64,
+      "si": 72.48,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 5
     },
     {
-      "fqn": "PathFindingState",
+      "fqn": "OpenRCT2.PathFinding.PathFindingState",
       "file_path": "peep/GuestPathfinding.cpp",
       "si": 37.58,
       "grade": "B",
@@ -4233,7 +4233,7 @@
     {
       "fqn": "peep.PeepAnimations",
       "file_path": "peep/PeepAnimations.cpp",
-      "si": 55.03,
+      "si": 54.72,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4260,7 +4260,7 @@
     {
       "fqn": "platform.Crash",
       "file_path": "platform/Crash.cpp",
-      "si": 68.4,
+      "si": 68.87,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 29,
@@ -4287,14 +4287,14 @@
     {
       "fqn": "platform.Platform.Emscripten",
       "file_path": "platform/Platform.Emscripten.cpp",
-      "si": 24.53,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 0
     },
     {
-      "fqn": "EnvLangGuard",
+      "fqn": "OpenRCT2.Platform.EnvLangGuard",
       "file_path": "platform/Platform.Linux.cpp",
       "si": 15.41,
       "grade": "A",
@@ -4314,7 +4314,7 @@
     {
       "fqn": "platform.Platform.Win32",
       "file_path": "platform/Platform.Win32.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -4323,8 +4323,8 @@
     {
       "fqn": "PlatformEnvironment",
       "file_path": "PlatformEnvironment.cpp",
-      "si": 85.69,
-      "grade": "E",
+      "si": 75.0,
+      "grade": "D",
       "cc_max": 9.0,
       "loc": 77,
       "bugfix_count": 7
@@ -4332,14 +4332,14 @@
     {
       "fqn": "PlatformEnvironment",
       "file_path": "PlatformEnvironment.cpp",
-      "si": 82.23,
+      "si": 88.99,
       "grade": "E",
       "cc_max": 16.0,
       "loc": 140,
       "bugfix_count": 7
     },
     {
-      "fqn": "StackEntry",
+      "fqn": "OpenRCT2.Profiling.Detail.StackEntry",
       "file_path": "profiling/Profiling.cpp",
       "si": 4.25,
       "grade": "A",
@@ -4359,16 +4359,16 @@
     {
       "fqn": "rct1.S4Importer",
       "file_path": "rct1/S4Importer.cpp",
-      "si": 69.34,
+      "si": 69.81,
       "grade": "D",
       "cc_max": 1.0,
       "loc": 4,
       "bugfix_count": 152
     },
     {
-      "fqn": "S4Importer",
+      "fqn": "OpenRCT2.RCT1.S4Importer",
       "file_path": "rct1/S4Importer.cpp",
-      "si": 82.55,
+      "si": 83.02,
       "grade": "E",
       "cc_max": 22.5714,
       "loc": 2503,
@@ -4377,16 +4377,16 @@
     {
       "fqn": "rct1.T4Importer",
       "file_path": "rct1/T4Importer.cpp",
-      "si": 34.59,
+      "si": 34.75,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 4,
       "bugfix_count": 6
     },
     {
-      "fqn": "TD4Importer",
+      "fqn": "OpenRCT2.RCT1.TD4Importer",
       "file_path": "rct1/T4Importer.cpp",
-      "si": 44.34,
+      "si": 44.97,
       "grade": "C",
       "cc_max": 13.0,
       "loc": 237,
@@ -4395,14 +4395,14 @@
     {
       "fqn": "rct1.Tables",
       "file_path": "rct1/Tables.cpp",
-      "si": 54.09,
+      "si": 53.77,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 16
     },
     {
-      "fqn": "EncodingConvertEntry",
+      "fqn": "OpenRCT2.EncodingConvertEntry",
       "file_path": "rct12/CSStringConverter.cpp",
       "si": 9.28,
       "grade": "A",
@@ -4413,7 +4413,7 @@
     {
       "fqn": "rct12.RCT12",
       "file_path": "rct12/RCT12.cpp",
-      "si": 92.92,
+      "si": 92.61,
       "grade": "E",
       "cc_max": 7.9,
       "loc": 672,
@@ -4422,7 +4422,7 @@
     {
       "fqn": "rct12.ScenarioPatcher",
       "file_path": "rct12/ScenarioPatcher.cpp",
-      "si": 75.31,
+      "si": 75.47,
       "grade": "D",
       "cc_max": 12.5,
       "loc": 609,
@@ -4431,7 +4431,7 @@
     {
       "fqn": "rct12.TD46",
       "file_path": "rct12/TD46.cpp",
-      "si": 53.46,
+      "si": 52.36,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4440,7 +4440,7 @@
     {
       "fqn": "rct2.RCT2",
       "file_path": "rct2/RCT2.cpp",
-      "si": 73.27,
+      "si": 73.11,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -4449,16 +4449,16 @@
     {
       "fqn": "rct2.S6Importer",
       "file_path": "rct2/S6Importer.cpp",
-      "si": 58.02,
+      "si": 58.81,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 4,
       "bugfix_count": 97
     },
     {
-      "fqn": "S6Importer",
+      "fqn": "OpenRCT2.RCT2.S6Importer",
       "file_path": "rct2/S6Importer.cpp",
-      "si": 78.93,
+      "si": 79.09,
       "grade": "D",
       "cc_max": 26.0,
       "loc": 1828,
@@ -4501,43 +4501,43 @@
       "bugfix_count": 8
     },
     {
-      "fqn": "TD6Importer",
+      "fqn": "OpenRCT2.RCT2.TD6Importer",
       "file_path": "rct2/T6Importer.cpp",
-      "si": 42.14,
+      "si": 42.61,
       "grade": "C",
       "cc_max": 8.0,
       "loc": 215,
       "bugfix_count": 8
     },
     {
-      "fqn": "ReplayCommand",
+      "fqn": "OpenRCT2.ReplayCommand",
       "file_path": "ReplayManager.cpp",
-      "si": 44.97,
+      "si": 44.81,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 7,
       "bugfix_count": 15
     },
     {
-      "fqn": "ReplayRecordFile",
+      "fqn": "OpenRCT2.ReplayRecordFile",
       "file_path": "ReplayManager.cpp",
-      "si": 44.03,
+      "si": 44.5,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 15
     },
     {
-      "fqn": "ReplayRecordData",
+      "fqn": "OpenRCT2.ReplayRecordData",
       "file_path": "ReplayManager.cpp",
-      "si": 44.03,
+      "si": 44.5,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 15
     },
     {
-      "fqn": "ReplayManager",
+      "fqn": "OpenRCT2.ReplayManager",
       "file_path": "ReplayManager.cpp",
       "si": 94.5,
       "grade": "E",
@@ -4548,7 +4548,7 @@
     {
       "fqn": "ride.CableLift",
       "file_path": "ride/CableLift.cpp",
-      "si": 91.35,
+      "si": 91.19,
       "grade": "E",
       "cc_max": 13.0,
       "loc": 399,
@@ -4557,7 +4557,7 @@
     {
       "fqn": "ride.CarEntry",
       "file_path": "ride/CarEntry.cpp",
-      "si": 43.4,
+      "si": 43.87,
       "grade": "C",
       "cc_max": 18.0,
       "loc": 123,
@@ -4566,7 +4566,7 @@
     {
       "fqn": "ride.MazeCost",
       "file_path": "ride/MazeCost.cpp",
-      "si": 50.16,
+      "si": 50.47,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4584,7 +4584,7 @@
     {
       "fqn": "StationIndexWithMessage",
       "file_path": "ride/Ride.cpp",
-      "si": 52.36,
+      "si": 54.25,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4593,14 +4593,14 @@
     {
       "fqn": "NecessarySpriteGroup",
       "file_path": "ride/Ride.cpp",
-      "si": 52.36,
+      "si": 54.25,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 147
     },
     {
-      "fqn": "RideMusicChannel",
+      "fqn": "OpenRCT2.RideAudio.RideMusicChannel",
       "file_path": "ride/RideAudio.cpp",
       "si": 84.12,
       "grade": "E",
@@ -4620,7 +4620,7 @@
     {
       "fqn": "TrackDescriptor",
       "file_path": "ride/RideConstruction.cpp",
-      "si": 43.71,
+      "si": 44.5,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4638,7 +4638,7 @@
     {
       "fqn": "ride.RideManager",
       "file_path": "ride/RideManager.cpp",
-      "si": 73.74,
+      "si": 73.27,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -4647,7 +4647,7 @@
     {
       "fqn": "ride.RideRatings",
       "file_path": "ride/RideRatings.cpp",
-      "si": 93.87,
+      "si": 93.71,
       "grade": "E",
       "cc_max": 21.1111,
       "loc": 1859,
@@ -4656,7 +4656,7 @@
     {
       "fqn": "ShelteredEights",
       "file_path": "ride/RideRatings.cpp",
-      "si": 39.78,
+      "si": 39.94,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -4665,7 +4665,7 @@
     {
       "fqn": "Row",
       "file_path": "ride/RideRatings.cpp",
-      "si": 39.78,
+      "si": 39.94,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -4674,7 +4674,7 @@
     {
       "fqn": "ride.ShopItem",
       "file_path": "ride/ShopItem.cpp",
-      "si": 82.86,
+      "si": 82.39,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 86,
@@ -4683,7 +4683,7 @@
     {
       "fqn": "ride.Station",
       "file_path": "ride/Station.cpp",
-      "si": 88.68,
+      "si": 88.84,
       "grade": "E",
       "cc_max": 18.0,
       "loc": 353,
@@ -4692,7 +4692,7 @@
     {
       "fqn": "ride.ted.PitchAndRoll",
       "file_path": "ride/ted/PitchAndRoll.cpp",
-      "si": 50.16,
+      "si": 49.37,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4719,8 +4719,8 @@
     {
       "fqn": "ride.TrackData",
       "file_path": "ride/TrackData.cpp",
-      "si": 79.72,
-      "grade": "D",
+      "si": 80.82,
+      "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 18
@@ -4728,7 +4728,7 @@
     {
       "fqn": "ride.TrackDesign",
       "file_path": "ride/TrackDesign.cpp",
-      "si": 95.13,
+      "si": 95.6,
       "grade": "E",
       "cc_max": 30.2,
       "loc": 2000,
@@ -4737,7 +4737,7 @@
     {
       "fqn": "TrackSceneryEntry",
       "file_path": "ride/TrackDesign.cpp",
-      "si": 61.01,
+      "si": 62.74,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -4746,7 +4746,7 @@
     {
       "fqn": "ride.TrackDesignRepository",
       "file_path": "ride/TrackDesignRepository.cpp",
-      "si": 34.59,
+      "si": 34.75,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 33,
@@ -4755,7 +4755,7 @@
     {
       "fqn": "TrackRepositoryItem",
       "file_path": "ride/TrackDesignRepository.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -4764,7 +4764,7 @@
     {
       "fqn": "TrackDesignFileIndex",
       "file_path": "ride/TrackDesignRepository.cpp",
-      "si": 39.47,
+      "si": 39.62,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 41,
@@ -4782,7 +4782,7 @@
     {
       "fqn": "ride.TrackDesignSave",
       "file_path": "ride/TrackDesignSave.cpp",
-      "si": 63.21,
+      "si": 64.15,
       "grade": "D",
       "cc_max": 10.6667,
       "loc": 496,
@@ -4791,7 +4791,7 @@
     {
       "fqn": "TrackDesignAddStatus",
       "file_path": "ride/TrackDesignSave.cpp",
-      "si": 45.13,
+      "si": 45.6,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 8,
@@ -4800,7 +4800,7 @@
     {
       "fqn": "ride.TrackIteration",
       "file_path": "ride/TrackIteration.cpp",
-      "si": 69.03,
+      "si": 69.18,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -4809,7 +4809,7 @@
     {
       "fqn": "ride.TrackPaint",
       "file_path": "ride/TrackPaint.cpp",
-      "si": 96.7,
+      "si": 97.01,
       "grade": "E",
       "cc_max": 40.0,
       "loc": 1486,
@@ -4818,7 +4818,7 @@
     {
       "fqn": "ride.TrackStyle",
       "file_path": "ride/TrackStyle.cpp",
-      "si": 47.48,
+      "si": 46.86,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 8,
@@ -4827,7 +4827,7 @@
     {
       "fqn": "ride.TrainManager",
       "file_path": "ride/TrainManager.cpp",
-      "si": 50.16,
+      "si": 50.0,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -4836,7 +4836,7 @@
     {
       "fqn": "ride.Vehicle.Animation",
       "file_path": "ride/Vehicle.Animation.cpp",
-      "si": 90.41,
+      "si": 90.25,
       "grade": "E",
       "cc_max": 38.0,
       "loc": 944,
@@ -4854,7 +4854,7 @@
     {
       "fqn": "ride.Vehicle.Collision",
       "file_path": "ride/Vehicle.Collision.cpp",
-      "si": 83.33,
+      "si": 83.18,
       "grade": "E",
       "cc_max": 46.0,
       "loc": 225,
@@ -4872,7 +4872,7 @@
     {
       "fqn": "ride.Vehicle.Crash",
       "file_path": "ride/Vehicle.Crash.cpp",
-      "si": 77.36,
+      "si": 77.99,
       "grade": "D",
       "cc_max": 17.0,
       "loc": 493,
@@ -4881,7 +4881,7 @@
     {
       "fqn": "ride.Vehicle.Dodgems",
       "file_path": "ride/Vehicle.Dodgems.cpp",
-      "si": 83.49,
+      "si": 83.65,
       "grade": "E",
       "cc_max": 28.0,
       "loc": 271,
@@ -4890,7 +4890,7 @@
     {
       "fqn": "DodgemsTrackSize",
       "file_path": "ride/Vehicle.Dodgems.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -4899,7 +4899,7 @@
     {
       "fqn": "ride.Vehicle.MiniGolf",
       "file_path": "ride/Vehicle.MiniGolf.cpp",
-      "si": 80.03,
+      "si": 80.35,
       "grade": "E",
       "cc_max": 37.0,
       "loc": 684,
@@ -4908,8 +4908,8 @@
     {
       "fqn": "ride.Vehicle.SceneryDoors",
       "file_path": "ride/Vehicle.SceneryDoors.cpp",
-      "si": 58.49,
-      "grade": "C",
+      "si": 60.06,
+      "grade": "D",
       "cc_max": 15.0,
       "loc": 99,
       "bugfix_count": 0
@@ -4917,7 +4917,7 @@
     {
       "fqn": "ride.Vehicle.Sound",
       "file_path": "ride/Vehicle.Sound.cpp",
-      "si": 87.89,
+      "si": 87.74,
       "grade": "E",
       "cc_max": 21.0,
       "loc": 247,
@@ -4926,7 +4926,7 @@
     {
       "fqn": "ride.Vehicle.Station",
       "file_path": "ride/Vehicle.Station.cpp",
-      "si": 90.88,
+      "si": 90.57,
       "grade": "E",
       "cc_max": 61.0,
       "loc": 1607,
@@ -4935,7 +4935,7 @@
     {
       "fqn": "SynchronisedVehicle",
       "file_path": "ride/Vehicle.Station.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -4944,7 +4944,7 @@
     {
       "fqn": "ride.Vehicle.TrackMotion",
       "file_path": "ride/Vehicle.TrackMotion.cpp",
-      "si": 97.01,
+      "si": 96.86,
       "grade": "E",
       "cc_max": 51.5,
       "loc": 1469,
@@ -4971,7 +4971,7 @@
     {
       "fqn": "ride.VehicleRiderControl",
       "file_path": "ride/VehicleRiderControl.cpp",
-      "si": 85.85,
+      "si": 86.01,
       "grade": "E",
       "cc_max": 53.0,
       "loc": 105,
@@ -4989,7 +4989,7 @@
     {
       "fqn": "ride.VehicleSubpositionData",
       "file_path": "ride/VehicleSubpositionData.cpp",
-      "si": 45.75,
+      "si": 46.07,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5007,7 +5007,7 @@
     {
       "fqn": "sawyer_coding.SawyerChunkReader",
       "file_path": "sawyer_coding/SawyerChunkReader.cpp",
-      "si": 65.88,
+      "si": 65.09,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5016,7 +5016,7 @@
     {
       "fqn": "sawyer_coding.SawyerChunkWriter",
       "file_path": "sawyer_coding/SawyerChunkWriter.cpp",
-      "si": 50.16,
+      "si": 49.37,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5034,7 +5034,7 @@
     {
       "fqn": "scenario.Scenario",
       "file_path": "scenario/Scenario.cpp",
-      "si": 97.96,
+      "si": 97.8,
       "grade": "E",
       "cc_max": 11.0,
       "loc": 491,
@@ -5052,7 +5052,7 @@
     {
       "fqn": "scenario.ScenarioObjective",
       "file_path": "scenario/ScenarioObjective.cpp",
-      "si": 51.89,
+      "si": 51.1,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5061,7 +5061,7 @@
     {
       "fqn": "scenario.ScenarioRepository",
       "file_path": "scenario/ScenarioRepository.cpp",
-      "si": 58.33,
+      "si": 59.91,
       "grade": "C",
       "cc_max": 9.0,
       "loc": 106,
@@ -5070,17 +5070,17 @@
     {
       "fqn": "ScenarioFileIndex",
       "file_path": "scenario/ScenarioRepository.cpp",
-      "si": 43.08,
+      "si": 43.55,
       "grade": "C",
       "cc_max": 6.0,
       "loc": 128,
       "bugfix_count": 25
     },
     {
-      "fqn": "CrashAdditionalFileRegistration",
+      "fqn": "ScenarioFileIndex.CrashAdditionalFileRegistration",
       "file_path": "scenario/ScenarioRepository.cpp",
-      "si": 62.89,
-      "grade": "D",
+      "si": 40.41,
+      "grade": "C",
       "cc_max": 1.0,
       "loc": 13,
       "bugfix_count": 25
@@ -5095,7 +5095,7 @@
       "bugfix_count": 25
     },
     {
-      "fqn": "ScenarioAlias",
+      "fqn": "OpenRCT2.ScenarioSources.ScenarioAlias",
       "file_path": "scenario/ScenarioSources.cpp",
       "si": 15.41,
       "grade": "A",
@@ -5104,7 +5104,7 @@
       "bugfix_count": 7
     },
     {
-      "fqn": "ScenarioTitleDescriptor",
+      "fqn": "OpenRCT2.ScenarioSources.ScenarioTitleDescriptor",
       "file_path": "scenario/ScenarioSources.cpp",
       "si": 15.41,
       "grade": "A",
@@ -5122,7 +5122,7 @@
       "bugfix_count": 0
     },
     {
-      "fqn": "IntroSceneImpl",
+      "fqn": "OpenRCT2.IntroSceneImpl",
       "file_path": "scenes/intro/IntroScene.cpp",
       "si": 15.41,
       "grade": "A",
@@ -5133,7 +5133,7 @@
     {
       "fqn": "scenes.preloader.PreloaderScene",
       "file_path": "scenes/preloader/PreloaderScene.cpp",
-      "si": 88.99,
+      "si": 88.68,
       "grade": "E",
       "cc_max": 3.0,
       "loc": 46,
@@ -5142,7 +5142,7 @@
     {
       "fqn": "scenes.Scene",
       "file_path": "scenes/Scene.cpp",
-      "si": 52.04,
+      "si": 53.93,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 23,
@@ -5241,7 +5241,7 @@
     {
       "fqn": "scenes.title.TitleScene",
       "file_path": "scenes/title/TitleScene.cpp",
-      "si": 92.45,
+      "si": 92.14,
       "grade": "E",
       "cc_max": 14.5,
       "loc": 349,
@@ -5250,14 +5250,14 @@
     {
       "fqn": "scenes.title.TitleSequence",
       "file_path": "scenes/title/TitleSequence.cpp",
-      "si": 57.86,
+      "si": 58.18,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 1
     },
     {
-      "fqn": "PredefinedSequence",
+      "fqn": "OpenRCT2.TitleSequenceManager.PredefinedSequence",
       "file_path": "scenes/title/TitleSequenceManager.cpp",
       "si": 27.36,
       "grade": "B",
@@ -5268,7 +5268,7 @@
     {
       "fqn": "scripting.bindings.entity.ScBalloon",
       "file_path": "scripting/bindings/entity/ScBalloon.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5286,7 +5286,7 @@
     {
       "fqn": "scripting.bindings.entity.ScGuest",
       "file_path": "scripting/bindings/entity/ScGuest.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5295,7 +5295,7 @@
     {
       "fqn": "scripting.bindings.entity.ScLitter",
       "file_path": "scripting/bindings/entity/ScLitter.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5313,7 +5313,7 @@
     {
       "fqn": "scripting.bindings.entity.ScParticle",
       "file_path": "scripting/bindings/entity/ScParticle.cpp",
-      "si": 22.33,
+      "si": 22.48,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5331,7 +5331,7 @@
     {
       "fqn": "scripting.bindings.entity.ScStaff",
       "file_path": "scripting/bindings/entity/ScStaff.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5439,7 +5439,7 @@
     {
       "fqn": "scripting.bindings.world.ScMap",
       "file_path": "scripting/bindings/world/ScMap.cpp",
-      "si": 42.92,
+      "si": 43.4,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5457,7 +5457,7 @@
     {
       "fqn": "scripting.bindings.world.ScParkMessage",
       "file_path": "scripting/bindings/world/ScParkMessage.cpp",
-      "si": 34.28,
+      "si": 34.43,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5475,7 +5475,7 @@
     {
       "fqn": "scripting.bindings.world.ScTile",
       "file_path": "scripting/bindings/world/ScTile.cpp",
-      "si": 32.23,
+      "si": 32.39,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5484,7 +5484,7 @@
     {
       "fqn": "scripting.bindings.world.ScTileElement",
       "file_path": "scripting/bindings/world/ScTileElement.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5511,7 +5511,7 @@
     {
       "fqn": "ExpressionStringifier",
       "file_path": "scripting/ScriptEngine.cpp",
-      "si": 66.19,
+      "si": 67.14,
       "grade": "D",
       "cc_max": 15.0,
       "loc": 358,
@@ -5520,7 +5520,7 @@
     {
       "fqn": "ConstantBuilder",
       "file_path": "scripting/ScriptEngine.cpp",
-      "si": 47.01,
+      "si": 47.8,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 28,
@@ -5529,7 +5529,7 @@
     {
       "fqn": "JSToGameActionParameterVisitor",
       "file_path": "scripting/ScriptEngine.cpp",
-      "si": 47.8,
+      "si": 49.06,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 33,
@@ -5538,7 +5538,7 @@
     {
       "fqn": "JSFromGameActionParameterVisitor",
       "file_path": "scripting/ScriptEngine.cpp",
-      "si": 47.01,
+      "si": 47.8,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 20,
@@ -5547,23 +5547,23 @@
     {
       "fqn": "TrackImporter",
       "file_path": "TrackImporter.cpp",
-      "si": 51.89,
+      "si": 50.63,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 1
     },
     {
-      "fqn": "DummyUiContext",
+      "fqn": "OpenRCT2.Ui.DummyUiContext",
       "file_path": "ui/DummyUiContext.cpp",
-      "si": 77.99,
+      "si": 78.14,
       "grade": "D",
       "cc_max": 1.0,
       "loc": 162,
       "bugfix_count": 5
     },
     {
-      "fqn": "X8DrawingEngineFactory",
+      "fqn": "OpenRCT2.Ui.DummyUiContext.X8DrawingEngineFactory",
       "file_path": "ui/DummyUiContext.cpp",
       "si": 7.08,
       "grade": "A",
@@ -5572,9 +5572,9 @@
       "bugfix_count": 5
     },
     {
-      "fqn": "DummyWindowManager",
+      "fqn": "OpenRCT2.Ui.DummyWindowManager",
       "file_path": "ui/DummyWindowManager.cpp",
-      "si": 48.11,
+      "si": 49.53,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 91,
@@ -5583,7 +5583,7 @@
     {
       "fqn": "util.Util",
       "file_path": "util/Util.cpp",
-      "si": 73.43,
+      "si": 73.74,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 41,
@@ -5592,7 +5592,7 @@
     {
       "fqn": "Version",
       "file_path": "Version.cpp",
-      "si": 62.58,
+      "si": 62.42,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5601,7 +5601,7 @@
     {
       "fqn": "windows.Intent",
       "file_path": "windows/Intent.cpp",
-      "si": 84.59,
+      "si": 84.91,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 69,
@@ -5610,7 +5610,7 @@
     {
       "fqn": "world.Banner",
       "file_path": "world/Banner.cpp",
-      "si": 81.76,
+      "si": 82.86,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 410,
@@ -5619,7 +5619,7 @@
     {
       "fqn": "BannerElementWithPos",
       "file_path": "world/Banner.cpp",
-      "si": 41.82,
+      "si": 42.3,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5637,34 +5637,34 @@
     {
       "fqn": "world.Entrance",
       "file_path": "world/Entrance.cpp",
-      "si": 83.96,
+      "si": 84.43,
       "grade": "E",
       "cc_max": 7.0,
       "loc": 171,
       "bugfix_count": 10
     },
     {
-      "fqn": "FootpathNeighbour",
+      "fqn": "OpenRCT2.FootpathNeighbour",
       "file_path": "world/Footpath.cpp",
-      "si": 44.81,
+      "si": 45.44,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 45
     },
     {
-      "fqn": "FootpathNeighbourList",
+      "fqn": "OpenRCT2.FootpathNeighbourList",
       "file_path": "world/Footpath.cpp",
-      "si": 44.81,
+      "si": 45.44,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
       "bugfix_count": 45
     },
     {
-      "fqn": "TileState",
+      "fqn": "OpenRCT2.TileState",
       "file_path": "world/Footpath.cpp",
-      "si": 44.81,
+      "si": 45.44,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5682,7 +5682,7 @@
     {
       "fqn": "world.map_generator.MapGen",
       "file_path": "world/map_generator/MapGen.cpp",
-      "si": 38.21,
+      "si": 38.36,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5718,7 +5718,7 @@
     {
       "fqn": "world.map_generator.SurfaceSelection",
       "file_path": "world/map_generator/SurfaceSelection.cpp",
-      "si": 29.4,
+      "si": 29.72,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5727,7 +5727,7 @@
     {
       "fqn": "world.map_generator.TreePlacement",
       "file_path": "world/map_generator/TreePlacement.cpp",
-      "si": 35.85,
+      "si": 36.01,
       "grade": "B",
       "cc_max": 0.0,
       "loc": 0,
@@ -5736,7 +5736,7 @@
     {
       "fqn": "world.MapAnimation",
       "file_path": "world/MapAnimation.cpp",
-      "si": 97.17,
+      "si": 97.33,
       "grade": "E",
       "cc_max": 28.0,
       "loc": 289,
@@ -5745,7 +5745,7 @@
     {
       "fqn": "TemporaryMapAnimation",
       "file_path": "world/MapAnimation.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5754,7 +5754,7 @@
     {
       "fqn": "TileCoordsXYCmp",
       "file_path": "world/MapAnimation.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5763,7 +5763,7 @@
     {
       "fqn": "world.MapRangeView",
       "file_path": "world/MapRangeView.cpp",
-      "si": 45.75,
+      "si": 46.07,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5772,7 +5772,7 @@
     {
       "fqn": "world.MapSelection",
       "file_path": "world/MapSelection.cpp",
-      "si": 66.51,
+      "si": 65.88,
       "grade": "D",
       "cc_max": 1.0,
       "loc": 14,
@@ -5781,7 +5781,7 @@
     {
       "fqn": "world.Park",
       "file_path": "world/Park.cpp",
-      "si": 92.14,
+      "si": 93.08,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -5790,7 +5790,7 @@
     {
       "fqn": "world.QuarterTile",
       "file_path": "world/QuarterTile.cpp",
-      "si": 79.87,
+      "si": 79.56,
       "grade": "D",
       "cc_max": 6.0,
       "loc": 58,
@@ -5799,7 +5799,7 @@
     {
       "fqn": "world.Scenery",
       "file_path": "world/Scenery.cpp",
-      "si": 92.61,
+      "si": 93.24,
       "grade": "E",
       "cc_max": 18.0,
       "loc": 477,
@@ -5808,7 +5808,7 @@
     {
       "fqn": "MiscScenery",
       "file_path": "world/Scenery.cpp",
-      "si": 41.35,
+      "si": 41.67,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5826,7 +5826,7 @@
     {
       "fqn": "world.tile_element.BannerElement",
       "file_path": "world/tile_element/BannerElement.cpp",
-      "si": 71.07,
+      "si": 70.44,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5835,7 +5835,7 @@
     {
       "fqn": "world.tile_element.EntranceElement",
       "file_path": "world/tile_element/EntranceElement.cpp",
-      "si": 78.62,
+      "si": 78.77,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5844,7 +5844,7 @@
     {
       "fqn": "world.tile_element.LargeSceneryElement",
       "file_path": "world/tile_element/LargeSceneryElement.cpp",
-      "si": 73.27,
+      "si": 72.8,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5853,7 +5853,7 @@
     {
       "fqn": "world.tile_element.PathElement",
       "file_path": "world/tile_element/PathElement.cpp",
-      "si": 85.22,
+      "si": 85.69,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -5862,7 +5862,7 @@
     {
       "fqn": "world.tile_element.Slope",
       "file_path": "world/tile_element/Slope.cpp",
-      "si": 53.77,
+      "si": 55.35,
       "grade": "C",
       "cc_max": 0.0,
       "loc": 0,
@@ -5871,7 +5871,7 @@
     {
       "fqn": "world.tile_element.SmallSceneryElement",
       "file_path": "world/tile_element/SmallSceneryElement.cpp",
-      "si": 78.62,
+      "si": 78.93,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5889,7 +5889,7 @@
     {
       "fqn": "world.tile_element.TileElement",
       "file_path": "world/tile_element/TileElement.cpp",
-      "si": 90.25,
+      "si": 91.04,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -5907,7 +5907,7 @@
     {
       "fqn": "world.tile_element.TrackElement",
       "file_path": "world/tile_element/TrackElement.cpp",
-      "si": 93.4,
+      "si": 94.03,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -5916,7 +5916,7 @@
     {
       "fqn": "world.tile_element.WallElement",
       "file_path": "world/tile_element/WallElement.cpp",
-      "si": 73.27,
+      "si": 72.8,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5925,7 +5925,7 @@
     {
       "fqn": "world.TileInspector",
       "file_path": "world/TileInspector.cpp",
-      "si": 70.6,
+      "si": 70.75,
       "grade": "D",
       "cc_max": 0.0,
       "loc": 0,
@@ -5934,14 +5934,14 @@
     {
       "fqn": "world.Wall",
       "file_path": "world/Wall.cpp",
-      "si": 74.69,
+      "si": 74.53,
       "grade": "D",
       "cc_max": 8.0,
       "loc": 61,
       "bugfix_count": 2
     },
     {
-      "fqn": "Trait",
+      "fqn": "OpenRCT2.Weather.Trait",
       "file_path": "world/Weather.cpp",
       "si": 27.36,
       "grade": "B",
@@ -5953,8 +5953,8 @@
   "file_rows": [
     {
       "file_path": "actions/cheats/CheatSetAction.cpp",
-      "si_max": 74.37,
-      "si_mean": 74.37,
+      "si_max": 74.69,
+      "si_mean": 74.69,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -5962,8 +5962,8 @@
     },
     {
       "file_path": "actions/footpath/FootpathAdditionPlaceAction.cpp",
-      "si_max": 32.23,
-      "si_mean": 32.23,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -5971,8 +5971,8 @@
     },
     {
       "file_path": "actions/footpath/FootpathAdditionRemoveAction.cpp",
-      "si_max": 55.5,
-      "si_mean": 55.5,
+      "si_max": 55.82,
+      "si_mean": 55.82,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -5980,8 +5980,8 @@
     },
     {
       "file_path": "actions/footpath/FootpathLayoutPlaceAction.cpp",
-      "si_max": 61.95,
-      "si_mean": 61.95,
+      "si_max": 62.26,
+      "si_mean": 62.26,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -5989,8 +5989,8 @@
     },
     {
       "file_path": "actions/footpath/FootpathPlaceAction.cpp",
-      "si_max": 71.86,
-      "si_mean": 71.86,
+      "si_max": 72.17,
+      "si_mean": 72.17,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -5998,8 +5998,8 @@
     },
     {
       "file_path": "actions/footpath/FootpathRemoveAction.cpp",
-      "si_max": 60.53,
-      "si_mean": 60.53,
+      "si_max": 60.38,
+      "si_mean": 60.38,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6007,8 +6007,8 @@
     },
     {
       "file_path": "actions/GameAction.cpp",
-      "si_max": 61.95,
-      "si_mean": 61.95,
+      "si_max": 61.64,
+      "si_mean": 61.64,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6016,8 +6016,8 @@
     },
     {
       "file_path": "actions/GameActionRegistry.cpp",
-      "si_max": 80.66,
-      "si_mean": 80.66,
+      "si_max": 80.97,
+      "si_mean": 80.97,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6070,8 +6070,8 @@
     },
     {
       "file_path": "actions/general/LoadOrQuitAction.cpp",
-      "si_max": 48.74,
-      "si_mean": 48.74,
+      "si_max": 48.9,
+      "si_mean": 48.9,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6079,8 +6079,8 @@
     },
     {
       "file_path": "actions/general/MapChangeSizeAction.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6106,8 +6106,8 @@
     },
     {
       "file_path": "actions/general/TileModifyAction.cpp",
-      "si_max": 54.09,
-      "si_mean": 54.09,
+      "si_max": 53.77,
+      "si_mean": 53.77,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6142,8 +6142,8 @@
     },
     {
       "file_path": "actions/park/LandBuyRightsAction.cpp",
-      "si_max": 57.86,
-      "si_mean": 57.86,
+      "si_max": 58.02,
+      "si_mean": 58.02,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6151,8 +6151,8 @@
     },
     {
       "file_path": "actions/park/LandSetRightsAction.cpp",
-      "si_max": 61.95,
-      "si_mean": 61.95,
+      "si_max": 62.11,
+      "si_mean": 62.11,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6169,8 +6169,8 @@
     },
     {
       "file_path": "actions/park/ParkEntranceRemoveAction.cpp",
-      "si_max": 55.03,
-      "si_mean": 55.03,
+      "si_max": 55.19,
+      "si_mean": 55.19,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6205,8 +6205,8 @@
     },
     {
       "file_path": "actions/park/ParkSetLoanAction.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.04,
+      "si_mean": 52.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6223,8 +6223,8 @@
     },
     {
       "file_path": "actions/park/ParkSetParameterAction.cpp",
-      "si_max": 53.46,
-      "si_mean": 53.46,
+      "si_max": 52.99,
+      "si_mean": 52.99,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6232,8 +6232,8 @@
     },
     {
       "file_path": "actions/park/ParkSetResearchFundingAction.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.04,
+      "si_mean": 52.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6259,8 +6259,8 @@
     },
     {
       "file_path": "actions/peep/PeepPickupAction.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 50.31,
+      "si_mean": 50.31,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6286,8 +6286,8 @@
     },
     {
       "file_path": "actions/peep/StaffHireNewAction.cpp",
-      "si_max": 41.35,
-      "si_mean": 41.35,
+      "si_max": 41.67,
+      "si_mean": 41.67,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6295,8 +6295,8 @@
     },
     {
       "file_path": "actions/peep/StaffSetColourAction.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6322,8 +6322,8 @@
     },
     {
       "file_path": "actions/peep/StaffSetOrdersAction.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.04,
+      "si_mean": 52.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6340,8 +6340,8 @@
     },
     {
       "file_path": "actions/ride/MazePlaceTrackAction.cpp",
-      "si_max": 60.53,
-      "si_mean": 60.53,
+      "si_max": 61.16,
+      "si_mean": 61.16,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6349,8 +6349,8 @@
     },
     {
       "file_path": "actions/ride/MazeSetTrackAction.cpp",
-      "si_max": 62.58,
-      "si_mean": 62.58,
+      "si_max": 63.52,
+      "si_mean": 63.52,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6358,8 +6358,8 @@
     },
     {
       "file_path": "actions/ride/RideCreateAction.cpp",
-      "si_max": 59.28,
-      "si_mean": 59.28,
+      "si_max": 59.75,
+      "si_mean": 59.75,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6367,8 +6367,8 @@
     },
     {
       "file_path": "actions/ride/RideDemolishAction.cpp",
-      "si_max": 64.94,
-      "si_mean": 64.94,
+      "si_max": 65.57,
+      "si_mean": 65.57,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6376,8 +6376,8 @@
     },
     {
       "file_path": "actions/ride/RideEntranceExitPlaceAction.cpp",
-      "si_max": 65.88,
-      "si_mean": 65.88,
+      "si_max": 66.51,
+      "si_mean": 66.51,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6385,8 +6385,8 @@
     },
     {
       "file_path": "actions/ride/RideEntranceExitRemoveAction.cpp",
-      "si_max": 55.03,
-      "si_mean": 55.03,
+      "si_max": 55.19,
+      "si_mean": 55.19,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6430,8 +6430,8 @@
     },
     {
       "file_path": "actions/ride/RideSetPriceAction.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6457,8 +6457,8 @@
     },
     {
       "file_path": "actions/ride/RideSetVehicleAction.cpp",
-      "si_max": 60.53,
-      "si_mean": 60.53,
+      "si_max": 61.01,
+      "si_mean": 61.01,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6475,8 +6475,8 @@
     },
     {
       "file_path": "actions/scenery/BannerPlaceAction.cpp",
-      "si_max": 38.36,
-      "si_mean": 38.36,
+      "si_max": 38.21,
+      "si_mean": 38.21,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6484,8 +6484,8 @@
     },
     {
       "file_path": "actions/scenery/BannerRemoveAction.cpp",
-      "si_max": 56.6,
-      "si_mean": 56.6,
+      "si_max": 56.92,
+      "si_mean": 56.92,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6520,8 +6520,8 @@
     },
     {
       "file_path": "actions/scenery/LargeSceneryPlaceAction.cpp",
-      "si_max": 68.08,
-      "si_mean": 68.08,
+      "si_max": 68.24,
+      "si_mean": 68.24,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6556,8 +6556,8 @@
     },
     {
       "file_path": "actions/scenery/SignSetNameAction.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6574,8 +6574,8 @@
     },
     {
       "file_path": "actions/scenery/SmallSceneryPlaceAction.cpp",
-      "si_max": 69.03,
-      "si_mean": 69.03,
+      "si_max": 69.97,
+      "si_mean": 69.97,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6583,8 +6583,8 @@
     },
     {
       "file_path": "actions/scenery/SmallSceneryRemoveAction.cpp",
-      "si_max": 62.58,
-      "si_mean": 62.58,
+      "si_max": 63.05,
+      "si_mean": 63.05,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6592,8 +6592,8 @@
     },
     {
       "file_path": "actions/scenery/SmallScenerySetColourAction.cpp",
-      "si_max": 32.23,
-      "si_mean": 32.23,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6601,8 +6601,8 @@
     },
     {
       "file_path": "actions/scenery/WallPlaceAction.cpp",
-      "si_max": 71.86,
-      "si_mean": 71.86,
+      "si_max": 72.33,
+      "si_mean": 72.33,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6610,8 +6610,8 @@
     },
     {
       "file_path": "actions/scenery/WallRemoveAction.cpp",
-      "si_max": 57.86,
-      "si_mean": 57.86,
+      "si_max": 57.7,
+      "si_mean": 57.7,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6637,8 +6637,8 @@
     },
     {
       "file_path": "actions/terraform/LandLowerAction.cpp",
-      "si_max": 39.31,
-      "si_mean": 39.31,
+      "si_max": 39.47,
+      "si_mean": 39.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6646,8 +6646,8 @@
     },
     {
       "file_path": "actions/terraform/LandRaiseAction.cpp",
-      "si_max": 39.31,
-      "si_mean": 39.31,
+      "si_max": 39.47,
+      "si_mean": 39.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6655,8 +6655,8 @@
     },
     {
       "file_path": "actions/terraform/LandSetHeightAction.cpp",
-      "si_max": 67.3,
-      "si_mean": 67.3,
+      "si_max": 67.61,
+      "si_mean": 67.61,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6664,8 +6664,8 @@
     },
     {
       "file_path": "actions/terraform/LandSmoothAction.cpp",
-      "si_max": 39.31,
-      "si_mean": 39.31,
+      "si_max": 39.47,
+      "si_mean": 39.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6673,8 +6673,8 @@
     },
     {
       "file_path": "actions/terraform/SurfaceSetStyleAction.cpp",
-      "si_max": 32.23,
-      "si_mean": 32.23,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6682,8 +6682,8 @@
     },
     {
       "file_path": "actions/terraform/WaterLowerAction.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6691,8 +6691,8 @@
     },
     {
       "file_path": "actions/terraform/WaterRaiseAction.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6700,8 +6700,8 @@
     },
     {
       "file_path": "actions/terraform/WaterSetHeightAction.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6718,8 +6718,8 @@
     },
     {
       "file_path": "actions/track/TrackPlaceAction.cpp",
-      "si_max": 69.03,
-      "si_mean": 69.03,
+      "si_max": 69.5,
+      "si_mean": 69.5,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6727,8 +6727,8 @@
     },
     {
       "file_path": "actions/track/TrackRemoveAction.cpp",
-      "si_max": 60.53,
-      "si_mean": 60.53,
+      "si_max": 61.01,
+      "si_mean": 61.01,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6736,8 +6736,8 @@
     },
     {
       "file_path": "actions/track/TrackSetBrakeSpeedAction.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6754,8 +6754,8 @@
     },
     {
       "file_path": "AssetPackManager.cpp",
-      "si_max": 55.03,
-      "si_mean": 55.03,
+      "si_max": 55.19,
+      "si_mean": 55.19,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6781,8 +6781,8 @@
     },
     {
       "file_path": "Cheats.cpp",
-      "si_max": 94.81,
-      "si_mean": 94.81,
+      "si_max": 94.97,
+      "si_mean": 94.97,
       "loc_total": 305,
       "cc_max": 52.0,
       "class_count": 1,
@@ -6799,8 +6799,8 @@
     },
     {
       "file_path": "command_line/ConvertCommand.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6817,8 +6817,8 @@
     },
     {
       "file_path": "command_line/RootCommands.cpp",
-      "si_max": 35.53,
-      "si_mean": 35.53,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6835,8 +6835,8 @@
     },
     {
       "file_path": "command_line/SimulateCommands.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6871,8 +6871,8 @@
     },
     {
       "file_path": "command_line/sprite/SpriteCommands.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6907,8 +6907,8 @@
     },
     {
       "file_path": "command_line/sprite/SpriteExportAll.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6925,8 +6925,8 @@
     },
     {
       "file_path": "command_line/sprite/SpriteFile.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6943,8 +6943,8 @@
     },
     {
       "file_path": "config/Config.cpp",
-      "si_max": 41.51,
-      "si_mean": 41.51,
+      "si_max": 41.98,
+      "si_mean": 41.98,
       "loc_total": 17,
       "cc_max": 2.0,
       "class_count": 1,
@@ -6952,8 +6952,8 @@
     },
     {
       "file_path": "config/IniReader.cpp",
-      "si_max": 42.3,
-      "si_mean": 18.8,
+      "si_max": 42.77,
+      "si_mean": 18.87,
       "loc_total": 319,
       "cc_max": 11.0,
       "class_count": 7,
@@ -6971,7 +6971,7 @@
     {
       "file_path": "Context.cpp",
       "si_max": 99.84,
-      "si_mean": 81.37,
+      "si_mean": 79.33,
       "loc_total": 1291,
       "cc_max": 13.6667,
       "class_count": 2,
@@ -6988,8 +6988,8 @@
     },
     {
       "file_path": "core/Compression.cpp",
-      "si_max": 53.46,
-      "si_mean": 53.46,
+      "si_max": 52.67,
+      "si_mean": 52.67,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -6997,8 +6997,8 @@
     },
     {
       "file_path": "core/Console.cpp",
-      "si_max": 82.7,
-      "si_mean": 82.7,
+      "si_max": 83.49,
+      "si_mean": 83.49,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7007,7 +7007,7 @@
     {
       "file_path": "core/Crypt.CNG.cpp",
       "si_max": 78.3,
-      "si_mean": 28.59,
+      "si_mean": 28.64,
       "loc_total": 504,
       "cc_max": 5.0,
       "class_count": 6,
@@ -7015,8 +7015,8 @@
     },
     {
       "file_path": "core/Crypt.OpenRCT2.cpp",
-      "si_max": 80.35,
-      "si_mean": 80.35,
+      "si_max": 80.5,
+      "si_mean": 80.5,
       "loc_total": 59,
       "cc_max": 5.0,
       "class_count": 1,
@@ -7024,8 +7024,8 @@
     },
     {
       "file_path": "core/Crypt.OpenSSL.cpp",
-      "si_max": 79.09,
-      "si_mean": 42.09,
+      "si_max": 79.25,
+      "si_mean": 42.14,
       "loc_total": 250,
       "cc_max": 7.0,
       "class_count": 3,
@@ -7042,8 +7042,8 @@
     },
     {
       "file_path": "core/File.cpp",
-      "si_max": 78.77,
-      "si_mean": 78.77,
+      "si_max": 79.87,
+      "si_mean": 79.87,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7051,8 +7051,8 @@
     },
     {
       "file_path": "core/FileScanner.cpp",
-      "si_max": 74.53,
-      "si_mean": 32.37,
+      "si_max": 74.06,
+      "si_mean": 32.23,
       "loc_total": 366,
       "cc_max": 12.0,
       "class_count": 7,
@@ -7060,8 +7060,8 @@
     },
     {
       "file_path": "core/FileStream.cpp",
-      "si_max": 82.08,
-      "si_mean": 82.08,
+      "si_max": 82.7,
+      "si_mean": 82.7,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7069,8 +7069,8 @@
     },
     {
       "file_path": "core/FileWatcher.cpp",
-      "si_max": 42.61,
-      "si_mean": 42.61,
+      "si_max": 43.08,
+      "si_mean": 43.08,
       "loc_total": 138,
       "cc_max": 13.0,
       "class_count": 1,
@@ -7078,8 +7078,8 @@
     },
     {
       "file_path": "core/Guard.cpp",
-      "si_max": 91.98,
-      "si_mean": 91.98,
+      "si_max": 92.45,
+      "si_mean": 92.45,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7114,8 +7114,8 @@
     },
     {
       "file_path": "core/Imaging.cpp",
-      "si_max": 53.46,
-      "si_mean": 53.46,
+      "si_max": 53.14,
+      "si_mean": 53.14,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7123,8 +7123,8 @@
     },
     {
       "file_path": "core/IStream.cpp",
-      "si_max": 79.72,
-      "si_mean": 79.72,
+      "si_max": 80.19,
+      "si_mean": 80.19,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7132,8 +7132,8 @@
     },
     {
       "file_path": "core/JobPool.cpp",
-      "si_max": 64.31,
-      "si_mean": 64.31,
+      "si_max": 64.94,
+      "si_mean": 64.94,
       "loc_total": 108,
       "cc_max": 10.0,
       "class_count": 1,
@@ -7141,8 +7141,8 @@
     },
     {
       "file_path": "core/Json.cpp",
-      "si_max": 76.89,
-      "si_mean": 76.89,
+      "si_max": 77.83,
+      "si_mean": 77.83,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7150,8 +7150,8 @@
     },
     {
       "file_path": "core/MemoryStream.cpp",
-      "si_max": 84.43,
-      "si_mean": 84.43,
+      "si_max": 85.06,
+      "si_mean": 85.06,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7159,8 +7159,8 @@
     },
     {
       "file_path": "core/Path.cpp",
-      "si_max": 88.52,
-      "si_mean": 88.52,
+      "si_max": 89.15,
+      "si_mean": 89.15,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7195,8 +7195,8 @@
     },
     {
       "file_path": "core/String.cpp",
-      "si_max": 95.28,
-      "si_mean": 95.28,
+      "si_max": 95.75,
+      "si_mean": 95.75,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7204,8 +7204,8 @@
     },
     {
       "file_path": "core/StringBuilder.cpp",
-      "si_max": 58.18,
-      "si_mean": 58.18,
+      "si_max": 57.86,
+      "si_mean": 57.86,
       "loc_total": 47,
       "cc_max": 2.0,
       "class_count": 1,
@@ -7213,8 +7213,8 @@
     },
     {
       "file_path": "core/StringReader.cpp",
-      "si_max": 48.9,
-      "si_mean": 48.9,
+      "si_max": 48.43,
+      "si_mean": 48.43,
       "loc_total": 39,
       "cc_max": 3.0,
       "class_count": 1,
@@ -7231,8 +7231,8 @@
     },
     {
       "file_path": "core/UTF8.cpp",
-      "si_max": 63.52,
-      "si_mean": 63.52,
+      "si_max": 64.62,
+      "si_mean": 64.62,
       "loc_total": 80,
       "cc_max": 6.0,
       "class_count": 1,
@@ -7240,8 +7240,8 @@
     },
     {
       "file_path": "core/Zip.cpp",
-      "si_max": 69.65,
-      "si_mean": 49.16,
+      "si_max": 68.08,
+      "si_mean": 48.84,
       "loc_total": 300,
       "cc_max": 6.0,
       "class_count": 3,
@@ -7249,8 +7249,8 @@
     },
     {
       "file_path": "core/ZipAndroid.cpp",
-      "si_max": 32.55,
-      "si_mean": 32.55,
+      "si_max": 32.7,
+      "si_mean": 32.7,
       "loc_total": 208,
       "cc_max": 6.0,
       "class_count": 1,
@@ -7258,8 +7258,8 @@
     },
     {
       "file_path": "Date.cpp",
-      "si_max": 90.57,
-      "si_mean": 90.57,
+      "si_max": 90.41,
+      "si_mean": 90.41,
       "loc_total": 112,
       "cc_max": 2.0,
       "class_count": 1,
@@ -7285,8 +7285,8 @@
     },
     {
       "file_path": "drawing/BlendColourMap.cpp",
-      "si_max": 46.7,
-      "si_mean": 46.7,
+      "si_max": 46.23,
+      "si_mean": 46.23,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7303,8 +7303,8 @@
     },
     {
       "file_path": "drawing/ColourMap.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 51.1,
+      "si_mean": 51.1,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7357,8 +7357,8 @@
     },
     {
       "file_path": "drawing/Font.cpp",
-      "si_max": 83.02,
-      "si_mean": 83.02,
+      "si_max": 82.08,
+      "si_mean": 82.08,
       "loc_total": 136,
       "cc_max": 8.0,
       "class_count": 1,
@@ -7366,8 +7366,8 @@
     },
     {
       "file_path": "drawing/Image.cpp",
-      "si_max": 75.47,
-      "si_mean": 75.47,
+      "si_max": 75.31,
+      "si_mean": 75.31,
       "loc_total": 180,
       "cc_max": 5.0,
       "class_count": 1,
@@ -7402,8 +7402,8 @@
     },
     {
       "file_path": "drawing/Line.cpp",
-      "si_max": 42.45,
-      "si_mean": 42.45,
+      "si_max": 42.92,
+      "si_mean": 42.92,
       "loc_total": 138,
       "cc_max": 18.0,
       "class_count": 1,
@@ -7411,8 +7411,8 @@
     },
     {
       "file_path": "drawing/NewDrawing.cpp",
-      "si_max": 55.66,
-      "si_mean": 55.66,
+      "si_max": 57.39,
+      "si_mean": 57.39,
       "loc_total": 209,
       "cc_max": 3.5,
       "class_count": 1,
@@ -7420,8 +7420,8 @@
     },
     {
       "file_path": "drawing/Rectangle.cpp",
-      "si_max": 53.46,
-      "si_mean": 53.46,
+      "si_max": 52.99,
+      "si_mean": 52.99,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7456,8 +7456,8 @@
     },
     {
       "file_path": "drawing/Text.cpp",
-      "si_max": 83.65,
-      "si_mean": 75.16,
+      "si_max": 83.81,
+      "si_mean": 75.31,
       "loc_total": 143,
       "cc_max": 5.0,
       "class_count": 2,
@@ -7492,8 +7492,8 @@
     },
     {
       "file_path": "drawing/WeatherDrawer.cpp",
-      "si_max": 60.85,
-      "si_mean": 60.85,
+      "si_max": 60.69,
+      "si_mean": 60.69,
       "loc_total": 133,
       "cc_max": 8.0,
       "class_count": 1,
@@ -7501,8 +7501,8 @@
     },
     {
       "file_path": "drawing/X8DrawingEngine.cpp",
-      "si_max": 91.04,
-      "si_mean": 91.04,
+      "si_max": 90.88,
+      "si_mean": 90.88,
       "loc_total": 537,
       "cc_max": 12.0,
       "class_count": 1,
@@ -7510,8 +7510,8 @@
     },
     {
       "file_path": "Editor.cpp",
-      "si_max": 78.14,
-      "si_mean": 78.14,
+      "si_max": 78.46,
+      "si_mean": 78.46,
       "loc_total": 4,
       "cc_max": 1.0,
       "class_count": 1,
@@ -7519,8 +7519,8 @@
     },
     {
       "file_path": "EditorObjectSelectionSession.cpp",
-      "si_max": 87.74,
-      "si_mean": 87.74,
+      "si_max": 87.58,
+      "si_mean": 87.58,
       "loc_total": 661,
       "cc_max": 24.0,
       "class_count": 1,
@@ -7528,8 +7528,8 @@
     },
     {
       "file_path": "entity/Balloon.cpp",
-      "si_max": 70.6,
-      "si_mean": 70.6,
+      "si_max": 70.28,
+      "si_mean": 70.28,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7537,8 +7537,8 @@
     },
     {
       "file_path": "entity/Duck.cpp",
-      "si_max": 68.08,
-      "si_mean": 68.08,
+      "si_max": 67.92,
+      "si_mean": 67.92,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7555,8 +7555,8 @@
     },
     {
       "file_path": "entity/EntityRegistry.cpp",
-      "si_max": 96.07,
-      "si_mean": 96.07,
+      "si_max": 96.23,
+      "si_mean": 96.23,
       "loc_total": 73,
       "cc_max": 4.0,
       "class_count": 1,
@@ -7564,8 +7564,8 @@
     },
     {
       "file_path": "entity/EntityTweener.cpp",
-      "si_max": 61.95,
-      "si_mean": 61.95,
+      "si_max": 62.11,
+      "si_mean": 62.11,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7573,8 +7573,8 @@
     },
     {
       "file_path": "entity/Fountain.cpp",
-      "si_max": 68.08,
-      "si_mean": 68.08,
+      "si_max": 67.92,
+      "si_mean": 67.92,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7582,8 +7582,8 @@
     },
     {
       "file_path": "entity/Guest.cpp",
-      "si_max": 54.25,
-      "si_mean": 54.25,
+      "si_max": 55.97,
+      "si_mean": 55.97,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7591,8 +7591,8 @@
     },
     {
       "file_path": "entity/Litter.cpp",
-      "si_max": 64.94,
-      "si_mean": 64.94,
+      "si_max": 64.31,
+      "si_mean": 64.31,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7600,8 +7600,8 @@
     },
     {
       "file_path": "entity/MoneyEffect.cpp",
-      "si_max": 71.07,
-      "si_mean": 71.07,
+      "si_max": 70.6,
+      "si_mean": 70.6,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7609,8 +7609,8 @@
     },
     {
       "file_path": "entity/Particle.cpp",
-      "si_max": 67.3,
-      "si_mean": 67.3,
+      "si_max": 66.98,
+      "si_mean": 66.98,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7618,8 +7618,8 @@
     },
     {
       "file_path": "entity/PatrolArea.cpp",
-      "si_max": 67.3,
-      "si_mean": 67.3,
+      "si_max": 66.67,
+      "si_mean": 66.67,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7627,8 +7627,8 @@
     },
     {
       "file_path": "entity/Peep.cpp",
-      "si_max": 86.79,
-      "si_mean": 86.79,
+      "si_max": 87.11,
+      "si_mean": 87.11,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7645,8 +7645,8 @@
     },
     {
       "file_path": "FileClassifier.cpp",
-      "si_max": 75.0,
-      "si_mean": 75.0,
+      "si_max": 74.21,
+      "si_mean": 74.21,
       "loc_total": 190,
       "cc_max": 13.0,
       "class_count": 1,
@@ -7654,8 +7654,8 @@
     },
     {
       "file_path": "Game.cpp",
-      "si_max": 98.11,
-      "si_mean": 98.11,
+      "si_max": 98.58,
+      "si_mean": 98.58,
       "loc_total": 533,
       "cc_max": 7.3333,
       "class_count": 1,
@@ -7672,8 +7672,8 @@
     },
     {
       "file_path": "GameStateSnapshots.cpp",
-      "si_max": 70.13,
-      "si_mean": 65.78,
+      "si_max": 84.59,
+      "si_mean": 63.21,
       "loc_total": 678,
       "cc_max": 20.0,
       "class_count": 3,
@@ -7681,8 +7681,8 @@
     },
     {
       "file_path": "Input.cpp",
-      "si_max": 64.94,
-      "si_mean": 64.94,
+      "si_max": 65.41,
+      "si_mean": 65.41,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7690,8 +7690,8 @@
     },
     {
       "file_path": "interface/Chat.cpp",
-      "si_max": 95.75,
-      "si_mean": 95.75,
+      "si_max": 95.44,
+      "si_mean": 95.44,
       "loc_total": 252,
       "cc_max": 14.0,
       "class_count": 1,
@@ -7726,8 +7726,8 @@
     },
     {
       "file_path": "interface/Fonts.cpp",
-      "si_max": 59.43,
-      "si_mean": 59.43,
+      "si_max": 59.59,
+      "si_mean": 59.59,
       "loc_total": 57,
       "cc_max": 7.0,
       "class_count": 1,
@@ -7736,7 +7736,7 @@
     {
       "file_path": "interface/InteractiveConsole.cpp",
       "si_max": 90.09,
-      "si_mean": 73.5,
+      "si_mean": 74.29,
       "loc_total": 1717,
       "cc_max": 41.6,
       "class_count": 2,
@@ -7744,8 +7744,8 @@
     },
     {
       "file_path": "interface/Screenshot.cpp",
-      "si_max": 94.97,
-      "si_mean": 94.97,
+      "si_max": 94.81,
+      "si_mean": 94.81,
       "loc_total": 585,
       "cc_max": 20.0,
       "class_count": 1,
@@ -7753,8 +7753,8 @@
     },
     {
       "file_path": "interface/StdInOutConsole.cpp",
-      "si_max": 81.92,
-      "si_mean": 81.92,
+      "si_max": 81.45,
+      "si_mean": 81.45,
       "loc_total": 138,
       "cc_max": 8.0,
       "class_count": 1,
@@ -7762,8 +7762,8 @@
     },
     {
       "file_path": "interface/Viewport.cpp",
-      "si_max": 91.51,
-      "si_mean": 91.51,
+      "si_max": 91.82,
+      "si_mean": 91.82,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7771,8 +7771,8 @@
     },
     {
       "file_path": "interface/Window.cpp",
-      "si_max": 71.86,
-      "si_mean": 71.86,
+      "si_max": 72.01,
+      "si_mean": 72.01,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7780,8 +7780,8 @@
     },
     {
       "file_path": "interface/WindowBase.cpp",
-      "si_max": 64.94,
-      "si_mean": 64.94,
+      "si_max": 64.47,
+      "si_mean": 64.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7789,8 +7789,8 @@
     },
     {
       "file_path": "interface/ZoomLevel.cpp",
-      "si_max": 49.06,
-      "si_mean": 49.06,
+      "si_max": 50.79,
+      "si_mean": 50.79,
       "loc_total": 41,
       "cc_max": 1.0,
       "class_count": 1,
@@ -7798,8 +7798,8 @@
     },
     {
       "file_path": "localisation/Currency.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 50.0,
+      "si_mean": 50.0,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7816,8 +7816,8 @@
     },
     {
       "file_path": "localisation/Formatter.cpp",
-      "si_max": 58.65,
-      "si_mean": 58.65,
+      "si_max": 60.22,
+      "si_mean": 60.22,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7825,8 +7825,8 @@
     },
     {
       "file_path": "localisation/Formatting.cpp",
-      "si_max": 81.45,
-      "si_mean": 81.45,
+      "si_max": 81.92,
+      "si_mean": 81.92,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7843,8 +7843,8 @@
     },
     {
       "file_path": "localisation/LanguagePack.cpp",
-      "si_max": 69.5,
-      "si_mean": 69.5,
+      "si_max": 68.55,
+      "si_mean": 68.55,
       "loc_total": 221,
       "cc_max": 12.0,
       "class_count": 1,
@@ -7861,8 +7861,8 @@
     },
     {
       "file_path": "localisation/LocalisationService.cpp",
-      "si_max": 81.29,
-      "si_mean": 81.29,
+      "si_max": 81.76,
+      "si_mean": 81.76,
       "loc_total": 10,
       "cc_max": 1.0,
       "class_count": 1,
@@ -7870,8 +7870,8 @@
     },
     {
       "file_path": "management/Award.cpp",
-      "si_max": 87.11,
-      "si_mean": 57.23,
+      "si_max": 86.79,
+      "si_mean": 57.08,
       "loc_total": 556,
       "cc_max": 11.5,
       "class_count": 2,
@@ -7879,8 +7879,8 @@
     },
     {
       "file_path": "management/Finance.cpp",
-      "si_max": 94.18,
-      "si_mean": 94.18,
+      "si_max": 94.34,
+      "si_mean": 94.34,
       "loc_total": 254,
       "cc_max": 6.0,
       "class_count": 1,
@@ -7888,8 +7888,8 @@
     },
     {
       "file_path": "management/Marketing.cpp",
-      "si_max": 92.3,
-      "si_mean": 92.3,
+      "si_max": 91.98,
+      "si_mean": 91.98,
       "loc_total": 217,
       "cc_max": 15.0,
       "class_count": 1,
@@ -7897,8 +7897,8 @@
     },
     {
       "file_path": "management/NewsItem.cpp",
-      "si_max": 89.62,
-      "si_mean": 89.62,
+      "si_max": 89.94,
+      "si_mean": 89.94,
       "loc_total": 401,
       "cc_max": 13.3333,
       "class_count": 1,
@@ -7906,8 +7906,8 @@
     },
     {
       "file_path": "management/Research.cpp",
-      "si_max": 95.6,
-      "si_mean": 95.6,
+      "si_max": 95.28,
+      "si_mean": 95.28,
       "loc_total": 917,
       "cc_max": 12.6,
       "class_count": 1,
@@ -7915,8 +7915,8 @@
     },
     {
       "file_path": "network/DiscordService.cpp",
-      "si_max": 55.03,
-      "si_mean": 55.03,
+      "si_max": 54.72,
+      "si_mean": 54.72,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7933,8 +7933,8 @@
     },
     {
       "file_path": "network/NetworkBase.cpp",
-      "si_max": 79.72,
-      "si_mean": 79.72,
+      "si_max": 81.13,
+      "si_mean": 81.13,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7951,8 +7951,8 @@
     },
     {
       "file_path": "network/NetworkConnection.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 50.31,
+      "si_mean": 50.31,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -7960,8 +7960,8 @@
     },
     {
       "file_path": "network/NetworkGroup.cpp",
-      "si_max": 47.64,
-      "si_mean": 47.64,
+      "si_max": 47.17,
+      "si_mean": 47.17,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8005,8 +8005,8 @@
     },
     {
       "file_path": "network/NetworkServerAdvertiser.cpp",
-      "si_max": 60.69,
-      "si_mean": 60.69,
+      "si_max": 61.79,
+      "si_mean": 61.79,
       "loc_total": 70,
       "cc_max": 5.0,
       "class_count": 1,
@@ -8032,8 +8032,8 @@
     },
     {
       "file_path": "network/Socket.cpp",
-      "si_max": 59.59,
-      "si_mean": 28.62,
+      "si_max": 59.43,
+      "si_mean": 28.67,
       "loc_total": 667,
       "cc_max": 16.0,
       "class_count": 6,
@@ -8041,8 +8041,8 @@
     },
     {
       "file_path": "object/AudioObject.cpp",
-      "si_max": 32.23,
-      "si_mean": 32.23,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8050,8 +8050,8 @@
     },
     {
       "file_path": "object/AudioSampleTable.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.2,
+      "si_mean": 52.2,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8059,8 +8059,8 @@
     },
     {
       "file_path": "object/BannerObject.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8068,8 +8068,8 @@
     },
     {
       "file_path": "object/ClimateObject.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8086,8 +8086,8 @@
     },
     {
       "file_path": "object/EntranceObject.cpp",
-      "si_max": 56.6,
-      "si_mean": 56.6,
+      "si_max": 56.45,
+      "si_mean": 56.45,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8095,8 +8095,8 @@
     },
     {
       "file_path": "object/FootpathObject.cpp",
-      "si_max": 63.99,
-      "si_mean": 63.99,
+      "si_max": 63.36,
+      "si_mean": 63.36,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8104,8 +8104,8 @@
     },
     {
       "file_path": "object/FootpathRailingsObject.cpp",
-      "si_max": 59.28,
-      "si_mean": 59.28,
+      "si_max": 58.96,
+      "si_mean": 58.96,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8113,8 +8113,8 @@
     },
     {
       "file_path": "object/FootpathSurfaceObject.cpp",
-      "si_max": 65.88,
-      "si_mean": 65.88,
+      "si_max": 65.72,
+      "si_mean": 65.72,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8122,8 +8122,8 @@
     },
     {
       "file_path": "object/ImageTable.cpp",
-      "si_max": 39.94,
-      "si_mean": 39.94,
+      "si_max": 40.09,
+      "si_mean": 40.09,
       "loc_total": 37,
       "cc_max": 5.0,
       "class_count": 1,
@@ -8131,8 +8131,8 @@
     },
     {
       "file_path": "object/LargeSceneryObject.cpp",
-      "si_max": 57.86,
-      "si_mean": 57.86,
+      "si_max": 57.23,
+      "si_mean": 57.23,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8140,8 +8140,8 @@
     },
     {
       "file_path": "object/MusicObject.cpp",
-      "si_max": 65.88,
-      "si_mean": 65.88,
+      "si_max": 66.04,
+      "si_mean": 66.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8149,8 +8149,8 @@
     },
     {
       "file_path": "object/Object.cpp",
-      "si_max": 73.74,
-      "si_mean": 73.74,
+      "si_max": 73.58,
+      "si_mean": 73.58,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8158,8 +8158,8 @@
     },
     {
       "file_path": "object/ObjectEntryManager.cpp",
-      "si_max": 73.27,
-      "si_mean": 73.27,
+      "si_max": 72.96,
+      "si_mean": 72.96,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8167,8 +8167,8 @@
     },
     {
       "file_path": "object/ObjectFactory.cpp",
-      "si_max": 47.33,
-      "si_mean": 46.19,
+      "si_max": 48.27,
+      "si_mean": 47.52,
       "loc_total": 103,
       "cc_max": 2.0,
       "class_count": 4,
@@ -8176,8 +8176,8 @@
     },
     {
       "file_path": "object/ObjectList.cpp",
-      "si_max": 77.2,
-      "si_mean": 77.2,
+      "si_max": 77.67,
+      "si_mean": 77.67,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8185,8 +8185,8 @@
     },
     {
       "file_path": "object/ObjectManager.cpp",
-      "si_max": 90.72,
-      "si_mean": 64.15,
+      "si_max": 91.35,
+      "si_mean": 64.47,
       "loc_total": 668,
       "cc_max": 10.0,
       "class_count": 2,
@@ -8194,8 +8194,8 @@
     },
     {
       "file_path": "object/ObjectRepository.cpp",
-      "si_max": 86.64,
-      "si_mean": 53.38,
+      "si_max": 86.95,
+      "si_mean": 53.73,
       "loc_total": 470,
       "cc_max": 7.0,
       "class_count": 4,
@@ -8212,8 +8212,8 @@
     },
     {
       "file_path": "object/PathAdditionObject.cpp",
-      "si_max": 56.6,
-      "si_mean": 56.6,
+      "si_max": 56.29,
+      "si_mean": 56.29,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8221,8 +8221,8 @@
     },
     {
       "file_path": "object/PeepAnimationsObject.cpp",
-      "si_max": 69.97,
-      "si_mean": 69.97,
+      "si_max": 69.65,
+      "si_mean": 69.65,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8230,8 +8230,8 @@
     },
     {
       "file_path": "object/PeepNamesObject.cpp",
-      "si_max": 53.46,
-      "si_mean": 53.46,
+      "si_max": 52.67,
+      "si_mean": 52.67,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8248,8 +8248,8 @@
     },
     {
       "file_path": "object/RideObject.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8257,8 +8257,8 @@
     },
     {
       "file_path": "object/ScenarioMetaObject.cpp",
-      "si_max": 57.86,
-      "si_mean": 57.86,
+      "si_max": 57.23,
+      "si_mean": 57.23,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8275,8 +8275,8 @@
     },
     {
       "file_path": "object/SmallSceneryObject.cpp",
-      "si_max": 57.86,
-      "si_mean": 57.86,
+      "si_max": 57.55,
+      "si_mean": 57.55,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8284,8 +8284,8 @@
     },
     {
       "file_path": "object/StationObject.cpp",
-      "si_max": 71.07,
-      "si_mean": 71.07,
+      "si_max": 70.91,
+      "si_mean": 70.91,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8293,8 +8293,8 @@
     },
     {
       "file_path": "object/StringTable.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8302,8 +8302,8 @@
     },
     {
       "file_path": "object/TerrainEdgeObject.cpp",
-      "si_max": 61.95,
-      "si_mean": 61.95,
+      "si_max": 61.64,
+      "si_mean": 61.64,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8311,8 +8311,8 @@
     },
     {
       "file_path": "object/TerrainSurfaceObject.cpp",
-      "si_max": 61.95,
-      "si_mean": 61.95,
+      "si_max": 61.32,
+      "si_mean": 61.32,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8320,8 +8320,8 @@
     },
     {
       "file_path": "object/WallObject.cpp",
-      "si_max": 56.6,
-      "si_mean": 56.6,
+      "si_max": 56.29,
+      "si_mean": 56.29,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8338,8 +8338,8 @@
     },
     {
       "file_path": "object/WaterObject.cpp",
-      "si_max": 55.5,
-      "si_mean": 55.5,
+      "si_max": 55.66,
+      "si_mean": 55.66,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8347,8 +8347,8 @@
     },
     {
       "file_path": "OpenRCT2.cpp",
-      "si_max": 94.03,
-      "si_mean": 94.03,
+      "si_max": 93.87,
+      "si_mean": 93.87,
       "loc_total": 8,
       "cc_max": 2.0,
       "class_count": 1,
@@ -8410,8 +8410,8 @@
     },
     {
       "file_path": "paint/entity/Paint.Staff.cpp",
-      "si_max": 32.7,
-      "si_mean": 32.7,
+      "si_max": 32.86,
+      "si_mean": 32.86,
       "loc_total": 43,
       "cc_max": 7.0,
       "class_count": 1,
@@ -8419,8 +8419,8 @@
     },
     {
       "file_path": "paint/Paint.cpp",
-      "si_max": 97.8,
-      "si_mean": 97.8,
+      "si_max": 98.43,
+      "si_mean": 98.43,
       "loc_total": 626,
       "cc_max": 8.0,
       "class_count": 1,
@@ -8437,8 +8437,8 @@
     },
     {
       "file_path": "paint/Painter.cpp",
-      "si_max": 71.38,
-      "si_mean": 71.38,
+      "si_max": 71.54,
+      "si_mean": 71.54,
       "loc_total": 168,
       "cc_max": 8.0,
       "class_count": 1,
@@ -8455,8 +8455,8 @@
     },
     {
       "file_path": "paint/support/MetalSupports.cpp",
-      "si_max": 87.58,
-      "si_mean": 35.1,
+      "si_max": 87.89,
+      "si_mean": 35.18,
       "loc_total": 213,
       "cc_max": 21.0,
       "class_count": 4,
@@ -8464,8 +8464,8 @@
     },
     {
       "file_path": "paint/support/WoodenSupports.cpp",
-      "si_max": 86.48,
-      "si_mean": 39.1,
+      "si_max": 86.64,
+      "si_mean": 39.15,
       "loc_total": 162,
       "cc_max": 7.0,
       "class_count": 3,
@@ -8473,8 +8473,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.Banner.cpp",
-      "si_max": 42.77,
-      "si_mean": 42.77,
+      "si_max": 43.24,
+      "si_mean": 43.24,
       "loc_total": 73,
       "cc_max": 8.0,
       "class_count": 1,
@@ -8482,8 +8482,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.Entrance.cpp",
-      "si_max": 56.76,
-      "si_mean": 56.76,
+      "si_max": 58.33,
+      "si_mean": 58.33,
       "loc_total": 313,
       "cc_max": 22.0,
       "class_count": 1,
@@ -8491,8 +8491,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.LargeScenery.cpp",
-      "si_max": 50.31,
-      "si_mean": 50.31,
+      "si_max": 53.3,
+      "si_mean": 53.3,
       "loc_total": 345,
       "cc_max": 19.0,
       "class_count": 1,
@@ -8500,8 +8500,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.Path.cpp",
-      "si_max": 76.42,
-      "si_mean": 58.26,
+      "si_max": 76.73,
+      "si_mean": 58.49,
       "loc_total": 893,
       "cc_max": 38.0,
       "class_count": 2,
@@ -8509,8 +8509,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.PathAddition.cpp",
-      "si_max": 43.4,
-      "si_mean": 43.4,
+      "si_max": 43.87,
+      "si_mean": 43.87,
       "loc_total": 262,
       "cc_max": 18.0,
       "class_count": 1,
@@ -8518,8 +8518,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.SmallScenery.cpp",
-      "si_max": 68.24,
-      "si_mean": 68.24,
+      "si_max": 69.34,
+      "si_mean": 69.34,
       "loc_total": 326,
       "cc_max": 36.0,
       "class_count": 1,
@@ -8527,8 +8527,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.Surface.cpp",
-      "si_max": 93.24,
-      "si_mean": 52.79,
+      "si_max": 92.92,
+      "si_mean": 52.83,
       "loc_total": 1353,
       "cc_max": 86.0,
       "class_count": 4,
@@ -8536,8 +8536,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.TileElement.cpp",
-      "si_max": 81.13,
-      "si_mean": 81.13,
+      "si_max": 81.29,
+      "si_mean": 81.29,
       "loc_total": 325,
       "cc_max": 49.0,
       "class_count": 1,
@@ -8545,8 +8545,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.Tunnel.cpp",
-      "si_max": 34.75,
-      "si_mean": 34.75,
+      "si_max": 34.91,
+      "si_mean": 34.91,
       "loc_total": 210,
       "cc_max": 9.0,
       "class_count": 1,
@@ -8554,8 +8554,8 @@
     },
     {
       "file_path": "paint/tile_element/Paint.Wall.cpp",
-      "si_max": 47.17,
-      "si_mean": 47.17,
+      "si_max": 48.11,
+      "si_mean": 48.11,
       "loc_total": 298,
       "cc_max": 17.0,
       "class_count": 1,
@@ -8572,8 +8572,8 @@
     },
     {
       "file_path": "paint/track/coaster/AlpineCoaster.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.04,
+      "si_mean": 52.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8581,8 +8581,8 @@
     },
     {
       "file_path": "paint/track/coaster/BobsleighCoaster.cpp",
-      "si_max": 91.82,
-      "si_mean": 91.82,
+      "si_max": 91.67,
+      "si_mean": 91.67,
       "loc_total": 4056,
       "cc_max": 53.5,
       "class_count": 1,
@@ -8608,8 +8608,8 @@
     },
     {
       "file_path": "paint/track/coaster/ClassicWoodenTwisterRollerCoaster.cpp",
-      "si_max": 76.26,
-      "si_mean": 76.26,
+      "si_max": 76.1,
+      "si_mean": 76.1,
       "loc_total": 326,
       "cc_max": 26.5,
       "class_count": 1,
@@ -8617,8 +8617,8 @@
     },
     {
       "file_path": "paint/track/coaster/CompactInvertedCoaster.cpp",
-      "si_max": 96.86,
-      "si_mean": 96.86,
+      "si_max": 96.7,
+      "si_mean": 96.7,
       "loc_total": 9569,
       "cc_max": 43.8182,
       "class_count": 1,
@@ -8626,8 +8626,8 @@
     },
     {
       "file_path": "paint/track/coaster/CorkscrewRollerCoaster.cpp",
-      "si_max": 98.43,
-      "si_mean": 98.43,
+      "si_max": 98.11,
+      "si_mean": 98.11,
       "loc_total": 20590,
       "cc_max": 45.64,
       "class_count": 1,
@@ -8653,8 +8653,8 @@
     },
     {
       "file_path": "paint/track/coaster/HeartlineTwisterCoaster.cpp",
-      "si_max": 84.75,
-      "si_mean": 84.75,
+      "si_max": 84.28,
+      "si_mean": 84.28,
       "loc_total": 1663,
       "cc_max": 31.0,
       "class_count": 1,
@@ -8662,8 +8662,8 @@
     },
     {
       "file_path": "paint/track/coaster/HybridCoaster.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.04,
+      "si_mean": 52.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8671,8 +8671,8 @@
     },
     {
       "file_path": "paint/track/coaster/InvertedHairpinCoaster.cpp",
-      "si_max": 84.91,
-      "si_mean": 84.91,
+      "si_max": 84.75,
+      "si_mean": 84.75,
       "loc_total": 1366,
       "cc_max": 26.5,
       "class_count": 1,
@@ -8680,8 +8680,8 @@
     },
     {
       "file_path": "paint/track/coaster/InvertedImpulseCoaster.cpp",
-      "si_max": 77.52,
-      "si_mean": 77.52,
+      "si_max": 77.2,
+      "si_mean": 77.2,
       "loc_total": 743,
       "cc_max": 20.0,
       "class_count": 1,
@@ -8689,8 +8689,8 @@
     },
     {
       "file_path": "paint/track/coaster/InvertedRollerCoaster.cpp",
-      "si_max": 98.27,
-      "si_mean": 98.27,
+      "si_max": 97.96,
+      "si_mean": 97.96,
       "loc_total": 11291,
       "cc_max": 44.9286,
       "class_count": 1,
@@ -8698,8 +8698,8 @@
     },
     {
       "file_path": "paint/track/coaster/JuniorRollerCoaster.cpp",
-      "si_max": 96.54,
-      "si_mean": 96.54,
+      "si_max": 96.38,
+      "si_mean": 96.38,
       "loc_total": 2998,
       "cc_max": 17.8889,
       "class_count": 1,
@@ -8707,8 +8707,8 @@
     },
     {
       "file_path": "paint/track/coaster/LatticeTriangleTrack.cpp",
-      "si_max": 96.38,
-      "si_mean": 96.38,
+      "si_max": 96.54,
+      "si_mean": 96.54,
       "loc_total": 19625,
       "cc_max": 46.56,
       "class_count": 1,
@@ -8716,8 +8716,8 @@
     },
     {
       "file_path": "paint/track/coaster/LatticeTriangleTrackAlt.cpp",
-      "si_max": 43.55,
-      "si_mean": 43.55,
+      "si_max": 44.03,
+      "si_mean": 44.03,
       "loc_total": 230,
       "cc_max": 12.0,
       "class_count": 1,
@@ -8725,8 +8725,8 @@
     },
     {
       "file_path": "paint/track/coaster/LayDownRollerCoasterInverted.cpp",
-      "si_max": 93.08,
-      "si_mean": 93.08,
+      "si_max": 92.77,
+      "si_mean": 92.77,
       "loc_total": 8129,
       "cc_max": 38.9,
       "class_count": 1,
@@ -8734,8 +8734,8 @@
     },
     {
       "file_path": "paint/track/coaster/LimLaunchedRollerCoaster.cpp",
-      "si_max": 91.67,
-      "si_mean": 91.67,
+      "si_max": 91.51,
+      "si_mean": 91.51,
       "loc_total": 5953,
       "cc_max": 69.0,
       "class_count": 1,
@@ -8743,8 +8743,8 @@
     },
     {
       "file_path": "paint/track/coaster/LoopingRollerCoaster.cpp",
-      "si_max": 96.23,
-      "si_mean": 96.23,
+      "si_max": 96.07,
+      "si_mean": 96.07,
       "loc_total": 10280,
       "cc_max": 48.8462,
       "class_count": 1,
@@ -8752,8 +8752,8 @@
     },
     {
       "file_path": "paint/track/coaster/MineRide.cpp",
-      "si_max": 91.19,
-      "si_mean": 91.19,
+      "si_max": 90.72,
+      "si_mean": 90.72,
       "loc_total": 5442,
       "cc_max": 49.8571,
       "class_count": 1,
@@ -8761,8 +8761,8 @@
     },
     {
       "file_path": "paint/track/coaster/MineTrainCoaster.cpp",
-      "si_max": 93.71,
-      "si_mean": 93.71,
+      "si_max": 93.4,
+      "si_mean": 93.4,
       "loc_total": 7171,
       "cc_max": 48.6667,
       "class_count": 1,
@@ -8770,8 +8770,8 @@
     },
     {
       "file_path": "paint/track/coaster/MiniRollerCoaster.cpp",
-      "si_max": 95.44,
-      "si_mean": 95.44,
+      "si_max": 95.13,
+      "si_mean": 95.13,
       "loc_total": 8994,
       "cc_max": 46.0769,
       "class_count": 1,
@@ -8779,8 +8779,8 @@
     },
     {
       "file_path": "paint/track/coaster/MiniSuspendedCoaster.cpp",
-      "si_max": 84.28,
-      "si_mean": 84.28,
+      "si_max": 83.96,
+      "si_mean": 83.96,
       "loc_total": 2169,
       "cc_max": 30.5,
       "class_count": 1,
@@ -8788,8 +8788,8 @@
     },
     {
       "file_path": "paint/track/coaster/MultiDimensionRollerCoaster.cpp",
-      "si_max": 94.34,
-      "si_mean": 94.34,
+      "si_max": 94.18,
+      "si_mean": 94.18,
       "loc_total": 7681,
       "cc_max": 47.7778,
       "class_count": 1,
@@ -8815,8 +8815,8 @@
     },
     {
       "file_path": "paint/track/coaster/ReverserRollerCoaster.cpp",
-      "si_max": 86.01,
-      "si_mean": 86.01,
+      "si_max": 85.85,
+      "si_mean": 85.85,
       "loc_total": 1354,
       "cc_max": 35.0,
       "class_count": 1,
@@ -8833,8 +8833,8 @@
     },
     {
       "file_path": "paint/track/coaster/SingleRailRollerCoaster.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 52.04,
+      "si_mean": 52.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -8842,8 +8842,8 @@
     },
     {
       "file_path": "paint/track/coaster/StandUpRollerCoaster.cpp",
-      "si_max": 97.33,
-      "si_mean": 97.33,
+      "si_max": 97.17,
+      "si_mean": 97.17,
       "loc_total": 18528,
       "cc_max": 48.087,
       "class_count": 1,
@@ -8869,8 +8869,8 @@
     },
     {
       "file_path": "paint/track/coaster/TwisterRollerCoaster.cpp",
-      "si_max": 98.58,
-      "si_mean": 98.58,
+      "si_max": 98.27,
+      "si_mean": 98.27,
       "loc_total": 20309,
       "cc_max": 45.68,
       "class_count": 1,
@@ -8878,8 +8878,8 @@
     },
     {
       "file_path": "paint/track/coaster/VirginiaReel.cpp",
-      "si_max": 77.04,
-      "si_mean": 77.04,
+      "si_max": 76.89,
+      "si_mean": 76.89,
       "loc_total": 317,
       "cc_max": 16.0,
       "class_count": 1,
@@ -8887,8 +8887,8 @@
     },
     {
       "file_path": "paint/track/coaster/WildMouse.cpp",
-      "si_max": 53.62,
-      "si_mean": 53.62,
+      "si_max": 54.4,
+      "si_mean": 54.4,
       "loc_total": 786,
       "cc_max": 17.0,
       "class_count": 1,
@@ -8896,8 +8896,8 @@
     },
     {
       "file_path": "paint/track/coaster/WoodenRollerCoaster.cpp",
-      "si_max": 86.95,
-      "si_mean": 86.95,
+      "si_max": 86.48,
+      "si_mean": 86.48,
       "loc_total": 568,
       "cc_max": 47.0,
       "class_count": 1,
@@ -8905,8 +8905,8 @@
     },
     {
       "file_path": "paint/track/coaster/WoodenWildMouse.cpp",
-      "si_max": 76.1,
-      "si_mean": 76.1,
+      "si_max": 76.26,
+      "si_mean": 76.26,
       "loc_total": 604,
       "cc_max": 16.0,
       "class_count": 1,
@@ -8923,8 +8923,8 @@
     },
     {
       "file_path": "paint/track/gentle/Circus.cpp",
-      "si_max": 67.61,
-      "si_mean": 67.61,
+      "si_max": 67.45,
+      "si_mean": 67.45,
       "loc_total": 105,
       "cc_max": 11.0,
       "class_count": 1,
@@ -8932,8 +8932,8 @@
     },
     {
       "file_path": "paint/track/gentle/CrookedHouse.cpp",
-      "si_max": 66.35,
-      "si_mean": 66.35,
+      "si_max": 66.19,
+      "si_mean": 66.19,
       "loc_total": 102,
       "cc_max": 8.0,
       "class_count": 1,
@@ -8941,8 +8941,8 @@
     },
     {
       "file_path": "paint/track/gentle/Dodgems.cpp",
-      "si_max": 63.36,
-      "si_mean": 63.36,
+      "si_max": 62.89,
+      "si_mean": 62.89,
       "loc_total": 75,
       "cc_max": 9.0,
       "class_count": 1,
@@ -8950,8 +8950,8 @@
     },
     {
       "file_path": "paint/track/gentle/FerrisWheel.cpp",
-      "si_max": 72.17,
-      "si_mean": 72.17,
+      "si_max": 71.38,
+      "si_mean": 71.38,
       "loc_total": 134,
       "cc_max": 14.0,
       "class_count": 1,
@@ -8959,8 +8959,8 @@
     },
     {
       "file_path": "paint/track/gentle/FlyingSaucers.cpp",
-      "si_max": 55.19,
-      "si_mean": 55.19,
+      "si_max": 55.5,
+      "si_mean": 55.5,
       "loc_total": 36,
       "cc_max": 3.0,
       "class_count": 1,
@@ -8968,8 +8968,8 @@
     },
     {
       "file_path": "paint/track/gentle/GhostTrain.cpp",
-      "si_max": 80.97,
-      "si_mean": 80.97,
+      "si_max": 80.66,
+      "si_mean": 80.66,
       "loc_total": 395,
       "cc_max": 18.0,
       "class_count": 1,
@@ -8977,8 +8977,8 @@
     },
     {
       "file_path": "paint/track/gentle/HauntedHouse.cpp",
-      "si_max": 64.15,
-      "si_mean": 64.15,
+      "si_max": 63.68,
+      "si_mean": 63.68,
       "loc_total": 103,
       "cc_max": 8.0,
       "class_count": 1,
@@ -8986,8 +8986,8 @@
     },
     {
       "file_path": "paint/track/gentle/Maze.cpp",
-      "si_max": 79.25,
-      "si_mean": 79.25,
+      "si_max": 78.62,
+      "si_mean": 78.62,
       "loc_total": 140,
       "cc_max": 30.0,
       "class_count": 1,
@@ -8995,8 +8995,8 @@
     },
     {
       "file_path": "paint/track/gentle/MerryGoRound.cpp",
-      "si_max": 68.55,
-      "si_mean": 68.55,
+      "si_max": 68.4,
+      "si_mean": 68.4,
       "loc_total": 151,
       "cc_max": 11.0,
       "class_count": 1,
@@ -9004,8 +9004,8 @@
     },
     {
       "file_path": "paint/track/gentle/MiniGolf.cpp",
-      "si_max": 83.18,
-      "si_mean": 83.18,
+      "si_max": 82.55,
+      "si_mean": 82.55,
       "loc_total": 627,
       "cc_max": 19.0,
       "class_count": 1,
@@ -9031,8 +9031,8 @@
     },
     {
       "file_path": "paint/track/gentle/ObservationTower.cpp",
-      "si_max": 65.25,
-      "si_mean": 65.25,
+      "si_max": 64.78,
+      "si_mean": 64.78,
       "loc_total": 115,
       "cc_max": 10.0,
       "class_count": 1,
@@ -9040,8 +9040,8 @@
     },
     {
       "file_path": "paint/track/gentle/SpaceRings.cpp",
-      "si_max": 73.9,
-      "si_mean": 73.9,
+      "si_max": 73.43,
+      "si_mean": 73.43,
       "loc_total": 154,
       "cc_max": 18.0,
       "class_count": 1,
@@ -9049,8 +9049,8 @@
     },
     {
       "file_path": "paint/track/gentle/SpiralSlide.cpp",
-      "si_max": 72.48,
-      "si_mean": 72.48,
+      "si_max": 71.7,
+      "si_mean": 71.7,
       "loc_total": 200,
       "cc_max": 17.0,
       "class_count": 1,
@@ -9058,8 +9058,8 @@
     },
     {
       "file_path": "paint/track/shops/Facility.cpp",
-      "si_max": 40.25,
-      "si_mean": 40.25,
+      "si_max": 40.57,
+      "si_mean": 40.57,
       "loc_total": 62,
       "cc_max": 11.0,
       "class_count": 1,
@@ -9067,8 +9067,8 @@
     },
     {
       "file_path": "paint/track/shops/Shop.cpp",
-      "si_max": 58.81,
-      "si_mean": 58.81,
+      "si_max": 59.12,
+      "si_mean": 59.12,
       "loc_total": 50,
       "cc_max": 7.0,
       "class_count": 1,
@@ -9076,8 +9076,8 @@
     },
     {
       "file_path": "paint/track/thrill/3dCinema.cpp",
-      "si_max": 41.67,
-      "si_mean": 41.67,
+      "si_max": 42.14,
+      "si_mean": 42.14,
       "loc_total": 103,
       "cc_max": 11.0,
       "class_count": 1,
@@ -9085,8 +9085,8 @@
     },
     {
       "file_path": "paint/track/thrill/Enterprise.cpp",
-      "si_max": 74.06,
-      "si_mean": 74.06,
+      "si_max": 73.9,
+      "si_mean": 73.9,
       "loc_total": 156,
       "cc_max": 17.0,
       "class_count": 1,
@@ -9094,8 +9094,8 @@
     },
     {
       "file_path": "paint/track/thrill/GoKarts.cpp",
-      "si_max": 92.77,
-      "si_mean": 92.77,
+      "si_max": 92.3,
+      "si_mean": 92.3,
       "loc_total": 1510,
       "cc_max": 19.5,
       "class_count": 1,
@@ -9103,8 +9103,8 @@
     },
     {
       "file_path": "paint/track/thrill/LaunchedFreefall.cpp",
-      "si_max": 66.82,
-      "si_mean": 66.82,
+      "si_max": 66.35,
+      "si_mean": 66.35,
       "loc_total": 116,
       "cc_max": 11.0,
       "class_count": 1,
@@ -9112,8 +9112,8 @@
     },
     {
       "file_path": "paint/track/thrill/MagicCarpet.cpp",
-      "si_max": 89.78,
-      "si_mean": 89.78,
+      "si_max": 89.62,
+      "si_mean": 89.62,
       "loc_total": 199,
       "cc_max": 9.0,
       "class_count": 1,
@@ -9121,8 +9121,8 @@
     },
     {
       "file_path": "paint/track/thrill/MotionSimulator.cpp",
-      "si_max": 67.61,
-      "si_mean": 67.61,
+      "si_max": 67.45,
+      "si_mean": 67.45,
       "loc_total": 115,
       "cc_max": 11.0,
       "class_count": 1,
@@ -9130,8 +9130,8 @@
     },
     {
       "file_path": "paint/track/thrill/RotoDrop.cpp",
-      "si_max": 69.81,
-      "si_mean": 69.81,
+      "si_max": 69.03,
+      "si_mean": 69.03,
       "loc_total": 125,
       "cc_max": 13.0,
       "class_count": 1,
@@ -9139,8 +9139,8 @@
     },
     {
       "file_path": "paint/track/thrill/SwingingInverterShip.cpp",
-      "si_max": 72.33,
-      "si_mean": 72.33,
+      "si_max": 71.86,
+      "si_mean": 71.86,
       "loc_total": 131,
       "cc_max": 13.0,
       "class_count": 1,
@@ -9148,8 +9148,8 @@
     },
     {
       "file_path": "paint/track/thrill/SwingingShip.cpp",
-      "si_max": 82.39,
-      "si_mean": 82.39,
+      "si_max": 82.23,
+      "si_mean": 82.23,
       "loc_total": 245,
       "cc_max": 32.0,
       "class_count": 1,
@@ -9157,8 +9157,8 @@
     },
     {
       "file_path": "paint/track/thrill/TopSpin.cpp",
-      "si_max": 70.28,
-      "si_mean": 70.28,
+      "si_max": 70.13,
+      "si_mean": 70.13,
       "loc_total": 217,
       "cc_max": 11.0,
       "class_count": 1,
@@ -9166,8 +9166,8 @@
     },
     {
       "file_path": "paint/track/thrill/Twist.cpp",
-      "si_max": 72.01,
-      "si_mean": 72.01,
+      "si_max": 71.07,
+      "si_mean": 71.07,
       "loc_total": 149,
       "cc_max": 15.0,
       "class_count": 1,
@@ -9184,8 +9184,8 @@
     },
     {
       "file_path": "paint/track/transport/Chairlift.cpp",
-      "si_max": 80.19,
-      "si_mean": 80.19,
+      "si_max": 79.4,
+      "si_mean": 79.4,
       "loc_total": 583,
       "cc_max": 20.0,
       "class_count": 1,
@@ -9193,8 +9193,8 @@
     },
     {
       "file_path": "paint/track/transport/Lift.cpp",
-      "si_max": 63.05,
-      "si_mean": 63.05,
+      "si_max": 62.58,
+      "si_mean": 62.58,
       "loc_total": 108,
       "cc_max": 10.0,
       "class_count": 1,
@@ -9202,7 +9202,7 @@
     },
     {
       "file_path": "paint/track/transport/MiniatureRailway.cpp",
-      "si_max": 89.94,
+      "si_max": 89.78,
       "si_mean": 56.13,
       "loc_total": 1310,
       "cc_max": 24.5,
@@ -9211,8 +9211,8 @@
     },
     {
       "file_path": "paint/track/transport/Monorail.cpp",
-      "si_max": 85.06,
-      "si_mean": 85.06,
+      "si_max": 85.22,
+      "si_mean": 85.22,
       "loc_total": 817,
       "cc_max": 23.0,
       "class_count": 1,
@@ -9220,8 +9220,8 @@
     },
     {
       "file_path": "paint/track/transport/SuspendedMonorail.cpp",
-      "si_max": 80.5,
-      "si_mean": 80.5,
+      "si_max": 79.72,
+      "si_mean": 79.72,
       "loc_total": 1957,
       "cc_max": 30.5,
       "class_count": 1,
@@ -9229,8 +9229,8 @@
     },
     {
       "file_path": "paint/track/water/BoatHire.cpp",
-      "si_max": 76.73,
-      "si_mean": 76.73,
+      "si_max": 76.42,
+      "si_mean": 76.42,
       "loc_total": 1228,
       "cc_max": 26.0,
       "class_count": 1,
@@ -9238,8 +9238,8 @@
     },
     {
       "file_path": "paint/track/water/DinghySlide.cpp",
-      "si_max": 77.83,
-      "si_mean": 77.83,
+      "si_max": 77.36,
+      "si_mean": 77.36,
       "loc_total": 875,
       "cc_max": 20.0,
       "class_count": 1,
@@ -9247,8 +9247,8 @@
     },
     {
       "file_path": "paint/track/water/DinghySlideCovered.cpp",
-      "si_max": 48.27,
-      "si_mean": 48.27,
+      "si_max": 49.69,
+      "si_mean": 49.69,
       "loc_total": 803,
       "cc_max": 18.5,
       "class_count": 1,
@@ -9256,8 +9256,8 @@
     },
     {
       "file_path": "paint/track/water/LogFlume.cpp",
-      "si_max": 80.82,
-      "si_mean": 80.82,
+      "si_max": 80.03,
+      "si_mean": 80.03,
       "loc_total": 845,
       "cc_max": 21.0,
       "class_count": 1,
@@ -9265,8 +9265,8 @@
     },
     {
       "file_path": "paint/track/water/RiverRapids.cpp",
-      "si_max": 77.67,
-      "si_mean": 77.67,
+      "si_max": 77.52,
+      "si_mean": 77.52,
       "loc_total": 548,
       "cc_max": 18.0,
       "class_count": 1,
@@ -9274,8 +9274,8 @@
     },
     {
       "file_path": "paint/track/water/SplashBoats.cpp",
-      "si_max": 83.81,
-      "si_mean": 83.81,
+      "si_max": 83.33,
+      "si_mean": 83.33,
       "loc_total": 728,
       "cc_max": 19.0,
       "class_count": 1,
@@ -9283,8 +9283,8 @@
     },
     {
       "file_path": "paint/track/water/SubmarineRide.cpp",
-      "si_max": 66.04,
-      "si_mean": 66.04,
+      "si_max": 65.25,
+      "si_mean": 65.25,
       "loc_total": 158,
       "cc_max": 10.0,
       "class_count": 1,
@@ -9292,8 +9292,8 @@
     },
     {
       "file_path": "paint/track_pieces/QuarterHelix.cpp",
-      "si_max": 32.23,
-      "si_mean": 32.23,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9400,8 +9400,8 @@
     },
     {
       "file_path": "paint/VirtualFloor.cpp",
-      "si_max": 88.84,
-      "si_mean": 88.84,
+      "si_max": 88.52,
+      "si_mean": 88.52,
       "loc_total": 354,
       "cc_max": 36.0,
       "class_count": 1,
@@ -9418,8 +9418,8 @@
     },
     {
       "file_path": "park/ParkFile.cpp",
-      "si_max": 89.15,
-      "si_mean": 67.57,
+      "si_max": 77.04,
+      "si_mean": 64.82,
       "loc_total": 2085,
       "cc_max": 22.0,
       "class_count": 4,
@@ -9427,8 +9427,8 @@
     },
     {
       "file_path": "park/ParkPreview.cpp",
-      "si_max": 60.53,
-      "si_mean": 60.53,
+      "si_max": 39.47,
+      "si_mean": 39.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9436,8 +9436,8 @@
     },
     {
       "file_path": "ParkImporter.cpp",
-      "si_max": 72.64,
-      "si_mean": 72.64,
+      "si_max": 72.48,
+      "si_mean": 72.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9454,8 +9454,8 @@
     },
     {
       "file_path": "peep/PeepAnimations.cpp",
-      "si_max": 55.03,
-      "si_mean": 55.03,
+      "si_max": 54.72,
+      "si_mean": 54.72,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9481,8 +9481,8 @@
     },
     {
       "file_path": "platform/Crash.cpp",
-      "si_max": 68.4,
-      "si_mean": 68.4,
+      "si_max": 68.87,
+      "si_mean": 68.87,
       "loc_total": 29,
       "cc_max": 2.0,
       "class_count": 1,
@@ -9508,8 +9508,8 @@
     },
     {
       "file_path": "platform/Platform.Emscripten.cpp",
-      "si_max": 24.53,
-      "si_mean": 24.53,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9535,8 +9535,8 @@
     },
     {
       "file_path": "platform/Platform.Win32.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9544,8 +9544,8 @@
     },
     {
       "file_path": "PlatformEnvironment.cpp",
-      "si_max": 85.69,
-      "si_mean": 83.96,
+      "si_max": 88.99,
+      "si_mean": 82.0,
       "loc_total": 217,
       "cc_max": 16.0,
       "class_count": 2,
@@ -9571,8 +9571,8 @@
     },
     {
       "file_path": "rct1/S4Importer.cpp",
-      "si_max": 82.55,
-      "si_mean": 75.94,
+      "si_max": 83.02,
+      "si_mean": 76.41,
       "loc_total": 2507,
       "cc_max": 22.5714,
       "class_count": 2,
@@ -9580,8 +9580,8 @@
     },
     {
       "file_path": "rct1/T4Importer.cpp",
-      "si_max": 44.34,
-      "si_mean": 39.47,
+      "si_max": 44.97,
+      "si_mean": 39.86,
       "loc_total": 241,
       "cc_max": 13.0,
       "class_count": 2,
@@ -9589,8 +9589,8 @@
     },
     {
       "file_path": "rct1/Tables.cpp",
-      "si_max": 54.09,
-      "si_mean": 54.09,
+      "si_max": 53.77,
+      "si_mean": 53.77,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9607,8 +9607,8 @@
     },
     {
       "file_path": "rct12/RCT12.cpp",
-      "si_max": 92.92,
-      "si_mean": 92.92,
+      "si_max": 92.61,
+      "si_mean": 92.61,
       "loc_total": 672,
       "cc_max": 7.9,
       "class_count": 1,
@@ -9616,8 +9616,8 @@
     },
     {
       "file_path": "rct12/ScenarioPatcher.cpp",
-      "si_max": 75.31,
-      "si_mean": 75.31,
+      "si_max": 75.47,
+      "si_mean": 75.47,
       "loc_total": 609,
       "cc_max": 12.5,
       "class_count": 1,
@@ -9625,8 +9625,8 @@
     },
     {
       "file_path": "rct12/TD46.cpp",
-      "si_max": 53.46,
-      "si_mean": 53.46,
+      "si_max": 52.36,
+      "si_mean": 52.36,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9634,8 +9634,8 @@
     },
     {
       "file_path": "rct2/RCT2.cpp",
-      "si_max": 73.27,
-      "si_mean": 73.27,
+      "si_max": 73.11,
+      "si_mean": 73.11,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9643,8 +9643,8 @@
     },
     {
       "file_path": "rct2/S6Importer.cpp",
-      "si_max": 78.93,
-      "si_mean": 68.48,
+      "si_max": 79.09,
+      "si_mean": 68.95,
       "loc_total": 1832,
       "cc_max": 26.0,
       "class_count": 2,
@@ -9670,8 +9670,8 @@
     },
     {
       "file_path": "rct2/T6Importer.cpp",
-      "si_max": 42.14,
-      "si_mean": 40.02,
+      "si_max": 42.61,
+      "si_mean": 40.25,
       "loc_total": 219,
       "cc_max": 8.0,
       "class_count": 2,
@@ -9680,7 +9680,7 @@
     {
       "file_path": "ReplayManager.cpp",
       "si_max": 94.5,
-      "si_mean": 56.88,
+      "si_mean": 57.08,
       "loc_total": 677,
       "cc_max": 11.5,
       "class_count": 4,
@@ -9688,8 +9688,8 @@
     },
     {
       "file_path": "ride/CableLift.cpp",
-      "si_max": 91.35,
-      "si_mean": 91.35,
+      "si_max": 91.19,
+      "si_mean": 91.19,
       "loc_total": 399,
       "cc_max": 13.0,
       "class_count": 1,
@@ -9697,8 +9697,8 @@
     },
     {
       "file_path": "ride/CarEntry.cpp",
-      "si_max": 43.4,
-      "si_mean": 43.4,
+      "si_max": 43.87,
+      "si_mean": 43.87,
       "loc_total": 123,
       "cc_max": 18.0,
       "class_count": 1,
@@ -9706,8 +9706,8 @@
     },
     {
       "file_path": "ride/MazeCost.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 50.47,
+      "si_mean": 50.47,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9716,7 +9716,7 @@
     {
       "file_path": "ride/Ride.cpp",
       "si_max": 99.69,
-      "si_mean": 68.14,
+      "si_mean": 69.4,
       "loc_total": 4964,
       "cc_max": 18.7778,
       "class_count": 3,
@@ -9734,7 +9734,7 @@
     {
       "file_path": "ride/RideConstruction.cpp",
       "si_max": 97.64,
-      "si_mean": 70.67,
+      "si_mean": 71.07,
       "loc_total": 1337,
       "cc_max": 28.3333,
       "class_count": 2,
@@ -9751,8 +9751,8 @@
     },
     {
       "file_path": "ride/RideManager.cpp",
-      "si_max": 73.74,
-      "si_mean": 73.74,
+      "si_max": 73.27,
+      "si_mean": 73.27,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9760,8 +9760,8 @@
     },
     {
       "file_path": "ride/RideRatings.cpp",
-      "si_max": 93.87,
-      "si_mean": 57.81,
+      "si_max": 93.71,
+      "si_mean": 57.86,
       "loc_total": 1859,
       "cc_max": 21.1111,
       "class_count": 3,
@@ -9769,8 +9769,8 @@
     },
     {
       "file_path": "ride/ShopItem.cpp",
-      "si_max": 82.86,
-      "si_mean": 82.86,
+      "si_max": 82.39,
+      "si_mean": 82.39,
       "loc_total": 86,
       "cc_max": 7.0,
       "class_count": 1,
@@ -9778,8 +9778,8 @@
     },
     {
       "file_path": "ride/Station.cpp",
-      "si_max": 88.68,
-      "si_mean": 88.68,
+      "si_max": 88.84,
+      "si_mean": 88.84,
       "loc_total": 353,
       "cc_max": 18.0,
       "class_count": 1,
@@ -9787,8 +9787,8 @@
     },
     {
       "file_path": "ride/ted/PitchAndRoll.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 49.37,
+      "si_mean": 49.37,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9814,8 +9814,8 @@
     },
     {
       "file_path": "ride/TrackData.cpp",
-      "si_max": 79.72,
-      "si_mean": 79.72,
+      "si_max": 80.82,
+      "si_mean": 80.82,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9823,8 +9823,8 @@
     },
     {
       "file_path": "ride/TrackDesign.cpp",
-      "si_max": 95.13,
-      "si_mean": 78.07,
+      "si_max": 95.6,
+      "si_mean": 79.17,
       "loc_total": 2000,
       "cc_max": 30.2,
       "class_count": 2,
@@ -9833,7 +9833,7 @@
     {
       "file_path": "ride/TrackDesignRepository.cpp",
       "si_max": 74.84,
-      "si_mean": 45.8,
+      "si_mean": 45.91,
       "loc_total": 243,
       "cc_max": 7.0,
       "class_count": 4,
@@ -9841,8 +9841,8 @@
     },
     {
       "file_path": "ride/TrackDesignSave.cpp",
-      "si_max": 63.21,
-      "si_mean": 54.17,
+      "si_max": 64.15,
+      "si_mean": 54.88,
       "loc_total": 504,
       "cc_max": 10.6667,
       "class_count": 2,
@@ -9850,8 +9850,8 @@
     },
     {
       "file_path": "ride/TrackIteration.cpp",
-      "si_max": 69.03,
-      "si_mean": 69.03,
+      "si_max": 69.18,
+      "si_mean": 69.18,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9859,8 +9859,8 @@
     },
     {
       "file_path": "ride/TrackPaint.cpp",
-      "si_max": 96.7,
-      "si_mean": 96.7,
+      "si_max": 97.01,
+      "si_mean": 97.01,
       "loc_total": 1486,
       "cc_max": 40.0,
       "class_count": 1,
@@ -9868,8 +9868,8 @@
     },
     {
       "file_path": "ride/TrackStyle.cpp",
-      "si_max": 47.48,
-      "si_mean": 47.48,
+      "si_max": 46.86,
+      "si_mean": 46.86,
       "loc_total": 8,
       "cc_max": 1.0,
       "class_count": 1,
@@ -9877,8 +9877,8 @@
     },
     {
       "file_path": "ride/TrainManager.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 50.0,
+      "si_mean": 50.0,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -9886,8 +9886,8 @@
     },
     {
       "file_path": "ride/Vehicle.Animation.cpp",
-      "si_max": 90.41,
-      "si_mean": 90.41,
+      "si_max": 90.25,
+      "si_mean": 90.25,
       "loc_total": 944,
       "cc_max": 38.0,
       "class_count": 1,
@@ -9904,8 +9904,8 @@
     },
     {
       "file_path": "ride/Vehicle.Collision.cpp",
-      "si_max": 83.33,
-      "si_mean": 83.33,
+      "si_max": 83.18,
+      "si_mean": 83.18,
       "loc_total": 225,
       "cc_max": 46.0,
       "class_count": 1,
@@ -9922,8 +9922,8 @@
     },
     {
       "file_path": "ride/Vehicle.Crash.cpp",
-      "si_max": 77.36,
-      "si_mean": 77.36,
+      "si_max": 77.99,
+      "si_mean": 77.99,
       "loc_total": 493,
       "cc_max": 17.0,
       "class_count": 1,
@@ -9931,8 +9931,8 @@
     },
     {
       "file_path": "ride/Vehicle.Dodgems.cpp",
-      "si_max": 83.49,
-      "si_mean": 52.91,
+      "si_max": 83.65,
+      "si_mean": 53.07,
       "loc_total": 271,
       "cc_max": 28.0,
       "class_count": 2,
@@ -9940,8 +9940,8 @@
     },
     {
       "file_path": "ride/Vehicle.MiniGolf.cpp",
-      "si_max": 80.03,
-      "si_mean": 80.03,
+      "si_max": 80.35,
+      "si_mean": 80.35,
       "loc_total": 684,
       "cc_max": 37.0,
       "class_count": 1,
@@ -9949,8 +9949,8 @@
     },
     {
       "file_path": "ride/Vehicle.SceneryDoors.cpp",
-      "si_max": 58.49,
-      "si_mean": 58.49,
+      "si_max": 60.06,
+      "si_mean": 60.06,
       "loc_total": 99,
       "cc_max": 15.0,
       "class_count": 1,
@@ -9958,8 +9958,8 @@
     },
     {
       "file_path": "ride/Vehicle.Sound.cpp",
-      "si_max": 87.89,
-      "si_mean": 87.89,
+      "si_max": 87.74,
+      "si_mean": 87.74,
       "loc_total": 247,
       "cc_max": 21.0,
       "class_count": 1,
@@ -9967,8 +9967,8 @@
     },
     {
       "file_path": "ride/Vehicle.Station.cpp",
-      "si_max": 90.88,
-      "si_mean": 61.55,
+      "si_max": 90.57,
+      "si_mean": 61.48,
       "loc_total": 1607,
       "cc_max": 61.0,
       "class_count": 2,
@@ -9976,8 +9976,8 @@
     },
     {
       "file_path": "ride/Vehicle.TrackMotion.cpp",
-      "si_max": 97.01,
-      "si_mean": 97.01,
+      "si_max": 96.86,
+      "si_mean": 96.86,
       "loc_total": 1469,
       "cc_max": 51.5,
       "class_count": 1,
@@ -10003,8 +10003,8 @@
     },
     {
       "file_path": "ride/VehicleRiderControl.cpp",
-      "si_max": 85.85,
-      "si_mean": 47.56,
+      "si_max": 86.01,
+      "si_mean": 47.65,
       "loc_total": 105,
       "cc_max": 53.0,
       "class_count": 2,
@@ -10012,8 +10012,8 @@
     },
     {
       "file_path": "ride/VehicleSubpositionData.cpp",
-      "si_max": 45.75,
-      "si_mean": 45.75,
+      "si_max": 46.07,
+      "si_mean": 46.07,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10030,8 +10030,8 @@
     },
     {
       "file_path": "sawyer_coding/SawyerChunkReader.cpp",
-      "si_max": 65.88,
-      "si_mean": 65.88,
+      "si_max": 65.09,
+      "si_mean": 65.09,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10039,8 +10039,8 @@
     },
     {
       "file_path": "sawyer_coding/SawyerChunkWriter.cpp",
-      "si_max": 50.16,
-      "si_mean": 50.16,
+      "si_max": 49.37,
+      "si_mean": 49.37,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10057,8 +10057,8 @@
     },
     {
       "file_path": "scenario/Scenario.cpp",
-      "si_max": 97.96,
-      "si_mean": 97.96,
+      "si_max": 97.8,
+      "si_mean": 97.8,
       "loc_total": 491,
       "cc_max": 11.0,
       "class_count": 1,
@@ -10075,8 +10075,8 @@
     },
     {
       "file_path": "scenario/ScenarioObjective.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 51.1,
+      "si_mean": 51.1,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10085,7 +10085,7 @@
     {
       "file_path": "scenario/ScenarioRepository.cpp",
       "si_max": 86.32,
-      "si_mean": 62.66,
+      "si_mean": 57.55,
       "loc_total": 634,
       "cc_max": 11.5,
       "class_count": 4,
@@ -10120,8 +10120,8 @@
     },
     {
       "file_path": "scenes/preloader/PreloaderScene.cpp",
-      "si_max": 88.99,
-      "si_mean": 88.99,
+      "si_max": 88.68,
+      "si_mean": 88.68,
       "loc_total": 46,
       "cc_max": 3.0,
       "class_count": 1,
@@ -10129,8 +10129,8 @@
     },
     {
       "file_path": "scenes/Scene.cpp",
-      "si_max": 52.04,
-      "si_mean": 52.04,
+      "si_max": 53.93,
+      "si_mean": 53.93,
       "loc_total": 23,
       "cc_max": 2.0,
       "class_count": 1,
@@ -10228,8 +10228,8 @@
     },
     {
       "file_path": "scenes/title/TitleScene.cpp",
-      "si_max": 92.45,
-      "si_mean": 92.45,
+      "si_max": 92.14,
+      "si_mean": 92.14,
       "loc_total": 349,
       "cc_max": 14.5,
       "class_count": 1,
@@ -10237,8 +10237,8 @@
     },
     {
       "file_path": "scenes/title/TitleSequence.cpp",
-      "si_max": 57.86,
-      "si_mean": 57.86,
+      "si_max": 58.18,
+      "si_mean": 58.18,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10255,8 +10255,8 @@
     },
     {
       "file_path": "scripting/bindings/entity/ScBalloon.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10273,8 +10273,8 @@
     },
     {
       "file_path": "scripting/bindings/entity/ScGuest.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10282,8 +10282,8 @@
     },
     {
       "file_path": "scripting/bindings/entity/ScLitter.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10300,8 +10300,8 @@
     },
     {
       "file_path": "scripting/bindings/entity/ScParticle.cpp",
-      "si_max": 22.33,
-      "si_mean": 22.33,
+      "si_max": 22.48,
+      "si_mean": 22.48,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10318,8 +10318,8 @@
     },
     {
       "file_path": "scripting/bindings/entity/ScStaff.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10426,8 +10426,8 @@
     },
     {
       "file_path": "scripting/bindings/world/ScMap.cpp",
-      "si_max": 42.92,
-      "si_mean": 42.92,
+      "si_max": 43.4,
+      "si_mean": 43.4,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10444,8 +10444,8 @@
     },
     {
       "file_path": "scripting/bindings/world/ScParkMessage.cpp",
-      "si_max": 34.28,
-      "si_mean": 34.28,
+      "si_max": 34.43,
+      "si_mean": 34.43,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10462,8 +10462,8 @@
     },
     {
       "file_path": "scripting/bindings/world/ScTile.cpp",
-      "si_max": 32.23,
-      "si_mean": 32.23,
+      "si_max": 32.39,
+      "si_mean": 32.39,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10471,8 +10471,8 @@
     },
     {
       "file_path": "scripting/bindings/world/ScTileElement.cpp",
-      "si_max": 41.35,
-      "si_mean": 41.35,
+      "si_max": 41.67,
+      "si_mean": 41.67,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10498,8 +10498,8 @@
     },
     {
       "file_path": "scripting/ScriptEngine.cpp",
-      "si_max": 66.19,
-      "si_mean": 52.0,
+      "si_max": 67.14,
+      "si_mean": 52.95,
       "loc_total": 439,
       "cc_max": 15.0,
       "class_count": 4,
@@ -10507,8 +10507,8 @@
     },
     {
       "file_path": "TrackImporter.cpp",
-      "si_max": 51.89,
-      "si_mean": 51.89,
+      "si_max": 50.63,
+      "si_mean": 50.63,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10516,8 +10516,8 @@
     },
     {
       "file_path": "ui/DummyUiContext.cpp",
-      "si_max": 77.99,
-      "si_mean": 42.53,
+      "si_max": 78.14,
+      "si_mean": 42.61,
       "loc_total": 166,
       "cc_max": 1.0,
       "class_count": 2,
@@ -10525,8 +10525,8 @@
     },
     {
       "file_path": "ui/DummyWindowManager.cpp",
-      "si_max": 48.11,
-      "si_mean": 48.11,
+      "si_max": 49.53,
+      "si_mean": 49.53,
       "loc_total": 91,
       "cc_max": 1.0,
       "class_count": 1,
@@ -10534,8 +10534,8 @@
     },
     {
       "file_path": "util/Util.cpp",
-      "si_max": 73.43,
-      "si_mean": 73.43,
+      "si_max": 73.74,
+      "si_mean": 73.74,
       "loc_total": 41,
       "cc_max": 3.0,
       "class_count": 1,
@@ -10543,8 +10543,8 @@
     },
     {
       "file_path": "Version.cpp",
-      "si_max": 62.58,
-      "si_mean": 62.58,
+      "si_max": 62.42,
+      "si_mean": 62.42,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10552,8 +10552,8 @@
     },
     {
       "file_path": "windows/Intent.cpp",
-      "si_max": 84.59,
-      "si_mean": 84.59,
+      "si_max": 84.91,
+      "si_mean": 84.91,
       "loc_total": 69,
       "cc_max": 1.0,
       "class_count": 1,
@@ -10561,8 +10561,8 @@
     },
     {
       "file_path": "world/Banner.cpp",
-      "si_max": 81.76,
-      "si_mean": 61.79,
+      "si_max": 82.86,
+      "si_mean": 62.58,
       "loc_total": 410,
       "cc_max": 7.0,
       "class_count": 2,
@@ -10579,8 +10579,8 @@
     },
     {
       "file_path": "world/Entrance.cpp",
-      "si_max": 83.96,
-      "si_mean": 83.96,
+      "si_max": 84.43,
+      "si_mean": 84.43,
       "loc_total": 171,
       "cc_max": 7.0,
       "class_count": 1,
@@ -10588,8 +10588,8 @@
     },
     {
       "file_path": "world/Footpath.cpp",
-      "si_max": 44.81,
-      "si_mean": 44.81,
+      "si_max": 45.44,
+      "si_mean": 45.44,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 3,
@@ -10606,8 +10606,8 @@
     },
     {
       "file_path": "world/map_generator/MapGen.cpp",
-      "si_max": 38.21,
-      "si_mean": 38.21,
+      "si_max": 38.36,
+      "si_mean": 38.36,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10642,8 +10642,8 @@
     },
     {
       "file_path": "world/map_generator/SurfaceSelection.cpp",
-      "si_max": 29.4,
-      "si_mean": 29.4,
+      "si_max": 29.72,
+      "si_mean": 29.72,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10651,8 +10651,8 @@
     },
     {
       "file_path": "world/map_generator/TreePlacement.cpp",
-      "si_max": 35.85,
-      "si_mean": 35.85,
+      "si_max": 36.01,
+      "si_mean": 36.01,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10660,8 +10660,8 @@
     },
     {
       "file_path": "world/MapAnimation.cpp",
-      "si_max": 97.17,
-      "si_mean": 59.96,
+      "si_max": 97.33,
+      "si_mean": 60.22,
       "loc_total": 289,
       "cc_max": 28.0,
       "class_count": 3,
@@ -10669,8 +10669,8 @@
     },
     {
       "file_path": "world/MapRangeView.cpp",
-      "si_max": 45.75,
-      "si_mean": 45.75,
+      "si_max": 46.07,
+      "si_mean": 46.07,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10678,8 +10678,8 @@
     },
     {
       "file_path": "world/MapSelection.cpp",
-      "si_max": 66.51,
-      "si_mean": 66.51,
+      "si_max": 65.88,
+      "si_mean": 65.88,
       "loc_total": 14,
       "cc_max": 1.0,
       "class_count": 1,
@@ -10687,8 +10687,8 @@
     },
     {
       "file_path": "world/Park.cpp",
-      "si_max": 92.14,
-      "si_mean": 92.14,
+      "si_max": 93.08,
+      "si_mean": 93.08,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10696,8 +10696,8 @@
     },
     {
       "file_path": "world/QuarterTile.cpp",
-      "si_max": 79.87,
-      "si_mean": 79.87,
+      "si_max": 79.56,
+      "si_mean": 79.56,
       "loc_total": 58,
       "cc_max": 6.0,
       "class_count": 1,
@@ -10705,8 +10705,8 @@
     },
     {
       "file_path": "world/Scenery.cpp",
-      "si_max": 92.61,
-      "si_mean": 66.98,
+      "si_max": 93.24,
+      "si_mean": 67.45,
       "loc_total": 477,
       "cc_max": 18.0,
       "class_count": 2,
@@ -10723,8 +10723,8 @@
     },
     {
       "file_path": "world/tile_element/BannerElement.cpp",
-      "si_max": 71.07,
-      "si_mean": 71.07,
+      "si_max": 70.44,
+      "si_mean": 70.44,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10732,8 +10732,8 @@
     },
     {
       "file_path": "world/tile_element/EntranceElement.cpp",
-      "si_max": 78.62,
-      "si_mean": 78.62,
+      "si_max": 78.77,
+      "si_mean": 78.77,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10741,8 +10741,8 @@
     },
     {
       "file_path": "world/tile_element/LargeSceneryElement.cpp",
-      "si_max": 73.27,
-      "si_mean": 73.27,
+      "si_max": 72.8,
+      "si_mean": 72.8,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10750,8 +10750,8 @@
     },
     {
       "file_path": "world/tile_element/PathElement.cpp",
-      "si_max": 85.22,
-      "si_mean": 85.22,
+      "si_max": 85.69,
+      "si_mean": 85.69,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10759,8 +10759,8 @@
     },
     {
       "file_path": "world/tile_element/Slope.cpp",
-      "si_max": 53.77,
-      "si_mean": 53.77,
+      "si_max": 55.35,
+      "si_mean": 55.35,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10768,8 +10768,8 @@
     },
     {
       "file_path": "world/tile_element/SmallSceneryElement.cpp",
-      "si_max": 78.62,
-      "si_mean": 78.62,
+      "si_max": 78.93,
+      "si_mean": 78.93,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10786,8 +10786,8 @@
     },
     {
       "file_path": "world/tile_element/TileElement.cpp",
-      "si_max": 90.25,
-      "si_mean": 90.25,
+      "si_max": 91.04,
+      "si_mean": 91.04,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10804,8 +10804,8 @@
     },
     {
       "file_path": "world/tile_element/TrackElement.cpp",
-      "si_max": 93.4,
-      "si_mean": 93.4,
+      "si_max": 94.03,
+      "si_mean": 94.03,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10813,8 +10813,8 @@
     },
     {
       "file_path": "world/tile_element/WallElement.cpp",
-      "si_max": 73.27,
-      "si_mean": 73.27,
+      "si_max": 72.8,
+      "si_mean": 72.8,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10822,8 +10822,8 @@
     },
     {
       "file_path": "world/TileInspector.cpp",
-      "si_max": 70.6,
-      "si_mean": 70.6,
+      "si_max": 70.75,
+      "si_mean": 70.75,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -10831,8 +10831,8 @@
     },
     {
       "file_path": "world/Wall.cpp",
-      "si_max": 74.69,
-      "si_mean": 74.69,
+      "si_max": 74.53,
+      "si_mean": 74.53,
       "loc_total": 61,
       "cc_max": 8.0,
       "class_count": 1,

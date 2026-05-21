@@ -58,6 +58,7 @@ class ClassMetrics:
     coupling: int = 0          # fan_in + fan_out
     cycle_member: bool = False
     cycle_size: int = 0
+    cycle_edges: int = 0           # 자신이 관여한 SCC 내부 edge 수 (in + out)
     global_state: int = 0
     game_loop_centrality: float = 0.0
 
@@ -241,17 +242,39 @@ def _compute_coupling(classes: list[ClassMetrics], g: nx.DiGraph) -> None:
 
 
 def _compute_cycle_membership(classes: list[ClassMetrics], g: nx.DiGraph) -> None:
-    """크기 ≥ 2 인 SCC에 속하는 클래스를 cycle 멤버로 분류한다."""
+    """크기 ≥ 2 인 SCC에 속하는 클래스를 cycle 멤버로 분류 + 세분화 메트릭.
+
+    각 SCC 멤버에 대해:
+      * ``cycle_member`` = True
+      * ``cycle_size``   = SCC 의 크기
+      * ``cycle_edges``  = SCC 내부에서 자신이 관여한 edge 수 (in + out)
+
+    같은 SCC 의 클래스도 SCC 내부 edge 수에 따라 차별화된다 — 깊이 얽힌
+    god-class 와 SCC 가장자리의 peripheral 클래스가 같은 점수가 아니다.
+    """
+    by_fqn = {c.fqn: c for c in classes}
     for scc in nx.strongly_connected_components(g):
         if len(scc) < 2:
             continue
-        size = len(scc)
-        for fqn in scc:
-            for c in classes:
-                if c.fqn == fqn:
-                    c.cycle_member = True
-                    c.cycle_size = size
-                    break
+        scc_set = set(scc)
+        size = len(scc_set)
+        # SCC 내부 edge 만 추출
+        in_within: dict[str, int] = {fqn: 0 for fqn in scc_set}
+        out_within: dict[str, int] = {fqn: 0 for fqn in scc_set}
+        for u in scc_set:
+            if u not in g:
+                continue
+            for v in g.successors(u):
+                if v in scc_set:
+                    out_within[u] += 1
+                    in_within[v] += 1
+        for fqn in scc_set:
+            c = by_fqn.get(fqn)
+            if c is None:
+                continue
+            c.cycle_member = True
+            c.cycle_size = size
+            c.cycle_edges = in_within.get(fqn, 0) + out_within.get(fqn, 0)
 
 
 # ---------------------------------------------------------------------------
@@ -387,6 +410,7 @@ def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
                 "coupling": c.coupling,
                 "cycle_member": c.cycle_member,
                 "cycle_size": c.cycle_size,
+                "cycle_edges": c.cycle_edges,
                 "global_state": c.global_state,
                 "game_loop_centrality": round(c.game_loop_centrality, 4),
                 "method_count": len(c.methods),

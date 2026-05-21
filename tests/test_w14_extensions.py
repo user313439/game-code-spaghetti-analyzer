@@ -194,6 +194,62 @@ def test_diff_detects_grade_changes(tmp_path):
     assert r.classes_improved[0].grade_delta == -3  # E(4) → B(1)
 
 
+def test_cycle_edges_differentiates_within_scc():
+    """같은 SCC 의 두 클래스도 SCC 내 edge 수가 다르면 cycle_edges 값이 달라진다."""
+    import networkx as nx
+    from game_si.metrics import ClassMetrics, _compute_cycle_membership
+
+    # 3-노드 SCC, 그리고 그 안에서 hub 노드(A) 가 더 많은 edge.
+    # A ↔ B 양방향, A ↔ C 양방향, B → C 단방향.
+    g = nx.DiGraph()
+    for fqn in ("A", "B", "C"):
+        g.add_node(fqn)
+    g.add_edges_from([("A", "B"), ("B", "A"), ("A", "C"), ("C", "A"), ("B", "C"), ("C", "B")])
+
+    classes = [
+        ClassMetrics(fqn=f, name=f, file_path=f"{f}.cs", start_line=1, end_line=1, kind="class")
+        for f in ("A", "B", "C")
+    ]
+    _compute_cycle_membership(classes, g)
+
+    by_fqn = {c.fqn: c for c in classes}
+    for c in classes:
+        assert c.cycle_member is True
+        assert c.cycle_size == 3
+    # 각 노드 in+out 카운트: A: 2 in + 2 out = 4, B: 2 in + 2 out = 4, C: 2 in + 2 out = 4
+    # (대칭 SCC). 그래서 같다.
+    assert by_fqn["A"].cycle_edges == 4
+    assert by_fqn["B"].cycle_edges == 4
+    assert by_fqn["C"].cycle_edges == 4
+
+
+def test_cycle_edges_asymmetric():
+    """비대칭 SCC: hub 노드와 peripheral 노드의 cycle_edges 차이."""
+    import networkx as nx
+    from game_si.metrics import ClassMetrics, _compute_cycle_membership
+
+    # A 는 SCC hub: B,C,D 모두와 양방향. B,C,D 간 edge 없음.
+    # 그래도 SCC 가 되려면 A → B → A 같은 양방향이 모두 있어야.
+    g = nx.DiGraph()
+    g.add_edges_from([
+        ("A", "B"), ("B", "A"),
+        ("A", "C"), ("C", "A"),
+        ("A", "D"), ("D", "A"),
+    ])
+    classes = [
+        ClassMetrics(fqn=f, name=f, file_path=f"{f}.cs", start_line=1, end_line=1, kind="class")
+        for f in ("A", "B", "C", "D")
+    ]
+    _compute_cycle_membership(classes, g)
+    by_fqn = {c.fqn: c for c in classes}
+    # A 는 6 개의 SCC 내부 edge 에 관여 (3 in + 3 out)
+    assert by_fqn["A"].cycle_edges == 6
+    # B/C/D 는 2 개 (1 in + 1 out)
+    assert by_fqn["B"].cycle_edges == 2
+    assert by_fqn["C"].cycle_edges == 2
+    assert by_fqn["D"].cycle_edges == 2
+
+
 def test_diff_format_summary_contains_key_lines(tmp_path):
     baseline_p = tmp_path / "base.json"
     latest_p = tmp_path / "latest.json"

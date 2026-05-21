@@ -25,7 +25,7 @@
       "name": "si_vs_bugfix",
       "n": 668,
       "spearman_rho": -0.1239,
-      "p_value": 0.001814
+      "p_value": 0.00181
     },
     {
       "name": "loc_vs_bugfix",
@@ -44,7 +44,7 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 226,
-      "spearman_rho": 0.5797,
+      "spearman_rho": 0.5795,
       "p_value": 0.0
     },
     {
@@ -1398,7 +1398,7 @@
     {
       "fqn": "OpenRA.Graphics.Viewport",
       "file_path": "Graphics/Viewport.cs",
-      "si": 96.26,
+      "si": 96.41,
       "grade": "E",
       "cc_max": 7.5,
       "loc": 293,
@@ -2235,7 +2235,7 @@
     {
       "fqn": "OpenRA.Network.OrderManager",
       "file_path": "Network/OrderManager.cs",
-      "si": 95.06,
+      "si": 95.36,
       "grade": "E",
       "cc_max": 9.0,
       "loc": 205,
@@ -2352,7 +2352,7 @@
     {
       "fqn": "OpenRA.Network.SyncReport",
       "file_path": "Network/SyncReport.cs",
-      "si": 94.46,
+      "si": 94.31,
       "grade": "E",
       "cc_max": 12.0,
       "loc": 127,
@@ -2559,7 +2559,7 @@
     {
       "fqn": "OpenRA.int2",
       "file_path": "Primitives/int2.cs",
-      "si": 98.5,
+      "si": 98.65,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 37,
@@ -2712,7 +2712,7 @@
     {
       "fqn": "OpenRA.Primitives.Rectangle",
       "file_path": "Primitives/Rectangle.cs",
-      "si": 95.36,
+      "si": 95.66,
       "grade": "E",
       "cc_max": 4.0,
       "loc": 68,
@@ -2937,7 +2937,7 @@
     {
       "fqn": "OpenRA.Server.Connection",
       "file_path": "Server/Connection.cs",
-      "si": 95.51,
+      "si": 95.81,
       "grade": "E",
       "cc_max": 22.0,
       "loc": 166,
@@ -3225,7 +3225,7 @@
     {
       "fqn": "OpenRA.Sound",
       "file_path": "Sound/Sound.cs",
-      "si": 94.91,
+      "si": 95.06,
       "grade": "E",
       "cc_max": 16.3333,
       "loc": 339,
@@ -3558,7 +3558,7 @@
     {
       "fqn": "OpenRA.Support.VariableExpression.VariableToken",
       "file_path": "Support/VariableExpression.cs",
-      "si": 96.11,
+      "si": 94.76,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 2,
@@ -3567,7 +3567,7 @@
     {
       "fqn": "OpenRA.Support.VariableExpression.NumberToken",
       "file_path": "Support/VariableExpression.cs",
-      "si": 96.41,
+      "si": 95.21,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 6,
@@ -3666,7 +3666,7 @@
     {
       "fqn": "OpenRA.Traits.Shroud",
       "file_path": "Traits/Player/Shroud.cs",
-      "si": 95.81,
+      "si": 96.11,
       "grade": "E",
       "cc_max": 14.5,
       "loc": 359,
@@ -4467,7 +4467,7 @@
     {
       "fqn": "OpenRA.Traits.ITraitInfoInterface",
       "file_path": "Traits/TraitsInterfaces.cs",
-      "si": 97.16,
+      "si": 97.01,
       "grade": "E",
       "cc_max": 0.0,
       "loc": 0,
@@ -5232,7 +5232,7 @@
     {
       "fqn": "OpenRA.ExternalMods",
       "file_path": "ExternalMods.cs",
-      "si": 95.21,
+      "si": 95.51,
       "grade": "E",
       "cc_max": 12.0,
       "loc": 223,
@@ -5619,7 +5619,7 @@
     {
       "fqn": "OpenRA.MiniYamlNodeBuilder",
       "file_path": "MiniYaml.cs",
-      "si": 94.31,
+      "si": 94.46,
       "grade": "E",
       "cc_max": 1.0,
       "loc": 26,
@@ -5628,7 +5628,7 @@
     {
       "fqn": "OpenRA.MiniYamlBuilder",
       "file_path": "MiniYaml.cs",
-      "si": 95.66,
+      "si": 95.96,
       "grade": "E",
       "cc_max": 8.0,
       "loc": 33,
@@ -5655,7 +5655,7 @@
     {
       "fqn": "OpenRA.ModData",
       "file_path": "ModData.cs",
-      "si": 94.76,
+      "si": 94.91,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 162,
@@ -5682,7 +5682,7 @@
     {
       "fqn": "OpenRA.MPos",
       "file_path": "MPos.cs",
-      "si": 97.01,
+      "si": 97.16,
       "grade": "E",
       "cc_max": 2.0,
       "loc": 32,
@@ -5772,7 +5772,7 @@
     {
       "fqn": "OpenRA.Player",
       "file_path": "Player.cs",
-      "si": 95.96,
+      "si": 96.26,
       "grade": "E",
       "cc_max": 10.0,
       "loc": 193,
@@ -5808,7 +5808,7 @@
     {
       "fqn": "OpenRA.Renderer",
       "file_path": "Renderer.cs",
-      "si": 98.65,
+      "si": 98.5,
       "grade": "E",
       "cc_max": 6.6667,
       "loc": 441,
@@ -6709,8 +6709,8 @@
     },
     {
       "file_path": "Graphics/Viewport.cs",
-      "si_max": 96.26,
-      "si_mean": 52.36,
+      "si_max": 96.41,
+      "si_mean": 52.4,
       "loc_total": 303,
       "cc_max": 7.5,
       "class_count": 4,
@@ -7033,8 +7033,8 @@
     },
     {
       "file_path": "Network/OrderManager.cs",
-      "si_max": 95.06,
-      "si_mean": 70.59,
+      "si_max": 95.36,
+      "si_mean": 70.73,
       "loc_total": 209,
       "cc_max": 9.0,
       "class_count": 2,
@@ -7069,8 +7069,8 @@
     },
     {
       "file_path": "Network/SyncReport.cs",
-      "si_max": 94.46,
-      "si_mean": 56.86,
+      "si_max": 94.31,
+      "si_mean": 56.84,
       "loc_total": 213,
       "cc_max": 12.0,
       "class_count": 6,
@@ -7195,8 +7195,8 @@
     },
     {
       "file_path": "Primitives/int2.cs",
-      "si_max": 98.5,
-      "si_mean": 98.5,
+      "si_max": 98.65,
+      "si_mean": 98.65,
       "loc_total": 37,
       "cc_max": 2.0,
       "class_count": 1,
@@ -7321,8 +7321,8 @@
     },
     {
       "file_path": "Primitives/Rectangle.cs",
-      "si_max": 95.36,
-      "si_mean": 95.36,
+      "si_max": 95.66,
+      "si_mean": 95.66,
       "loc_total": 68,
       "cc_max": 4.0,
       "class_count": 1,
@@ -7438,8 +7438,8 @@
     },
     {
       "file_path": "Server/Connection.cs",
-      "si_max": 95.51,
-      "si_mean": 56.14,
+      "si_max": 95.81,
+      "si_mean": 56.29,
       "loc_total": 166,
       "cc_max": 22.0,
       "class_count": 2,
@@ -7519,8 +7519,8 @@
     },
     {
       "file_path": "Sound/Sound.cs",
-      "si_max": 94.91,
-      "si_mean": 44.02,
+      "si_max": 95.06,
+      "si_mean": 44.05,
       "loc_total": 341,
       "cc_max": 16.3333,
       "class_count": 4,
@@ -7673,7 +7673,7 @@
     {
       "file_path": "Support/VariableExpression.cs",
       "si_max": 99.4,
-      "si_mean": 52.43,
+      "si_mean": 52.27,
       "loc_total": 773,
       "cc_max": 44.0,
       "class_count": 16,
@@ -7690,8 +7690,8 @@
     },
     {
       "file_path": "Traits/Player/Shroud.cs",
-      "si_max": 95.81,
-      "si_mean": 41.59,
+      "si_max": 96.11,
+      "si_mean": 41.64,
       "loc_total": 367,
       "cc_max": 14.5,
       "class_count": 6,
@@ -7771,7 +7771,7 @@
     },
     {
       "file_path": "Traits/TraitsInterfaces.cs",
-      "si_max": 97.16,
+      "si_max": 97.01,
       "si_mean": 39.47,
       "loc_total": 176,
       "cc_max": 2.0,
@@ -7888,8 +7888,8 @@
     },
     {
       "file_path": "ExternalMods.cs",
-      "si_max": 95.21,
-      "si_mean": 48.06,
+      "si_max": 95.51,
+      "si_mean": 48.16,
       "loc_total": 226,
       "cc_max": 12.0,
       "class_count": 3,
@@ -8051,7 +8051,7 @@
     {
       "file_path": "MiniYaml.cs",
       "si_max": 99.55,
-      "si_mean": 81.82,
+      "si_mean": 81.89,
       "loc_total": 664,
       "cc_max": 32.5,
       "class_count": 7,
@@ -8059,8 +8059,8 @@
     },
     {
       "file_path": "ModData.cs",
-      "si_max": 94.76,
-      "si_mean": 57.71,
+      "si_max": 94.91,
+      "si_mean": 57.75,
       "loc_total": 167,
       "cc_max": 10.0,
       "class_count": 4,
@@ -8068,8 +8068,8 @@
     },
     {
       "file_path": "MPos.cs",
-      "si_max": 97.01,
-      "si_mean": 88.1,
+      "si_max": 97.16,
+      "si_mean": 88.17,
       "loc_total": 42,
       "cc_max": 2.0,
       "class_count": 2,
@@ -8095,8 +8095,8 @@
     },
     {
       "file_path": "Player.cs",
-      "si_max": 95.96,
-      "si_mean": 36.57,
+      "si_max": 96.26,
+      "si_mean": 36.64,
       "loc_total": 193,
       "cc_max": 10.0,
       "class_count": 4,
@@ -8122,8 +8122,8 @@
     },
     {
       "file_path": "Renderer.cs",
-      "si_max": 98.65,
-      "si_mean": 53.84,
+      "si_max": 98.5,
+      "si_mean": 53.79,
       "loc_total": 442,
       "cc_max": 6.6667,
       "class_count": 3,
