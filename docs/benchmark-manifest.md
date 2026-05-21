@@ -430,7 +430,23 @@ python -m game_si advise --scoring reports/<case>/scoring.json --top 5
 - **코드 스니펫 의존성** — `ast.json` 이 가용하지 않은 경우 advice 품질이 떨어진다. 본 4 케이스는 모두 ast.json 을 보유.
 - **자동 코드 수정 금지** — 응답의 리팩토링 제안은 사람이 검토·적용해야 한다. plan §6.4 의 범위 외 명시.
 
-산출물: 각 케이스의 `reports/<case>/advisor.{json,md}`. `advisor.md` 는 사람용 한국어 마크다운, `advisor.json` 은 구조화된 원본.
+### 6.5 의존성 그래프 컨텍스트 강화 (W14 후속 개선)
+
+초기 Phase C 실행에서 모든 응답이 `uncertainty_notes` 에 "의존성 그래프 미시각화" 우려를 명시했다. 본 개선으로 metrics.json 의 클래스 그래프(in/out neighbors) 를 prompt 에 직접 포함시켜 모델이 구체적 모듈명을 인용할 수 있게 했다.
+
+`game_si/metrics.py` 의 metrics_to_dict 가 metrics-0.2 스키마에서 각 클래스의 `in_neighbors` / `out_neighbors` FQN 리스트를 직렬화하고, `game_si/advisor.py` 의 `_build_user_prompt` 가 hotspot 당 in/out 이웃 (최대 10 개씩) 을 prompt 에 추가한다.
+
+**개선 효과 — Chocolate Doom `i_system` 예시 비교**:
+
+| 항목 | 초기 응답 (의존성 정보 없이) | 강화 응답 (의존성 정보 포함) |
+|---|---|---|
+| 리팩토링 대상 인용 | "전역 상태를 명시적 컨텍스트 객체로 캡슐화 ... DosEmulationState 같은 형태로" (추측) | "**d_loop, g_game, d_main 같은 상위 모듈의 호출 사이트부터 래퍼를 적용**" (실제 의존 모듈명) |
+| SCC 해소 제안 | "의존성 그래프 도구로 시각화하고 ..." (외부 도구 의존) | "**deh_main, m_misc, w_wad 간 순환을 먼저 정리해 SCC 크기를 축소**" (구체적 edge 명시) |
+| 의존성 인용 | "결합도 156 의 fan-in/fan-out 을 세부 분석" (모호) | "**i_timer, m_argv, m_misc, w_wad, i_video, i_sound, i_joystick, z_zone**" (실제 의존 모듈) |
+
+20 hotspot 전체 비용은 변화 없음 (~$0.27). prompt 토큰은 hotspot 당 평균 +200 토큰 증가했으나 output 토큰 절감으로 상쇄.
+
+산출물: 각 케이스의 `reports/<case>/advisor.{json,md}` (의존성 그래프 강화 버전으로 갱신).
 
 ## 7. G-SI-Full — ChangeRisk 항목 추가 확장 (plan §4.3)
 

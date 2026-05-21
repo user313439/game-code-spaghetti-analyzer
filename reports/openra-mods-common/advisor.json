@@ -3,12 +3,12 @@
   "project": "OpenRA.Mods.Common",
   "model": "claude-haiku-4-5",
   "total_usage": {
-    "input_tokens": 20244,
-    "output_tokens": 7746,
+    "input_tokens": 21347,
+    "output_tokens": 8022,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
   },
-  "estimated_cost_usd": 0.058974,
+  "estimated_cost_usd": 0.061457,
   "rows": [
     {
       "fqn": "OpenRA.Mods.Common.Traits.ConditionalTrait",
@@ -29,29 +29,30 @@
       "snippet_method": "RequiredConditionsChanged",
       "advice": {
         "risk_reasons": [
-          "결합도 149 — OpenRA 엔진 내 거의 모든 trait 기반 시스템이 이 기본 클래스를 직접 또는 간접 참조하고 있으며, 변경 시 영향 범위를 추적하기 어렵다.",
-          "GlobalState 접근 3회 — `IsTraitDisabled` 상태 변경이 static 또는 전역 trait 조회 시스템과 결합되어 있어, 테스트 시 격리된 상태 검증이 제한된다.",
-          "조건 체계(condition dictionary)에 대한 암묵적 의존성 — 모든 호출자가 `RequiredConditionsChanged` 시그니처를 준수해야 하므로, 조건 시스템 마이그레이션 시 광범위한 이벤트 리스너 수정이 필수다."
+          "결합도 149 — 거의 모든 모듈(149개 클래스)이 이 기본 트레이트에 직접 의존하며, 이는 god-object 패턴 특성상 변경 시 연쇄 영향이 매우 크다.",
+          "게임 루프 진입점은 아니지만(GameLoopCentrality=0), 조건 평가(`RequiredConditionsChanged`)가 trait 활성화/비활성화 상태를 관리하므로 모든 의존 trait 의 런타임 동작에 영향을 미친다. 이 메서드의 호출자가 프레임마다 실행될 가능성이 높다.",
+          "정적 필드/싱글톤 접근이 3회 있어 테스트 격리가 어렵고, 작은 LOC(37줄) 대비 매우 높은 결합도는 기초 인터페이스로서 변경 위험이 비정상적으로 크다는 신호다."
         ],
         "refactoring_suggestions": [
-          "조건 평가(evaluation) 로직을 순수 함수로 추출하라 — `RequiredCondition.Evaluate()` 의 반환값을 외부에서 캐시하거나 memoize 하여 `IsTraitDisabled` 할당의 빈도를 줄이고, 테스트 시 상태 변화를 독립적으로 검증할 수 있도록 한다.",
-          "Trait 활성화/비활성화 이벤트를 관찰자 패턴(observer/publisher-subscriber)으로 명시화하라 — 현재 `TraitEnabled`/`TraitDisabled` 콜백이 암묵적이므로, 리스너 등록/해제를 명확히 추적 가능하게 하여 의존성 그래프를 단순화한다.",
-          "조건 시스템을 인터페이스로 abstraction 하여 mock 가능하게 만들라 — `IConditionEvaluator` 같은 협력 의존성을 도입하면, 단위 테스트에서 조건 조합을 독립적으로 제어할 수 있고, 게임 루프 외부 로직 검증이 용이해진다."
+          "현재 구조를 '변경 금지' 수준으로 안정화하라 — 이미 게임 아키텍처의 기초를 이루고 있어 리팩토링보다는 semantic versioning 과 명확한 계약(contract) 문서화가 우선이다. 새 기능은 상속이나 composition 으로 확장하는 방식을 선호한다.",
+          "조건 평가(`Info.RequiresCondition.Evaluate`) 의 성능을 characterise 하라 — 이 메서드가 모든 의존 trait 마다 호출된다면 캐시 정책(평가 결과 memoization, 조건 변화 시에만 재평가) 을 검토해 프레임 성능에 미치는 영향을 추적한다.",
+          "`IsTraitDisabled` 상태 변화 시 콜백(`TraitEnabled`/`TraitDisabled`) 실행 순서를 검증하는 integration test 를 강화하라 — 조건 활성화/비활성화 경계에서 의존 trait 들이 일관된 상태로 전환되는지 확인해야 한다.",
+          "정적 필드 3개 접근을 추적하고, 가능하면 trait 인스턴스 필드로 전환하여 테스트 시 mock 주입이 가능하도록 개선한다. 단, 게임 루프 핫 패스에서 성능 영향을 측정해야 한다."
         ],
         "test_priorities": [
-          "조건 상태 전환 characterisation test — `RequiredConditionsChanged` 호출 시 조건 딕셔너리의 다양한 조합(nil, 빈 dict, 조건 참, 조건 거짓)에 대해 `IsTraitDisabled` 값과 `TraitEnabled`/`TraitDisabled` 콜백 호출 여부를 기록하고, 향후 리팩토링 후 동작 일치성을 보장한다.",
-          "Trait 간 이벤트 전파 integration test — 다른 trait 이 `RequiredConditionsChanged` 이벤트를 구독하는 시나리오에서, 조건 변경 시 체인 반응의 순서와 중복성을 검증하여, 광범위한 의존성이 의도한 대로 작동함을 입증한다.",
-          "성능 회귀 test (hot path) — 게임 루프의 `Update` 단계에서 조건 평가 호출 빈도와 GC 압력을 baseline 으로 기록하고, 조건 캐싱/memoize 변경 후 fps 영향이 없음을 확인한다."
+          "Characterisation test: 현재 `RequiredConditionsChanged` 메서드의 호출 빈도, 캐시/상태 전환 시 지연을 측정하고, 리팩토링 전후 프레임 시간(frame time) 및 GC 할당을 비교하는 성능 regression test 를 작성한다.",
+          "Golden master / state machine test: 조건 문자열과 평가 결과(`IsTraitDisabled`)의 모든 경계 케이스(null 조건, 빈 문자열, 복합 조건식 등)를 matrix 로 검증하고, 상태 전환 시 `TraitEnabled`/`TraitDisabled` 콜백이 정확히 한 번씩 호출되는지 확인한다.",
+          "의존도 구조 regression test: 현재 149개 의존 클래스 목록을 '기대값'으로 기록한 뒤, 향후 변경 시 의존도 증가(또는 패턴 변화)를 감지하는 아키텍처 검사를 CI 에 추가한다. 이는 변경 범위를 조기에 경보한다."
         ],
-        "uncertainty_notes": "코드 스니펫만으로는 `IsTraitDisabled` 필드의 초기화 타이밍, 다른 trait 으로부터의 조건 피드백 루프 존재 여부, 게임 루프의 몇 번 호출되는지(매 프레임 vs 조건 변화 시)를 확실히 판단할 수 없다. 또한 `Info.RequiresCondition` 이 null-coalescing 대상인지, 아니면 선택적 필드인지에 따라 null 안전성 리팩토링의 필요도가 달라질 수 있다. 게임 루프 진입점에서의 도달 깊이와 빈도 분석이 필요하다."
+        "uncertainty_notes": "코드 스니펫만으로는 정적 필드 3개의 구체적 위치와 의도를 확인할 수 없다 — 전체 클래스 정의와 초기화 코드를 검토해야 그 필드들이 정말 호출 경로의 병목인지 판단 가능하다. 또한 `RequiredConditionsChanged` 의 호출 빈도와 호출자(어느 trait 또는 시스템이 이벤트를 발생시키는지)를 추적해야 게임 루프 영향도를 정확히 평가할 수 있다. LOC 37은 작지만 결합도 149 라는 extreme value 는 이 클래스가 실제로 basic interface/marker trait 수준의 역할을 하는지, 아니면 데이터 구조가 불필요하게 복잡한지 구분이 필요하다."
       },
       "usage": {
-        "input_tokens": 3933,
-        "output_tokens": 1194,
+        "input_tokens": 4261,
+        "output_tokens": 1374,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01GDfDT3kdTBGUmJ7oe7omfb"
+      "response_id": "msg_016QHdjqnw6WUcvMeS9BoH6A"
     },
     {
       "fqn": "OpenRA.Mods.Common.Traits.ConditionalTraitInfo",
@@ -72,29 +73,29 @@
       "snippet_method": "RulesetLoaded",
       "advice": {
         "risk_reasons": [
-          "결합도 149 — 거의 모든 모듈이 의존하는 작은 인터페이스/기본 클래스. 이 단위의 변경은 프로젝트 전역에 파급된다.",
-          "DependencyCycle 0이므로 순환 의존성은 없으나, fan-in 과다는 변경 영향 범위 분석이 필수임을 의미한다. 특히 조건(Condition) 평가 로직이 중앙에 위치해 있다.",
-          "GlobalState 접근 2회는 `VariableExpression.NoVariables` 같은 정적 상태를 의존함을 시사한다. 게임 루프나 조건 시스템이 런타임 상태에 민감할 때 테스트 격리가 어려워진다."
+          "결합도 149 — 프로젝트 내 거의 모든 Trait 정보 클래스(149개)가 이 기본 클래스에 의존하며, 이는 'god-interface' 패턴으로 볼 수 있다. 이 클래스의 API 변경은 광범위한 캐스케이딩 변경을 초래한다.",
+          "작은 본문(4줄)에도 불구하고 극도로 높은 결합도로 인해 변경 위험이 극대화되어 있다. 메서드 본신 CC는 낮지만(2.0), 이는 반복적인 trait 조합 패턴에서 안정적인 기초 타입이 필요함을 의미한다.",
+          "조건부(Condition) 평가 로직이 게임 규칙 로딩 단계(RulesetLoaded)에 깊숙이 박혀 있어, 조건 시스템 전체의 의존성 그래프에서 중추 역할을 한다. 이 메서드의 동작 변경은 모든 AI 모듈, 트리거, 게임 기계(mechanism) 초기화에 영향을 미칠 수 있다."
         ],
         "refactoring_suggestions": [
-          "ConditionalTraitInfo 의 API 를 freeze 하고, 진입점 변경은 모두 하위 호환성 검증을 강제한다. god-object 패턴이 아니므로 분해보다는 안정화(semantic versioning, deprecation warning) 가 효과적이다.",
-          "RequiresCondition 평가 로직을 전용 조건 서비스(ConditionEvaluator 등) 로 추출해, 정적 상태 의존성을 명시적으로 가시화한다. 이는 fan-in 감소보다 테스트 격리성 개선에 초점을 맞춘다.",
-          "`VariableExpression.NoVariables` 를 주입 가능하게 변경하거나, 문서화를 통해 이 정적 상태가 변경되는 조건을 명확히 한다. 게임 루프 초기화 단계에서만 접근됨을 보장할 수 있으면 안전성이 높아진다."
+          "이 클래스는 리팩토링 대상이 아니라 **API 안정화·버전 관리** 대상이다. 변경이 불가피할 경우 semantic versioning을 엄격히 지켜 하위호환성을 보장하거나, 새로운 기본 클래스를 도입하되 레거시 클래스와의 어댑터 계층을 제공한다.",
+          "결합도 감소를 위해 EnabledByDefault 초기화 로직을 공유 유틸리티 함수(예: `EvaluateConditionDefault`)로 추출하고, 파생 클래스들이 명시적으로 호출하게 리팩토링할 수 있다. 다만 이는 149개 파생 클래스의 일괄 검토를 요구하므로, 먼저 가장 자주 변경되는 모듈(예: AI 관련) 일부에만 시범 적용한다.",
+          "조건 평가 자체를 전용 Condition 클래스 또는 람다 기반 구조로 분리하여, ConditionalTraitInfo가 단순 플래그 저장소 역할만 수행하도록 단순화한다. 이는 조건 엔진의 유연성을 높이고, 이 클래스의 변경 빈도를 줄일 것이다."
         ],
         "test_priorities": [
-          "Characterisation test: ConditionalTraitInfo 인스턴스들이 모두 RequiresCondition 평가를 동일하게 수행함을 확인하는 회귀 테스트. 변경 후 팬인 모듈들의 조건 로직이 깨지지 않았음을 검증한다.",
-          "Condition evaluation 의 정적 상태(NoVariables) 에 대한 격리 테스트. VariableExpression 상태 변경이 RulesetLoaded 결과에 미치는 영향을 측정해, 게임 루프 초기화 순서 의존성을 명확히 한다.",
-          "Ruleset 로딩 단계 통합 테스트. ConditionalTraitInfo.RulesetLoaded 호출이 여러 Trait 조합에서 일관되게 동작함을 보장한다. 특히 EnabledByDefault 값이 추후 조건 변경과 독립적임을 확인한다."
+          "Characterisation test: 모든 파생 trait 정보 클래스에 대해 RulesetLoaded 호출 전후 EnabledByDefault 상태 변화를 기록하고, 회귀 감지용 golden master로 저장한다. 이를 통해 API 변경 시 영향 범위를 즉시 확인한다.",
+          "조건 평가 로직 변경 시 영향도 테스트: RequiresCondition 파싱, VariableExpression.NoVariables 맥락, 기본값 설정 경로에 대한 파라미터화 테스트를 작성한다. 특히 null 조건(RequiresCondition == null)과 복잡한 조건식 평가의 경계 케이스를 검증한다.",
+          "통합 테스트: 게임 규칙 로딩 단계에서 150개 이상의 파생 클래스가 동시에 RulesetLoaded를 호출할 때, 조건 평가 순서, 의존성 순환, 예외 전파가 올바르게 처리되는지 확인한다. 이는 게임 시작 안정성과 직결된다."
         ],
-        "uncertainty_notes": "코드 스니펫이 3줄뿐이고 클래스 LOC 가 4로 매우 짧으므로, 결합도 149의 정확한 원인(base class, interface, generic constraint, type reference) 을 단정하기 어렵다. RequiresCondition 과 VariableExpression 의 정적 상태 성격, RulesetLoaded 가 게임 루프 어느 단계에서 호출되는지도 이 스니펫에서 불분명하다. 따라서 리팩토링 제안은 보수적으로 안정화 우선으로 방향지었으며, 구체적인 의존성 그래프 및 호출 흐름 분석을 바탕으로 조정이 필요하다."
+        "uncertainty_notes": "코드 스니펫은 메서드 본신만 제시되어 클래스 전체 구조(필드, 다른 메서드, 네임스페이스 컨텍스트)를 알 수 없다. EnabledByDefault 필드의 선언 위치, 다른 public/virtual 메서드의 존재 여부, 이 클래스가 중간 추상 기본 클래스인지 최상위인지 불명확하다. 또한 149개 fan-in 클래스 중 실제 변경 빈도와 함께 변경되는 비율을 알 수 없어, 리팩토링 비용-편익 산정이 정확하지 않다."
       },
       "usage": {
-        "input_tokens": 3862,
-        "output_tokens": 1071,
+        "input_tokens": 4208,
+        "output_tokens": 1355,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01YB3ihEgGMjaVtXd2byHuDh"
+      "response_id": "msg_01PnFzaHgqoRhUb45ZfDprdS"
     },
     {
       "fqn": "OpenRA.Mods.Common.Widgets.TextFieldWidget",
@@ -115,29 +116,29 @@
       "snippet_method": "HandleKeyPress",
       "advice": {
         "risk_reasons": [
-          "Cyclomatic Complexity 98.0은 단일 메서드가 50개 이상의 분기를 포함함을 의미하며, HandleKeyPress 메서드가 키보드 입력 타입별로 거대한 switch-case 구조를 형성하고 있다. 이는 각 키 입력 경로의 동작을 추적하기 어렵고 테스트 커버리지 달성을 어렵게 한다.",
-          "GlobalState 56은 이 위젯이 게임 엔진의 여러 싱글톤 또는 정적 상태(플랫폼 정보, 클립보드, 입력 시스템 등)에 강하게 의존함을 의미한다. 단위 테스트 시 이들 전역 상태를 모두 모킹해야 하며, 런타임 상태 오염 위험이 높다.",
-          "GameLoopCentrality 1.0은 이 핸들러가 게임 루프의 입력 처리 프레임에서 직접 호출되는 핫 패스임을 의미한다. HandleKeyPress의 모든 분기와 상태 변경이 매 입력 프레임마다 실행되므로, 여기서의 버그나 성능 저하가 즉시 사용자 경험에 영향을 미친다."
+          "Cyclomatic Complexity 98 — 메서드 `HandleKeyPress`가 거대 switch/조건문 구조로 되어 있으며, 60개 이상의 키입력 케이스를 처리하는 god-method 패턴. 이는 각 분기의 테스트 커버리지 확보를 어렵게 하고, 새로운 키입력 로직 추가 시 의도하지 않은 인터랙션 버그 위험이 높다.",
+          "GlobalState 56 — `Platform.CurrentPlatform` 같은 정적 싱글톤 상태에 직접 접근하는 빈도가 높다. 키입력 핸들러가 UI 위젯의 게임 루프 진입점(KeyboardFocus, IsDisabled 체크)에 속하므로, 전역 상태 의존성은 단위 테스트 격리를 방해하고 멀티스레드 입력 처리 시 경쟁 조건을 유발할 수 있다.",
+          "GameLoopCentrality 1.0 — `HandleKeyPress`는 입력 이벤트 처리의 게임 루프 직접 호출 메서드로, 매 프레임 또는 이벤트 발생 시마다 실행되는 핫 패스다. CC 98인 메서드가 핫 패스에 있으므로, 리팩토링 중 분기 추가·로직 재정렬은 입력 응답성과 fps에 즉시 영향을 미친다."
         ],
         "refactoring_suggestions": [
-          "HandleKeyPress의 거대한 switch-case 를 전략 패턴 또는 키코드별 핸들러 딕셔너리로 분해한다. 각 Keycode에 대응하는 독립적인 메서드(예: HandleReturnKey, HandleTabKey, HandleBackspaceKey 등)를 추출하면 CC를 낮추고 개별 경로의 테스트를 격리할 수 있다. 단, 게임 루프의 핫 패스이므로 핸들러 조회 오버헤드(딕셔너리 lookup)를 성능 테스트로 검증해야 한다.",
-          "전역 상태 의존성(플랫폼 감지, 클립보드 접근, 시간 관련 정적 필드)을 생성자 또는 초기화 단계에 주입 가능한 컨텍스트 객체로 추상화한다. Platform.CurrentPlatform, Func<string>(클립보드 읽기), IClock 같은 인터페이스를 도입하면 테스트 환경에서 상태를 제어할 수 있다. 핫 패스 성능을 유지하려면 이 컨텍스트를 멤버 필드로 캐싱하고 런타임 중에 변경하지 않도록 설계한다.",
-          "HandleKeyPress 내 텍스트 조작 로직(커서 이동, 선택, 삽입, 삭제 등)을 별도의 TextBufferController 또는 TextEditState 클래스로 분리한다. 이렇게 하면 키 이벤트 디스패치 로직과 실제 텍스트 상태 변경 로직이 분리되어 단위 테스트가 용이해진다. 예를 들어 '백스페이스 누름' → TextEditState.DeleteBackward() → 결과 상태 검증 형태로 테스트할 수 있다."
+          "키입력 케이스를 키 코드별 dispatch 테이블(Dictionary<Keycode, Action<KeyInput>>)로 분해한다. 각 핵심 키(RETURN, TAB, ESCAPE, BACKSPACE 등)별로 개별 메서드(`HandleReturnKey`, `HandleTabKey` 등)로 추출하되, 플랫폼 분기(OSX vs 기타)는 조건부 등록 시점으로 미루어 `HandleKeyPress` 본문의 CC를 30 이하로 낮춘다. 이때 dispatch 테이블 구성 비용(메모리)은 한 번만 발생하므로 핫 패스 성능 영향을 최소화한다.",
+          "정적 상태 접근을 클래스 생성 시점 의존성 주입으로 전환한다. `Platform.CurrentPlatform` 대신 `_platformType`(생성자 주입) 필드로 캐싱하고, 입력 장치 기능 쿼리(키보드 포커스, 키 반복) 역시 초기화 시점에 `_inputCapabilities` 같은 설정 객체로 캡슐화한다. GlobalState 56을 10 이하로 줄이되, 플랫폼 전환(게임 런타임 중 드물게 발생)이 필요하면 캐시 무효화 콜백을 도입한다.",
+          "입력 이벤트 로직에서 UI 상태 변이(SelectionStart, SelectionEnd, Text 변경)를 분리된 private 메서드로 격리한다. `HandleKeyPress` → 키 해석 → `ApplyTextModification(startPos, endPos, newChar)` 같은 순결한 인터페이스로 전환하면, 입력 시뮬레이션 테스트와 성능 프로파일링이 용이해진다."
         ],
         "test_priorities": [
-          "HandleKeyPress의 각 키 입력 경로에 대한 Characterisation Test를 먼저 작성한다. 현재 동작을 정확히 기록하는 테스트 케이스(예: Ctrl+A 선택, Ctrl+C 복사, Ctrl+V 붙여넣기 각각)를 다양한 플랫폼(Windows, macOS, Linux) 및 전역 상태 조합에 대해 작성하면, 리팩토링 후 회귀를 빠르게 감지할 수 있다.",
-          "Global state(Platform, 클립보드, 타이밍)를 모킹하는 Golden Master Test를 정의한다. 예를 들어 '특정 클립보드 내용이 있을 때 Ctrl+V를 누르면 정확히 그 내용이 삽입되는가'를 입력 → 예상 텍스트 상태 쌍으로 기록하고, 리팩토링 후에도 동일한 결과가 나오는지 검증한다.",
-          "HandleKeyPress의 핵심 경로(개별 키 이벤트 처리)가 일정 시간 이내에 완료되는지를 확인하는 성능 회귀 테스트를 작성한다. 게임 루프의 입력 처리 단계는 보통 1ms 이내여야 하므로, 대량의 연속 입력(예: 1000개 키 이벤트)을 처리했을 때 누적 시간이 기준치 이상으로 증가하지 않는지 모니터링한다."
+          "**Characterisation Test (입력 이벤트 oracle)** — 현재 `HandleKeyPress`의 각 주요 키(RETURN, TAB, ESCAPE, BACKSPACE, HOME, END, Ctrl+A, Ctrl+C, Ctrl+V 등) 입력에 대한 상태 변화(Text, SelectionStart, 콜백 호출 여부)를 golden master로 기록한다. 이후 리팩토링 후 동일한 입력에 대해 출력이 변하지 않음을 검증하는 regression test 기반 확보.",
+          "**Platform-specific Behavior Unit Test** — OSX vs Linux/Windows의 입력 해석 차이(Cmd+C vs Ctrl+C 등)를 별도 테스트로 분리하되, 실제 `Platform.CurrentPlatform` 싱글톤 대신 mock/stub 주입으로 각 플랫폼 분기를 독립 검증한다. 이를 통해 dispatch 테이블 리팩토링 후 플랫폼 조건부 로직이 정확히 작동함을 보장한다.",
+          "**Performance Regression Test (핫 패스 성능)** — `HandleKeyPress` 메서드의 실행 시간(마이크로초 단위)을 벤치마크 하고, 리팩토링(dispatch 테이블 도입, 캐싱) 후 성능이 현재 대비 10% 이상 저하되지 않았는지 자동 검증한다. 매 프레임 호출되는 메서드이므로 누적 GC 압력 증가도 모니터링 대상이다."
         ],
-        "uncertainty_notes": "제공된 코드 스니펫이 HandleKeyPress의 처음 30줄에 불과하므로, 실제 전체 260줄(210-469)에서 얼마나 많은 고유한 키 타입 분기와 중첩 조건문이 있는지 정확히 파악하기 어렵다. CC 98.0이 정확히 어느 패턴(예: 단일 거대 switch vs 중첩된 if-else chain)에서 비롯되었는지, 그리고 일부 분기가 실제로는 죽은 코드인지 아직 활용 중인지 확인이 필요하다. 또한 TextFieldWidget이 OpenRA 엔진의 다른 위젯(Label, Button 등)과 공유하는 기본 클래스나 인터페이스가 있다면, 리팩토링 범위를 결정할 때 그 설계 제약을 고려해야 한다."
+        "uncertainty_notes": "코드 스니펫이 부분 표시(truncated, lines 210-469)되어 전체 메서드 본문을 확인하지 못했으므로, 실제 CC 98이 어느 구간에 집중되어 있는지(단일 거대 switch 대 여러 중첩 if-else 대 다중 메서드 호출) 확실하지 않다. 또한 `OnEnterKey`, `OnTabKey`, `OnEscKey` 같은 콜백 메서드들이 이 클래스 내부에서 선언되었는지 외부에서 주입되는지 불명확하며, 만약 이들이 외부 이벤트 핸들러라면 dispatch 테이블 설계가 달라질 수 있다. `Platform.CurrentPlatform` 접근 56회는 클래스 전체 메서드 평균이므로, `HandleKeyPress` 단일 메서드 내 접근 빈도는 더 낮을 가능성도 있다."
       },
       "usage": {
-        "input_tokens": 4013,
-        "output_tokens": 1760,
+        "input_tokens": 4143,
+        "output_tokens": 1804,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01UPFeA2qxLMZf87TcYE22sm"
+      "response_id": "msg_01XV4fJvujDCdJx3LHkJJnbo"
     },
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.LobbyLogic",
@@ -158,32 +159,30 @@
       "snippet_method": ".ctor",
       "advice": {
         "risk_reasons": [
-          "게임 루프 진입점(GameLoopCentrality=1.0)에서 직접 호출되는 로직 클래스로서, 프레임마다 상태 동기화와 UI 업데이트를 담당하는 핫 패스다. 이 클래스의 모든 메서드 변경이 로비 응답성과 fps 에 직접 영향을 미친다.",
-          "전역 상태 의존도 87 — Game 싱글톤(Game.LobbyInfoChanged, Game.BeforeGameStart, Game.ConnectionStateChanged) 및 MapCache, ChromeMetrics 등의 정적 자원에 대한 강한 결합이 테스트 격리와 병렬성을 심각하게 제약한다.",
-          "순환생성자 복잡도 79 (상위 10% 평균) — 단일 `.ctor` 메서드가 433줄에 걸쳐 16개 이상의 이벤트 핸들러 등록, UI 초기화, 서비스 검색을 일괄 수행하고 있어 변경 영향 추적과 단위 테스트가 거의 불가능하다.",
-          "결합도 3 은 낮아 보이지만, 이는 직접 타입 참조만 센 값이고, Game 싱글톤을 통한 암묵적 결합이 극도로 높다 — 전역 상태 접근 87 회가 이를 증명한다. 로비 UI 변경 시 게임 엔진 상태 변경의 side-effect 추적 비용이 매우 크다."
+          "Cyclomatic Complexity 79.0 — 생성자 메서드가 극도로 복잡하며, 다양한 UI 위젯 초기화, 이벤트 구독, 상태 설정이 선형으로 중첩되어 있다. 이는 테스트 격리와 부분 재사용을 매우 어렵게 만든다.",
+          "Global State 접근도 87 — `Game.LobbyInfoChanged`, `Game.BeforeGameStart`, `Game.ConnectionStateChanged` 같은 정적 이벤트에 다중 구독하고 있으며, `ModData`, `MapCache`, `ChromeMetrics` 등 전역 싱글톤 상태에 광범위하게 의존한다. 멀티스레드 테스트와 격리된 단위 테스트가 거의 불가능하다.",
+          "GameLoopCentrality 1.0 — 이 클래스는 로비 UI 진입점(ObjectCreator 로 생성)이면서 동시에 게임 루프의 여러 진입 이벤트(`BeforeGameStart`, `Update` 등)에 직접 연결되어 있다. 따라서 여기서의 모든 변경은 게임 전역 상태 동기화와 fps 에 영향을 미칠 수 있다."
         ],
         "refactoring_suggestions": [
-          "생성자에서 이벤트 구독과 UI 초기화를 분리하는 초기화 메서드 패턴(Initialize/Setup) 도입 — 생성 직후 별도 단계에서 선택적 초기화를 수행하도록 리팩토링하면, 테스트에서 필요한 초기화만 수행하고 부작용을 제어할 수 있다.",
-          "Game 싱글톤 대신 OrderManager나 ModData 처럼 생성자 주입되는 의존성으로부터 필요한 이벤트/상태에 접근하도록 변경 — 즉, Game 을 중간 계층(GameEventBridge, LobbyEventAdapter 등) 을 통해 간접화하면, 단위 테스트에서 목 객체(mock GameEventAdapter) 로 교체 가능하고, 로비 로직의 이벤트 응답 거동을 독립적으로 검증할 수 있다.",
-          "가장 복잡한 메서드 체인(UpdateCurrentMap → UpdatePlayerList 등)을 담당하는 로직을 상태 머신 또는 관찰자 패턴(Observer 세분화)으로 분해 — 현재는 Game.LobbyInfoChanged 하나가 여러 UI 업데이트를 트리거하는데, 이를 개별 관찰자로 나누면 각 업데이트의 순서 의존성과 성능 특성을 독립적으로 분석·최적화할 수 있다.",
-          "UI 초기화 로직(Widget 트리 구성, 바인딩)을 별도 Helper 클래스(LobbyUIBuilder, LobbyUIBinder) 로 추출하면, 로비 로직 자체는 상태/이벤트 처리에 집중하고, UI 표현 변경이 핵심 로직에 미치는 영향을 줄일 수 있다."
+          "생성자를 여러 private 초기화 메서드로 분해하라 — UI 위젯 트리 구성, 이벤트 구독, 싱글톤 참조, 상태 초기화를 분리된 메서드(`InitializeWidgetTree`, `SubscribeToGameEvents`, `LoadConfiguration` 등)로 분리하면 각 단계의 테스트 가능성이 높아지고 생성자 CC 를 50 이상 낮출 수 있다.",
+          "정적 Game 이벤트 구독을 명시적 의존성 주입으로 대체하라 — `Game.LobbyInfoChanged` 같은 전역 이벤트 구독 대신, 생성자에서 `IGameEventDispatcher` 인터페이스를 주입받고, 테스트 시에는 mock 을 주입할 수 있도록 리팩토링한다. 이를 통해 GlobalState 지수를 30 이상 감소시킬 수 있다.",
+          "로비 상태 모델을 별도의 ViewModel 클래스로 추출하라 — 현재 클래스가 UI 로직과 게임 상태 동기화를 모두 담당하고 있다. `LobbyViewModel` 같은 중간 계층을 만들어 `Game` 전역 상태와의 상호작용을 국소화하면, 로직 재사용성이 높아지고 게임 루프 핫 패스에서의 영향을 줄일 수 있다.",
+          "UI 위젯 콜백 lambda 들을 명명된 메서드로 추출하라 — 현재 생성자 내에 수십 개의 익명 이벤트 핸들러가 있을 가능성이 높다. 이를 `private void OnMapSelected()`, `private void OnPlayerListChanged()` 같은 메서드로 추출하면 코드 흐름이 명확해지고 부분 테스트가 가능해진다."
         ],
         "test_priorities": [
-          "Characterisation test (기존 거동 캡처) — 로비 UI 변경 전 현재 Game.LobbyInfoChanged 이벤트 구독 순서, 각 핸들러의 호출 횟수, 상태 변경 결과를 모두 기록하는 golden master 테스트를 작성해야 한다. 이를 통해 이후 리팩토링 단계에서 회귀(regression)를 즉시 포착할 수 있다.",
-          "전역 상태 격리 테스트 — MapCache, ChromeMetrics, Game 싱글톤 등의 상태가 로비 로직 거동에 미치는 영향을 테스트하는 격리된 시나리오(e.g., MapCache.UnknownMap 상태, ChromeMetrics 값 부재) 를 작성해 각 전역 자원의 필수성과 대체 가능성을 파악한다.",
-          "이벤트 핸들러 독립성 테스트 — 생성자에서 등록되는 각 이벤트 핸들러(UpdateCurrentMap, UpdatePlayerList, UpdateDiscordStatus 등)를 단독으로 호출했을 때와 연쇄 호출했을 때의 결과를 비교하는 테스트를 작성하면, 순서 의존성 버그를 조기 발견할 수 있다.",
-          "성능 회귀 테스트 — 로비 정보 변경 시 프레임 시간(frame time) 및 GC 할당량을 측정해, 리팩토링 후 UI 응답성이 저하되지 않았는지 검증하는 성능 기준선(baseline) 테스트를 확립한다. 게임 루프 핫 패스에 속하므로 frame budgeting 이 중요하다."
+          "Characterisation Test (게임 상태 진입점) — 로비 생성 후 초기 상태 스냅샷을 golden master 형태로 저장하고, 리팩토링 후에도 동일한 상태가 생성되는지 검증한다. `Game` 정적 이벤트를 mock 으로 교체한 후 생성자만 호출하는 테스트를 작성한다.",
+          "이벤트 구독 순서 및 중복 검증 테스트 — 현재 5개 이상의 Game 정적 이벤트에 다중 구독하고 있으므로, 특정 이벤트 발생 시 정확히 한 번만 핸들러가 호출되는지, 순서가 보장되는지 검증하는 테스트가 필수다.",
+          "의존성 주입 마이그레이션 후 Integration Test — 생성자에 `IGameEventDispatcher` 를 도입한 후, 실제 게임 이벤트와 mock 을 각각 주입했을 때 로비가 정상 동작하는지 검증한다. 특히 `OnGameStart` → 게임 루프 진입 경로를 추적한다."
         ],
-        "uncertainty_notes": "코드 스니펫이 생성자 일부(~596줄 중 ~160줄)만 보여져, 나머지 메서드들(UpdatePlayerList, UpdateCurrentMap 등)의 복잡도 분포와 구체적 전역 상태 접근 패턴을 확인할 수 없다. 따라서 CC=79 가 생성자에만 집중되어 있는지, 아니면 여러 메서드에 분산되어 있는지 불명확하다. 또한 Game 싱글톤의 이벤트 핸들러 등록 이후 메서드 호출 순서, 예를 들어 UpdateCurrentMap → UpdatePlayerList 간의 암묵적 상태 의존성이 코드상 명시되지 않아, 실제 버그 위험도를 전수 검토 없이 단정하기 어렵다. WebServices 주입과 MapCache 사용의 관계도 명확하지 않아, 전역 상태 개선 시 성능 영향을 예측하기 위해서는 프로파일링이 필수적이다."
+        "uncertainty_notes": "코드 스니펫이 생성자의 처음 30 줄만 표시되고 전체 메서드가 596 줄까지 이어진다고 명시되어 있으나 전체 본문을 볼 수 없다. 따라서 정확한 lambda 사용 빈도, 추가 전역 상태 접근, 내부 메서드 호출 패턴을 확인할 수 없다. CC 79.0 은 생성자 내 제어 흐름 분기(if, switch, &&, || 등)의 합산이므로, 실제로는 선형적 초기화 코드일 가능성도 있다 (마크업 파싱, 조건부 위젯 활성화 등). 전체 메서드를 검토하면 더 정확한 분해 전략이 가능하다. 또한 Coupling 이 3 으로 표기되었지만, GlobalState 87 과의 불균형이 크므로, 실제 팬인/팬아웃 계산 방식(정적 이벤트 구독이 coupling 에 포함되는지)을 재확인할 필요가 있다."
       },
       "usage": {
-        "input_tokens": 4214,
-        "output_tokens": 1935,
+        "input_tokens": 4387,
+        "output_tokens": 1704,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01163ZpNEyYjcjWT2npXRnNS"
+      "response_id": "msg_01TinNPP4r7dPQBj5iZ4R8uY"
     },
     {
       "fqn": "OpenRA.Mods.Common.Widgets.Logic.AssetBrowserLogic",
@@ -204,32 +203,32 @@
       "snippet_method": ".ctor",
       "advice": {
         "risk_reasons": [
-          "순환 복잡도(CC) 64.0 — 최상단 10% 평균 수준으로, 주 생성자 메서드가 다양한 조건 분기, 루프, 예외 처리를 포함하고 있어 테스트 경로가 기하급수적으로 증가한다.",
-          "정적 전역 상태 접근(GlobalState) 43회 — modData, world, worldRenderer, FluentProvider.GetMessage() 등 암묵적 의존성을 통해 UI 로직이 광범위한 게임 상태에 강하게 결합되어 있으며, 이들 중 하나라도 변경되면 예측 불가능한 부작용이 발생할 수 있다.",
-          "게임 루프 중심성(GameLoopCentrality) 1.0 — AssetBrowserLogic 은 ObjectCreator 를 통해 게임 UI 프레임워크에서 직접 생성되며, 생성자 내 팔레트 쿼리와 스프라이트 캐시 초기화가 메인 루프 진입 경로상에 있으므로, 초기화 지연이나 실패는 게임 시작 자체를 방해한다.",
-          "생성자 크기(665 LOC 중 ~339 LOC가 .ctor) — 초기화 로직이 한 메서드에 집중되어 있어 의존성 주입, 에러 복구, 단위 테스트가 극도로 어렵고, 부분적 생성(예: 팔레트만 로드) 이 불가능하다."
+          "Cyclomatic Complexity 64.0 — 단일 생성자 메서드가 매우 높은 분기 및 중첩 제어 흐름을 포함하고 있으며, 이는 코드 검증 및 변경의 정신적 부담을 가중시킨다.",
+          "GlobalState 접근 43건 — 생성자 내에서 modData, world, WorldActor 등의 전역/싱글톤 상태에 다수 접근하고 있어, 테스트 격리와 독립적 인스턴스 생성이 어렵다.",
+          "GameLoopCentrality 1.0 (진입점) — 이 클래스는 위젯 로직의 중심 진입점으로 매 프레임 또는 사용자 입력 시 호출되는 hot path 에 위치하며, 생성자의 복잡한 초기화 로직이 UI 반응 지연을 야기할 수 있다.",
+          "LOC 665 + 분기 복잡도 집중 — 665줄의 거대한 클래스에서 초기화 로직이 분산되어 있고, 단일 책임 원칙 위반 가능성이 높다."
         ],
         "refactoring_suggestions": [
-          "생성자를 여러 개의 초기화 헬퍼 메서드로 분해 — Create*, Initialize* 패턴을 도입하여 SheetBuilder 초기화, 팔레트 쿼리, 캐시 구성 등을 별도 private 메서드로 추출한다. 이렇게 하면 생성 경로의 일부를 테스트 더블(mock)로 대체할 수 있고, 향후 lazy initialization 이 필요할 때도 쉽다.",
-          "전역 상태 의존성을 명시적 필드로 전환 — modData, world, worldRenderer 같은 암묵적 외부 의존성을 명확하게 생성자 매개변수로 선언하고, FluentProvider.GetMessage() 호출은 정적 메서드가 아닌 주입 가능한 IMessageProvider 인터페이스로 추상화한다. 이는 코드 가독성을 높이고, 테스트 환경에서 stub 을 쉽게 주입할 수 있게 한다.",
-          "생성자 복잡도를 줄이기 위해 Builder 패턴 또는 Factory 도입 — AssetBrowserLogic 의 설정이 다양하면(팔레트 필터링, 캐시 크기 제한 등), Builder<AssetBrowserLogicConfiguration> 를 도입하여 생성자 분기를 제거하고 선택적 초기화를 명확하게 한다.",
-          "팔레트·스프라이트 캐시 초기화를 지연 로딩 전략으로 변경 — world.WorldActor 쿼리는 UI 첫 렌더링 시에만 필요하므로, lazy<IProvidesAssetBrowserPalettes[]> 패턴으로 초기화를 미루면 생성자 임계 경로를 단축하고 UI 반응성을 개선할 수 있다."
+          "생성자 로직을 초기화 메서드로 분리 (Lazy Initialization 패턴) — 현재 생성자에서 sheetBuilders 딕셔너리 구성, spriteCache 생성, palette 질의 등이 모두 동기적으로 수행되고 있다. 이들을 별도의 `InitializeSheetBuilders()`, `InitializePalettes()` 등으로 추출하고, UI 로딩 단계에서 비동기 또는 지연 호출하도록 변경하면 생성자 CC를 50% 이상 감소시킬 수 있다.",
+          "전역 상태 주입을 명시적 매개변수화 — modData, worldRenderer, world 같은 의존성이 현재 암묵적 전역 상태로 취급되고 있다. 생성자 시그니처에 이미 전달되고 있으므로, 생성자 내부에서 추가 전역 상태(WorldActor traits 질의, Manifest 접근) 를 우회하기보다는 이들을 별도의 초기화 단계로 추출하고, 단위 테스트 시 목(mock) 제공이 용이하도록 인터페이스화 (e.g., `IPaletteProvider`, `ISheetBuilder`) 한다.",
+          "복잡한 딕셔너리/컬렉션 초기화를 Builder 또는 Factory 패턴으로 전환 — spriteCache 의 복잡한 람다 체인과 SheetBuilder 딕셔너리 구성을 전담하는 `SpriteAssetInitializer` 같은 전용 클래스로 추출하면, 생성자는 위임(delegation) 만 하게 되어 복잡도가 대폭 감소하고 재사용성도 높아진다.",
+          "UI 진입점 최소화 — 생성자가 게임 루프 진입점(ObjectCreator 등) 이라면, 무거운 초기화 로직은 `OnFirstRender()` 또는 `Tick()` 콜백으로 지연시켜 UI 응답성을 개선할 수 있다."
         ],
         "test_priorities": [
-          "생성자 매개변수 조합별 Characterisation Test — 현재 .ctor 의 모든 분기 경로(팔레트 없음, 색상 픽커 있음/없음, SheetBuilder 실패 등)를 golden master 로 기록하여, 향후 리팩토링 후 동작이 변하지 않았음을 검증한다.",
-          "정적 의존성(modData, world, FluentProvider) 주입 테스트 — mock IModData, mock WorldRenderer 를 주입하고, 각각이 null 이거나 특정 상태일 때 AssetBrowserLogic 이 안전하게 실패하거나 기본값으로 폴백하는지 검증한다.",
-          "UI 프레임워크 통합 테스트 — ObjectCreator 가 실제로 AssetBrowserLogic 을 생성할 때, 게임 루프 진입 전에 모든 팔레트 쿼리와 캐시 초기화가 완료되는지, 그리고 예외 발생 시 UI 로드 실패 메시지가 올바르게 표시되는지 검증한다.",
-          "팔레트 쿼리 성능 회귀 테스트 — world.WorldActor.TraitsImplementing<IProvidesAssetBrowserPalettes>() 호출이 trait 개수에 따라 얼마나 오래 걸리는지 측정하고, UI 로드 시간이 게임 시작 지연(예: 100ms 이상)을 초래하지 않음을 보장한다."
+          "Characterisation Test (AssetBrowserLogic 생성자 동작 기록) — 현재 생성자의 실제 동작(sheetBuilders 초기화, spriteCache 캐시 구성, palette 로드 순서) 을 golden master 형태로 기록한다. 이후 리팩토링 시 동작 동치성 검증에 사용한다.",
+          "Mock WorldActor & Traits Injection Test — modData, world, WorldActor.TraitsImplementing 을 목 객체로 제공하는 테스트를 작성하여, 생성자가 전역 상태에 의존하지 않고도 인스턴스 생성 가능한지 검증한다. 이는 생성자 복잡도 감소 및 의존성 추출의 타당성을 확인하는 기준점이 된다.",
+          "Lazy Initialization 단계별 테스트 — 생성자 로직을 별도 메서드로 분리한 후, 각 단계(sheets, cache, palettes) 가 독립적으로 호출·재검증 가능한지 테스트한다. 특히 sheet builder 캐시 일관성과 palette 로드 순서 오류를 확인한다.",
+          "Performance Regression Test (생성 시간 측정) — 생성자 복잡도 감소와 지연 로딩 도입이 UI 반응성(시각적 지연)에 미치는 영향을 측정 테스트한다. 게임 루프 핫 패스에 미치는 영향을 정량화한다."
         ],
-        "uncertainty_notes": "코드 스니펫이 생성자의 초반부만 포함되어, 나머지 ~250 LOC 에서 추가로 어떤 초기화 로직(이벤트 핸들러 등록, 더 많은 조건 분기)이 있는지 확인할 수 없다. 또한 FluentProvider.GetMessage(AllPackages) 와 trait 쿼리가 실제로 I/O를 수행하는지(파일 시스템 접근, 네트워크) 명확하지 않으므로, 생성자 최적화의 우선순위는 프로파일링 결과에 따라 조정되어야 한다. GlobalState 수치 43 이 모두 초기화 시점의 읽기인지, 아니면 런타임 중 반복 접근하는지도 확인이 필요하다."
+        "uncertainty_notes": "의존성 그래프에서 이 클래스를 참조하는 외부 클래스가 '없음' 으로 표시되어 있으므로, 실제 호출 관계(ObjectCreator 패턴, 리플렉션, 동적 로드) 가 정적 분석으로 추적되지 않았을 가능성이 있다. 따라서 GameLoopCentrality 1.0 은 메서드 이름('Logic', 'ObjectCreator.UseCtor') 휴리스틱에 기반한 것으로 추정된다. 또한 코드 스니펫이 생성자 시작 부분만 제시되어, 전체 665줄 중 CC=64.0 이 어떻게 분포하는지(단일 거대 루프 vs. 여러 분기문 vs. 다중 중첩) 는 명확하지 않다. 리팩토링 방향은 전체 메서드 본문을 검토 후 조정이 필요할 수 있다."
       },
       "usage": {
-        "input_tokens": 4222,
-        "output_tokens": 1786,
+        "input_tokens": 4348,
+        "output_tokens": 1785,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01KwgJV4qxTLyVexfp6dQXwS"
+      "response_id": "msg_01TcTb3xcNHyBZDqjBEoeRUJ"
     }
   ],
   "notes": []

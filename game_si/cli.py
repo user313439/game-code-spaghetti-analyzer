@@ -753,7 +753,7 @@ def _cmd_timeseries(args: argparse.Namespace) -> int:
 
 def _cmd_advise(args: argparse.Namespace) -> int:
     """W13 Phase C — 상위 hotspot 에 대해 LLM 리팩토링 가이드 수집."""
-    from .advisor import Advisor, format_markdown, to_dict
+    from .advisor import Advisor, format_markdown, to_dict, _load_metrics_neighbors
 
     scoring_path: Path = args.scoring
     if not scoring_path.exists():
@@ -767,6 +767,14 @@ def _cmd_advise(args: argparse.Namespace) -> int:
             ast_data = json.load(f)
     else:
         print(f"[warn] ast.json 가용하지 않음 — 지표만으로 답변. ({ast_path})", file=sys.stderr)
+
+    # 의존성 그래프 컨텍스트 — metrics.json (metrics-0.2+) 에 직렬화된 in/out neighbors
+    metrics_path = scoring_path.parent / "metrics.json"
+    neighbors_by_fqn = _load_metrics_neighbors(metrics_path) if metrics_path.exists() else {}
+    if neighbors_by_fqn:
+        print(f"[advise] dependency graph loaded for {len(neighbors_by_fqn)} classes")
+    else:
+        print(f"[warn] metrics.json 에서 in/out neighbors 추출 실패 — 의존성 정보 없이 답변", file=sys.stderr)
 
     out_dir: Path = args.out if args.out is not None else scoring_path.parent
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -790,6 +798,7 @@ def _cmd_advise(args: argparse.Namespace) -> int:
             project=project_name,
             top_n=args.top,
             progress=True,
+            neighbors_by_fqn=neighbors_by_fqn or None,
         )
     except Exception as exc:
         print(f"[error] Advisor 호출 실패: {exc}", file=sys.stderr)

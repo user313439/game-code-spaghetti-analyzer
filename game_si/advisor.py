@@ -280,7 +280,13 @@ def _build_snippet(
 # ---------------------------------------------------------------------------
 
 
-def _build_user_prompt(hotspot: dict, snippet: str, snippet_method: str | None) -> str:
+def _build_user_prompt(
+    hotspot: dict,
+    snippet: str,
+    snippet_method: str | None,
+    in_neighbors: list[str] | None = None,
+    out_neighbors: list[str] | None = None,
+) -> str:
     raw = hotspot.get("raw", {})
     lines: list[str] = []
     lines.append("# Hotspot 정보")
@@ -299,6 +305,29 @@ def _build_user_prompt(hotspot: dict, snippet: str, snippet_method: str | None) 
     if hotspot.get("top_reasons"):
         lines.append(f"- top_reasons: {', '.join(hotspot['top_reasons'])}")
     lines.append("")
+
+    # 의존성 그래프 컨텍스트 — 모델이 "의존성 그래프 미시각화" 우려를 일부 해소할 수
+    # 있도록 직접 in/out 이웃 FQN 을 prompt 에 포함시킨다.
+    if in_neighbors is not None or out_neighbors is not None:
+        lines.append("## 의존성 그래프 (클래스 단위 in/out 이웃)")
+        in_n = in_neighbors or []
+        out_n = out_neighbors or []
+        if in_n:
+            shown = in_n[:10]
+            extra = f" (외 {len(in_n) - 10} 개 더)" if len(in_n) > 10 else ""
+            lines.append(f"- **이 클래스를 참조하는 클래스** ({len(in_n)}개): "
+                         + ", ".join(f"`{n}`" for n in shown) + extra)
+        else:
+            lines.append("- 이 클래스를 참조하는 클래스: 없음 (또는 매핑 안된 외부)")
+        if out_n:
+            shown = out_n[:10]
+            extra = f" (외 {len(out_n) - 10} 개 더)" if len(out_n) > 10 else ""
+            lines.append(f"- **이 클래스가 참조하는 클래스** ({len(out_n)}개): "
+                         + ", ".join(f"`{n}`" for n in shown) + extra)
+        else:
+            lines.append("- 이 클래스가 참조하는 클래스: 없음 (또는 매핑 안된 외부)")
+        lines.append("")
+
     if snippet:
         method_label = f"`{snippet_method}`" if snippet_method else "(메서드)"
         lines.append(f"## 가장 복잡한 메서드 {method_label} (일부)")
@@ -308,8 +337,28 @@ def _build_user_prompt(hotspot: dict, snippet: str, snippet_method: str | None) 
     else:
         lines.append("(코드 스니펫 가용하지 않음 — 지표만으로 판단)")
     lines.append("")
-    lines.append("위 정보를 바탕으로 JSON schema 에 맞춰 응답하라.")
+    lines.append("위 정보(지표 + 의존성 이웃 + 코드 스니펫)를 모두 활용해 JSON schema 에 맞춰 응답하라.")
     return "\n".join(lines)
+
+
+def _load_metrics_neighbors(metrics_path: Path) -> dict[str, tuple[list[str], list[str]]]:
+    """metrics.json 에서 fqn → (in_neighbors, out_neighbors) 매핑 추출.
+
+    metrics-0.2 이상 스키마에서 동작. 0.1 이라면 빈 dict 반환.
+    """
+    try:
+        with open(metrics_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except OSError:
+        return {}
+    out: dict[str, tuple[list[str], list[str]]] = {}
+    for c in data.get("classes", []):
+        in_n = c.get("in_neighbors")
+        out_n = c.get("out_neighbors")
+        if in_n is None and out_n is None:
+            continue
+        out[c["fqn"]] = (in_n or [], out_n or [])
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -368,8 +417,18 @@ class Advisor:
         self.model = model
         self.max_tokens = max_tokens
 
-    def advise_one(self, hotspot: dict, snippet: str, snippet_method: str | None) -> AdvisorRow:
-        user_text = _build_user_prompt(hotspot, snippet, snippet_method)
+    def advise_one(
+        self,
+        hotspot: dict,
+        snippet: str,
+        snippet_method: str | None,
+        in_neighbors: list[str] | None = None,
+        out_neighbors: list[str] | None = None,
+    ) -> AdvisorRow:
+        user_text = _build_user_prompt(
+            hotspot, snippet, snippet_method,
+            in_neighbors=in_neighbors, out_neighbors=out_neighbors,
+        )
         response = self.client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
@@ -416,6 +475,7 @@ class Advisor:
         project: str,
         top_n: int = 5,
         progress: bool = True,
+        neighbors_by_fqn: dict[str, tuple[list[str], list[str]]] | None = None,
     ) -> AdvisorResult:
         hotspots = sorted(
             scoring.get("class_scores", []),
@@ -439,7 +499,10 @@ class Advisor:
                     f"[advise] {idx}/{len(hotspots)} {hotspot['grade']} G-SI={hotspot['si']:>6.2f}  {hotspot['fqn']}",
                     flush=True,
                 )
-            row = self.advise_one(hotspot, snippet, method_name)
+            in_n, out_n = (None, None)
+            if neighbors_by_fqn and hotspot["fqn"] in neighbors_by_fqn:
+                in_n, out_n = neighbors_by_fqn[hotspot["fqn"]]
+            row = self.advise_one(hotspot, snippet, method_name, in_neighbors=in_n, out_neighbors=out_n)
             rows.append(row)
 
         total = {

@@ -3,12 +3,12 @@
   "project": "OpenRCT2",
   "model": "claude-haiku-4-5",
   "total_usage": {
-    "input_tokens": 20802,
-    "output_tokens": 9413,
+    "input_tokens": 22202,
+    "output_tokens": 10426,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
   },
-  "estimated_cost_usd": 0.067867,
+  "estimated_cost_usd": 0.074332,
   "rows": [
     {
       "fqn": "park.Legacy",
@@ -29,32 +29,30 @@
       "snippet_method": "TrackTypeMustBeMadeInvisible",
       "advice": {
         "risk_reasons": [
-          "순환 의존성(DependencyCycle=275) — 이 compilation unit은 대규모 순환 의존성 그래프(SCC 크기 275)의 멤버로, 변경 시 예측 불가능한 범위의 코드가 영향받을 수 있다.",
-          "극도로 높은 순환 복잡도(CC=568.0, 상위 10% 평균) — 하나의 파일 내에 수백 개의 제어 흐름 분기가 집중되어 있으며, 제시된 `TrackTypeMustBeMadeInvisible` 메서드만 해도 거대한 switch/else-if 체인으로 구성된 전형적인 '거대 함수' 패턴이다.",
-          "게임 루프 중심성 부재(GameLoopCentrality=0.0) — 이 파일이 게임 루프 진입점(Tick/Update/Render)에서 직접 도달 불가능함에도 불구하고, 높은 coupling(24)과 순환 의존성은 공용 park 저장 포맷 핸들러로서 광범위하게 호출되며, 변경이 모든 공원 로드 경로에 영향을 미친다는 뜻이다.",
-          "레거시 마이그레이션 로직의 응축 — CC 값 대부분이 `parkFileVersion` 조건부로 인한 버전별 호환성 처리(Log Flume v123, Giga Coaster v456 등)에서 비롯되었으며, 이들 조건 제거 불가능성이 구조적 복잡성을 고착화한다."
+          "Cyclomatic Complexity 568.0 — 단일 compilation_unit 내 제어 흐름이 극도로 복잡. 제시된 TrackTypeMustBeMadeInvisible 메서드만 해도 수십 개의 if/else 와 switch case 가 중첩되어 있으며, 파일 전체 CC 평균은 게임 코드 일반 수준의 10배 이상. 코드 이해 및 변경 시 버그 유입 위험이 매우 높다.",
+          "DependencyCycle 275 — 순환 의존성 그래프 멤버이면서 SCC 크기가 275개로 매우 큼. park.Legacy 는 ObjectRepository, ParkFileImporter, S4Importer 등 12개 클래스에 의존되고 동시에 ride.Ride, object.ObjectList, rct1/rct2 모듈 등 12개를 참조하며, 이 모두가 상호 순환 구조를 형성. 레거시 파일 포맷 마이그레이션 코드의 중심이 되어 있어 변경 영향 추적이 거의 불가능.",
+          "게임 자산 호환성 레이어로 설계된 god-module — 로그 플룸, 기가 코스터, 기타 탈것 타입별 legacy track element 변환 로직이 모두 이 파일에 집중. 정적 지형, 트랙 엘리먼트, 탈것 타입 등 도메인 전역 개념에 대한 암묵적 계약(contract)이 하드코딩되어 있어, 새 탈것 타입 추가 시마다 이 파일을 수정해야 한다."
         ],
         "refactoring_suggestions": [
-          "버전 기반 track type 마이그레이션 로직을 전용 TrackVersionAdapter 계층으로 추출 — `TrackTypeMustBeMadeInvisible` 같은 거대 메서드를 버전 번호별 구현 클래스로 분해하되, 각 버전 어댑터는 단일 parkFileVersion 범위만 담당하도록 하여 CC를 범주별로 분산시킨다. 다만 이 변경은 공원 로드 핫 패스에 영향을 미칠 수 있으므로, 성능 회귀 테스트(FPS/메모리 할당 추적)를 먼저 수립해야 한다.",
-          "순환 의존성 브레이킹을 위해 park 저장 데이터 모델(Track, Ride, Element) 을 불변 핸들러 인터페이스로 캡슐화 — 현재 275 개 SCC 멤버 중 다수가 상호 참조하는 상태 변경을 공유하고 있을 것으로 추정된다. park 파일 읽기 단계와 검증 단계를 명확히 분리하고, 검증 결과를 별도 immutable config 객체로 발행하여 순환 참조를 끊는다.",
-          "거대 switch 문(`TrackElemType` case 분기가 수십 줄)을 lookup table (map<TrackElemType, VersionRange>) 또는 rule-based DSL로 재작성 — 각 track type과 버전 범위의 매핑을 데이터 드리븐으로 표현하면 CC를 대폭 감소시킬 수 있다. 단, park 저장 포맷 변경 이력이 문서화되어 있어야 규칙을 정확히 추출할 수 있다.",
-          "현재 파일을 기능 도메인별로 분리 — 예를 들어 `TrackLegacy.cpp`(track 버전 마이그레이션), `RideLegacy.cpp`(ride 타입 호환성), `ElementLegacy.cpp`(element 속성 변환) 등으로 나누되, 각 파일은 독립적으로 검증 및 테스트 가능하도록 한다."
+          "TrackTypeMustBeMadeInvisible 를 ride 타입별 lookup table (map/dictionary) 로 변환. 현재 중첩 if/switch 구조 대신 (rideType, parkFileVersion) → {trackType 컬렉션} 형태의 데이터 테이블을 외부 configuration 또는 상수로 정의하고, loop 기반 조회로 단순화. 이렇게 하면 CC 를 수십 단계 낮출 수 있고, 새 탈것 타입 추가 시 코드 수정 대신 데이터만 확장하면 된다.",
+          "park.Legacy 내 대규모 메서드들을 ride 타입 또는 마이그레이션 시대(version era) 단위로 분해한 작은 객체(converter 클래스)들로 추출. 예: LegacyLogFlumeConverter, LegacyGigaCoasterConverter 같은 전용 클래스를 만들고 각각이 구체적 버전 범위와 타입 매핑만 담당하도록 분리. 이는 순환 의존성을 끊고 각 converter 를 독립적으로 테스트 가능하게 만든다.",
+          "ObjectRepository, ParkFileImporter, S4Importer 등 의존자(fan-in)와의 인터페이스를 명시적 adapter 계층으로 추상화. 현재 모든 클래스가 park.Legacy 의 구체적 함수들을 직접 호출하므로, 변환 인터페이스(ILegacyTrackConverter, ILegacyPeepConverter) 를 선언하고 구현을 분리하면 fan-in 을 줄이고 SCC 크기를 감소시킬 수 있다.",
+          "게임 루프 영향 평가: GameLoopCentrality 0.0 이므로 이 모듈은 런타임 Tick/Update/Render 호출 체인 밖이고, 파일 로드/저장 초기 단계에만 사용된다. 따라서 리팩토링은 frameRate 성능에는 거의 영향을 주지 않으나, 게임 시작(park load) 지연 및 메모리 할당 패턴을 모니터링해야 한다."
         ],
         "test_priorities": [
-          "Park 파일 버전별 characterisation test — 각 주요 버전(v77, v101, v123, v456 등) park 파일을 고정 golden master로 확보하고, 현재 구현이 정확히 동일한 구조의 Track/Ride 데이터를 로드하는지 검증한다. 이는 리팩토링 후 동작 동치성을 보장하는 가장 신뢰할 수 있는 방법이다.",
-          "Track type 호환성 매트릭스 unit test — `TrackTypeMustBeMadeInvisible` 등 각 거대 메서드의 입력(rideType, trackType, parkFileVersion 조합)과 출력(invisible 플래그)을 표 형태로 test case 화한다. 최소 30~50 개의 조합을 커버하여, 리팩토링 시 edge case 누락을 조기 발견한다.",
-          "성능 회귀 테스트 (park 로드 시간, 메모리 할당) — 대규모 공원 파일(track/ride 요소 5000+)을 로드하는 데 걸리는 시간과 할당된 메모리를 기준선으로 설정한 뒤, 리팩토링 후 5% 이상 악화되지 않음을 확인한다. 특히 버전 체크 로직이 모든 park 로드에서 실행되므로 regression 가능성이 높다.",
-          "순환 의존성 브레이킹 검증 — 리팩토링 후 park 모듈의 SCC 크기를 측정하여, 현재 275에서 50 이하로 감소했는지 정적 분석 도구로 확인한다. 이는 향후 인접 모듈 리팩토링의 영향 범위를 제어 가능하게 만든다."
+          "Golden master / characterisation test for legacy format migration: rct1, rct2, s4 포맷의 알려진 공개 파크 파일 여러 개를 로드 → 변환 → 저장 후, 결과 속성(탑승인원, 트랙 요소 위치, 조경 객체)이 변경 전후 동일함을 비교하는 회귀 테스트를 우선 작성. 이는 park.Legacy 변경의 모든 버그를 catch 할 수 있는 가장 저렴한 수단.",
+          "Ride type 별 track element conversion table 의 exhaustiveness test: 모든 ride 타입 × 모든 track type × 모든 지원 버전의 조합에 대해 TrackTypeMustBeMadeInvisible 및 유사 함수들의 출력이 정의되어 있는지 확인. Coverage 빈틈이 있으면 사용자가 레거시 파크 로드 시 assertion 또는 silent data loss 를 경험할 수 있다.",
+          "Integration test for dependency cycle 상의 인접 호출자들(ObjectRepository, S4Importer): 각 importer 가 park.Legacy 의 변환 함수를 호출하고 결과를 ObjectManager 에 삽입할 때, object 생성 순서 및 FK 참조 무결성이 보장되는지 테스트. 순환 의존성 때문에 변경 영향이 쉽게 멀리까지 전파되므로, 각 importer 별로 작은 파크 데이터셋을 고정해 놓고 매번 검증해야 한다."
         ],
-        "uncertainty_notes": "제시된 코드 스니펫은 메서드 일부만 보여주므로, 전체 771 LOC 내에서 정확히 몇 개의 독립적인 메서드가 있는지, 각 메서드의 CC가 어느 정도인지 파악하기 어렵다. 또한 park 저장 포맷의 버전 이력(왜 v123, v456 같은 버전 번호인지, 몇 개의 버전을 지원하는지) 이 문서화되어 있는지 확인이 필요하며, 이에 따라 table-driven 리팩토링의 실현 가능성이 결정된다. 마지막으로 DependencyCycle=275 라는 극단적 수치는, 현재 정적 분석 도구의 SCC 계산이 legacy.cpp 자체의 내부 타입(TrackElement, RideType 등) 순환 참조까지 포함하는지, 아니면 외부 모듈 의존성만 세는지에 따라 해석이 달라질 수 있다 — 후자라면 순환 의존성 브레이킹의 우선순위가 더 높다."
+        "uncertainty_notes": "제시된 스니펫은 TrackTypeMustBeMadeInvisible 일부만 보여주므로, 파일 내 다른 메서드들의 구체적 CC 분포와 각 메서드가 얼마나 많은 track type / ride type 조합을 다루는지 정확히 파악하기 어렵다. 또한 DependencyCycle 275 는 매우 큰 숫자인데, 이것이 park.Legacy 자신이 직접 순환 참조를 만드는지, 아니면 외부 모듈(ride, object, rct1/rct2)의 거대 순환 구조에 park.Legacy 가 포함된 건지 명확하지 않다. 전자라면 park.Legacy 내부 리팩토링만으로 SCC 크기를 줄일 수 있으나, 후자라면 더 광범위한 모듈 간 의존성 재설계가 필요할 수 있다. 상세한 의존성 그래프 또는 SCC 멤버 리스트가 있으면 더 정확한 우선순위를 정할 수 있을 것으로 예상된다."
       },
       "usage": {
-        "input_tokens": 4237,
-        "output_tokens": 2105,
+        "input_tokens": 4498,
+        "output_tokens": 2048,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01X5cP7ertAyxo4bMj4LATxe"
+      "response_id": "msg_01K35nqatBovfCRfkFH4GUNi"
     },
     {
       "fqn": "Context",
@@ -75,32 +73,31 @@
       "snippet_method": "LoadParkFromStream",
       "advice": {
         "risk_reasons": [
-          "Coupling 250 — 거의 모든 모듈이 이 클래스에 의존하거나 이 클래스가 의존한다. god-object 패턴으로 진단되며, 단일 변경이 광범위 회귀 위험을 초래한다.",
-          "DependencyCycle 275 — 순환 의존성 SCC 에 속한 275 개 클래스의 중심부다. 이는 코드 격리와 단위 테스트를 근본적으로 어렵게 만든다.",
-          "GameLoopCentrality 1.0 및 LoadParkFromStream 복잡도 — 게임 루프 진입점에서 직접 호출되는 핫 패스 메서드이며, 파일 로딩(I/O) 및 리소스 마이그레이션 로직이 짜여 있어 성능 또는 상태 불일치 위험이 높다.",
-          "CC 13.67 평균 — 메서드당 제어 흐름이 복잡하고, 특히 LoadParkFromStream 은 여러 파일 버전(S4/S6/park) 분기 처리로 인해 테스트 케이스 폭발 위험이 있다."
+          "결합도 250 — 202개 클래스가 이 Context를 직접 참조하며, 거의 모든 게임 액션(action.*)과 엔티티 시스템이 의존하는 god-object 구조다. 이는 OpenRCT2의 역사적 아키텍처(중앙 집중식 상태 관리)에서 비롯되었으나, 변경 시 전체 게임 시스템의 회귀 테스트가 필수적이다.",
+          "게임 루프 중심성 1.0 — LoadParkFromStream, Update, Tick 같은 주요 진입점에서 직접 호출되므로, 이 클래스의 수정은 매 프레임 실행되는 핫 패스에 영향을 준다. 특히 메모리 할당, 파일 I/O 폴백 로직, 예외 처리가 포함된 복잡한 메서드들이 게임 루프 경로상에 있다.",
+          "순환 의존성 275 — 이 클래스가 속한 SCC(Strongly Connected Component) 규모가 275다. 이는 Context와 그 의존 클래스들(ParkImporter, ObjectManager, RCT2, TrackDesignRepository 등)이 서로를 참조하는 순환 고리를 형성함을 의미한다. 이로 인해 단위 테스트 격리가 어렵고, 모의 객체(mock) 생성도 복잡해진다.",
+          "메서드 복잡도 고평균 (CC 13.67) — 코드 스니펫의 LoadParkFromStream 메서드는 조건분기(if/else if), 파일 타입 분류, 여러 IParkImporter 전략 선택, 예외 처리를 다루고 있으며, 보이지 않은 부분(lines 788-999)까지 포함하면 200+ 라인의 거대 함수로 추정된다. 이는 파크 로드 성공/실패 경로가 교착되어 있음을 시사한다."
         ],
         "refactoring_suggestions": [
-          "점진적 인터페이스 추출: LoadParkFromStream 은 IParkImporter 팩토리 선택, 버전 분류, I/O 처리를 모두 담당한다. 파일 버전 분류 로직을 별도 ParkFileClassifier 클래스로 추출하면 DependencyCycle 과 Coupling 을 동시에 경감할 수 있다. 단, 게임 루프 핫 패스이므로 팩토리 비용 최소화(캐싱, lazy 로딩)를 검토해야 한다.",
-          "god-object 계층화: Context 가 현재 park loading, game state, resource management 를 모두 조정하므로, 도메인별로 책임을 명시적으로 분리한다. 예를 들어 ParkLoadingService(파일 I/O + 마이그레이션), GameStateManager(상태 동기화), ResourceCoordinator(객체 저장소 접근) 로 나누되, Context 는 이들을 위임만 한다. 이는 의존성 방향을 단방향화해 SCC 크기를 줄인다.",
-          "characterisation test 우선 작성: LoadParkFromStream 의 현재 동작(S4/S6 분기, 예외 처리, 타이틀 로드 폴백)을 golden master test 로 기록한 뒤, 리팩토링 중 회귀를 탐지한다. 각 파일 버전별 샘플 park 파일을 테스트 자산으로 관리하면 리팩토링 신뢰도가 크게 올라간다.",
-          "순환 의존성 끊기 — inversion-of-control 검토: Context 가 참조하는 모듈들이 다시 Context 로 역참조하는 지점을 파악한 뒤, 공통 인터페이스(예: IParkLoaded 이벤트, IParkStateObserver) 를 도입해 역참조를 event/observer 로 전환한다. 이는 SCC 를 점진적으로 해체하며, 테스트 mock 주입이 용이해진다."
+          "파크 파일 분류 및 로드 전략을 Strategy 패턴으로 분리하라. TryClassifyFile 과정을 독립적인 FileTypeResolver 클래스로 추출하고, FileType별 IParkImporter 팩토리를 별도 팩토리 클래스로 구성하면, LoadParkFromStream의 분기 로직을 감소시키고 테스트 용이성을 높일 수 있다. 이 변경은 Context의 다른 부분(게임 루프 업데이트)에 영향을 주지 않는다.",
+          "202개 의존 클래스를 다루는 god-object 구조를 점진적으로 분해하기 위해, 먼저 'action 시스템'과 '게임 상태'를 분리한 GameState 인터페이스를 도입하라. 현재 Context는 액션 처리, 맵 관리, 엔티티 참조를 모두 담당하는데, 이들을 각각 ActionDispatcher, MapManager, EntityRepository로 위임하면, 개별 액션 클래스는 이들 작은 인터페이스를 참조하게 된다. 변경은 action 계층부터 시작하되, 게임 루프 핫 패스(Update/Tick)는 후순위로 미룬다.",
+          "순환 의존성을 끊기 위해 Context → RCT2 → ObjectManager 같은 의존성 체인에서 중간 계층(adapters)을 삽입하라. 예를 들어 RCT2 레거시 형식 파싱을 LegacyFormatHandler 어댑터로 래핑하면, Context와 RCT2 간 직접 순환 참조를 제거할 수 있다. 다만 이 변경은 파크 로드(게임 시작 시점)에만 영향을 주므로, 런타임 성능 우려는 낮다."
         ],
         "test_priorities": [
-          "Characterisation test (LoadParkFromStream 의 각 파일 버전별 동작): S4 포맷, S6 포맷, .park 포맷 각각에 대해 정상 로드/실패 케이스를 golden master 로 녹화한다. 예외 발생, 타이틀 로드 폴백, 객체 저장소 상태 변경을 검증하며, 리팩토링 후 회귀를 탐지하는 기준선이 된다.",
-          "Performance regression test (게임 루프 핫 패스 영향): 큰 park 파일(1000+ 객체) 로딩 시간, 메모리 할당 횟수, GC 압박을 기준선으로 측정한다. 인터페이스 추출 후 팩토리 오버헤드나 추가 객체 생성이 fps 에 미치는 영향을 정량적으로 검증해야 한다.",
-          "Dependency injection mock test (Coupling/SCC 감소 검증): Context 의 의존성을 명시적으로 주입 가능하도록 리팩토링한 후, _objectRepository, 파일 분류기, 각 파일 버전 importer 를 mock 으로 교체하는 단위 테스트를 작성한다. 이는 SCC 와 Coupling 을 측정 가능하게 만들고, 리팩토링 효과를 정량화한다.",
-          "순환 의존성 SCC 맵 검증: 현재 275개 SCC 멤버를 추출해 의존성 그래프를 시각화한 후, 주요 역참조 경로를 파악한다. 리팩토링 후 SCC 가 감소했는지 확인하고, 여전히 큰 SCC 가 남아 있으면 다음 인터페이스 후보를 우선순위화한다."
+          "특성화 테스트(Characterisation Test) — 현재 LoadParkFromStream의 모든 분기(park file, S4 save, S6 save, invalid type, 예외 경로)를 입력 파일별로 수집하여 golden master로 기록하라. 리팩토링 후 동일 입력에 대해 동일 출력(또는 메모리 구조)을 재현하는지 검증하면, 세부 구현 변경을 안전하게 격리할 수 있다.",
+          "Context 의존 클래스들(주요 action 10~20개)에 대한 통합 테스트 강화 — LoadParkFromStream 후 특정 action(FootpathPlaceAction, MapChangeSizeAction 등)이 올바르게 작동하는지 확인하라. 이는 god-object 구조에서 의존성 주입이나 팩토리 변경 후 암묵적 회귀를 잡는 데 효과적이다.",
+          "게임 루프 성능 회귀 테스트 — LoadParkFromStream 이후 10프레임간 Update/Render 호출 시간을 측정하여 기준선(baseline)을 설정하라. 리팩토링(특히 ParkImporter 전략 분리, adapters 추가)이 호출 체인 길이나 메모리 할당을 변경할 수 있으므로, fps 저하 감시가 필수다.",
+          "순환 의존성 감지 테스트 — 리팩토링 후 의존성 그래프에서 Context-to-RCT2-to-ObjectManager 같은 주요 순환 경로가 제거되었는지 정적 분석으로 재검증하라. 또한 Context 생성 시 모의 객체(mocks)만으로 초기화 가능한지 테스트하면, 실제 격리 개선을 신속히 확인할 수 있다."
         ],
-        "uncertainty_notes": "코드 스니펫이 LoadParkFromStream 의 전부만 제공되어 Context 의 나머지 메서드(생명주기 관리, 게임 상태 동기화, 리소스 정리) 를 전수 파악하기 어렵다. 따라서 DependencyCycle 275 가 Context 중심 또는 Context 가 큰 SCC 의 일부인지, GlobalState 가 0인 이유(Context 자체가 싱글톤 인스턴스로 전달되는 것인지, 아니면 정말 static 접근이 없는지) 를 확인 필요가 있다. 또한 IParkImporter 구현체들의 복잡도 분포, _objectRepository 의 역할, 게임 루프의 다른 진입점(예: Update, Render) 에서 Context 호출 빈도를 추가 분석하면 리팩토링 우선순위를 더 정밀하게 조정할 수 있다."
+        "uncertainty_notes": "코드 스니펫이 truncated 되어 LoadParkFromStream의 전체 제어흐름(특히 788-999 범위)을 파악할 수 없다. CC 13.67은 top-10% 평균값이므로 개별 메서드가 훨씬 더 복잡할 수 있으며, 예외 처리 깊이나 중첩된 try-catch, 파일 I/O 재시도 로직 등이 추가되면 실제 CC는 40~60에 달할 수도 있다. 또한 DependencyCycle 275는 SCC 크기로 해석했으나, 이것이 Context를 포함한 전체 SCC 규모인지 Context 관련 부분집합인지 명확하지 않다. 순환 의존성 끊기의 우선순위는 전체 의존성 그래프 시각화 후 재검토가 필요하다. 마지막으로 OpenRCT2의 실제 게임 루프 구조(멀티스레드 여부, 비동기 로드 지원)가 알려지지 않아, 성능 영향 범위의 예측 신뢰도가 중간 수준이다."
       },
       "usage": {
-        "input_tokens": 4086,
-        "output_tokens": 1879,
+        "input_tokens": 4364,
+        "output_tokens": 2155,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01F4N3FgEwnqqvQaJmsMxfns"
+      "response_id": "msg_01YPfCRnvX4pLHMQKP3bSDGa"
     },
     {
       "fqn": "ride.Ride",
@@ -121,31 +118,32 @@
       "snippet_method": "updateMaxVehicles",
       "advice": {
         "risk_reasons": [
-          "Coupling 172 — ride.Ride 는 프로젝트 내 거의 모든 모듈이 직접 참조하는 god-object 로, 한 줄 수정도 광범위한 재컴파일과 회귀 위험을 초래한다.",
-          "GameLoopCentrality 1.0 + CC 18.7778 — Ride::updateMaxVehicles 같은 메서드들이 Update/Tick 호출 그래프에서 핫 패스로 도달 가능하며, 복잡한 제어 흐름(루프, 조건문 중첩)이 매 프레임 실행되어 성능 회귀 위험이 높다.",
-          "DependencyCycle 275(SCC member) — 순환 의존성 구조 내 핵심 노드이므로, 의존성 그래프를 단순화 없이 변경하면 링커 또는 런타임 초기화 순서 오류가 발생할 수 있다.",
-          "GlobalState 9 + 복합 로직 — 메서드 내부에서 static ride entry, station length 계산, 물리 상수(MaxMass, 0x44180) 등을 혼합하므로, 상태 격리 없이 리팩토링하면 싱글톤 의존성이 더 증가할 위험이 있다."
+          "결합도 172 — 129개 클래스가 이 compilation unit을 직접 참조하며, 43개의 외부 클래스에 의존하는 god-object 패턴. 모든 ride 관련 액션(RideCreateAction, RideDemolishAction, RideSetAppearanceAction 등)이 이 단위에 의존하므로, 인터페이스 또는 필드 변경이 프로젝트 전체에 파급된다.",
+          "게임 루프 중심성 1.0 — Ride::Tick/Update 메서드가 game loop entry point이며, 매 프레임마다 실행되는 핫 패스. 여기서의 성능 저하나 예외는 fps에 직접 영향을 미친다.",
+          "순환 의존성 SCC 크기 275 — 이 단위가 포함된 strongly connected component이 275개 노드로 매우 크다. ride 도메인 전체가 순환 결합되어 있음을 의미하며, 리팩토링 시 변경 영향 범위를 정확히 파악하기 어렵다.",
+          "Cyclomatic Complexity 평균 18.78 (상위 10%) — updateMaxVehicles 코드 스니펫에서 보이는 다중 if-else, for 루프, ternary 연산 등이 복합적으로 얽혀 있다. 4964 LOC 규모의 파일에서 메서드 복잡도가 높으면 로직 변경 시 회귀 위험이 커진다."
         ],
         "refactoring_suggestions": [
-          "**케이스별 검증 로직 추출**: updateMaxVehicles 는 `rideEntry->cars_per_flat_ride == kNoFlatRideCars` 여부에 따라 두 갈래로 분기한다. 각 분기를 `validateRollerCoasterCars()`, `validateFlatRideCars()` 같은 작은 헬퍼 함수로 추출하되, 이들 함수는 Ride 의 상태(numCarsPerTrain, minCarsPerTrain 등)를 인자로 받고 계산 결과만 반환하게 설계한다. 이는 CC 를 낮추고 테스트 가능성을 높인다.",
-          "**물리·수학 상수를 별도 구조체로 분리**: 0x44180, 0x16B2A, maxMass 같은 매직 넘버는 게임 루프 핫 패스에서 반복 사용되고 있다. `struct RidePhysicsConstants` 를 정의하여 이들을 캡슐화하고, Ride 생성 시점에 한 번만 계산하도록 변경한다. 이는 매 프레임 계산 부하를 줄이고, 각 상수의 의미를 명확히 한다.",
-          "**Station length 쿼리 캐싱**: RideGetSmallestStationLength(*this) 호출이 복잡한 루프 내에서 발생한다. 스테이션 구조가 변경될 때만 캐시를 무효화하는 방식으로, 매 updateMaxVehicles 호출 시마다 선형 탐색을 피한다. 이는 GameLoopCentrality 핫 패스의 성능 회귀를 방지한다.",
-          "**Coupling 감축은 점진적**: ride.Ride 의 god-object 특성상, 한 번에 모든 의존성을 제거할 수 없다. 대신 새 변경 사항에 한해 RideTypeDescriptor, RideEntry 같은 읽기 전용 데이터에 대한 의존성은 유지하되, 쓰기 가능한 전역 상태(static cache 등)는 매우 신중하게 추가하지 않도록 코드 리뷰 가이드라인을 강화한다."
+          "Ride 클래스를 역할별 파사드로 분해하되, 게임 루프 의존성을 먼저 분리한다. 예: RidePhysicsCalculator(updateMaxVehicles 같은 공학 계산), RideStateManager(상태 전이), RideAudioVisuals(음향/시각 효과) 등으로 추출하되, 초기에는 Ride 내 delegate로 두어 호출 경로는 변경하지 않는 방식으로 진행한다. 이를 통해 game loop entry point는 유지하면서 내부 결합을 낮춘다.",
+          "외부에서 Ride를 참조하는 129개 클래스들이 ride의 어느 필드/메서드에 접근하는지 매핑하고, 공통 쿼리 인터페이스(읽기 전용: getRideStats, getRidePassengerInfo, getRideStatus 등)로 추상화한다. 이를 통해 액션 클래스들이 Ride의 내부 구현이 아닌 계약에 의존하도록 전환한다.",
+          "전역 상태 접근(GlobalState=9) 중 static reference의 출처를 추적한다. ObjectManager, RideManager, Scenario 같은 singleton/static 참조가 정말 필요한지, 아니면 생성자 또는 메서드 인자로 명시적 전달이 가능한지 검토한다. 특히 게임 루프 핫 패스에 있는 메서드(Tick/Update)에서는 불필요한 singleton lookup을 제거하면 성능상 이득이 있을 수 있다.",
+          "updateMaxVehicles 같은 복합 계산 로직을 순수 함수로 추출한다(입력: rideEntry, stationNumTiles, 기존 파라미터들 → 출력: newNumCarsPerTrain, maxNumCarsPerTrain). 이렇게 하면 로직을 독립적으로 테스트·검증할 수 있고, 나중에 SIMD 최적화나 병렬 계산으로 확장할 때도 도움이 된다."
         ],
         "test_priorities": [
-          "**성능 회귀 테스트**: updateMaxVehicles 를 다양한 ride type(rollercoaster, flatride, logic 경로), station count (0, 1, 10+), vehicle 조합(min/max cars)으로 호출하고, 실행 시간(ns 단위)을 메이저·마이너 릴리스마다 측정하는 characterisation test 를 도입한다. GameLoopCentrality 1.0 이므로 프레임 시간 누적 영향이 중요하다.",
-          "**상태 격리 테스트**: updateMaxVehicles 호출 전후 Ride 인스턴스의 필드(numCarsPerTrain, minCarsPerTrain, maxCarsPerTrain)가 유효한 범위에 있는지(rideEntry 제약 조건), 그리고 다른 독립적인 Ride 인스턴스를 수정하지 않는지 검증하는 테스트를 작성한다. coupling 172 로 인한 숨겨진 전역 상태 오염을 탐지한다.",
-          "**의존성 호출 mock 테스트**: GetRideEntryByIndex, getRideTypeDescriptor, RideGetSmallestStationLength 같은 외부 함수 호출을 mock 하여, 각각의 null 반환, 예외, 경계 값에 대한 Ride 의 방어 로직을 테스트한다. 특히 `if (stationNumTiles.has_value())` 분기 누락 시 undefined behavior 를 잡는 것이 중요하다."
+          "Characterisation test: 현재 Ride 클래스의 주요 public 메서드(updateMaxVehicles, tick, setName 등)에 대해 다양한 입력(다른 ride 타입, 역(station) 길이 조건, 객체 미존재 등)에서의 output을 golden snapshot으로 기록한다. 이후 리팩토링 중 이 snapshot과의 차이를 점검하여 의도하지 않은 로직 변경을 조기 탐지한다.",
+          "Performance regression test: 게임 루프 entry point인 Ride::Tick을 100프레임 이상 반복 실행하고, 실행 시간 및 메모리 할당(GC pressure)을 측정한다. 리팩토링(특히 delegate pattern 도입, 인터페이스 추상화) 후에도 같은 성능 기준을 만족하는지 확인한다.",
+          "Dependency injection feasibility test: 현재 코드에서 ObjectManager, RideManager 등 singleton 참조를 constructor parameter로 주입받도록 한 임시 오버로드를 작성하고, 이것이 game loop 호출 경로에서 성능 저하를 일으키는지 측정한다. 불가피한 경우 lazy initialization이나 thread-local caching 같은 대안을 시범한다.",
+          "Circular dependency resolution test: SCC size 275인 순환 참조를 단계적으로 끊으면서, 각 단계마다 컴파일·링크 시간과 runtime behavior가 변하지 않음을 확인한다. 예: ride.Vehicle 의존성을 분리할 때, Vehicle이 여전히 Ride를 역참조하는지, 아니면 추상 인터페이스로 대체 가능한지 먼저 조사한다."
         ],
-        "uncertainty_notes": "메서드 풀 코드가 truncated 되었으므로, 루프의 나머지 부분(numCars 반복 내 실제 계산)과 flatride 분기의 전체 로직을 확인할 수 없다. 따라서 CC 18.7778 이 주로 어느 부분에서 나오는지(루프 깊이? 중첩 조건?), 그리고 Coupling 172 가 ride.Ride 자체의 의존성인지 아니면 포함된 다른 클래스들의 축적인지 정확히 판단하기 어렵다. 또한 updateMaxVehicles 가 게임 루프의 정확히 어느 진입점(Update? Render?)에서 호출되는지 알 수 없으므로, 성능 영향 크기의 예측이 제한적이다. 실제 리팩토링 전에 호출 그래프와 full source 검토가 필수이다."
+        "uncertainty_notes": "코드 스니펫이 updateMaxVehicles의 일부만 제공되어, 전체 메서드의 모든 분기와 exit point를 파악하기 어렵다. 특히 for 루프와 그 내부 조건들이 정확히 몇 개의 경로를 만드는지 불명확하다. 또한 4964 LOC 파일 전체의 메서드 분포(최대 CC, 평균 CC, 메서드 개수)를 알 수 없어, updateMaxVehicles가 대표적 복잡 메서드인지 아니면 예외인지 판단할 수 없다. 의존성 그래프의 129개 fan-in 클래스 중 몇 개가 실제로 game loop 중에 Ride를 호출하는지, 즉 몇 개가 'hot path' 에 있는지도 불명확하며, 이에 따라 리팩토링 우선순위(인터페이스 분리 vs. 상태 추출 vs. 성능 보정)가 달라질 수 있다."
       },
       "usage": {
-        "input_tokens": 4173,
-        "output_tokens": 1845,
+        "input_tokens": 4481,
+        "output_tokens": 1976,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_013MxTRgASKDGu8VqUXs98fA"
+      "response_id": "msg_01AhmLFfiWNkiVN29rkycyRE"
     },
     {
       "fqn": "ride.Vehicle",
@@ -166,30 +164,32 @@
       "snippet_method": "UpdateMeasurements",
       "advice": {
         "risk_reasons": [
-          "결합도 122 — Vehicle 이 속한 SCC(순환 의존성 그룹)가 275개 클래스를 포함하며, 게임 루프 직진입점(GameLoopCentrality=1.0)에서 매 프레임 호출되는 핫 패스다. 이는 ride, station, window manager 등 거의 모든 게임 시스템에 강하게 결합되어 있음을 의미하며, 한 곳의 변경이 전체 물리·UI 시스템에 파급된다.",
-          "메서드 복잡도 CC~40 (상위 10% 평균)과 UpdateMeasurements 의 깊은 중첩 조건문·전역 상태 접근 (windowMgr, flags 읽기/쓰기)으로 인해 테스트 전제 조건이 매우 많다. 각 if 분기마다 Ride, Station, Window 객체 상태가 영향을 주고받는 구조로, 한 가지 상태 변경이 예상 밖의 경로를 타게 될 위험이 높다.",
-          "GameLoopCentrality=1.0 은 Vehicle::Update 등이 매 프레임 실행됨을 의미한다. UpdateMeasurements 내에서 일어나는 모든 상태 변경(averageSpeedTestTimeout 증감, flags.set/unset, Ride 객체 뮤테이션)은 성능과 안정성에 직결되며, 예외 또는 early return 시 다음 프레임 상태 불일치가 누적될 수 있다."
+          "결합도 122 (fan-out 35개, fan-in 87개) — 게임 내 대부분의 엔티티, 액션, 윈도우 시스템이 Vehicle 을 직접 의존하는 핵심 god-object 패턴. 이 클래스 변경은 수십 개 모듈에 ripple effect 를 발생시킨다.",
+          "GameLoopCentrality 1.0 — UpdateMeasurements, Update 등 메서드들이 매 프레임 게임 루프에서 직접 호출되는 핫 패스. 이 코드는 밀리초당 누적되므로, 성능 회귀나 GC 압력 증가가 즉시 fps 에 반영된다.",
+          "순환 의존성 (DependencyCycle 275, SCC 멤버) — Ride, RideData, GameState, World 등 상호 참조 구조에서 Vehicle 은 중심에 있어, 호출 흐름을 추적하거나 테스트 고립이 극도로 어렵다. 변경 영향을 정적 분석으로 추적 불가능한 구간이 존재할 수 있다.",
+          "CC 39.5 (상위 10% 평균) — UpdateMeasurements 메서드 스니펫만 보아도 다중 조건부(status, station 검증, timeout 로직), 플래그 조작, 윈도우 매니저 호출 등이 얽혀 있어, 한 번의 논리 변경이 여러 분기를 동시에 영향한다."
         ],
         "refactoring_suggestions": [
-          "Ride 상태 쿼리(currentTestStation, currentTestSegment, averageSpeedTestTimeout)를 Vehicle 로컬 변수로 캐시하는 래퍼 메서드 도입. 매 프레임마다 Ride 객체를 통한 간접 접근을 줄여 결합도를 낮추고, 테스트 시에는 mock Ride 를 주입하기 쉽게 한다. 단, 캐시 동기화 메커니즘(dirty flag, generation counter)을 명확히 문서화해야 한다.",
-          "UpdateMeasurements 를 측정 도메인(speed test, timeout 관리)과 UI 갱신(windowMgr invalidation, flags 설정) 두 부분으로 분리. speed test 로직을 pure function 에 가깝게 변환(Ride → measurement result 만 반환)하고, UI 갱신은 호출자에게 위임하도록 리팩토링. 이는 게임 루프 중복 호출 시 불필요한 UI invalidation 을 제거하고 테스트 편의성을 높인다.",
-          "SCC 크기 275 는 순환 의존성이 심각함을 의미한다. ride, vehicle, station 간의 직접 양방향 참조를 식별하고, 일부를 이벤트/콜백 또는 옵저버 패턴으로 치환해 의존성 방향을 단방향화한다. 예를 들어 'Vehicle test segment 변경' 이벤트를 Ride 가 구독하는 방식으로, 역 참조를 제거할 수 있다. 단, 게임 루프 핫 패스에서는 이벤트 큐 오버헤드를 측정해야 한다.",
-          "Ui::GetWindowManager() 같은 싱글톤 접근을 최상위 호출자(game loop tick)에서 명시적 주입 파라미터로 변환. Vehicle::Update(WindowManager& windowMgr, Ride& ride, ...) 형태로 의존성을 명시화하면, 단위 테스트에서 fake/mock 을 쉽게 제공할 수 있고, 전역 상태 의존도(GlobalState=8) 를 점차 제거할 수 있다."
+          "Vehicle 의존성을 단계별로 계층화하기 — 현재 87 개 클래스가 Vehicle 을 직접 참조하는데, 이 중 '엔티티 속성 읽기'(LightListEntry, ItemPref 등)와 '게임 로직 변경'(CheatSetAction, Editor 등) 을 분리하는 read-only facade 또는 event-driven interface 를 도입. 급격한 변경 대신, 인접한 5~10 개 호출처부터 interface 로 전환하여 점진적으로 결합도를 낮춘다.",
+          "UpdateMeasurements 의 상태 머신 단계를 명시적 enum / visitor pattern 으로 분해 — 현재 메서드는 travellingBoat, testInProgress, averageSpeedTestTimeout 등 여러 상태 전이를 한곳에서 관리. status, flags 값별로 상태별 핸들러를 분리하고, 매 상태 전이에서 윈도우 갱신·플래그 변경을 독립적 콜백으로 옮기면 각 분기의 부작용(side effect)이 명확해진다.",
+          "전역 state 접근(Ui::GetWindowManager(), GetRide() 등) 을 Vehicle 생성 시점에 주입받는 컨텍스트로 변경 — 현재 UpdateMeasurements 는 매 호출마다 전역 윈도우 매니저를 조회. 이는 핫 패스에서 성능 이슈 + 테스트 고립 불가. Vehicle 을 구성할 때 RideRef, WindowManager 를 DI 패턴으로 전달하되, 핫 패스 성능(캐시 미스, 가상 호출 오버헤드) 은 benchmarking 하여 실제 fps 영향을 측정한 뒤 적용.",
+          "UpdateMeasurements 의 통계 누적 로직(averageSpeedTestTimeout 등) 을 별도 'RideTestState' 혹은 'MeasurementAccumulator' 객체로 추출 — 현재 Ride 와 Vehicle 모두 테스트 상태를 관리하는 중복 책임. 이 로직을 3rd 클래스로 옮기고 Ride 와 Vehicle 이 이를 query 하는 구조로 바꾸면, 테스트 시나리오를 독립적으로 구성할 수 있다."
         ],
         "test_priorities": [
-          "UpdateMeasurements 의 각 분기별 characterisation test 작성: (1) status==travellingBoat 시 Ride flags 상태 변화 검증, (2) currentTestStation 이 null 일 때 early return 검증, (3)정상 측정 시 averageSpeedTestTimeout 증감 및 한계값 처리 검증. 각 테스트는 초기 상태(Ride, Station, Vehicle flags)를 명시적으로 설정하고 후속 상태를 assertion 한다.",
-          "게임 루프 핫 패스 성능 회귀 테스트(performance regression test): Vehicle 1000개가 UpdateMeasurements 를 매 프레임 호출할 때 CPU 시간과 메모리 할당량을 baseline 으로 기록. 리팩토링(예: Ride 쿼리 캐싱, 이벤트 도입) 후에도 기준점 대비 ±5% 내 성능 유지 검증.",
-          "Ride ↔ Vehicle 간 상태 동기화 golden master test: 복잡한 test 시나리오(여러 station, multiple segments)를 긴 기간 시뮬레이션하고, 최종 Ride test statistics 와 Vehicle flags 상태를 golden 기준과 비교. SCC 분해 과정에서 순환 참조 변경으로 인한 미묘한 상태 불일치를 조기에 발견한다."
+          "Vehicle 모듈 내 상태 전이 characterisation test — 현재 게임 코드는 UpdateMeasurements 의 정확한 사이드 이펙트(어떤 조건에서 어떤 플래그가 변하고, 윈도우가 언제 갱신되는지)를 명시적으로 문서화한 테스트가 부족할 가능성 높음. 상태별(travellingBoat, testInProgress 등) 입력 케이스를 만들고, 출력 플래그/윈도우 갱신 호출을 golden master 로 기록해 회귀 방지.",
+          "Vehicle 변경이 87 개 의존 클래스에 미치는 영향 범위 분석 테스트 — 리팩토링 전, Vehicle API 의 구간별 변경(예: GetRide() 반환 타입 변경, status 필드 접근 제한 등)에 대해 compile-time 과 runtime 양쪽에서 어느 모듈이 영향받는지 매핑. 의존성 그래프의 cut-edge 를 식별해 우선 리팩토링 대상 결정.",
+          "UpdateMeasurements 성능 회귀 테스트 (fps / memory) — 매 프레임 호출되는 메서드이므로, 리팩토링 전후 프로파일 데이터(cpu time, allocation count, GC pause) 를 측정하는 benchmark 구성. 특히 DI 패턴 도입 시 가상 호출 오버헤드가 누적되지 않는지 확인.",
+          "Vehicle 의 전역 상태 접근(GetWindowManager, GetRide 등) 을 격리하는 stub/mock test — 현재 8 개의 전역 접근 지점이 있는데, 각각을 mock 으로 대체했을 때 UpdateMeasurements 의 논리가 동일하게 작동하는지 검증. 이를 통해 향후 DI 전환 시 동치성 보장."
         ],
-        "uncertainty_notes": "코드 스니펫이 UpdateMeasurements 의 일부만 제시되어 전체 길이(766줄)와 분기 분포를 확실히 파악하기 어렵다. 특히 전역 상태 접근(GlobalState=8)이 낮게 평가된 이유가 정적 필드가 적기 때문인지, 아니면 Ui::GetWindowManager() 같은 싱글톤 호출이 다른 메서드에 집중되어 있기 때문인지 명확하지 않다. 또한 SCC 크기 275가 ride.cpp 전체에 분산되어 있는지, Vehicle.cpp 내 특정 클래스에 집중되어 있는지 알 수 없어, refactoring 우선순위 결정에 불확실성이 있다. 대략적인 호출 그래프 시각화(graphviz dot)와 SCC 멤버 목록 확인이 실제 리팩토링 전에 권장된다."
+        "uncertainty_notes": "코드 스니펫이 일부(line 455~766 중 처음 몇십 줄)이므로, UpdateMeasurements 의 전체 분기 수(actual CC)와 누락된 side effect 를 완전히 파악하기 어렵다. 또한 Vehicle 이 vehicle.cpp 단일 파일 내에만 있는지, 여러 헤더 파일의 Vehicle 클래스/함수가 더 있는지 불명. DependencyCycle 275 는 매우 큰 SCC 크기를 시사하는데, 순환 의존성의 실제 경로(Vehicle ← Ride ← World ← Entity ← ...)를 그려보지 않아 어느 단계에서 끊을 수 있을지 확실하지 않다. 성능 핫 패스 여부도 UpdateMeasurements 호출 빈도(매 프레임인지, 특정 상태에서만인지)에 따라 달라질 수 있으므로 profiling 정보가 필요하다."
       },
       "usage": {
-        "input_tokens": 4128,
-        "output_tokens": 1894,
+        "input_tokens": 4394,
+        "output_tokens": 2130,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_015TZDH2Ai3WVmJCcQHASe6j"
+      "response_id": "msg_018jqcvb8UEUioCfhK1YyViA"
     },
     {
       "fqn": "drawing.Drawing",
@@ -210,32 +210,32 @@
       "snippet_method": "UpdatePaletteEffects",
       "advice": {
         "risk_reasons": [
-          "결합도 164 — 거의 모든 게임 모듈(ObjectEntryManager, Weather, Gfx, Palette 시스템)이 직접 의존하므로, 이 파일의 작은 변경이 광범위한 재빌드 및 회귀 테스트를 유발한다.",
-          "GameLoopCentrality 0.5 — 게임 렌더 루프(매 프레임)의 핫 패스에서 직접 호출되므로, 성능 저하(fps 감소, 메모리 할당) 또는 예외가 실시간 게임 플레이를 즉시 영향시킨다.",
-          "전역 상태 의존도 43 — gGamePalette, gLightningFlash, ObjectEntryManager::Instance 같은 정적 싱글톤에 깊게 결합되어 있어, 단위 테스트 불가능하고 상태 순서 변경에 취약하다.",
-          "순환 의존성 SCC 크기 275 — 본 파일이 포함된 순환 의존 클래스 그룹이 매우 크므로, 이 그룹 내 어떤 변경도 예측 어려운 파급 효과를 일으킬 수 있다."
+          "결합도 164(팬인 153 + 팬아웃 11) — 거의 모든 액션/UI 모듈이 이 드로잉 단위에 의존하므로, 여기서의 변경이 수백 개 호출처에 파급된다. 순환 의존성 SCC 크기 275는 끊어낼 수 없는 강한 결합을 의미한다.",
+          "게임 루프 중심성 0.5(매우 높음) — UpdatePaletteEffects 등 메서드가 Render/Draw 진입점에서 호출되는 핫 패스 상에 있으므로, 매 프레임 성능 영향을 점검해야 한다. 팔레트 업데이트, 메모리 순회(gGamePalette 배열 루프)가 누적되면 fps 저하가 발생할 수 있다.",
+          "전역 상태 접근 43회 — gGamePalette, Weather::gLightningFlash, gLightningDirection 같은 정적 변수를 직접 읽고 수정한다. 이로 인해 테스트 고립이 어렵고 부작용이 예측 불가능해진다.",
+          "CC 15.5(상위 10% 평균) — UpdatePaletteEffects 메서드 본체에만 다중 조건 분기(weather check, null check, palette type dispatch)가 중첩되어 있어, 장기 유지보수 시 새로운 기상 또는 팔레트 모드 추가 시 복잡도가 급증할 위험이 있다."
         ],
         "refactoring_suggestions": [
-          "먼저 UpdatePaletteEffects 내 전역 상태 접근(gGamePalette, gLightningFlash, Weather::gLightningFlash)을 파라미터화된 helper 함수로 추출하되, 게임 루프의 핫 패스 성능을 해치지 않도록 호출 빈도별로 점진적으로 진행한다. 예를 들어 palette 버퍼 read/write를 인접 Renderer 계층에만 노출하고, Weather 상태는 명시적 인자로 전달하는 식이다.",
-          "ObjectEntryManager 싱글톤 접근을 WeakPtr 또는 캐시된 entry pointer로 변경하여, 매 프레임 ObjectEntryManager 인스턴스 조회 비용을 제거한다. 이는 느슨한 결합을 유지하면서 성능 저하를 방지한다.",
-          "Palette 업데이트 로직(UpdatePalette 호출 부분)을 별도의 PaletteUpdateQueue 또는 command 패턴으로 지연 실행화하되, 실제 gGamePalette 변조는 렌더 스레드의 critical section 외부에서 한 번만 일어나도록 한다. 이는 race condition 위험을 낮추고 god-object(gGamePalette)의 관리 책임을 명확히 한다.",
-          "현재 ~474 LOC 파일을 EffectsUpdate(weather), PaletteUpdate(rendering), EffectsFactory(entry 로드) 세 개의 더 작은 단위로 분해하되, 각 단위가 독립적으로 테스트 가능하도록 의존성을 invert한다(dependency injection 또는 strategy pattern)."
+          "**전역 팔레트 상태를 컨텍스트 객체로 감싸기** — gGamePalette, gLightningFlash, gLightningDirection을 GamePaletteState 같은 명시적 객체로 캡슐화하고, Drawing 생성 시 주입받도록 변경. 이렇게 하면 테스트에서 팔레트 상태를 mock 할 수 있고, 향후 멀티플레이어/리플레이 기능에도 대응 가능해진다. 핫 패스(Render) 성능은 포인터 역참조 1~2 단계 추가로 무시할 수준이다.",
+          "**기상 효과 업데이트를 전략 패턴으로 분리** — Weather::gLightningFlash, gRainLevel 같은 기상 상태별 팔레트 변환 로직을 WeatherPaletteStrategy 인터페이스로 추출. UpdatePaletteEffects를 호출할 때 현재 날씨에 맞는 전략만 실행하도록. 이렇게 하면 메서드 복잡도를 낮추고, 향후 새로운 기상 모드 추가 시 기존 코드 수정 대신 새 전략만 구현하면 된다.",
+          "**팬인 모듈의 의존성을 간접화** — 현재 153개 모듈(모든 액션 클래스)이 Drawing을 직접 import 한다. 이들이 실제로 필요한 것은 DrawText, DrawRect 같은 구체적 함수 몇 개뿐이다. 이를 IDrawingContext 인터페이스로 추상화하고, 각 액션은 인터페이스만 의존하도록 변경하면, Drawing 내부 리팩토링이 액션 코드에 영향을 주지 않는다.",
+          "**팔레트 업데이트 루프의 성능 프로파일링** — UpdatePaletteEffects 내 gGamePalette 배열 순회(for i in 0..numColours)가 매 프레임 실행되므로, 팬인 크기 변경 전에 성능 회귀 테스트를 작성해 frame time 증가를 감시한다. 필요시 팔레트 업데이트 빈도를 낮추거나, 더티 플래그 방식으로 변경된 색상만 업데이트하는 최적화를 고려할 수 있다."
         ],
         "test_priorities": [
-          "Characterisation test — UpdatePaletteEffects 호출 시 gGamePalette 특정 범위의 변경 전후 상태를 golden master로 기록한 뒤, 향후 리팩토링 후 바이트 단위로 동등성을 검증한다. 게임 루프의 시각 품질(color shift, lightning flash effect)이 의존하므로 회귀 감지가 필수다.",
-          "Performance regression test — 밀리초 단위 프로파일링으로 UpdatePaletteEffects의 wall-clock time을 측정하고(특히 palette 루프), 리팩토링 후 동일한 fps 유지 여부를 확인한다. WeatherSystem 상태 변화(gLightningFlash 값)에 따른 분기 커버리지도 함께 기록한다.",
-          "Dependency isolation test (mock) — ObjectEntryManager, Weather, GfxGetG1Palette 세 외부 의존성을 mock 또는 stub으로 교체하고, UpdatePaletteEffects가 null entry/null palette 같은 경계 조건에서 안전한 동작을 검증한다(현재 코드는 nullptr check가 부분적). 이는 순환 의존성 그룹과의 결합을 느슨히 하는 데 도움이 된다.",
-          "Circular dependency trace test — SCC 275 내에서 본 파일을 포함하는 순환 경로를 DFS로 추출하고, 각 경로상 최소 한 의존성을 끊을 수 있는지 사전 검증한다. 리팩토링 전 순환성 제거 시나리오를 명확히 하면 변경 범위를 제한할 수 있다."
+          "**기상 효과 팔레트 변환 characterisation test** — 번개/폭우 상태별로 gGamePalette 배열의 RGB 값이 예상 공식(예: blue = -((0xFF - g1Entry.blue) / 2) - 1)에 따라 변환되는지 확인하는 golden master 테스트. 기존 동작을 '정답'으로 기록해 두고, 리팩토링 후에도 동일한 팔레트 값이 나오는지 검증한다.",
+          "**의존성 주입 + 모킹 통합 테스트** — Drawing 생성 시 mock GamePaletteState, mock WeatherContext를 주입해, 전역 상태 없이 UpdatePaletteEffects가 올바르게 호출되는지 테스트. 이를 통해 리팩토링 후 153개 호출처의 동작이 보장됨을 증명한다.",
+          "**프레임 시간 회귀 테스트** — UpdatePaletteEffects를 1000회 반복 호출했을 때 소요 시간을 측정하는 성능 테스트. 리팩토링(전략 패턴 분리, 컨텍스트 주입) 전후 프레임 시간이 ±5% 이내임을 확인해, 최적화 후보(더티 플래그, 배열 크기 축소)를 검증한다.",
+          "**팬인 호출 연쇄 테스트** — 액션 클래스 몇 개(CheatSetAction, RideDemolishAction)에서 Drawing::DrawText/DrawRect를 호출하는 시나리오를 자동화. 인터페이스 추상화 후에도 기존 액션 코드가 컴파일되고 실행되는지 확인한다."
         ],
-        "uncertainty_notes": "코드 스니펫이 일부 절단(line 747-899)되어 있으므로, UpdatePaletteEffects의 전체 길이, 추가 전역 상태 접근(gGamePalette 외 다른 static palette 버퍼), 그리고 Weather::gLightningFlash 값 범위(lightning 지속 프레임 수)를 정확히 파악하기 위해선 전체 메서드 본문이 필요하다. 또한 이 메서드의 호출 빈도(모든 프레임 vs. weather 변화 시 1회)가 정확히 문서화되어 있지 않아, 성능 최적화 우선순위가 부분적으로 추측에 의존한다. DependencyCycle 값 275가 실제 SCC 크기인지, 아니면 누적 complexity 지수인지 확인이 필요하다."
+        "uncertainty_notes": "코드 스니펫이 부분 발췌이므로, UpdatePaletteEffects 메서드의 전체 라인 수(747~899)와 정확한 CC 값을 확인할 수 없다. 또한 Weather::gLightningFlash 같은 외부 정적 변수의 수정 빈도와 크기를 알 수 없어, 전역 상태 43회 중 몇 개가 쓰기인지 추정만 가능하다. Drawing이 어떤 렌더링 백엔드(GDI, Direct3D, OpenGL)를 사용하는지에 따라 팔레트 업데이트의 성능 특성이 달라질 수 있으므로, 플랫폼별 회귀 테스트가 필요할 수 있다. 또한 순환 의존성 SCC 275가 Drawing 클래스 자체의 순환 참조인지, 아니면 Drawing을 포함한 상위 모듈 수준의 순환인지 불명확하여, 리팩토링의 실효성 판단에 불확실성이 남아 있다."
       },
       "usage": {
-        "input_tokens": 4178,
-        "output_tokens": 1690,
+        "input_tokens": 4465,
+        "output_tokens": 2117,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0
       },
-      "response_id": "msg_01TANfrHY7N8AvUZZSJZuqDK"
+      "response_id": "msg_01JBrmSmE78BUjoY5zJgc4Jg"
     }
   ],
   "notes": []

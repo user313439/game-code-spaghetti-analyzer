@@ -1,118 +1,115 @@
 # Chocolate Doom — LLM 리팩토링 가이드 (Phase C)
 
 - 모델: `claude-haiku-4-5`
-- 토큰 사용: input=20,135 output=9,724 cache_write=0 cache_read=0 (cache hit ≈ 0.0%)
-- 예상 비용: **$0.0688** USD
+- 토큰 사용: input=21,113 output=9,226 cache_write=0 cache_read=0 (cache hit ≈ 0.0%)
+- 예상 비용: **$0.0672** USD
 
 ## 1. [E] G-SI 100.0 — `i_system`
 `i_system.c` · CC=12.0  CP=156  GS=22  GLC=0.3333
 
 **위험 원인**
-- 결합도 156 — 156개의 외부 타입/단위를 참조하거나 참조받으며, 이는 거의 모든 모듈이 이 compilation unit 에 직·간접적으로 의존함을 의미한다. 변경 시 광범위한 회귀 테스트가 필수이다.
-- 순환 의존성 SCC 크기 32 — 32개 단위가 순환 의존성 강연결 요소(strongly connected component)를 형성하고 있어, 버전 업그레이드나 리팩토링 시 고리를 끊을 경로를 신중하게 계획해야 한다.
-- 전역 상태(GlobalState) 22회 — `static` 변수 초기화(`firsttime`), 커맨드라인 인자 접근(`myargv`), DOS 메모리 덤프 캐시 등 정적 상태가 메서드 간에 공유되어 테스트 격리 및 멀티스레드 안전성을 심각하게 제약한다.
-- 게임 루프 중심성 0.3333 — 낮은 값이지만 DOS 호환성/메모리 에뮬레이션은 전체 게임 라이프사이클에 영향을 주는 초기화 루틴이므로, 게임 시작 핸들러에서 단 한 번이라도 호출되면 모든 프레임에 미치는 global state 오염 위험이 있다.
+- 결합도 156으로 프로젝트 내 절대다수 모듈(146개)이 직접 의존하는 god-object 패턴이다. 이 단위의 한 줄 변경도 전체 프로젝트에 파급될 수 있으며, 이미 32개 클래스가 포함된 순환 의존성 SCC의 핵심 멤버로 작용하고 있다.
+- 정적 mutable 필드(static boolean firsttime 등) 22개를 통해 전역 상태에 강하게 의존한다. 메모리 접근 초기화 상태를 static 변수로 관리하므로 멀티스레드 게임 루프나 병렬 초기화 시나리오에서 race condition 위험이 있다.
+- GameLoopCentrality 0.3333으로 진입점으로부터 평균 3~4 단계 떨어져 있어 I/O 초기화(타이머, 비디오, 사운드, 조이스틱) 루틴이 메인 루프 시작 경로에 포함된다. 이 코드의 성능 저하나 exception은 게임 시작 시간 및 초기 프레임에 직접 영향을 미친다.
 
 **리팩토링 제안**
-- 전역 상태를 명시적 컨텍스트 객체로 캡슐화하라. `struct DosEmulationState { static_bool firsttime; int dos_version; void *mem_dump; }` 같은 형태로 도스 호환성 설정을 분리하고, 이를 초기화 단계에서 한 번만 구성한 뒤 필요한 함수에 인자로 전달하는 방식으로 전환하면 GlobalState 접근을 줄일 수 있다. 단, 게임 루프 핫 패스에서는 성능 영향을 검증해야 한다.
-- 순환 의존성 SCC(크기 32)를 끊기 위해 먼저 의존성 그래프를 시각화하고, 가장 많이 참조되는 2~3개 hub unit(아마도 전역 설정, 메모리 관리 등)을 찾아 이들을 분리된 읽기 전용 configuration 모듈로 추출하라. 이를 통해 SCC를 여러 개의 작은 DAG(비순환 그래프)로 분해할 수 있다.
-- `I_GetMemoryValue`의 초기화 로직(버전 감지, 메모리 덤프 선택)을 별도의 `I_InitDosEmulation()` 함수로 분리하고, 게임 시작 시점(메인 루프 이전)에 명시적으로 호출하라. 이렇게 하면 런타임 중 상태 갱신이 불가능하도록 강제할 수 있고, 테스트 시에는 `I_InitDosEmulation` 호출을 mock 하거나 고정 설정으로 대체 가능해진다.
-- 고도의 결합도(156)는 `i_system.c`가 도메인-중립적인 시스템 추상화(메모리, DOS 호환성, 플랫폼 인터페이스)를 담당하기 때문일 가능성이 높다. 이 경우 모든 변경이 광범위 영향을 미치므로, 먼저 공개 인터페이스를 안정화하고 semantic versioning을 도입하는 것이 리팩토링보다 우선이다. 변경이 필요하면 신규 함수를 추가하되, 기존 함수는 deprecated 로 표시하고 충분한 마이그레이션 기간을 둔다.
+- i_system.c를 추상적 인터페이스(예: ISystemMemory, ISystemTimer)로 분리해, 핵심 god-object 의존성을 줄인다. 다만 146개 모듈의 의존성이 있으므로 점진적으로 진행해야 하며, 우선 d_loop, g_game, d_main 같은 상위 모듈의 호출 사이트부터 래퍼를 적용한 뒤 하위 모듈로 확산시킨다.
+- static mutable 필드들(firsttime, dos_mem_dump 등)을 매개변수 또는 명시적 컨텍스트 구조체로 전환한다. I_GetMemoryValue의 초기화 로직을 별도 I_InitMemoryEmulation() 함수로 분리해 첫 호출 시점을 제어자에게 명확히 하고, 순환 호출을 방지한다.
+- 순환 의존성 SCC(크기 32)를 break 하기 위해 의존성 그래프에서 가장 약한 링크(i_timer → m_argv 같은 선택적 의존성)를 찾아 제거한다. 특히 deh_main, m_misc, w_wad 간 순환을 먼저 정리해 SCC 크기를 축소한다.
+- I/O 초기화 루틴(I_InitTimer, I_InitVideo, I_InitSound, I_InitJoystick)을 별도 모듈 i_init.c로 추출하고, 매인 루프 시작 전 한 번만 호출하는 명시적 부팅 시퀀스를 도입한다. 이를 통해 게임 루프 중 예기치 않은 재초기화를 방지하고 성능 핫 패스와의 경계를 명확히 한다.
 
 **테스트 우선순위**
-- 특성 테스트(Characterisation Test)를 작성하라: `i_system.c`의 모든 공개 함수(특히 `I_GetMemoryValue`, 메모리 할당/해제, DOS 버전 감지 함수)를 현재 동작 그대로 기록하는 테스트를 작성하여 의도하지 않은 변경을 탐지한다. 이는 광범위한 의존성 때문에 회귀 테스트의 기초가 된다.
-- 초기화 순서 및 상태 격리 테스트: 같은 테스트 프로세스 내에서 DOS 버전(`dos622`, `dos71`, `dosbox`)별로 `I_GetMemoryValue`를 여러 번 호출하되, 각 호출 전에 static 상태를 완전히 리셋할 수 있는 `I_ResetDosEmulation()` 함수를 구현하고 이를 검증하는 테스트를 추가한다. 이를 통해 전역 상태로 인한 테스트 간섭을 격리할 수 있다.
-- 회귀 테스트(Regression Test, 또는 스냅샷 테스트): `i_system.c`가 참조하는 상위 10개 fan-in 모듈(최대한의 의존자)에 대해, 각 모듈의 주요 API 호출 시 `i_system.c`의 메모리 및 상태 동작이 불변임을 검증하는 통합 테스트를 작성하라. 이는 SCC 순환 의존성 변경 시 연쇄 실패를 사전에 감지한다.
-- 성능 회귀 테스트: `I_GetMemoryValue`를 루프에서 반복 호출하여 초기화 로직 분리 후 성능 저하가 없음을 확인하는 테스트를 작성하라. 전역 상태 캡슐화로 인한 인자 전달이나 메모리 접근 패턴 변화가 게임 루프 프레임 시간에 영향을 미칠 수 있기 때문이다.
+- i_system 내 모든 public 함수(I_GetMemoryValue, I_Sleep, I_GetTimeMS 등)의 현재 동작을 characterisation test로 기록한다. 각 함수가 특정 입력에 대해 반환하는 값, side-effect(전역 상태 변화, 파일 I/O), 첫 호출 vs 재호출 시 차이를 golden master 형태로 저장해, 리팩토링 중 회귀를 즉시 탐지할 수 있도록 한다.
+- i_system이 의존하는 10개 모듈(i_timer, m_argv, m_misc, w_wad, i_video, i_sound, i_joystick, z_zone 등)과의 호출 순서 및 초기화 순서 의존성을 integration test로 검증한다. 특히 M_CheckParmWithArgs(-setmem) → dos_mem_dump 초기화 경로와 I_InitTimer → m_argv 의존성을 명시적으로 테스트해 순환 호출 위험을 노출시킨다.
+- I_GetMemoryValue의 static firsttime 플래그와 관련된 thread-safety test를 작성한다. 병렬 호출 시뮬레이션(예: 두 스레드가 동시에 첫 호출)에서 dos_mem_dump 초기화가 정확히 한 번만 일어나는지, 또는 race condition이 발생하는지 확인한다. 현재 코드가 single-threaded 가정이라면 그 제약을 명시적으로 문서화한다.
+- 게임 시작 후 첫 프레임과 100프레임 이후 i_system 함수 호출 비용의 성능 regression test를 설정한다. I_Sleep, I_GetTimeMS 같은 루프 내 호출이 초기화 상태에 따라 성능 편차를 보이는지 모니터링해, 리팩토링 중 프레임율 저하를 조기에 감지한다.
 
-_불확실성: 코드 스니펫이 메서드 초기화 부분만 노출되어 있어 I_GetMemoryValue의 전체 로직과 다른 메서드들의 상호작용을 파악하기 어렵다. 결합도 156과 SCC 크기 32의 정확한 의존성 구조(즉, 어느 모듈들이 i_system.c를 참조하는지, i_system.c가 어떤 모듈에 의존하는지)를 시각화하지 않고서는 순환 의존성을 끊을 최적 지점을 단정하기 어렵다. 또한 Chocolate Doom(본 도구의 대상 프로젝트로 추정됨)의 게임 루프 아키텍처상 i_system이 실제로 어느 초기화 단계에서 호출되는지 불분명하므로, GameLoopCentrality 0.3333이 '낮은' 값인지 '높은 위험' 값인지 정확히 판단하려면 D_DoomMain이나 메인 게임 루프 함수와의 호출 그래프를 확인해야 한다._
+_불확실성: 코드 스니펫이 I_GetMemoryValue 메서드만 제시되어 있어, 나머지 315줄의 구조(다른 public 함수, 초기화 루틴, 전역 상태의 규모)를 정확히 파악할 수 없다. 특히 순환 의존성 SCC 크기 32가 i_system 자신뿐만 아니라 의존하는 10개 모듈과 의존되는 146개 모듈 일부를 포함하는지, 아니면 i_system 내부의 상호 참조 때문인지 불명확하다. 또한 GameLoopCentrality 0.3333이 초기화 코드(비-핫 패스)에만 적용되는지, 아니면 I_Sleep이나 I_GetTimeMS 같은 메인 루프 내 빈번 호출 함수까지 평균한 것인지 확인 필요하다. 최종 리팩토링 전략은 이 파일의 함수별 호출 빈도와 게임 루프 의존성을 더 정밀하게 분석한 후 수립하기를 권고한다._
 
 ## 2. [E] G-SI 99.7 — `m_misc`
 `m_misc.c` · CC=10.0  CP=116  GS=0  GLC=0.5
 
 **위험 원인**
-- 결합도 116 — 프로젝트 내 거의 모든 모듈이 `m_misc` 의 유틸리티 함수(문자열 처리, 파일 시스템, 메모리)를 의존하므로, 이 파일의 변경은 전체 시스템에 파급된다.
-- 순환 의존성(SCC 크기 32) — `m_misc` 는 대형 순환 의존성 그룹의 일부로, 다른 31개 모듈과 직간접 순환 참조 관계를 가지고 있어 변경 영향도 예측이 어렵다.
-- god-module 패턴 — 파일 I/O, 문자열 유틸, 메모리 관리, 경로 정규화 등 핵심 유틸리티가 한 곳에 집중되어 있으며, 이 모듈 없이는 거의 모든 게임 시스템이 작동할 수 없다.
-- 게임 루프 진입점 도달(GameLoopCentrality 0.5) — `M_FileCaseExists` 같은 메서드가 리소스 로딩 경로에서 호출될 수 있어, 변경 시 fps 또는 로딩 성능 회귀 위험이 있다.
+- 결합도 116 — 114개 클래스가 이 단위에 의존하며, 게임 초기화·네트워크·UI·렌더링 등 거의 모든 모듈의 유틸리티 허브 역할. god-object 패턴으로, 한 줄의 변경도 전 프로젝트에 파급 가능.
+- 순환 의존성 SCC 크기 32 — 이 파일이 속한 강연결 요소에 32개 단위가 얽혀 있으므로, 이 모듈의 API 변경이나 내부 의존성 재구성 시 순환 고리 전체가 영향을 받아 디버깅이 극도로 어려움.
+- CC 평균 10.0 (상위 10%) — 개별 메서드는 중간 정도이지만, 예시 메서드 `M_FileCaseExists` 처럼 다중 경로(파일 존재 확인 로직 6개 케이스 분기)를 포함한 유틸리티 함수들이 누적되어, 테스트 커버리지 확보가 번거로움.
+- 게임 루프 중심성 0.5 — 직접 진입점은 아니지만, `d_main`, `d_loop`, `g_game` 등 핵심 게임 루프 드라이버 14개가 직접 의존하므로, 여기 버그나 성능 저하는 매 프레임 누적 영향을 줌.
 
 **리팩토링 제안**
-- 순환 의존성 깨기: `m_misc` 를 기본 유틸 레이어(문자열, 메모리만)로 축소하고, 파일 시스템 관련 함수(예: `M_FileCaseExists`, `M_FileExists`)를 별도 모듈 `d_fileio.c` 로 추출하며, 그 모듈이 `m_misc` 만 의존하도록 의존성 그래프를 일방향화한다. 이는 SCC 크기 감소와 god-module 해체의 첫 단계가 될 수 있다.
-- 파일 시스템 추상화 계층: 현재 `M_FileCaseExists` 등이 직접 POSIX/Windows 경로 조작을 하고 있다. 플랫폼 별 경로 로직을 `d_fileio` 모듈 내 작은 함수 몇 개로 캡슐화하면, 향후 가상 파일 시스템(VFS) 지원이나 테스트 시에 mocking 하기 용이해진다.
-- 호출자 별 의존성 분석: 현재 결합도 116 의 fan-in/fan-out 을 세부 분석하여, 어느 함수가 가장 자주 호출되는지 파악한 뒤, 상위 5~10개 의존 함수만 `m_misc` 에 두고 나머지는 전문 모듈로 이동하는 점진적 전략을 수립한다.
-- 순환 참조 브레이킹 시뮬레이션: 변경 전에 의존성 그래프 도구(Graphviz 등)로 SCC 크기 32 의 구성 모듈을 시각화하고, 어느 간선 제거가 가장 효과적일지 모의한다. 게임 로직과 유틸이 섞여 있을 가능성이 높으므로, 도메인 경계를 먼저 그어야 한다.
+- **유틸리티 계층화**: 현재 114개 의존자를 보면 파일 시스템(`M_FileCaseExists`, `M_FileExists`)·문자열(`M_StringDuplicate`)·메모리 추상화가 뒤섞여 있음. 최소한 `file_utils.c` / `string_utils.c` 로 논리적 부분집합을 추출해 각각의 인터페이스를 작게 유지하면, 단일 모듈 변경 시 영향 범위를 줄일 수 있음. SCC 크기 32 는 이런 계층 분리로 감소 가능.
+- **플랫폼 추상화 강화**: `M_FileCaseExists` 가 `DIR_SEPARATOR` 같은 플랫폼 의존성을 직접 다루고 있음. 이들을 `i_system` 을 통해 명시적 인터페이스로 제공하면, 테스트 시 mock 을 주입할 수 있고, 향후 별도 `platform_layer.c` 추출이 용이해짐.
+- **게임 루프 핫 패스 분리**: `d_main` / `d_loop` 에서 매 프레임 호출되는 함수(예: 설정 읽기, 명령행 파싱)와 한 번만 실행되는 초기화 로직을 구분. 초기화 경로만 별도로 묶으면 게임 루프 내 `m_misc` 의존을 줄일 수 있고, 성능 프로파일링이 명확해짐.
+- **대상 메서드 부분 추출**: `M_FileCaseExists` 같은 복잡한 다중 경로 메서드는 각 케이스별(`_try_actual_path`, `_try_lowercase` 등) 소형 헬퍼로 분리. 개별 테스트·수정이 쉬워지고 CC 분산 효과도 있음. 단, `z_zone.c` 메모리 할당과의 강한 결합이 있으므로 현재는 내부 helper 로만 제한.
 
 **테스트 우선순위**
-- Characterisation test for `M_FileCaseExists`: 현재 코드의 정확한 동작(대소문자 무시 경로 해석, 정규화 순서)을 golden master 로 기록하고, 리팩토링 후에도 동일한 입출력을 보장하는지 회귀 테스트한다. 특히 Windows/Unix 경로 분리자 차이를 커버해야 한다.
-- 파일 시스템 의존성 mocking 테스트: 현재 메서드가 실제 파일 시스템을 읽기 때문에 테스트 속도가 느리고 환경에 민감하다. 로직을 추출한 후 `M_FileExists` 호출을 의존성으로 주입하거나 mocking 하는 단위 테스트를 작성하여, I/O 없이 경로 정규화 로직만 검증한다.
-- Performance regression test for game loop: 게임 루프 내에서 파일 체크가 발생하는 경우(예: WAD 로딩, 세이브 파일 탐색), 변경 전후 프레임 시간을 계측하고 성능 저하(>5% fps drop) 를 감지하는 벤치마크를 작성한다.
-- 순환 의존성 제거 후 빌드 및 통합 테스트: `m_misc` 에서 파일 시스템 함수를 분리하면 모듈 간 링킹 순서가 바뀔 수 있다. 플랫폼별(Linux, Windows, macOS) 빌드와 게임 시작~첫 WAD 로딩까지 정상 작동을 확인하는 smoke test 를 실행한다.
+- **특성화 테스트(Characterisation Test)**: `m_misc.c` 의 모든 public 함수(`M_FileCaseExists`, `M_StringDuplicate`, `M_ConfigFile` 등)에 대해 현 동작을 기록하는 golden master 테스트를 작성. 파일 시스템 mock 또는 temp 디렉토리 fixture 를 사용해 계절 의존성을 제거한 후, 각 입력에 대한 출력·부작용을 스냅샷으로 보존. 리팩토링 후 회귀를 탐지하는 안전막이 됨.
+- **크로스 모듈 연쇄 테스트**: 114개 의존자 중 핵심 5개(d_main, d_loop, g_game, deh_mapping, hu_stuff)를 선정해, `m_misc` 변경 후 이들의 통합 테스트를 실행. 특히 게임 루프 핵심 시나리오(게임 시작 → 플레이 1프레임 → 설정 저장)를 자동화해 순환 의존성 영향을 조기에 포착.
+- **성능 회귀 테스트**: `M_FileCaseExists` 는 I/O 바운드 작업이므로, 초기화 단계에서 디렉토리 스캔 횟수·메모리 할당 패턴을 측정하는 성능 테스트 추가. 현 구현의 baseline 을 기록하고, 리팩토링 시 frame time 영향(특히 게임 로드 구간)을 검증.
+- **의존성 단절 테스트**: 114개 호출자 중 일부를 대상으로 `m_misc` 인터페이스를 stub 화해, 실제 호출을 mock 으로 대체했을 때 그 호출자가 독립적으로 작동하는지 검증. SCC 크기 감소 및 계층 분리 효과를 정량화할 수 있음.
 
-_불확실성: 메서드 스니펫이 일부만 제공되어 `M_FileCaseExists` 의 전체 구현 및 부작용을 완전히 파악하기 어렵다. 특히 경로 메모리 할당, 문자열 중복(strdup), 해제 책임이 호출자에 있는지 명확하지 않으며, 이는 리팩토링 시 메모리 누수 위험을 높인다. 또한 현재 코드가 광범위하게 사용되는 유틸리티인지, 아니면 로더 같은 특정 모듈에만 의존하는지 확실하지 않으므로, 실제 fan-in 116 이 고르게 분포하는지 핫스팟 몇 개인지 재확인이 필요하다. DependencyCycle SCC 크기 32는 상당히 크지만, 어느 모듈이 SCC 의 진정한 병목인지는 추가 그래프 분석이 요구된다._
+_불확실성: 코드 스니펫이 `M_FileCaseExists` 일부만 주어져, 703 LOC 전체 내용과 개별 함수의 실제 CC 분포를 확인할 수 없음. 또한 114개 의존자의 호출 빈도(게임 루프 핫 패스 vs 초기화 경로)를 정확히 파악하려면 동적 프로파일링(call graph 시간 측정)이 필요함. 순환 의존성 SCC 32개 멤버 리스트가 없어 어느 모듈들이 핵심 루프를 이루는지 추정만 가능. 플랫폼 추상화 강화 제안은 현재 `i_system` 과의 관계를 완전히 파악하지 못한 상태에서의 제안이므로, 실제 리팩토링 시 기존 `i_system` 인터페이스와의 충돌 여부를 검토해야 함._
 
 ## 3. [E] G-SI 99.3 — `strife.p_switch`
 `strife/p_switch.c` · CC=212.0  CP=7  GS=43  GLC=0.0
 
 **위험 원인**
-- CC 212.0 — 거대 switch 문 기반 특수 라인 처리로 인한 극단적 제어 흐름 복잡도. 메서드 전체가 629줄(449~1077)에 달하며, 단일 함수 내에 게임의 거의 모든 특수 라인 타입(문, 플랫폼, 엘리베이터, 크러시 등)의 동작을 구현하고 있어 수정 시 회귀 테스트 영역이 극대화된다.
-- GlobalState 43회 접근 — 정적 변수(g_linespecialstuff, g_platformstate 등으로 추정)에 대한 빈번한 읽기/쓰기로 인해 게임 전역 상태와 강하게 결합되어 있다. 이는 유닛 테스트 격리가 사실상 불가능하며, 게임 상태의 초기화 순서에 따라 비결정적 동작이 발생할 위험이 높다.
-- Coupling 7 — 상대적으로 낮지만, 본 메서드가 모든 line_t 관련 스페셜 처리의 유일한 진입점이므로 플레이어, 몬스터, 환경 상호작용 시스템이 모두 이 단일 지점에 의존한다. 변경 시 광범위한 기능 영역이 동시에 영향받을 수 있다.
-- GameLoopCentrality 0.0 이지만 P_UseSpecialLine은 P_LineAction(또는 유사 선택적 상호작용 함수)의 일부로서 플레이어 input 및 충돌 판정 루프에서 호출되는 핫 패스다. 제어 흐름 최적화나 상태 변경이 프레임 처리 시간에 직결된다.
+- Cyclomatic Complexity 212.0 (상위 10% 평균) — 이는 `P_UseSpecialLine` 같은 거대 switch 문이 enum/line special 타입별로 148개 case 를 dispatch 하는 구조에서 비롯되었으며, 제어 흐름 분기가 극도로 많아 단위 테스트와 버그 고정이 매우 어렵다.
+- GlobalState 43 (정적 mutable 필드 접근) — `i_system`, `m_misc`, `z_zone` 같은 전역 시스템 모듈에 대한 직접 접근이 빈번하며, 이는 테스트 격리 불가능성과 게임 상태 검증의 불확실성을 초래한다.
+- 이 compilation_unit 은 line special 해석의 핵심 게이트웨이로 게임 로직 곳곳(door 열기, 스위치 활성화, trigger 처리)이 의존하는 구조인 반면, 의존성 역방향 추적이 맵핑 안됨으로 인해 영향 범위를 정확히 파악할 수 없다.
 
 **리팩토링 제안**
-- **enum/strategy 기반 dispatch 패턴 도입**: 현재 중첩 switch 구조를 linespecial 타입별 handler 함수 포인터 배열로 변환할 것을 검토한다. 예: `boolean (*handlers[256])(mobj_t*, line_t*, int)` 형태로 각 special 타입별 독립 함수를 등록하면, CC를 개별 핸들러별로 분산시킬 수 있고 신규 라인 타입 추가 시 기존 코드 변경 없이 새 함수 추가만으로 가능하게 된다. 단, Strife 레거시 호환성(이미 저장된 맵 포맷)을 고려하여 기존 special 값의 매핑은 보존해야 한다.
-- **전역 상태 진입점 캡슐화**: 43회의 정적 상태 접근을 직접 노출하지 말고, `LineSpecialContext` 구조체를 도입하여 메서드 시그니처를 `P_UseSpecialLine(mobj_t*, line_t*, int, LineSpecialContext*)` 형태로 변경한다. 이렇게 하면 테스트 시 목(mock) 컨텍스트를 주입할 수 있고, 게임 루프 내에서만 실제 전역 상태를 바인딩하면 된다. 성능 영향은 미미할 것으로 예상된다(포인터 역참조 추가 1회).
-- **특수 라인 타입별 인테그레이션 테스트 세분화**: 현재 629줄 메서드의 모든 분기를 한 번의 E2E 테스트로 검증하기는 불가능하므로, 먼저 라인 타입별 characterisation test(사이즈/실행 시간/상태 변경)를 작성하여 리팩토링 전후 동작을 freeze 한다. 리팩토링 후 각 핸들러별 독립 unit test 를 추가하면서 점진적으로 전환한다.
-- **게임 루프 핫 패스에서의 조기 반환(early exit) 최적화**: P_UseSpecialLine 내 기본 케이스(special 0, 또는 플레이어 타입 필터링)는 가장 자주 실행되는 분기다. 이런 조기 반환 경로를 메서드 상단으로 이동하면 평균 case 의 제어 흐름이 단축된다. 특히 ML_SECRET, side 검사 같은 전제 조건들을 먼저 수행하도록 재정렬할 것.
+- **특수 라인 타입별 핸들러 위임 패턴 도입** — 현재 거대 switch 문을 `linespec_handler` 함수 포인터 배열(line special → handler function)로 변환하여 CC 를 메서드당 10~30 수준으로 분산시킨다. 각 핸들러는 특정 특수 라인 타입(148, 31, 144 등)만 담당하므로 단위 테스트 가능성이 획기적으로 높아진다. 단, 기존 switch case 의 fall-through 로직이 있다면 명시적 상태 머신으로 재구성해야 한다.
+- **전역 상태 참조를 Facade 컨텍스트로 감싸기** — `i_system`, `m_misc`, `z_zone` 접근을 직접 하지 말고, `line_activation_context_t` 같은 구조체를 도입하여 필요한 게임 상태를 명시적으로 매개변수로 전달한다. 이렇게 하면 의도하지 않은 전역 상태 오염을 방지하고, 테스트 시 mock context 를 주입할 수 있다.
+- **Characterisation 테스트로 현재 동작 기준선 확보** — 각 line special 타입(1, 31, 144, 148 등)에 대해 다양한 `mobj_t` 상태(player 여부, secret flag, 다양한 높이)와 결합하여 출력 결과(true/false, side effect)를 golden file 로 저장한다. 리팩토링 후에도 이 파일과 동일하게 동작하는지 diff 로 검증하는 방식이 CC 200 코드의 안전한 변경에 효과적이다.
 
 **테스트 우선순위**
-- **Characterisation test (freeze)**: P_UseSpecialLine 에 대해 주요 라인 special 타입(문, 플랫폼, 엘리베이터, 크러시, 텍스쳐 스크롤 등) 각각을 동적 객체, 플레이어, 몬스터와 조합한 케이스를 golden master 형태로 기록한다. 각 케이스에서 반환값, 라인 상태(플래그, 높이), 모빌 상태 변화를 스냅샷하여 리팩토링 전후 회귀 탐지의 기준선으로 삼는다.
-- **GlobalState 격리 테스트**: 전역 상태 초기값 변이에 따른 P_UseSpecialLine 동작 편차를 parametrized test 로 작성한다. 예: 플레이어 powerups 상태, 맵 내 활성 plat/ceil 개수, 게임 어려움 레벨별로 같은 라인 특수 처리의 결과가 같은지 검증한다. 이를 통해 전역 상태 의존성의 scope 을 명확히 할 수 있다.
-- **Performance regression test**: P_UseSpecialLine 이 게임 루프(collision/lineaction 판정)에서 ms 단위 지연을 발생시키지 않는지 벤치마크한다. 리팩토링(특히 dispatch 도입, 컨텍스트 주입) 전후로 1000회 호출 단위의 벽시계 시간, 분기 예측 미스율을 측정하여 성능 저하를 조기에 감지한다.
-- **Line special 타입별 엣지 케이스 통합 테스트**: 중첩 switch 내에서 놓친 케이스(예: side != 0 인 라인, secret door + non-player 조합, 플레이어 상태 이상)를 의도적으로 구성한 맵을 로드하여 실행한다. 특히 Strife 특화 타입(haleyjd 코멘트 달린 148, 144 등)은 원본 mang 에서 재현 가능한 save state 를 확보하고 회귀 테스트에 포함한다.
+- **Per-special-type unit test (각 line special 타입별 독립 테스트)** — 현재 giant switch 의 각 case(148, 31, 144, 1, ...)에 대해 입력(thing mobj, line, side) 과 출력(boolean, 상태 변화) 을 매개변수화된 테스트로 작성한다. 특히 side=0 과 side=1 의 분기, secret flag 확인, thing->player 여부에 따른 다른 경로를 모두 명시적으로 커버한다.
+- **Golden master / characterisation test** — 914 LOC 전체 컴파일 유닛의 현재 동작을 다양한 인풋(special type, mobj 상태, line 속성)의 조합에 대해 출력으로 serialise 하고, 리팩토링 후에도 바이너리 동일성을 보장하는 regression test 를 먼저 작성한다. 이를 통해 기존 map 호환성이 보장된다.
+- **Global state 접근 모니터링 테스트** — `i_system`, `m_misc`, `z_zone` 같은 전역 모듈 접근이 예상된 범위 내인지(예: 특정 line special 에서만 발생), 의도하지 않은 부작용이 없는지 검증하는 spy/mock 기반 테스트를 도입한다. 핫 패스(매 프레임 호출)가 아니므로 성능 오버헤드는 무시할 수 있다.
 
-_불확실성: 코드 스니펫이 메서드의 초반부만 제시되었으므로, 629줄 전체의 정확한 분기 구조, 상태 변경 패턴, 호출하는 다른 대형 함수의 존재 여부를 완전히 파악하기 어렵다. 또한 GlobalState 43회가 구체적으로 어떤 정적 변수들에 대한 접근인지(플랫폼, 천정, 도어 상태 등), 그리고 이들 중 게임 상태 저장/로드 시 직렬화되는 것들인지 아니면 런타임 전용인지 불명확하다. Strife 의 특수 라인 타입이 OpenDoom 에서 추가된 것인지 원본 Doom 에서 비롯되었는지에 따라 리팩토링의 호환성 방향이 달라질 수 있다. 이러한 세부사항은 코드 리뷰 및 도메인 전문가(원 게임 설계자, 프로젝트 메인테이너)와의 상담이 필요하다._
+_불확실성: 코드 스니펫이 전체 914 LOC 함수 중 일부만 노출되어, CC 212 의 정확한 구성(switch case 수, 중첩 if/else, loop 유무)을 완전히 파악하기 어렵다. 또한 `line->special` 의 enum 정의, 각 case 의 실제 복잡도 분포, fall-through 패턴 유무를 알 수 없어 리팩토링 전략의 세부 방향(각 핸들러 CC 목표값)을 정확히 설정하기 어렵다. 의존성 역방향 그래프가 맵핑되지 않아 이 함수를 호출하는 모든 사이트가 게임 루프의 어느 깊이에 있는지(hotpath 인지 cold path 인지) 확인할 수 없으며, 따라서 변경 시 성능 영향 여부를 사전에 판단할 수 없다._
 
 ## 4. [E] G-SI 99.0 — `i_video`
 `i_video.c` · CC=19.3333  CP=54  GS=263  GLC=1.0
 
 **위험 원인**
-- Global state 접근이 263회로 극히 높음 — `fullscreen`, `window_width`, `window_height`, `fullscreen_width`, `fullscreen_height` 등 static mutable 변수들이 SetVideoMode 및 기타 진입점에서 직접 읽고 쓰임. 이는 단위 테스트 격리 및 재초기화 어려움을 초래하며, 멀티스레드 게임 루프에서 race condition 위험 존재.
-- 게임 루프 중심성 1.0 및 결합도 54 — i_video.c는 렌더링 초기화 및 프레임 버퍼 관리의 핵심 모듈로, 거의 모든 렌더링 서브시스템이 이 모듈을 의존함. SetVideoMode 같은 메서드가 매 설정 변경 시 호출되어 시스템 전역 상태를 변경하므로 변경 영향 범위가 매우 광범위.
-- 순환 의존성 SCC 크기 32 — i_video.c가 속한 순환 의존성 고리에 32개 단위가 포함됨. 이는 개별 모듈 격리 추출이 어렵고, 한 곳 변경이 다른 곳을 예기치 않게 영향줄 가능성이 높음을 의미.
-- CC 19.3 (상위 10% 평균) — SetVideoMode 메서드는 보이는 코드만 해도 다중 조건문(fullscreen, highdpi, 해상도 설정, SDL 플래그 조합)으로 분기 복잡도가 높으며, 전체 1248 LOC 모듈이 복잡한 메서드 여럿을 포함하고 있음을 시사.
+- 전역 상태 의존도 263 — static mutable 필드(`fullscreen`, `window_width`, `window_height` 등)에 대한 직접 접근이 과다하며, 이는 멀티스레드 환경이나 테스트 격리에서 심각한 부작용을 야기한다.
+- 게임 루프 중심성 1.0 — 이 모듈은 `d_loop`와 `g_game`을 거쳐 매 프레임 호출되는 핵심 렌더링 경로에 진입점이므로, 여기서의 모든 변경은 FPS 영향과 레이턴시를 반드시 점검해야 한다.
+- 결합도 54 + SCC 크기 32 — 40개 클래스가 이 모듈을 참조하며 순환 의존성(DependencyCycle=32)에 속해 있어, 수정 시 영향 범위 예측이 극히 어렵다. 특히 `m_misc`, `i_system`, `v_video` 같은 god-object 모듈들과의 양방향 의존이 변경 격리를 방해한다.
+- SetVideoMode 메서드 CC~19 + 장대한 case/if 체인(SDL 플래그 조합, 해상도 로직) — 화면 모드 전환 중 상태 불일치로 인한 크래시 또는 렌더링 버그 발생 가능성이 높다.
 
 **리팩토링 제안**
-- 전역 상태 격리를 위해 VideoConfig struct (또는 클래스)를 도입하여 `fullscreen`, `window_width` 등을 번들링한 뒤, SetVideoMode 서명을 `SetVideoMode(VideoConfig cfg)` 형태로 변경. 이렇게 하면 호출자는 명시적으로 설정 구조체를 전달하고, 테스트에서 mutable static에 의존하지 않고도 여러 설정 조합을 검증 가능.
-- 게임 루프 핫 패스(Render/Draw 진입점)를 식별한 뒤, SetVideoMode 호출 지점이 진입점 자체인지 초기화 단계인지 분류. 만약 매 프레임이 아닌 설정 변경 시에만 호출된다면, 핫 패스에서 분리된 별도 callback/event 채널로 이동시켜 렌더 루프 영향도 최소화.
-- 결합도 54를 단계적으로 낮추기 위해, 현재 i_video.c 에 직접 의존하는 모듈 중 상위 5개를 식별하고, 각각에 대해 필요한 인터페이스만 노출하는 narrow facade 함수 세트를 정의. 예: 대부분 모듈이 '현재 화면 크기 조회', '장치 리셋' 정도만 필요하다면, 이들만 public API로 두고 내부 구현 세부사항 감춤.
-- 순환 의존성 SCC 크기 32를 줄이기 위해, 먼저 strongly connected component 멤버 목록을 추출하여 어느 의존성 간선이 사이클을 닫는지 파악. 이후 그 간선 중 하나를 제거 가능한 지점(예: factory 또는 lazy initialization)으로 변환하여 고리를 단순화.
+- SetVideoMode 를 함수형 구성으로 분해: 현재 전역 `fullscreen`, `window_width` 등을 직접 읽는 대신, 호출자가 인자로 전달하도록 리팩토링하면 전역 상태 의존도를 낮추고 테스트 용이성이 급증한다. 이는 게임 루프의 화면 크기 변경 요청을 명시적으로 처리하는 이벤트 구조로 발전할 수 있다.
+- `i_video.c` 의 static 필드들을 `VideoState` 같은 구조체로 캡슐화하여, 최소한 이 파일 내 상태를 한 곳에서 관리하도록 정리한다. 전역 노출은 유지하되(하위 호환성), 내부 응집도를 높이면 영향 범위 분석이 용이해진다.
+- SetVideoMode 호출 전후에 검증 함수(현재 해상도, 전체화면 모드, 렌더링 디바이스 상태)를 추가하여, 상태 전환의 원자성을 보장한다. 특히 SDL 윈도우 재생성 중 예외 발생 시 rollback 로직을 명시적으로 구성한다.
+- v_video, i_system 같은 god-object 모듈과의 의존성을 인터페이스로 추상화하고, 호출자(d_loop)에서 이 의존성을 주입받도록 리팩토링한다. 이는 SCC 크기를 점진적으로 축소하고 순환 의존성을 끊는 첫 단계가 된다.
 
 **테스트 우선순위**
-- Characterisation test — i_video.c의 주요 진입점(예: SetVideoMode, I_StartupGraphics, I_GetScreenDimensions 등)에 대해 현재 동작을 golden master로 기록. 특히 fullscreen/windowed 모드 전환, 다양한 해상도 조합(0x0, 1920x1080, 640x480 등)에서의 window_flags 값 및 SDL 호출 시퀀스를 검증하는 mock 기반 테스트로 시작하여 리팩토링 중 회귀 방지.
-- Global state 격리 테스트 — 현재 static 변수들(fullscreen, window_width 등)을 mock 또는 stub으로 대체하여, SetVideoMode 및 관련 함수가 외부 상태 없이도 주어진 입력에 대해 일관된 동작을 하는지 검증. 이를 통해 전역 상태 제거 후 함수 서명 변경 시 회귀 감지.
-- Performance regression test — SetVideoMode 호출이 실제 프레임 렌더 루프의 fps에 미치는 영향을 측정하는 micro-benchmark. 특히 모드 전환 시 일회성 오버헤드(메모리 할당, SDL 호출 대기)와 상태 변경 후 첫 몇 프레임의 stability를 모니터링하여, 리팩토링 후 프로파일링 회귀 방지.
+- SetVideoMode 화면 모드 전환 characterisation test — 현재 코드의 전체 스크린 해상도, 윈도우 해상도, 전체화면 모드 조합(8~12 가지)에 대해 호출 전후 상태 변화를 golden master 로 기록하여, 리팩토링 후 회귀를 감지한다.
+- 전역 상태 격리 테스트 — SetVideoMode 호출 시 `fullscreen`, `window_width` 등의 정적 필드가 예상 값으로 변경되고, 동시에 SDL 윈도우 객체가 올바르게 생성되는지 확인하는 통합 테스트. 특히 모드 전환 중 예외 발생 시나리오(e.g. 지원하지 않는 해상도)를 포함한다.
+- FPS/렌더링 성능 regression test — SetVideoMode 변경 후 게임 루프의 평균 프레임 시간이 ±5% 이상 벗어나지 않는지 점검하는 미시 벤치마크. 이 모듈이 d_loop → g_game 진입점이므로 성능 도입은 즉시 감지되어야 한다.
+- 다중 모니터/고해상도 시나리오 통합 테스트 — `SDL_WINDOW_ALLOW_HIGHDPI`, 다중 디스플레이 모드 전환 등 엣지 케이스를 명시적으로 테스트하여, 플랫폼별(Windows/Mac/Linux) 회귀를 조기에 발견한다.
 
-_불확실성: 코드 스니펫이 부분(truncated)이고 전체 SetVideoMode 본문(1202~1414줄)이 보이지 않아 정확한 CC 값 계산 불가. 또한 i_video.c 내 다른 메서드들(I_StartupGraphics, I_ShutdownGraphics 등)의 복잡도 및 각각이 게임 루프 진입점과의 관계를 파악하지 못해, 핫 패스 격리의 우선순위를 확정하기 어려움. SCC 크기 32에 포함된 모듈 목록도 보이지 않아 순환 의존성 끊기의 구체적 대상을 특정할 수 없음. 따라서 본 제안은 전형적 게임 렌더링 모듈 패턴에 기반한 휴리스틱이며, 실제 구현 시 전체 호출 그래프 및 의존성 그래프를 시각화하여 재검토 필요._
+_불확실성: 스니펫이 truncated 되어 SetVideoMode 전체 길이와 case 구조를 정확히 파악할 수 없다. 따라서 CC 19.3은 상위 10% 평균이며 이 메서드 개별 CC 는 더 높을 가능성이 있다. 또한 SDL 버전, Chocolate Doom 의 버전별 화면 처리 차이(legacy vs. SDL2)가 존재할 수 있어, 리팩토링 시 하위 호환성 확인이 필수다. i_video.c 가 참조하는 14개 모듈(특히 i_system, m_misc) 과의 정확한 호출 방향(양방향 vs. 단방향)을 완전히 파악하려면 전체 의존성 그래프가 필요하다._
 
 ## 5. [E] G-SI 98.7 — `z_zone`
 `z_zone.c` · CC=11.0  CP=90  GS=38  GLC=0.0
 
 **위험 원인**
-- 결합도 90 — 거의 모든 시스템이 메모리 할당자에 의존하는 god-object 구조로, 변경 시 프로젝트 전체 영향 범위 추적이 매우 어렵다.
-- 순환 의존성 SCC 크기 32 — 강연결 컴포넌트에 속한 32개 단위가 서로 순환 참조하므로 독립적 테스트 및 점진적 리팩토링이 원천 차단된다.
-- 전역 상태 접근 38회 — `mainzone` 등 mutable static 변수를 직접 조작하며, 멀티스레드 안전성이 없고 테스트 격리가 불가능하다.
-- 게임 루프 도달성 0.0 — 게임 루프 entry point에서 직접 호출되지 않으나, 모든 동적 할당이 이 모듈을 거쳐 간접 의존하므로 성능 회귀 테스트가 필수적이다.
+- 결합도 90 — 프로젝트 내 88개 클래스(거의 모든 모듈)가 z_zone을 직접 참조하며, 2개만 참조하는 역방향 구조로 전형적인 god-module 패턴을 보임. 메모리 할당 인터페이스의 사소한 변경도 프로젝트 전역에 영향을 미침.
+- 순환 의존성 SCC 크기 32 — z_zone이 포함된 강연결요소가 32개 단위를 포함하고 있어, 이 모듈을 분리하거나 수정할 때 전체 의존성 체인이 함께 움직일 위험이 있음. 특히 d_main, g_game, f_finale 등 게임 루프 핵심 모듈들이 모두 포함된 것으로 보임.
+- 전역 상태 38개 접근 — Z_Malloc 스니펫에서 `mainzone->rover` 같은 정적 전역 상태를 직접 조작하고 있으며, memblock_t 링크드 리스트의 비안전한 포인터 조작으로 인한 메모리 corruption, double-free, use-after-free 위험이 높음. 멀티스레드 환경에서는 race condition 발생 가능성도 있음.
+- CC 평균 11.0(상위 10%) + 게임 루프 중심성 0.0 괴리 — Z_Malloc은 프로젝트 진입점에서 직접 호출되지 않지만(GameLoopCentrality=0), 모든 메모리 할당이 거기를 통하므로 실제로는 매 프레임 핫 패스의 최상위 공급자. 지표의 도달성 모델이 명시적 호출 그래프만 추적하여 실제 런타임 중요도를 놓치고 있음.
 
 **리팩토링 제안**
-- 현재 순환 의존성 고리를 즉시 분해하는 대신, `Z_Malloc`, `Z_Free` 등 핵심 인터페이스를 먼저 추상화 계층으로 격리하고, 단기적으로는 이 인터페이스에 대한 의존성만 신규 코드에서 허용하는 정책을 수립한다. 이는 god-object 특성은 유지하면서 향후 분해 로드맵의 기초가 된다.
-- mutable static (`mainzone`, `blockmetatag` 등)을 함수 매개변수 또는 opaque handle로 전달하는 구조로 단계적 전환을 검토한다. 핫 패스 성능 영향을 먼저 측정하고, 가장 깊은 호출자(예: `Z_Malloc` 내부 루프)부터 시작해 상위로 점진적으로 전파한다.
-- z_zone.c 내부 메모리 검사 루틴들(예: `Z_FileDumpHeap`, `Z_CheckHeap`)을 별도 translation unit으로 추출하여 디버그 빌드 의존성을 분리한다. 이는 순환성을 증가시키지 않으면서 파일 결합도를 낮춘다.
-- alloc/free 호출 경로를 golden master test로 기록하고, 리팩토링 중 할당량·단편화·응답시간 특성이 변하지 않음을 검증하는 자동 성능 회귀 체크포인트를 도입한다.
+- 메모리 할당 인터페이스를 안정화(semantic versioning + API freeze) 하거나, 최소한 내부 구현(mainzone, rover 포인터 직접 조작)을 캡슐화하여 외부 의존도를 줄임. 예: Z_Malloc의 시그니처는 유지하되, 내부 상태는 모두 z_zone.c 스코프 내로 제한하고 단위 테스트용 의존성 주입 후크(예: 할당자 전략 패턴) 도입.
+- 전역 상태 mainzone의 수명 관리를 명확히 함. 현재 Z_InitMemory(), Z_Malloc(), Z_Free() 흐름에서 mainzone이 언제 초기화/해제되는지, 어떤 상황에서 null이 될 수 있는지 문서화하고, 가능하면 컨텍스트 포인터 명시적 전달로 점진적 변경. 게임 루프 진입 전 명시적 호출로 제약하여 랜덤 타이밍에 Z_InitMemory()가 호출될 가능성을 제거.
+- Z_Malloc 내 메모리 블록 순회(rover, base->prev 등)를 분리 함수로 추출하고, 각 부분에 대해 경계값 테스트(메모리 부족, 단편화, 최대 할당량 초과) 를 강화. 특히 memblock_t 링크드 리스트 조작 부분은 corruption 감지 헬퍼(checksum, fence bytes, double-link validation) 추가 검토.
+- 88개 역 의존도를 줄이기 위해, 상위 계층 모듈(d_main, g_game 등)을 먼저 분석하여 Z_Malloc 호출 패턴을 분류(초기화 시점 vs. 런타임 vs. 프레임당). 초기화 시점 할당을 별도 arena로 분리하면 런타임 메모리 관리자와 격리 가능.
 
 **테스트 우선순위**
-- Characterisation test — 현재 동작을 명시적으로 기록하기. `Z_Malloc` 호출 순서별 결과 메모리 주소, 태그별 할당 크기 패턴, free 후 재할당 시 물리적 위치 재사용 여부 등을 golden file로 저장하고, 리팩토링 전후 차이를 추적한다.
-- Memory corruption / double-free / UAF 퍼즈 테스트 — 현재 static block metadata 상태에 대한 멀티스레드 접근 시뮬레이션 및 극단 케이스(huge allocation, zero-size, tag boundary) 입력을 반복해 안전성 기저선을 설정한다.
-- Performance regression test — 게임 루프 내 프레임당 할당/해제 횟수·응답시간·GC 압력(fragmentation ratio)을 측정하고, 리팩토링 후 1% 이상 편차가 나면 경고하도록 자동화한다. 이는 game loop centrality 0.0 인 것과 별개로, 모든 동적 할당이 간접 의존하는 특성상 필수다.
+- Characterisation test(현재 동작 기록) — Z_Malloc/Z_Free/Z_FreeTags의 블랙박스 동작을 시뮬레이션(다양한 크기, 태그, user 포인터 조합)하고, 반환값과 mainzone 상태 변화를 golden master로 저장. 이후 리팩토링 시 동작 변경이 없음을 보증.
+- 메모리 안전성 regression test — 주요 게임 시나리오(맵 로드, 엔터티 생성/삭제, 게임 루프 100 프레임 실행)에서 Z_Malloc/Z_Free 호출 순서 로깅 및 메모리 누수(할당 수 != 해제 수), double-free, corruption 감지. Valgrind/AddressSanitizer와 연계.
+- DependencyCycle SCC 32개 단위 영향 범위 테스트 — z_zone 변경 시 d_main, g_game, f_finale 등 SCC 내 핵심 모듈의 링크 및 초기화 순서가 영향받지 않는지 검증. 순환 의존 추출 이후 각 모듈별 초기 상태 테스트.
 
-_불확실성: 코드 스니펫에서 Z_Malloc의 제어 흐름만 보이므로, 전체 순환 의존성 고리의 정확한 형태(z_zone ↔ 어느 모듈들)를 단정할 수 없다. 또한 mainzone 의 lock/synchronization 메커니즘이 있는지 불명확하며, 만약 이미 뮤텍스로 보호되고 있다면 전역 상태 위험도는 다소 낮을 수 있다. god-object 특성은 매우 분명하나, 의존성 고리 해제 우선순위는 실제 호출 그래프 시각화를 통해 재평가 필요._
+_불확실성: 코드 스니펫이 Z_Malloc 전체가 아니라 일부(248-354줄 중 처음 35줄만)이므로, 실제 메모리 fragment 처리, purgable block 제거(PU_FREE 체크 후 하위 로직), 최종 memblock 초기화 부분을 판단하지 못함. 따라서 CC 11.0이 실제 분기 수보다 높거나 낮을 가능성이 있음. 또한 GameLoopCentrality=0.0이라는 값이, 도구의 호출 그래프 추적이 Z_Malloc이 d_main/g_game 등에서 비명시적으로 호출되는 경로(macro 확장, 플러그인, 링크 타임 최적화)를 놓쳤을 가능성을 시사함. 메모리 할당자로서 Z_Malloc은 사실상 매 게임 루프의 암묵적 의존성이지만, 정적 분석의 호출 그래프 기반 모델로는 감지 불가능._

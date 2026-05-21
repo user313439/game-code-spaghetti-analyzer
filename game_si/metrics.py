@@ -355,8 +355,20 @@ def _compute_game_loop_centrality(
 
 def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
     """MetricsResult를 JSON 직렬화 가능한 dict로 변환한다."""
+    g = result.class_graph
+    # 클래스별 in/out 이웃 FQN 리스트 (직렬화용). LLM Advisor 가 이를 prompt 에
+    # 포함시켜 "이 클래스를 누가 참조하고, 이 클래스가 무엇을 참조하는지" 의 그래프
+    # 컨텍스트를 모델에게 전달한다.
+    def _neighbors(fqn: str) -> tuple[list[str], list[str]]:
+        if fqn not in g:
+            return [], []
+        # 그래프 엣지: u → v 는 "u 가 v 를 참조" 의미.
+        out_n = list(g.successors(fqn))       # 이 클래스가 참조하는 것 (fan_out 대상)
+        in_n = list(g.predecessors(fqn))      # 이 클래스를 참조하는 것 (fan_in 출처)
+        return in_n, out_n
+
     return {
-        "schema_version": "metrics-0.1",
+        "schema_version": "metrics-0.2",
         "ast_schema_version": result.schema_version,
         "input_path": result.input_path,
         "classes": [
@@ -378,6 +390,9 @@ def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
                 "global_state": c.global_state,
                 "game_loop_centrality": round(c.game_loop_centrality, 4),
                 "method_count": len(c.methods),
+                # in/out 이웃 (그래프 컨텍스트, LLM Advisor 가 사용)
+                "in_neighbors": _neighbors(c.fqn)[0],
+                "out_neighbors": _neighbors(c.fqn)[1],
             }
             for c in result.classes
         ],
