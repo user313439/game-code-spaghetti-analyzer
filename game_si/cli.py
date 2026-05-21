@@ -108,6 +108,21 @@ def _build_parser() -> argparse.ArgumentParser:
         default=30,
         help="대시보드 Hotspot Table에 표시할 클래스 수 (기본 30).",
     )
+    p_analyze.add_argument(
+        "--weights",
+        choices=["default", "tuned", "custom"],
+        default="default",
+        help="G-SI-Static 가중치 모드 (plan §4.6). "
+             "default = plan §4.2 의 고정 값. "
+             "tuned = `game-si tune` 으로 학습한 가중치 (reports/tune.json 자동 로드). "
+             "custom = --weights-file 로 사용자 JSON 전달.",
+    )
+    p_analyze.add_argument(
+        "--weights-file",
+        type=Path,
+        default=None,
+        help="--weights custom 시 사용할 JSON 파일 (key=메트릭, value=가중치, sum≈1)",
+    )
 
     p_diff = sub.add_parser(
         "diff",
@@ -305,8 +320,12 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
     )
 
     # 3) G-SI 산출
-    from .si import compute_si_static, scoring_to_dict
-    scoring = compute_si_static(metrics)
+    from .si import compute_si_static, scoring_to_dict, DEFAULT_WEIGHTS_STATIC
+    weights = _resolve_weights(args.weights, args.weights_file)
+    if args.weights != "default":
+        print(f"[si] weights mode: {args.weights}  " +
+              " ".join(f"{k}={v:.2f}" for k, v in weights.items()))
+    scoring = compute_si_static(metrics, weights=weights)
     print(
         "[si] grade distribution: "
         + " ".join(f"{g}={scoring.grade_distribution[g]}" for g in "ABCDE")
@@ -328,19 +347,62 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
         if not args.no_html:
             from .report import generate_dashboard
             project_name = args.project_name or _default_project_name(input_path)
+            # advisor.json 자동 로드 — 있으면 메인 대시보드에 Refactoring Guide 섹션 통합
+            advisor_data = None
+            advisor_path = out_dir / "advisor.json"
+            if advisor_path.exists():
+                try:
+                    with open(advisor_path, "r", encoding="utf-8") as f:
+                        advisor_data = json.load(f)
+                except Exception as exc:
+                    print(f"[warn] advisor.json 로드 실패 — 대시보드 통합 생략: {exc}", file=sys.stderr)
             html_path = generate_dashboard(
                 project_name=project_name,
                 scoring=scoring,
                 metrics=metrics,
                 output_path=out_dir / "index.html",
                 top_n=args.dashboard_top,
+                advisor_data=advisor_data,
             )
-            print(f"[dashboard] wrote {html_path}")
+            if advisor_data:
+                print(f"[dashboard] wrote {html_path} (with Refactoring Guide)")
+            else:
+                print(f"[dashboard] wrote {html_path}")
 
     if args.top and args.top > 0:
         _print_top_classes(scoring, args.top)
 
     return 0
+
+
+def _resolve_weights(mode: str, weights_file: Path | None) -> dict[str, float] | None:
+    """plan §4.6 의 가중치 모드 해석.
+
+    - default → None (compute_si_static 이 DEFAULT_WEIGHTS_STATIC 사용)
+    - tuned   → reports/tune.json 의 tuned_weights 자동 로드
+    - custom  → --weights-file 의 JSON 로드
+    """
+    if mode == "default":
+        return None  # compute_si_static 에서 DEFAULT_WEIGHTS_STATIC 사용
+    if mode == "tuned":
+        tune_path = Path("reports/tune.json")
+        if not tune_path.exists():
+            raise RuntimeError(
+                "--weights tuned 사용 시 reports/tune.json 이 필요합니다. "
+                "먼저 `python -m game_si tune --case ... ` 으로 가중치를 학습하세요."
+            )
+        with open(tune_path, "r", encoding="utf-8") as f:
+            tune_data = json.load(f)
+        tuned = tune_data.get("tuned_weights")
+        if not isinstance(tuned, dict):
+            raise RuntimeError(f"tune.json 의 tuned_weights 필드가 비어 있습니다: {tune_path}")
+        return tuned
+    if mode == "custom":
+        if weights_file is None or not weights_file.exists():
+            raise RuntimeError("--weights custom 사용 시 --weights-file <path> 가 필요합니다.")
+        with open(weights_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    raise ValueError(f"unknown weights mode: {mode}")
 
 
 def _resolve_language(lang_arg: str, input_path: Path) -> str:

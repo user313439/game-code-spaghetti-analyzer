@@ -128,6 +128,7 @@ benchmarks/        외부 분석 대상 (git 추적 제외, 재현은 manifest �
 
 ## 문서
 
+- [docs/si-formula.md](docs/si-formula.md) — G-SI 공식 상세 + 가중치 운용(default/tuned/custom) + 등급표 + 검증 데이터 요약
 - [docs/benchmark-manifest.md](docs/benchmark-manifest.md) — 분석 대상 메타정보 + Phase A/B/C/D 측정 결과 종합
 - [docs/ast-schema.md](docs/ast-schema.md) — AST JSON 스키마 v0.2 (csharp-analyzer · cpp_analyzer 공통)
 

@@ -42,12 +42,17 @@ def generate_dashboard(
     metrics: MetricsResult,
     output_path: Path,
     top_n: int = 30,
+    advisor_data: dict | None = None,
 ) -> Path:
-    """대시보드 HTML을 생성하고 경로를 반환한다."""
+    """대시보드 HTML을 생성하고 경로를 반환한다.
+
+    `advisor_data` 가 주어지면 LLM Refactoring Guide 섹션을 대시보드에 통합한다
+    (plan §10.3). `reports/<case>/advisor.json` 의 구조를 그대로 받는다.
+    """
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    html_doc = _render_html(project_name, scoring, metrics, top_n)
+    html_doc = _render_html(project_name, scoring, metrics, top_n, advisor_data)
     output_path.write_text(html_doc, encoding="utf-8")
     return output_path
 
@@ -62,6 +67,7 @@ def _render_html(
     scoring: ScoringResult,
     metrics: MetricsResult,
     top_n: int,
+    advisor_data: dict | None = None,
 ) -> str:
     analyzed_at = _dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
 
@@ -92,7 +98,86 @@ def _render_html(
         module_table=_render_module_table(module_rows),
         dependency_graph=_render_dependency_graph(scoring, metrics, top_n=50),
         cycle_explorer=_render_cycle_explorer(metrics, si_by_fqn),
+        refactoring_guide=_render_refactoring_guide(advisor_data),
         embedded_json=embedded_json,
+    )
+
+
+def _render_refactoring_guide(advisor_data: dict | None) -> str:
+    """plan §10.3 의 'Refactoring Guide' 화면 — LLM Advisor 출력을 통합.
+
+    advisor_data 가 None 이면 빈 placeholder 만 반환 (advise 미실행 안내).
+    """
+    if advisor_data is None:
+        return (
+            '<section id="refactoring-guide-empty" class="hidden-section"></section>'
+        )
+    rows = advisor_data.get("rows", [])
+    if not rows:
+        return '<section id="refactoring-guide-empty" class="hidden-section"></section>'
+
+    model = html.escape(str(advisor_data.get("model", "claude-haiku-4-5")))
+    usage = advisor_data.get("total_usage", {}) or {}
+    cost = advisor_data.get("estimated_cost_usd", 0.0)
+    cache_read = int(usage.get("cache_read_input_tokens", 0))
+    cache_total = cache_read + int(usage.get("cache_creation_input_tokens", 0))
+    hit_rate = (cache_read / cache_total * 100.0) if cache_total else 0.0
+
+    cards = []
+    for idx, row in enumerate(rows, 1):
+        fqn = html.escape(str(row.get("fqn", "")))
+        grade = str(row.get("grade", "?"))
+        si = float(row.get("si", 0.0))
+        file_path = html.escape(str(row.get("file_path", "")))
+        method = row.get("snippet_method")
+        method_label = (
+            f' · 메서드 <code>{html.escape(str(method))}</code>'
+            if method else ""
+        )
+        color = GRADE_COLORS.get(grade, "#888")
+
+        advice = row.get("advice", {}) or {}
+        rs = advice.get("risk_reasons", []) or []
+        sg = advice.get("refactoring_suggestions", []) or []
+        tp = advice.get("test_priorities", []) or []
+        unc = advice.get("uncertainty_notes", "") or ""
+
+        def _ul(items: list) -> str:
+            return "<ul>" + "".join(f"<li>{html.escape(str(x))}</li>" for x in items) + "</ul>"
+
+        cards.append(
+            f'<details class="advice-card" data-grade="{grade}"{" open" if idx == 1 else ""}>'
+            f'<summary>'
+            f'<span class="advice-rank">#{idx}</span>'
+            f'<span class="grade-badge" style="background:{color}">{grade}</span>'
+            f'<span class="advice-si">G-SI {si:.1f}</span>'
+            f'<code class="advice-fqn">{fqn}</code>'
+            f'<span class="advice-path">{file_path}{method_label}</span>'
+            f'</summary>'
+            f'<div class="advice-body">'
+            f'<div class="advice-block"><h4>위험 원인</h4>{_ul(rs)}</div>'
+            f'<div class="advice-block"><h4>리팩토링 방향</h4>{_ul(sg)}</div>'
+            f'<div class="advice-block"><h4>테스트 우선순위</h4>{_ul(tp)}</div>'
+            + (f'<div class="advice-uncertainty"><strong>불확실성</strong>: {html.escape(unc)}</div>'
+               if unc else "")
+            + '</div></details>'
+        )
+
+    return (
+        '<section>'
+        '<div class="sec-head">'
+        '<h2>AI 리팩토링 가이드</h2>'
+        f'<span class="advice-meta">model=<code>{model}</code> · '
+        f'cost ≈ ${float(cost):.4f} · cache hit ≈ {hit_rate:.0f}%</span>'
+        '</div>'
+        '<div class="sec-explain" style="display:block">'
+        '<p>상위 hotspot 에 대해 <em>Claude Haiku 4.5</em> 가 (1) 위험 원인, '
+        '(2) 리팩토링 방향, (3) 테스트 우선순위를 제안합니다. 모든 응답은 '
+        '<strong>지표 근거 + 의존성 그래프 컨텍스트</strong>를 활용한 것이며, '
+        '자동 코드 수정은 본 작품 범위 외(plan §6.4)입니다. 추측 한계는 '
+        '각 카드 하단의 "불확실성" 절에 명시됩니다.</p></div>'
+        + "".join(cards)
+        + '</section>'
     )
 
 
@@ -652,6 +737,35 @@ _HTML_TEMPLATE = r"""<!doctype html>
                white-space: nowrap; transition: all 0.1s; }}
   .sec-info:hover {{ background: rgba(96,165,250,0.1); border-color: var(--accent); }}
   .sec-info[aria-expanded="true"] {{ background: var(--accent); color: #0b1322; border-color: var(--accent); }}
+  .hidden-section {{ display: none; }}
+  .advice-meta {{ color: var(--muted); font-size: 12px; margin-left: auto; }}
+  .advice-meta code {{ background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 3px; }}
+  .advice-card {{ background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+                  margin-bottom: 10px; }}
+  .advice-card[data-grade="E"] {{ border-left: 4px solid #d24343; }}
+  .advice-card[data-grade="D"] {{ border-left: 4px solid #ef7d3c; }}
+  .advice-card[data-grade="C"] {{ border-left: 4px solid #e3b341; }}
+  .advice-card[data-grade="B"] {{ border-left: 4px solid #7fb95a; }}
+  .advice-card[data-grade="A"] {{ border-left: 4px solid #3b8e5a; }}
+  .advice-card summary {{ cursor: pointer; padding: 12px 16px; display: flex; align-items: center;
+                          gap: 12px; font-size: 13px; user-select: none; }}
+  .advice-card summary:hover {{ background: rgba(255,255,255,0.02); }}
+  .advice-card summary::-webkit-details-marker {{ display: none; }}
+  .advice-rank {{ color: var(--muted); font-variant-numeric: tabular-nums; min-width: 28px; }}
+  .advice-si {{ color: var(--muted); font-variant-numeric: tabular-nums; min-width: 80px; }}
+  .advice-fqn {{ font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px;
+                 background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; }}
+  .advice-path {{ color: var(--muted); font-size: 12px; margin-left: auto; }}
+  .advice-path code {{ background: rgba(255,255,255,0.06); padding: 0 4px; border-radius: 3px; }}
+  .advice-body {{ padding: 0 18px 14px 18px; border-top: 1px solid var(--border); }}
+  .advice-block {{ margin-top: 14px; }}
+  .advice-block h4 {{ margin: 0 0 6px 0; font-size: 13px; color: var(--accent); }}
+  .advice-block ul {{ margin: 0; padding-left: 22px; }}
+  .advice-block li {{ margin-bottom: 6px; color: #d1d5db; line-height: 1.55; }}
+  .advice-uncertainty {{ margin-top: 14px; padding: 10px 12px; background: rgba(96,165,250,0.06);
+                          border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0;
+                          color: var(--muted); font-size: 12.5px; line-height: 1.6; }}
+  .advice-uncertainty strong {{ color: var(--accent); }}
   .sec-explain {{ background: rgba(96,165,250,0.06); border-left: 3px solid var(--accent);
                   padding: 14px 18px; margin-bottom: 12px; font-size: 13px; line-height: 1.7;
                   color: #cbd5e1; border-radius: 0 6px 6px 0; }}
@@ -993,6 +1107,8 @@ _HTML_TEMPLATE = r"""<!doctype html>
   </div>
   {module_table}
 </section>
+
+{refactoring_guide}
 
 </main>
 <footer>
