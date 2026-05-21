@@ -37,7 +37,7 @@ import anthropic
 
 
 MODEL_DEFAULT = "claude-haiku-4-5"
-MAX_TOKENS_DEFAULT = 1500
+MAX_TOKENS_DEFAULT = 3000
 MAX_RETRIES = 5
 SCHEMA_VERSION = "advisor-0.1"
 
@@ -336,7 +336,9 @@ def _load_dotenv(path: Path | None = None) -> None:
             key, _, value = line.partition("=")
             key = key.strip()
             value = value.strip().strip('"').strip("'")
-            if key and key not in os.environ:
+            # 이미 truthy 한 값으로 설정된 환경변수는 보존. 빈 문자열이거나
+            # 미설정 상태면 .env 의 값으로 덮어쓴다.
+            if key and not os.environ.get(key):
                 os.environ[key] = value
     except OSError:
         pass

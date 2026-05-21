@@ -1,0 +1,242 @@
+{
+  "schema_version": "advisor-0.1",
+  "project": "OpenRA.Game",
+  "model": "claude-haiku-4-5",
+  "total_usage": {
+    "input_tokens": 20518,
+    "output_tokens": 9874,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+  },
+  "estimated_cost_usd": 0.069888,
+  "rows": [
+    {
+      "fqn": "OpenRA.Network.UnitOrders",
+      "file_path": "Network/UnitOrders.cs",
+      "grade": "E",
+      "si": 100.0,
+      "raw": {
+        "cc": 93.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 47.0,
+        "game_loop_centrality": 0.3333
+      },
+      "top_reasons": [
+        "cc",
+        "global_state"
+      ],
+      "snippet_method": "ProcessOrder",
+      "advice": {
+        "risk_reasons": [
+          "Cyclomatic complexity 93.0 은 프로젝트 상위 10% 메서드 평균의 수십 배에 해당하는 극도로 높은 수치다. ProcessOrder 메서드가 60+ 개의 case 분기를 갖춘 거대 switch 문으로 구성되어 있으며, 각 분기 내 중첩된 조건문이 복잡도를 기하급수적으로 증가시킨다. 이는 버그 삽입, 코드 리뷰 어려움, 테스트 경로 폭발을 직접 초래한다.",
+          "Global state 접근 47회 — TextNotificationsManager, MiniYaml 같은 정적 인스턴스 및 싱글톤에 대한 높은 의존도다. 이는 메서드를 단위 테스트하기 거의 불가능하게 만들며, 네트워크 순서 처리(OrderManager, World 컨텍스트가 전달됨에도 불구하고) 의 상태 격리를 훼손한다.",
+          "게임 루프 중심성 0.3333 은 이 클래스가 네트워크 이벤트 루프 또는 클라이언트 명령 처리 핫 패스에 노출되어 있음을 시사한다. ProcessOrder 는 모든 서버-클라이언트 상호작용 메시지(Message, FluentMessage, 유닛 생성, 이동 등)를 처리하므로, 성능 저하나 미처리 예외가 게임플레이 응답성에 즉시 영향을 미친다.",
+          "Coupling 이 5 로 낮음에도 불구하고, 정적 싱글톤(TextNotificationsManager, MiniYaml) 에 대한 암묵적 의존성이 분석 도구상 포착되지 않을 가능성이 있다. 이 의존성들은 런타임에 강한 결합을 만들어 변경 시 파급 범위를 예측하기 어렵다."
+        ],
+        "refactoring_suggestions": [
+          "ProcessOrder 를 case 별 개별 메서드로 분해하되, dispatch 패턴(문자열-to-handler 딕셔너리 또는 전략 객체)을 사용해 단일 entry point 를 유지한다. 예컨대 \"Message\" → HandleMessageOrder(orderManager, world, order), \"FluentMessage\" → HandleFluentMessageOrder(...) 같은 형태로, 각 메서드의 CC 를 10~20 이하로 수렴시킨다. 이렇게 하면 개별 메서드 테스트가 가능해지고 코드 리뷰 부담이 크게 줄어든다.",
+          "정적 싱글톤 의존성(TextNotificationsManager, MiniYaml 등) 을 처리기(handler) 메서드의 매개변수로 전달하거나, 컨텍스트 객체(예: OrderExecutionContext 클래스) 에 담아 주입한다. 이렇게 하면 각 핸들러를 순수 함수처럼 테스트할 수 있고, 런타임에도 싱글톤 상태 오염을 방지할 수 있다. 게임 루프 핫 패스이므로 의존성 주입 오버헤드(매개변수 전달)는 무시할 수 있다.",
+          "관련된 order type(Message, FluentMessage, PlayerJoined 등)과 해당 처리 로직을 별도의 enum 과 handler interface 로 명시한다. 이렇게 하면 새로운 order type 추가 시 switch 문을 확장하지 않고 새로운 handler 를 등록하기만 하면 되므로 Open-Closed Principle 을 따르고 CC 증가를 억제한다.",
+          "먼저 textNotificationsManager 호출 패턴(AddSystemLine, AddPlayerJoinedLine, AddPlayerLeftLine)을 분석해 공통 인터페이스로 추상화한다. UI 알림 로직을 별도의 서비스 클래스로 추출하면 ProcessOrder 는 순수 주문 해석·유효성 검사에만 집중할 수 있고, UI 상태 변경과의 결합도를 낮출 수 있다."
+        ],
+        "test_priorities": [
+          "Characterisation test — ProcessOrder 의 현재 동작을 golden master 로 기록한다. 각 order type(Message, FluentMessage, 유닛 명령 등) 에 대해 입력-출력을 캡처하고, 리팩토링 후에도 동일한 외부 동작이 보장되는지 검증한다. 특히 네트워크 메시지 순서, TextNotificationsManager 호출 순서가 보존되는지 확인한다.",
+          "핸들러 격리 테스트 — ProcessOrder 를 분해한 개별 메서드(HandleMessageOrder, HandleFluentMessageOrder 등) 에 대해, 싱글톤 대신 mock/stub TextNotificationsManager 를 주입한 단위 테스트를 작성한다. 각 order type 별로 올바른 UI 메시지가 정확한 인수로 호출되는지 검증한다.",
+          "성능 회귀 테스트 — ProcessOrder 는 게임 루프의 핫 패스이므로, 리팩토링 후 dispatch 패턴(딕셔너리 조회 또는 인터페이스 호출)으로 인한 처리량/지연시간 변화를 측정한다. 100+ 개의 네트워크 명령을 연속 처리할 때 프레임 드롭이 발생하지 않는지 확인한다.",
+          "상태 격리 테스트 — 여러 클라이언트 ID 와 서로 다른 world 인스턴스를 가진 테스트 케이스를 작성해, ProcessOrder 호출 간 정적 상태 오염(TextNotificationsManager 의 메시지 누적 등)이 발생하지 않는지 검증한다."
+        ],
+        "uncertainty_notes": "코드 스니펫이 414 줄 중 처음 40 줄만 포함되어 있어, 나머지 case 분기들의 정확한 구조와 실제 CC 분포를 확인할 수 없다. GlobalState 카운트 47 은 전체 메서드에서 측정된 수치지만, 스니펫 상 이미 TextNotificationsManager 호출이 여러 곳에서 반복되고 있어 추정은 합리적이다. 또한 OrderManager 와 World 파라미터가 전달되는 것으로 보아 이들이 순수 컨텍스트로 사용되는지, 아니면 그 내부의 정적 상태(예: World.IsGameOver, OrderManager.SessionId) 를 접근하는지 명확하지 않다. 만약 후자라면 실제 결합도와 테스트 복잡도가 더 높을 수 있다."
+      },
+      "usage": {
+        "input_tokens": 4074,
+        "output_tokens": 2109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      },
+      "response_id": "msg_013sBNxiaa9dTv8UgQhbfqs3"
+    },
+    {
+      "fqn": "OpenRA.Server.Server",
+      "file_path": "Server/Server.cs",
+      "grade": "E",
+      "si": 99.85,
+      "raw": {
+        "cc": 33.25,
+        "coupling": 23.0,
+        "dependency_cycle": 0.0,
+        "global_state": 176.0,
+        "game_loop_centrality": 1.0
+      },
+      "top_reasons": [
+        "coupling",
+        "global_state"
+      ],
+      "snippet_method": "ValidateClient",
+      "advice": {
+        "risk_reasons": [
+          "GlobalState 176 — `Log.Write()`, `GeoIP.LookupCountry()`, `Session` 싱글톤 등 다수의 정적 전역 상태에 접근하므로 테스트 격리가 극히 어렵고, 서버 재시작 간 상태 누수 위험이 높다.",
+          "GameLoopCentrality 1.0 + CC 33.25 (상위 10% 평균) — 이 클래스는 네트워크 이벤트 핸들러 진입점으로 호작하며, 연결 검증·인증·클라이언트 추가 같은 핵심 로직을 단일 메서드 내에 응축해 있다. `ValidateClient` 메서드 하나가 암호 검증, GeoIP 조회, 중복 닉네임 검사, 밴 리스트 확인을 순서대로 처리하므로 한 단계 실패의 전파 경로가 복잡하다.",
+          "Coupling 23 + 1290 LOC — 서버 상태 머신(`ServerState`), 연결(`Connection`), 세션(`Session`), 설정(`Settings`), 로깅(`Log`) 등 거의 모든 핵심 모듈이 의존하므로, 이 클래스의 인터페이스 변경이 다운스트림 모듈에 전파될 여지가 크다."
+        ],
+        "refactoring_suggestions": [
+          "ValidateClient 메서드를 단계별 검증 단계로 분해한다 — 게임 시작 여부 검사 → 암호 검증 → IP 차단 확인 → GeoIP 조회 → 중복 검사 → 세션 추가. 각 단계를 별도 private 메서드 또는 strategy 객체로 추출하면 테스트 시 중간 단계별 동작을 검증할 수 있고, 향후 검증 규칙 추가 시 수정 범위를 좁힐 수 있다.",
+          "전역 상태 의존성을 생성자 또는 명시적 컨텍스트 객체로 주입한다 — `Log`, `GeoIP`, `Session.AnonymizeIP` 같은 정적 호출을 `ILogger`, `IGeoIPProvider` 같은 인터페이스로 감싸고, 서버 생성 시 의존성으로 받도록 한다. 네트워크 핫 패스이므로 인터페이스 디스패치 오버헤드를 측정하되, 최소한 테스트 환경에서는 mock 가능하게 전환해야 한다.",
+          "ServerState 상태 전이 로직을 state machine 클래스로 분리한다 — 현재 `State` 필드는 곳곳에서 조건으로 검사되고 있다. `ValidateClient`에서도 `if (State == ServerState.GameStarted)` 로 시작하는데, 이런 상태 검사를 중앙화하면 상태 도달 불가능 조합을 사전에 차단할 수 있고, 향후 상태 전이 규칙 추가 시 영향 범위를 명확히 할 수 있다.",
+          "ValidateClient 메서드의 예외 처리와 오류 응답(`SendOrderTo`, `DropClient`)을 일관된 오류 핸들러로 통합한다 — 현재 코드는 검증 실패 지점마다 `SendOrderTo(..., ErrorGameStarted)` → `DropClient()` 패턴이 반복되는데, 이를 `ThrowValidationError(errorType)` 같은 메서드로 압축하면 예외 처리 경로가 명확해지고, 오류 응답 형식 변경 시 한 곳만 수정하면 된다."
+        ],
+        "test_priorities": [
+          "Characterisation test: `ValidateClient` 메서드의 현재 동작을 기록하는 golden master 테스트 작성. 입력(handshake 데이터, 현재 서버 상태, 설정)에 따른 출력(클라이언트 추가 여부, SendOrderTo 호출 여부, 오류 메시지 종류)을 테스트 매트릭스로 정의. 이후 리팩토링 시 회귀를 즉시 감지할 수 있다.",
+          "Isolation/mock test: `ILogger`, `IGeoIPProvider`, `ISessionManager` 같은 인터페이스 모음 도입 후, 각 의존성을 mock 으로 치환해 단위 테스트를 작성. 특히 GeoIP 조회 실패, 중복 닉네임, IP 밴 등의 엣지 케이스를 격리된 환경에서 검증.",
+          "Network integration test: 실제 연결 객체와 서버 상태를 사용해, 올바른 시퀀스(인증 성공 → 클라이언트 추가, 암호 오류 → 연결 종료 등)가 동작함을 확인. 게임 루프 내 `Update()` 호출 외부에서 네트워크 이벤트를 주입해 진행 방향이 맞는지 테스트.",
+          "Performance regression test: ValidateClient 호출 시 메모리 할당 및 CPU 사이클을 측정. 리팩토링 후에도 (인터페이스 디스패치 추가 등) 단일 클라이언트 검증 시간이 일정 threshold 이내에 유지되는지 확인. 동시 다중 클라이언트 연결 시뮬레이션에서 CPU 스파이크가 발생하지 않는지 검증."
+        ],
+        "uncertainty_notes": "코드 스니펫이 446~706 줄 중 일부만 제공되어 ValidateClient 전체 로직(중복 닉네임 검사, 밴 리스트 확인 등 뒷부분)을 완전히 파악하기 어렵다. GlobalState 176은 높지만, 그 중 몇 개가 read-only vs. mutable 인지, 또는 메서드 호출 시점의 부수효과(side effect)를 정확히 알 수 없다. 또한 현재 서버가 멀티스레드 또는 async 패턴을 사용하는지 불명확하므로, 동시성 테스트 필요성 정도를 단정하기 어렵다. 최종 리팩토링 방향은 전체 Server.cs 의 다른 메서드들(OnConnection, OnDisconnect, Update 등)과의 상호작용을 확인한 후 수립하는 것이 안전하다."
+      },
+      "usage": {
+        "input_tokens": 4135,
+        "output_tokens": 1984,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      },
+      "response_id": "msg_0155NNEwurkgU351NN5f2b7d"
+    },
+    {
+      "fqn": "OpenRA.Game",
+      "file_path": "Game.cs",
+      "grade": "E",
+      "si": 99.7,
+      "raw": {
+        "cc": 16.25,
+        "coupling": 27.0,
+        "dependency_cycle": 0.0,
+        "global_state": 152.0,
+        "game_loop_centrality": 1.0
+      },
+      "top_reasons": [
+        "coupling",
+        "global_state"
+      ],
+      "snippet_method": "Loop",
+      "advice": {
+        "risk_reasons": [
+          "GlobalState 152 — 전역 상태 접근이 매우 높으며, 게임 루프 진입점에서 직접 정적 필드와 싱글톤에 접근하므로 테스트 격리가 거의 불가능하다. 이는 게임 초기화·종료·상태 리셋 흐름을 단위 테스트하기 어렵게 만든다.",
+          "Coupling 27 — Game 클래스가 모든 주요 시스템(렌더러, 입력, 네트워크, 모드 로더, 음향 등)을 직접 참조하고 있으며, 대부분의 모듈이 Game 인스턴스에 역으로 의존하므로 god-object 패턴을 형성한다.",
+          "GameLoopCentrality 1.0 + CC 16.25 — Loop() 메서드는 게임 루프의 중심 진입점이면서 높은 순환 복잡도를 가지고 있다. 매 프레임 실행되는 핫 패스이므로 여기서의 변경은 즉시 프레임율과 응답성에 영향을 미친다.",
+          "LOC 888 + 복합 타이밍 로직 — 클래스 본체가 매우 크고, Loop() 메서드만 139줄을 차지하며 deltaTime, 프레임 스킵, sleep 스케줄링 등 섬세한 타이밍 제어를 담당하고 있다. 한 곳의 변경이 의도치 않게 다른 게임 루프 구간에 영향을 미칠 가능성이 높다."
+        ],
+        "refactoring_suggestions": [
+          "전역 상태 의존성 추출 — Game 클래스의 정적 필드(Settings, sound engines, renderers 등)를 명시적 GameContext 객체로 집계하여 의존성 주입 패턴을 도입한다. 당장 모든 호출자를 수정할 수는 없으므로, 우선 새 코드와 테스트에서는 컨텍스트를 전달받도록 하고, 기존 정적 접근자는 내부적으로 기본 컨텍스트를 참조하는 래퍼로 유지한다.",
+          "게임 루프 타이밍 로직 추출 — Loop() 메서드의 deltaTime 계산, 프레임 스킵 정책, sleep 스케줄링 로직을 GameLoopScheduler 클래스로 분리한다. 이렇게 하면 타이밍 정책을 독립적으로 테스트할 수 있고, 향후 멀티스레드 게임 루프 도입 시에도 교체가 용이하다.",
+          "핫 패스(Update/Render 호출) 최적화 검증 — Loop() 내에서 호출되는 주요 시스템(ticks, renders, input polling)의 할당 및 GC 압력을 프로파일링한다. 전역 상태 제거 과정에서 추가 메모리 할당이 발생할 수 있으므로, 성능 회귀 테스트(FPS stability, GC pause time)를 먼저 수립하고, 매 단계마다 벤치마크 비교를 수행한다.",
+          "God-object 주변 모듈 독립성 검증 — Game.Instance를 직접 참조하는 상위 10개 클래스(렌더러, 입력 매니저, 사운드 엔진 등)를 파악하고, 각각이 정말로 Game 전체가 필요한지, 아니면 특정 기능(Renderer, InputHandler 등)만 필요한지 검토한다. 필요시 특정 인터페이스로 제한하여 결합도를 단계적으로 낮춘다."
+        ],
+        "test_priorities": [
+          "게임 루프 타이밍 특성 테스트 (characterisation test) — 현재 Loop() 의 deltaTime 계산, 프레임 스킵 정책, sleep 동작을 mock 타이머(시뮬레이션된 시간)로 기록하여 golden master 로 저장한다. 이후 리팩토링 때마다 이 baseline 과 비교하여 타이밍 회귀를 조기에 감지한다.",
+          "글로벌 상태 격리 테스트 — GameContext 를 도입한 뒤, 각 GameContext 인스턴스가 독립적으로 초기화·실행·종료될 수 있는지 검증한다. 특히 여러 게임 세션을 순차적으로 시뮬레이션하여 상태 누수(static field 미정리)가 없는지 확인한다.",
+          "성능 회귀 테스트 (FPS stability) — 고정 사양(CPU, 메모리, 렌더 해상도)에서 100프레임을 연속 실행하고, 평균 FPS, 최소/최대 프레임 시간, GC pause 시간을 측정한다. 리팩토링 전후로 이 메트릭을 비교하여 성능 저하를 감지한다. 특히 게임 루프의 hot path 변경은 필수 검증 항목이다."
+        ],
+        "uncertainty_notes": "Loop() 메서드의 전체 구현이 truncated 되어, 정확한 제어 흐름, 예외 처리, 플랫폼 특화 로직(sleep, vsync sync)의 규모를 완전히 파악하기 어렵다. 또한 Game 클래스의 다른 메서드들(초기화, 이벤트 핸들러)에서 GlobalState 152 중 정확히 몇 개가 발생하는지, 그리고 어떤 부분이 게임 루프 중심 통로에 있는지 추가 정보 없이는 우선순위를 정확히 결정할 수 없다. 코드스니펫이 제한적이므로 refactoring_suggestions 는 게임 엔진 패턴 경험에 기반한 일반적 방향이며, 실제 구현 시에는 의존성 그래프 full scan 과 성능 프로파일링이 필요하다."
+      },
+      "usage": {
+        "input_tokens": 4173,
+        "output_tokens": 1874,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      },
+      "response_id": "msg_017PYzMzWE319yXBn7wCGjPe"
+    },
+    {
+      "fqn": "OpenRA.MiniYaml",
+      "file_path": "MiniYaml.cs",
+      "grade": "E",
+      "si": 99.55,
+      "raw": {
+        "cc": 32.5,
+        "coupling": 23.0,
+        "dependency_cycle": 2.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.25
+      },
+      "top_reasons": [
+        "coupling",
+        "cc"
+      ],
+      "snippet_method": "FromLines",
+      "advice": {
+        "risk_reasons": [
+          "CC 32.5 (top-10% 평균) — FromLines 메서드 단독으로 184줄에 걸쳐 깊은 중첩 루프, 상태 기계식 문자 파싱 로직, 예외 처리까지 포함되어 있어 제어 흐름이 매우 복잡함. 이는 파싱 에러 재현과 개별 케이스 단위 테스트를 어렵게 함.",
+          "Coupling 23 — MiniYaml 은 OpenRA 의 설정/메타데이터 계층의 핵심 단위로, 거의 모든 상위 모듈(game state, mod loader, manifest parser)이 이 클래스에 직접 의존. 단일 변경이 광범위한 영향을 미칠 수 있음.",
+          "DependencyCycle (SCC size 2) — 최소한 한 개의 2-노드 순환 의존성이 존재. 게임 시작 시 YAML 파싱이 진입점이므로 사이클의 해제 시점이 명확하지 않으면 startup 또는 reload 시 숨겨진 순서 의존성이 발생할 위험.",
+          "GameLoopCentrality 0.25 — FromLines 는 게임 루프 초반(mod loading, config parse) 에서만 호출되지만, 파싱 실패 시 전체 게임 시작이 중단되므로 핫 패스는 아니어도 critical path 상의 게이트키퍼 함수임."
+        ],
+        "refactoring_suggestions": [
+          "FromLines 메서드를 상태 기계 또는 여러 헬퍼 메서드로 분해하기. 특히 (1) 라인별 tokenization, (2) indentation level 추론, (3) key-value-comment 구분, (4) 중첩 구조 재구성 을 별도 메서드로 추출하면 각 단계를 독립적으로 테스트 가능하게 됨. CC 를 10 이하 범위로 분산시키는 것이 목표.",
+          "Coupling 을 낮추기 위해 MiniYamlNode 의 공개 API 를 명시적 인터페이스로 정의하고, 내부 구현(SourceLocation, comment storage 등) 을 감싸기. 이렇게 하면 상위 계층에서 MiniYaml 을 통한 의존성을 제한할 수 있고, 향후 포맷 변경(YAML → JSON) 시 영향 범위를 국소화할 수 있음.",
+          "순환 의존성을 제거하기 위해 의존성 그래프를 시각화하고, SCC 내 각 노드의 책임을 명확히 분리하기. 특히 mod loader ↔ MiniYaml ↔ game config 사이의 사이클이 있다면, 중간 레이어(예: ConfigRegistry) 를 도입해 단방향 의존성으로 변환하기.",
+          "FromLines 의 내부 상태 변수(level, spaces, parsedLines, result) 를 한 개의 ParseContext 객체로 캡슐화하면, 상태 누수를 줄이고 미래의 parallel parsing (여러 파일 동시 파싱) 으로의 전환이 수월해짐. 단, startup phase 이므로 성능 영향은 미미할 것으로 예상됨."
+        ],
+        "test_priorities": [
+          "Characterisation test: 현재 FromLines 가 처리하는 복잡한 YAML 구조(깊은 중첩, 주석, 이스케이프 시퀀스, 빈 줄, 탭/스페이스 혼용) 에 대해 golden master 형태로 입력-출력 쌍을 캡처하기. 이렇게 하면 향후 리팩토링 시 회귀를 빠르게 감지할 수 있음.",
+          "ParseError regression test: FromLines 가 발생시켜야 할 예외 케이스(malformed key, circular reference, encoding error) 를 명시적으로 리스트업하고, 각 케이스마다 정확한 에러 메시지와 SourceLocation 을 검증하는 test 작성. 이는 파싱 로직 분해 후에도 일관성을 보장함.",
+          "Integration test (mod loading): MiniYaml.FromLines 를 호출하는 상위 모듈(ModData, ManifestData) 을 통합하는 테스트를 강화하기. 특히 start-up 시 여러 YAML 파일을 순차로 로드할 때 순환 의존성이나 state leakage 가 없는지 검증하기. 이는 DependencyCycle 리팩토링 후 안전성을 보증하는 checkpoint 역할 함.",
+          "Performance regression test: FromLines 는 매 게임 시작 시(그리고 mod reload 시) 호출되므로, 파싱 시간(ms 단위) 과 메모리 할당량(object count, GC pressure) 을 baseline 으로 기록하고, 리팩토링 후에도 ±5% 이내 유지되는지 확인하기. stringPool 최적화의 효과도 정량화하기."
+        ],
+        "uncertainty_notes": "FromLines 전체 코드가 제시되지 않아, 정확한 제어 흐름과 CC 계산 근거를 완전히 검증할 수 없음. 또한 DependencyCycle 이 정확히 어느 두 클래스 사이의 사이클인지(mod loader ↔ MiniYaml vs. MiniYaml ↔ game config 등), 그리고 그 사이클이 startup 에만 영향을 미치는지 runtime 에도 영향을 미치는지 명확하지 않음. 게임 루프 중심성이 0.25 로 낮은 이유도, FromLines 가 initialization phase 에 한정되는 건지 아니면 mod reload 같은 비주기적 이벤트에서도 호출되는지 불명확함. Coupling 23 도 fan-in/fan-out 분해 없이는 실제 버전 관리 위험도를 정정하기 어려움."
+      },
+      "usage": {
+        "input_tokens": 4137,
+        "output_tokens": 1866,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      },
+      "response_id": "msg_011x8KbUPZpQ6wPpbV6tZTLv"
+    },
+    {
+      "fqn": "OpenRA.Support.VariableExpression.Token",
+      "file_path": "Support/VariableExpression.cs",
+      "grade": "E",
+      "si": 99.4,
+      "raw": {
+        "cc": 35.0,
+        "coupling": 5.0,
+        "dependency_cycle": 3.0,
+        "global_state": 31.0,
+        "game_loop_centrality": 0.0
+      },
+      "top_reasons": [
+        "cc",
+        "dependency_cycle"
+      ],
+      "snippet_method": "GetNextType",
+      "advice": {
+        "risk_reasons": [
+          "Cyclomatic Complexity 35.0 — `GetNextType` 메서드가 거대 switch-case 문으로 구성되어 있으며, 각 case 내 추가 조건 분기(!=, <=, >=, &&, || 등)가 누적되어 단일 메서드의 제어 흐름이 매우 복잡함. 이는 토큰 해석 로직이 모두 한 곳에 응축되어 있음을 의미하며, 새로운 연산자 추가 시 case 를 수정하면서 기존 분기 로직을 실수로 훼손할 가능성이 높음.",
+          "Global State 31 — `TokenType` 열거형 및 static 필드나 싱글톤 인스턴스를 통한 상태 의존도가 높으며, 특히 토큰 타입 정의와 검증 로직이 정적 멤버로 중앙 집중화되어 있음. 이는 단위 테스트 시 토큰 타입 전체를 주입받아야 하고, 타입 정의 변경이 파서 전체에 파급됨을 의미.",
+          "Dependency Cycle SCC size 3 — 클래스가 순환 의존성 그룹(SCC)에 포함되어 있으며, 토큰 타입 정의 → 파서 → 표현식 평가 → 토큰 생성 같은 사이클이 존재할 가능성이 높음. 이는 한 모듈만 분리해 테스트하기 어렵게 만들고, 리팩토링 시 영향 범위 예측을 불가능하게 함."
+        ],
+        "refactoring_suggestions": [
+          "거대 switch-case 문을 Strategy 패턴 또는 함수 포인터 맵(`Dictionary<char, Func<...>>`)으로 변환하는 것을 검토하되, 각 연산자별 분기를 별도 private 메서드(`ParseOperatorNotEqual`, `ParseComparisonOperator` 등)로 추출하는 단계적 접근을 추천함. 이렇게 하면 CC 를 메서드당 5~8 로 낮출 수 있으며, 새 연산자 추가 시 기존 분기를 건드리지 않음.",
+          "전역 상태 의존도 31을 낮추기 위해 `TokenType` 열거형 정의와 검증 로직을 별도의 immutable 설정 객체(`ITokenTypeRegistry` 또는 `TokenTypeDefinitions`)로 추출하고, `GetNextType` 에 의존성 주입 형태로 전달하는 방안을 검토함. 이는 단위 테스트에서 mocking 된 토큰 타입 세트로 검증 가능하게 만들 고, 커스텀 연산자 확장을 용이하게 함.",
+          "순환 의존성(SCC size 3)을 제거하기 위해 먼저 현재 사이클의 멤버들(`VariableExpression`, `Token`, 관련 평가 클래스)을 나열하고, 가장 낮은 수준의 모듈(순수 토큰 인식기)을 독립적으로 분리하는 것을 권장함. 이 과정에서 호출 그래프 분석 도구를 사용해 역방향 의존성을 식별한 후, 추상화 계층을 도입해 사이클을 끊음.",
+          "GameLoopCentrality 0.0 이므로 이 클래스는 게임 루프의 핫 패스 밖에 있으며, 따라서 성능 회귀 테스트보다는 정확성과 회귀 테스트에 집중할 수 있음. 그러나 변수 표현식 평가가 AI 또는 이벤트 시스템 같은 초당 다빈도 실행 경로에서 호출된다면, 리팩토링 후 표현식 파싱 캐시 또는 조기 컴파일을 검토해야 함."
+        ],
+        "test_priorities": [
+          "Characterisation test — 현재 `GetNextType` 메서드가 모든 지원 연산자(`!=`, `<=`, `>=`, `==`, `&&`, `||`, `!` 등)에 대해 올바른 `TokenType` 을 반환하는지를 기존 코드의 동작 그대로 녹화한 golden master 테스트를 작성하여, 리팩토링 후 회귀를 감지함.",
+          "Boundary & edge case test — 특히 switch-case 의 각 분기에서 `i` 포인터 연산 후 배열 경계 체크(`i < expression.Length`)의 정확성을 검증하는 테스트 추가. 예를 들어 `expression = \"!\"` (길이 1)와 `expression = \"!=\"` (길이 2)를 구분해서 처리하는지 확인.",
+          "Dependency injection mock test — `TokenType` 레지스트리를 별도 의존성으로 주입받는 리팩토링 후, 커스텀 토큰 타입 세트(또는 축약된 연산자 조합)로 mocking 하여 새로운 연산자 추가 시나리오를 테스트 가능하게 함. 이는 순환 의존성 제거 검증에도 도움이 됨.",
+          "Cycle detection regression test — SCC size 3 를 벗기 위한 리팩토링 후, 의존성 분석 도구(예: NDepend, Roslyn)로 순환 사이클이 정말 제거되었는지 자동 검증하는 테스트를 CI/CD 파이프라인에 추가."
+        ],
+        "uncertainty_notes": "코드 스니펫이 일부 생략되어 전체 switch-case 범위와 추가 분기 로직을 파악할 수 없음. 특히 토큰 인식 후 상태 전이(`lastType` 파라미터)가 어떻게 쓰이는지, 그리고 `TokenType` 열거형이 얼마나 많은 값을 가지는지 확인 필요. 또한 `VariableExpression` 클래스의 다른 메서드들과의 호출 관계, 그리고 Coupling 5가 의미하는 외부 타입 5개가 구체적으로 무엇인지 코드 전문을 봐야 정확한 의존성 추출 전략을 세울 수 있음. GameLoopCentrality 0.0 는 정적 호출 그래프 분석일 가능성이 있으므로, 리플렉션이나 동적 표현식 평가를 통한 간접 호출 경로가 존재하는지 런타임 추적으로 확인 권장."
+      },
+      "usage": {
+        "input_tokens": 3999,
+        "output_tokens": 2041,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      },
+      "response_id": "msg_01AD3xJVqbL3K6nbcA88PceB"
+    }
+  ],
+  "notes": []
+}

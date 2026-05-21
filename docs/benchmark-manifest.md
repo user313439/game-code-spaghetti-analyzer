@@ -376,6 +376,62 @@ python -m game_si timeseries <repo> --lang <c|cpp|csharp> --subdir <subdir> \
 
 산출물: `reports/<case>/timeseries.json` (수치) + `reports/<case>/timeseries.html` (Project Health 추이 line chart + 등급 분포 stacked area + bug-fix 활동 bar + 시점 표).
 
+## 6. Phase C — LLM Refactoring Advisor (W13)
+
+plan §7.3 의 Phase C 정성 평가. 4 케이스 각각의 G-SI 상위 5 hotspot 에 대해 Claude Haiku 4.5 를 호출하여 (1) 위험 원인, (2) 리팩토링 방향, (3) 테스트 우선순위를 한국어 JSON 으로 받는다. 자동 코드 수정 기능은 본 작품 범위 외다 (plan §3, §6.4).
+
+### 6.1 설계 결정
+
+- **모델**: `claude-haiku-4-5` ($1/M input, $5/M output). 학사 졸업작품 비용 통제(plan §11) 기준에 적합.
+- **Prompt caching**: 시스템 프롬프트(`game_si/advisor.py` SYSTEM_PROMPT, ~3,900 자) 에 `cache_control: ephemeral` 부착. 실측 결과 토큰 기준으로 Haiku 4.5 의 최소 캐시 prefix(4,096 토큰)에 미달해 `cache_read_input_tokens` 가 0 으로 측정되었다 — 첫 호출의 캐시 쓰기 비용도 0 으로 잡혔으므로 실비 영향은 없으나, 차후 시스템 프롬프트를 영문 보강해 캐시를 활용하면 추가 30~40% 절감 가능.
+- **Structured outputs**: `output_config.format` 에 JSON schema 를 전달해 응답 형식을 API 수준에서 강제. `risk_reasons` / `refactoring_suggestions` / `test_priorities` / `uncertainty_notes` 필드.
+- **Retry**: SDK `max_retries=5` + 자동 backoff (429/5xx). 본 실행에서는 재시도 발생 없음.
+- **입력 최소화** (plan §10.6): 원본 소스를 통째로 보내지 않는다 — 지표값 + 가장 복잡한 메서드의 짧은 스니펫(최대 30줄) + 시그니처만.
+
+### 6.2 4 케이스 호출 통계
+
+```bash
+python -m game_si advise --scoring reports/<case>/scoring.json --top 5
+```
+
+| 케이스 | input tokens | output tokens | 비용 (USD) |
+|---|---:|---:|---:|
+| OpenRA.Game | 20,518 | 9,874 | $0.0699 |
+| OpenRA.Mods.Common | 20,244 | 7,746 | $0.0590 |
+| Chocolate Doom | 20,135 | 9,724 | $0.0688 |
+| OpenRCT2 | 20,802 | 9,413 | $0.0679 |
+| **합계** | **81,699** | **36,757** | **$0.2655** |
+
+20 hotspot 전체 분석 비용이 $0.27 — 본 작품 LLM 보조 예산($1 미만)의 일부.
+
+### 6.3 정성 평가 — 응답 품질
+
+다음은 실측된 advice 의 한 예시 (Chocolate Doom `i_system` hotspot, G-SI 100, 결합도 156, SCC 크기 32, GlobalState 22):
+
+> **위험 원인**: "결합도 156 — 156개의 외부 타입/단위를 참조하거나 참조받으며, 이는 거의 모든 모듈이 이 compilation unit 에 직·간접적으로 의존함을 의미한다. 변경 시 광범위한 회귀 테스트가 필수이다."
+
+> **리팩토링 제안**: "전역 상태를 명시적 컨텍스트 객체로 캡슐화하라. `struct DosEmulationState { static_bool firsttime; int dos_version; void *mem_dump; }` 같은 형태로 도스 호환성 설정을 분리하고 ... 단, 게임 루프 핫 패스에서는 성능 영향을 검증해야 한다."
+
+> **테스트 우선순위**: "특성 테스트(Characterisation Test)를 작성하라: `i_system.c`의 모든 공개 함수(특히 `I_GetMemoryValue`, 메모리 할당/해제, DOS 버전 감지 함수)를 현재 동작 그대로 기록하는 테스트를 작성하여 의도하지 않은 변경을 탐지한다."
+
+다른 케이스도 동일한 패턴이 관찰된다. OpenRA.Game `UnitOrders` 에서는 "ProcessOrder 메서드가 60+ 개의 case 분기를 가진 거대 switch 문" + "dispatch 테이블(문자열-to-handler 딕셔너리)" 분리를 제안했고, OpenRCT2 `park.Legacy` (CC_top10p=568) 에서는 "레거시 저장 포맷 마이그레이션" 패턴을 인지하고 게임 자산 변환의 의도성을 언급하며 보존을 권고했다.
+
+종합:
+
+1. **정량 인용의 정확성** — 모든 응답이 지표 수치(CC, 결합도, GlobalState, SCC 크기) 를 정확히 인용한다. 시스템 프롬프트에 G-SI 정의를 충분히 담은 효과.
+2. **게임 도메인 인지** — DOS 호환성, god-module, 코스터 페인트, RCT1 임포터 같은 도메인 특화 패턴을 인식하고 조언에 반영. 일반 정적 분석 보고서보다 도메인 깊이가 있다.
+3. **테스트 유형의 적절성** — characterisation test, golden master test, performance regression test 같은 게임/레거시 코드에 적합한 테스트 유형을 권고. 단순한 "유닛 테스트 추가" 수준이 아니다.
+4. **불확실성 명시** — 모든 응답이 `uncertainty_notes` 에 추측 한계(스니펫 일부만 노출, 의존성 그래프 미시각화 등)를 명시한다. 자동 패치 없이 의사결정 보조 도구로 사용하기에 안전하다.
+
+### 6.4 한계 및 사용 가이드라인
+
+- **추측이 포함됨** — 응답에 `(추정)`, "가능성이 높다", "확실하지 않음" 같은 표현이 빈번. 도구는 의사결정 보조이며, 실제 리팩토링은 사람이 의존성 그래프 확인 후 진행해야 한다.
+- **시점별 결정성 없음** — 같은 hotspot 도 호출 시점에 따라 advice 가 일부 달라질 수 있다 (LLM 특성). 보고서 인용 시에는 본 실행 결과를 fixed 한 stop-snapshot 으로 사용한다.
+- **코드 스니펫 의존성** — `ast.json` 이 가용하지 않은 경우 advice 품질이 떨어진다. 본 4 케이스는 모두 ast.json 을 보유.
+- **자동 코드 수정 금지** — 응답의 리팩토링 제안은 사람이 검토·적용해야 한다. plan §6.4 의 범위 외 명시.
+
+산출물: 각 케이스의 `reports/<case>/advisor.{json,md}`. `advisor.md` 는 사람용 한국어 마크다운, `advisor.json` 은 구조화된 원본.
+
 ## 3. 라이선스 및 재배포 원칙
 
 - 본 매니페스트에 등재된 저장소의 코드는 본 작품 저장소에 복사하거나 포함하지 않는다.
