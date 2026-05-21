@@ -1,0 +1,112 @@
+## game-si 품질 게이트 샘플 — plan §6.3
+##
+## PR 이 main 으로 머지될 때 G-SI 가 일정 수준 이상 악화되면 실패시키는 샘플 workflow.
+##
+## 작동 흐름:
+##   1. main(베이스라인) 과 PR HEAD(라테스트) 둘 다 checkout.
+##   2. 각 시점에서 analyze 실행 → scoring.json 산출.
+##   3. game-si diff 로 두 결과 비교, --fail-if-worse-than 3 으로 게이트.
+##   4. 결과 summary 를 PR 코멘트로 등록 (선택).
+##
+## 본 yaml 은 도구의 워크플로 통합 가능성을 보여주는 **샘플**이다. 실제 사용 시
+## 분석 대상(아래의 ANALYZE_PATH, REPO_SUBDIR) 을 프로젝트에 맞게 수정한다.
+
+name: G-SI Quality Gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'csharp-analyzer/**'
+
+env:
+  ANALYZE_PATH: src/openrct2     # 분석 대상 디렉토리 (예시)
+  REPO_SUBDIR: src/openrct2      # 저장소 루트 기준 동일 경로
+  ANALYZE_LANG: cpp              # csharp / c / cpp
+  FAIL_THRESHOLD: 3.0            # Project Health Δ > 3 이면 PR 실패
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: pr
+
+      - name: Checkout main (baseline)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: baseline
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Setup .NET 8 (only if analyzing C#)
+        if: env.ANALYZE_LANG == 'csharp'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install game-si (from PR checkout)
+        working-directory: pr
+        run: pip install -e .
+
+      - name: Build csharp-analyzer (if needed)
+        if: env.ANALYZE_LANG == 'csharp'
+        working-directory: pr
+        run: dotnet build csharp-analyzer/csharp-analyzer.csproj -c Debug
+
+      - name: Analyze baseline (main)
+        working-directory: pr
+        run: |
+          python -m game_si analyze "../baseline/${ANALYZE_PATH}" \
+            --lang ${ANALYZE_LANG} \
+            --out reports/_ci_baseline --no-html
+
+      - name: Analyze PR HEAD
+        working-directory: pr
+        run: |
+          python -m game_si analyze "${ANALYZE_PATH}" \
+            --lang ${ANALYZE_LANG} \
+            --out reports/_ci_latest --no-html
+
+      - name: Diff and apply gate
+        id: gate
+        working-directory: pr
+        run: |
+          python -m game_si diff \
+            reports/_ci_baseline/scoring.json \
+            reports/_ci_latest/scoring.json \
+            --fail-if-worse-than ${FAIL_THRESHOLD} \
+            --out reports/_ci_diff
+          echo "summary<<EOF" >> "$GITHUB_OUTPUT"
+          cat reports/_ci_diff/diff_summary.txt >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Comment on PR (always — pass or fail)
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const summary = `${{ steps.gate.outputs.summary }}`;
+            const fence = '```';
+            const body = `### G-SI Quality Gate\n\n${fence}\n${summary}\n${fence}`;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });
+
+      - name: Upload diff artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g-si-diff
+          path: pr/reports/_ci_diff/

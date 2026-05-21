@@ -37,6 +37,16 @@ DEFAULT_WEIGHTS_STATIC: dict[str, float] = {
     "game_loop_centrality": 0.15,
 }
 
+# plan §4.3 — G-SI-Full 가중치. ChangeRisk 항목 추가, 나머지는 비율 조정.
+DEFAULT_WEIGHTS_FULL: dict[str, float] = {
+    "cc": 0.25,
+    "coupling": 0.20,
+    "dependency_cycle": 0.15,
+    "global_state": 0.15,
+    "game_loop_centrality": 0.15,
+    "change_risk": 0.10,
+}
+
 
 # ---------------------------------------------------------------------------
 # 등급표 — `plan_final_draft.md` §4.7
@@ -198,6 +208,91 @@ def compute_si_static(
         class_scores.append(cs)
 
     # 6) 파일/모듈 집계
+    file_scores = _aggregate_files(class_scores, metrics)
+    module_scores = _aggregate_modules(file_scores)
+
+    grade_dist = {g: 0 for g in "ABCDE"}
+    for cs in class_scores:
+        grade_dist[cs.grade] += 1
+
+    project_health = _compute_project_health(class_scores, metrics)
+
+    return ScoringResult(
+        weights=w,
+        class_scores=class_scores,
+        file_scores=file_scores,
+        module_scores=module_scores,
+        grade_distribution=grade_dist,
+        total_classes=len(metrics.classes),
+        total_methods=len(metrics.methods),
+        project_health=project_health,
+    )
+
+
+def compute_si_full(
+    metrics: MetricsResult,
+    change_risk_by_file: dict[str, float],
+    weights: dict[str, float] | None = None,
+) -> ScoringResult:
+    """G-SI-Full 산출 (plan §4.3).
+
+    G-SI-Static 과 동일한 파이프라인이지만 ``raw`` 에 ``change_risk`` 항목 추가.
+    ``change_risk_by_file`` 는 ``compute_change_risk()`` 의 출력에서 file_path →
+    change_risk 값으로 변환한 dict.
+    """
+    w = _normalize_weights(weights or DEFAULT_WEIGHTS_FULL)
+
+    if not metrics.classes:
+        return ScoringResult(
+            weights=w,
+            class_scores=[],
+            file_scores=[],
+            module_scores=[],
+            grade_distribution={g: 0 for g in "ABCDE"},
+            total_classes=0,
+            total_methods=0,
+        )
+
+    # 1) raw 추출 — change_risk 까지 포함
+    rows: list[dict[str, float]] = []
+    for c in metrics.classes:
+        cr = float(change_risk_by_file.get(c.file_path.replace("\\", "/"), 0.0))
+        rows.append({
+            "cc": float(_class_cc_representative(c)),
+            "coupling": float(c.coupling),
+            "dependency_cycle": float(c.cycle_size if c.cycle_member else 0),
+            "global_state": float(c.global_state),
+            "game_loop_centrality": float(c.game_loop_centrality),
+            "change_risk": cr,
+        })
+
+    z_rows = _z_score_rows(rows)
+    raw_scores = [
+        sum(w[k] * z_rows[i][k] for k in w)
+        for i in range(len(rows))
+    ]
+    si_values = _percentile_rank(raw_scores)
+
+    class_scores: list[ClassScore] = []
+    for c, raw, z, raw_score, si in zip(metrics.classes, rows, z_rows, raw_scores, si_values):
+        cs = ClassScore(
+            fqn=c.fqn,
+            name=c.name,
+            file_path=c.file_path,
+            module=_module_of(c.file_path),
+            start_line=c.start_line,
+            end_line=c.end_line,
+            kind=c.kind,
+            loc=sum(m.loc for m in c.methods),
+            raw=raw,
+            z=z,
+            raw_score=raw_score,
+            si=si,
+            grade=_grade(si),
+            top_reasons=_top_reasons(z, w),
+        )
+        class_scores.append(cs)
+
     file_scores = _aggregate_files(class_scores, metrics)
     module_scores = _aggregate_modules(file_scores)
 

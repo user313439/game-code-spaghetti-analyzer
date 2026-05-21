@@ -1,0 +1,20 @@
+=== Weight Tuning (plan §4.6) ===
+grid size: 2,226 candidates
+evaluated: 2,226
+
+default weights: cc=0.30 coupling=0.25 dependency_cycle=0.15 global_state=0.15 game_loop_centrality=0.15
+tuned weights:   cc=0.30 coupling=0.30 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
+
+per-case file-level Spearman ρ (vs file bug-fix count):
+  case                      default    tuned       Δ
+  OpenRA.Game               +0.5756  +0.6454 +0.0698
+  OpenRA.Mods.Common        +0.5451  +0.5677 +0.0226
+  Chocolate Doom            +0.5815  +0.6186 +0.0370
+  OpenRCT2                  +0.4606  +0.4812 +0.0206
+
+LOPO (Leave-One-Project-Out) cross-validation:
+  default (avg of per-case ρ):  +0.5407
+  tuned (hold-out ρ avg):       +0.5706
+  Δ (tuned − default):          +0.0299
+
+→ tuned weights 가 LOPO 검증에서 default 대비 개선됨.

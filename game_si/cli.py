@@ -109,10 +109,20 @@ def _build_parser() -> argparse.ArgumentParser:
         help="대시보드 Hotspot Table에 표시할 클래스 수 (기본 30).",
     )
 
-    # 후속 주차에서 구현될 명령들 — W1에서는 stub
-    p_diff = sub.add_parser("diff", help="(W12+) 두 분석 결과의 G-SI 변화 비교")
-    p_diff.add_argument("baseline_json")
-    p_diff.add_argument("latest_json")
+    p_diff = sub.add_parser(
+        "diff",
+        help="두 scoring.json 의 G-SI 변화 비교 (CI 품질 게이트용).",
+    )
+    p_diff.add_argument("baseline_json", help="기준 scoring.json (예: main 브랜치)")
+    p_diff.add_argument("latest_json", help="비교 scoring.json (예: PR 브랜치)")
+    p_diff.add_argument(
+        "--out", type=Path, default=None,
+        help="diff.{json,_summary.txt} 출력 디렉토리 (기본: latest 의 디렉토리)",
+    )
+    p_diff.add_argument(
+        "--fail-if-worse-than", type=float, default=None,
+        help="health_delta 가 이 값을 초과하면 비-0 종료 (CI 게이트). 예: 3.0",
+    )
 
     p_validate = sub.add_parser(
         "validate",
@@ -155,6 +165,32 @@ def _build_parser() -> argparse.ArgumentParser:
         default=None,
         help="validation.html 헤더에 표시할 프로젝트 이름. 기본값은 --subdir 또는 scoring.json 디렉토리 이름.",
     )
+
+    p_tune = sub.add_parser(
+        "tune",
+        help="plan §4.6 — 가중치 튜닝 + LOPO 교차 검증.",
+    )
+    p_tune.add_argument(
+        "--case", action="append", required=True, metavar="NAME=DIR",
+        help="케이스 추가. 형식: <name>=<reports/<case> 디렉토리>. 반복 가능.",
+    )
+    p_tune.add_argument(
+        "--out", type=Path, default=Path("reports"),
+        help="tune.json + tune_summary.txt 출력 디렉토리 (기본: reports/).",
+    )
+
+    p_full = sub.add_parser(
+        "score-full",
+        help="G-SI-Full 산출 (plan §4.3). 기존 ast.json 재사용 + ChangeRisk 추가.",
+    )
+    p_full.add_argument("input", help="분석 대상 디렉토리 (analyze 와 동일 경로)")
+    p_full.add_argument("--lang", choices=["csharp", "c", "cpp", "auto"], default="auto")
+    p_full.add_argument("--repo", type=Path, required=True, help="git 저장소 working tree")
+    p_full.add_argument("--subdir", default=None, help="저장소 루트로부터 input 까지의 서브 디렉토리")
+    p_full.add_argument("--months", type=int, default=12, help="ChangeRisk time window (개월, 기본 12)")
+    p_full.add_argument("--out", type=Path, required=True, help="결과 출력 디렉토리")
+    p_full.add_argument("--project-name", default=None)
+    p_full.add_argument("--exclude", action="append", default=[])
 
     p_ts = sub.add_parser(
         "timeseries",
@@ -504,6 +540,172 @@ def _cmd_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_diff(args: argparse.Namespace) -> int:
+    """두 scoring.json 의 G-SI 변화 비교. CI 품질 게이트 용도."""
+    from .diff import compute_diff, to_dict, format_summary
+
+    baseline = Path(args.baseline_json)
+    latest = Path(args.latest_json)
+    if not baseline.exists():
+        print(f"[error] baseline 부재: {baseline}", file=sys.stderr)
+        return 1
+    if not latest.exists():
+        print(f"[error] latest 부재: {latest}", file=sys.stderr)
+        return 1
+
+    result = compute_diff(baseline, latest)
+
+    out_dir: Path = args.out if args.out is not None else latest.parent
+    out_dir.mkdir(parents=True, exist_ok=True)
+    json_path = out_dir / "diff.json"
+    summary_path = out_dir / "diff_summary.txt"
+    json_path.write_text(json.dumps(to_dict(result), ensure_ascii=False, indent=2), encoding="utf-8")
+    summary_text = format_summary(result)
+    summary_path.write_text(summary_text + "\n", encoding="utf-8")
+
+    print(summary_text)
+    print()
+    print(f"[diff] wrote {json_path}")
+    print(f"[diff] wrote {summary_path}")
+
+    if args.fail_if_worse_than is not None and result.health_delta > args.fail_if_worse_than:
+        print(
+            f"[diff] FAIL — health_delta ({result.health_delta:+.2f}) > "
+            f"threshold ({args.fail_if_worse_than:+.2f})",
+            file=sys.stderr,
+        )
+        return 2
+    return 0
+
+
+def _cmd_tune(args: argparse.Namespace) -> int:
+    """plan §4.6 — 가중치 튜닝 + LOPO 교차 검증."""
+    from .tune import load_case_data, run_tune, to_dict, format_summary
+
+    cases = []
+    for spec in args.case:
+        if "=" not in spec:
+            print(f"[error] --case 형식 오류: '{spec}'. <name>=<dir> 형태로.", file=sys.stderr)
+            return 1
+        name, _, dir_str = spec.partition("=")
+        case_dir = Path(dir_str)
+        scoring_p = case_dir / "scoring.json"
+        validation_p = case_dir / "validation.json"
+        if not scoring_p.exists() or not validation_p.exists():
+            print(f"[error] {name}: {scoring_p} 또는 {validation_p} 부재", file=sys.stderr)
+            return 1
+        cases.append(load_case_data(name, scoring_p, validation_p))
+    print(f"[tune] cases={len(cases)}  files총={sum(len(c.raw_by_file) for c in cases)}")
+    print("[tune] grid search + LOPO 진행중...")
+    result = run_tune(cases)
+    out_dir: Path = args.out
+    out_dir.mkdir(parents=True, exist_ok=True)
+    json_path = out_dir / "tune.json"
+    summary_path = out_dir / "tune_summary.txt"
+    json_path.write_text(
+        json.dumps(to_dict(result), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    summary_text = format_summary(result)
+    summary_path.write_text(summary_text + "\n", encoding="utf-8")
+    print()
+    print(summary_text)
+    print()
+    print(f"[tune] wrote {json_path}")
+    print(f"[tune] wrote {summary_path}")
+    return 0
+
+
+def _cmd_score_full(args: argparse.Namespace) -> int:
+    """G-SI-Full 산출 — plan §4.3 의 확장 지표.
+
+    절차: analyze 와 동일하게 ast → metrics → ChangeRisk 산출(gitlog) →
+    compute_si_full → scoring_full.json + 상위 hotspot 비교 표 텍스트.
+    """
+    from .change_risk import compute_change_risk
+    from .metrics import compute_metrics
+    from .si import compute_si_full, scoring_to_dict, DEFAULT_WEIGHTS_FULL
+
+    input_path = Path(args.input)
+    if not input_path.exists():
+        print(f"[error] 입력 경로가 존재하지 않습니다: {input_path}", file=sys.stderr)
+        return 1
+    if not args.repo.exists():
+        print(f"[error] repo 경로가 존재하지 않습니다: {args.repo}", file=sys.stderr)
+        return 1
+    out_dir: Path = args.out
+    out_dir.mkdir(parents=True, exist_ok=True)
+    project_name = args.project_name or _default_project_name(input_path)
+
+    lang = _resolve_language(args.lang, input_path)
+    print(f"[score-full] project={project_name}  lang={lang}  months={args.months}")
+    print(f"[score-full] computing ChangeRisk from {args.repo}  subdir={args.subdir or '(root)'}")
+
+    cr_rows = compute_change_risk(repo=args.repo, subdir=args.subdir, months=args.months)
+    cr_by_file = {k: row.change_risk for k, row in cr_rows.items()}
+    print(f"[score-full] ChangeRisk computed for {len(cr_by_file)} files in last {args.months} months")
+
+    try:
+        if lang == "csharp":
+            data, errors = _run_csharp(input_path, None, args.exclude)
+        else:
+            data, errors = _run_cpp(input_path, None, args.exclude)
+    except Exception as exc:
+        print(f"[error] AST 분석 실패: {exc}", file=sys.stderr)
+        return 1
+    if errors:
+        print(f"[warn] {len(errors)} files failed to parse", file=sys.stderr)
+
+    metrics = compute_metrics(data)
+    scoring_full = compute_si_full(metrics, cr_by_file)
+    print(
+        "[score-full] G-SI-Full grade distribution: "
+        + " ".join(f"{g}={scoring_full.grade_distribution[g]}" for g in "ABCDE")
+    )
+
+    out_json = out_dir / "scoring_full.json"
+    payload = scoring_to_dict(scoring_full)
+    payload["weights"] = DEFAULT_WEIGHTS_FULL  # 명시
+    payload["change_risk_window_months"] = args.months
+    payload["change_risk_files"] = len(cr_by_file)
+    out_json.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    # 텍스트 요약: G-SI-Static 과 비교 (scoring.json 옆에 있으면 자동)
+    static_path = out_dir / "scoring.json"
+    summary_lines: list[str] = []
+    summary_lines.append("=== G-SI-Full vs G-SI-Static (top hotspot 비교) ===")
+    summary_lines.append(f"project: {project_name}  window: {args.months} months")
+    if static_path.exists():
+        with open(static_path, "r", encoding="utf-8") as f:
+            static_scoring = json.load(f)
+        # 상위 10 비교
+        full_top = sorted(scoring_full.class_scores, key=lambda c: -c.si)[:10]
+        static_top_map = {c["fqn"]: c for c in static_scoring.get("class_scores", [])}
+        summary_lines.append("")
+        summary_lines.append(f"{'rank':>4}  {'G-SI Full':>9}  {'G-SI Static':>11}  {'Δ':>6}  {'CR':>6}  fqn")
+        for i, cs in enumerate(full_top, 1):
+            static_val = static_top_map.get(cs.fqn, {}).get("si", 0.0)
+            delta = cs.si - float(static_val)
+            cr_val = cs.raw.get("change_risk", 0.0)
+            summary_lines.append(
+                f"{i:>4}  {cs.si:>9.2f}  {static_val:>11.2f}  {delta:>+6.2f}  {cr_val:>6.0f}  {cs.fqn[:80]}"
+            )
+    else:
+        summary_lines.append("(scoring.json 부재 — Static 비교 생략)")
+
+    summary_text = "\n".join(summary_lines)
+    (out_dir / "scoring_full_summary.txt").write_text(summary_text + "\n", encoding="utf-8")
+    print()
+    print(summary_text)
+    print()
+    print(f"[score-full] wrote {out_json}")
+    print(f"[score-full] wrote {out_dir / 'scoring_full_summary.txt'}")
+    return 0
+
+
 def _cmd_timeseries(args: argparse.Namespace) -> int:
     """W14 Phase D — G-SI 시계열 측정."""
     from .timeseries import run_timeseries, to_dict, generate_html
@@ -696,8 +898,12 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_advise(args)
     if args.command == "timeseries":
         return _cmd_timeseries(args)
-    if args.command in {"diff"}:
-        return _cmd_stub(args.command)
+    if args.command == "score-full":
+        return _cmd_score_full(args)
+    if args.command == "tune":
+        return _cmd_tune(args)
+    if args.command == "diff":
+        return _cmd_diff(args)
 
     parser.print_help(sys.stderr)
     return 2

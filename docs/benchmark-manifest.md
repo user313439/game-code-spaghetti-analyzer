@@ -432,6 +432,128 @@ python -m game_si advise --scoring reports/<case>/scoring.json --top 5
 
 산출물: 각 케이스의 `reports/<case>/advisor.{json,md}`. `advisor.md` 는 사람용 한국어 마크다운, `advisor.json` 은 구조화된 원본.
 
+## 7. G-SI-Full — ChangeRisk 항목 추가 확장 (plan §4.3)
+
+plan §4.3 의 G-SI-Full 가중합을 본 시점에 구현했다.
+
+```
+raw_full(unit) = 0.25·Z(CC) + 0.20·Z(Coupling) + 0.15·Z(DepCycle)
+               + 0.15·Z(GS) + 0.15·Z(GLC) + 0.10·Z(ChangeRisk)
+```
+
+ChangeRisk 정의 (`game_si/change_risk.py`): 최근 N 개월(기본 12) 동안 해당 **파일** 을 수정한 commit 수에 bug-fix 비율을 가산해 결합한 값 — `total_changes × (1 + bugfix_ratio)`.
+
+```bash
+python -m game_si score-full <input_path> --lang <lang> --repo <repo> \
+    --subdir <subdir> --months 12 --out reports/<case>
+```
+
+**데이터 누수 방지** (plan §3.2 명시) — G-SI-Full 은 git 변경 이력 기반이라 Phase A 의 정답값과 같은 출처를 공유한다. 따라서 본 작품은 G-SI-Full 을 **보조 지표** 로 별도 산출만 하고 Phase A 의 검증값으로 사용하지 않는다.
+
+### 7.1 4 케이스 상위 hotspot 변화 — G-SI-Static vs G-SI-Full
+
+가장 큰 변화 예시 (OpenRA.Game, top 10 중 변화 + 인 클래스만):
+
+| rank Full | G-SI Static → Full | Δ | ChangeRisk | fqn |
+|---:|---:|---:|---:|---|
+| 1 | 99.85 → 100.00 | **+0.15** | 13 | `OpenRA.Server.Server` (god-object + 활발한 수정) |
+| 8 | 98.65 → 98.95 | **+0.30** | 6 | `OpenRA.Renderer` |
+| 9 | 98.35 → 98.80 | **+0.45** | 5 | `OpenRA.Graphics.WorldRenderer` |
+| 10 | 98.05 → 98.65 | **+0.60** | 0 | `OpenRA.KeycodeExts` |
+
+`Server` 가 1 위로 올라온 것이 특히 합리적 — 결합도·전역 상태에 더해 12 개월 내 13 회 수정 활동이 있어 변경 위험이 높다. percentile rank 정의상 상승하는 클래스 만큼 다른 클래스는 하락하므로 분포 자체가 이동한다.
+
+타 케이스 산출물: `reports/<case>/scoring_full.json` + `scoring_full_summary.txt`.
+
+## 8. 가중치 튜닝 + LOPO 교차 검증 (plan §4.6)
+
+```bash
+python -m game_si tune --case OpenRA.Game=reports/openra-game \
+    --case OpenRA.Mods.Common=reports/openra-mods-common \
+    --case "Chocolate Doom=reports/chocolate-doom" \
+    --case OpenRCT2=reports/openrct2
+```
+
+5 차원 가중치를 step 0.05 grid 로 탐색 (sum=1 제약, **2,226 후보**) 하여 4 케이스의 **파일 단위 Spearman ρ 평균을 최대화** 하는 가중치를 찾는다. Leave-One-Project-Out 교차 검증으로 과적합을 점검한다.
+
+### 8.1 결과
+
+**Default vs Tuned**:
+
+| 항목 | cc | coupling | dependency_cycle | global_state | game_loop_centrality |
+|---|---:|---:|---:|---:|---:|
+| default (plan §4.2) | 0.30 | 0.25 | 0.15 | 0.15 | 0.15 |
+| **tuned (본 실험)** | **0.30** | **0.30** | **0.05** | **0.30** | **0.05** |
+
+**케이스별 ρ**:
+
+| 케이스 | default ρ | tuned ρ | Δ |
+|---|---:|---:|---:|
+| OpenRA.Game | +0.5756 | +0.6454 | **+0.0698** |
+| OpenRA.Mods.Common | +0.5451 | +0.5677 | +0.0226 |
+| Chocolate Doom | +0.5815 | +0.6186 | +0.0370 |
+| OpenRCT2 | +0.4606 | +0.4812 | +0.0206 |
+
+**LOPO**:
+
+| | ρ |
+|---|---:|
+| default (4 케이스 평균) | +0.5407 |
+| **tuned (hold-out 평균)** | **+0.5706** |
+| **Δ (tuned − default)** | **+0.0299** |
+
+### 8.2 해석
+
+1. **CC + Coupling + GlobalState 가 가장 강한 시그널** — tuned 가중치가 셋 다 0.30 으로 결합되어 0.90 (총합 1.0 중 90%) 을 차지한다. 이는 게임 코드의 위험이 분기 복잡도(CC) + 모듈 간 결합도(Coupling) + 전역 상태 의존(GS) 세 축에서 발생한다는 plan §2 의 가설과 일치한다.
+2. **DependencyCycle 과 GameLoopCentrality 는 4 케이스에서 약한 시그널** — tuned 가중치가 0.05 로 거의 무시된다. DepCycle 은 4 케이스 모두 SCC 수가 적어 (1~5 개) binary 같은 효과를 내고, GLC 는 진입점 매칭이 syntactic 이라 정확도 한계가 있다. 본 결과는 도구의 **개선 우선순위** (semantic 분석 도입, GLC 계산 정밀화) 를 데이터로 제시한다.
+3. **LOPO 가 default 대비 +0.03 개선** — tuned 가 단일 케이스에 과적합되지 않았음을 시사. 단 4 케이스로는 통계적 일반화에 한계가 있으므로 보고서에서는 "정량 신호" 수준으로 한정해 다룬다.
+
+산출물: `reports/tune.{json,_summary.txt}`.
+
+## 9. CI 품질 게이트 샘플 (plan §6.3)
+
+plan §6.3 의 "GitHub Actions 에서 동작 가능한 품질 게이트 샘플" 을 두 모듈로 구현했다.
+
+### 9.1 `diff` 서브커맨드 (`game_si/diff.py`)
+
+두 `scoring.json` 의 변화를 산출한다 — Project Health Δ, avg_si Δ, risk_ratio Δ, cycle_count Δ, 그리고 **등급이 변한 클래스 목록 (악화·개선 따로)**.
+
+```bash
+python -m game_si diff baseline.json latest.json --fail-if-worse-than 3.0
+```
+
+`--fail-if-worse-than N` 옵션으로 health_delta 가 N 초과면 exit code 2 — CI 에서 PR 을 실패시킬 수 있다.
+
+산출물: `diff.json` + `diff_summary.txt`.
+
+### 9.2 GitHub Actions 샘플: `.github/workflows/g-si-quality-gate.yml`
+
+PR 이 main 으로 머지될 때 다음 흐름:
+
+1. main(baseline) + PR HEAD(latest) 둘 다 checkout
+2. Python + .NET(C# 인 경우) 셋업, `pip install -e .`
+3. 양쪽에서 `game-si analyze` 실행 → 각각 `scoring.json` 산출
+4. `game-si diff --fail-if-worse-than 3.0` 로 게이트
+5. `diff_summary.txt` 를 PR 코멘트로 등록 + artifact 업로드
+
+본 yaml 은 도구의 워크플로 통합 가능성을 보여 주는 **샘플**이다. 실제 사용 시 분석 대상(`ANALYZE_PATH`, `REPO_SUBDIR`) 과 임계치(`FAIL_THRESHOLD`) 를 프로젝트에 맞게 수정한다.
+
+## 10. 종합 — plan 마일스톤 매핑
+
+| plan 절 | 마일스톤 | 상태 | 본 매니페스트 위치 |
+|---|---|---|---|
+| §4.2 G-SI-Static | 기본 점수 산출 | 완료 | §1, §2 |
+| §4.3 G-SI-Full | ChangeRisk 확장 | 완료 | §7 |
+| §4.6 가중치 운용 (tuned) | grid + LOPO | 완료 | §8 |
+| §6.1 Phase 1 (C# 분석) | OpenRA 2 모듈 | 완료 | §1 |
+| §6.2 Phase 2 (C/C++ 분석) | Chocolate Doom + OpenRCT2 | 완료 | §2 |
+| §6.3 Phase 3 항목 — CI 품질 게이트 | GitHub Actions 샘플 | 완료 | §9 |
+| §7.1 Phase A (정량 검증) | 4 케이스 Spearman | 완료 | §3 |
+| §7.2 Phase B (외부 도구 비교) | Lizard | 완료 | §4 |
+| §7.3 Phase C (LLM Advisor) | Haiku 4.5, 20 hotspot | 완료 | §6 |
+| §7.4 Phase D (시계열) | git worktree 기반 | 완료 | §5 |
+| §7.5 Phase E (사용자 설문) | "시간 허용 시" | 양식 준비 | `docs/phase_e_survey.md` (사용자 진행) |
+
 ## 3. 라이선스 및 재배포 원칙
 
 - 본 매니페스트에 등재된 저장소의 코드는 본 작품 저장소에 복사하거나 포함하지 않는다.
