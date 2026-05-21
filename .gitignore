@@ -89,6 +89,16 @@ coverage/
 *.pem
 *.key
 secrets.json
+# API 키 임시 보관용 파일 패턴 — 절대 커밋 금지.
+# 키는 항상 .env 에만 두고, 아래 패턴의 파일은 보관 또는 삭제 한다.
+api*key*.txt
+*api_key*.txt
+*api-key*.txt
+api key.txt
+api_key.json
+.secret*
+*.secret
+*.secret.txt
 
 # --- Logs / temp -----------------------------------------------------------
 *.log

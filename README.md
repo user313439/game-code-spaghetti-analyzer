@@ -10,10 +10,10 @@
 
 | 케이스 | 언어 | 규모 | Project Health | Phase A G-SI ρ (vs bug-fix) |
 |---|---|---|---:|---:|
-| [OpenRA.Game](reports/openra-game/index.html) | C# | 668 클래스 / 2.8K 메서드 / 32K LOC | C (47.9) | **+0.580** (p<1e-6) |
-| [OpenRA.Mods.Common](reports/openra-mods-common/index.html) | C# | 2,194 클래스 / 7.3K 메서드 / 117K LOC | C (46.7) | **+0.541** (p<1e-6) |
+| [OpenRA.Game](reports/openra-game/index.html) | C# | 668 클래스 / 2.8K 메서드 / 32K LOC | C (48.6) | **+0.580** (p<1e-6) |
+| [OpenRA.Mods.Common](reports/openra-mods-common/index.html) | C# | 2,194 클래스 / 7.3K 메서드 / 117K LOC | C (46.8) | **+0.541** (p<1e-6) |
 | [Chocolate Doom](reports/chocolate-doom/index.html) | C | 296 파일 / 4.3K 함수 / 190K LOC | C (50.6) | **+0.582** (p<1e-6) |
-| [OpenRCT2](reports/openrct2/index.html) | C++ | 636 단위 / 5.8K 함수 / 486K LOC | C (54.9) | **+0.458** (p<1e-13) |
+| [OpenRCT2](reports/openrct2/index.html) | C++ | 636 단위 / 5.8K 함수 / 486K LOC | C (54.8) | **+0.458** (p<1e-13) |
 
 **검증 요약** (자세한 내용은 [docs/benchmark-manifest.md](docs/benchmark-manifest.md) §3~§6):
 
@@ -53,21 +53,67 @@ python -m game_si timeseries <git_repo> --lang c --subdir src --samples 12 \
 
 각 명령은 `reports/<project>/` 디렉토리에 결과 파일과 단일 파일 HTML 시각화를 함께 산출한다. HTML 은 CDN 의존성 없이 더블클릭으로 열린다.
 
+## 기능 범위 — 현재 가능 / 향후
+
+| 기능 | 상태 |
+|---|:---:|
+| C# 정적 분석 (Roslyn + SemanticModel) | ✅ v1.0 |
+| C/C++ 정적 분석 (tree-sitter) | ✅ v1.0 |
+| G-SI-Static 산출 + 등급 + Project Health | ✅ v1.0 |
+| G-SI-Full (ChangeRisk 항목 추가) | ✅ v1.0 |
+| 단일 파일 HTML 대시보드 (Refactoring Guide 통합) | ✅ v1.0 |
+| Phase A 검증: bug-fix 상관 (`validate`) | ✅ v1.0 |
+| Phase B 비교: Lizard hotspot (`compare`) | ✅ v1.0 |
+| Phase C: LLM Refactoring Advisor (`advise`, Claude Haiku) | ✅ v1.0 |
+| Phase D: 시계열 G-SI (`timeseries`) | ✅ v1.0 |
+| 가중치 학습 + LOPO (`tune`) + `analyze --weights tuned` | ✅ v1.0 |
+| `diff` (두 commit 간 G-SI 변화 + CI 게이트) | ✅ v1.0 |
+| GitHub Actions 품질 게이트 샘플 | ✅ v1.0 |
+| Phase E 사용자 설문 (양식 준비) | 🔶 사용자 진행 |
+| Roslyn MSBuildWorkspace (csproj 자동 로드 + 외부 dll references) | ⏳ 향후 (plan §13 위험 분리) |
+| SonarQube 비교 통합 | ⏳ 향후 (보고서 "비교 대상" 으로 언급) |
+| Unity 샘플 분석 (plan §8.4 선택 후보) | ⏳ 향후 |
+| 메서드 단위 G-SI (현재 클래스 단위) | ⏳ 향후 |
+| 자동 코드 수정 패치 생성 | ❌ 범위 외 (plan §6.4) |
+
 ## 시작하기
 
 ### 요구 사항
-- Python 3.10 이상
-- .NET 8 SDK (C# 분석 시)
-- (선택) Anthropic API 키 (Phase C LLM Advisor)
+- **Python 3.10 이상**
+- **.NET 8 SDK** (C# 분석 시 — `C:\Program Files\dotnet` 권장)
+- (선택) **Anthropic API 키** (Phase C LLM Advisor — `.env` 또는 환경변수)
 
 ### 설치 및 빌드
 
 ```bash
-# Python 패키지 설치
+# Python 패키지 + 의존성 설치
 pip install -e .
 
-# C# 분석기 빌드
+# C# 분석기 빌드 (한 번만)
 cd csharp-analyzer && dotnet build && cd ..
+```
+
+### .NET 8 SDK PATH 등록 (필요 시)
+
+`dotnet --info` 가 5.0 만 잡거나 안 잡히면:
+
+```powershell
+# 영구 (사용자 환경변수)
+[Environment]::SetEnvironmentVariable("PATH",
+    "C:\Program Files\dotnet;" + $env:PATH, "User")
+
+# 또는 현재 세션만
+$env:PATH = "C:\Program Files\dotnet;" + $env:PATH
+```
+
+설치 안 됐으면 [dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0) 참고.
+
+### 환경 점검
+
+```bash
+python -m game_si --help           # 8 서브커맨드 노출
+python -m py_compile game_si/*.py  # syntax OK
+python -m pytest tests/ -q         # 33/33 통과
 ```
 
 ### 간단한 사용 예
@@ -128,9 +174,11 @@ benchmarks/        외부 분석 대상 (git 추적 제외, 재현은 manifest �
 
 ## 문서
 
+- [docs/progress_checklist.md](docs/progress_checklist.md) — 산출물 확인 체크리스트 (대시보드 / JSON / CLI / 보안 점검)
 - [docs/si-formula.md](docs/si-formula.md) — G-SI 공식 상세 + 가중치 운용(default/tuned/custom) + 등급표 + 검증 데이터 요약
 - [docs/benchmark-manifest.md](docs/benchmark-manifest.md) — 분석 대상 메타정보 + Phase A/B/C/D 측정 결과 종합
 - [docs/ast-schema.md](docs/ast-schema.md) — AST JSON 스키마 v0.2 (csharp-analyzer · cpp_analyzer 공통)
+- [docs/phase_e_survey.md](docs/phase_e_survey.md) — Phase E 사용자 피드백 설문 가이드 + 양식 (선택)
 
 ## 라이선스 / 표절 방지
 
