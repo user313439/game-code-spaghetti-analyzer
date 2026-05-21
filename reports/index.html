@@ -20,11 +20,12 @@
     border-bottom: 1px solid var(--border);
   }
   header h1 { margin: 0 0 8px 0; font-size: 28px; }
-  header .subtitle { color: var(--muted); font-size: 15px; max-width: 760px; }
-  main { padding: 32px; max-width: 1100px; margin: 0 auto; }
+  header .subtitle { color: var(--muted); font-size: 15px; max-width: 820px; }
+  main { padding: 32px; max-width: 1180px; margin: 0 auto; }
   section { margin-bottom: 40px; }
-  section h2 {
-    font-size: 18px; color: #cbd5e1; margin: 0 0 14px 0;
+  section h2 { font-size: 18px; color: #cbd5e1; margin: 0 0 6px 0; }
+  section .h-sub {
+    color: var(--muted); font-size: 13px; margin-bottom: 14px;
     padding-bottom: 8px; border-bottom: 1px solid var(--border);
   }
   .intro {
@@ -36,23 +37,40 @@
   .intro p { margin: 0 0 8px 0; }
   .intro p:last-child { margin-bottom: 0; }
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+  .cards.compact { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
   .card {
     background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
     padding: 20px; text-decoration: none; color: inherit; display: flex; flex-direction: column;
     transition: transform 0.12s, border-color 0.12s;
   }
-  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .card.compact { padding: 14px 16px; }
+  .card.disabled { opacity: 0.7; cursor: default; pointer-events: none; }
+  .card:hover:not(.disabled) { transform: translateY(-2px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
   .grade-badge {
-    display: inline-block; padding: 4px 14px; border-radius: 999px;
-    color: #fff; font-weight: 700; font-size: 14px; min-width: 30px; text-align: center;
+    display: inline-block; padding: 3px 12px; border-radius: 999px;
+    color: #fff; font-weight: 700; font-size: 13px; min-width: 28px; text-align: center;
   }
-  .card-title { font-size: 18px; font-weight: 600; flex: 1; }
-  .card-score { font-size: 32px; font-weight: 700; margin: 4px 0 12px 0;
-                font-variant-numeric: tabular-nums; }
-  .card-score small { font-size: 14px; color: var(--muted); font-weight: 400; }
+  .grade-badge.small { padding: 2px 8px; font-size: 11px; min-width: 22px; }
+  .grade-A { background: #3b8e5a; }
+  .grade-B { background: #7fb95a; }
+  .grade-C { background: #e3b341; color: #111; }
+  .grade-D { background: #ef7d3c; }
+  .grade-E { background: #d24343; }
+  .grade-NA { background: #555; }
+  .lang-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(255,255,255,0.08); font-size: 11px; color: var(--muted);
+  }
+  .card-title { font-size: 17px; font-weight: 600; flex: 1; }
+  .card.compact .card-title { font-size: 14px; }
+  .card-sub { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  .card-score { font-size: 28px; font-weight: 700; margin: 4px 0 12px 0; font-variant-numeric: tabular-nums; }
+  .card.compact .card-score { font-size: 20px; margin: 2px 0 8px 0; }
+  .card-score small { font-size: 13px; color: var(--muted); font-weight: 400; }
   .card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
-  .card-stat { display: flex; justify-content: space-between; padding: 6px 10px;
+  .card.compact .card-stats { grid-template-columns: 1fr; gap: 4px; font-size: 11px; }
+  .card-stat { display: flex; justify-content: space-between; padding: 5px 10px;
                background: var(--panel2); border-radius: 4px; }
   .card-stat-label { color: var(--muted); }
   .card-stat-value { font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -60,14 +78,14 @@
     margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
     color: var(--accent); font-size: 13px;
   }
+  .card.disabled .card-cta { color: var(--muted); }
   .meta-table { width: 100%; border-collapse: collapse; }
   .meta-table th, .meta-table td { padding: 8px 12px; border-bottom: 1px solid var(--border);
-                                    text-align: left; font-size: 13px; }
-  .meta-table th { color: var(--muted); font-weight: 600; width: 200px; }
-  .meta-table code { background: rgba(255,255,255,0.06); padding: 1px 6px;
-                      border-radius: 3px; font-size: 12px; }
-  footer { padding: 24px 32px; color: var(--muted); font-size: 12px; text-align: center;
-           border-top: 1px solid var(--border); }
+                                    text-align: left; font-size: 13px; vertical-align: top; }
+  .meta-table th { color: var(--muted); font-weight: 600; width: 180px; }
+  .meta-table code { background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 12px; }
+  .meta-table a { color: var(--accent); }
+  footer { padding: 24px 32px; color: var(--muted); font-size: 12px; text-align: center; border-top: 1px solid var(--border); }
   footer a { color: var(--accent); }
 </style>
 </head>
@@ -75,7 +93,7 @@
 <header>
   <h1>Game Code Spaghetti Analyzer</h1>
   <div class="subtitle">
-    게임 엔진 기반 프로젝트의 C# 코드를 정적 분석하여 함수·클래스·파일·모듈 단위의 의존성과 게임 특화 위험을 정량화하는 도구입니다. 성균관대학교 소프트웨어학과 졸업작품 (2026-1).
+    게임 엔진 기반 프로젝트의 <strong>C# 및 C/C++ 소스 코드</strong>를 정적 분석하여 함수·클래스·파일·모듈 단위의 의존성과 게임 특화 위험을 정량화하는 도구입니다. 성균관대학교 소프트웨어학과 졸업작품 (2026-1).
   </div>
 </header>
 
@@ -83,44 +101,87 @@
 
 <section>
   <div class="intro">
-    <p>아래는 본 도구를 두 개의 오픈소스 게임 엔진 모듈에 적용한 결과입니다. 각 카드를 클릭하면 해당 프로젝트의 상세 대시보드(클래스별 G-SI 점수, 의존성 그래프, 순환 의존성 묶음 등)로 이동합니다.</p>
-    <p>대시보드는 외부 라이브러리 의존성 없이 단일 HTML 파일로 동작하며, 모든 데이터는 페이지 내부에 임베드되어 있어 인터넷 연결 없이도 정상 동작합니다.</p>
+    <p>본 도구를 <strong>3 개 오픈소스 게임 프로젝트</strong> (OpenRA, Chocolate Doom, OpenRCT2) 에 적용한 결과입니다. OpenRA 는 여러 내부 모듈로 나누어 분석했으며, C 기반 Chocolate Doom 과 C/C++ 기반 OpenRCT2 를 추가해 언어와 구조가 다른 게임에서도 동일 지표가 동작함을 확인했습니다.</p>
+    <p>각 카드를 클릭하면 해당 케이스의 상세 대시보드 (G-SI hotspot · 의존성 그래프 · 순환 묶음 · AI 리팩토링 가이드) 로 이동합니다. 대시보드는 단일 HTML 파일이라 CDN 의존성 없이 오프라인에서도 동작합니다.</p>
   </div>
 </section>
 
 <section>
-  <h2>분석 사례</h2>
+  <h2>본격 케이스 (Phase A ~ D 전체 적용)</h2>
+  <div class="h-sub">정량 검증(Phase A) · 외부 도구 비교(Phase B) · LLM 가이드(Phase C) · 시계열 분석(Phase D) 모두 진행한 4 개 케이스</div>
   <div class="cards">
     <a class="card" href="openra-game/index.html">
       <div class="card-head">
-        <span class="grade-badge" style="background:#e3b341; color:#111;">C</span>
+        <span class="grade-badge grade-C">C</span>
         <div class="card-title">OpenRA.Game</div>
+        <span class="lang-tag">C#</span>
       </div>
-      <div class="card-score">47.9<small> / 100</small></div>
+      <div class="card-sub">RTS 엔진 코어 (게임 루프 · 네트워크 · 그래픽)</div>
+      <div class="card-score">48.6<small> / 100</small></div>
       <div class="card-stats">
         <div class="card-stat"><span class="card-stat-label">분석 클래스</span><span class="card-stat-value">668</span></div>
         <div class="card-stat"><span class="card-stat-label">분석 메서드</span><span class="card-stat-value">2,793</span></div>
-        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">52.6</span></div>
-        <div class="card-stat"><span class="card-stat-label">위험(D+E) 비율</span><span class="card-stat-value">40.1%</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">53.3</span></div>
+        <div class="card-stat"><span class="card-stat-label">위험(D+E) 비율</span><span class="card-stat-value">41.3%</span></div>
         <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">5</span></div>
-        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">1.73</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">1.79</span></div>
       </div>
       <div class="card-cta">상세 대시보드 보기 →</div>
     </a>
 
     <a class="card" href="openra-mods-common/index.html">
       <div class="card-head">
-        <span class="grade-badge" style="background:#e3b341; color:#111;">C</span>
+        <span class="grade-badge grade-C">C</span>
         <div class="card-title">OpenRA.Mods.Common</div>
+        <span class="lang-tag">C#</span>
       </div>
-      <div class="card-score">46.7<small> / 100</small></div>
+      <div class="card-sub">공용 게임 모드 코드 (Trait · 위젯 · 활동)</div>
+      <div class="card-score">46.8<small> / 100</small></div>
       <div class="card-stats">
         <div class="card-stat"><span class="card-stat-label">분석 클래스</span><span class="card-stat-value">2,194</span></div>
         <div class="card-stat"><span class="card-stat-label">분석 메서드</span><span class="card-stat-value">7,321</span></div>
-        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">51.0</span></div>
-        <div class="card-stat"><span class="card-stat-label">위험(D+E) 비율</span><span class="card-stat-value">40.0%</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">51.1</span></div>
+        <div class="card-stat"><span class="card-stat-label">위험(D+E) 비율</span><span class="card-stat-value">40.2%</span></div>
         <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">4</span></div>
-        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">2.18</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">2.21</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card" href="chocolate-doom/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-C">C</span>
+        <div class="card-title">Chocolate Doom</div>
+        <span class="lang-tag">C</span>
+      </div>
+      <div class="card-sub">고전 Doom 의 충실 소스 포트</div>
+      <div class="card-score">50.6<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">분석 파일</span><span class="card-stat-value">296</span></div>
+        <div class="card-stat"><span class="card-stat-label">분석 함수</span><span class="card-stat-value">4,311</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">50.4</span></div>
+        <div class="card-stat"><span class="card-stat-label">위험(D+E) 비율</span><span class="card-stat-value">40.2%</span></div>
+        <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">2</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">7.15</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card" href="openrct2/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-C">C</span>
+        <div class="card-title">OpenRCT2</div>
+        <span class="lang-tag">C++</span>
+      </div>
+      <div class="card-sub">RollerCoaster Tycoon 2 의 오픈소스 재구현</div>
+      <div class="card-score">54.8<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">분석 단위</span><span class="card-stat-value">636</span></div>
+        <div class="card-stat"><span class="card-stat-label">분석 함수</span><span class="card-stat-value">5,766</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">50.4</span></div>
+        <div class="card-stat"><span class="card-stat-label">위험(D+E) 비율</span><span class="card-stat-value">40.1%</span></div>
+        <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">2</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">18.99</span></div>
       </div>
       <div class="card-cta">상세 대시보드 보기 →</div>
     </a>
@@ -128,14 +189,98 @@
 </section>
 
 <section>
+  <h2>OpenRA 보조 모듈 (Phase A 검증 표본 확장용)</h2>
+  <div class="h-sub">동일 저장소의 다른 모듈을 추가해 8-케이스 가중치 튜닝(LOPO) 의 표본을 확장. 메인 대시보드는 별도로 만들지 않았으며 scoring.json 만 보유합니다.</div>
+  <div class="cards compact">
+    <div class="card compact">
+      <div class="card-head">
+        <span class="grade-badge grade-B small">B</span>
+        <div class="card-title">OpenRA.Mods.Cnc</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">Command &amp; Conquer 모드</div>
+      <div class="card-score">35.3<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">278</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">945</span></div>
+      </div>
+    </div>
+
+    <div class="card compact">
+      <div class="card-head">
+        <span class="grade-badge grade-B small">B</span>
+        <div class="card-title">OpenRA.Mods.D2k</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">Dune 2000 모드</div>
+      <div class="card-score">35.7<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">48</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">119</span></div>
+      </div>
+    </div>
+
+    <div class="card compact">
+      <div class="card-head">
+        <span class="grade-badge grade-B small">B</span>
+        <div class="card-title">OpenRA.Platforms.Default</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">SDL2 platform 어댑터</div>
+      <div class="card-score">37.5<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">33</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">242</span></div>
+      </div>
+    </div>
+
+    <div class="card compact disabled" title="단일 클래스라 상관계수 평가 불가능">
+      <div class="card-head">
+        <span class="grade-badge grade-NA small">N/A</span>
+        <div class="card-title">OpenRA.Server</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">단일 진입점 프로그램 (표본 부족 사례)</div>
+      <div class="card-score">—</div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">1</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">3</span></div>
+      </div>
+      <div class="card-cta">통계적 평가 불가 (n &lt; 5)</div>
+    </div>
+  </div>
+</section>
+
+<section>
   <h2>분석 대상 정보</h2>
+  <div class="h-sub">각 케이스의 원본 게임 저장소 및 분석 시점</div>
   <table class="meta-table">
     <tbody>
-      <tr><th>분석 대상</th><td><a href="https://github.com/OpenRA/OpenRA" style="color: var(--accent);">OpenRA</a> — Command &amp; Conquer · Red Alert · Dune 2000의 오픈소스 재구현</td></tr>
-      <tr><th>언어</th><td>C# (.NET 8)</td></tr>
-      <tr><th>라이선스</th><td>GPL-3.0-or-later</td></tr>
-      <tr><th>분석 시점 커밋</th><td><code>8f2138c71106aaffd8a288b56d1c9ef6013700ba</code></td></tr>
-      <tr><th>분석 도구 버전</th><td><code>v0.1-mvp</code> (W7 시점)</td></tr>
+      <tr>
+        <th>OpenRA</th>
+        <td>
+          <a href="https://github.com/OpenRA/OpenRA">github.com/OpenRA/OpenRA</a> — Command &amp; Conquer · Red Alert · Dune 2000 의 오픈소스 재구현<br>
+          <code>C#</code> · GPL-3.0-or-later · commit <code>8f2138c71106aaffd8a288b56d1c9ef6013700ba</code>
+        </td>
+      </tr>
+      <tr>
+        <th>Chocolate Doom</th>
+        <td>
+          <a href="https://github.com/chocolate-doom/chocolate-doom">github.com/chocolate-doom/chocolate-doom</a> — 원작 Doom 의 충실한 소스 포트<br>
+          <code>C</code> · GPL-2.0 · commit <code>c62b634f394e64dd51dec7e6f890496f43a56ade</code>
+        </td>
+      </tr>
+      <tr>
+        <th>OpenRCT2</th>
+        <td>
+          <a href="https://github.com/OpenRCT2/OpenRCT2">github.com/OpenRCT2/OpenRCT2</a> — RollerCoaster Tycoon 2 의 오픈소스 재구현<br>
+          <code>C / C++</code> · GPL-3.0 · commit <code>7a2cddeed1304f284829ffb0c91f31557819c51e</code>
+        </td>
+      </tr>
+      <tr>
+        <th>분석 도구 버전</th>
+        <td><code>v1.0</code> · Roslyn SemanticModel + tree-sitter C/C++ · Phase A~D + LLM Advisor + tuned weights (8-케이스 LOPO)</td>
+      </tr>
     </tbody>
   </table>
 </section>
@@ -143,15 +288,16 @@
 <section>
   <h2>대시보드 사용법 간단 정리</h2>
   <div class="intro">
-    <p>각 대시보드 페이지에서 다음을 확인할 수 있습니다.</p>
+    <p>각 본격 케이스의 대시보드 페이지에서 다음을 확인할 수 있습니다.</p>
     <ul style="margin: 8px 0 0 22px; padding: 0;">
-      <li><strong>Project Health</strong> — 프로젝트 전체 종합 점수와 등급 (한 화면에서 가장 큰 카드).</li>
-      <li><strong>Summary 카드 6개</strong> — 분석 규모와 위험 신호 요약.</li>
-      <li><strong>등급 분포 차트</strong> — 모든 클래스를 A~E로 나눈 비율.</li>
+      <li><strong>Project Health</strong> — 프로젝트 전체 종합 점수와 등급 (가장 큰 카드).</li>
+      <li><strong>Summary 카드</strong> — 분석 규모와 위험 신호 요약.</li>
+      <li><strong>등급 분포 차트</strong> — 모든 클래스를 A~E 로 나눈 비율.</li>
       <li><strong>Hotspot Table</strong> — 가장 위험한 클래스 목록. 등급 필터·텍스트 검색·컬럼 정렬 모두 동작합니다.</li>
-      <li><strong>Dependency Graph</strong> — 위험 클래스 주변 의존성 시각화. 마우스 휠 확대/축소, 드래그 이동, 노드 hover로 상세 정보.</li>
+      <li><strong>Dependency Graph</strong> — 위험 클래스 주변 의존성 시각화. 마우스 휠 확대·드래그 이동·노드 hover 로 상세 정보.</li>
       <li><strong>Cycle Explorer</strong> — A→B→C→A 식으로 순환 참조에 빠진 클래스 묶음 목록.</li>
       <li><strong>Module Summary</strong> — 폴더 단위 집계.</li>
+      <li><strong>AI 리팩토링 가이드</strong> — 상위 5 hotspot 에 대한 Claude Haiku 의 위험 원인·리팩토링 방향·테스트 우선순위 제안 (의사결정 보조용, 자동 코드 수정 아님).</li>
     </ul>
     <p style="margin-top: 8px;">각 섹션 제목 옆의 <strong>「ⓘ 이 섹션이 뭔가요?」</strong> 버튼을 누르면 그 섹션의 자세한 설명이 펼쳐집니다.</p>
   </div>
