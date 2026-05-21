@@ -177,23 +177,38 @@ python -m game_si validate benchmarks/chocolate-doom \
 ## 디렉토리 구성
 
 ```text
-csharp-analyzer/   Roslyn 기반 C# 정적 분석 콘솔 (.NET 8)
-game_si/           Python CLI 및 분석 파이프라인
-  ├── analyzer.py        C# 분석기 호출 어댑터
-  ├── cpp_analyzer.py    tree-sitter 기반 C/C++ AST 추출
-  ├── metrics.py         그래프·메트릭 계산 (NetworkX)
-  ├── si.py              G-SI 산출 + Project Health
-  ├── report.py          메인 대시보드 HTML 생성
-  ├── gitlog.py          git log 기반 bug-fix 커밋 추출
-  ├── validate.py        Phase A — Spearman 상관
-  ├── validate_report.py Phase A — 산점도 HTML
-  ├── compare.py         Phase B — Lizard 비교
-  ├── advisor.py         Phase C — Claude Haiku 호출
-  └── timeseries.py      Phase D — git worktree 기반 시계열
-tests/             pytest 단위 테스트 (17/17 통과)
-docs/              ast-schema.md, benchmark-manifest.md
-reports/           4 케이스 분석 산출물
-benchmarks/        외부 분석 대상 (git 추적 제외, 재현은 manifest 의 커밋 해시로)
+csharp-analyzer/         C# 분석기 (.NET 8, Roslyn + SemanticModel)
+game_si/                 Python 메인 패키지 — CLI · 분석 · 시각화 · 검증
+  ├── cli.py                  8 서브커맨드 (analyze/validate/compare/advise/
+  │                           timeseries/score-full/tune/diff)
+  ├── analyzer.py             C# csharp-analyzer 외부 콘솔 호출 어댑터
+  ├── cpp_analyzer.py         tree-sitter 기반 C/C++ AST 추출
+  ├── metrics.py              NetworkX 기반 그래프·메트릭 산출
+  ├── si.py                   G-SI-Static + G-SI-Full 산출
+  ├── report.py               메인 HTML 대시보드 생성 (단일 파일, CDN-free)
+  ├── gitlog.py               git log 에서 bug-fix 커밋 추출
+  ├── validate.py             Phase A — bug-fix ↔ G-SI Spearman 상관
+  ├── compare.py              Phase B — Lizard hotspot 비교
+  ├── advisor.py              Phase C — Claude Haiku LLM 가이드
+  ├── timeseries.py           Phase D — git worktree 기반 시계열
+  ├── change_risk.py          G-SI-Full 의 ChangeRisk 항목
+  ├── tune.py                 plan §4.6 — 가중치 grid + LOPO 교차검증
+  └── diff.py                 두 scoring.json 비교 (CI 품질 게이트용)
+tests/                   pytest 단위 테스트 (33/33 통과)
+docs/                    공개 문서 (ast-schema · benchmark-manifest ·
+                                  si-formula · progress_checklist · phase_e_survey)
+reports/                 분석 산출물 — 3 게임 프로젝트 / 8 분석 단위:
+  ├── index.html              전체 인덱스
+  ├── openra-game/            OpenRA.Game (C# 엔진 코어) — 본격 케이스
+  ├── openra-mods-common/     OpenRA.Mods.Common — 본격 케이스
+  ├── openra-mods-cnc/        OpenRA.Mods.Cnc — Phase A 보조
+  ├── openra-mods-d2k/        OpenRA.Mods.D2k — 보조
+  ├── openra-server/          OpenRA.Server — 표본 부족 사례 (n=1)
+  ├── openra-platforms-default/  Platforms.Default — 보조
+  ├── chocolate-doom/         Chocolate Doom (C) — 본격 케이스
+  └── openrct2/               OpenRCT2 (C/C++) — 본격 케이스
+benchmarks/              외부 분석 대상 (.gitignore — 재현은 manifest 의 commit hash)
+.github/workflows/       g-si-quality-gate.yml — PR 마다 G-SI 변화 게이트 (sample)
 ```
 
 ## 문서
