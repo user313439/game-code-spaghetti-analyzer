@@ -1,0 +1,39 @@
+{
+  "verified_on": "2026-10-13",
+  "scope": "Three opt-in local preview themes; no default selection or analysis changes",
+  "preview_urls": {
+    "dark": "http://127.0.0.1:8766/?theme=dark",
+    "white": "http://127.0.0.1:8766/?theme=light",
+    "blue": "http://127.0.0.1:8766/?theme=blue"
+  },
+  "application_files": ["game_si/web/app.py", "game_si/web/static/app.js", "game_si/web/static/app.css", "game_si/web/static/report-light.css", "game_si/web/static/report-blue.css"],
+  "approach": "Safe local result URLs propagate light/blue through live results, history, primary examples and auxiliary examples. Fixed CSS is injected into HTTP HTML responses only. Default/dark reports, stored HTML, JSON, metrics, grade background colors, CSP and access restrictions remain unchanged.",
+  "tests": {
+    "command": "py -3.10 -m pytest tests -q --tb=short",
+    "environment": ".NET on PATH and compatible GAME_SI_TEST_CLANG_LIBRARY",
+    "passed": 419,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 80.31,
+    "javascript_syntax_exit_code": 0,
+    "red_green": "Missing white and blue behavior failed before implementation. Narrow table overflow, invisible tooltip overflow, badge contrast and blue keyboard outline regressions failed before CSS fixes."
+  },
+  "browser_checks": {
+    "main_screens": [".cache/web/dark-preview-main-2026-10-13.png", ".cache/web/white-preview-main-2026-10-13.png", ".cache/web/blue-preview-main-2026-10-13.png"],
+    "result_screens": [".cache/web/white-preview-result-2026-10-12.png", ".cache/web/blue-preview-result-2026-10-13.png", ".cache/web/blue-preview-doom3-2026-10-13.png"],
+    "white": "Main-to-example links, OpenRA complete and DOOM 3 partial result, help, keyboard status tooltip, hotspot search/sort, graph search/zoom/reset checked. Narrow report viewport/content width both 798 after local table scrolling fix.",
+    "blue": "Main-to-OpenRA and DOOM 3 example links retained theme query. Server table search showed 30 of 34 matches (668 total). Game graph search highlighted 4 nodes. Zoom viewBox changed from 0 0 1400 720 to 140 72 1120 576 and reset restored it. Report viewport/content width both 1265. Partial warning stayed amber.",
+    "limits": "Actual mouse hover on table headers and empty-result tooltip boundary was not verified; supported browser tools do not expose a hover action. No new source import/analysis was performed for this palette-only task."
+  },
+  "selected_contrast_ratios": {
+    "blue_button_text": 5.51,
+    "blue_helper_on_page": 4.77,
+    "blue_input_boundary": 3.11,
+    "light_and_blue_A_badge_text": 4.77,
+    "limit": "Selected colors only; not a complete accessibility certification."
+  },
+  "preservation": {"report_files_checked": 226, "hash_mismatches": 0, "reports_index_unchanged": true},
+  "independent_review": {"critical": 0, "important": 0, "minor": "Potential tooltip clipping at the bottom of locally scrolling hotspot tables or empty-search headers; CSS-based observation, not browser-reproduced."},
+  "status": "ready_for_three_theme_comparison_not_a_final_default",
+  "git": "No commits, branches, pushes or resets performed. Existing workspace changes retained."
+}

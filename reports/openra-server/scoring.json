@@ -7,6 +7,13 @@
     "global_state": 0.15,
     "game_loop_centrality": 0.15
   },
+  "ranking_info": {
+    "scope": "within_analysis_relative",
+    "informative": false,
+    "unique_raw_scores": 1,
+    "largest_tie_fraction": 1.0,
+    "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. 동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다."
+  },
   "project_health": {
     "score": 70.0,
     "grade": "D",
@@ -51,6 +58,13 @@
         "global_state": 30.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 30.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0,
         "coupling": 0.0,
@@ -83,5 +97,19 @@
       "class_count": 1,
       "file_count": 1
     }
-  ]
+  ],
+  "analysis_status": {
+    "state": "complete",
+    "language": "csharp",
+    "analyzed_files": 1,
+    "failed_files": 0,
+    "syntax_files": 0,
+    "errors": [],
+    "diagnostics": [],
+    "limitations": [
+      "결과는 선택한 언어와 분석 대상에 한정됩니다. 완료 표시는 코드 전체를 정확히 이해했다는 보증이 아닙니다.",
+      "동적 호출·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프는 완전히 해석하지 않습니다.",
+      "C# 프로젝트 설정과 외부 DLL을 자동으로 읽지 않습니다. 해석되지 않은 호출은 이름 기반 근사 또는 연결 누락이 발생할 수 있습니다."
+    ]
+  }
 }

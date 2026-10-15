@@ -1,0 +1,15 @@
+/* Third preview: restrained sky-blue surfaces, reusing the light report rules. */
+:root{--bg:#eaf2f9;--panel:#f9fcff;--panel2:#e5eef7;--fg:#20364d;--muted:#526d86;--accent:#356d9b;--border:#ccdbea}
+.sec-explain,.table-notice,.section-intro,.graph-tip,
+.help-body .help-tip,.advice-uncertainty{background:#e3eff8;border-color:#c0d6e8}
+.section-intro,.sec-explain,.advice-uncertainty{border-left-color:var(--accent)}
+.sec-info:hover,.advice-card summary:hover{background:#e3eff8}
+.table-controls input,.table-controls select,.graph-controls input,
+.graph-zoom button,.gt-btn{border-color:#7793ad}
+.graph-zoom button:hover,.gt-btn:hover{background:#dbe9f5;border-color:var(--accent)}
+.depgraph,.graph-info{background:#edf4fb}
+.depgraph .edge:not(.hl-edge){stroke:#7d96ad}
+.depgraph marker path{fill:#637f99}
+.advice-fqn,.advice-path code,.advice-meta code,.sec-explain code,
+.section-intro code,.graph-info code.neighbor,.cycle-member{background:#e5eef7}
+[data-tooltip]::after{background:#f9fcff;border-color:#b9cfe1;box-shadow:0 5px 18px #20364d1a}

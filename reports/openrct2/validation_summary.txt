@@ -1,7 +1,7 @@
 === G-SI Validation (Phase A) ===
 repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRCT2
 subdir:         src/openrct2
-date range:     * .. *
+date range:     * .. 2026-10-03
 commits seen:   12193
 bug-fix found:  2848
 classes total:  636  (with bug-fix: 399)
@@ -9,12 +9,12 @@ files total:    544  (with bug-fix: 309)
 unmatched changes (non-class files): 3973
 
 Class-level Spearman correlation (vs file bug-fix count):
-  si_vs_bugfix            n= 636  rho= +0.3224  p=4.441e-16
+  si_vs_bugfix            n= 636  rho= +0.3199  p=4.441e-16
   loc_vs_bugfix           n= 636  rho= +0.3285  p=0
   cc_vs_bugfix            n= 636  rho= +0.3041  p=1.665e-14
 
 File-level Spearman correlation (vs file bug-fix count):
-  file_si_vs_bugfix       n= 544  rho= +0.4598  p=0
+  file_si_vs_bugfix       n= 544  rho= +0.4687  p=0
   file_loc_vs_bugfix      n= 544  rho= +0.4062  p=0
   file_cc_vs_bugfix       n= 544  rho= +0.3681  p=0
 

@@ -189,7 +189,8 @@ def format_summary(r: DiffResult) -> str:
     out.append(f"baseline: {r.baseline_path}")
     out.append(f"latest:   {r.latest_path}")
     out.append("")
-    out.append(f"Project Health:  {r.health_baseline:.2f} ({r.grade_baseline}) → "
+    out.append("주의: 상대 백분위와 보조 Health 차이는 절대 품질 개선/악화의 증거가 아닙니다.")
+    out.append(f"Project Health (보조):  {r.health_baseline:.2f} ({r.grade_baseline}) → "
                f"{r.health_latest:.2f} ({r.grade_latest})   "
                f"Δ {r.health_delta:+.2f} {arrow(r.health_delta)}")
     out.append(f"avg G-SI:        Δ {r.avg_si_delta:+.2f}")

@@ -3,7 +3,7 @@
   "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
   "subdir": "OpenRA.Platforms.Default",
   "since": null,
-  "until": null,
+  "until": "2026-10-03",
   "keywords": [
     "fix",
     "bug",
@@ -378,7 +378,7 @@
       "bugfix_count": 9
     },
     {
-      "fqn": "OpenRA.Platforms.Default.ThreadedVertexBuffer",
+      "fqn": "OpenRA.Platforms.Default.ThreadedVertexBuffer<T>",
       "file_path": "ThreadedGraphicsContext.cs",
       "si": 9.09,
       "grade": "A",
@@ -414,7 +414,7 @@
       "bugfix_count": 9
     },
     {
-      "fqn": "OpenRA.Platforms.Default.VertexBuffer",
+      "fqn": "OpenRA.Platforms.Default.VertexBuffer<T>",
       "file_path": "VertexBuffer.cs",
       "si": 54.55,
       "grade": "C",

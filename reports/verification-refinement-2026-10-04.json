@@ -1,0 +1,1624 @@
+{
+  "run_at_utc": "2026-10-03T15:25:01.850304+00:00",
+  "history_cutoff": "2026-10-03",
+  "checks": [
+    {
+      "name": "input:OpenRA",
+      "passed": true
+    },
+    {
+      "name": "input:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "input:OpenRCT2",
+      "passed": true
+    },
+    {
+      "name": "build-final.log",
+      "passed": true
+    },
+    {
+      "name": "tests-final.log",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openra-game",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openra-game",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openra-game",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openra-game",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openra-game",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openra-game",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openra-game",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openra-game",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openra-game",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openra-game",
+      "passed": true
+    },
+    {
+      "name": "graph-json:openra-game:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openra-game:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-game:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-game:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-game:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-game:validation.json",
+      "passed": true
+    },
+    {
+      "name": "full-window:openra-game",
+      "passed": true
+    },
+    {
+      "name": "full-identities:openra-game",
+      "passed": true
+    },
+    {
+      "name": "timeseries-32-points:openra-game",
+      "passed": true
+    },
+    {
+      "name": "timeseries-final:openra-game",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "graph-json:openra-mods-common:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openra-mods-common:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-common:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-common:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-mods-common:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-mods-common:validation.json",
+      "passed": true
+    },
+    {
+      "name": "full-window:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "full-identities:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "timeseries-32-points:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "timeseries-final:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "graph-json:openra-mods-cnc:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openra-mods-cnc:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-cnc:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-cnc:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-mods-cnc:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-mods-cnc:validation.json",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "graph-json:openra-mods-d2k:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openra-mods-d2k:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-mods-d2k:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-mods-d2k:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-mods-d2k:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-mods-d2k:validation.json",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openra-server",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openra-server",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openra-server",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openra-server",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openra-server",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openra-server",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openra-server",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openra-server",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openra-server",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openra-server",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openra-server:0",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-server:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-server:validation.json",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "graph-json:openra-platforms-default:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openra-platforms-default:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openra-platforms-default:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openra-platforms-default:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-platforms-default:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openra-platforms-default:validation.json",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "class-identity:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "method-identity:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "default-rho:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "graph-json:chocolate-doom:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:chocolate-doom:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:chocolate-doom:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:chocolate-doom:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:chocolate-doom:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:chocolate-doom:validation.json",
+      "passed": true
+    },
+    {
+      "name": "full-window:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "full-identities:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "timeseries-32-points:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "timeseries-final:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "ast-errors:openrct2",
+      "passed": true
+    },
+    {
+      "name": "class-identity:openrct2",
+      "passed": true
+    },
+    {
+      "name": "method-identity:openrct2",
+      "passed": true
+    },
+    {
+      "name": "metrics-match:openrct2",
+      "passed": true
+    },
+    {
+      "name": "scoring-match:openrct2",
+      "passed": true
+    },
+    {
+      "name": "default-rho:openrct2",
+      "passed": true
+    },
+    {
+      "name": "same-bugfix-input:openrct2",
+      "passed": true
+    },
+    {
+      "name": "fixed-cutoff:openrct2",
+      "passed": true
+    },
+    {
+      "name": "ablation-default-pipeline:openrct2",
+      "passed": true
+    },
+    {
+      "name": "relative-warning:openrct2",
+      "passed": true
+    },
+    {
+      "name": "graph-json:openrct2:0",
+      "passed": true
+    },
+    {
+      "name": "js-syntax:openrct2:1",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:default",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:without_cc",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:without_coupling",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:without_dependency_cycle",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:without_global_state",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:without_game_loop_centrality",
+      "passed": true
+    },
+    {
+      "name": "ablation-rho:openrct2:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-population:openrct2:cc_coupling_only",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openrct2:scoring.json",
+      "passed": true
+    },
+    {
+      "name": "ablation-hash:openrct2:validation.json",
+      "passed": true
+    },
+    {
+      "name": "full-window:openrct2",
+      "passed": true
+    },
+    {
+      "name": "full-identities:openrct2",
+      "passed": true
+    },
+    {
+      "name": "timeseries-32-points:openrct2",
+      "passed": true
+    },
+    {
+      "name": "timeseries-final:openrct2",
+      "passed": true
+    },
+    {
+      "name": "fold-count",
+      "passed": true
+    },
+    {
+      "name": "fold-separation:OpenRA",
+      "passed": true
+    },
+    {
+      "name": "fold-separation:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "fold-separation:OpenRCT2",
+      "passed": true
+    },
+    {
+      "name": "server-excluded",
+      "passed": true
+    }
+  ],
+  "cases": {
+    "openra-game": {
+      "health": 48.19,
+      "rho": 0.605,
+      "files": 226,
+      "classes": 668,
+      "methods": 2793,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 226,
+          "spearman_rho": 0.605,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 226,
+          "spearman_rho": 0.6988,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 226,
+          "spearman_rho": 0.5517,
+          "p_value": 0.0
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 668,
+          "spearman_rho": -0.1274,
+          "p_value": 0.001338
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 668,
+          "spearman_rho": -0.1852,
+          "p_value": 3e-06
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 668,
+          "spearman_rho": -0.1441,
+          "p_value": 0.000277
+        }
+      ],
+      "raw_changed_or_renamed_classes": 121,
+      "cycles": 5,
+      "ast_elapsed_ms": 7985,
+      "jaccard": {
+        "5": 0.6667,
+        "10": 0.4286,
+        "30": 0.3636
+      },
+      "lizard_rho": 0.6536,
+      "timeseries_health": [
+        38.11,
+        36.17,
+        40.33,
+        40.56,
+        43.73,
+        45.64,
+        47.49,
+        48.19
+      ],
+      "timeseries_cycles": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "openra-mods-common": {
+      "health": 46.72,
+      "rho": 0.5353,
+      "files": 1080,
+      "classes": 2194,
+      "methods": 7321,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 1080,
+          "spearman_rho": 0.5353,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 1080,
+          "spearman_rho": 0.6129,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 1080,
+          "spearman_rho": 0.5265,
+          "p_value": 0.0
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 2194,
+          "spearman_rho": 0.0878,
+          "p_value": 6.3e-05
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 2194,
+          "spearman_rho": 0.0267,
+          "p_value": 0.225304
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 2194,
+          "spearman_rho": 0.0241,
+          "p_value": 0.273561
+        }
+      ],
+      "raw_changed_or_renamed_classes": 86,
+      "cycles": 4,
+      "ast_elapsed_ms": 18310,
+      "jaccard": {
+        "5": 0.25,
+        "10": 0.6667,
+        "30": 0.5
+      },
+      "lizard_rho": 0.7915,
+      "timeseries_health": [
+        46.67,
+        44.73,
+        44.71,
+        46.71,
+        46.81,
+        46.98,
+        47.99,
+        46.72
+      ],
+      "timeseries_cycles": [
+        0,
+        3,
+        3,
+        4,
+        4,
+        4,
+        5,
+        4
+      ]
+    },
+    "openra-mods-cnc": {
+      "health": 35.1,
+      "rho": 0.3671,
+      "files": 140,
+      "classes": 278,
+      "methods": 945,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 140,
+          "spearman_rho": 0.3671,
+          "p_value": 1.2e-05
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 140,
+          "spearman_rho": 0.5714,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 140,
+          "spearman_rho": 0.492,
+          "p_value": 0.0
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 278,
+          "spearman_rho": 0.1061,
+          "p_value": 0.086317
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 278,
+          "spearman_rho": 0.1478,
+          "p_value": 0.016485
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 278,
+          "spearman_rho": 0.1444,
+          "p_value": 0.019134
+        }
+      ],
+      "raw_changed_or_renamed_classes": 6,
+      "cycles": 0,
+      "ast_elapsed_ms": 3759
+    },
+    "openra-mods-d2k": {
+      "health": 35.69,
+      "rho": 0.4981,
+      "files": 23,
+      "classes": 48,
+      "methods": 119,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 23,
+          "spearman_rho": 0.4981,
+          "p_value": 0.017541
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 23,
+          "spearman_rho": 0.4752,
+          "p_value": 0.024786
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 23,
+          "spearman_rho": 0.4858,
+          "p_value": 0.021195
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 48,
+          "spearman_rho": 0.1305,
+          "p_value": 0.392417
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 48,
+          "spearman_rho": 0.0029,
+          "p_value": 0.984987
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 48,
+          "spearman_rho": 0.025,
+          "p_value": 0.870665
+        }
+      ],
+      "raw_changed_or_renamed_classes": 3,
+      "cycles": 0,
+      "ast_elapsed_ms": 1846
+    },
+    "openra-server": {
+      "health": 70.0,
+      "rho": null,
+      "files": 1,
+      "classes": 1,
+      "methods": 3,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 1,
+          "spearman_rho": null,
+          "p_value": null
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 1,
+          "spearman_rho": null,
+          "p_value": null
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 1,
+          "spearman_rho": null,
+          "p_value": null
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 1,
+          "spearman_rho": null,
+          "p_value": null
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 1,
+          "spearman_rho": null,
+          "p_value": null
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 1,
+          "spearman_rho": null,
+          "p_value": null
+        }
+      ],
+      "raw_changed_or_renamed_classes": 0,
+      "cycles": 0,
+      "ast_elapsed_ms": 857
+    },
+    "openra-platforms-default": {
+      "health": 37.47,
+      "rho": 0.5692,
+      "files": 18,
+      "classes": 33,
+      "methods": 242,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 18,
+          "spearman_rho": 0.5692,
+          "p_value": 0.015044
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 18,
+          "spearman_rho": 0.8231,
+          "p_value": 1.1e-05
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 18,
+          "spearman_rho": 0.8064,
+          "p_value": 2.7e-05
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 33,
+          "spearman_rho": 0.0171,
+          "p_value": 0.927482
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 33,
+          "spearman_rho": 0.2636,
+          "p_value": 0.150971
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 33,
+          "spearman_rho": 0.1712,
+          "p_value": 0.357545
+        }
+      ],
+      "raw_changed_or_renamed_classes": 2,
+      "cycles": 0,
+      "ast_elapsed_ms": 2065
+    },
+    "chocolate-doom": {
+      "health": 50.57,
+      "rho": 0.5851,
+      "files": 296,
+      "classes": 296,
+      "methods": 4311,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 296,
+          "spearman_rho": 0.5851,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 296,
+          "spearman_rho": 0.6158,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 296,
+          "spearman_rho": 0.4676,
+          "p_value": 0.0
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 296,
+          "spearman_rho": 0.5851,
+          "p_value": 0.0
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 296,
+          "spearman_rho": 0.6158,
+          "p_value": 0.0
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 296,
+          "spearman_rho": 0.4676,
+          "p_value": 0.0
+        }
+      ],
+      "raw_changed_or_renamed_classes": 0,
+      "cycles": 2,
+      "ast_elapsed_ms": 5049,
+      "jaccard": {
+        "5": 0.1111,
+        "10": 0.1111,
+        "30": 0.3333
+      },
+      "lizard_rho": 0.7082,
+      "timeseries_health": [
+        52.44,
+        52.51,
+        52.32,
+        50.77,
+        51.75,
+        50.27,
+        50.49,
+        50.57
+      ],
+      "timeseries_cycles": [
+        1,
+        1,
+        1,
+        3,
+        3,
+        2,
+        2,
+        2
+      ]
+    },
+    "openrct2": {
+      "health": 54.87,
+      "rho": 0.4687,
+      "files": 544,
+      "classes": 636,
+      "methods": 5766,
+      "correlations": [
+        {
+          "name": "file_si_vs_bugfix",
+          "n": 544,
+          "spearman_rho": 0.4687,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_loc_vs_bugfix",
+          "n": 544,
+          "spearman_rho": 0.4062,
+          "p_value": 0.0
+        },
+        {
+          "name": "file_cc_vs_bugfix",
+          "n": 544,
+          "spearman_rho": 0.3681,
+          "p_value": 0.0
+        }
+      ],
+      "class_correlations": [
+        {
+          "name": "si_vs_bugfix",
+          "n": 636,
+          "spearman_rho": 0.3199,
+          "p_value": 0.0
+        },
+        {
+          "name": "loc_vs_bugfix",
+          "n": 636,
+          "spearman_rho": 0.3285,
+          "p_value": 0.0
+        },
+        {
+          "name": "cc_vs_bugfix",
+          "n": 636,
+          "spearman_rho": 0.3041,
+          "p_value": 0.0
+        }
+      ],
+      "raw_changed_or_renamed_classes": 343,
+      "cycles": 2,
+      "ast_elapsed_ms": 18114,
+      "jaccard": {
+        "5": 0.1111,
+        "10": 0.0526,
+        "30": 0.25
+      },
+      "lizard_rho": 0.5345,
+      "timeseries_health": [
+        52.19,
+        52.18,
+        52.23,
+        52.19,
+        52.12,
+        52.11,
+        52.1,
+        54.87
+      ],
+      "timeseries_cycles": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ]
+    }
+  },
+  "benchmarks": {
+    "OpenRA": {
+      "sha": "8f2138c71106aaffd8a288b56d1c9ef6013700ba",
+      "clean": true
+    },
+    "chocolate-doom": {
+      "sha": "c62b634f394e64dd51dec7e6f890496f43a56ade",
+      "clean": true
+    },
+    "OpenRCT2": {
+      "sha": "7a2cddeed1304f284829ffb0c91f31557819c51e",
+      "clean": true
+    }
+  },
+  "python": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+  "browser_verification": "HTML structure + Node JS syntax only; interactive browser not verified",
+  "tests_passed": 79,
+  "source_sha256": {
+    "csharp-analyzer/AstExtractor.cs": "15ede472f766c395344eab6cdbab627e3e5c326e6ffb66898dad84336663a2dd",
+    "csharp-analyzer/csharp-analyzer.csproj": "593d0ab1a7077d8b8b9248dfe91f5708c9ee98b62fb57db47733110aef948bee",
+    "csharp-analyzer/CyclomaticComplexityWalker.cs": "2894dd4142d1c58ac10fe621b71b6553f8a314e5810e8cf83ce35f1bdab51c77",
+    "csharp-analyzer/MethodBodyWalker.cs": "eef7bce22ae4f665a47a339bb07f95c4124c75bcf34a467e7b7c1d0f2378a0ff",
+    "csharp-analyzer/Models.cs": "3005373bbffdb0feb2dd3429f90c58b7139ff9ef3ac93e43a023ed4952c3d546",
+    "csharp-analyzer/Program.cs": "5b30f487dcb7249f0a5c0aa9034789ed30cc75b3710814208ae0dd111247109a",
+    "docs/_verification/run_refinement.py": "e2a6a1736be50f9e0749cf5f2f9c95bf082f429ae933f86666f97cc1bdfabf32",
+    "docs/_verification/verify_refinement.py": "e1d8e2c58ee098cce5c8bd753d2e7c690e178174c7648b34b7fe445acf7d78d9",
+    "game_si/__init__.py": "09568c7c1f390bd47a805baa22c9cd45e12577a1698756ac9d1891be6284fe6b",
+    "game_si/__main__.py": "6f9f273aad09d77631b22c3c38cfbd666f4a43e85cc32c2b79eb514fdacc2cb7",
+    "game_si/ablation.py": "67fee891a941df20cb2427f0ed604a6c813d435286a7423835628a6678f2f5ee",
+    "game_si/advisor.py": "a99666727aa39c864332420f741a32c05c4f576044d825c236872ce5cdd9ef00",
+    "game_si/analyzer.py": "a49bdf4e26dedac8bb0a8be59e7838500758debf0c2b39fbfd1b543435f7d2d0",
+    "game_si/change_risk.py": "3296472dd4b78e815919750a2667f9c120cf0c318ca612d687cb9e56327cdf26",
+    "game_si/cli.py": "edae0d97d1889a24195f53557b5d2de484c533c938f4bedc9f40f963989392f9",
+    "game_si/compare.py": "454f7dc590e9a44ebf4497960e87fd72c2818824d3e6c2357e71a883b27ef2a5",
+    "game_si/cpp_analyzer.py": "2902290e2d85b239b6bb38079aa1ea755f57485923406c7e0c82375bc4f4ee43",
+    "game_si/diff.py": "e95a3985fcb4f34a2f4c70c92c889d8886dbaad101f900e53da1b116d9945940",
+    "game_si/gitlog.py": "920ff0d6564cd169599826361e8208b34d86e9c0a426af09b53056601c9be57b",
+    "game_si/metrics.py": "78ba5984f13bb2b7de21a9cb91344fa87acbb85e72da03bd78c40a38e637bb41",
+    "game_si/report.py": "be4d505cea8ca545be1ef367e23bc15a165d31b102ce722fa972b1d3c2812583",
+    "game_si/si.py": "0fab3b9218c1dc76053c1e8a0a1a4e2577c9422fcb64ec2ad4a82654c4cdfb48",
+    "game_si/timeseries.py": "d45065a71d6637e49d2cd56b649d1209ae8cf9446aa0e2918b4b35bf46041979",
+    "game_si/tune.py": "8c3b2fe5d5ab731b7cf0b639a37c45e70d3b34d11e85ad3dd64acde35b27ab95",
+    "game_si/validate.py": "5107441934782c47c019c0fb175a4dac4637421092ab71f2c8cb11c03efa4335",
+    "game_si/validate_report.py": "333a5bd6e333809fda5a4c9eeb3cea42eeaeecc50df460ee323d42173157728b",
+    "pyproject.toml": "1d0d2206a635f86d2410aae7c7424d636eb7e368318b958cdf36d2522bc13804",
+    "tests/samples/IdentityCases.cs": "d5bdf836e506fd6c87c122feebb7ca946257d45cade1bb262b2229932cc39ddb",
+    "tests/samples/SampleGame.cs": "c3161230881e79eec5e7ac190de8f4c12236c783d60a7832c81d63e858801730",
+    "tests/test_cpp_analyzer.py": "170dd6f8825472ea7bd71b47ede88957cb66b4c58608b44299a08cce03bfc24c",
+    "tests/test_refinement.py": "847bb0282318968bb1958835241d5442e707d6968956d8c8ce69806483082d12",
+    "tests/test_reproducibility.py": "d8ab447fb2bddd40ea9ec8eb034b1d2f962f9ecb7474273d5972d0e58fd2736a",
+    "tests/test_validate.py": "4e80d4a3b8ee0604b6864acc53d43a05e3468a75f76f81c58bb88deb282f63fa",
+    "tests/test_w14_extensions.py": "50c8dea241c90c1da66b880eeee738863de171166fe38e6e16d71323e406b4ef"
+  },
+  "analyzer_dll_sha256": "46c3f1314a29662041d51e37a1d8da3c37bc165dbf789818ef8e4c8f559004b5",
+  "passed": true,
+  "artifact_sha256": {
+    "ablation.json": "ca72a811c401e81ba3b32f4fa947b795873c123f443010378245de5f97b9e3bb",
+    "ablation.log": "6ab11cc13310a8a9caf4fca79502886e2c00aa95082105c6c9487210594ddd20",
+    "build-final.log": "0ebab76f579baf5a2c029927960146978ee9f66c0d4e16cc036540a24f82b4ef",
+    "chocolate-doom/analyze.log": "9d8a48fa88246901d69a4c963f9cb06aaebb0fd5ed219054b3f1584dc5e8d3a5",
+    "chocolate-doom/ast.json": "7f38bacc7e35af7e6ae3df29a126edea21a9d7cab3a42cc826071cd31731f278",
+    "chocolate-doom/compare.json": "c2e98a0c3fb6ee41f866763364a0a11f93226a4018ec87ee78d57e044342ec85",
+    "chocolate-doom/compare.log": "6d12c4144832950c24f955b687b3ce0e320088127366d643268bf247fd73f515",
+    "chocolate-doom/compare_summary.txt": "8b0d2c3ba922567ad9f01f6a889a7cbede27fc4aaf735a58feb3134364ef67d5",
+    "chocolate-doom/full.log": "dde32218ea50abfeb1b7a890e85ba484762683f55b617368e52d957d8bc5b062",
+    "chocolate-doom/index.html": "804af32afa80c5f1e2b79ffec24d49df0345659709b55be19255b019e05c1fb4",
+    "chocolate-doom/metrics.json": "c61de101606dba155699345a9c9a8c04aeaa0f6a8f90e22b6e6b450add14d5bd",
+    "chocolate-doom/scoring.json": "3627dc90b35682bc927d323772eaa0e886ee68766a7f42ca6a4d7763872bb3b4",
+    "chocolate-doom/scoring_full.json": "36982bc9837d43a5e00b8a2aa04da8dadb5556b2fccca305dc488bd98fed9a41",
+    "chocolate-doom/scoring_full_summary.txt": "320edafc2f178d426a5028a7abb10c16c345c97f6fefcbb9dfb265fc423acad5",
+    "chocolate-doom/timeseries.html": "d88ea9f2ab7c0f4ede17a2953f0a9408536be70722b852c0ad5d59a176136b86",
+    "chocolate-doom/timeseries.json": "f3b2b28aa3314dd0bc0b7db90ba7e9c6b7c920998d5eba4c3f45d8b76def5d0f",
+    "chocolate-doom/timeseries.log": "c2489d1ec993c0fcd7281c9a54d028c78e0b0b8cbd015fc75db4ad2aa524803b",
+    "chocolate-doom/validate.log": "4b5dbb11aa9033dad7903fe8d7967542cb2f62d1f009c2b75c94136e3085cdf1",
+    "chocolate-doom/validation.html": "45db8c4f084030729557ae1093c6222bab35375a85cd8bf7043798c73730bf96",
+    "chocolate-doom/validation.json": "26d06e88d479d83ad8218085bb7b94f29cdf7acdedcf95249eae52fc8bf806b7",
+    "chocolate-doom/validation_summary.txt": "15e6a5d9c6dcba30c3200fdad0760d8ee2c147683883855f4ef6ca8b84d8684e",
+    "openra-game/analyze.log": "b63b374c476c68ed9acdd982f4d4e4f04068d2ef89a1827e20aa42a49e8c1166",
+    "openra-game/ast.json": "5d366133acc20491820f4c8be416cde2d90444b804feee5a8be7a634c266c26d",
+    "openra-game/compare.json": "0e699f3e6b8ab9446893ddcb46eda1cf111451ee9ad72c4d58cd696b2d8c6d66",
+    "openra-game/compare.log": "af34ff82d680dfb4120e54439891fb0ae18e109a89480fe6cd9c425497a16745",
+    "openra-game/compare_summary.txt": "7fd1ad0b8d38574b7835310f4fafdb002dbd4b87fbd1b29812c0f6b178db1385",
+    "openra-game/full.log": "7d7c5af2334988555ace6a8306eba59efbab11f96673fc8d347b4ca7bda54e66",
+    "openra-game/index.html": "d925958cd79fa27193e61de141c6eac6132bca2f844af5bef5f51bfee2760526",
+    "openra-game/metrics.json": "1a649f76b9edcde153bb67e790fe1f9f9e91eca3e0fc647dce6398b6a0b7ec7b",
+    "openra-game/scoring.json": "dabe55c7f4f21df11a021883c945c297b30ee2391ee8b3d0b3b71c5c31af913e",
+    "openra-game/scoring_full.json": "279d9f99e5702cb1dd0fff9ab253c9ffc3b86d6aa6c24cd003bcff929dbc9ea2",
+    "openra-game/scoring_full_summary.txt": "44c7624401aa512c1ce8be981adee4ca0fff80c0e31b6dff455e4a93210b862d",
+    "openra-game/timeseries.html": "373f5bec9b8f6effdef86d93d2bce2e391b34006af1c758303eac5112303d7ea",
+    "openra-game/timeseries.json": "2841c21d0f28bd488f43149cbf5c4f5be206556bc9db7bde297250a9a032f928",
+    "openra-game/timeseries.log": "6fb9e038d8fe888e11e5282d6d3710f35b2c9bf087c6ed672b5497e5cd0051fb",
+    "openra-game/validate.log": "7784ae72103c6492bdf910b769f08a43ed438ceb3a01413614611807568346a6",
+    "openra-game/validation.html": "0738b8284e13a4ec027a24294f581485f5dba7b6bdc7f8e5435e884d2fe6d022",
+    "openra-game/validation.json": "de9641a4e536d554a4361d74499c677ac39ddcbf6c4fe3c317893a2051f0d86d",
+    "openra-game/validation_summary.txt": "140c7c7d9cc594fea5f9c3e9cd68b4f589a84b2bc99cfc21c0d3f6ff48df77d2",
+    "openra-mods-cnc/analyze.log": "fd8e42159c197490351380898d30c9811646f8d7fed572a163530e35b24c3774",
+    "openra-mods-cnc/ast.json": "582b52532680d54e89242424465d9829792584b5b0f26a1642c620ab4313a008",
+    "openra-mods-cnc/index.html": "24f107c7537ac2d65842eba9cc151aa7db8bd12c0aabd912f824c88bf83d72e1",
+    "openra-mods-cnc/metrics.json": "928c1ca4132916d0b3d27e62365ca3766c395703a34801b5dd7ef797026b2eae",
+    "openra-mods-cnc/scoring.json": "2b1f5369b4b8ec9ffbb95f554136a6003a40bff78188c1884f947e13f4f4bb1a",
+    "openra-mods-cnc/validate.log": "b1bcac16bcf645749cc850dac6dc1cb4a01a38ba3045f5d431f0f9188628e8b1",
+    "openra-mods-cnc/validation.html": "d2c432fda8902228d85da9d83e469ab0d12f445934855fd10cc383fba82fb0fc",
+    "openra-mods-cnc/validation.json": "25cd9ef271efcdb255eed61a77e21e11a4c3de97f6440fb84be11654f0f21c0a",
+    "openra-mods-cnc/validation_summary.txt": "ea2eff02257c34e1c3270c8d184ebb4e1abcc9f9f569795a5b2fc6ad199ae9ca",
+    "openra-mods-common/analyze.log": "5bb81167dec2817acdb3bc873ed9c20a892d8329d87adf9bc9235e512a240b1f",
+    "openra-mods-common/ast.json": "7816500de793181492f05ea7390d6de8607d8d52e6cbafc97c11c14f9cb78aac",
+    "openra-mods-common/compare.json": "a69874725ab7c2acbdfe87fe13d4fdfc07ad78c058e55991cdedddd8a0702cb2",
+    "openra-mods-common/compare.log": "fbef73ed3ef5aeda075dda6887d82c60af0f356007dc5cbe498579b1e09548c5",
+    "openra-mods-common/compare_summary.txt": "6339c61ebab62431c2f8699cc9497bd2f8ff3295c9ddd08aa6928408a0505e17",
+    "openra-mods-common/full.log": "810e2579000183988fb8193868c723813d18eb2f25e5b66e1998ad7e42770fb4",
+    "openra-mods-common/index.html": "4e76b3252ee5251f933ef5b0b0367eae2023f8189e8f57795ba12de1b4e137fe",
+    "openra-mods-common/metrics.json": "ebfbc8c155b8b476d0b8642276d2e004cbe4c00fd0b46a116d7208b955deaeeb",
+    "openra-mods-common/scoring.json": "3b5e304dbe326ca092e4242adb5ffe03b7adc0984bc3d2c6cbb2f29dcdcbbe50",
+    "openra-mods-common/scoring_full.json": "31c2be4f0b9723f6d4beda0b93bffa30eb7926b508e932eae0e2cabdb58e7c9f",
+    "openra-mods-common/scoring_full_summary.txt": "b21356453b2fb803d6ae9a67471aeb411915619203f2fa86fedb759aa1aef91d",
+    "openra-mods-common/timeseries.html": "a24247a8f6f9f7810e49541b74294f1dae3db7f4fa6e9126bee9c529c9d1830b",
+    "openra-mods-common/timeseries.json": "cea112d99c7fc34cba7d08058bd3192d592f0edf10f51fd02feec5e8d5c2c26b",
+    "openra-mods-common/timeseries.log": "ff3470dfcfe876d73d634bd89ef4093129e113f6f7e935829d30a860da44cbb0",
+    "openra-mods-common/validate.log": "0079faba32fc60d3683b70cf82e2fa2527d0f92fa099b34041892386528ac9f1",
+    "openra-mods-common/validation.html": "240a9bb34d885bce45c0a085628aa7da86d5542526e4407a01ee6a2bfc17595c",
+    "openra-mods-common/validation.json": "782333d15e65239ed8328e771432362a8caa36bb72031e1df4d871019fc485fe",
+    "openra-mods-common/validation_summary.txt": "1ae5a4bc065064da6b1bd6dc8a799e1a42c41365abf913eb870e3b9012fc9fdc",
+    "openra-mods-d2k/analyze.log": "eaa70a6038f6215dc2894d15e67d5f0742a6614e325da9a8f93454ddc83d42b8",
+    "openra-mods-d2k/ast.json": "7a828cdff13fe884a4a1d750da1062168dc3ecb22a373718f8aa610d412ccb56",
+    "openra-mods-d2k/index.html": "9c3e40eb835c9a88d5617ba79fc6164e28aac91ba60ce8d699de603763d7dd47",
+    "openra-mods-d2k/metrics.json": "c3d3a271d3ee3c2b3a92be410627c3b3d05d6af281f1417edc3b919eae518c61",
+    "openra-mods-d2k/scoring.json": "6436e0bb797ad34e7b3502c6730bf83146796366c3873ee242c8ab38b035d63f",
+    "openra-mods-d2k/validate.log": "b386c3886409763b8b9c6d73bfea8e5cccf908563d5b3be2928705c852bad4d3",
+    "openra-mods-d2k/validation.html": "8e1716e67f42df3a407e4dd052bd071cf8a7459acc1ee1c26aae4880d38a203f",
+    "openra-mods-d2k/validation.json": "1807099260bc982008662f229392cfc667a4337ed9bb162c84c2cf8a65ac2086",
+    "openra-mods-d2k/validation_summary.txt": "cefa60e5d654f54f356a49f0cb4e3b464aa66c106e9e584e48da522a28ce190f",
+    "openra-platforms-default/analyze.log": "4bd8519543d15923a8f0b38124a65e51805de20b11eb280f9e87b08d841a1e30",
+    "openra-platforms-default/ast.json": "b6b0fc2422b8b5ff50f6e528ac643b7c7e40138ad3032e8c92a8c07ddcae7faa",
+    "openra-platforms-default/index.html": "360e386056247cecb3d087a4720ad140aea4f1658b6c57a961b0a5e0c6706ecd",
+    "openra-platforms-default/metrics.json": "f160cae9f4b3995f6de5e68fe20f8e1a97e7b2c910ea1d293fa37e06eb38c37d",
+    "openra-platforms-default/scoring.json": "3d9be402d407b4a499de62825207c84f7218bd34baa1425a0b98e3afbd6e4dd6",
+    "openra-platforms-default/validate.log": "ec095a9c0b608971162bcb7257cafc0146467ff1a8f59624ed0662c191b738b1",
+    "openra-platforms-default/validation.html": "e7c6db2acc42e42c0ba0aec34661b24d8cf1ae7d7a9cd6b8e51dd968952c8148",
+    "openra-platforms-default/validation.json": "5f7ebd05cac0f79ebf5a123aa9f813b2ef837be5471bc49710957b7cae75ba55",
+    "openra-platforms-default/validation_summary.txt": "2232eb8b2aa7fa631d8687a9b9589187b3114580c0f7cad757d8d77cf6108f04",
+    "openra-server/analyze.log": "c973d5682869e4d8763e50540d7cce692f1a4982a0a7e8443c873d4c19c026c4",
+    "openra-server/ast.json": "9998bcfef0700773cded980bf0291da4881845fcdf706d277276906c3326ae8f",
+    "openra-server/index.html": "233701e25993fa495ad07bed91fd31fc937d028ad44e188818be79473948c2f1",
+    "openra-server/metrics.json": "c89c291b38ff5ec249ca9994d412d312cdebe041a9d86a3fe6579c153aed4811",
+    "openra-server/scoring.json": "314399bde8d06b9eaa4397ba118755a6bd691824c5012e8c2667b22d86e1dc4b",
+    "openra-server/validate.log": "7d22e397c9c471ed829d515617a5a36c4b293a4f7a32dd0e75ef7c0d34dd9f06",
+    "openra-server/validation.html": "c9f61c859af1eecdbaf817b87bad5bdfdafb61d6ad871a9d00e7fc0d0a3eb4b8",
+    "openra-server/validation.json": "73ca7480dd1e54db73085d2f0589e4fc07b9db34eeaf85f112230b215aaf6315",
+    "openra-server/validation_summary.txt": "fb55cd3df359573682492761c90799e232257c60afbb50a88c53bfd33727cb82",
+    "openrct2/analyze.log": "5a5ab534cd3c3f0da32d50031e258c45918b66ddc5e560ab09a1c56e3cb5ef26",
+    "openrct2/ast.json": "ba43096876f995427b2908cbc4bd8db344c9cdf8a61f9d1289a7087624b665c5",
+    "openrct2/compare.json": "608f50c954a1432c1d18850bb6db2c7e10b8052365fd6542308dbdf297baf361",
+    "openrct2/compare.log": "e40955cce38d67cf14221a5acf9b44669a55b5f37b243221c6d92763c2f82360",
+    "openrct2/compare_summary.txt": "c2c12eec8c8a85afcaaa4153123f667d2e0af17782ad2dcd61d3e4f3dd0c035e",
+    "openrct2/full.log": "7a14192d1a6510dd88ce0b68799db327a606ce21fda505e79f134fee1b4fd184",
+    "openrct2/index.html": "7b9a2cb406c94fc494c82cf3eabf6021eab948fd23bd27fd68bce163ef4e9421",
+    "openrct2/metrics.json": "b9e6cc2c567c4492777a8853cd084341149eec0cdc6c6d1162b3a81a47103317",
+    "openrct2/scoring.json": "32923ce9473542554525dd726c3d6c1191587afb1a2090f2b20e2b10a9e64f00",
+    "openrct2/scoring_full.json": "4d6426fbc79c85749b26c9541716c3770e3a8d314de71f4fefa44fefb3151fbf",
+    "openrct2/scoring_full_summary.txt": "1d35b4dc36f78607e51a73305c1855c2fb8e63310c323233d7ed96b2e133d763",
+    "openrct2/timeseries.html": "d96f43da215855eafaa7aaf09d25e9bd6a39eef27c5ea3ca37a190bf0c518ba9",
+    "openrct2/timeseries.json": "110729008e3d6d3ed77d595da1139ec7ef57f8b09a65792836147b72c6123c5a",
+    "openrct2/timeseries.log": "1a6aac8dda7aa1632157ca826d7a6962c8a70d17628ab03d7fa3265fef5e86a5",
+    "openrct2/validate.log": "007789735e13bdde16eca247ddf2364448d6c095a0ef4a03e3cb4c417a8de394",
+    "openrct2/validation.html": "cee6b4d07f897adbbb31194ee710acdc41a45bfb6388fdb4a1ebd50aba196108",
+    "openrct2/validation.json": "6cd3edede764aff521ff46b3e2798f809ce5d73a9831792682769c5c3d855be3",
+    "openrct2/validation_summary.txt": "03fcf86d3ad8a07a60a29214ce6244ff94df52f72af41b5224b773d6f76e38f9",
+    "tests-final.log": "603013f78d35133ed01860966b2c4df7b0125d05b5509ab8ece39021be3dfe37",
+    "tune.json": "e33d047ba67690a5f80a0ec4b6a1d8a2b4a42bc46b4613147bb7fbd01cf19b15",
+    "tune.log": "b4a363fc24bfe77dfd468d8d8c286a5f449f14e29f3c8fe87d82fc61d7be9fbd",
+    "tune_summary.txt": "84ca7d0d348458b4a6493c66af0bdd3a63c12e999ea714c1f7f598e6756d7782"
+  }
+}

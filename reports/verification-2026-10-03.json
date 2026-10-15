@@ -1,0 +1,769 @@
+{
+  "run_at_utc": "2026-10-03T12:46:16.396786+00:00",
+  "project_head": "4584789e9baaa7394b488126eeed754b62856b50",
+  "python": "3.10.11",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "dependencies": {
+    "numpy": "2.2.6",
+    "networkx": "3.4.2",
+    "tree-sitter": "0.25.2",
+    "tree-sitter-c": "0.24.2",
+    "tree-sitter-cpp": "0.23.4",
+    "lizard": "1.22.1",
+    "pytest": "9.0.3"
+  },
+  "benchmarks": {
+    "OpenRA": {
+      "sha": "8f2138c71106aaffd8a288b56d1c9ef6013700ba",
+      "clean": true
+    },
+    "chocolate-doom": {
+      "sha": "c62b634f394e64dd51dec7e6f890496f43a56ade",
+      "clean": true
+    },
+    "OpenRCT2": {
+      "sha": "7a2cddeed1304f284829ffb0c91f31557819c51e",
+      "clean": true
+    }
+  },
+  "cases": {
+    "openra-game": {
+      "health": 48.62,
+      "files": 226,
+      "rho": 0.6011,
+      "ast_elapsed_ms": 10497,
+      "classes": 668,
+      "methods": 2793,
+      "timeseries": {
+        "sha": [
+          "9652434a3e875ff4642fce30c43c36c0bced0048",
+          "e10074d153caad157b4c4eee686d3af00684c9a7",
+          "51ab2b496903ce1c6ef99513bb5894d11b85509c",
+          "6722db20e36a0398f5b17d37b81ddf94d333ced8",
+          "fbe6ab7f4ec19ad7d17bb78cc525d5e27d245bbb",
+          "7caf6362228a475137565ae1010094021258c9f3",
+          "8c3793e7eaed8cee492d92166ff2f3da95b170e3",
+          "805d236b2271c12640f0b8d7a4581a459b40f3f1"
+        ],
+        "health_old": [
+          38.04,
+          36.11,
+          40.19,
+          40.5,
+          43.58,
+          45.38,
+          47.3,
+          47.93
+        ],
+        "health_new": [
+          38.09,
+          36.18,
+          40.39,
+          40.65,
+          44.03,
+          45.97,
+          47.76,
+          48.62
+        ],
+        "cycles_new": [
+          0,
+          0,
+          1,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "jaccard": {
+        "5": 0.6667,
+        "10": 0.4286,
+        "30": 0.3636
+      },
+      "lizard_rho": 0.6481,
+      "historical_advisor_mismatches": [
+        "OpenRA.Network.UnitOrders",
+        "OpenRA.Server.Server",
+        "OpenRA.Game",
+        "OpenRA.MiniYaml",
+        "OpenRA.Support.VariableExpression.Token"
+      ]
+    },
+    "openra-mods-common": {
+      "health": 46.78,
+      "files": 1080,
+      "rho": 0.5363,
+      "ast_elapsed_ms": 29313,
+      "classes": 2194,
+      "methods": 7321,
+      "timeseries": {
+        "sha": [
+          "3a72153a3d33064c1bead686da38ba4fec234a43",
+          "901e604cf3d0d118c98888f75a7aa90f1f0c6f23",
+          "f1758e955976b1085713a0023c4f69c255328051",
+          "7160c8a1a952bbd0e9210d84006fdffd95b8680f",
+          "9a15df9dde46ce7257adf3f15ea401135633cf68",
+          "36d5ae54213956c6523823d75bcba60645e3f999",
+          "f0cf72882576603e5d53c6c22090f28dcd43c1a8",
+          "ef92a448b6f65b9f4fde37f23d8c0591a4659b64"
+        ],
+        "health_old": [
+          46.67,
+          44.68,
+          44.68,
+          46.67,
+          46.75,
+          46.86,
+          47.92,
+          46.68
+        ],
+        "health_new": [
+          46.67,
+          44.77,
+          44.72,
+          46.73,
+          46.83,
+          47.01,
+          47.98,
+          46.78
+        ],
+        "cycles_new": [
+          0,
+          3,
+          3,
+          4,
+          4,
+          4,
+          5,
+          4
+        ]
+      },
+      "jaccard": {
+        "5": 0.25,
+        "10": 0.6667,
+        "30": 0.5
+      },
+      "lizard_rho": 0.7926,
+      "historical_advisor_mismatches": [
+        "OpenRA.Mods.Common.Traits.ConditionalTrait",
+        "OpenRA.Mods.Common.Widgets.TextFieldWidget",
+        "OpenRA.Mods.Common.Widgets.Logic.LobbyLogic",
+        "OpenRA.Mods.Common.Widgets.Logic.AssetBrowserLogic"
+      ]
+    },
+    "openra-mods-cnc": {
+      "health": 35.27,
+      "files": 140,
+      "rho": 0.3681,
+      "ast_elapsed_ms": 5473,
+      "classes": 278,
+      "methods": 945
+    },
+    "openra-mods-d2k": {
+      "health": 35.69,
+      "files": 23,
+      "rho": 0.4915,
+      "ast_elapsed_ms": 2551,
+      "classes": 48,
+      "methods": 119
+    },
+    "openra-server": {
+      "health": 70.0,
+      "files": 1,
+      "rho": null,
+      "ast_elapsed_ms": 1197,
+      "classes": 1,
+      "methods": 3
+    },
+    "openra-platforms-default": {
+      "health": 37.47,
+      "files": 18,
+      "rho": 0.5692,
+      "ast_elapsed_ms": 2788,
+      "classes": 33,
+      "methods": 242
+    },
+    "chocolate-doom": {
+      "health": 50.57,
+      "files": 296,
+      "rho": 0.5851,
+      "ast_elapsed_ms": 10845,
+      "classes": 296,
+      "methods": 4311,
+      "timeseries": {
+        "sha": [
+          "66a2cc66d7504c9b64e1c461e62ad2a9d964fa95",
+          "a653fb6e0cfab8b5bbe71ae7652e1a9af810b065",
+          "8089e905e3ce33bfbe8377d71bb6d75f5868edbd",
+          "b2a59b3eec1dcc040f58bdd5e88bfed55face2fe",
+          "9eab7159e57ac633387066c1d239e651a3c45f4c",
+          "2550ff5bd989d5b52eabe32c21d8ded4f29b16f9",
+          "cd7cc921f38545a47ed8bc16620ce58c816639e1",
+          "c62b634f394e64dd51dec7e6f890496f43a56ade"
+        ],
+        "health_old": [
+          52.44,
+          52.51,
+          52.32,
+          50.77,
+          51.75,
+          50.27,
+          50.49,
+          50.57
+        ],
+        "health_new": [
+          52.44,
+          52.51,
+          52.32,
+          50.77,
+          51.75,
+          50.27,
+          50.49,
+          50.57
+        ],
+        "cycles_new": [
+          1,
+          1,
+          1,
+          3,
+          3,
+          2,
+          2,
+          2
+        ]
+      },
+      "jaccard": {
+        "5": 0.1111,
+        "10": 0.1111,
+        "30": 0.3333
+      },
+      "lizard_rho": 0.7082,
+      "historical_advisor_mismatches": [
+        "i_system",
+        "m_misc",
+        "i_video",
+        "z_zone"
+      ]
+    },
+    "openrct2": {
+      "health": 54.84,
+      "files": 544,
+      "rho": 0.4598,
+      "ast_elapsed_ms": 31784,
+      "classes": 636,
+      "methods": 5766,
+      "timeseries": {
+        "sha": [
+          "25bc798ff8bebdbda2b4c4620936118c76b1186d",
+          "9f67fafc433cbb6cbbbd9189d7c0c7eef2ded878",
+          "cf44ea7e24439252a5d5fa8f095899fc3aded534",
+          "5456899afc04dcdd045c5e5e39b1bfd0df41e9e6",
+          "cff87c7d72e15f1261a23b383843d5d168414cf7",
+          "713a05f203316a434ccc562ddebc0f11476197c0",
+          "dc0b0bdbcbb80573fe995454de7343a2bb69e303",
+          "7a2cddeed1304f284829ffb0c91f31557819c51e"
+        ],
+        "health_old": [
+          52.19,
+          52.18,
+          52.21,
+          52.18,
+          52.11,
+          52.16,
+          52.15,
+          54.94
+        ],
+        "health_new": [
+          52.19,
+          52.18,
+          52.21,
+          52.18,
+          52.11,
+          52.11,
+          52.11,
+          54.84
+        ],
+        "cycles_new": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "jaccard": {
+        "5": 0.1111,
+        "10": 0.0526,
+        "30": 0.2245
+      },
+      "lizard_rho": 0.5307,
+      "historical_advisor_mismatches": [
+        "park.Legacy",
+        "Context",
+        "ride.Ride",
+        "ride.Vehicle",
+        "drawing.Drawing"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "benchmark:OpenRA",
+      "passed": true
+    },
+    {
+      "name": "benchmark:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "benchmark:OpenRCT2",
+      "passed": true
+    },
+    {
+      "name": "static:openra-game",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openra-game",
+      "passed": true
+    },
+    {
+      "name": "timeseries:openra-game",
+      "passed": true
+    },
+    {
+      "name": "full-window:openra-game",
+      "passed": true
+    },
+    {
+      "name": "static:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "timeseries:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "full-window:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "static:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "static:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "static:openra-server",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openra-server",
+      "passed": true
+    },
+    {
+      "name": "static:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "static:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "tune-default:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "timeseries:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "full-window:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "static:openrct2",
+      "passed": true
+    },
+    {
+      "name": "tune-default:openrct2",
+      "passed": true
+    },
+    {
+      "name": "timeseries:openrct2",
+      "passed": true
+    },
+    {
+      "name": "full-window:openrct2",
+      "passed": true
+    },
+    {
+      "name": "project-fold-count",
+      "passed": true
+    },
+    {
+      "name": "fold-separation:OpenRA",
+      "passed": true
+    },
+    {
+      "name": "fold-separation:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "fold-separation:OpenRCT2",
+      "passed": true
+    },
+    {
+      "name": "server-excluded",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-game:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-game:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-game:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-game:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-game:weights-4",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-common:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-common:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-common:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-common:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-common:weights-4",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-cnc:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-cnc:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-cnc:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-cnc:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-cnc:weights-4",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-d2k:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-d2k:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-d2k:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-d2k:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-mods-d2k:weights-4",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-platforms-default:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-platforms-default:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-platforms-default:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-platforms-default:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:openra-platforms-default:weights-4",
+      "passed": true
+    },
+    {
+      "name": "precision:chocolate-doom:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:chocolate-doom:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:chocolate-doom:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:chocolate-doom:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:chocolate-doom:weights-4",
+      "passed": true
+    },
+    {
+      "name": "precision:openrct2:weights-0",
+      "passed": true
+    },
+    {
+      "name": "precision:openrct2:weights-1",
+      "passed": true
+    },
+    {
+      "name": "precision:openrct2:weights-2",
+      "passed": true
+    },
+    {
+      "name": "precision:openrct2:weights-3",
+      "passed": true
+    },
+    {
+      "name": "precision:openrct2:weights-4",
+      "passed": true
+    }
+  ],
+  "tuning": {
+    "schema_version": "tune-0.3",
+    "scoring_method": "class z-score -> weighted sum -> percentile (2 decimals) -> file max",
+    "validation_unit": "project",
+    "aggregation": "equal-weight mean of within-project mean correlations",
+    "case_projects": {
+      "OpenRA.Game": "OpenRA",
+      "OpenRA.Mods.Common": "OpenRA",
+      "OpenRA.Mods.Cnc": "OpenRA",
+      "OpenRA.Mods.D2k": "OpenRA",
+      "OpenRA.Server": "OpenRA",
+      "OpenRA.Platforms.Default": "OpenRA",
+      "Chocolate Doom": "chocolate-doom",
+      "OpenRCT2": "OpenRCT2"
+    },
+    "project_folds": [
+      {
+        "project": "OpenRA",
+        "train_cases": [
+          "Chocolate Doom",
+          "OpenRCT2"
+        ],
+        "holdout_cases": [
+          "OpenRA.Game",
+          "OpenRA.Mods.Common",
+          "OpenRA.Mods.Cnc",
+          "OpenRA.Mods.D2k",
+          "OpenRA.Platforms.Default"
+        ],
+        "weights": {
+          "cc": 0.25,
+          "coupling": 0.4,
+          "dependency_cycle": 0.05,
+          "global_state": 0.25,
+          "game_loop_centrality": 0.05
+        },
+        "per_case_holdout_rho": {
+          "OpenRA.Game": 0.6394,
+          "OpenRA.Mods.Common": 0.5476,
+          "OpenRA.Mods.Cnc": 0.3803,
+          "OpenRA.Mods.D2k": 0.4946,
+          "OpenRA.Platforms.Default": 0.4909
+        },
+        "holdout_rho": 0.5106
+      },
+      {
+        "project": "chocolate-doom",
+        "train_cases": [
+          "OpenRA.Game",
+          "OpenRA.Mods.Common",
+          "OpenRA.Mods.Cnc",
+          "OpenRA.Mods.D2k",
+          "OpenRA.Platforms.Default",
+          "OpenRCT2"
+        ],
+        "holdout_cases": [
+          "Chocolate Doom"
+        ],
+        "weights": {
+          "cc": 0.4,
+          "coupling": 0.2,
+          "dependency_cycle": 0.05,
+          "global_state": 0.3,
+          "game_loop_centrality": 0.05
+        },
+        "per_case_holdout_rho": {
+          "Chocolate Doom": 0.609
+        },
+        "holdout_rho": 0.609
+      },
+      {
+        "project": "OpenRCT2",
+        "train_cases": [
+          "OpenRA.Game",
+          "OpenRA.Mods.Common",
+          "OpenRA.Mods.Cnc",
+          "OpenRA.Mods.D2k",
+          "OpenRA.Platforms.Default",
+          "Chocolate Doom"
+        ],
+        "holdout_cases": [
+          "OpenRCT2"
+        ],
+        "weights": {
+          "cc": 0.35,
+          "coupling": 0.2,
+          "dependency_cycle": 0.1,
+          "global_state": 0.3,
+          "game_loop_centrality": 0.05
+        },
+        "per_case_holdout_rho": {
+          "OpenRCT2": 0.4557
+        },
+        "holdout_rho": 0.4557
+      }
+    ],
+    "input_precision": {
+      "OpenRA.Game": "full precision (raw_exact)",
+      "OpenRA.Mods.Common": "full precision (raw_exact)",
+      "OpenRA.Mods.Cnc": "full precision (raw_exact)",
+      "OpenRA.Mods.D2k": "full precision (raw_exact)",
+      "OpenRA.Server": "full precision (raw_exact)",
+      "OpenRA.Platforms.Default": "full precision (raw_exact)",
+      "Chocolate Doom": "full precision (raw_exact)",
+      "OpenRCT2": "full precision (raw_exact)"
+    },
+    "grid_size": 2226,
+    "n_evaluated": 2226,
+    "min_samples_for_correlation": 5,
+    "default_weights": {
+      "cc": 0.3,
+      "coupling": 0.25,
+      "dependency_cycle": 0.15,
+      "global_state": 0.15,
+      "game_loop_centrality": 0.15
+    },
+    "tuned_weights": {
+      "cc": 0.35,
+      "coupling": 0.25,
+      "dependency_cycle": 0.05,
+      "global_state": 0.3,
+      "game_loop_centrality": 0.05
+    },
+    "per_case_default_rho": {
+      "OpenRA.Game": 0.6011,
+      "OpenRA.Mods.Common": 0.5363,
+      "OpenRA.Mods.Cnc": 0.3681,
+      "OpenRA.Mods.D2k": 0.4915,
+      "OpenRA.Server": null,
+      "OpenRA.Platforms.Default": 0.5692,
+      "Chocolate Doom": 0.5851,
+      "OpenRCT2": 0.4598
+    },
+    "per_case_tuned_rho": {
+      "OpenRA.Game": 0.6567,
+      "OpenRA.Mods.Common": 0.5568,
+      "OpenRA.Mods.Cnc": 0.4461,
+      "OpenRA.Mods.D2k": 0.5052,
+      "OpenRA.Server": null,
+      "OpenRA.Platforms.Default": 0.6316,
+      "Chocolate Doom": 0.6152,
+      "OpenRCT2": 0.4739
+    },
+    "excluded_cases": [
+      "OpenRA.Server"
+    ],
+    "excluded_reason": "see per-case exclusion_reasons",
+    "exclusion_reasons": {
+      "OpenRA.Server": "insufficient samples (n < 5 files with bugfix data)"
+    },
+    "lopo_default_rho": 0.5194,
+    "lopo_tuned_rho": 0.5251,
+    "lopo_note": "all modules of a held-out project are excluded from training; small cases skipped"
+  },
+  "source_sha256": {
+    "csharp-analyzer/AstExtractor.cs": "f1157d6d95db836417967aa4dd336817929dec6b1941eb18816fd17050bbb784",
+    "csharp-analyzer/csharp-analyzer.csproj": "593d0ab1a7077d8b8b9248dfe91f5708c9ee98b62fb57db47733110aef948bee",
+    "csharp-analyzer/CyclomaticComplexityWalker.cs": "2894dd4142d1c58ac10fe621b71b6553f8a314e5810e8cf83ce35f1bdab51c77",
+    "csharp-analyzer/MethodBodyWalker.cs": "ada9f59238bb26ceb8ad98dcaa766e3bbd72f946392ac913599650c1f85b568f",
+    "csharp-analyzer/Models.cs": "44ca6401d47b9645ffb21a8a5a23a3097978e8792814a4a9db131456d7d4ef1e",
+    "csharp-analyzer/Program.cs": "5b30f487dcb7249f0a5c0aa9034789ed30cc75b3710814208ae0dd111247109a",
+    "docs/_verification/verify_final.py": "f73249d766af9cca06822337678d93c350d57c15be1867798dccd8c3150c450b",
+    "game_si/__init__.py": "09568c7c1f390bd47a805baa22c9cd45e12577a1698756ac9d1891be6284fe6b",
+    "game_si/__main__.py": "6f9f273aad09d77631b22c3c38cfbd666f4a43e85cc32c2b79eb514fdacc2cb7",
+    "game_si/advisor.py": "a99666727aa39c864332420f741a32c05c4f576044d825c236872ce5cdd9ef00",
+    "game_si/analyzer.py": "a49bdf4e26dedac8bb0a8be59e7838500758debf0c2b39fbfd1b543435f7d2d0",
+    "game_si/change_risk.py": "3296472dd4b78e815919750a2667f9c120cf0c318ca612d687cb9e56327cdf26",
+    "game_si/cli.py": "4f62f72744af9b18e75aa68229dd813358f9d9731438e4d29164a30c064738ea",
+    "game_si/compare.py": "6b2c5c8ce3a8d32d09383b515634a865e504c397c52bf50f631a8a2ce1940811",
+    "game_si/cpp_analyzer.py": "2902290e2d85b239b6bb38079aa1ea755f57485923406c7e0c82375bc4f4ee43",
+    "game_si/diff.py": "ae72e1cedf38b19c4e689a04ff3342c979578a9293a24429f6bdf18a345ff444",
+    "game_si/gitlog.py": "920ff0d6564cd169599826361e8208b34d86e9c0a426af09b53056601c9be57b",
+    "game_si/metrics.py": "4d77c1ddd4eecf9895381df4b7198630ee4054c4f9c87be938188746bfe88221",
+    "game_si/report.py": "04841f985b08d44ae6209e186754de02b2e2e18b3bf221933a6169fd2abd673b",
+    "game_si/si.py": "8f2b50a774ec5edbd655017abd1d21fb3d2447319f62968f6a672a0ed86100c1",
+    "game_si/timeseries.py": "5ad8d6a4ff62b394eee06cc4fd2bd9a1d78142c5b4ca70cae01de1fc83cd59fe",
+    "game_si/tune.py": "8c3b2fe5d5ab731b7cf0b639a37c45e70d3b34d11e85ad3dd64acde35b27ab95",
+    "game_si/validate.py": "5107441934782c47c019c0fb175a4dac4637421092ab71f2c8cb11c03efa4335",
+    "game_si/validate_report.py": "333a5bd6e333809fda5a4c9eeb3cea42eeaeecc50df460ee323d42173157728b",
+    "pyproject.toml": "1d0d2206a635f86d2410aae7c7424d636eb7e368318b958cdf36d2522bc13804",
+    "tests/test_cpp_analyzer.py": "170dd6f8825472ea7bd71b47ede88957cb66b4c58608b44299a08cce03bfc24c",
+    "tests/test_reproducibility.py": "d8ab447fb2bddd40ea9ec8eb034b1d2f962f9ecb7474273d5972d0e58fd2736a",
+    "tests/test_validate.py": "4e80d4a3b8ee0604b6864acc53d43a05e3468a75f76f81c58bb88deb282f63fa",
+    "tests/test_w14_extensions.py": "50c8dea241c90c1da66b880eeee738863de171166fe38e6e16d71323e406b4ef"
+  },
+  "passed": true
+}

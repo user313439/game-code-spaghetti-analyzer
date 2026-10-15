@@ -27,6 +27,24 @@ public sealed class AnalysisResult
 
     [JsonPropertyName("errors")]
     public List<AnalysisError> Errors { get; set; } = new();
+
+    [JsonPropertyName("diagnostics")]
+    public List<AnalysisDiagnostic> Diagnostics { get; set; } = new();
+}
+
+public sealed class AnalysisDiagnostic
+{
+    [JsonPropertyName("path")]
+    public string Path { get; set; } = "";
+
+    [JsonPropertyName("kind")]
+    public string Kind { get; set; } = "syntax";
+
+    [JsonPropertyName("line")]
+    public int Line { get; set; }
+
+    [JsonPropertyName("message")]
+    public string Message { get; set; } = "";
 }
 
 public sealed class AnalysisSummary
@@ -120,6 +138,12 @@ public sealed class ClassNode
 
 public sealed class MethodNode
 {
+    [JsonPropertyName("symbol_id")]
+    public string? SymbolId { get; set; }
+
+    [JsonPropertyName("invoked_symbols")]
+    public List<string> InvokedSymbols { get; set; } = new();
+
     [JsonPropertyName("name")]
     public string Name { get; set; } = "";
 

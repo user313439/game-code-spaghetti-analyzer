@@ -1,0 +1,593 @@
+{
+  "schema_version": "validate-0.2",
+  "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
+  "subdir": "OpenRA.Platforms.Default",
+  "since": null,
+  "until": null,
+  "keywords": [
+    "fix",
+    "bug",
+    "crash",
+    "regression",
+    "hotfix",
+    "patch",
+    "defect"
+  ],
+  "total_commits": 263,
+  "bugfix_commits": 47,
+  "classes_total": 33,
+  "classes_with_bugfix": 29,
+  "files_total": 18,
+  "files_with_bugfix": 14,
+  "unmatched_change_count": 2,
+  "class_correlations": [
+    {
+      "name": "si_vs_bugfix",
+      "n": 33,
+      "spearman_rho": 0.0171,
+      "p_value": 0.927482
+    },
+    {
+      "name": "loc_vs_bugfix",
+      "n": 33,
+      "spearman_rho": 0.2636,
+      "p_value": 0.150971
+    },
+    {
+      "name": "cc_vs_bugfix",
+      "n": 33,
+      "spearman_rho": 0.1712,
+      "p_value": 0.357545
+    }
+  ],
+  "file_correlations": [
+    {
+      "name": "file_si_vs_bugfix",
+      "n": 18,
+      "spearman_rho": 0.5692,
+      "p_value": 0.015044
+    },
+    {
+      "name": "file_loc_vs_bugfix",
+      "n": 18,
+      "spearman_rho": 0.8231,
+      "p_value": 1.1e-05
+    },
+    {
+      "name": "file_cc_vs_bugfix",
+      "n": 18,
+      "spearman_rho": 0.8064,
+      "p_value": 2.7e-05
+    }
+  ],
+  "top_bugfix_files": [
+    {
+      "path": "Sdl2PlatformWindow.cs",
+      "count": 14
+    },
+    {
+      "path": "OpenAlSoundEngine.cs",
+      "count": 10
+    },
+    {
+      "path": "ThreadedGraphicsContext.cs",
+      "count": 9
+    },
+    {
+      "path": "OpenGL.cs",
+      "count": 7
+    },
+    {
+      "path": "Shader.cs",
+      "count": 5
+    },
+    {
+      "path": "Sdl2Input.cs",
+      "count": 5
+    },
+    {
+      "path": "Sdl2HardwareCursor.cs",
+      "count": 3
+    },
+    {
+      "path": "FreeTypeFont.cs",
+      "count": 3
+    },
+    {
+      "path": "DummySoundEngine.cs",
+      "count": 3
+    },
+    {
+      "path": "MultiTapDetection.cs",
+      "count": 3
+    },
+    {
+      "path": "Sdl2GraphicsContext.cs",
+      "count": 3
+    },
+    {
+      "path": "Texture.cs",
+      "count": 3
+    },
+    {
+      "path": "VertexBuffer.cs",
+      "count": 1
+    },
+    {
+      "path": "DefaultPlatform.cs",
+      "count": 1
+    }
+  ],
+  "unmatched_paths_sample": [
+    {
+      "path": "OpenRA.Platforms.Default.csproj",
+      "count": 2
+    }
+  ],
+  "rows": [
+    {
+      "fqn": "OpenRA.Platforms.Default.DefaultPlatform",
+      "file_path": "DefaultPlatform.cs",
+      "si": 66.67,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 22,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.DummySoundEngine",
+      "file_path": "DummySoundEngine.cs",
+      "si": 57.58,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 30,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.NullSoundSource",
+      "file_path": "DummySoundEngine.cs",
+      "si": 27.27,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.NullSound",
+      "file_path": "DummySoundEngine.cs",
+      "si": 27.27,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.FrameBuffer",
+      "file_path": "FrameBuffer.cs",
+      "si": 69.7,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 112,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.FreeType",
+      "file_path": "FreeTypeFont.cs",
+      "si": 6.06,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 10,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.FreeTypeFont",
+      "file_path": "FreeTypeFont.cs",
+      "si": 51.52,
+      "grade": "C",
+      "cc_max": 5.0,
+      "loc": 71,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ITextureInternal",
+      "file_path": "ITextureInternal.cs",
+      "si": 36.36,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 1,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.MultiTapDetection",
+      "file_path": "MultiTapDetection.cs",
+      "si": 30.3,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 16,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.TapHistory",
+      "file_path": "MultiTapDetection.cs",
+      "si": 33.33,
+      "grade": "B",
+      "cc_max": 3.0,
+      "loc": 31,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenAlSoundEngine",
+      "file_path": "OpenAlSoundEngine.cs",
+      "si": 90.91,
+      "grade": "E",
+      "cc_max": 9.0,
+      "loc": 311,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenAlSoundEngine.PoolSlot",
+      "file_path": "OpenAlSoundEngine.cs",
+      "si": 12.12,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenAlSoundSource",
+      "file_path": "OpenAlSoundEngine.cs",
+      "si": 42.42,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 19,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenAlSound",
+      "file_path": "OpenAlSoundEngine.cs",
+      "si": 63.64,
+      "grade": "D",
+      "cc_max": 4.0,
+      "loc": 57,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenAlAsyncLoadSound",
+      "file_path": "OpenAlSoundEngine.cs",
+      "si": 78.79,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 112,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenGL",
+      "file_path": "OpenGL.cs",
+      "si": 81.82,
+      "grade": "E",
+      "cc_max": 18.0,
+      "loc": 298,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.OpenGL.GLFeatures",
+      "file_path": "OpenGL.cs",
+      "si": 3.03,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.Sdl2GraphicsContext",
+      "file_path": "Sdl2GraphicsContext.cs",
+      "si": 93.94,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 242,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.Sdl2HardwareCursor",
+      "file_path": "Sdl2HardwareCursor.cs",
+      "si": 45.45,
+      "grade": "C",
+      "cc_max": 5.0,
+      "loc": 40,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.Sdl2Input",
+      "file_path": "Sdl2Input.cs",
+      "si": 96.97,
+      "grade": "E",
+      "cc_max": 42.0,
+      "loc": 224,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.Sdl2PlatformWindow",
+      "file_path": "Sdl2PlatformWindow.cs",
+      "si": 100.0,
+      "grade": "E",
+      "cc_max": 25.0,
+      "loc": 474,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.Shader",
+      "file_path": "Shader.cs",
+      "si": 75.76,
+      "grade": "D",
+      "cc_max": 6.0,
+      "loc": 221,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.StaticIndexBuffer",
+      "file_path": "StaticIndexBuffer.cs",
+      "si": 48.48,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 36,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.Texture",
+      "file_path": "Texture.cs",
+      "si": 72.73,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 157,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadAffine",
+      "file_path": "ThreadAffine.cs",
+      "si": 87.88,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 13,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedGraphicsContext",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 84.85,
+      "grade": "E",
+      "cc_max": 4.0,
+      "loc": 294,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedGraphicsContext.Message",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 60.61,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 89,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedFrameBuffer",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 27.27,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 31,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedVertexBuffer",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 9.09,
+      "grade": "A",
+      "cc_max": 2.0,
+      "loc": 55,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedIndexBuffer",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 27.27,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 14,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedTexture",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 39.39,
+      "grade": "B",
+      "cc_max": 2.0,
+      "loc": 68,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.ThreadedShader",
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si": 27.27,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 49,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "OpenRA.Platforms.Default.VertexBuffer",
+      "file_path": "VertexBuffer.cs",
+      "si": 54.55,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 94,
+      "bugfix_count": 1
+    }
+  ],
+  "file_rows": [
+    {
+      "file_path": "DefaultPlatform.cs",
+      "si_max": 66.67,
+      "si_mean": 66.67,
+      "loc_total": 22,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "DummySoundEngine.cs",
+      "si_max": 57.58,
+      "si_mean": 37.37,
+      "loc_total": 32,
+      "cc_max": 1.0,
+      "class_count": 3,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "FrameBuffer.cs",
+      "si_max": 69.7,
+      "si_mean": 69.7,
+      "loc_total": 112,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "FreeTypeFont.cs",
+      "si_max": 51.52,
+      "si_mean": 28.79,
+      "loc_total": 81,
+      "cc_max": 5.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "ITextureInternal.cs",
+      "si_max": 36.36,
+      "si_mean": 36.36,
+      "loc_total": 1,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "MultiTapDetection.cs",
+      "si_max": 33.33,
+      "si_mean": 31.81,
+      "loc_total": 47,
+      "cc_max": 3.0,
+      "class_count": 2,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "OpenAlSoundEngine.cs",
+      "si_max": 90.91,
+      "si_mean": 57.58,
+      "loc_total": 499,
+      "cc_max": 9.0,
+      "class_count": 5,
+      "bugfix_count": 10
+    },
+    {
+      "file_path": "OpenGL.cs",
+      "si_max": 81.82,
+      "si_mean": 42.42,
+      "loc_total": 298,
+      "cc_max": 18.0,
+      "class_count": 2,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "Sdl2GraphicsContext.cs",
+      "si_max": 93.94,
+      "si_mean": 93.94,
+      "loc_total": 242,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Sdl2HardwareCursor.cs",
+      "si_max": 45.45,
+      "si_mean": 45.45,
+      "loc_total": 40,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "Sdl2Input.cs",
+      "si_max": 96.97,
+      "si_mean": 96.97,
+      "loc_total": 224,
+      "cc_max": 42.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "Sdl2PlatformWindow.cs",
+      "si_max": 100.0,
+      "si_mean": 100.0,
+      "loc_total": 474,
+      "cc_max": 25.0,
+      "class_count": 1,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "Shader.cs",
+      "si_max": 75.76,
+      "si_mean": 75.76,
+      "loc_total": 221,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "StaticIndexBuffer.cs",
+      "si_max": 48.48,
+      "si_mean": 48.48,
+      "loc_total": 36,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "Texture.cs",
+      "si_max": 72.73,
+      "si_mean": 72.73,
+      "loc_total": 157,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "ThreadAffine.cs",
+      "si_max": 87.88,
+      "si_mean": 87.88,
+      "loc_total": 13,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "ThreadedGraphicsContext.cs",
+      "si_max": 84.85,
+      "si_mean": 39.39,
+      "loc_total": 600,
+      "cc_max": 8.0,
+      "class_count": 7,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "VertexBuffer.cs",
+      "si_max": 54.55,
+      "si_mean": 54.55,
+      "loc_total": 94,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    }
+  ],
+  "notes": [
+    "bug-fix 변경 파일 중 2 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음."
+  ]
+}

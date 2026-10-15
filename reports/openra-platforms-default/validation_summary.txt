@@ -1,7 +1,7 @@
 === G-SI Validation (Phase A) ===
 repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
 subdir:         OpenRA.Platforms.Default
-date range:     * .. *
+date range:     * .. 2026-10-03
 commits seen:   263
 bug-fix found:  47
 classes total:  33  (with bug-fix: 29)

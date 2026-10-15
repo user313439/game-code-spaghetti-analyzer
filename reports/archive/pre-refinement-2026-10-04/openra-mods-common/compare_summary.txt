@@ -1,0 +1,47 @@
+=== Phase B: G-SI vs Lizard (max CC) ===
+project:       openra-mods-common
+scoring:       docs\_verification\2026-10-03\openra-mods-common\scoring.json
+analyzed_path: benchmarks\OpenRA\OpenRA.Mods.Common
+files: us=1080 liz=1080 matched=1080
+spearman(si vs liz_max_cc): rho=+0.7926  p=0
+
+Top-N Jaccard:
+  top- 5: 0.250
+  top-10: 0.667
+  top-30: 0.500
+
+Common top-30 (양쪽 모두 hotspot, 정렬 = G-SI rank):
+  gsi# 2 liz# 2 | si= 99.9 [E] liz_cc= 98  Widgets/TextFieldWidget.cs
+  gsi# 3 liz# 5 | si= 99.9 [E] liz_cc= 75  Widgets/Logic/Lobby/LobbyLogic.cs
+  gsi# 5 liz# 7 | si= 99.8 [E] liz_cc= 65  Widgets/Logic/AssetBrowserLogic.cs
+  gsi# 6 liz# 9 | si= 99.7 [E] liz_cc= 58  Widgets/Logic/Ingame/IngameChatLogic.cs
+  gsi# 7 liz# 4 | si= 99.6 [E] liz_cc= 75  MapGenerator/Terraformer.cs
+  gsi# 8 liz# 1 | si= 99.6 [E] liz_cc=117  MapGenerator/TilingPath.cs
+  gsi# 9 liz# 3 | si= 99.5 [E] liz_cc= 76  Traits/World/ClassicMapGenerator.cs
+  gsi#10 liz# 6 | si= 99.5 [E] liz_cc= 70  UpdateRules/Rules/20230225/ExplicitSequenceFilenames.cs
+  gsi#11 liz#12 | si= 99.3 [E] liz_cc= 49  Widgets/ScrollableLineGraphWidget.cs
+  gsi#12 liz#26 | si= 99.3 [E] liz_cc= 32  Traits/Air/Aircraft.cs
+
+G-SI 단독 top-30 (Lizard top-30 에는 없음 — Phase B 정성 분석 후보):
+  gsi# 1 liz#665 | si=100.0 [E] liz_cc=  4  Traits/Conditions/ConditionalTrait.cs
+  gsi# 4 liz#240 | si= 99.8 [E] liz_cc= 10  Traits/BotModules/Squads/States/GroundStates.cs
+  gsi#14 liz#223 | si= 99.2 [E] liz_cc= 10  Traits/BotModules/Squads/States/AirStates.cs
+  gsi#18 liz#33 | si= 99.0 [E] liz_cc= 30  Widgets/Logic/ReplayBrowserLogic.cs
+  gsi#20 liz#31 | si= 98.9 [E] liz_cc= 30  Widgets/Logic/LoadGameBrowserLogic.cs
+  gsi#21 liz#36 | si= 98.8 [E] liz_cc= 27  Widgets/ViewportControllerWidget.cs
+  gsi#24 liz#62 | si= 98.6 [E] liz_cc= 21  Widgets/ProductionPaletteWidget.cs
+  gsi#28 liz#152 | si= 98.5 [E] liz_cc= 13  Traits/Mobile.cs
+  gsi#29 liz#484 | si= 98.4 [E] liz_cc=  6  Traits/BotModules/Squads/States/ProtectionStates.cs
+  gsi#30 liz#37 | si= 98.4 [E] liz_cc= 26  Activities/Resupply.cs
+
+Lizard 단독 top-30 (G-SI top-30 에는 없음):
+  gsi#58 liz#11 | si= 97.0 [E] liz_cc= 51  MapGenerator/MatrixUtils.cs
+  gsi#33 liz#15 | si= 98.2 [E] liz_cc= 40  Traits/BotModules/McvExpansionManagerBotModule.cs
+  gsi#32 liz#21 | si= 98.3 [E] liz_cc= 36  Activities/Air/FlyAttack.cs
+  gsi#38 liz#22 | si= 97.9 [E] liz_cc= 35  Widgets/Logic/Ingame/CommandBarLogic.cs
+  gsi#49 liz#23 | si= 97.4 [E] liz_cc= 33  Widgets/Logic/MapChooserLogic.cs
+  gsi#68 liz#24 | si= 96.5 [E] liz_cc= 33  UtilityCommands/FuzzMapGeneratorCommand.cs
+  gsi#103 liz#25 | si= 94.8 [E] liz_cc= 32  Widgets/Logic/Ingame/ProductionTooltipLogic.cs
+  gsi#203 liz#27 | si= 90.1 [E] liz_cc= 32  Util.cs
+  gsi#35 liz#29 | si= 98.0 [E] liz_cc= 31  Traits/BotModules/HarvesterBotModule.cs
+  gsi#106 liz#30 | si= 94.7 [E] liz_cc= 30  Traits/Player/DeveloperMode.cs

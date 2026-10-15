@@ -1,0 +1,2064 @@
+{
+  "schema_version": "si-0.2",
+  "weights": {
+    "cc": 0.3,
+    "coupling": 0.25,
+    "dependency_cycle": 0.15,
+    "global_state": 0.15,
+    "game_loop_centrality": 0.15
+  },
+  "ranking_info": {
+    "scope": "within_analysis_relative",
+    "informative": true,
+    "unique_raw_scores": 35,
+    "largest_tie_fraction": 0.14583333333333334,
+    "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. 동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다."
+  },
+  "project_health": {
+    "score": 35.69,
+    "grade": "B",
+    "avg_si": 52.56,
+    "risk_ratio": 0.4167,
+    "cycle_count": 0,
+    "avg_coupling": 1.08,
+    "components": {
+      "avg_si": 52.5608,
+      "risk_score": 41.6667,
+      "cycle_score": 0.0,
+      "coupling_norm": 10.8333,
+      "weight_avg_si": 0.45,
+      "weight_risk_ratio": 0.25,
+      "weight_cycle_score": 0.15,
+      "weight_coupling_norm": 0.15
+    }
+  },
+  "total_classes": 48,
+  "total_methods": 119,
+  "grade_distribution": {
+    "A": 5,
+    "B": 11,
+    "C": 12,
+    "D": 10,
+    "E": 10
+  },
+  "class_scores": [
+    {
+      "fqn": "OpenRA.Mods.D2k.Activities.AttackState",
+      "name": "AttackState",
+      "file_path": "Activities/SwallowActor.cs",
+      "module": "Activities",
+      "start_line": 24,
+      "end_line": 24,
+      "kind": "enum",
+      "loc": 0,
+      "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.6609,
+        "coupling": -1.7857,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.8191,
+      "si": 4.17,
+      "grade": "A",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Activities.SwallowActor",
+      "name": "SwallowActor",
+      "file_path": "Activities/SwallowActor.cs",
+      "module": "Activities",
+      "start_line": 26,
+      "end_line": 165,
+      "kind": "class",
+      "loc": 119,
+      "raw": {
+        "cc": 12.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.987,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.8352,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.6795,
+      "si": 89.58,
+      "grade": "E",
+      "top_reasons": [
+        "cc",
+        "game_loop_centrality"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Graphics.D2kSpriteSequenceLoader",
+      "name": "D2kSpriteSequenceLoader",
+      "file_path": "Graphics/D2kSpriteSequence.cs",
+      "module": "Graphics",
+      "start_line": 19,
+      "end_line": 26,
+      "kind": "class",
+      "loc": 5,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Graphics.D2kSpriteSequence",
+      "name": "D2kSpriteSequence",
+      "file_path": "Graphics/D2kSpriteSequence.cs",
+      "module": "Graphics",
+      "start_line": 28,
+      "end_line": 115,
+      "kind": "class",
+      "loc": 70,
+      "raw": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.4377,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.0456,
+      "si": 56.25,
+      "grade": "C",
+      "top_reasons": [
+        "cc",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Graphics.SonicBlastRenderable",
+      "name": "SonicBlastRenderable",
+      "file_path": "Graphics/SonicBlastRenderable.cs",
+      "module": "Graphics",
+      "start_line": 19,
+      "end_line": 63,
+      "kind": "class",
+      "loc": 28,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.1308,
+      "si": 70.83,
+      "grade": "D",
+      "top_reasons": [
+        "game_loop_centrality",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader",
+      "name": "D2kSoundResourcesLoader",
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "module": "PackageLoaders",
+      "start_line": 20,
+      "end_line": 93,
+      "kind": "class",
+      "loc": 11,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.1193,
+      "si": 68.75,
+      "grade": "D",
+      "top_reasons": [
+        "coupling",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader.D2kSoundResources",
+      "name": "D2kSoundResources",
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "module": "PackageLoaders",
+      "start_line": 22,
+      "end_line": 80,
+      "kind": "class",
+      "loc": 44,
+      "raw": {
+        "cc": 3.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.2489,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.1605,
+      "si": 72.92,
+      "grade": "D",
+      "top_reasons": [
+        "coupling",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader.D2kSoundResources.Entry",
+      "name": "Entry",
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "module": "PackageLoaders",
+      "start_line": 24,
+      "end_line": 24,
+      "kind": "record struct",
+      "loc": 0,
+      "raw": {
+        "cc": 0.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.6609,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.0051,
+      "si": 58.33,
+      "grade": "C",
+      "top_reasons": [
+        "coupling",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Projectiles.SonicBlastInfo",
+      "name": "SonicBlastInfo",
+      "file_path": "Projectiles/SonicBlast.cs",
+      "module": "Projectiles",
+      "start_line": 25,
+      "end_line": 62,
+      "kind": "class",
+      "loc": 4,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3022,
+      "si": 43.75,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Projectiles.SonicBlast",
+      "name": "SonicBlast",
+      "file_path": "Projectiles/SonicBlast.cs",
+      "module": "Projectiles",
+      "start_line": 64,
+      "end_line": 156,
+      "kind": "class",
+      "loc": 74,
+      "raw": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.0257,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": 1.8958,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.9622,
+      "si": 95.83,
+      "grade": "E",
+      "top_reasons": [
+        "coupling",
+        "game_loop_centrality"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader",
+      "name": "R8Loader",
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "module": "SpriteLoaders",
+      "start_line": 23,
+      "end_line": 228,
+      "kind": "class",
+      "loc": 45,
+      "raw": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.0257,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": 0.8352,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.4338,
+      "si": 83.33,
+      "grade": "E",
+      "top_reasons": [
+        "coupling",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader.RemappableFrame",
+      "name": "RemappableFrame",
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "module": "SpriteLoaders",
+      "start_line": 25,
+      "end_line": 98,
+      "kind": "class",
+      "loc": 11,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.411,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.2067,
+      "si": 50.0,
+      "grade": "C",
+      "top_reasons": [
+        "global_state",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader.Frame",
+      "name": "Frame",
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "module": "SpriteLoaders",
+      "start_line": 100,
+      "end_line": 180,
+      "kind": "class",
+      "loc": 69,
+      "raw": {
+        "cc": 10.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 10.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.7124,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.0133,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.1004,
+      "si": 64.58,
+      "grade": "D",
+      "top_reasons": [
+        "cc",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreviewInfo",
+      "name": "D2kActorPreviewPlaceBuildingPreviewInfo",
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "module": "Traits",
+      "start_line": 24,
+      "end_line": 57,
+      "kind": "class",
+      "loc": 8,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.0463,
+      "si": 60.42,
+      "grade": "D",
+      "top_reasons": [
+        "coupling",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreview",
+      "name": "D2kActorPreviewPlaceBuildingPreview",
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "module": "Traits",
+      "start_line": 59,
+      "end_line": 59,
+      "kind": "class",
+      "loc": 0,
+      "raw": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.6609,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.407,
+      "si": 10.42,
+      "grade": "A",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreviewPreview",
+      "name": "D2kActorPreviewPlaceBuildingPreviewPreview",
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "module": "Traits",
+      "start_line": 61,
+      "end_line": 123,
+      "kind": "class",
+      "loc": 53,
+      "raw": {
+        "cc": 11.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 11.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.8497,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.1735,
+      "si": 77.08,
+      "grade": "D",
+      "top_reasons": [
+        "cc",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Buildings.D2kBuildingInfo",
+      "name": "D2kBuildingInfo",
+      "file_path": "Traits/Buildings/D2kBuilding.cs",
+      "module": "Traits",
+      "start_line": 22,
+      "end_line": 50,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Buildings.D2kBuilding",
+      "name": "D2kBuilding",
+      "file_path": "Traits/Buildings/D2kBuilding.cs",
+      "module": "Traits",
+      "start_line": 52,
+      "end_line": 161,
+      "kind": "class",
+      "loc": 93,
+      "raw": {
+        "cc": 24.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 24.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 2.6349,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 1.0147,
+      "si": 97.92,
+      "grade": "E",
+      "top_reasons": [
+        "cc",
+        "game_loop_centrality"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.HarvesterInsuranceInfo",
+      "name": "HarvesterInsuranceInfo",
+      "file_path": "Traits/Player/HarvesterInsurance.cs",
+      "module": "Traits",
+      "start_line": 18,
+      "end_line": 23,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.334,
+      "si": 31.25,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.HarvesterInsurance",
+      "name": "HarvesterInsurance",
+      "file_path": "Traits/Player/HarvesterInsurance.cs",
+      "module": "Traits",
+      "start_line": 25,
+      "end_line": 48,
+      "kind": "class",
+      "loc": 18,
+      "raw": {
+        "cc": 4.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.1116,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.2422,
+      "si": 47.92,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithCrumbleOverlayInfo",
+      "name": "WithCrumbleOverlayInfo",
+      "file_path": "Traits/Render/WithCrumbleOverlay.cs",
+      "module": "Traits",
+      "start_line": 19,
+      "end_line": 34,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithCrumbleOverlay",
+      "name": "WithCrumbleOverlay",
+      "file_path": "Traits/Render/WithCrumbleOverlay.cs",
+      "module": "Traits",
+      "start_line": 36,
+      "end_line": 67,
+      "kind": "class",
+      "loc": 23,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3246,
+      "si": 33.33,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithDeliveryOverlayInfo",
+      "name": "WithDeliveryOverlayInfo",
+      "file_path": "Traits/Render/WithDeliveryOverlay.cs",
+      "module": "Traits",
+      "start_line": 19,
+      "end_line": 37,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.334,
+      "si": 31.25,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Render.WithDeliveryOverlay",
+      "name": "WithDeliveryOverlay",
+      "file_path": "Traits/Render/WithDeliveryOverlay.cs",
+      "module": "Traits",
+      "start_line": 39,
+      "end_line": 71,
+      "kind": "class",
+      "loc": 25,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.2928,
+      "si": 45.83,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.BuildableTerrainLayerInfo",
+      "name": "BuildableTerrainLayerInfo",
+      "file_path": "Traits/World/BuildableTerrainLayer.cs",
+      "module": "Traits",
+      "start_line": 23,
+      "end_line": 34,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3022,
+      "si": 43.75,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.BuildableTerrainLayer",
+      "name": "BuildableTerrainLayer",
+      "file_path": "Traits/World/BuildableTerrainLayer.cs",
+      "module": "Traits",
+      "start_line": 36,
+      "end_line": 154,
+      "kind": "class",
+      "loc": 91,
+      "raw": {
+        "cc": 5.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.0257,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.232,
+      "si": 79.17,
+      "grade": "D",
+      "top_reasons": [
+        "game_loop_centrality",
+        "cc"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGeneratorInfo",
+      "name": "D2kMapGeneratorInfo",
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "module": "Traits",
+      "start_line": 26,
+      "end_line": 648,
+      "kind": "class",
+      "loc": 409,
+      "raw": {
+        "cc": 33.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 33.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 3.8709,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": 5.5018,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 2.2873,
+      "si": 100.0,
+      "grade": "E",
+      "top_reasons": [
+        "cc",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGeneratorInfo.Parameters",
+      "name": "Parameters",
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "module": "Traits",
+      "start_line": 74,
+      "end_line": 243,
+      "kind": "class",
+      "loc": 32,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.1973,
+      "si": 52.08,
+      "grade": "C",
+      "top_reasons": [
+        "global_state",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGenerator",
+      "name": "D2kMapGenerator",
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "module": "Traits",
+      "start_line": 650,
+      "end_line": 663,
+      "kind": "class",
+      "loc": 6,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRendererInfo",
+      "name": "D2kResourceRendererInfo",
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "module": "Traits",
+      "start_line": 20,
+      "end_line": 25,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3022,
+      "si": 43.75,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRenderer",
+      "name": "D2kResourceRenderer",
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "module": "Traits",
+      "start_line": 27,
+      "end_line": 169,
+      "kind": "class",
+      "loc": 69,
+      "raw": {
+        "cc": 9.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.575,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.0911,
+      "si": 62.5,
+      "grade": "D",
+      "top_reasons": [
+        "cc",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.D2kResourceRenderer.ClearSides",
+      "name": "ClearSides",
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "module": "Traits",
+      "start_line": 29,
+      "end_line": 44,
+      "kind": "enum",
+      "loc": 0,
+      "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.6609,
+        "coupling": -1.7857,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.8191,
+      "si": 4.17,
+      "grade": "A",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SonicBlastRendererInfo",
+      "name": "SonicBlastRendererInfo",
+      "file_path": "Traits/World/SonicBlastRenderer.cs",
+      "module": "Traits",
+      "start_line": 18,
+      "end_line": 29,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3022,
+      "si": 43.75,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SonicBlastRenderer",
+      "name": "SonicBlastRenderer",
+      "file_path": "Traits/World/SonicBlastRenderer.cs",
+      "module": "Traits",
+      "start_line": 31,
+      "end_line": 94,
+      "kind": "class",
+      "loc": 48,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.172,
+      "si": 75.0,
+      "grade": "D",
+      "top_reasons": [
+        "game_loop_centrality",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallowInfo",
+      "name": "AttackSwallowInfo",
+      "file_path": "Traits/AttackSwallow.cs",
+      "module": "Traits",
+      "start_line": 23,
+      "end_line": 45,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallow",
+      "name": "AttackSwallow",
+      "file_path": "Traits/AttackSwallow.cs",
+      "module": "Traits",
+      "start_line": 47,
+      "end_line": 98,
+      "kind": "class",
+      "loc": 27,
+      "raw": {
+        "cc": 5.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.0257,
+        "coupling": 3.1593,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.655,
+      "si": 87.5,
+      "grade": "E",
+      "top_reasons": [
+        "coupling",
+        "cc"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttackSwallow.SwallowTarget",
+      "name": "SwallowTarget",
+      "file_path": "Traits/AttackSwallow.cs",
+      "module": "Traits",
+      "start_line": 81,
+      "end_line": 97,
+      "kind": "class",
+      "loc": 12,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttractsWormsInfo",
+      "name": "AttractsWormsInfo",
+      "file_path": "Traits/AttractsWorms.cs",
+      "module": "Traits",
+      "start_line": 17,
+      "end_line": 33,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.6496,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3658,
+      "si": 25.0,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.AttractsWorms",
+      "name": "AttractsWorms",
+      "file_path": "Traits/AttractsWorms.cs",
+      "module": "Traits",
+      "start_line": 35,
+      "end_line": 80,
+      "kind": "class",
+      "loc": 38,
+      "raw": {
+        "cc": 3.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.2489,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.1561,
+      "si": 54.17,
+      "grade": "C",
+      "top_reasons": [
+        "global_state",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SandwormInfo",
+      "name": "SandwormInfo",
+      "file_path": "Traits/Sandworm.cs",
+      "module": "Traits",
+      "start_line": 20,
+      "end_line": 35,
+      "kind": "class",
+      "loc": 1,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.334,
+      "si": 31.25,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.Sandworm",
+      "name": "Sandworm",
+      "file_path": "Traits/Sandworm.cs",
+      "module": "Traits",
+      "start_line": 37,
+      "end_line": 149,
+      "kind": "class",
+      "loc": 93,
+      "raw": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.4377,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 1.2594,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.5783,
+      "si": 85.42,
+      "grade": "E",
+      "top_reasons": [
+        "game_loop_centrality",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SpiceBloomInfo",
+      "name": "SpiceBloomInfo",
+      "file_path": "Traits/SpiceBloom.cs",
+      "module": "Traits",
+      "start_line": 26,
+      "end_line": 65,
+      "kind": "class",
+      "loc": 8,
+      "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.5236,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.3022,
+      "si": 43.75,
+      "grade": "C",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.SpiceBloom",
+      "name": "SpiceBloom",
+      "file_path": "Traits/SpiceBloom.cs",
+      "module": "Traits",
+      "start_line": 67,
+      "end_line": 168,
+      "kind": "class",
+      "loc": 87,
+      "raw": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.1631,
+        "coupling": 1.511,
+        "dependency_cycle": 0.0,
+        "global_state": -0.2254,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.6853,
+      "si": 91.67,
+      "grade": "E",
+      "top_reasons": [
+        "coupling",
+        "game_loop_centrality"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Traits.FireProjectilesEffect",
+      "name": "FireProjectilesEffect",
+      "file_path": "Traits/SpiceBloom.cs",
+      "module": "Traits",
+      "start_line": 170,
+      "end_line": 212,
+      "kind": "class",
+      "loc": 35,
+      "raw": {
+        "cc": 7.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.3004,
+        "coupling": -0.1374,
+        "dependency_cycle": 0.0,
+        "global_state": 0.1989,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.378,
+      "si": 81.25,
+      "grade": "E",
+      "top_reasons": [
+        "game_loop_centrality",
+        "cc"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.UtilityCommands.D2kMapImporter",
+      "name": "D2kMapImporter",
+      "file_path": "UtilityCommands/D2kMapImporter.cs",
+      "module": "UtilityCommands",
+      "start_line": 21,
+      "end_line": 529,
+      "kind": "class",
+      "loc": 242,
+      "raw": {
+        "cc": 33.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 33.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 3.8709,
+        "coupling": -1.7857,
+        "dependency_cycle": 0.0,
+        "global_state": 1.2594,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": 0.8268,
+      "si": 93.75,
+      "grade": "E",
+      "top_reasons": [
+        "cc",
+        "global_state"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.UtilityCommands.ImportD2kMapCommand",
+      "name": "ImportD2kMapCommand",
+      "file_path": "UtilityCommands/ImportD2kMapCommand.cs",
+      "module": "UtilityCommands",
+      "start_line": 18,
+      "end_line": 43,
+      "kind": "class",
+      "loc": 20,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 6.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 6.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": -1.7857,
+        "dependency_cycle": 0.0,
+        "global_state": 0.6231,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.5458,
+      "si": 8.33,
+      "grade": "A",
+      "top_reasons": [
+        "global_state",
+        "dependency_cycle"
+      ]
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Warheads.DamagesConcreteWarhead",
+      "name": "DamagesConcreteWarhead",
+      "file_path": "Warheads/DamagesConcreteWarhead.cs",
+      "module": "Warheads",
+      "start_line": 19,
+      "end_line": 37,
+      "kind": "class",
+      "loc": 11,
+      "raw": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -0.3862,
+        "coupling": -1.7857,
+        "dependency_cycle": 0.0,
+        "global_state": -0.4375,
+        "game_loop_centrality": -0.513
+      },
+      "raw_score": -0.7049,
+      "si": 6.25,
+      "grade": "A",
+      "top_reasons": []
+    },
+    {
+      "fqn": "OpenRA.Mods.D2k.Widgets.Logic.PurchaseWidgetLogic",
+      "name": "PurchaseWidgetLogic",
+      "file_path": "Widgets/Logic/PurchaseWidgetLogic.cs",
+      "module": "Widgets",
+      "start_line": 20,
+      "end_line": 83,
+      "kind": "class",
+      "loc": 50,
+      "raw": {
+        "cc": 8.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 1.0
+      },
+      "z": {
+        "cc": 0.4377,
+        "coupling": -1.7857,
+        "dependency_cycle": 0.0,
+        "global_state": 0.8352,
+        "game_loop_centrality": 1.9494
+      },
+      "raw_score": 0.1026,
+      "si": 66.67,
+      "grade": "D",
+      "top_reasons": [
+        "game_loop_centrality",
+        "cc"
+      ]
+    }
+  ],
+  "file_scores": [
+    {
+      "file_path": "Activities/SwallowActor.cs",
+      "module": "Activities",
+      "si_mean": 46.88,
+      "si_max": 89.58,
+      "grade": "E",
+      "class_count": 2
+    },
+    {
+      "file_path": "Graphics/D2kSpriteSequence.cs",
+      "module": "Graphics",
+      "si_mean": 40.62,
+      "si_max": 56.25,
+      "grade": "C",
+      "class_count": 2
+    },
+    {
+      "file_path": "Graphics/SonicBlastRenderable.cs",
+      "module": "Graphics",
+      "si_mean": 70.83,
+      "si_max": 70.83,
+      "grade": "D",
+      "class_count": 1
+    },
+    {
+      "file_path": "PackageLoaders/D2kSoundResources.cs",
+      "module": "PackageLoaders",
+      "si_mean": 66.67,
+      "si_max": 72.92,
+      "grade": "D",
+      "class_count": 3
+    },
+    {
+      "file_path": "Projectiles/SonicBlast.cs",
+      "module": "Projectiles",
+      "si_mean": 69.79,
+      "si_max": 95.83,
+      "grade": "E",
+      "class_count": 2
+    },
+    {
+      "file_path": "SpriteLoaders/R8Loader.cs",
+      "module": "SpriteLoaders",
+      "si_mean": 65.97,
+      "si_max": 83.33,
+      "grade": "E",
+      "class_count": 3
+    },
+    {
+      "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
+      "module": "Traits",
+      "si_mean": 49.31,
+      "si_max": 77.08,
+      "grade": "D",
+      "class_count": 3
+    },
+    {
+      "file_path": "Traits/Buildings/D2kBuilding.cs",
+      "module": "Traits",
+      "si_mean": 61.46,
+      "si_max": 97.92,
+      "grade": "E",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/Player/HarvesterInsurance.cs",
+      "module": "Traits",
+      "si_mean": 39.58,
+      "si_max": 47.92,
+      "grade": "C",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/Render/WithCrumbleOverlay.cs",
+      "module": "Traits",
+      "si_mean": 29.17,
+      "si_max": 33.33,
+      "grade": "B",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/Render/WithDeliveryOverlay.cs",
+      "module": "Traits",
+      "si_mean": 38.54,
+      "si_max": 45.83,
+      "grade": "C",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/World/BuildableTerrainLayer.cs",
+      "module": "Traits",
+      "si_mean": 61.46,
+      "si_max": 79.17,
+      "grade": "D",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/World/D2kMapGenerator.cs",
+      "module": "Traits",
+      "si_mean": 59.03,
+      "si_max": 100.0,
+      "grade": "E",
+      "class_count": 3
+    },
+    {
+      "file_path": "Traits/World/D2kResourceRenderer.cs",
+      "module": "Traits",
+      "si_mean": 36.81,
+      "si_max": 62.5,
+      "grade": "D",
+      "class_count": 3
+    },
+    {
+      "file_path": "Traits/World/SonicBlastRenderer.cs",
+      "module": "Traits",
+      "si_mean": 59.38,
+      "si_max": 75.0,
+      "grade": "D",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/AttackSwallow.cs",
+      "module": "Traits",
+      "si_mean": 45.83,
+      "si_max": 87.5,
+      "grade": "E",
+      "class_count": 3
+    },
+    {
+      "file_path": "Traits/AttractsWorms.cs",
+      "module": "Traits",
+      "si_mean": 39.58,
+      "si_max": 54.17,
+      "grade": "C",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/Sandworm.cs",
+      "module": "Traits",
+      "si_mean": 58.33,
+      "si_max": 85.42,
+      "grade": "E",
+      "class_count": 2
+    },
+    {
+      "file_path": "Traits/SpiceBloom.cs",
+      "module": "Traits",
+      "si_mean": 72.22,
+      "si_max": 91.67,
+      "grade": "E",
+      "class_count": 3
+    },
+    {
+      "file_path": "UtilityCommands/D2kMapImporter.cs",
+      "module": "UtilityCommands",
+      "si_mean": 93.75,
+      "si_max": 93.75,
+      "grade": "E",
+      "class_count": 1
+    },
+    {
+      "file_path": "UtilityCommands/ImportD2kMapCommand.cs",
+      "module": "UtilityCommands",
+      "si_mean": 8.33,
+      "si_max": 8.33,
+      "grade": "A",
+      "class_count": 1
+    },
+    {
+      "file_path": "Warheads/DamagesConcreteWarhead.cs",
+      "module": "Warheads",
+      "si_mean": 6.25,
+      "si_max": 6.25,
+      "grade": "A",
+      "class_count": 1
+    },
+    {
+      "file_path": "Widgets/Logic/PurchaseWidgetLogic.cs",
+      "module": "Widgets",
+      "si_mean": 66.67,
+      "si_max": 66.67,
+      "grade": "D",
+      "class_count": 1
+    }
+  ],
+  "module_scores": [
+    {
+      "module": "Activities",
+      "si_mean": 89.58,
+      "si_max": 89.58,
+      "grade": "E",
+      "class_count": 2,
+      "file_count": 1
+    },
+    {
+      "module": "Graphics",
+      "si_mean": 63.54,
+      "si_max": 70.83,
+      "grade": "D",
+      "class_count": 3,
+      "file_count": 2
+    },
+    {
+      "module": "PackageLoaders",
+      "si_mean": 72.92,
+      "si_max": 72.92,
+      "grade": "D",
+      "class_count": 3,
+      "file_count": 1
+    },
+    {
+      "module": "Projectiles",
+      "si_mean": 95.83,
+      "si_max": 95.83,
+      "grade": "E",
+      "class_count": 2,
+      "file_count": 1
+    },
+    {
+      "module": "SpriteLoaders",
+      "si_mean": 83.33,
+      "si_max": 83.33,
+      "grade": "E",
+      "class_count": 3,
+      "file_count": 1
+    },
+    {
+      "module": "Traits",
+      "si_mean": 72.12,
+      "si_max": 100.0,
+      "grade": "D",
+      "class_count": 31,
+      "file_count": 13
+    },
+    {
+      "module": "UtilityCommands",
+      "si_mean": 51.04,
+      "si_max": 93.75,
+      "grade": "C",
+      "class_count": 2,
+      "file_count": 2
+    },
+    {
+      "module": "Warheads",
+      "si_mean": 6.25,
+      "si_max": 6.25,
+      "grade": "A",
+      "class_count": 1,
+      "file_count": 1
+    },
+    {
+      "module": "Widgets",
+      "si_mean": 66.67,
+      "si_max": 66.67,
+      "grade": "D",
+      "class_count": 1,
+      "file_count": 1
+    }
+  ]
+}

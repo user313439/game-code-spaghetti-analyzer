@@ -8,7 +8,7 @@ G-SI 점수와 파일별 bug-fix 횟수의 Spearman 순위 상관을 계산할 �
 설치가 필요 없다. Windows 콘솔에서의 한글/UTF-8 이슈를 피하기 위해 stdout
 인코딩을 UTF-8로 강제한다.
 
-키워드는 `docs/plan_final_draft.md` §7.1 에 정의된 6종(`fix`, `bug`, `crash`,
+키워드는 `docs/_planning/plan_final_draft.md` §7.1 에 정의된 6종(`fix`, `bug`, `crash`,
 `regression`, `hotfix`, `patch`)을 사용한다. `fix typo`, `fix indent` 등
 사소한 수정은 별도 필터로 제외한다.
 """

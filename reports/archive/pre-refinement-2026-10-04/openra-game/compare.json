@@ -1,0 +1,420 @@
+{
+  "schema_version": "compare-0.1",
+  "project": "openra-game",
+  "scoring_path": "docs\\_verification\\2026-10-03\\openra-game\\scoring.json",
+  "analyzed_path": "benchmarks\\OpenRA\\OpenRA.Game",
+  "files_analyzed_by_us": 226,
+  "files_analyzed_by_lizard": 226,
+  "files_matched": 226,
+  "top_n": 30,
+  "jaccard_topN": {
+    "5": 0.6667,
+    "10": 0.4286,
+    "30": 0.3636
+  },
+  "spearman_si_vs_lizard_cc": 0.6481,
+  "spearman_p": 0.0,
+  "gsi_only_topN": [
+    {
+      "file_path": "Primitives/int2.cs",
+      "rank_gsi": 8,
+      "rank_lizard": 156,
+      "si": 98.65,
+      "grade": "E",
+      "lizard_max_cc": 2,
+      "lizard_nloc": 60
+    },
+    {
+      "file_path": "FieldLoader.cs",
+      "rank_gsi": 9,
+      "rank_lizard": 38,
+      "si": 98.5,
+      "grade": "E",
+      "lizard_max_cc": 10,
+      "lizard_nloc": 746
+    },
+    {
+      "file_path": "Primitives/float2.cs",
+      "rank_gsi": 13,
+      "rank_lizard": 112,
+      "si": 97.9,
+      "grade": "E",
+      "lizard_max_cc": 5,
+      "lizard_nloc": 91
+    },
+    {
+      "file_path": "Renderer.cs",
+      "rank_gsi": 14,
+      "rank_lizard": 49,
+      "si": 97.75,
+      "grade": "E",
+      "lizard_max_cc": 9,
+      "lizard_nloc": 434
+    },
+    {
+      "file_path": "Graphics/WorldRenderer.cs",
+      "rank_gsi": 15,
+      "rank_lizard": 32,
+      "si": 97.6,
+      "grade": "E",
+      "lizard_max_cc": 11,
+      "lizard_nloc": 337
+    },
+    {
+      "file_path": "MPos.cs",
+      "rank_gsi": 16,
+      "rank_lizard": 181,
+      "si": 97.46,
+      "grade": "E",
+      "lizard_max_cc": 2,
+      "lizard_nloc": 53
+    },
+    {
+      "file_path": "Traits/TraitsInterfaces.cs",
+      "rank_gsi": 17,
+      "rank_lizard": 184,
+      "si": 97.31,
+      "grade": "E",
+      "lizard_max_cc": 2,
+      "lizard_nloc": 518
+    },
+    {
+      "file_path": "CPos.cs",
+      "rank_gsi": 18,
+      "rank_lizard": 135,
+      "si": 97.16,
+      "grade": "E",
+      "lizard_max_cc": 4,
+      "lizard_nloc": 98
+    },
+    {
+      "file_path": "Graphics/CursorManager.cs",
+      "rank_gsi": 19,
+      "rank_lizard": 68,
+      "si": 97.01,
+      "grade": "E",
+      "lizard_max_cc": 8,
+      "lizard_nloc": 229
+    },
+    {
+      "file_path": "World.cs",
+      "rank_gsi": 20,
+      "rank_lizard": 51,
+      "si": 96.86,
+      "grade": "E",
+      "lizard_max_cc": 9,
+      "lizard_nloc": 468
+    },
+    {
+      "file_path": "Network/SyncReport.cs",
+      "rank_gsi": 21,
+      "rank_lizard": 52,
+      "si": 96.71,
+      "grade": "E",
+      "lizard_max_cc": 8,
+      "lizard_nloc": 271
+    },
+    {
+      "file_path": "Graphics/Viewport.cs",
+      "rank_gsi": 26,
+      "rank_lizard": 74,
+      "si": 95.81,
+      "grade": "E",
+      "lizard_max_cc": 7,
+      "lizard_nloc": 325
+    },
+    {
+      "file_path": "Primitives/Rectangle.cs",
+      "rank_gsi": 28,
+      "rank_lizard": 127,
+      "si": 95.36,
+      "grade": "E",
+      "lizard_max_cc": 4,
+      "lizard_nloc": 98
+    },
+    {
+      "file_path": "ModData.cs",
+      "rank_gsi": 29,
+      "rank_lizard": 44,
+      "si": 95.21,
+      "grade": "E",
+      "lizard_max_cc": 9,
+      "lizard_nloc": 185
+    }
+  ],
+  "lizard_only_topN": [
+    {
+      "file_path": "Sound/Sound.cs",
+      "rank_gsi": 31,
+      "rank_lizard": 5,
+      "si": 94.61,
+      "grade": "E",
+      "lizard_max_cc": 38,
+      "lizard_nloc": 385
+    },
+    {
+      "file_path": "Scripting/ScriptTypes.cs",
+      "rank_gsi": 33,
+      "rank_lizard": 10,
+      "si": 94.16,
+      "grade": "E",
+      "lizard_max_cc": 26,
+      "lizard_nloc": 140
+    },
+    {
+      "file_path": "FieldSaver.cs",
+      "rank_gsi": 40,
+      "rank_lizard": 12,
+      "si": 93.11,
+      "grade": "E",
+      "lizard_max_cc": 22,
+      "lizard_nloc": 123
+    },
+    {
+      "file_path": "Network/Connection.cs",
+      "rank_gsi": 43,
+      "rank_lizard": 15,
+      "si": 92.51,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 296
+    },
+    {
+      "file_path": "Primitives/Polygon.cs",
+      "rank_gsi": 67,
+      "rank_lizard": 17,
+      "si": 88.77,
+      "grade": "E",
+      "lizard_max_cc": 18,
+      "lizard_nloc": 87
+    },
+    {
+      "file_path": "Network/GameServer.cs",
+      "rank_gsi": 35,
+      "rank_lizard": 19,
+      "si": 93.86,
+      "grade": "E",
+      "lizard_max_cc": 17,
+      "lizard_nloc": 166
+    },
+    {
+      "file_path": "Graphics/SpriteRenderer.cs",
+      "rank_gsi": 41,
+      "rank_lizard": 20,
+      "si": 92.96,
+      "grade": "E",
+      "lizard_max_cc": 16,
+      "lizard_nloc": 181
+    },
+    {
+      "file_path": "Primitives/Int32Matrix4x4.cs",
+      "rank_gsi": 207,
+      "rank_lizard": 21,
+      "si": 49.7,
+      "grade": "C",
+      "lizard_max_cc": 16,
+      "lizard_nloc": 51
+    },
+    {
+      "file_path": "Graphics/Util.cs",
+      "rank_gsi": 58,
+      "rank_lizard": 22,
+      "si": 90.27,
+      "grade": "E",
+      "lizard_max_cc": 14,
+      "lizard_nloc": 261
+    },
+    {
+      "file_path": "Activities/Activity.cs",
+      "rank_gsi": 46,
+      "rank_lizard": 26,
+      "si": 92.07,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 177
+    },
+    {
+      "file_path": "Map/TerrainInfo.cs",
+      "rank_gsi": 105,
+      "rank_lizard": 27,
+      "si": 82.04,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 130
+    },
+    {
+      "file_path": "WAngle.cs",
+      "rank_gsi": 59,
+      "rank_lizard": 28,
+      "si": 90.12,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 208
+    },
+    {
+      "file_path": "Graphics/SpriteFont.cs",
+      "rank_gsi": 37,
+      "rank_lizard": 29,
+      "si": 93.56,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 323
+    },
+    {
+      "file_path": "Graphics/TerrainSpriteLayer.cs",
+      "rank_gsi": 47,
+      "rank_lizard": 30,
+      "si": 91.92,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 197
+    }
+  ],
+  "common_topN": [
+    {
+      "file_path": "Server/Server.cs",
+      "rank_gsi": 1,
+      "rank_lizard": 3,
+      "si": 100.0,
+      "grade": "E",
+      "lizard_max_cc": 50,
+      "lizard_nloc": 1227
+    },
+    {
+      "file_path": "Network/UnitOrders.cs",
+      "rank_gsi": 2,
+      "rank_lizard": 1,
+      "si": 99.85,
+      "grade": "E",
+      "lizard_max_cc": 88,
+      "lizard_nloc": 330
+    },
+    {
+      "file_path": "Game.cs",
+      "rank_gsi": 3,
+      "rank_lizard": 8,
+      "si": 99.7,
+      "grade": "E",
+      "lizard_max_cc": 26,
+      "lizard_nloc": 729
+    },
+    {
+      "file_path": "MiniYaml.cs",
+      "rank_gsi": 4,
+      "rank_lizard": 2,
+      "si": 99.55,
+      "grade": "E",
+      "lizard_max_cc": 54,
+      "lizard_nloc": 615
+    },
+    {
+      "file_path": "Support/VariableExpression.cs",
+      "rank_gsi": 5,
+      "rank_lizard": 4,
+      "si": 99.4,
+      "grade": "E",
+      "lizard_max_cc": 44,
+      "lizard_nloc": 809
+    },
+    {
+      "file_path": "Map/Map.cs",
+      "rank_gsi": 6,
+      "rank_lizard": 16,
+      "si": 99.1,
+      "grade": "E",
+      "lizard_max_cc": 19,
+      "lizard_nloc": 1063
+    },
+    {
+      "file_path": "Map/MapPreview.cs",
+      "rank_gsi": 7,
+      "rank_lizard": 14,
+      "si": 98.95,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 608
+    },
+    {
+      "file_path": "Network/Order.cs",
+      "rank_gsi": 10,
+      "rank_lizard": 7,
+      "si": 98.35,
+      "grade": "E",
+      "lizard_max_cc": 30,
+      "lizard_nloc": 374
+    },
+    {
+      "file_path": "Server/VoteKickTracker.cs",
+      "rank_gsi": 11,
+      "rank_lizard": 6,
+      "si": 98.2,
+      "grade": "E",
+      "lizard_max_cc": 32,
+      "lizard_nloc": 165
+    },
+    {
+      "file_path": "FileFormats/Png.cs",
+      "rank_gsi": 12,
+      "rank_lizard": 9,
+      "si": 98.05,
+      "grade": "E",
+      "lizard_max_cc": 26,
+      "lizard_nloc": 460
+    },
+    {
+      "file_path": "Server/Connection.cs",
+      "rank_gsi": 22,
+      "rank_lizard": 11,
+      "si": 96.56,
+      "grade": "E",
+      "lizard_max_cc": 22,
+      "lizard_nloc": 167
+    },
+    {
+      "file_path": "Actor.cs",
+      "rank_gsi": 23,
+      "rank_lizard": 13,
+      "si": 96.41,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 455
+    },
+    {
+      "file_path": "ExternalMods.cs",
+      "rank_gsi": 24,
+      "rank_lizard": 24,
+      "si": 96.26,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 216
+    },
+    {
+      "file_path": "Traits/Player/Shroud.cs",
+      "rank_gsi": 25,
+      "rank_lizard": 18,
+      "si": 95.96,
+      "grade": "E",
+      "lizard_max_cc": 17,
+      "lizard_nloc": 399
+    },
+    {
+      "file_path": "Player.cs",
+      "rank_gsi": 27,
+      "rank_lizard": 23,
+      "si": 95.66,
+      "grade": "E",
+      "lizard_max_cc": 13,
+      "lizard_nloc": 240
+    },
+    {
+      "file_path": "Map/MapCache.cs",
+      "rank_gsi": 30,
+      "rank_lizard": 25,
+      "si": 95.06,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 358
+    }
+  ],
+  "notes": []
+}

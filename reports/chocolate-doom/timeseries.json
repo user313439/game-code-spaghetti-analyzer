@@ -1,6 +1,6 @@
 {
   "schema_version": "timeseries-0.1",
-  "project": "Chocolate Doom",
+  "project": "chocolate-doom",
   "repo": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\chocolate-doom",
   "subdir": "src",
   "lang": "c",
@@ -28,7 +28,7 @@
         "E": 13
       },
       "bugfix_commits_since_prev": 0,
-      "analysis_elapsed_ms": 1404
+      "analysis_elapsed_ms": 1304
     },
     {
       "sha": "a653fb6e0cfab8b5bbe71ae7652e1a9af810b065",
@@ -50,7 +50,7 @@
         "E": 20
       },
       "bugfix_commits_since_prev": 127,
-      "analysis_elapsed_ms": 1750
+      "analysis_elapsed_ms": 1622
     },
     {
       "sha": "8089e905e3ce33bfbe8377d71bb6d75f5868edbd",
@@ -72,7 +72,7 @@
         "E": 21
       },
       "bugfix_commits_since_prev": 124,
-      "analysis_elapsed_ms": 1825
+      "analysis_elapsed_ms": 1758
     },
     {
       "sha": "b2a59b3eec1dcc040f58bdd5e88bfed55face2fe",
@@ -94,7 +94,7 @@
         "E": 58
       },
       "bugfix_commits_since_prev": 179,
-      "analysis_elapsed_ms": 6717
+      "analysis_elapsed_ms": 6678
     },
     {
       "sha": "9eab7159e57ac633387066c1d239e651a3c45f4c",
@@ -116,7 +116,7 @@
         "E": 58
       },
       "bugfix_commits_since_prev": 143,
-      "analysis_elapsed_ms": 6743
+      "analysis_elapsed_ms": 6460
     },
     {
       "sha": "2550ff5bd989d5b52eabe32c21d8ded4f29b16f9",
@@ -138,7 +138,7 @@
         "E": 58
       },
       "bugfix_commits_since_prev": 81,
-      "analysis_elapsed_ms": 7242
+      "analysis_elapsed_ms": 6334
     },
     {
       "sha": "cd7cc921f38545a47ed8bc16620ce58c816639e1",
@@ -160,7 +160,7 @@
         "E": 59
       },
       "bugfix_commits_since_prev": 102,
-      "analysis_elapsed_ms": 6540
+      "analysis_elapsed_ms": 6446
     },
     {
       "sha": "c62b634f394e64dd51dec7e6f890496f43a56ade",
@@ -182,7 +182,7 @@
         "E": 60
       },
       "bugfix_commits_since_prev": 84,
-      "analysis_elapsed_ms": 7792
+      "analysis_elapsed_ms": 7004
     }
   ],
   "notes": []

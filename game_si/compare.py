@@ -1,6 +1,6 @@
 """Phase B — 외부 정적 분석 도구(Lizard)와 G-SI hotspot 비교 (W13).
 
-`docs/plan_final_draft.md` §7.2 의 Phase B 핵심 정량 비교를 수행한다. Lizard 는
+`docs/_planning/plan_final_draft.md` §7.2 의 Phase B 핵심 정량 비교를 수행한다. Lizard 는
 C / C++ / C# / Java 등 다양한 언어를 지원하는 경량 정적 분석 도구로, 함수
 단위의 Cyclomatic Complexity 와 LOC, parameter count 를 제공한다.
 
@@ -150,8 +150,8 @@ def run_comparison(
     matched = our_files & liz_files
 
     # rank lists (descending by metric)
-    gsi_ranking = sorted(matched, key=lambda f: -by_file_si[f]["si"])
-    liz_ranking = sorted(matched, key=lambda f: -lizard_stats[f].max_cc)
+    gsi_ranking = sorted(matched, key=lambda f: (-by_file_si[f]["si"], f))
+    liz_ranking = sorted(matched, key=lambda f: (-lizard_stats[f].max_cc, f))
 
     rank_gsi = {f: i + 1 for i, f in enumerate(gsi_ranking)}
     rank_liz = {f: i + 1 for i, f in enumerate(liz_ranking)}
@@ -202,7 +202,7 @@ def run_comparison(
         key=lambda f: rank_gsi[f],
     )
 
-    notes: list[str] = []
+    notes: list[str] = ["동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다."]
     if len(matched) < min(len(our_files), len(liz_files)):
         notes.append(
             f"Lizard 가 분석한 {len(liz_files)} 파일 중 {len(matched)} 만 G-SI 분석 파일과 매칭. "

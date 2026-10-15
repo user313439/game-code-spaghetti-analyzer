@@ -1,0 +1,431 @@
+{
+  "schema_version": "compare-0.1",
+  "project": "chocolate-doom",
+  "scoring_path": "docs\\_verification\\2026-10-03\\chocolate-doom\\scoring.json",
+  "analyzed_path": "benchmarks\\chocolate-doom\\src",
+  "files_analyzed_by_us": 296,
+  "files_analyzed_by_lizard": 475,
+  "files_matched": 291,
+  "top_n": 30,
+  "jaccard_topN": {
+    "5": 0.1111,
+    "10": 0.1111,
+    "30": 0.3333
+  },
+  "spearman_si_vs_lizard_cc": 0.7082,
+  "spearman_p": 0.0,
+  "gsi_only_topN": [
+    {
+      "file_path": "i_system.c",
+      "rank_gsi": 1,
+      "rank_lizard": 159,
+      "si": 100.0,
+      "grade": "E",
+      "lizard_max_cc": 12,
+      "lizard_nloc": 251
+    },
+    {
+      "file_path": "m_misc.c",
+      "rank_gsi": 2,
+      "rank_lizard": 173,
+      "si": 99.66,
+      "grade": "E",
+      "lizard_max_cc": 10,
+      "lizard_nloc": 599
+    },
+    {
+      "file_path": "i_video.c",
+      "rank_gsi": 4,
+      "rank_lizard": 72,
+      "si": 98.99,
+      "grade": "E",
+      "lizard_max_cc": 28,
+      "lizard_nloc": 871
+    },
+    {
+      "file_path": "z_zone.c",
+      "rank_gsi": 5,
+      "rank_lizard": 161,
+      "si": 98.65,
+      "grade": "E",
+      "lizard_max_cc": 11,
+      "lizard_nloc": 317
+    },
+    {
+      "file_path": "m_argv.c",
+      "rank_gsi": 6,
+      "rank_lizard": 75,
+      "si": 98.31,
+      "grade": "E",
+      "lizard_max_cc": 26,
+      "lizard_nloc": 361
+    },
+    {
+      "file_path": "w_wad.c",
+      "rank_gsi": 7,
+      "rank_lizard": 148,
+      "si": 97.97,
+      "grade": "E",
+      "lizard_max_cc": 13,
+      "lizard_nloc": 360
+    },
+    {
+      "file_path": "v_video.c",
+      "rank_gsi": 8,
+      "rank_lizard": 162,
+      "si": 97.64,
+      "grade": "E",
+      "lizard_max_cc": 11,
+      "lizard_nloc": 667
+    },
+    {
+      "file_path": "d_loop.c",
+      "rank_gsi": 10,
+      "rank_lizard": 106,
+      "si": 96.96,
+      "grade": "E",
+      "lizard_max_cc": 18,
+      "lizard_nloc": 490
+    },
+    {
+      "file_path": "deh_main.c",
+      "rank_gsi": 11,
+      "rank_lizard": 154,
+      "si": 96.62,
+      "grade": "E",
+      "lizard_max_cc": 13,
+      "lizard_nloc": 294
+    },
+    {
+      "file_path": "doom/st_stuff.c",
+      "rank_gsi": 17,
+      "rank_lizard": 36,
+      "si": 94.59,
+      "grade": "E",
+      "lizard_max_cc": 51,
+      "lizard_nloc": 815
+    },
+    {
+      "file_path": "net_server.c",
+      "rank_gsi": 18,
+      "rank_lizard": 81,
+      "si": 94.26,
+      "grade": "E",
+      "lizard_max_cc": 24,
+      "lizard_nloc": 1340
+    },
+    {
+      "file_path": "net_client.c",
+      "rank_gsi": 19,
+      "rank_lizard": 136,
+      "si": 93.92,
+      "grade": "E",
+      "lizard_max_cc": 15,
+      "lizard_nloc": 753
+    },
+    {
+      "file_path": "deh_str.c",
+      "rank_gsi": 22,
+      "rank_lizard": 95,
+      "si": 92.91,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 264
+    },
+    {
+      "file_path": "heretic/d_main.c",
+      "rank_gsi": 23,
+      "rank_lizard": 55,
+      "si": 92.57,
+      "grade": "E",
+      "lizard_max_cc": 34,
+      "lizard_nloc": 674
+    },
+    {
+      "file_path": "i_joystick.c",
+      "rank_gsi": 29,
+      "rank_lizard": 114,
+      "si": 90.54,
+      "grade": "E",
+      "lizard_max_cc": 17,
+      "lizard_nloc": 609
+    }
+  ],
+  "lizard_only_topN": [
+    {
+      "file_path": "hexen/mn_menu.c",
+      "rank_gsi": 41,
+      "rank_lizard": 4,
+      "si": 86.49,
+      "grade": "E",
+      "lizard_max_cc": 144,
+      "lizard_nloc": 1504
+    },
+    {
+      "file_path": "heretic/mn_menu.c",
+      "rank_gsi": 34,
+      "rank_lizard": 6,
+      "si": 88.85,
+      "grade": "E",
+      "lizard_max_cc": 136,
+      "lizard_nloc": 1405
+    },
+    {
+      "file_path": "strife/m_menu.c",
+      "rank_gsi": 43,
+      "rank_lizard": 7,
+      "si": 85.81,
+      "grade": "E",
+      "lizard_max_cc": 121,
+      "lizard_nloc": 1585
+    },
+    {
+      "file_path": "doom/m_menu.c",
+      "rank_gsi": 48,
+      "rank_lizard": 11,
+      "si": 84.12,
+      "grade": "E",
+      "lizard_max_cc": 112,
+      "lizard_nloc": 1529
+    },
+    {
+      "file_path": "doom/p_inter.c",
+      "rank_gsi": 31,
+      "rank_lizard": 13,
+      "si": 89.86,
+      "grade": "E",
+      "lizard_max_cc": 100,
+      "lizard_nloc": 651
+    },
+    {
+      "file_path": "doom/p_spec.c",
+      "rank_gsi": 65,
+      "rank_lizard": 17,
+      "si": 78.38,
+      "grade": "D",
+      "lizard_max_cc": 94,
+      "lizard_nloc": 928
+    },
+    {
+      "file_path": "hexen/p_user.c",
+      "rank_gsi": 56,
+      "rank_lizard": 19,
+      "si": 81.42,
+      "grade": "E",
+      "lizard_max_cc": 88,
+      "lizard_nloc": 1375
+    },
+    {
+      "file_path": "heretic/p_inter.c",
+      "rank_gsi": 35,
+      "rank_lizard": 21,
+      "si": 88.51,
+      "grade": "E",
+      "lizard_max_cc": 85,
+      "lizard_nloc": 1144
+    },
+    {
+      "file_path": "hexen/p_mobj.c",
+      "rank_gsi": 64,
+      "rank_lizard": 22,
+      "si": 78.72,
+      "grade": "D",
+      "lizard_max_cc": 82,
+      "lizard_nloc": 1867
+    },
+    {
+      "file_path": "heretic/p_switch.c",
+      "rank_gsi": 37,
+      "rank_lizard": 23,
+      "si": 87.84,
+      "grade": "E",
+      "lizard_max_cc": 81,
+      "lizard_nloc": 293
+    },
+    {
+      "file_path": "strife/p_doors.c",
+      "rank_gsi": 39,
+      "rank_lizard": 24,
+      "si": 87.16,
+      "grade": "E",
+      "lizard_max_cc": 75,
+      "lizard_nloc": 991
+    },
+    {
+      "file_path": "heretic/p_spec.c",
+      "rank_gsi": 69,
+      "rank_lizard": 25,
+      "si": 77.03,
+      "grade": "D",
+      "lizard_max_cc": 63,
+      "lizard_nloc": 989
+    },
+    {
+      "file_path": "heretic/r_segs.c",
+      "rank_gsi": 51,
+      "rank_lizard": 28,
+      "si": 83.11,
+      "grade": "E",
+      "lizard_max_cc": 59,
+      "lizard_nloc": 455
+    },
+    {
+      "file_path": "doom/r_segs.c",
+      "rank_gsi": 44,
+      "rank_lizard": 29,
+      "si": 85.47,
+      "grade": "E",
+      "lizard_max_cc": 59,
+      "lizard_nloc": 501
+    },
+    {
+      "file_path": "strife/r_segs.c",
+      "rank_gsi": 45,
+      "rank_lizard": 30,
+      "si": 85.47,
+      "grade": "E",
+      "lizard_max_cc": 59,
+      "lizard_nloc": 506
+    }
+  ],
+  "common_topN": [
+    {
+      "file_path": "strife/p_switch.c",
+      "rank_gsi": 3,
+      "rank_lizard": 1,
+      "si": 99.32,
+      "grade": "E",
+      "lizard_max_cc": 210,
+      "lizard_nloc": 770
+    },
+    {
+      "file_path": "heretic/g_game.c",
+      "rank_gsi": 9,
+      "rank_lizard": 5,
+      "si": 97.3,
+      "grade": "E",
+      "lizard_max_cc": 143,
+      "lizard_nloc": 1591
+    },
+    {
+      "file_path": "strife/d_main.c",
+      "rank_gsi": 12,
+      "rank_lizard": 26,
+      "si": 96.28,
+      "grade": "E",
+      "lizard_max_cc": 60,
+      "lizard_nloc": 1199
+    },
+    {
+      "file_path": "doom/g_game.c",
+      "rank_gsi": 13,
+      "rank_lizard": 18,
+      "si": 95.95,
+      "grade": "E",
+      "lizard_max_cc": 90,
+      "lizard_nloc": 1661
+    },
+    {
+      "file_path": "doom/d_main.c",
+      "rank_gsi": 14,
+      "rank_lizard": 27,
+      "si": 95.61,
+      "grade": "E",
+      "lizard_max_cc": 60,
+      "lizard_nloc": 1204
+    },
+    {
+      "file_path": "hexen/g_game.c",
+      "rank_gsi": 15,
+      "rank_lizard": 3,
+      "si": 95.27,
+      "grade": "E",
+      "lizard_max_cc": 149,
+      "lizard_nloc": 1594
+    },
+    {
+      "file_path": "strife/g_game.c",
+      "rank_gsi": 16,
+      "rank_lizard": 12,
+      "si": 94.93,
+      "grade": "E",
+      "lizard_max_cc": 109,
+      "lizard_nloc": 1488
+    },
+    {
+      "file_path": "strife/p_dialog.c",
+      "rank_gsi": 20,
+      "rank_lizard": 20,
+      "si": 93.58,
+      "grade": "E",
+      "lizard_max_cc": 86,
+      "lizard_nloc": 880
+    },
+    {
+      "file_path": "doom/p_switch.c",
+      "rank_gsi": 21,
+      "rank_lizard": 9,
+      "si": 93.24,
+      "grade": "E",
+      "lizard_max_cc": 117,
+      "lizard_nloc": 418
+    },
+    {
+      "file_path": "hexen/p_map.c",
+      "rank_gsi": 24,
+      "rank_lizard": 10,
+      "si": 92.23,
+      "grade": "E",
+      "lizard_max_cc": 113,
+      "lizard_nloc": 1575
+    },
+    {
+      "file_path": "strife/p_inter.c",
+      "rank_gsi": 25,
+      "rank_lizard": 15,
+      "si": 91.89,
+      "grade": "E",
+      "lizard_max_cc": 98,
+      "lizard_nloc": 901
+    },
+    {
+      "file_path": "strife/p_spec.c",
+      "rank_gsi": 26,
+      "rank_lizard": 2,
+      "si": 91.55,
+      "grade": "E",
+      "lizard_max_cc": 161,
+      "lizard_nloc": 1193
+    },
+    {
+      "file_path": "hexen/p_inter.c",
+      "rank_gsi": 27,
+      "rank_lizard": 8,
+      "si": 91.22,
+      "grade": "E",
+      "lizard_max_cc": 120,
+      "lizard_nloc": 1773
+    },
+    {
+      "file_path": "strife/st_stuff.c",
+      "rank_gsi": 28,
+      "rank_lizard": 16,
+      "si": 90.88,
+      "grade": "E",
+      "lizard_max_cc": 96,
+      "lizard_nloc": 990
+    },
+    {
+      "file_path": "hexen/p_spec.c",
+      "rank_gsi": 30,
+      "rank_lizard": 14,
+      "si": 90.2,
+      "grade": "E",
+      "lizard_max_cc": 99,
+      "lizard_nloc": 810
+    }
+  ],
+  "notes": [
+    "Lizard 가 분석한 475 파일 중 291 만 G-SI 분석 파일과 매칭. 분석기가 본문 .c/.cpp 만 보지만 Lizard 는 헤더도 함께 보는 등 범위 차이일 수 있음."
+  ]
+}

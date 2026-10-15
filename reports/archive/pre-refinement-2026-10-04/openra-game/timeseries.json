@@ -1,0 +1,189 @@
+{
+  "schema_version": "timeseries-0.1",
+  "project": "OpenRA.Game",
+  "repo": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
+  "subdir": "OpenRA.Game",
+  "lang": "csharp",
+  "samples": 8,
+  "since": null,
+  "until": null,
+  "points": [
+    {
+      "sha": "9652434a3e875ff4642fce30c43c36c0bced0048",
+      "short_sha": "9652434a3e",
+      "date": "2010-02-27",
+      "subject": "Make walls work",
+      "health_score": 38.09,
+      "health_grade": "B",
+      "avg_si": 52.03,
+      "risk_ratio": 0.4017,
+      "cycle_count": 0,
+      "classes_total": 361,
+      "methods_total": 1035,
+      "grade_distribution": {
+        "A": 60,
+        "B": 81,
+        "C": 75,
+        "D": 72,
+        "E": 73
+      },
+      "bugfix_commits_since_prev": 0,
+      "analysis_elapsed_ms": 5154
+    },
+    {
+      "sha": "e10074d153caad157b4c4eee686d3af00684c9a7",
+      "short_sha": "e10074d153",
+      "date": "2010-07-20",
+      "subject": "Actually give cash, add cheating message",
+      "health_score": 36.18,
+      "health_grade": "B",
+      "avg_si": 51.88,
+      "risk_ratio": 0.4006,
+      "cycle_count": 0,
+      "classes_total": 312,
+      "methods_total": 958,
+      "grade_distribution": {
+        "A": 49,
+        "B": 63,
+        "C": 75,
+        "D": 62,
+        "E": 63
+      },
+      "bugfix_commits_since_prev": 192,
+      "analysis_elapsed_ms": 6142
+    },
+    {
+      "sha": "51ab2b496903ce1c6ef99513bb5894d11b85509c",
+      "short_sha": "51ab2b4969",
+      "date": "2011-01-30",
+      "subject": "fix targets staying valid across owner changes",
+      "health_score": 40.39,
+      "health_grade": "C",
+      "avg_si": 52.37,
+      "risk_ratio": 0.4013,
+      "cycle_count": 1,
+      "classes_total": 309,
+      "methods_total": 970,
+      "grade_distribution": {
+        "A": 38,
+        "B": 84,
+        "C": 63,
+        "D": 62,
+        "E": 62
+      },
+      "bugfix_commits_since_prev": 189,
+      "analysis_elapsed_ms": 4845
+    },
+    {
+      "sha": "6722db20e36a0398f5b17d37b81ddf94d333ced8",
+      "short_sha": "6722db20e3",
+      "date": "2013-07-28",
+      "subject": "Clean up ViewportScrollControllerWidget.",
+      "health_score": 40.65,
+      "health_grade": "C",
+      "avg_si": 52.31,
+      "risk_ratio": 0.4027,
+      "cycle_count": 1,
+      "classes_total": 370,
+      "methods_total": 1362,
+      "grade_distribution": {
+        "A": 41,
+        "B": 80,
+        "C": 100,
+        "D": 74,
+        "E": 75
+      },
+      "bugfix_commits_since_prev": 199,
+      "analysis_elapsed_ms": 7179
+    },
+    {
+      "sha": "fbe6ab7f4ec19ad7d17bb78cc525d5e27d245bbb",
+      "short_sha": "fbe6ab7f4e",
+      "date": "2014-11-21",
+      "subject": "Fixed yaml bug with leading spaces",
+      "health_score": 44.03,
+      "health_grade": "C",
+      "avg_si": 52.2,
+      "risk_ratio": 0.4013,
+      "cycle_count": 2,
+      "classes_total": 598,
+      "methods_total": 2286,
+      "grade_distribution": {
+        "A": 102,
+        "B": 129,
+        "C": 127,
+        "D": 120,
+        "E": 120
+      },
+      "bugfix_commits_since_prev": 170,
+      "analysis_elapsed_ms": 9614
+    },
+    {
+      "sha": "7caf6362228a475137565ae1010094021258c9f3",
+      "short_sha": "7caf636222",
+      "date": "2016-07-02",
+      "subject": "Port game speed selection to new lobby backend.",
+      "health_score": 45.97,
+      "health_grade": "C",
+      "avg_si": 52.46,
+      "risk_ratio": 0.403,
+      "cycle_count": 3,
+      "classes_total": 598,
+      "methods_total": 2261,
+      "grade_distribution": {
+        "A": 116,
+        "B": 81,
+        "C": 160,
+        "D": 121,
+        "E": 120
+      },
+      "bugfix_commits_since_prev": 112,
+      "analysis_elapsed_ms": 9390
+    },
+    {
+      "sha": "8c3793e7eaed8cee492d92166ff2f3da95b170e3",
+      "short_sha": "8c3793e7ea",
+      "date": "2020-07-12",
+      "subject": "Rename WRot.Zero to WRot.None.",
+      "health_score": 47.76,
+      "health_grade": "C",
+      "avg_si": 52.83,
+      "risk_ratio": 0.4007,
+      "cycle_count": 4,
+      "classes_total": 604,
+      "methods_total": 2406,
+      "grade_distribution": {
+        "A": 115,
+        "B": 101,
+        "C": 146,
+        "D": 121,
+        "E": 121
+      },
+      "bugfix_commits_since_prev": 115,
+      "analysis_elapsed_ms": 10418
+    },
+    {
+      "sha": "805d236b2271c12640f0b8d7a4581a459b40f3f1",
+      "short_sha": "805d236b22",
+      "date": "2026-03-01",
+      "subject": "New Load Game and Save Game UI",
+      "health_score": 48.62,
+      "health_grade": "C",
+      "avg_si": 53.29,
+      "risk_ratio": 0.4132,
+      "cycle_count": 5,
+      "classes_total": 668,
+      "methods_total": 2793,
+      "grade_distribution": {
+        "A": 130,
+        "B": 134,
+        "C": 128,
+        "D": 142,
+        "E": 134
+      },
+      "bugfix_commits_since_prev": 171,
+      "analysis_elapsed_ms": 16525
+    }
+  ],
+  "notes": []
+}

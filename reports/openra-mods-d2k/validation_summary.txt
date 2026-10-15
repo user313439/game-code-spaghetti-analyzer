@@ -1,7 +1,7 @@
 === G-SI Validation (Phase A) ===
 repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
 subdir:         OpenRA.Mods.D2k
-date range:     * .. *
+date range:     * .. 2026-10-03
 commits seen:   579
 bug-fix found:  97
 classes total:  48  (with bug-fix: 47)
@@ -9,12 +9,12 @@ files total:    23  (with bug-fix: 22)
 unmatched changes (non-class files): 78
 
 Class-level Spearman correlation (vs file bug-fix count):
-  si_vs_bugfix            n=  48  rho= +0.1289  p=0.3983
+  si_vs_bugfix            n=  48  rho= +0.1305  p=0.3924
   loc_vs_bugfix           n=  48  rho= +0.0029  p=0.985
   cc_vs_bugfix            n=  48  rho= +0.0250  p=0.8707
 
 File-level Spearman correlation (vs file bug-fix count):
-  file_si_vs_bugfix       n=  23  rho= +0.4915  p=0.01942
+  file_si_vs_bugfix       n=  23  rho= +0.4981  p=0.01754
   file_loc_vs_bugfix      n=  23  rho= +0.4752  p=0.02479
   file_cc_vs_bugfix       n=  23  rho= +0.4858  p=0.02119
 

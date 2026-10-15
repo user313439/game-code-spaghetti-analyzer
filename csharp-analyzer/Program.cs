@@ -41,7 +41,7 @@ internal sealed class Program
                 InputPath = Path.GetFullPath(options.InputPath),
             };
 
-            var files = CollectCSharpFiles(options.InputPath, options.ExcludePatterns);
+            var files = CollectCSharpFiles(options.InputPath, options.ExcludePatterns, result.Errors);
             if (files.Count == 0)
             {
                 Console.Error.WriteLine($"[warn] no .cs files found under: {options.InputPath}");
@@ -59,6 +59,16 @@ internal sealed class Program
                 {
                     var source = File.ReadAllText(file);
                     var tree = CSharpSyntaxTree.ParseText(source, path: file);
+                    var syntaxError = tree.GetDiagnostics().FirstOrDefault(d => d.Severity == DiagnosticSeverity.Error);
+                    if (syntaxError != null)
+                    {
+                        result.Diagnostics.Add(new AnalysisDiagnostic
+                        {
+                            Path = file,
+                            Line = syntaxError.Location.GetLineSpan().StartLinePosition.Line + 1,
+                            Message = $"{syntaxError.Id}: {syntaxError.GetMessage()} — 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다.",
+                        });
+                    }
                     var relative = Path.GetRelativePath(rootForRelative, file).Replace('\\', '/');
                     trees.Add((file, relative, tree));
                 }
@@ -133,7 +143,7 @@ internal sealed class Program
         }
     }
 
-    private static List<string> CollectCSharpFiles(string inputPath, IReadOnlyList<string> excludePatterns)
+    private static List<string> CollectCSharpFiles(string inputPath, IReadOnlyList<string> excludePatterns, List<AnalysisError> errors)
     {
         var collected = new List<string>();
 
@@ -148,29 +158,29 @@ internal sealed class Program
         var defaultExclude = new[] { "bin", "obj", ".git", ".vs", "packages", "node_modules", "TestResults" };
         var allExcludes = defaultExclude.Concat(excludePatterns).ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var file in EnumerateCSharpFiles(inputPath, allExcludes))
+        foreach (var file in EnumerateCSharpFiles(inputPath, allExcludes, errors))
         {
             collected.Add(file);
         }
         return collected;
     }
 
-    private static IEnumerable<string> EnumerateCSharpFiles(string dir, HashSet<string> excludes)
+    private static IEnumerable<string> EnumerateCSharpFiles(string dir, HashSet<string> excludes, List<AnalysisError> errors)
     {
         IEnumerable<string> subdirs;
-        try { subdirs = Directory.EnumerateDirectories(dir); }
-        catch { yield break; }
+        try { subdirs = Directory.GetDirectories(dir); }
+        catch (Exception ex) { errors.Add(new AnalysisError { Path = dir, Message = ex.Message }); yield break; }
 
         foreach (var sub in subdirs)
         {
             var name = Path.GetFileName(sub);
             if (excludes.Contains(name)) continue;
-            foreach (var f in EnumerateCSharpFiles(sub, excludes)) yield return f;
+            foreach (var f in EnumerateCSharpFiles(sub, excludes, errors)) yield return f;
         }
 
         IEnumerable<string> files;
-        try { files = Directory.EnumerateFiles(dir, "*.cs"); }
-        catch { yield break; }
+        try { files = Directory.GetFiles(dir, "*.cs"); }
+        catch (Exception ex) { errors.Add(new AnalysisError { Path = dir, Message = ex.Message }); yield break; }
 
         foreach (var f in files) yield return Path.GetFullPath(f);
     }

@@ -1,6 +1,6 @@
 """W8 Phase A — G-SI ↔ bug-fix 빈도 검증.
 
-`docs/plan_final_draft.md` §7.1 의 Phase A 핵심 정량 검증을 수행한다.
+`docs/_planning/plan_final_draft.md` §7.1 의 Phase A 핵심 정량 검증을 수행한다.
 
 핵심 출력은 다음 세 가지 Spearman 순위 상관계수이다.
 

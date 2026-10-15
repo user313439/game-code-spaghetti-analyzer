@@ -1,0 +1,4160 @@
+{
+  "review_date_kst": "2026-10-07",
+  "run_at_utc": "2026-10-07T14:36:35.423814+00:00",
+  "scope": "Optional canonical analyze backend: implementation-file units, not complete engine/class analysis",
+  "checks": {
+    "fresh_full_suite": true,
+    "existing_sources_except_approved_integration_unchanged": true,
+    "existing_artifacts_unchanged": true,
+    "basic_metrics_scores_status_repeat_unchanged": true,
+    "two_real_runs_equal_excluding_time": true,
+    "benchmark_sources_unchanged": true,
+    "benchmark_revisions_unchanged": true,
+    "active_assert_macro_branches_explained": true,
+    "lizard_runframe_directive_difference_explained": true,
+    "execute_default_count_difference_explained": true,
+    "doom3_static_html": true,
+    "doom3_source_anchors": true,
+    "doom3_registered_scope_and_honest_partial": true,
+    "openrct2_static_html": true,
+    "openrct2_selected_sample_only": true,
+    "openrct2_sample_no_errors": true
+  },
+  "all_required_checks_passed": true,
+  "cases": {
+    "doom3": {
+      "scope": "implementation_file",
+      "summary": {
+        "total_files": 69,
+        "total_classes": 69,
+        "total_methods": 4375,
+        "total_loc": 71964,
+        "elapsed_ms": 203660,
+        "registered_files": 69,
+        "unregistered_files": 2,
+        "compiler_warning_count": 1120,
+        "compiler_error_count": 3845
+      },
+      "state": "partial",
+      "status": {
+        "state": "partial",
+        "language": "cpp",
+        "backend": "clang",
+        "analysis_unit": "implementation_file",
+        "runtime": {
+          "native_version": "clang version 20.1.8",
+          "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+        },
+        "configuration": {
+          "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\doom3-analysis-compile-commands.json",
+          "sha256": "ba15dd848a774931d96c3ea4926b22e57e34cb31ca9eecb0badf9ad0ffa6cc9c",
+          "entries": [
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Actor.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 40,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\AF.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 41,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\AFEntity.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 42,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AAS.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 0,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AAS_debug.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 1,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AAS_pathing.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 2,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AAS_routing.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 3,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AI.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 4,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AI_events.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 5,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AI_pathing.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 6,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\ai\\AI_Vagary.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 7,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\anim\\Anim.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 8,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\anim\\Anim_Blend.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 9,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\anim\\Anim_Import.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 10,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\anim\\Anim_Testmodel.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 11,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\BrittleFracture.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 43,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Camera.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 44,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Entity.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 45,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Fx.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 46,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Game_local.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 47,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Game_network.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 48,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\GameEdit.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 49,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\Class.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 12,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\DebugGraph.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 13,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\Event.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 14,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\SaveGame.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 15,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\SysCmds.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 16,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\SysCvar.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 17,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\TypeInfo.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 18,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\IK.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 50,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Item.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 51,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Light.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 52,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Misc.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 53,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Moveable.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 54,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Mover.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 55,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\MultiplayerGame.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 56,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Clip.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 19,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Force.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 20,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Force_Constant.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 21,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Force_Drag.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 22,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Force_Field.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 23,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Force_Spring.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 24,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 25,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_Actor.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 26,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_AF.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 27,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_Base.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 28,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_Monster.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 29,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_Parametric.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 30,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_Player.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 31,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_RigidBody.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 32,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_Static.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 33,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Physics_StaticMulti.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 34,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\Push.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 35,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Player.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 57,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\PlayerIcon.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 58,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\PlayerView.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 59,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Projectile.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 60,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Pvs.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 61,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\script\\Script_Compiler.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 36,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\script\\Script_Interpreter.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 37,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\script\\Script_Program.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 38,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\script\\Script_Thread.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 39,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\SecurityCamera.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 62,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\SmokeParticles.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 63,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Sound.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 64,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Target.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 65,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Trigger.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 66,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Weapon.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 67,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\WorldSpawn.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++17",
+                "-target",
+                "i686-pc-windows-msvc",
+                "-DGAME_DLL",
+                "-DWIN32",
+                "-D_CRT_NONSTDC_NO_DEPRECATE",
+                "-D_CRT_SECURE_NO_DEPRECATE",
+                "-D_DEBUG",
+                "-D_USE_32BIT_TIME_T",
+                "-D_WINDOWS",
+                "-D__DOOM__"
+              ],
+              "entry_index": 68,
+              "alternatives_count": 0
+            }
+          ],
+          "unregistered_files": [
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\EndLevel.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\gamesys\\Callbacks.cpp"
+          ]
+        },
+        "analyzed_files": 69,
+        "registered_files": 69,
+        "unregistered_files": 2,
+        "failed_files": 0,
+        "syntax_files": 0,
+        "compiler_error_files": 26,
+        "compiler_warning_files": 69,
+        "compiler_error_count": 3845,
+        "compiler_warning_count": 1120,
+        "limitations": [
+          "분석 단위는 구현 파일입니다. 파일 간 의존성은 선택한 구현 파일에서 연결한 심볼을 이용한 근사이며 정확한 클래스 그래프가 아닙니다.",
+          "원시 CC와 파일 간 결합도·순환·전역 상태·게임 루프 지표를 함께 확인하세요. G-SI는 분석 집합 내부의 상대 검토 순위이며 절대 품질이나 결함 확률이 아닙니다.",
+          "compile_commands.json에서 파일별 첫 등록 항목 하나의 설정만 선택합니다. 다른 설정·플랫폼·전처리 분기와 미등록 파일은 분석 범위 밖입니다.",
+          "헤더는 컴파일 문맥에 사용하지만 헤더 안의 함수 본문을 별도 분석 단위로 추출하지 않습니다. 헤더에서 발생한 진단은 원래 구현 파일별로 집계합니다.",
+          "직접 호출은 컴파일 시점 심볼로 연결합니다. 가상 호출의 동적 대상·함수 포인터·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프를 완전히 해석하지 않습니다.",
+          "CC는 range-for와 중첩 람다 본문을 제외하고 default 분기를 포함합니다. 매크로 생성 함수의 원본 스니펫은 제공하지 않습니다.",
+          "호환 libclang으로 분석한 결과이며 원본 빌드 성공을 뜻하지 않습니다. 분석 완료도 전체 코드의 정확한 해석을 보증하지 않습니다."
+        ]
+      },
+      "compiler_error_input_count": 26,
+      "compiler_severity_counts": {
+        "warning": 1120,
+        "error": 3844,
+        "fatal": 1
+      },
+      "macro_generated_definition_count": 284,
+      "runtime": {
+        "native_version": "clang version 20.1.8",
+        "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+      },
+      "database_sha256": "ba15dd848a774931d96c3ea4926b22e57e34cb31ca9eecb0badf9ad0ffa6cc9c",
+      "html_checks": {
+        "javascript_syntax": true,
+        "embedded_count_matches_scoring": true,
+        "file_scope_visible": true,
+        "help_collapsed": true,
+        "scope_and_limits_visible": true
+      },
+      "two_runs": {
+        "runs": [
+          {
+            "exit_code": 3,
+            "command": [
+              "C:\\Users\\dudwl\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+              "-B",
+              "-m",
+              "game_si",
+              "analyze",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game",
+              "--lang",
+              "cpp",
+              "--cpp-backend",
+              "clang",
+              "--compile-commands",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\doom3-analysis-compile-commands.json",
+              "--clang-library",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll",
+              "--out",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\reports\\doom3-gameplay-clang",
+              "--project-name",
+              "DOOM 3 gameplay — Clang 파일 단위 분석",
+              "--top",
+              "5"
+            ],
+            "observed_seconds": 205.906,
+            "output": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\reports\\doom3-gameplay-clang"
+          },
+          {
+            "exit_code": 3,
+            "command": [
+              "C:\\Users\\dudwl\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+              "-B",
+              "-m",
+              "game_si",
+              "analyze",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game",
+              "--lang",
+              "cpp",
+              "--cpp-backend",
+              "clang",
+              "--compile-commands",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\doom3-analysis-compile-commands.json",
+              "--clang-library",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll",
+              "--out",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\doom3-repeat",
+              "--project-name",
+              "DOOM 3 gameplay — Clang 파일 단위 분석",
+              "--top",
+              "5"
+            ],
+            "observed_seconds": 201.281,
+            "output": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\doom3-repeat"
+          }
+        ],
+        "repeat_equal_excluding_time": {
+          "ast.json": true,
+          "metrics.json": true,
+          "scoring.json": true,
+          "analysis_status.json": true
+        }
+      },
+      "artifact_sha256": {
+        "analysis_status.json": "2f2e8f23f80134061cea08076eec53775b4db69cdab07f4d4009c2765e565465",
+        "ast.json": "165927c29a0b8d098e893ca11e4e59c6e5f0f6e13bd6569621d24ecf71872d9b",
+        "index.html": "15bb0c6e52de89530fd4826cd4fe8dd8e78575afa4fb6faede3efd199b27025b",
+        "metrics.json": "c144334fe23195405d355dce426f694344211f8660bfd9a65a2531528f5488b2",
+        "scoring.json": "2bddc8c472a2360f2041240408ab6aef92ea27c99f9af7d4422f42a4685b1057"
+      },
+      "representative_source_audits": [
+        {
+          "file": "Player.cpp",
+          "function": "idPlayer::UpdateFocus",
+          "start_line": 4326,
+          "end_line": 4565,
+          "cc_clang_active_body": 55,
+          "cc_basic": 55,
+          "cc_lizard": 55,
+          "direct_call_count": 99,
+          "indirect_call_count": 4,
+          "direct_call_sample": [
+            {
+              "name": "idVec3",
+              "fully_qualified_name": "idVec3::idVec3",
+              "symbol_id": "c:@S@idVec3@F@idVec3#",
+              "raw_symbol_id": "c:@S@idVec3@F@idVec3#",
+              "kind": "direct",
+              "line": 4337,
+              "dispatch": "direct"
+            },
+            {
+              "name": "idVec3",
+              "fully_qualified_name": "idVec3::idVec3",
+              "symbol_id": "c:@S@idVec3@F@idVec3#",
+              "raw_symbol_id": "c:@S@idVec3@F@idVec3#",
+              "kind": "direct",
+              "line": 4337,
+              "dispatch": "direct"
+            },
+            {
+              "name": "trace_s",
+              "fully_qualified_name": "trace_s::trace_s",
+              "symbol_id": "c:@S@trace_s@F@trace_s#",
+              "raw_symbol_id": "c:@S@trace_s@F@trace_s#",
+              "kind": "direct",
+              "line": 4340,
+              "dispatch": "direct"
+            },
+            {
+              "name": "guiPoint_t",
+              "fully_qualified_name": "guiPoint_t::guiPoint_t",
+              "symbol_id": "c:@SA@guiPoint_t@F@guiPoint_t#",
+              "raw_symbol_id": "c:@SA@guiPoint_t@F@guiPoint_t#",
+              "kind": "direct",
+              "line": 4341,
+              "dispatch": "direct"
+            },
+            {
+              "name": "sysEvent_s",
+              "fully_qualified_name": "sysEvent_s::sysEvent_s",
+              "symbol_id": "c:@S@sysEvent_s@F@sysEvent_s#",
+              "raw_symbol_id": "c:@S@sysEvent_s@F@sysEvent_s#",
+              "kind": "direct",
+              "line": 4343,
+              "dispatch": "direct"
+            }
+          ],
+          "call_source_audits": [
+            {
+              "name": "idPlayer::ClearFocus",
+              "line": 4365,
+              "source_line": "\t\tClearFocus();"
+            },
+            {
+              "name": "idPlayer::ClearFocus",
+              "line": 4412,
+              "source_line": "\t\t\t\t\t\tClearFocus();"
+            },
+            {
+              "name": "idPlayer::ClearFocus",
+              "line": 4426,
+              "source_line": "\t\t\t\t\t\tClearFocus();"
+            },
+            {
+              "name": "idPlayer::ClearFocus",
+              "line": 4439,
+              "source_line": "\t\t\t\t\tClearFocus();"
+            },
+            {
+              "name": "idPlayer::ClearFocus",
+              "line": 4477,
+              "source_line": "\t\t\tClearFocus();"
+            }
+          ],
+          "checks": {
+            "owner": true,
+            "line_range": true,
+            "physical_start_definition": true,
+            "has_symbol_id": true,
+            "direct_calls_have_symbols": true,
+            "named_call_matches_source": true
+          }
+        },
+        {
+          "file": "script/Script_Interpreter.cpp",
+          "function": "idInterpreter::Execute",
+          "start_line": 936,
+          "end_line": 1835,
+          "cc_clang_active_body": 194,
+          "cc_basic": 193,
+          "cc_lizard": 192,
+          "direct_call_count": 571,
+          "indirect_call_count": 0,
+          "direct_call_sample": [
+            {
+              "name": "varEval_s",
+              "fully_qualified_name": "varEval_s::varEval_s",
+              "symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "raw_symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "kind": "direct",
+              "line": 937,
+              "dispatch": "direct"
+            },
+            {
+              "name": "varEval_s",
+              "fully_qualified_name": "varEval_s::varEval_s",
+              "symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "raw_symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "kind": "direct",
+              "line": 938,
+              "dispatch": "direct"
+            },
+            {
+              "name": "varEval_s",
+              "fully_qualified_name": "varEval_s::varEval_s",
+              "symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "raw_symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "kind": "direct",
+              "line": 939,
+              "dispatch": "direct"
+            },
+            {
+              "name": "varEval_s",
+              "fully_qualified_name": "varEval_s::varEval_s",
+              "symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "raw_symbol_id": "c:@U@varEval_s@F@varEval_s#",
+              "kind": "direct",
+              "line": 940,
+              "dispatch": "direct"
+            },
+            {
+              "name": "Error",
+              "fully_qualified_name": "idInterpreter::Error",
+              "symbol_id": "c:@S@idInterpreter@F@Error#*C.#1",
+              "raw_symbol_id": "c:@S@idInterpreter@F@Error#*C.#1",
+              "kind": "direct",
+              "line": 964,
+              "dispatch": "direct"
+            }
+          ],
+          "call_source_audits": [
+            {
+              "name": "idInterpreter::Error",
+              "line": 964,
+              "source_line": "\t\t\tError( \"runaway loop error\" );"
+            },
+            {
+              "name": "idInterpreter::Error",
+              "line": 1829,
+              "source_line": "\t\t\tError( \"Bad opcode %i\", st->op );"
+            }
+          ],
+          "checks": {
+            "owner": true,
+            "line_range": true,
+            "physical_start_definition": true,
+            "has_symbol_id": true,
+            "direct_calls_have_symbols": true,
+            "named_call_matches_source": true
+          }
+        },
+        {
+          "file": "Game_local.cpp",
+          "function": "idGameLocal::RunFrame",
+          "start_line": 2157,
+          "end_line": 2358,
+          "cc_clang_active_body": 38,
+          "cc_basic": 37,
+          "cc_lizard": 39,
+          "direct_call_count": 73,
+          "indirect_call_count": 1,
+          "direct_call_sample": [
+            {
+              "name": "idTimer",
+              "fully_qualified_name": "idTimer::idTimer",
+              "symbol_id": "c:@S@idTimer@F@idTimer#",
+              "raw_symbol_id": "c:@S@idTimer@F@idTimer#",
+              "kind": "direct",
+              "line": 2161,
+              "dispatch": "direct"
+            },
+            {
+              "name": "idTimer",
+              "fully_qualified_name": "idTimer::idTimer",
+              "symbol_id": "c:@S@idTimer@F@idTimer#",
+              "raw_symbol_id": "c:@S@idTimer@F@idTimer#",
+              "kind": "direct",
+              "line": 2161,
+              "dispatch": "direct"
+            },
+            {
+              "name": "idTimer",
+              "fully_qualified_name": "idTimer::idTimer",
+              "symbol_id": "c:@S@idTimer@F@idTimer#",
+              "raw_symbol_id": "c:@S@idTimer@F@idTimer#",
+              "kind": "direct",
+              "line": 2161,
+              "dispatch": "direct"
+            },
+            {
+              "name": "gameReturn_t",
+              "fully_qualified_name": "gameReturn_t::gameReturn_t",
+              "symbol_id": "c:@SA@gameReturn_t@F@gameReturn_t#",
+              "raw_symbol_id": "c:@SA@gameReturn_t@F@gameReturn_t#",
+              "kind": "direct",
+              "line": 2162,
+              "dispatch": "direct"
+            },
+            {
+              "name": "AssertFailed",
+              "fully_qualified_name": "AssertFailed",
+              "symbol_id": "c:@F@AssertFailed#*1C#I#S0_#",
+              "raw_symbol_id": "c:@F@AssertFailed#*1C#I#S0_#",
+              "kind": "direct",
+              "line": 2168,
+              "dispatch": "direct"
+            }
+          ],
+          "call_source_audits": [
+            {
+              "name": "idGameLocal::GetLocalPlayer",
+              "line": 2172,
+              "source_line": "\tplayer = GetLocalPlayer();"
+            }
+          ],
+          "checks": {
+            "owner": true,
+            "line_range": true,
+            "physical_start_definition": true,
+            "has_symbol_id": true,
+            "direct_calls_have_symbols": true,
+            "named_call_matches_source": true
+          }
+        }
+      ],
+      "macro_source_audit": {
+        "physics_generated_methods": [
+          {
+            "name": "CreateInstance",
+            "owner": "idPhysics_Player",
+            "line": 34,
+            "macro_expansions": [
+              {
+                "name": "CLASS_DECLARATION",
+                "invocation_line": 34,
+                "invocation_column": 1,
+                "start_offset": 1609,
+                "end_offset": 1663,
+                "definition_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\../../idlib\\../game\\gamesys/Class.h",
+                "definition_line": 110
+              }
+            ]
+          },
+          {
+            "name": "GetType",
+            "owner": "idPhysics_Player",
+            "line": 34,
+            "macro_expansions": [
+              {
+                "name": "CLASS_DECLARATION",
+                "invocation_line": 34,
+                "invocation_column": 1,
+                "start_offset": 1609,
+                "end_offset": 1663,
+                "definition_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\physics\\../../idlib\\../game\\gamesys/Class.h",
+                "definition_line": 110
+              }
+            ]
+          }
+        ],
+        "invocation_source_line": "CLASS_DECLARATION( idPhysics_Actor, idPhysics_Player )",
+        "macro_owner_invocation_correct": true
+      },
+      "cc_source_traces": {
+        "RunFrame": {
+          "runtime": {
+            "native_version": "clang version 20.1.8",
+            "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+          },
+          "source": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\Game_local.cpp",
+          "native_cc": 38,
+          "native_branches": [
+            {
+              "kind": "IF_STMT",
+              "line": 2167,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2168,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2174,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2174,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2181,
+              "operator": null
+            },
+            {
+              "kind": "DO_STMT",
+              "line": 2184,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2193,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2202,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2205,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2238,
+              "operator": null
+            },
+            {
+              "kind": "FOR_STMT",
+              "line": 2240,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2241,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2241,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2241,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2250,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2256,
+              "operator": null
+            },
+            {
+              "kind": "FOR_STMT",
+              "line": 2258,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2259,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2259,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "FOR_STMT",
+              "line": 2268,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2276,
+              "operator": null
+            },
+            {
+              "kind": "FOR_STMT",
+              "line": 2279,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2281,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2303,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2308,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2318,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2318,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2325,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2325,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2328,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2328,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2334,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2340,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2340,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2345,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 2345,
+              "operator": "LOr"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 2348,
+              "operator": null
+            }
+          ],
+          "native_branch_counts": {
+            "IF_STMT": 22,
+            "BINARY_OPERATOR": 10,
+            "DO_STMT": 1,
+            "FOR_STMT": 4
+          },
+          "lizard_original_cc": 39,
+          "lizard_without_function_directives_cc": 37,
+          "function_directive_lines": [
+            {
+              "line": 2166,
+              "text": "#ifdef _DEBUG"
+            },
+            {
+              "line": 2191,
+              "text": "#ifdef GAME_DLL"
+            }
+          ],
+          "source_modified_on_disk": false
+        },
+        "Execute": {
+          "runtime": {
+            "native_version": "clang version 20.1.8",
+            "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+          },
+          "source": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\DOOM-3\\neo\\game\\script\\Script_Interpreter.cpp",
+          "native_cc": 194,
+          "native_branches": [
+            {
+              "kind": "IF_STMT",
+              "line": 948,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 948,
+              "operator": "LOr"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 952,
+              "operator": null
+            },
+            {
+              "kind": "WHILE_STMT",
+              "line": 960,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 960,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 963,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 971,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 975,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 984,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 987,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 989,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1002,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1006,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1010,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1013,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1024,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1028,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1030,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1035,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1037,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1042,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1046,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1053,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1060,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1065,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1071,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1077,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1083,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1089,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1096,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1103,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1110,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1117,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1124,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1131,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1136,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1144,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1149,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1157,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1164,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1171,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1178,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1185,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1192,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1199,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1203,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1206,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1210,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1213,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1217,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1220,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1224,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1227,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1231,
+              "operator": "LOr"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1234,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1238,
+              "operator": "LOr"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1241,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1245,
+              "operator": "LOr"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1248,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1252,
+              "operator": "LOr"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1255,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1261,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1267,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1273,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1278,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1284,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1290,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1296,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1302,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1309,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1316,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1323,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1324,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1325,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1326,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1333,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1340,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1347,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1352,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1353,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1354,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1355,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1362,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1368,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1374,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1380,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1386,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1392,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1398,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1402,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1410,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1414,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1422,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1426,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1434,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1440,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1446,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1451,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1454,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1460,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1465,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1468,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1474,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1480,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1486,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1492,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1498,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1502,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1504,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1512,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1513,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1519,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1523,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1529,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1534,
+              "operator": null
+            },
+            {
+              "kind": "CONDITIONAL_OPERATOR",
+              "line": 1536,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1539,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1544,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1547,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1554,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1560,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1562,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1562,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1568,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1570,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1570,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1576,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1578,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1578,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1584,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1586,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1586,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1592,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1594,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1594,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1599,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1601,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1601,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1607,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1609,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1609,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1615,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1617,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1617,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1619,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1627,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1629,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1629,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1635,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1637,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1637,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1639,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1647,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1649,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1649,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1655,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1657,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1657,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1663,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1665,
+              "operator": null
+            },
+            {
+              "kind": "BINARY_OPERATOR",
+              "line": 1665,
+              "operator": "LAnd"
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1668,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1674,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1683,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1687,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1694,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1698,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1706,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1710,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1718,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1722,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1730,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1733,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1741,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1745,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1753,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1757,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1765,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1770,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1775,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1781,
+              "operator": null
+            },
+            {
+              "kind": "IF_STMT",
+              "line": 1783,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1790,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1795,
+              "operator": null
+            },
+            {
+              "kind": "CONDITIONAL_OPERATOR",
+              "line": 1797,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1800,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1805,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1809,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1816,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1821,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1826,
+              "operator": null
+            },
+            {
+              "kind": "CASE_STMT",
+              "line": 1827,
+              "operator": null
+            },
+            {
+              "kind": "DEFAULT_STMT",
+              "line": 1828,
+              "operator": null
+            }
+          ],
+          "native_branch_counts": {
+            "IF_STMT": 43,
+            "BINARY_OPERATOR": 23,
+            "WHILE_STMT": 1,
+            "CASE_STMT": 123,
+            "CONDITIONAL_OPERATOR": 2,
+            "DEFAULT_STMT": 1
+          },
+          "lizard_original_cc": 192,
+          "lizard_without_function_directives_cc": 192,
+          "function_directive_lines": [],
+          "source_modified_on_disk": false
+        }
+      }
+    },
+    "openrct2": {
+      "scope": "implementation_file",
+      "summary": {
+        "total_files": 3,
+        "total_classes": 3,
+        "total_methods": 71,
+        "total_loc": 954,
+        "elapsed_ms": 9155,
+        "registered_files": 3,
+        "unregistered_files": 28,
+        "compiler_warning_count": 0,
+        "compiler_error_count": 0
+      },
+      "state": "complete",
+      "status": {
+        "state": "complete",
+        "language": "cpp",
+        "backend": "clang",
+        "analysis_unit": "implementation_file",
+        "runtime": {
+          "native_version": "clang version 20.1.8",
+          "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+        },
+        "configuration": {
+          "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\openrct2-sample-analysis-compile-commands.json",
+          "sha256": "ad1e40c36db2d33dcb0a347aac750b50f0a4e4b16f498b27f6570d4c248ab96a",
+          "entries": [
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Guard.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++20",
+                "-target",
+                "x86_64-pc-windows-msvc",
+                "-DNOMINMAX",
+                "-fno-char8_t",
+                "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+              ],
+              "entry_index": 0,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Path.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++20",
+                "-target",
+                "x86_64-pc-windows-msvc",
+                "-DNOMINMAX",
+                "-fno-char8_t",
+                "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+              ],
+              "entry_index": 1,
+              "alternatives_count": 0
+            },
+            {
+              "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\String.cpp",
+              "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
+              "arguments": [
+                "-x",
+                "c++",
+                "-fms-extensions",
+                "-fms-compatibility",
+                "-fms-compatibility-version=19.44",
+                "-ferror-limit=0",
+                "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+                "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+                "-std=c++20",
+                "-target",
+                "x86_64-pc-windows-msvc",
+                "-DNOMINMAX",
+                "-fno-char8_t",
+                "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+              ],
+              "entry_index": 2,
+              "alternatives_count": 0
+            }
+          ],
+          "unregistered_files": [
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\ChecksumStream.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Compression.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Console.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Crypt.CNG.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Crypt.OpenRCT2.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Crypt.OpenSSL.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Diagnostics.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\File.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\FileScanner.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\FileStream.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\FileWatcher.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Http.Android.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Http.cURL.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Http.WinHttp.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Imaging.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\IStream.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\JobPool.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Json.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\MemoryStream.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\RTL.FriBidi.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\RTL.ICU.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\StreamBuffer.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\StringBuilder.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\StringReader.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\UnitConversion.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\UTF8.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Zip.cpp",
+            "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\ZipAndroid.cpp"
+          ]
+        },
+        "analyzed_files": 3,
+        "registered_files": 3,
+        "unregistered_files": 28,
+        "failed_files": 0,
+        "syntax_files": 0,
+        "compiler_error_files": 0,
+        "compiler_warning_files": 0,
+        "compiler_error_count": 0,
+        "compiler_warning_count": 0,
+        "limitations": [
+          "분석 단위는 구현 파일입니다. 파일 간 의존성은 선택한 구현 파일에서 연결한 심볼을 이용한 근사이며 정확한 클래스 그래프가 아닙니다.",
+          "원시 CC와 파일 간 결합도·순환·전역 상태·게임 루프 지표를 함께 확인하세요. G-SI는 분석 집합 내부의 상대 검토 순위이며 절대 품질이나 결함 확률이 아닙니다.",
+          "compile_commands.json에서 파일별 첫 등록 항목 하나의 설정만 선택합니다. 다른 설정·플랫폼·전처리 분기와 미등록 파일은 분석 범위 밖입니다.",
+          "헤더는 컴파일 문맥에 사용하지만 헤더 안의 함수 본문을 별도 분석 단위로 추출하지 않습니다. 헤더에서 발생한 진단은 원래 구현 파일별로 집계합니다.",
+          "직접 호출은 컴파일 시점 심볼로 연결합니다. 가상 호출의 동적 대상·함수 포인터·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프를 완전히 해석하지 않습니다.",
+          "CC는 range-for와 중첩 람다 본문을 제외하고 default 분기를 포함합니다. 매크로 생성 함수의 원본 스니펫은 제공하지 않습니다.",
+          "호환 libclang으로 분석한 결과이며 원본 빌드 성공을 뜻하지 않습니다. 분석 완료도 전체 코드의 정확한 해석을 보증하지 않습니다."
+        ]
+      },
+      "compiler_error_input_count": 0,
+      "compiler_severity_counts": {},
+      "macro_generated_definition_count": 0,
+      "runtime": {
+        "native_version": "clang version 20.1.8",
+        "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+      },
+      "database_sha256": "ad1e40c36db2d33dcb0a347aac750b50f0a4e4b16f498b27f6570d4c248ab96a",
+      "html_checks": {
+        "javascript_syntax": true,
+        "embedded_count_matches_scoring": true,
+        "file_scope_visible": true,
+        "help_collapsed": true,
+        "scope_and_limits_visible": true
+      },
+      "two_runs": {
+        "runs": [
+          {
+            "exit_code": 0,
+            "command": [
+              "C:\\Users\\dudwl\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+              "-B",
+              "-m",
+              "game_si",
+              "analyze",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core",
+              "--lang",
+              "cpp",
+              "--cpp-backend",
+              "clang",
+              "--compile-commands",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\openrct2-sample-analysis-compile-commands.json",
+              "--clang-library",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll",
+              "--out",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\reports\\openrct2-clang-sample",
+              "--project-name",
+              "OpenRCT2 core — Clang 대표 3파일",
+              "--top",
+              "5"
+            ],
+            "observed_seconds": 9.781,
+            "output": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\reports\\openrct2-clang-sample"
+          },
+          {
+            "exit_code": 0,
+            "command": [
+              "C:\\Users\\dudwl\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+              "-B",
+              "-m",
+              "game_si",
+              "analyze",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core",
+              "--lang",
+              "cpp",
+              "--cpp-backend",
+              "clang",
+              "--compile-commands",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\openrct2-sample-analysis-compile-commands.json",
+              "--clang-library",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll",
+              "--out",
+              "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\openrct2-repeat",
+              "--project-name",
+              "OpenRCT2 core — Clang 대표 3파일",
+              "--top",
+              "5"
+            ],
+            "observed_seconds": 9.391,
+            "output": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\openrct2-repeat"
+          }
+        ],
+        "repeat_equal_excluding_time": {
+          "ast.json": true,
+          "metrics.json": true,
+          "scoring.json": true,
+          "analysis_status.json": true
+        }
+      },
+      "artifact_sha256": {
+        "analysis_status.json": "a6a80642b54a2bffb72aae11253b213e3b548954cbdb86c8e34b0ccf4c5446be",
+        "ast.json": "94ed31cbdb2b0f83524daf61e6f6dbbbdbab0f9e81062ebd1902218b0a4d32ad",
+        "index.html": "f4d6e1909ee783b08bb84e4b3c33db9b07eecfa9491865861f5693020796aabb",
+        "metrics.json": "31213fca86e54c99c5b4cec1186a07346c609323cad85b070db7fed7c406e299",
+        "scoring.json": "0a7b631db6617a061346fee6a73a7f83e9d73c84c0b3640007debf642bdb4796"
+      }
+    }
+  },
+  "basic_regression": {
+    "openra-game": {
+      "exit_code": 0,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "openra-mods-common": {
+      "exit_code": 0,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "openra-mods-cnc": {
+      "exit_code": 0,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "openra-mods-d2k": {
+      "exit_code": 0,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "openra-server": {
+      "exit_code": 0,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "openra-platforms-default": {
+      "exit_code": 0,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "chocolate-doom": {
+      "exit_code": 3,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    },
+    "openrct2": {
+      "exit_code": 3,
+      "equal_to_saved_result": {
+        "metrics.json": true,
+        "scoring.json": true,
+        "analysis_status.json": true
+      }
+    }
+  },
+  "benchmark_commits": {
+    "DOOM-3": "a9c49da5afb18201d31e3f0a429a037e56ce2b9a",
+    "OpenRCT2": "7a2cddeed1304f284829ffb0c91f31557819c51e"
+  },
+  "preservation_counts": {
+    "basic_cases": 8,
+    "existing_artifacts": 47,
+    "existing_sources": 33
+  },
+  "configuration_provenance": {
+    "purpose": "Analysis contexts, not original game build reproduction or exported build database",
+    "doom3": {
+      "scope": "69 game.vcxproj ClCompile inputs",
+      "defines": [
+        "GAME_DLL",
+        "WIN32",
+        "_CRT_NONSTDC_NO_DEPRECATE",
+        "_CRT_SECURE_NO_DEPRECATE",
+        "_DEBUG",
+        "_USE_32BIT_TIME_T",
+        "_WINDOWS",
+        "__DOOM__"
+      ],
+      "standard": "C++17 for modern SDK",
+      "target": "i686-pc-windows-msvc",
+      "origin": [
+        "game.vcxproj",
+        "_Common.props",
+        "_Game.props",
+        "_Debug.props"
+      ],
+      "not_registered": [
+        "game/EndLevel.cpp",
+        "game/gamesys/Callbacks.cpp"
+      ]
+    },
+    "openrct2": {
+      "scope": [
+        "core/Guard.cpp",
+        "core/Path.cpp",
+        "core/String.cpp"
+      ],
+      "standard": "C++20",
+      "origin": [
+        "CMakeLists.txt:303 NOMINMAX",
+        "CMakeLists.txt:295 /Zc:char8_t-; :352 -fno-char8_t",
+        "src/openrct2/CMakeLists.txt:252 thirdparty include"
+      ]
+    },
+    "args": {
+      "doom3": [
+        "-x",
+        "c++",
+        "-fms-extensions",
+        "-fms-compatibility",
+        "-fms-compatibility-version=19.44",
+        "-ferror-limit=0",
+        "-IC:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/include",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/winrt",
+        "-std=c++17",
+        "-target",
+        "i686-pc-windows-msvc",
+        "-DGAME_DLL",
+        "-DWIN32",
+        "-D_CRT_NONSTDC_NO_DEPRECATE",
+        "-D_CRT_SECURE_NO_DEPRECATE",
+        "-D_DEBUG",
+        "-D_USE_32BIT_TIME_T",
+        "-D_WINDOWS",
+        "-D__DOOM__"
+      ],
+      "openrct2": [
+        "-x",
+        "c++",
+        "-fms-extensions",
+        "-fms-compatibility",
+        "-fms-compatibility-version=19.44",
+        "-ferror-limit=0",
+        "-IC:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/include",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um",
+        "-IC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/winrt",
+        "-std=c++20",
+        "-target",
+        "x86_64-pc-windows-msvc",
+        "-DNOMINMAX",
+        "-fno-char8_t",
+        "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+      ]
+    },
+    "source_build_scripts_executed": false,
+    "compiler_guard_disabled": false,
+    "source_macros_removed": false
+  },
+  "tests": {
+    "command": "py -3.10 -B -m pytest tests/ -q -p no:cacheprovider (native optional runtime enabled)",
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 28%]\n........................................................................ [ 56%]\n........................................................................ [ 84%]\n.........................................                                [100%]\n257 passed in 57.28s\n",
+    "stderr": ""
+  },
+  "verification_script_recovery": {
+    "first_attempt": "2026-10-07: 257 tests passed in 60.87s, then audit_functions import failed with ModuleNotFoundError: game_si; script exit 1 before publishing evidence",
+    "cause": "Child pytest received PYTHONPATH, but the verification script process lacked the project root in sys.path",
+    "correction": "Added the project root to this verification script process only and reran every required check"
+  },
+  "source_sha256": {
+    "game_si/clang_config.py": "5711f98a4e302b633ce388c35211da5a0e3a1205d4e23c6e4c0aec9b3ac7a73b",
+    "game_si/clang_analyzer.py": "d03f6d40813fb829a82acdb8a5c872f1ac121cad9a35b8d8f6b860dab428daa4",
+    "game_si/clang_worker.py": "6868489dce0885df4788e00556971b9e1d2ab3603732dac84f233af21ec70364",
+    "game_si/cli.py": "34c6446828de8a68fa0d34bfc6cc1421cd701391205399504557d97ec44cc3ee",
+    "game_si/diagnostics.py": "001213fc946ee004ac98fde2ce547605531338106b173bb81f5c9a1d7750965a",
+    "game_si/report.py": "99151fa96039a9b7b61f6f7484ed3a02d8d8611c81f7b02483b272712d7a086e",
+    "game_si/advisor.py": "94d35abf71edba06e3116cddbf9ae03ae069c2d0032e24c9b3772bfbb2bb20a4",
+    "game_si/metrics.py": "78ba5984f13bb2b7de21a9cb91344fa87acbb85e72da03bd78c40a38e637bb41",
+    "game_si/si.py": "0fab3b9218c1dc76053c1e8a0a1a4e2577c9422fcb64ec2ad4a82654c4cdfb48",
+    "pyproject.toml": "d57c3d8d242dd0d52f7e990454c75a5e321fde963dbce7eed216bbf08821fc66",
+    "tests/test_clang_analysis.py": "30b8c63229ca88b046b9419b16a92e95b217f7d726424b0b00cf3f4a563287b5",
+    "tests/test_clang_integration.py": "3033bd6f6a5cebc91d68a4d37eea6ef057aef5a025326057cb3ca77b314350f5"
+  },
+  "browser_interaction_verified": false,
+  "game_build_or_execution_verified": false,
+  "new_ai_api_calls": 0,
+  "git_writes_performed": false,
+  "native_environment_is_process_only": true
+}

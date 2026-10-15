@@ -1,0 +1,14 @@
+=== G-SI-Full vs G-SI-Static (top hotspot 비교) ===
+project: OpenRA.Mods.Common  window: 12 months
+
+rank  G-SI Full  G-SI Static       Δ      CR  fqn
+   1     100.00       100.00   +0.00       1  OpenRA.Mods.Common.Traits.ConditionalTrait
+   2      99.95        99.95   +0.00       1  OpenRA.Mods.Common.Traits.ConditionalTraitInfo
+   3      99.91        99.86   +0.05      11  OpenRA.Mods.Common.Widgets.Logic.LobbyLogic
+   4      99.86        99.91   -0.05       1  OpenRA.Mods.Common.Widgets.TextFieldWidget
+   5      99.82        99.45   +0.37      14  OpenRA.Mods.Common.MapGenerator.Terraformer
+   6      99.77        99.73   +0.04       0  OpenRA.Mods.Common.Traits.BotModules.Squads.GroundUnitsAttackMoveState
+   7      99.73        99.64   +0.09       0  OpenRA.Mods.Common.Traits.BotModules.Squads.GroundUnitsIdleState
+   8      99.68        99.82   -0.14       2  OpenRA.Mods.Common.Widgets.Logic.AssetBrowserLogic
+   9      99.64        99.68   -0.04       4  OpenRA.Mods.Common.Traits.Aircraft
+  10      99.59        99.50   +0.09       0  OpenRA.Mods.Common.Traits.BotModules.Squads.GroundUnitsAttackState

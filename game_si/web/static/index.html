@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko" data-preview-theme="blue">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eaf2f9">
+  <title>Game Code Spaghetti Analyzer</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <a class="brand" href="#analyze" aria-label="Game Code Spaghetti Analyzer 처음으로">
+      <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><path d="M7 7h14v14H7zM7 7l14 14M21 7L7 21"/><circle cx="7" cy="7" r="3"/><circle cx="21" cy="7" r="3"/><circle cx="7" cy="21" r="3"/><circle cx="21" cy="21" r="3"/></svg>
+      <span>GAME CODE<span class="brand-caption">SPAGHETTI ANALYZER</span></span>
+    </a>
+    <nav aria-label="주 메뉴">
+      <a href="#analyze" class="nav-link is-active" aria-current="page">새 분석</a>
+      <a href="#history" class="nav-link">분석 기록</a>
+      <a href="#examples" class="nav-link">예시 결과</a>
+    </nav>
+    <div class="local-info"><button type="button" class="local-label" aria-describedby="local-tooltip"><span aria-hidden="true"></span> 로컬 분석</button><p id="local-tooltip" class="local-tooltip" role="tooltip">소스 분석은 이 PC에서 처리합니다. GitHub 주소를 선택하면 소스 다운로드에만 인터넷을 사용하며, 외부 분석 서버로 소스를 보내지 않습니다.</p></div>
+  </header>
+
+  <main id="main">
+    <section id="analyze-page" class="page">
+      <div class="hero">
+        <p class="eyebrow">Game Code Spaghetti Analyzer</p>
+        <h1>게임 코드를 더 명확하게.</h1>
+        <p class="hero-copy">복잡하게 얽힌 코드에서 먼저 살펴볼 곳을 찾으세요.<br>게임 소스를 가져오면 구조와 의존성을 분석해 결과로 정리합니다.</p>
+        <div class="language-tags" aria-label="지원 언어"><span>C#</span><span>C</span><span>C++</span><span class="tag-note">소스 코드 정적 분석</span></div>
+      </div>
+
+      <div class="workspace">
+        <div id="notice" class="notice" role="alert" hidden></div>
+        <section class="analysis-card" aria-label="분석할 소스 선택">
+          <div class="card-heading"><div><p class="section-kicker">START A NEW ANALYSIS</p><h2>어떤 코드를 살펴볼까요?</h2></div><span class="step-label" id="step-label">01 / 소스 가져오기</span></div>
+          <form id="import-form" novalidate>
+            <div class="tabs" role="tablist" aria-label="소스 가져오기 방식">
+              <button id="github-tab" class="tab is-active" type="button" role="tab" aria-selected="true" aria-controls="github-panel">GitHub</button>
+              <button id="files-tab" class="tab" type="button" role="tab" aria-selected="false" aria-controls="files-panel" tabindex="-1">내 파일</button>
+            </div>
+            <div id="github-panel" role="tabpanel" aria-labelledby="github-tab">
+              <label for="github-url">공개 GitHub 저장소 주소</label>
+              <div class="url-input"><span aria-hidden="true">↗</span><input id="github-url" type="url" placeholder="github.com/owner/game-project" autocomplete="url" spellcheck="false" aria-describedby="github-help"></div>
+              <p class="field-help" id="github-help">저장소 전체를 가져온 뒤, 분석할 폴더와 언어를 선택합니다.</p>
+            </div>
+            <div id="files-panel" role="tabpanel" aria-labelledby="files-tab" hidden>
+              <div id="drop-zone" class="drop-zone" tabindex="0" role="group" aria-label="ZIP 파일 또는 소스 폴더를 여기에 놓으세요" aria-describedby="upload-help">
+                <svg viewBox="0 0 40 40" class="upload-icon" aria-hidden="true"><path d="M8 13h10l4 4h10v15H8zM20 27V7m-6 6 6-6 6 6"/></svg>
+                <p class="drop-title">ZIP 파일이나 폴더를 여기에 놓으세요</p>
+                <p class="drop-copy">또는 직접 선택해 가져올 수 있어요.</p>
+                <div class="picker-actions"><button id="choose-zip" class="button secondary compact" type="button">ZIP 선택</button><button id="choose-folder" class="button secondary compact" type="button">폴더 선택</button></div>
+              </div>
+              <input id="zip-input" class="visually-hidden" type="file" accept=".zip" aria-label="ZIP 파일 선택" tabindex="-1">
+              <input id="folder-input" class="visually-hidden" type="file" webkitdirectory multiple aria-label="소스 폴더 선택" tabindex="-1">
+              <p class="field-help" id="upload-help">ZIP 최대 100 MiB · 폴더 최대 1 GiB / 20,000개 소스 파일</p>
+              <p id="selected-files" class="selection-summary" aria-live="polite">아직 선택한 파일이 없습니다.</p>
+              <p class="field-help">소스·헤더만 가져오며 빌드 결과, 의존성 폴더, 환경 설정 파일은 제외합니다.</p>
+            </div>
+            <button id="import-button" class="button primary full-width" type="submit" disabled>소스 가져오기 <span aria-hidden="true">→</span></button>
+          </form>
+
+          <section id="scope-panel" class="scope-panel" aria-labelledby="scope-title" hidden>
+            <div class="scope-header"><span class="check-mark" aria-hidden="true">✓</span><div><h3 id="scope-title">분석할 범위를 확인하세요</h3><p id="source-label"></p></div></div>
+            <p id="source-meta" class="field-help"></p>
+            <div id="source-counts" class="source-counts"></div>
+            <div class="field-grid"><div><label for="scope-folder">분석 대상 폴더</label><select id="scope-folder"></select></div><div><label for="scope-language">분석 언어</label><select id="scope-language"><option value="auto">자동 감지</option><option value="csharp">C#</option><option value="c">C</option><option value="cpp">C++</option></select></div></div>
+            <p class="field-help">표시된 파일 수는 가져온 전체 소스 기준입니다. 선택한 폴더와 언어가 실제 분석 범위를 결정합니다.</p>
+            <button id="start-button" class="button primary full-width" type="button">이 범위 분석하기 <span aria-hidden="true">→</span></button>
+            <button id="change-source-button" class="button secondary full-width" type="button">소스 다시 선택하기 <span aria-hidden="true">↶</span></button>
+          </section>
+
+          <section id="job-panel" class="job-panel" aria-labelledby="job-title" aria-live="polite" hidden>
+            <div class="job-heading"><span id="status-symbol" class="status-symbol" aria-hidden="true"></span><div><p class="section-kicker">ANALYSIS STATUS</p><h3 id="job-title"></h3></div><span id="elapsed" class="elapsed"></span></div>
+            <p id="job-stage" class="job-stage"></p>
+            <p id="job-message" class="field-help"></p>
+            <div class="job-actions"><a id="result-link" class="button primary" href="#" hidden>결과 열기 <span aria-hidden="true">↗</span></a><button id="cancel-button" class="button secondary" type="button" hidden>작업 중단</button><button id="reset-button" class="button secondary" type="button" hidden>다른 코드 분석</button></div>
+            <details class="log-details"><summary>진행 로그 보기</summary><pre id="job-log" tabindex="0"></pre></details>
+          </section>
+
+          <details id="advanced-options">
+            <summary>고급 설정 <span>필요할 때만 조정하세요</span></summary>
+            <div class="advanced-content"><div class="field-grid"><div><label for="analysis-language">기본 분석 언어</label><select id="analysis-language"><option value="auto">자동 감지</option><option value="csharp">C#</option><option value="c">C</option><option value="cpp">C++</option></select></div><div><label for="analysis-backend">C / C++ 분석 방식</label><select id="analysis-backend"><option value="tree-sitter">기본 분석 (tree-sitter)</option><option value="clang">컴파일 설정 기반 (Clang)</option></select></div></div>
+              <p class="field-help">C#은 Roslyn으로 분석합니다. 기본 C/C++ 분석은 빌드 설정 없이 코드 구조를 살펴봅니다.</p>
+              <label for="analysis-name">분석 이름 <span class="optional">선택</span></label><input id="analysis-name" type="text" maxlength="100" placeholder="비워 두면 저장소·폴더 이름을 사용합니다">
+              <div id="clang-fields" hidden>
+                <p class="advanced-note">Clang은 기존 빌드 환경이 필요합니다. 브라우저에서 가져온 폴더는 분석용 사본이므로, 원래 소스 폴더와 컴파일 설정 경로를 지정해 기존 헤더·매크로 설정을 사용할 수 있습니다. 경로는 이 앱을 실행한 컴퓨터 기준입니다.</p>
+                <label for="local-path">원래 소스 폴더 경로 <span class="optional">선택</span></label><input id="local-path" type="text" placeholder="C:\Projects\MyGame" spellcheck="false">
+                <label for="local-subdir">원래 폴더 안의 분석 범위</label><input id="local-subdir" type="text" value="." placeholder=". 또는 src/game" spellcheck="false">
+                <p class="field-help">원래 소스 경로를 지정하면 위의 가져온 폴더 선택 대신 이 범위를 사용합니다. 점(.)은 원래 폴더 전체입니다.</p>
+                <label for="compile-commands">compile_commands.json 경로</label><input id="compile-commands" type="text" placeholder="C:\Projects\MyGame\build\compile_commands.json" spellcheck="false">
+                <label for="clang-library">libclang 파일 경로 <span class="optional">자동 탐색 가능 시 생략</span></label><input id="clang-library" type="text" placeholder="C:\LLVM\bin\libclang.dll" spellcheck="false">
+              </div>
+            </div>
+          </details>
+        </section>
+        <div class="workflow-hint"><span>01 <strong>소스 가져오기</strong></span><span aria-hidden="true">→</span><span>02 <strong>범위 확인</strong></span><span aria-hidden="true">→</span><span>03 <strong>결과 살펴보기</strong></span></div>
+      </div>
+      <section class="value-row" aria-label="분석 안내"><div><span class="value-number">01</span><h3>구조를 한눈에</h3><p>코드의 연결 관계와 복잡도를<br>시각화된 결과로 살펴보세요.</p></div><div><span class="value-number">02</span><h3>검토할 곳부터</h3><p>상대적인 지표를 바탕으로<br>먼저 살펴볼 대상을 찾으세요.</p></div><div><span class="value-number">03</span><h3>결과는 따로 보관</h3><p>새 분석은 별도 결과로 저장되어<br>분석 기록에서 다시 열 수 있어요.</p></div></section>
+    </section>
+
+    <section id="history-page" class="page collection-page" hidden><p class="eyebrow">YOUR ANALYSES</p><h1>분석 기록</h1><p class="collection-copy">이 컴퓨터에서 가져오고 분석한 코드를 다시 살펴보세요.</p><div class="history-toolbar"><button id="refresh-history" class="button secondary compact" type="button">새로고침</button><div><label for="history-sort">정렬</label><select id="history-sort"><option value="latest">최신순</option><option value="name">이름순</option><option value="size">소스 용량 큰 순</option></select></div></div><p class="field-help">소스 용량은 가져오기에 성공한 전체 소스·헤더 기준입니다. 확인하지 못한 용량은 ‘미확인’으로 표시합니다.</p><div id="history-notice" class="notice" role="status" hidden><span id="history-message"></span><button id="undo-delete" class="button secondary compact" type="button" hidden>되돌리기</button></div><div id="history-list" class="collection-list" aria-live="polite"></div><details id="deleted-history" class="archive-details"><summary>삭제한 기록</summary><p class="field-help">기록을 복원하면 기존 소스와 결과를 다시 확인할 수 있습니다.</p><div id="deleted-list" class="collection-list" aria-live="polite"></div></details></section>
+    <section id="examples-page" class="page collection-page" hidden><p class="eyebrow">EXPLORE THE RESULTS</p><h1>예시 결과</h1><p class="collection-copy">각 게임 프로젝트에서 실제로 분석한 범위와 결과를 살펴보세요.</p><div id="examples-list" class="collection-list" aria-live="polite"></div><details id="auxiliary-examples" class="archive-details"><summary>OpenRA 보조 모듈</summary><p class="field-help">같은 OpenRA 프로젝트에 속한 추가 모듈의 분석 결과입니다.</p><div id="auxiliary-list" class="collection-list"></div></details></section>
+  </main>
+  <footer class="site-footer"><span>Game Code Spaghetti Analyzer</span><p>정적 분석 지표는 검토 우선순위를 돕습니다. 실제 버그 수나 코드 품질의 절대 평가를 의미하지 않습니다.</p></footer>
+  <dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-description"><form method="dialog"><h2 id="delete-title">분석 기록을 삭제할까요?</h2><p id="delete-name"></p><p id="delete-description">목록에서 숨겨지며 소스와 결과 파일은 보관됩니다. ‘삭제한 기록’에서 다시 복원할 수 있습니다.</p><div class="dialog-actions"><button class="button secondary" value="cancel" autofocus>취소</button><button class="button primary" value="delete">기록 삭제</button></div></form></dialog>
+</body>
+</html>

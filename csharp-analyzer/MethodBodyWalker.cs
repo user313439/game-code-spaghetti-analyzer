@@ -25,6 +25,7 @@ public sealed class MethodBodyWalker : CSharpSyntaxWalker
     }
 
     public HashSet<string> InvokedNames { get; } = new(StringComparer.Ordinal);
+    public HashSet<string> InvokedSymbols { get; } = new(StringComparer.Ordinal);
     public HashSet<string> CreatedTypes { get; } = new(StringComparer.Ordinal);
     public HashSet<string> StaticAccesses { get; } = new(StringComparer.Ordinal);
     public HashSet<string> SingletonAccesses { get; } = new(StringComparer.Ordinal);
@@ -35,10 +36,18 @@ public sealed class MethodBodyWalker : CSharpSyntaxWalker
         // 의 정확한 FQN 을 prefix 로 붙여 같은 프로젝트 내 클래스 그래프 매칭에
         // 활용된다 (예: "Foo.Bar.Method" 형태). 실패 시 syntactic 텍스트.
         var info = _model.GetSymbolInfo(node);
-        ISymbol? sym = info.Symbol ?? info.CandidateSymbols.FirstOrDefault();
+        ISymbol? sym = info.Symbol;
         string callee;
         if (sym is IMethodSymbol method && method.ContainingType != null)
         {
+            // 별도 노드로 추출하지 않는 로컬 함수를 동명 클래스 메서드로 연결하지 않는다.
+            if (method.MethodKind == MethodKind.LocalFunction)
+            {
+                base.VisitInvocationExpression(node);
+                return;
+            }
+            var symbolId = (method.ReducedFrom ?? method).OriginalDefinition.GetDocumentationCommentId();
+            if (symbolId != null) InvokedSymbols.Add(symbolId);
             var typeFqn = AstExtractor.FormatFqn(method.ContainingType);
             callee = string.IsNullOrEmpty(typeFqn) ? method.Name : $"{typeFqn}.{method.Name}";
         }

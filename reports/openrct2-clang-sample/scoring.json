@@ -1,0 +1,335 @@
+{
+  "schema_version": "si-0.2",
+  "weights": {
+    "cc": 0.3,
+    "coupling": 0.25,
+    "dependency_cycle": 0.15,
+    "global_state": 0.15,
+    "game_loop_centrality": 0.15
+  },
+  "ranking_info": {
+    "scope": "within_analysis_relative",
+    "informative": true,
+    "unique_raw_scores": 3,
+    "largest_tie_fraction": 0.3333333333333333,
+    "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. 동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다."
+  },
+  "project_health": {
+    "score": 48.67,
+    "grade": "C",
+    "avg_si": 66.67,
+    "risk_ratio": 0.6667,
+    "cycle_count": 0,
+    "avg_coupling": 1.33,
+    "components": {
+      "avg_si": 66.6667,
+      "risk_score": 66.6667,
+      "cycle_score": 0.0,
+      "coupling_norm": 13.3333,
+      "weight_avg_si": 0.45,
+      "weight_risk_ratio": 0.25,
+      "weight_cycle_score": 0.15,
+      "weight_coupling_norm": 0.15
+    }
+  },
+  "total_classes": 3,
+  "total_methods": 71,
+  "grade_distribution": {
+    "A": 0,
+    "B": 1,
+    "C": 0,
+    "D": 1,
+    "E": 1
+  },
+  "class_scores": [
+    {
+      "fqn": "clang.file.Guard.cpp",
+      "name": "Guard.cpp",
+      "file_path": "Guard.cpp",
+      "module": "(root)",
+      "start_line": 1,
+      "end_line": 178,
+      "kind": "compilation_unit",
+      "loc": 105,
+      "raw": {
+        "cc": 9.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.2124,
+        "coupling": -0.7071,
+        "dependency_cycle": 0.0,
+        "global_state": 1.2675,
+        "game_loop_centrality": 0.0
+      },
+      "raw_score": 0.0771,
+      "si": 66.67,
+      "grade": "D",
+      "top_reasons": [
+        "global_state",
+        "cc"
+      ]
+    },
+    {
+      "fqn": "clang.file.Path.cpp",
+      "name": "Path.cpp",
+      "file_path": "Path.cpp",
+      "module": "(root)",
+      "start_line": 1,
+      "end_line": 147,
+      "kind": "compilation_unit",
+      "loc": 113,
+      "raw": {
+        "cc": 6.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": -1.3171,
+        "coupling": -0.7071,
+        "dependency_cycle": 0.0,
+        "global_state": -1.177,
+        "game_loop_centrality": 0.0
+      },
+      "raw_score": -0.7484,
+      "si": 33.33,
+      "grade": "B",
+      "top_reasons": []
+    },
+    {
+      "fqn": "clang.file.String.cpp",
+      "name": "String.cpp",
+      "file_path": "String.cpp",
+      "module": "(root)",
+      "start_line": 1,
+      "end_line": 872,
+      "kind": "compilation_unit",
+      "loc": 746,
+      "raw": {
+        "cc": 10.75,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 10.75,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 1.1046,
+        "coupling": 1.4142,
+        "dependency_cycle": 0.0,
+        "global_state": -0.0905,
+        "game_loop_centrality": 0.0
+      },
+      "raw_score": 0.6714,
+      "si": 100.0,
+      "grade": "E",
+      "top_reasons": [
+        "coupling",
+        "cc"
+      ]
+    }
+  ],
+  "file_scores": [
+    {
+      "file_path": "Guard.cpp",
+      "module": "(root)",
+      "si_mean": 66.67,
+      "si_max": 66.67,
+      "grade": "D",
+      "class_count": 1
+    },
+    {
+      "file_path": "Path.cpp",
+      "module": "(root)",
+      "si_mean": 33.33,
+      "si_max": 33.33,
+      "grade": "B",
+      "class_count": 1
+    },
+    {
+      "file_path": "String.cpp",
+      "module": "(root)",
+      "si_mean": 100.0,
+      "si_max": 100.0,
+      "grade": "E",
+      "class_count": 1
+    }
+  ],
+  "module_scores": [
+    {
+      "module": "(root)",
+      "si_mean": 66.67,
+      "si_max": 100.0,
+      "grade": "D",
+      "class_count": 3,
+      "file_count": 3
+    }
+  ],
+  "analysis_status": {
+    "state": "complete",
+    "language": "cpp",
+    "backend": "clang",
+    "analysis_unit": "implementation_file",
+    "runtime": {
+      "native_version": "clang version 20.1.8",
+      "library": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-cpp-feasibility\\clang20\\Library\\bin\\libclang-13.dll"
+    },
+    "configuration": {
+      "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-05-clang-integration\\openrct2-sample-analysis-compile-commands.json",
+      "sha256": "ad1e40c36db2d33dcb0a347aac750b50f0a4e4b16f498b27f6570d4c248ab96a",
+      "entries": [
+        {
+          "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Guard.cpp",
+          "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
+          "arguments": [
+            "-x",
+            "c++",
+            "-fms-extensions",
+            "-fms-compatibility",
+            "-fms-compatibility-version=19.44",
+            "-ferror-limit=0",
+            "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+            "-std=c++20",
+            "-target",
+            "x86_64-pc-windows-msvc",
+            "-DNOMINMAX",
+            "-fno-char8_t",
+            "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+          ],
+          "entry_index": 0,
+          "alternatives_count": 0
+        },
+        {
+          "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Path.cpp",
+          "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
+          "arguments": [
+            "-x",
+            "c++",
+            "-fms-extensions",
+            "-fms-compatibility",
+            "-fms-compatibility-version=19.44",
+            "-ferror-limit=0",
+            "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+            "-std=c++20",
+            "-target",
+            "x86_64-pc-windows-msvc",
+            "-DNOMINMAX",
+            "-fno-char8_t",
+            "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+          ],
+          "entry_index": 1,
+          "alternatives_count": 0
+        },
+        {
+          "path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\String.cpp",
+          "directory": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
+          "arguments": [
+            "-x",
+            "c++",
+            "-fms-extensions",
+            "-fms-compatibility",
+            "-fms-compatibility-version=19.44",
+            "-ferror-limit=0",
+            "-IC:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\include",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\shared",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um",
+            "-IC:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\winrt",
+            "-std=c++20",
+            "-target",
+            "x86_64-pc-windows-msvc",
+            "-DNOMINMAX",
+            "-fno-char8_t",
+            "-IC:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\thirdparty"
+          ],
+          "entry_index": 2,
+          "alternatives_count": 0
+        }
+      ],
+      "unregistered_files": [
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\ChecksumStream.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Compression.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Console.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Crypt.CNG.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Crypt.OpenRCT2.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Crypt.OpenSSL.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Diagnostics.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\File.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\FileScanner.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\FileStream.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\FileWatcher.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Http.Android.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Http.cURL.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Http.WinHttp.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Imaging.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\IStream.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\JobPool.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Json.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\MemoryStream.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\RTL.FriBidi.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\RTL.ICU.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\StreamBuffer.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\StringBuilder.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\StringReader.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\UnitConversion.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\UTF8.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\Zip.cpp",
+        "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2\\core\\ZipAndroid.cpp"
+      ]
+    },
+    "analyzed_files": 3,
+    "registered_files": 3,
+    "unregistered_files": 28,
+    "failed_files": 0,
+    "syntax_files": 0,
+    "compiler_error_files": 0,
+    "compiler_warning_files": 0,
+    "compiler_error_count": 0,
+    "compiler_warning_count": 0,
+    "errors": [],
+    "diagnostics": [],
+    "compiler_diagnostics": [],
+    "limitations": [
+      "분석 단위는 구현 파일입니다. 파일 간 의존성은 선택한 구현 파일에서 연결한 심볼을 이용한 근사이며 정확한 클래스 그래프가 아닙니다.",
+      "원시 CC와 파일 간 결합도·순환·전역 상태·게임 루프 지표를 함께 확인하세요. G-SI는 분석 집합 내부의 상대 검토 순위이며 절대 품질이나 결함 확률이 아닙니다.",
+      "compile_commands.json에서 파일별 첫 등록 항목 하나의 설정만 선택합니다. 다른 설정·플랫폼·전처리 분기와 미등록 파일은 분석 범위 밖입니다.",
+      "헤더는 컴파일 문맥에 사용하지만 헤더 안의 함수 본문을 별도 분석 단위로 추출하지 않습니다. 헤더에서 발생한 진단은 원래 구현 파일별로 집계합니다.",
+      "직접 호출은 컴파일 시점 심볼로 연결합니다. 가상 호출의 동적 대상·함수 포인터·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프를 완전히 해석하지 않습니다.",
+      "CC는 range-for와 중첩 람다 본문을 제외하고 default 분기를 포함합니다. 매크로 생성 함수의 원본 스니펫은 제공하지 않습니다.",
+      "호환 libclang으로 분석한 결과이며 원본 빌드 성공을 뜻하지 않습니다. 분석 완료도 전체 코드의 정확한 해석을 보증하지 않습니다."
+    ]
+  }
+}

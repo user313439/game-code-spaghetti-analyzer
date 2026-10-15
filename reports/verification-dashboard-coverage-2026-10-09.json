@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-09",
+  "scope": "Partial file ratio and concise complete-card layout",
+  "reports": [
+    {
+      "case": "chocolate-doom",
+      "state": "partial",
+      "before_sha256": "cd943c7e2a1ac12082094988ae7d5984ec4f455472eaaa96681ce46324d809ce",
+      "after_sha256": "423663e83f5e1dbbb28a11f7bde0a94efc45e5bb06b7fcd38ab037ed8a402024",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "doom3-gameplay",
+      "state": "partial",
+      "before_sha256": "fdcdfde9eedfa64f355eef2f644af2a85556c6ba6115e1f25bba884ec31dc3fe",
+      "after_sha256": "c2692edc67913a61c370fcd31750f1df79872b6be1851b4cf4657ad18478ca46",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "doom3-gameplay-clang",
+      "state": "partial",
+      "before_sha256": "e0597e4bc1fcccfa9f805149c2ed4d59fd9d97a8178dc09b9be0879191ef9ae2",
+      "after_sha256": "c7637053d5aabeff4b06afb1a87674a1f6f928c2e5e60eb62a5a63643ac19994",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-game",
+      "state": "complete",
+      "before_sha256": "a753c74e65614b46d5022121030a7dfcfcc0274ebee8ba24cf45f4181e2a38e1",
+      "after_sha256": "16dda1ffe71678c1d21d1391add7bd33cd10f795859347344a63b22b3f9b5de4",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-mods-cnc",
+      "state": "complete",
+      "before_sha256": "a4e6c91d1d4d32e7bef15fb2955df3ac8b35f8fb17d7fb726d402e642e8803c3",
+      "after_sha256": "653964a0d965474f79038b49be4a749fcbeb871886a57213fb47a07f53c7a444",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-mods-common",
+      "state": "complete",
+      "before_sha256": "85d7126d48c1c3a768f02155315ff667292e05df9a389ee1747d8c86c2c0e81f",
+      "after_sha256": "96286c838dcaa26c4a3a70afac428bc5766477fd2e6e959e6850f933c61e67ca",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-mods-d2k",
+      "state": "complete",
+      "before_sha256": "9f6e9ce253951086bf2cef8171aa45c923b17f54c84dad395e67327befb1904e",
+      "after_sha256": "7d49b4ea14f7745d1a847ff15f8106518eda0095e40577f827497ff0e0a8e6c4",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-platforms-default",
+      "state": "complete",
+      "before_sha256": "f654e77b87268b2061b140e69fe2737760dde35bbe4c7695c3db42ba86167526",
+      "after_sha256": "c8a74766da7894c5e648c6a269334f80c0ab21a21e1feaa095e46ae6f7173d4e",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-server",
+      "state": "complete",
+      "before_sha256": "aa5578005bce4e2c870dfd56cb9f387925776f4e68e47356f71fde8a2cc040bd",
+      "after_sha256": "5ff0c4abf7cef0969106bb48dbc413cea806e1765e4b305fcba99e3799ef5041",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openrct2",
+      "state": "partial",
+      "before_sha256": "4809caf1c01f1ccf70632b8997204f360bd44c06e48dc02799b33fa8d46f970f",
+      "after_sha256": "9cd0fbe9d222f9f1d04aa2fc2d785efeaa2338c7284463daba578de818c56362",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openrct2-clang-sample",
+      "state": "complete",
+      "before_sha256": "4aee8534e24517b578b636ee1d2697cbf3276d0225674629977e69ad3d204462",
+      "after_sha256": "2e572d230ce598c9a42ab6c74945eb092b4cb9a7f785dbc00f86c36ce579e511",
+      "scripts_unchanged": true,
+      "nonpresentation_bytes_unchanged": true,
+      "original_header_and_analysis_time_unchanged": true,
+      "percentage_shown": false,
+      "javascript_checks": 1
+    }
+  ],
+  "source_hashes": {
+    "game_si\\report.py": "5c094bf63f05e7ded89f718ff1cf55be355e9c781c1e310f7df8167c15996cc7",
+    "tests\\test_report_status_ui.py": "489a0f9d82c84e2c1baf9a49aaff4277befee002bbcd51cff1a637d6ea76d997",
+    "tests\\test_analysis_safety.py": "1b1331f89738fb6e166e5a31c17a78745e7b357f800605d8b0173d48be4fcf01"
+  },
+  "preserved_json_count": 168,
+  "all_prior_json_unchanged": true,
+  "root_index_unchanged": true,
+  "archived_html_unchanged": true,
+  "doom3_percentage_basis": "43 selected inputs with results and no compiler error / 69 registered inputs = 62.3%; warnings included, not accuracy or whole-game coverage",
+  "actual_browser_interaction_verified": false,
+  "browser_limitation": "Local file access blocked; no bypass, server or alternate browser surface used.",
+  "git_writes": false,
+  "paid_ai_calls": 0,
+  "real_game_analyses_rerun": false,
+  "test_verification": {
+    "initial_red_failures": 21,
+    "focused_status_ui_passed": 43,
+    "full_native_enabled_suite": {
+      "passed": 300,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_seconds": 51.02
+    },
+    "saved_reports_verified": 11,
+    "source_hashes_match": true,
+    "focused_diff_whitespace_check_passed": true
+  }
+}

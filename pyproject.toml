@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "game-si"
-version = "0.1.0"
+version = "1.0.0rc1"
 description = "Game Spaghetti Index measurement and visualization tool"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -25,8 +25,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+clang = ["clang>=20,<21"]
+web = ["fastapi>=0.143,<1", "uvicorn>=0.30,<1", "python-multipart>=0.0.18,<1", "psutil>=6,<8"]
 dev = [
     "pytest>=8.0",
+    "httpx2>=2,<3",        # 선택형 웹 HTTP 테스트
 ]
 
 [project.scripts]
@@ -35,3 +38,6 @@ game-si = "game_si.cli:main"
 [tool.setuptools.packages.find]
 include = ["game_si*"]
 exclude = ["tests*", "benchmarks*", "reports*", "dashboard*", "csharp-analyzer*"]
+
+[tool.setuptools.package-data]
+"game_si.web" = ["static/*.html", "static/*.css", "static/*.js"]

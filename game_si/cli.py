@@ -16,12 +16,15 @@ Examples
 from __future__ import annotations
 
 import argparse
+import html
 import io
 import json
+import math
 import sys
 from pathlib import Path
 
 from . import __version__
+from .diagnostics import summarize_analysis, validate_analysis_input
 from .analyzer import (
     AnalyzerExecutionError,
     AnalyzerNotFoundError,
@@ -63,7 +66,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # analyze
     p_analyze = sub.add_parser("analyze", help="단일 프로젝트 정적 분석을 수행한다.")
-    p_analyze.add_argument("input", help="분석할 디렉토리, .cs 파일, 또는 .sln 경로")
+    p_analyze.add_argument("input", help="분석할 소스 폴더 또는 C#/C/C++ 소스 파일")
     p_analyze.add_argument(
         "--lang",
         choices=["csharp", "c", "cpp", "auto"],
@@ -103,6 +106,11 @@ def _build_parser() -> argparse.ArgumentParser:
         help="대시보드 헤더에 표시할 프로젝트 이름. 기본값은 입력 디렉토리 이름.",
     )
     p_analyze.add_argument(
+        "--project-subtitle",
+        default=None,
+        help="프로젝트 이름 아래에 표시할 분석 범위 설명. 생략하면 분석 방식에 맞는 부제를 표시한다.",
+    )
+    p_analyze.add_argument(
         "--dashboard-top",
         type=int,
         default=30,
@@ -123,6 +131,14 @@ def _build_parser() -> argparse.ArgumentParser:
         default=None,
         help="--weights custom 시 사용할 JSON 파일 (key=메트릭, value=가중치, sum≈1)",
     )
+    p_analyze.add_argument("--cpp-backend", choices=["tree-sitter", "clang"],
+                           default="tree-sitter", help="C/C++ 분석기 (기본: tree-sitter).")
+    p_analyze.add_argument("--compile-commands", type=Path, default=None,
+                           help="clang 모드에 필요한 compile_commands.json 경로.")
+    p_analyze.add_argument("--clang-library", type=Path, default=None,
+                           help="clang 모드의 호환 libclang DLL/공유 라이브러리 경로.")
+    p_analyze.add_argument("--clang-timeout", type=float, default=None,
+                           help="clang worker 제한 시간, 유한한 양수 초 (기본: 60).")
 
     p_diff = sub.add_parser(
         "diff",
@@ -190,9 +206,19 @@ def _build_parser() -> argparse.ArgumentParser:
         help="케이스 추가. 형식: <name>=<reports/<case> 디렉토리>. 반복 가능.",
     )
     p_tune.add_argument(
+        "--project-group", action="append", default=[], metavar="NAME=PROJECT",
+        help="동일 원본 프로젝트의 모듈 그룹 지정. 기본은 validation.json 저장소 경로.",
+    )
+    p_tune.add_argument(
         "--out", type=Path, default=Path("reports"),
         help="tune.json + tune_summary.txt 출력 디렉토리 (기본: reports/).",
     )
+
+    p_ablate = sub.add_parser("ablate", help="고정 가중치 지표 제거 실험 (가중치 탐색 없음)")
+    p_ablate.add_argument("--case", action="append", required=True, metavar="NAME=DIR")
+    p_ablate.add_argument("--project-group", action="append", default=[], metavar="NAME=PROJECT")
+    p_ablate.add_argument("--top", type=int, default=30)
+    p_ablate.add_argument("--out", type=Path, required=True)
 
     p_full = sub.add_parser(
         "score-full",
@@ -203,6 +229,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_full.add_argument("--repo", type=Path, required=True, help="git 저장소 working tree")
     p_full.add_argument("--subdir", default=None, help="저장소 루트로부터 input 까지의 서브 디렉토리")
     p_full.add_argument("--months", type=int, default=12, help="ChangeRisk time window (개월, 기본 12)")
+    p_full.add_argument("--until", help="ChangeRisk 종료일 (YYYY-MM-DD, UTC). 재현 시 명시 권장.")
     p_full.add_argument("--out", type=Path, required=True, help="결과 출력 디렉토리")
     p_full.add_argument("--project-name", default=None)
     p_full.add_argument("--exclude", action="append", default=[])
@@ -265,45 +292,81 @@ def _build_parser() -> argparse.ArgumentParser:
 def _cmd_analyze(args: argparse.Namespace) -> int:
     input_path = Path(args.input)
     if not input_path.exists():
-        print(f"[error] 입력 경로가 존재하지 않습니다: {input_path}", file=sys.stderr)
-        return 1
+        raise ValueError(f"입력 경로가 존재하지 않습니다: {input_path}")
 
+    weights = None
+    if not args.no_score:
+        try:
+            weights = _resolve_weights(args.weights, args.weights_file)
+        except (ValueError, RuntimeError, OSError) as exc:
+            if args.cpp_backend == 'clang':
+                raise
+            _mark_analysis_failed(args.out, str(exc))
+            print(f"[error] {exc}", file=sys.stderr)
+            return 1
+    lang = _resolve_language(args.lang, input_path)
+    clang_mode = args.cpp_backend == "clang"
+    if clang_mode:
+        if lang == "csharp":
+            raise ValueError("--cpp-backend clang은 C/C++ 분석에서만 사용할 수 있습니다.")
+        if args.compile_commands is None:
+            raise ValueError("--cpp-backend clang에는 --compile-commands 경로가 필요합니다.")
+        if args.clang_timeout is not None and (not math.isfinite(args.clang_timeout) or args.clang_timeout <= 0):
+            raise ValueError("--clang-timeout은 유한한 양수(초)여야 합니다.")
+    elif any(value is not None for value in (args.compile_commands, args.clang_library, args.clang_timeout)):
+        raise ValueError("--compile-commands, --clang-library, --clang-timeout은 clang 모드에서만 사용할 수 있습니다.")
+    validate_analysis_input(input_path, lang, args.exclude)
     out_dir = args.out
     output_json: Path | None = None
     if out_dir is not None:
         out_dir.mkdir(parents=True, exist_ok=True)
         output_json = out_dir / "ast.json"
 
-    lang = _resolve_language(args.lang, input_path)
     print(f"[ast] language: {lang}")
 
     # 1) 언어별 analyzer 실행 → AST JSON
     try:
-        if lang == "csharp":
+        if clang_mode:
+            from .clang_analyzer import analyze_clang
+            native_result = analyze_clang(input_path, args.compile_commands, args.exclude,
+                                          output_path=output_json, clang_library=args.clang_library,
+                                          timeout=args.clang_timeout if args.clang_timeout is not None else 60.0)
+            result_data, result_errors = native_result.data, native_result.errors
+        elif lang == "csharp":
             result_data, result_errors = _run_csharp(input_path, output_json, args.exclude)
         else:
             result_data, result_errors = _run_cpp(input_path, output_json, args.exclude)
     except (AnalyzerNotFoundError, AnalyzerExecutionError, RuntimeError) as exc:
-        print(f"[error] {exc}", file=sys.stderr)
-        return 1
+        raise
 
     summary = result_data.get("summary", {})
+    unit_label = "implementation_files" if clang_mode else "classes"
+    method_label = "functions" if clang_mode else "methods"
+    edge_label = "file_edges" if clang_mode else "class_edges"
     print(
         f"[ast] files={summary.get('total_files')} "
-        f"classes={summary.get('total_classes')} "
-        f"methods={summary.get('total_methods')} "
+        f"{unit_label}={summary.get('total_classes')} "
+        f"{method_label}={summary.get('total_methods')} "
         f"loc={summary.get('total_loc')} "
         f"elapsed={summary.get('elapsed_ms')}ms"
     )
-    if result_errors:
-        print(f"[warn] {len(result_errors)} files failed to parse", file=sys.stderr)
+    analysis_status = summarize_analysis(result_data, lang)
+    if clang_mode:
+        args._clang_analysis_status = analysis_status
+    if out_dir is not None:
+        (out_dir / 'analysis_status.json').write_text(
+            json.dumps(analysis_status, ensure_ascii=False, indent=2), encoding='utf-8')
+    _print_analysis_status(analysis_status)
+    if analysis_status['state'] == 'failed':
+        _mark_analysis_failed(out_dir, '추출한 결과가 없거나 점수를 계산할 유효한 코드가 없습니다.')
+        return 1
     if output_json is not None:
         print(f"[ast] wrote {output_json}")
 
     if args.no_score:
         if args.top and args.top > 0:
             _print_top_methods(result_data, args.top)
-        return 0
+        return 3 if analysis_status['state'] == 'partial' else 0
 
     # 후속 단계가 사용하는 shim — 기존 코드 호환 (result.data 형태)
     class _ResultShim:
@@ -314,14 +377,13 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
     from .metrics import compute_metrics, metrics_to_dict
     metrics = compute_metrics(result.data)
     print(
-        f"[metrics] classes={len(metrics.classes)} methods={len(metrics.methods)} "
+        f"[metrics] {unit_label}={len(metrics.classes)} {method_label}={len(metrics.methods)} "
         f"sccs(size>=2)={len(metrics.sccs)} "
-        f"class_edges={metrics.class_graph.number_of_edges()}"
+        f"{edge_label}={metrics.class_graph.number_of_edges()}"
     )
 
     # 3) G-SI 산출
     from .si import compute_si_static, scoring_to_dict, DEFAULT_WEIGHTS_STATIC
-    weights = _resolve_weights(args.weights, args.weights_file)
     if args.weights != "default":
         print(f"[si] weights mode: {args.weights}  " +
               " ".join(f"{k}={v:.2f}" for k, v in weights.items()))
@@ -338,8 +400,10 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
             encoding="utf-8",
         )
         print(f"[metrics] wrote {out_dir / 'metrics.json'}")
+        payload = scoring_to_dict(scoring)
+        payload['analysis_status'] = analysis_status
         (out_dir / "scoring.json").write_text(
-            json.dumps(scoring_to_dict(scoring), ensure_ascii=False, indent=2),
+            json.dumps(payload, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
         print(f"[si] wrote {out_dir / 'scoring.json'}")
@@ -363,6 +427,8 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
                 output_path=out_dir / "index.html",
                 top_n=args.dashboard_top,
                 advisor_data=advisor_data,
+                analysis_status=analysis_status,
+                project_subtitle=getattr(args, 'project_subtitle', None),
             )
             if advisor_data:
                 print(f"[dashboard] wrote {html_path} (with Refactoring Guide)")
@@ -370,9 +436,70 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
                 print(f"[dashboard] wrote {html_path}")
 
     if args.top and args.top > 0:
-        _print_top_classes(scoring, args.top)
+        _print_top_classes(scoring, args.top, file_units=clang_mode)
 
-    return 0
+    return 3 if analysis_status['state'] == 'partial' else 0
+
+
+def _print_analysis_status(status: dict) -> None:
+    if status.get('backend') == 'clang':
+        runtime = status.get('runtime', {})
+        print(f"[analysis] clang · 구현 파일 단위 · {status['state']} · "
+              f"추출 {status['analyzed_files']}개 · 등록 {status['registered_files']}개 · "
+              f"미등록 {status['unregistered_files']}개 · 접근·추출 실패 {status['failed_files']}개 · "
+              f"컴파일 오류 {status['compiler_error_files']}개 파일/{status['compiler_error_count']}건 · "
+              f"컴파일 경고 {status['compiler_warning_files']}개 파일/{status['compiler_warning_count']}건 · "
+              f"{runtime.get('native_version', '버전 확인 불가')}")
+        issues = [*status['errors'], *status['compiler_diagnostics']]
+        for issue in issues[:20]:
+            line = f":{issue['line']}" if issue.get('line') else ''
+            print(f"[warn] {issue.get('severity', issue.get('kind', '추출'))} "
+                  f"{issue.get('path', '')}{line}: {issue.get('message', '')}", file=sys.stderr)
+        if issues:
+            print(f"[analysis] 진단 {len(issues)}건 중 최대 20건 표시. "
+                  "전체 진단: ast.json의 errors / compiler_diagnostics.", file=sys.stderr)
+        if status['state'] == 'failed':
+            print('[error] 유효한 함수 정의가 없어 점수와 대시보드를 생성하지 않습니다.', file=sys.stderr)
+        return
+    if status['state'] == 'failed':
+        print('[error] 유효한 분석 결과가 없어 점수와 대시보드를 생성하지 않습니다. '
+              '기존 결과가 있다면 이번 실행의 결과가 아닙니다.', file=sys.stderr)
+    elif status['state'] == 'partial':
+        print(f"[warn] 부분 분석: 추출 {status['analyzed_files']}개, 접근·추출 실패 {status['failed_files']}개, "
+              f"문법 복구 {status['syntax_files']}개. 결과의 분석 범위와 한계를 확인하세요.", file=sys.stderr)
+    else:
+        print(f"[analysis] 소스 추출 완료: {status['analyzed_files']}개 (정적 근사, 정확성 보증 아님)")
+    for issue in [*status['errors'], *status['diagnostics']]:
+        line = f":{issue['line']}" if issue.get('line') else ''
+        print(f"[warn] {issue.get('path', '')}{line}: {issue.get('message', '')}", file=sys.stderr)
+
+
+def _mark_analysis_failed(out_dir: Path | None, reason: str, filename='analysis_status.json') -> None:
+    if out_dir is None:
+        return
+    path = out_dir / filename
+    try:
+        if path.is_file():
+            status = json.loads(path.read_text(encoding='utf-8'))
+            status['state'] = 'failed'
+            status['failure_reason'] = reason
+            path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding='utf-8')
+            score_path = out_dir / ('scoring_full.json' if filename == 'analysis_status_full.json' else 'scoring.json')
+            if score_path.is_file():
+                saved = json.loads(score_path.read_text(encoding='utf-8'))
+                saved['analysis_status'] = status
+                score_path.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding='utf-8')
+            dashboard = out_dir / 'index.html'
+            if filename == 'analysis_status.json' and dashboard.is_file():
+                view = dashboard.read_text(encoding='utf-8')
+                if 'Game Spaghetti Index Report' in view and '<main>' in view:
+                    banner = ('<aside class="analysis-status partial" role="alert"><strong>최신 실행 실패</strong>'
+                              '<p>아래는 이전 결과 또는 저장이 완료되지 않은 결과입니다. 최신 실행의 완료 결과로 사용하지 마세요.</p>'
+                              f'<p>{html.escape(reason)}</p></aside>')
+                    dashboard.write_text(view.replace('<main>', '<main>\n' + banner, 1), encoding='utf-8')
+    except (OSError, ValueError):
+        # 저장 권한·디스크 문제로 기록도 불가능하면 콘솔 오류 안내를 유지한다.
+        pass
 
 
 def _resolve_weights(mode: str, weights_file: Path | None) -> dict[str, float] | None:
@@ -393,15 +520,20 @@ def _resolve_weights(mode: str, weights_file: Path | None) -> dict[str, float] |
             )
         with open(tune_path, "r", encoding="utf-8") as f:
             tune_data = json.load(f)
-        tuned = tune_data.get("tuned_weights")
+        tuned = tune_data.get("tuned_weights") if isinstance(tune_data, dict) else None
         if not isinstance(tuned, dict):
             raise RuntimeError(f"tune.json 의 tuned_weights 필드가 비어 있습니다: {tune_path}")
+        from .si import _normalize_weights, DEFAULT_WEIGHTS_STATIC
+        _normalize_weights(tuned, allowed=set(DEFAULT_WEIGHTS_STATIC))
         return tuned
     if mode == "custom":
         if weights_file is None or not weights_file.exists():
             raise RuntimeError("--weights custom 사용 시 --weights-file <path> 가 필요합니다.")
         with open(weights_file, "r", encoding="utf-8") as f:
-            return json.load(f)
+            weights = json.load(f)
+        from .si import _normalize_weights, DEFAULT_WEIGHTS_STATIC
+        _normalize_weights(weights, allowed=set(DEFAULT_WEIGHTS_STATIC))
+        return weights
     raise ValueError(f"unknown weights mode: {mode}")
 
 
@@ -472,10 +604,11 @@ def _default_project_name(input_path: Path) -> str:
     return p.name
 
 
-def _print_top_classes(scoring, top_n: int) -> None:
+def _print_top_classes(scoring, top_n: int, file_units: bool = False) -> None:
     rows = sorted(scoring.class_scores, key=lambda c: -c.si)[:top_n]
     print()
-    print(f"=== Top {len(rows)} classes by G-SI-Static ===")
+    unit = 'implementation files' if file_units else 'classes'
+    print(f"=== Top {len(rows)} {unit} by G-SI-Static ===")
     for i, cs in enumerate(rows, 1):
         reasons = ", ".join(cs.top_reasons) if cs.top_reasons else "—"
         print(
@@ -506,7 +639,8 @@ def _print_top_methods(data: dict, top_n: int) -> None:
     rows.sort(key=lambda r: -r["cc"])
 
     print()
-    print(f"=== Top {min(top_n, len(rows))} methods by Cyclomatic Complexity ===")
+    unit = 'functions' if data.get('backend') == 'clang' else 'methods'
+    print(f"=== Top {min(top_n, len(rows))} {unit} by Cyclomatic Complexity ===")
     for r in rows[:top_n]:
         print(f"  CC={r['cc']:>3}  LOC={r['loc']:>4}  {r['name']}")
         print(f"        {r['path']}:{r['line']}")
@@ -644,6 +778,16 @@ def _cmd_tune(args: argparse.Namespace) -> int:
     """plan §4.6 — 가중치 튜닝 + LOPO 교차 검증."""
     from .tune import load_case_data, run_tune, to_dict, format_summary
 
+    groups = {}
+    for spec in args.project_group:
+        if "=" not in spec:
+            print("[error] --project-group 형식: NAME=PROJECT", file=sys.stderr)
+            return 1
+        name, _, group = spec.partition("=")
+        if not name or not group or name in groups:
+            print("[error] 프로젝트 그룹 이름이 비어 있거나 중복되었습니다.", file=sys.stderr)
+            return 1
+        groups[name] = group
     cases = []
     for spec in args.case:
         if "=" not in spec:
@@ -656,10 +800,36 @@ def _cmd_tune(args: argparse.Namespace) -> int:
         if not scoring_p.exists() or not validation_p.exists():
             print(f"[error] {name}: {scoring_p} 또는 {validation_p} 부재", file=sys.stderr)
             return 1
-        cases.append(load_case_data(name, scoring_p, validation_p))
+        cases.append(load_case_data(name, scoring_p, validation_p, groups.get(name)))
+    if set(groups) - {c.name for c in cases}:
+        print("[error] --project-group에 등록된 케이스가 --case에 없습니다.", file=sys.stderr)
+        return 1
+    if args.command == "ablate":
+        from .ablation import run_ablation
+        import hashlib
+        try:
+            payload = run_ablation(cases, args.top)
+        except ValueError as exc:
+            print(f"[error] {exc}", file=sys.stderr)
+            return 1
+        payload["input_sha256"] = {
+            f"{name}/{filename}": hashlib.sha256((Path(directory) / filename).read_bytes()).hexdigest()
+            for spec in args.case for name, _, directory in [spec.partition("=")]
+            for filename in ("scoring.json", "validation.json")
+        }
+        args.out.mkdir(parents=True, exist_ok=True)
+        (args.out / "ablation.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+        print("variant | grouped mean rho")
+        for name, row in payload['variants'].items():
+            print(f"{name}: {row['grouped_mean_rho']}")
+        return 0
     print(f"[tune] cases={len(cases)}  files총={sum(len(c.raw_by_file) for c in cases)}")
     print("[tune] grid search + LOPO 진행중...")
-    result = run_tune(cases)
+    try:
+        result = run_tune(cases)
+    except ValueError as exc:
+        print(f"[error] {exc}", file=sys.stderr)
+        return 1
     out_dir: Path = args.out
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "tune.json"
@@ -685,9 +855,15 @@ def _cmd_score_full(args: argparse.Namespace) -> int:
     compute_si_full → scoring_full.json + 상위 hotspot 비교 표 텍스트.
     """
     from .change_risk import compute_change_risk
+    import datetime as dt
     from .metrics import compute_metrics
     from .si import compute_si_full, scoring_to_dict, DEFAULT_WEIGHTS_FULL
 
+    try:
+        end_date = dt.date.fromisoformat(args.until) if args.until else dt.datetime.utcnow().date()
+    except ValueError:
+        print("[error] --until은 유효한 YYYY-MM-DD 날짜여야 합니다.", file=sys.stderr)
+        return 1
     input_path = Path(args.input)
     if not input_path.exists():
         print(f"[error] 입력 경로가 존재하지 않습니다: {input_path}", file=sys.stderr)
@@ -695,15 +871,18 @@ def _cmd_score_full(args: argparse.Namespace) -> int:
     if not args.repo.exists():
         print(f"[error] repo 경로가 존재하지 않습니다: {args.repo}", file=sys.stderr)
         return 1
+    lang = _resolve_language(args.lang, input_path)
+    validate_analysis_input(input_path, lang, args.exclude)
     out_dir: Path = args.out
     out_dir.mkdir(parents=True, exist_ok=True)
     project_name = args.project_name or _default_project_name(input_path)
 
-    lang = _resolve_language(args.lang, input_path)
     print(f"[score-full] project={project_name}  lang={lang}  months={args.months}")
     print(f"[score-full] computing ChangeRisk from {args.repo}  subdir={args.subdir or '(root)'}")
 
-    cr_rows = compute_change_risk(repo=args.repo, subdir=args.subdir, months=args.months)
+    cr_rows = compute_change_risk(
+        repo=args.repo, subdir=args.subdir, months=args.months, until=end_date.isoformat(),
+    )
     cr_by_file = {k: row.change_risk for k, row in cr_rows.items()}
     print(f"[score-full] ChangeRisk computed for {len(cr_by_file)} files in last {args.months} months")
 
@@ -713,10 +892,15 @@ def _cmd_score_full(args: argparse.Namespace) -> int:
         else:
             data, errors = _run_cpp(input_path, None, args.exclude)
     except Exception as exc:
-        print(f"[error] AST 분석 실패: {exc}", file=sys.stderr)
+        raise RuntimeError(f'AST 분석 실패: {exc}') from exc
+    analysis_status = summarize_analysis(data, lang)
+    (out_dir / 'analysis_status_full.json').write_text(
+        json.dumps(analysis_status, ensure_ascii=False, indent=2), encoding='utf-8')
+    _print_analysis_status(analysis_status)
+    if analysis_status['state'] == 'failed':
+        _mark_analysis_failed(out_dir, '추출한 결과가 없거나 점수를 계산할 유효한 코드가 없습니다.',
+                              'analysis_status_full.json')
         return 1
-    if errors:
-        print(f"[warn] {len(errors)} files failed to parse", file=sys.stderr)
 
     metrics = compute_metrics(data)
     scoring_full = compute_si_full(metrics, cr_by_file)
@@ -727,9 +911,12 @@ def _cmd_score_full(args: argparse.Namespace) -> int:
 
     out_json = out_dir / "scoring_full.json"
     payload = scoring_to_dict(scoring_full)
+    payload['analysis_status'] = analysis_status
     payload["weights"] = DEFAULT_WEIGHTS_FULL  # 명시
     payload["change_risk_window_months"] = args.months
     payload["change_risk_files"] = len(cr_by_file)
+    payload["change_risk_until"] = end_date.isoformat()
+    payload["change_risk_since"] = (end_date - dt.timedelta(days=args.months * 30)).isoformat()
     out_json.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2),
         encoding="utf-8",
@@ -739,7 +926,8 @@ def _cmd_score_full(args: argparse.Namespace) -> int:
     static_path = out_dir / "scoring.json"
     summary_lines: list[str] = []
     summary_lines.append("=== G-SI-Full vs G-SI-Static (top hotspot 비교) ===")
-    summary_lines.append(f"project: {project_name}  window: {args.months} months")
+    summary_lines.append(f"project: {project_name}  window: {args.months} months "
+                         f"({payload['change_risk_since']} .. {payload['change_risk_until']}, UTC)")
     if static_path.exists():
         with open(static_path, "r", encoding="utf-8") as f:
             static_scoring = json.load(f)
@@ -765,7 +953,7 @@ def _cmd_score_full(args: argparse.Namespace) -> int:
     print()
     print(f"[score-full] wrote {out_json}")
     print(f"[score-full] wrote {out_dir / 'scoring_full_summary.txt'}")
-    return 0
+    return 3 if analysis_status['state'] == 'partial' else 0
 
 
 def _cmd_timeseries(args: argparse.Namespace) -> int:
@@ -960,7 +1148,27 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "analyze":
-        return _cmd_analyze(args)
+        try:
+            return _cmd_analyze(args)
+        except (OSError, RuntimeError, ValueError) as exc:
+            if args.cpp_backend == 'clang' and args.out is not None:
+                try:
+                    status_path = args.out / 'analysis_status.json'
+                    args.out.mkdir(parents=True, exist_ok=True)
+                    status = getattr(args, '_clang_analysis_status', None)
+                    if status is None:
+                        configuration = {'path': str(args.compile_commands.resolve())} if args.compile_commands else {}
+                        status = summarize_analysis({'backend': 'clang', 'input_path': args.input,
+                                                     'configuration': configuration}, args.lang)
+                    status['state'] = 'failed'
+                    status['failure_reason'] = str(exc)
+                    status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding='utf-8')
+                except OSError:
+                    pass
+            _mark_analysis_failed(args.out, str(exc))
+            print(f'[error] 분석을 완료하지 못했습니다: {exc}. '
+                  '이번 실행은 성공하지 않았으며 기존 결과가 있다면 갱신되지 않았거나 불완전할 수 있습니다.', file=sys.stderr)
+            return 1
     if args.command == "validate":
         return _cmd_validate(args)
     if args.command == "compare":
@@ -970,8 +1178,15 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "timeseries":
         return _cmd_timeseries(args)
     if args.command == "score-full":
-        return _cmd_score_full(args)
+        try:
+            return _cmd_score_full(args)
+        except (OSError, RuntimeError, ValueError) as exc:
+            _mark_analysis_failed(args.out, str(exc), 'analysis_status_full.json')
+            print(f'[error] Full 분석을 완료하지 못했습니다: {exc}', file=sys.stderr)
+            return 1
     if args.command == "tune":
+        return _cmd_tune(args)
+    if args.command == "ablate":
         return _cmd_tune(args)
     if args.command == "diff":
         return _cmd_diff(args)

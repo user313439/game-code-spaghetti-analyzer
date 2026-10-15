@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import json
+import os
 import re
 import time
 from dataclasses import dataclass, field
@@ -110,10 +111,10 @@ def analyze_cpp(
     excludes_set = DEFAULT_EXCLUDE_DIRS | set(excludes)
     start = time.perf_counter()
 
-    files_to_parse = _collect_files(input_path, excludes_set)
-
     file_nodes: list[dict] = []
     errors: list[dict] = []
+    diagnostics: list[dict] = []
+    files_to_parse = _collect_files(input_path, excludes_set, errors)
     parser_cache: dict[str, Parser] = {}
 
     total_loc = 0
@@ -127,6 +128,7 @@ def analyze_cpp(
             errors.append({"path": str(path), "message": str(exc)})
             continue
         file_nodes.append(file_node)
+        diagnostics.extend(file_node.pop('diagnostics', []))
         total_loc += file_node.get("loc", 0)
         total_classes += len(file_node.get("classes", []))
         for c in file_node.get("classes", []):
@@ -147,6 +149,7 @@ def analyze_cpp(
         },
         "files": file_nodes,
         "errors": errors,
+        "diagnostics": diagnostics,
     }
 
     if output_path is not None:
@@ -164,7 +167,7 @@ def analyze_cpp(
 # ---------------------------------------------------------------------------
 
 
-def _collect_files(root: Path, excludes: set[str]) -> list[Path]:
+def _collect_files(root: Path, excludes: set[str], errors: list[dict] | None = None) -> list[Path]:
     """본문이 있는 .c/.cpp/.cc/.cxx 파일만 수집한다.
 
     헤더(.h/.hpp/...)는 함수 정의가 거의 없어 분석 단위로 적절하지 않고, .c 와
@@ -174,15 +177,16 @@ def _collect_files(root: Path, excludes: set[str]) -> list[Path]:
     if root.is_file():
         return [root] if root.suffix.lower() in BODY_EXTENSIONS else []
     out: list[Path] = []
-    for p in sorted(root.rglob("*")):
-        if not p.is_file():
-            continue
-        if p.suffix.lower() not in BODY_EXTENSIONS:
-            continue
-        if any(part in excludes for part in p.relative_to(root).parts):
-            continue
-        out.append(p)
-    return out
+    def on_error(exc):
+        if errors is not None:
+            errors.append(dict(path=str(exc.filename or root), message=str(exc)))
+    for directory, subdirs, files in os.walk(root, onerror=on_error):
+        subdirs[:] = sorted(name for name in subdirs if name not in excludes)
+        for name in files:
+            path = Path(directory) / name
+            if path.suffix.lower() in BODY_EXTENSIONS:
+                out.append(path)
+    return sorted(out)
 
 
 def _get_parser(lang: str, cache: dict[str, Parser]) -> Parser:
@@ -218,6 +222,19 @@ def _analyze_file(path: Path, root: Path, parser_cache: dict[str, Parser]) -> di
     parser = _get_parser(lang, parser_cache)
     tree = parser.parse(src)
     root_node = tree.root_node
+    diagnostics = []
+    if root_node.has_error:
+        pending = [root_node]
+        location = root_node.start_point
+        while pending:
+            node = pending.pop()
+            if node.type == 'ERROR' or node.is_missing:
+                location = node.start_point
+                break
+            pending.extend(reversed(node.children))
+        diagnostics.append(dict(path=str(path), kind='syntax', line=location[0] + 1,
+                                message='문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. '
+                                        '복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다.'))
 
     # 1) #include 디렉티브 (referenced_types 의 stem 후보)
     includes = _extract_includes(root_node, src)
@@ -268,6 +285,8 @@ def _analyze_file(path: Path, root: Path, parser_cache: dict[str, Parser]) -> di
         "relative_path": relative_path,
         "loc": loc,
         "classes": classes,
+        "diagnostics": diagnostics,
+        "has_code": any(child.type != 'comment' for child in root_node.named_children),
     }
 
 

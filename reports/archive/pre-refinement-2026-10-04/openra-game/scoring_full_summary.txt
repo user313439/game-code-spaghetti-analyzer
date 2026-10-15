@@ -1,0 +1,14 @@
+=== G-SI-Full vs G-SI-Static (top hotspot 비교) ===
+project: OpenRA.Game  window: 12 months (2025-10-08 .. 2026-10-03, UTC)
+
+rank  G-SI Full  G-SI Static       Δ      CR  fqn
+   1     100.00       100.00   +0.00      11  OpenRA.Server.Server
+   2      99.85        99.85   +0.00       5  OpenRA.Network.UnitOrders
+   3      99.70        99.70   +0.00       8  OpenRA.Game
+   4      99.55        99.55   +0.00       2  OpenRA.MiniYaml
+   5      99.40        99.40   +0.00       2  OpenRA.Support.VariableExpression.Token
+   6      99.25        99.25   +0.00       2  OpenRA.Support.VariableExpression
+   7      99.10        99.10   +0.00       4  OpenRA.Map
+   8      98.95        98.95   +0.00       7  OpenRA.MapPreview
+   9      98.80        98.50   +0.30       5  OpenRA.FieldLoader
+  10      98.65        98.80   -0.15       2  OpenRA.MiniYamlNode

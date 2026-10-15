@@ -1,0 +1,32 @@
+=== Phase B: G-SI vs Lizard (max CC) ===
+project:       DOOM 3 - gameplay source (neo/game)
+scoring:       reports\doom3-gameplay\scoring.json
+analyzed_path: benchmarks\DOOM-3\neo\game
+files: us=71 liz=135 matched=71
+spearman(si vs liz_max_cc): rho=+0.7825  p=0
+
+Top-N Jaccard:
+  top- 5: 0.250
+  top-10: 0.538
+
+Common top-10 (양쪽 모두 hotspot, 정렬 = G-SI rank):
+  gsi# 2 liz# 1 | si= 98.8 [E] liz_cc=192  script/Script_Interpreter.cpp
+  gsi# 3 liz# 2 | si= 97.7 [E] liz_cc=139  gamesys/TypeInfo.cpp
+  gsi# 5 liz#10 | si= 95.4 [E] liz_cc= 42  physics/Physics_AF.cpp
+  gsi# 6 liz# 7 | si= 94.2 [E] liz_cc= 55  Player.cpp
+  gsi# 7 liz# 8 | si= 93.1 [E] liz_cc= 52  MultiplayerGame.cpp
+  gsi# 9 liz# 5 | si= 90.8 [E] liz_cc= 56  script/Script_Compiler.cpp
+  gsi#10 liz# 3 | si= 89.7 [E] liz_cc=113  anim/Anim_Blend.cpp
+
+G-SI 단독 top-10 (Lizard top-10 에는 없음 — Phase B 정성 분석 후보):
+  gsi# 1 liz#11 | si=100.0 [E] liz_cc= 41  Game_local.cpp
+  gsi# 4 liz#13 | si= 96.5 [E] liz_cc= 39  physics/Physics_Player.cpp
+  gsi# 8 liz#24 | si= 92.0 [E] liz_cc= 27  physics/Physics_RigidBody.cpp
+
+Lizard 단독 top-10 (G-SI top-10 에는 없음):
+  gsi#11 liz# 4 | si= 88.5 [E] liz_cc= 57  Game_network.cpp
+  gsi#23 liz# 6 | si= 74.7 [D] liz_cc= 55  Fx.cpp
+  gsi#18 liz# 9 | si= 80.5 [E] liz_cc= 43  Entity.cpp
+
+Notes:
+  - 동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다.

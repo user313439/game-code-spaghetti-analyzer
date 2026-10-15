@@ -1,7 +1,7 @@
 """G-SI (Game Spaghetti Index) 산출.
 
 본 모듈은 `metrics.MetricsResult`를 입력으로 받아
-계획서(`docs/plan_final_draft.md` §4)의 정의에 따라 점수를 산출한다.
+계획서(`docs/_planning/plan_final_draft.md` §4)의 정의에 따라 점수를 산출한다.
 
 처리 절차:
     1. 항목별 raw 값을 추출 (CC, Coupling, DependencyCycle, GlobalState, GameLoopCentrality)
@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import math
 import statistics
+from collections import Counter
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -150,7 +151,8 @@ def compute_si_static(
     weights: dict[str, float] | None = None,
 ) -> ScoringResult:
     """`metrics.MetricsResult`에서 G-SI-Static 점수를 산출한다."""
-    w = _normalize_weights(weights or DEFAULT_WEIGHTS_STATIC)
+    w = _normalize_weights(DEFAULT_WEIGHTS_STATIC if weights is None else weights,
+                           allowed=set(DEFAULT_WEIGHTS_STATIC))
 
     if not metrics.classes:
         return ScoringResult(
@@ -240,7 +242,7 @@ def compute_si_full(
     ``change_risk_by_file`` 는 ``compute_change_risk()`` 의 출력에서 file_path →
     change_risk 값으로 변환한 dict.
     """
-    w = _normalize_weights(weights or DEFAULT_WEIGHTS_FULL)
+    w = _normalize_weights(DEFAULT_WEIGHTS_FULL if weights is None else weights)
 
     if not metrics.classes:
         return ScoringResult(
@@ -385,13 +387,24 @@ def _compute_project_health(class_scores, metrics) -> ProjectHealth:
 # ---------------------------------------------------------------------------
 
 
-def _normalize_weights(w: dict[str, float]) -> dict[str, float]:
+def _normalize_weights(w: dict[str, float], allowed: set[str] | None = None) -> dict[str, float]:
     """가중치 합이 1이 되도록 정규화한다. 구현되지 않은 항목이 있을 때를 대비."""
-    total = sum(v for v in w.values() if v > 0)
+    allowed = set(DEFAULT_WEIGHTS_FULL) if allowed is None else allowed
+    if not isinstance(w, dict) or set(w) - allowed:
+        raise ValueError("가중치는 알려진 지표 이름을 키로 하는 JSON 객체여야 합니다.")
+    try:
+        invalid = any(type(v) not in (int, float) or not math.isfinite(v) or v < 0 for v in w.values())
+    except OverflowError:
+        invalid = True
+    if invalid:
+        raise ValueError("가중치는 알려진 지표의 유한한 0 이상 숫자여야 합니다.")
+    total = sum(float(v) for v in w.values())
     if total <= 0:
-        # 폴백: 모든 항목 동등
-        keys = list(DEFAULT_WEIGHTS_STATIC.keys())
-        return {k: 1.0 / len(keys) for k in keys}
+        raise ValueError("가중치 합은 0보다 커야 합니다.")
+    if not math.isfinite(total):
+        scale = max(w.values())
+        scaled = {k: v / scale for k, v in w.items()}
+        return {k: v / sum(scaled.values()) for k, v in scaled.items()}
     return {k: v / total for k, v in w.items()}
 
 
@@ -514,6 +527,16 @@ def _aggregate_modules(file_scores: list[FileScore]) -> list[ModuleScore]:
 
 
 def scoring_to_dict(result: ScoringResult) -> dict[str, Any]:
+    counts = Counter(cs.raw_score for cs in result.class_scores)
+    ranking_info = {
+        "scope": "within_analysis_relative",
+        "informative": len(counts) > 1,
+        "unique_raw_scores": len(counts),
+        "largest_tie_fraction": max(counts.values(), default=0) / max(1, result.total_classes),
+        "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. "
+                   "동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. "
+                   "Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다.",
+    }
     ph = result.project_health
     project_health_dict = None
     if ph is not None:
@@ -529,6 +552,7 @@ def scoring_to_dict(result: ScoringResult) -> dict[str, Any]:
     return {
         "schema_version": "si-0.2",
         "weights": result.weights,
+        "ranking_info": ranking_info,
         "project_health": project_health_dict,
         "total_classes": result.total_classes,
         "total_methods": result.total_methods,
@@ -544,6 +568,7 @@ def scoring_to_dict(result: ScoringResult) -> dict[str, Any]:
                 "kind": cs.kind,
                 "loc": cs.loc,
                 "raw": {k: round(v, 4) for k, v in cs.raw.items()},
+                "raw_exact": dict(cs.raw),
                 "z": {k: round(v, 4) for k, v in cs.z.items()},
                 "raw_score": round(cs.raw_score, 4),
                 "si": round(cs.si, 2),

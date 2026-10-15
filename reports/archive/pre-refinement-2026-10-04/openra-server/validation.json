@@ -1,0 +1,112 @@
+{
+  "schema_version": "validate-0.2",
+  "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
+  "subdir": "OpenRA.Server",
+  "since": null,
+  "until": null,
+  "keywords": [
+    "fix",
+    "bug",
+    "crash",
+    "regression",
+    "hotfix",
+    "patch",
+    "defect"
+  ],
+  "total_commits": 137,
+  "bugfix_commits": 28,
+  "classes_total": 1,
+  "classes_with_bugfix": 1,
+  "files_total": 1,
+  "files_with_bugfix": 1,
+  "unmatched_change_count": 21,
+  "class_correlations": [
+    {
+      "name": "si_vs_bugfix",
+      "n": 1,
+      "spearman_rho": null,
+      "p_value": null
+    },
+    {
+      "name": "loc_vs_bugfix",
+      "n": 1,
+      "spearman_rho": null,
+      "p_value": null
+    },
+    {
+      "name": "cc_vs_bugfix",
+      "n": 1,
+      "spearman_rho": null,
+      "p_value": null
+    }
+  ],
+  "file_correlations": [
+    {
+      "name": "file_si_vs_bugfix",
+      "n": 1,
+      "spearman_rho": null,
+      "p_value": null
+    },
+    {
+      "name": "file_loc_vs_bugfix",
+      "n": 1,
+      "spearman_rho": null,
+      "p_value": null
+    },
+    {
+      "name": "file_cc_vs_bugfix",
+      "n": 1,
+      "spearman_rho": null,
+      "p_value": null
+    }
+  ],
+  "top_bugfix_files": [
+    {
+      "path": "Program.cs",
+      "count": 9
+    }
+  ],
+  "unmatched_paths_sample": [
+    {
+      "path": "Server.cs",
+      "count": 14
+    },
+    {
+      "path": "OpenRA.Server.csproj",
+      "count": 5
+    },
+    {
+      "path": "Properties/AssemblyInfo.cs",
+      "count": 1
+    },
+    {
+      "path": "Connection.cs",
+      "count": 1
+    }
+  ],
+  "rows": [
+    {
+      "fqn": "OpenRA.Server.Program",
+      "file_path": "Program.cs",
+      "si": 100.0,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 96,
+      "bugfix_count": 9
+    }
+  ],
+  "file_rows": [
+    {
+      "file_path": "Program.cs",
+      "si_max": 100.0,
+      "si_mean": 100.0,
+      "loc_total": 96,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    }
+  ],
+  "notes": [
+    "bug-fix 변경 파일 중 21 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음."
+  ]
+}

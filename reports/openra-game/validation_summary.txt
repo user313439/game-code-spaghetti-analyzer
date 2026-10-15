@@ -1,7 +1,7 @@
 === G-SI Validation (Phase A) ===
 repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
 subdir:         OpenRA.Game
-date range:     * .. *
+date range:     * .. 2026-10-03
 commits seen:   6242
 bug-fix found:  1148
 classes total:  668  (with bug-fix: 603)
@@ -9,12 +9,12 @@ files total:    226  (with bug-fix: 190)
 unmatched changes (non-class files): 1150
 
 Class-level Spearman correlation (vs file bug-fix count):
-  si_vs_bugfix            n= 668  rho= -0.1205  p=0.002419
+  si_vs_bugfix            n= 668  rho= -0.1274  p=0.001338
   loc_vs_bugfix           n= 668  rho= -0.1852  p=2.688e-06
   cc_vs_bugfix            n= 668  rho= -0.1441  p=0.0002772
 
 File-level Spearman correlation (vs file bug-fix count):
-  file_si_vs_bugfix       n= 226  rho= +0.6011  p=0
+  file_si_vs_bugfix       n= 226  rho= +0.6050  p=0
   file_loc_vs_bugfix      n= 226  rho= +0.6988  p=0
   file_cc_vs_bugfix       n= 226  rho= +0.5517  p=0
 

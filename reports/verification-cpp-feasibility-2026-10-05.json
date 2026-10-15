@@ -1,0 +1,90 @@
+{
+  "review_date_kst": "2026-10-05",
+  "run_at_utc": "2026-10-05T12:23:02.075022+00:00",
+  "scope": "feasibility probes only; no shipped Clang integration or new G-SI scores",
+  "clang_version": "clang version 20.1.8",
+  "sources": {
+    "doom3": {
+      "commit": "a9c49da5afb18201d31e3f0a429a037e56ce2b9a",
+      "clean": true
+    },
+    "openrct2": {
+      "commit": "7a2cddeed1304f284829ffb0c91f31557819c51e",
+      "clean": true
+    }
+  },
+  "doom3_all_implementation_files": {
+    "implementation_files": 71,
+    "files_without_error_diagnostics": 43,
+    "files_with_error_diagnostics": 28,
+    "mainfile_definitions": 4383,
+    "definitions_with_header_owner": 4239,
+    "severity_counts": {
+      "2": 1131,
+      "3": 5951,
+      "4": 1
+    }
+  },
+  "doom3_project_registered_inputs": {
+    "files": 69,
+    "files_without_error_diagnostics": 43,
+    "files_with_error_diagnostics": 26,
+    "not_registered_in_project": [
+      "EndLevel.cpp",
+      "gamesys/Callbacks.cpp"
+    ]
+  },
+  "openrct2_configured_representative_files": [
+    {
+      "file": "core/Guard.cpp",
+      "error_diagnostics": 0,
+      "definitions": 10
+    },
+    {
+      "file": "core/Path.cpp",
+      "error_diagnostics": 0,
+      "definitions": 14
+    },
+    {
+      "file": "core/String.cpp",
+      "error_diagnostics": 0,
+      "definitions": 47
+    }
+  ],
+  "configured_files_repeat_equal": true,
+  "checks": {
+    "existing_source_test_files": true,
+    "existing_case_artifacts": true,
+    "existing_doom3_artifacts": true,
+    "landing_page": true,
+    "foreign_sources_unchanged": true,
+    "configured_rct_repeat_equal": true,
+    "configured_rct_no_errors": true,
+    "tests": true
+  },
+  "all_checks_passed": true,
+  "preserved_files": {
+    "source_test": 30,
+    "existing_cases": 40,
+    "existing_doom3": 6,
+    "landing": 1
+  },
+  "tests": {
+    "command": "py -3.10 -B -m pytest tests/ -q -p no:cacheprovider",
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 68%]\n.................................                                        [100%]\n105 passed in 4.97s\n"
+  },
+  "source_macros_removed": false,
+  "compiler_version_guard_disabled": false,
+  "production_code_changed": false,
+  "project_dependency_configuration_changed": false,
+  "game_build_or_execution_verified": false,
+  "browser_verified": false,
+  "ai_api_calls": 0,
+  "hashes": {
+    "probe_clang.py": "629c8c1edc2fc9c1c34160250e225bad2b470ff7858cc60a59452a9895cb90c9",
+    "recheck_config.py": "8cea211f152b457c7f67211dbce96b3cae6e845eaf6fe87f4e27a47cec87b742",
+    "probe_results.json": "9cd93add73004d8319ab303d246ecdea1f6a14a1962649ed3cef87fd246dcadc",
+    "configured_rct_results.json": "3eeacdd7de3fc56f9c57421c8c5af87d48723fb07d8fbe20a4c2125e31e33035"
+  }
+}

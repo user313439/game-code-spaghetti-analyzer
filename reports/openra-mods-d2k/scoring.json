@@ -7,6 +7,13 @@
     "global_state": 0.15,
     "game_loop_centrality": 0.15
   },
+  "ranking_info": {
+    "scope": "within_analysis_relative",
+    "informative": true,
+    "unique_raw_scores": 35,
+    "largest_tie_fraction": 0.14583333333333334,
+    "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. 동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다."
+  },
   "project_health": {
     "score": 35.69,
     "grade": "B",
@@ -51,14 +58,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6609,
         "coupling": -1.7857,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.8283,
+      "raw_score": -0.8191,
       "si": 4.17,
       "grade": "A",
       "top_reasons": []
@@ -79,14 +93,21 @@
         "global_state": 7.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.987,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.8352,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.6712,
+      "raw_score": 0.6795,
       "si": 89.58,
       "grade": "E",
       "top_reasons": [
@@ -110,14 +131,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -138,15 +166,22 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.4377,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.0548,
-      "si": 54.17,
+      "raw_score": -0.0456,
+      "si": 56.25,
       "grade": "C",
       "top_reasons": [
         "cc",
@@ -169,14 +204,21 @@
         "global_state": 4.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.1226,
+      "raw_score": 0.1308,
       "si": 70.83,
       "grade": "D",
       "top_reasons": [
@@ -200,14 +242,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.1101,
+      "raw_score": 0.1193,
       "si": 68.75,
       "grade": "D",
       "top_reasons": [
@@ -229,21 +278,28 @@
         "coupling": 2.0,
         "dependency_cycle": 0.0,
         "global_state": 1.0,
-        "game_loop_centrality": 0.5
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.2489,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": 0.6601
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.3365,
-      "si": 79.17,
+      "raw_score": 0.1605,
+      "si": 72.92,
       "grade": "D",
       "top_reasons": [
         "coupling",
-        "game_loop_centrality"
+        "dependency_cycle"
       ]
     },
     {
@@ -262,14 +318,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6609,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.0041,
+      "raw_score": 0.0051,
       "si": 58.33,
       "grade": "C",
       "top_reasons": [
@@ -293,14 +356,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3114,
+      "raw_score": -0.3022,
       "si": 43.75,
       "grade": "C",
       "top_reasons": []
@@ -321,19 +391,26 @@
         "global_state": 12.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.0257,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": 1.8958,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.954,
+      "raw_score": 0.9622,
       "si": 95.83,
       "grade": "E",
       "top_reasons": [
         "coupling",
-        "global_state"
+        "game_loop_centrality"
       ]
     },
     {
@@ -352,14 +429,21 @@
         "global_state": 7.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0257,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": 0.8352,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.4246,
+      "raw_score": 0.4338,
       "si": 83.33,
       "grade": "E",
       "top_reasons": [
@@ -383,15 +467,22 @@
         "global_state": 5.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.411,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.2159,
-      "si": 47.92,
+      "raw_score": -0.2067,
+      "si": 50.0,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -414,14 +505,21 @@
         "global_state": 3.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 10.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.7124,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.0133,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.0912,
+      "raw_score": 0.1004,
       "si": 64.58,
       "grade": "D",
       "top_reasons": [
@@ -445,14 +543,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.0371,
+      "raw_score": 0.0463,
       "si": 60.42,
       "grade": "D",
       "top_reasons": [
@@ -476,14 +581,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6609,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.4162,
+      "raw_score": -0.407,
       "si": 10.42,
       "grade": "A",
       "top_reasons": []
@@ -504,15 +616,22 @@
         "global_state": 4.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 11.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.8497,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.1642,
-      "si": 75.0,
+      "raw_score": 0.1735,
+      "si": 77.08,
       "grade": "D",
       "top_reasons": [
         "cc",
@@ -535,14 +654,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -563,14 +689,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 24.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 2.6349,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 1.0065,
+      "raw_score": 1.0147,
       "si": 97.92,
       "grade": "E",
       "top_reasons": [
@@ -594,14 +727,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3432,
+      "raw_score": -0.334,
       "si": 31.25,
       "grade": "B",
       "top_reasons": []
@@ -620,22 +760,26 @@
         "coupling": 1.0,
         "dependency_cycle": 0.0,
         "global_state": 0.0,
-        "game_loop_centrality": 0.3333
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.1116,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": 0.2486
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.128,
-      "si": 52.08,
+      "raw_score": -0.2422,
+      "si": 47.92,
       "grade": "C",
-      "top_reasons": [
-        "game_loop_centrality",
-        "dependency_cycle"
-      ]
+      "top_reasons": []
     },
     {
       "fqn": "OpenRA.Mods.D2k.Traits.Render.WithCrumbleOverlayInfo",
@@ -653,14 +797,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -681,14 +832,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3338,
+      "raw_score": -0.3246,
       "si": 33.33,
       "grade": "B",
       "top_reasons": []
@@ -709,14 +867,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3432,
+      "raw_score": -0.334,
       "si": 31.25,
       "grade": "B",
       "top_reasons": []
@@ -737,14 +902,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.302,
+      "raw_score": -0.2928,
       "si": 45.83,
       "grade": "C",
       "top_reasons": []
@@ -765,14 +937,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3114,
+      "raw_score": -0.3022,
       "si": 43.75,
       "grade": "C",
       "top_reasons": []
@@ -793,15 +972,22 @@
         "global_state": 2.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.0257,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.2238,
-      "si": 77.08,
+      "raw_score": 0.232,
+      "si": 79.17,
       "grade": "D",
       "top_reasons": [
         "game_loop_centrality",
@@ -824,14 +1010,21 @@
         "global_state": 29.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 33.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 3.8709,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": 5.5018,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 2.2781,
+      "raw_score": 2.2873,
       "si": 100.0,
       "grade": "E",
       "top_reasons": [
@@ -855,15 +1048,22 @@
         "global_state": 4.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.2065,
-      "si": 50.0,
+      "raw_score": -0.1973,
+      "si": 52.08,
       "grade": "C",
       "top_reasons": [
         "global_state",
@@ -886,14 +1086,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -914,14 +1121,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3114,
+      "raw_score": -0.3022,
       "si": 43.75,
       "grade": "C",
       "top_reasons": []
@@ -942,14 +1156,21 @@
         "global_state": 4.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.575,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.0818,
+      "raw_score": 0.0911,
       "si": 62.5,
       "grade": "D",
       "top_reasons": [
@@ -973,14 +1194,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6609,
         "coupling": -1.7857,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.8283,
+      "raw_score": -0.8191,
       "si": 4.17,
       "grade": "A",
       "top_reasons": []
@@ -1001,14 +1229,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3114,
+      "raw_score": -0.3022,
       "si": 43.75,
       "grade": "C",
       "top_reasons": []
@@ -1029,15 +1264,22 @@
         "global_state": 4.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.1638,
-      "si": 72.92,
+      "raw_score": 0.172,
+      "si": 75.0,
       "grade": "D",
       "top_reasons": [
         "game_loop_centrality",
@@ -1060,14 +1302,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -1088,14 +1337,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0257,
         "coupling": 3.1593,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.6458,
+      "raw_score": 0.655,
       "si": 87.5,
       "grade": "E",
       "top_reasons": [
@@ -1119,14 +1375,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -1147,14 +1410,21 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.6496,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.375,
+      "raw_score": -0.3658,
       "si": 25.0,
       "grade": "B",
       "top_reasons": []
@@ -1173,21 +1443,28 @@
         "coupling": 1.0,
         "dependency_cycle": 0.0,
         "global_state": 4.0,
-        "game_loop_centrality": 0.3333
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
       },
       "z": {
         "cc": -0.2489,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": 0.2486
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.0419,
-      "si": 56.25,
+      "raw_score": -0.1561,
+      "si": 54.17,
       "grade": "C",
       "top_reasons": [
-        "game_loop_centrality",
-        "global_state"
+        "global_state",
+        "dependency_cycle"
       ]
     },
     {
@@ -1206,14 +1483,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3432,
+      "raw_score": -0.334,
       "si": 31.25,
       "grade": "B",
       "top_reasons": []
@@ -1234,14 +1518,21 @@
         "global_state": 9.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.4377,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 1.2594,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.5701,
+      "raw_score": 0.5783,
       "si": 85.42,
       "grade": "E",
       "top_reasons": [
@@ -1265,14 +1556,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5236,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.3114,
+      "raw_score": -0.3022,
       "si": 43.75,
       "grade": "C",
       "top_reasons": []
@@ -1293,14 +1591,21 @@
         "global_state": 2.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.1631,
         "coupling": 1.511,
         "dependency_cycle": 0.0,
         "global_state": -0.2254,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.677,
+      "raw_score": 0.6853,
       "si": 91.67,
       "grade": "E",
       "top_reasons": [
@@ -1324,14 +1629,21 @@
         "global_state": 4.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.3004,
         "coupling": -0.1374,
         "dependency_cycle": 0.0,
         "global_state": 0.1989,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.3698,
+      "raw_score": 0.378,
       "si": 81.25,
       "grade": "E",
       "top_reasons": [
@@ -1355,14 +1667,21 @@
         "global_state": 9.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 33.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 3.8709,
         "coupling": -1.7857,
         "dependency_cycle": 0.0,
         "global_state": 1.2594,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": 0.8176,
+      "raw_score": 0.8268,
       "si": 93.75,
       "grade": "E",
       "top_reasons": [
@@ -1386,14 +1705,21 @@
         "global_state": 6.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 6.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": -1.7857,
         "dependency_cycle": 0.0,
         "global_state": 0.6231,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.555,
+      "raw_score": -0.5458,
       "si": 8.33,
       "grade": "A",
       "top_reasons": [
@@ -1417,14 +1743,21 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3862,
         "coupling": -1.7857,
         "dependency_cycle": 0.0,
         "global_state": -0.4375,
-        "game_loop_centrality": -0.5744
+        "game_loop_centrality": -0.513
       },
-      "raw_score": -0.7141,
+      "raw_score": -0.7049,
       "si": 6.25,
       "grade": "A",
       "top_reasons": []
@@ -1445,14 +1778,21 @@
         "global_state": 7.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.4377,
         "coupling": -1.7857,
         "dependency_cycle": 0.0,
         "global_state": 0.8352,
-        "game_loop_centrality": 1.8946
+        "game_loop_centrality": 1.9494
       },
-      "raw_score": 0.0944,
+      "raw_score": 0.1026,
       "si": 66.67,
       "grade": "D",
       "top_reasons": [
@@ -1473,8 +1813,8 @@
     {
       "file_path": "Graphics/D2kSpriteSequence.cs",
       "module": "Graphics",
-      "si_mean": 39.58,
-      "si_max": 54.17,
+      "si_mean": 40.62,
+      "si_max": 56.25,
       "grade": "C",
       "class_count": 2
     },
@@ -1489,8 +1829,8 @@
     {
       "file_path": "PackageLoaders/D2kSoundResources.cs",
       "module": "PackageLoaders",
-      "si_mean": 68.75,
-      "si_max": 79.17,
+      "si_mean": 66.67,
+      "si_max": 72.92,
       "grade": "D",
       "class_count": 3
     },
@@ -1505,7 +1845,7 @@
     {
       "file_path": "SpriteLoaders/R8Loader.cs",
       "module": "SpriteLoaders",
-      "si_mean": 65.28,
+      "si_mean": 65.97,
       "si_max": 83.33,
       "grade": "E",
       "class_count": 3
@@ -1513,8 +1853,8 @@
     {
       "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
       "module": "Traits",
-      "si_mean": 48.61,
-      "si_max": 75.0,
+      "si_mean": 49.31,
+      "si_max": 77.08,
       "grade": "D",
       "class_count": 3
     },
@@ -1529,8 +1869,8 @@
     {
       "file_path": "Traits/Player/HarvesterInsurance.cs",
       "module": "Traits",
-      "si_mean": 41.67,
-      "si_max": 52.08,
+      "si_mean": 39.58,
+      "si_max": 47.92,
       "grade": "C",
       "class_count": 2
     },
@@ -1553,15 +1893,15 @@
     {
       "file_path": "Traits/World/BuildableTerrainLayer.cs",
       "module": "Traits",
-      "si_mean": 60.42,
-      "si_max": 77.08,
+      "si_mean": 61.46,
+      "si_max": 79.17,
       "grade": "D",
       "class_count": 2
     },
     {
       "file_path": "Traits/World/D2kMapGenerator.cs",
       "module": "Traits",
-      "si_mean": 58.33,
+      "si_mean": 59.03,
       "si_max": 100.0,
       "grade": "E",
       "class_count": 3
@@ -1577,8 +1917,8 @@
     {
       "file_path": "Traits/World/SonicBlastRenderer.cs",
       "module": "Traits",
-      "si_mean": 58.33,
-      "si_max": 72.92,
+      "si_mean": 59.38,
+      "si_max": 75.0,
       "grade": "D",
       "class_count": 2
     },
@@ -1593,8 +1933,8 @@
     {
       "file_path": "Traits/AttractsWorms.cs",
       "module": "Traits",
-      "si_mean": 40.62,
-      "si_max": 56.25,
+      "si_mean": 39.58,
+      "si_max": 54.17,
       "grade": "C",
       "class_count": 2
     },
@@ -1658,7 +1998,7 @@
     },
     {
       "module": "Graphics",
-      "si_mean": 62.5,
+      "si_mean": 63.54,
       "si_max": 70.83,
       "grade": "D",
       "class_count": 3,
@@ -1666,8 +2006,8 @@
     },
     {
       "module": "PackageLoaders",
-      "si_mean": 79.17,
-      "si_max": 79.17,
+      "si_mean": 72.92,
+      "si_max": 72.92,
       "grade": "D",
       "class_count": 3,
       "file_count": 1
@@ -1720,5 +2060,19 @@
       "class_count": 1,
       "file_count": 1
     }
-  ]
+  ],
+  "analysis_status": {
+    "state": "complete",
+    "language": "csharp",
+    "analyzed_files": 23,
+    "failed_files": 0,
+    "syntax_files": 0,
+    "errors": [],
+    "diagnostics": [],
+    "limitations": [
+      "결과는 선택한 언어와 분석 대상에 한정됩니다. 완료 표시는 코드 전체를 정확히 이해했다는 보증이 아닙니다.",
+      "동적 호출·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프는 완전히 해석하지 않습니다.",
+      "C# 프로젝트 설정과 외부 DLL을 자동으로 읽지 않습니다. 해석되지 않은 호출은 이름 기반 근사 또는 연결 누락이 발생할 수 있습니다."
+    ]
+  }
 }

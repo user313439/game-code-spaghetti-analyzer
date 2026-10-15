@@ -1,0 +1,142 @@
+{
+  "schema_version": "compare-0.1",
+  "project": "DOOM 3 - gameplay source (neo/game)",
+  "scoring_path": "reports\\doom3-gameplay\\scoring.json",
+  "analyzed_path": "benchmarks\\DOOM-3\\neo\\game",
+  "files_analyzed_by_us": 71,
+  "files_analyzed_by_lizard": 135,
+  "files_matched": 71,
+  "top_n": 10,
+  "jaccard_topN": {
+    "5": 0.25,
+    "10": 0.5385
+  },
+  "spearman_si_vs_lizard_cc": 0.7825,
+  "spearman_p": 0.0,
+  "gsi_only_topN": [
+    {
+      "file_path": "Game_local.cpp",
+      "rank_gsi": 1,
+      "rank_lizard": 11,
+      "si": 100.0,
+      "grade": "E",
+      "lizard_max_cc": 41,
+      "lizard_nloc": 2717
+    },
+    {
+      "file_path": "physics/Physics_Player.cpp",
+      "rank_gsi": 4,
+      "rank_lizard": 13,
+      "si": 96.55,
+      "grade": "E",
+      "lizard_max_cc": 39,
+      "lizard_nloc": 1189
+    },
+    {
+      "file_path": "physics/Physics_RigidBody.cpp",
+      "rank_gsi": 8,
+      "rank_lizard": 24,
+      "si": 91.95,
+      "grade": "E",
+      "lizard_max_cc": 27,
+      "lizard_nloc": 847
+    }
+  ],
+  "lizard_only_topN": [
+    {
+      "file_path": "Game_network.cpp",
+      "rank_gsi": 11,
+      "rank_lizard": 4,
+      "si": 88.51,
+      "grade": "E",
+      "lizard_max_cc": 57,
+      "lizard_nloc": 1168
+    },
+    {
+      "file_path": "Fx.cpp",
+      "rank_gsi": 23,
+      "rank_lizard": 6,
+      "si": 74.71,
+      "grade": "D",
+      "lizard_max_cc": 55,
+      "lizard_nloc": 522
+    },
+    {
+      "file_path": "Entity.cpp",
+      "rank_gsi": 18,
+      "rank_lizard": 9,
+      "si": 80.46,
+      "grade": "E",
+      "lizard_max_cc": 43,
+      "lizard_nloc": 3010
+    }
+  ],
+  "common_topN": [
+    {
+      "file_path": "script/Script_Interpreter.cpp",
+      "rank_gsi": 2,
+      "rank_lizard": 1,
+      "si": 98.85,
+      "grade": "E",
+      "lizard_max_cc": 192,
+      "lizard_nloc": 1363
+    },
+    {
+      "file_path": "gamesys/TypeInfo.cpp",
+      "rank_gsi": 3,
+      "rank_lizard": 2,
+      "si": 97.7,
+      "grade": "E",
+      "lizard_max_cc": 139,
+      "lizard_nloc": 988
+    },
+    {
+      "file_path": "physics/Physics_AF.cpp",
+      "rank_gsi": 5,
+      "rank_lizard": 10,
+      "si": 95.4,
+      "grade": "E",
+      "lizard_max_cc": 42,
+      "lizard_nloc": 4770
+    },
+    {
+      "file_path": "Player.cpp",
+      "rank_gsi": 6,
+      "rank_lizard": 7,
+      "si": 94.25,
+      "grade": "E",
+      "lizard_max_cc": 55,
+      "lizard_nloc": 5846
+    },
+    {
+      "file_path": "MultiplayerGame.cpp",
+      "rank_gsi": 7,
+      "rank_lizard": 8,
+      "si": 93.1,
+      "grade": "E",
+      "lizard_max_cc": 52,
+      "lizard_nloc": 2560
+    },
+    {
+      "file_path": "script/Script_Compiler.cpp",
+      "rank_gsi": 9,
+      "rank_lizard": 5,
+      "si": 90.8,
+      "grade": "E",
+      "lizard_max_cc": 56,
+      "lizard_nloc": 1740
+    },
+    {
+      "file_path": "anim/Anim_Blend.cpp",
+      "rank_gsi": 10,
+      "rank_lizard": 3,
+      "si": 89.66,
+      "grade": "E",
+      "lizard_max_cc": 113,
+      "lizard_nloc": 3348
+    }
+  ],
+  "notes": [
+    "동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다."
+  ]
+}

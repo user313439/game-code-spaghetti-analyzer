@@ -1,9 +1,9 @@
 === Phase B: G-SI vs Lizard (max CC) ===
-project:       Chocolate Doom
-scoring:       reports\chocolate-doom\scoring.json
+project:       src
+scoring:       C:\Users\dudwl\Desktop\Projects\졸업작품\docs\_verification\2026-10-03-refinement\chocolate-doom\scoring.json
 analyzed_path: C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\chocolate-doom\src
 files: us=296 liz=475 matched=291
-spearman(si vs liz_max_cc): rho=+0.7020  p=0
+spearman(si vs liz_max_cc): rho=+0.7082  p=0
 
 Top-N Jaccard:
   top- 5: 0.111
@@ -12,10 +12,10 @@ Top-N Jaccard:
 
 Common top-30 (양쪽 모두 hotspot, 정렬 = G-SI rank):
   gsi# 3 liz# 1 | si= 99.3 [E] liz_cc=210  strife/p_switch.c
-  gsi#10 liz# 5 | si= 97.0 [E] liz_cc=143  heretic/g_game.c
-  gsi#11 liz#26 | si= 96.6 [E] liz_cc= 60  strife/d_main.c
+  gsi# 9 liz# 5 | si= 97.3 [E] liz_cc=143  heretic/g_game.c
+  gsi#12 liz#27 | si= 96.3 [E] liz_cc= 60  strife/d_main.c
   gsi#13 liz#18 | si= 96.0 [E] liz_cc= 90  doom/g_game.c
-  gsi#14 liz#27 | si= 95.6 [E] liz_cc= 60  doom/d_main.c
+  gsi#14 liz#26 | si= 95.6 [E] liz_cc= 60  doom/d_main.c
   gsi#15 liz# 3 | si= 95.3 [E] liz_cc=149  hexen/g_game.c
   gsi#16 liz#12 | si= 94.9 [E] liz_cc=109  strife/g_game.c
   gsi#20 liz#20 | si= 93.6 [E] liz_cc= 86  strife/p_dialog.c
@@ -23,28 +23,29 @@ Common top-30 (양쪽 모두 hotspot, 정렬 = G-SI rank):
   gsi#24 liz#10 | si= 92.2 [E] liz_cc=113  hexen/p_map.c
 
 G-SI 단독 top-30 (Lizard top-30 에는 없음 — Phase B 정성 분석 후보):
-  gsi# 1 liz#155 | si=100.0 [E] liz_cc= 12  i_system.c
-  gsi# 2 liz#171 | si= 99.7 [E] liz_cc= 10  m_misc.c
+  gsi# 1 liz#159 | si=100.0 [E] liz_cc= 12  i_system.c
+  gsi# 2 liz#174 | si= 99.7 [E] liz_cc= 10  m_misc.c
   gsi# 4 liz#71 | si= 99.0 [E] liz_cc= 28  i_video.c
-  gsi# 5 liz#165 | si= 98.7 [E] liz_cc= 11  z_zone.c
-  gsi# 6 liz#76 | si= 98.3 [E] liz_cc= 26  m_argv.c
-  gsi# 7 liz#161 | si= 98.0 [E] liz_cc= 11  v_video.c
-  gsi# 8 liz#154 | si= 97.6 [E] liz_cc= 13  w_wad.c
-  gsi# 9 liz#144 | si= 97.3 [E] liz_cc= 13  deh_main.c
-  gsi#12 liz#105 | si= 96.3 [E] liz_cc= 18  d_loop.c
+  gsi# 5 liz#168 | si= 98.7 [E] liz_cc= 11  z_zone.c
+  gsi# 6 liz#75 | si= 98.3 [E] liz_cc= 26  m_argv.c
+  gsi# 7 liz#154 | si= 98.0 [E] liz_cc= 13  w_wad.c
+  gsi# 8 liz#167 | si= 97.6 [E] liz_cc= 11  v_video.c
+  gsi#10 liz#104 | si= 97.0 [E] liz_cc= 18  d_loop.c
+  gsi#11 liz#143 | si= 96.6 [E] liz_cc= 13  deh_main.c
   gsi#17 liz#36 | si= 94.6 [E] liz_cc= 51  doom/st_stuff.c
 
 Lizard 단독 top-30 (G-SI top-30 에는 없음):
   gsi#41 liz# 4 | si= 86.5 [E] liz_cc=144  hexen/mn_menu.c
-  gsi#35 liz# 6 | si= 88.5 [E] liz_cc=136  heretic/mn_menu.c
-  gsi#44 liz# 7 | si= 85.5 [E] liz_cc=121  strife/m_menu.c
-  gsi#50 liz#11 | si= 83.5 [E] liz_cc=112  doom/m_menu.c
+  gsi#34 liz# 6 | si= 88.8 [E] liz_cc=136  heretic/mn_menu.c
+  gsi#43 liz# 7 | si= 85.8 [E] liz_cc=121  strife/m_menu.c
+  gsi#48 liz#11 | si= 84.1 [E] liz_cc=112  doom/m_menu.c
   gsi#31 liz#13 | si= 89.9 [E] liz_cc=100  doom/p_inter.c
-  gsi#67 liz#17 | si= 77.7 [D] liz_cc= 94  doom/p_spec.c
-  gsi#58 liz#19 | si= 80.7 [E] liz_cc= 88  hexen/p_user.c
-  gsi#36 liz#21 | si= 88.2 [E] liz_cc= 85  heretic/p_inter.c
-  gsi#65 liz#22 | si= 78.4 [D] liz_cc= 82  hexen/p_mobj.c
-  gsi#38 liz#23 | si= 87.5 [E] liz_cc= 81  heretic/p_switch.c
+  gsi#65 liz#17 | si= 78.4 [D] liz_cc= 94  doom/p_spec.c
+  gsi#56 liz#19 | si= 81.4 [E] liz_cc= 88  hexen/p_user.c
+  gsi#35 liz#21 | si= 88.5 [E] liz_cc= 85  heretic/p_inter.c
+  gsi#64 liz#22 | si= 78.7 [D] liz_cc= 82  hexen/p_mobj.c
+  gsi#37 liz#23 | si= 87.8 [E] liz_cc= 81  heretic/p_switch.c
 
 Notes:
+  - 동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다.
   - Lizard 가 분석한 475 파일 중 291 만 G-SI 분석 파일과 매칭. 분석기가 본문 .c/.cpp 만 보지만 Lizard 는 헤더도 함께 보는 등 범위 차이일 수 있음.

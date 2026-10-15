@@ -1,0 +1,99 @@
+{
+  "verified_on": "2026-10-12",
+  "scope": "Local web readability, recoverable history deletion, sorting, example project descriptions, and concurrent request fixes",
+  "status": "implemented_and_verified_for_user_feedback",
+  "runtime": {
+    "python": "3.10",
+    "dotnet": "8",
+    "libclang": "docs/_verification/2026-10-05-cpp-feasibility/clang20/Library/bin/libclang-13.dll",
+    "url": "http://127.0.0.1:8766/",
+    "server_process_id": 28308
+  },
+  "automated_tests": {
+    "command": "py -3.10 -m pytest tests -q --tb=short",
+    "environment": "dotnet on PATH and GAME_SI_TEST_CLANG_LIBRARY pointing to compatible native library",
+    "passed": 407,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 61.59,
+    "exit_code": 0,
+    "javascript_syntax_command": "node --check game_si/web/static/app.js",
+    "javascript_syntax_exit_code": 0,
+    "additional_race_regressions": {
+      "red_failed": 6,
+      "red_passed": 1,
+      "green_passed": 7,
+      "coverage": [
+        "Latest selected history detail wins when responses arrive out of order",
+        "Reset, navigation and history mutation invalidate stale detail replies",
+        "Refreshing the history list preserves the current pending detail selection",
+        "GitHub and file import reserve their worker under the job creation lock before cancel/delete can intervene"
+      ]
+    },
+    "previous_transient_io_failure": "Earlier isolated Windows job.tmp replace permission error was not reproduced in the fresh full runs or ten repeated source-size-backfill test runs; no speculative retry was added."
+  },
+  "reviews": {
+    "specification": "passed after both request-race fixes",
+    "code_quality": "no critical or important issues; ready for user testing",
+    "minor_followup": "Restore recreates the selected button without explicitly focusing the restored row. Keyboard focus usability can be improved in a later focused change."
+  },
+  "real_browser_checks": {
+    "browser": "Codex in-app browser",
+    "checked": [
+      "Main page and advanced settings readability",
+      "Local analysis explanation displayed through keyboard focus",
+      "Latest, name and imported-source-size sorting",
+      "Trash button accessible label, confirmation and cancel",
+      "Soft-delete notification and immediate undo",
+      "Deleted record remains hidden after reload and restores through collapsed deleted-record list",
+      "Restored live analysis result link is available again",
+      "Four project example cards and collapsible OpenRA auxiliary modules",
+      "DOOM 3 example link opens the existing partial-result dashboard"
+    ],
+    "final_version_rechecked": [
+      "Main screen",
+      "Source-size sorting",
+      "Delete, reload, restore",
+      "Grouped examples and DOOM 3 result link"
+    ],
+    "console_errors_observed": 0,
+    "main_screenshot": ".cache/web/feedback-main-2026-10-12.jpg",
+    "example_screenshot": ".cache/web/feedback-examples-2026-10-12.jpg"
+  },
+  "live_game_check": {
+    "performed_on": "2026-10-11",
+    "repository": "https://github.com/chocolate-doom/chocolate-doom",
+    "commit": "895f581c5d91497bdda0516612da803fe5843e28",
+    "job_id": "2b41103dd6cd4f158bb60afd48b0ca05",
+    "language": "c",
+    "backend": "tree-sitter",
+    "scope": "src",
+    "imported_source_and_header_bytes": 9500152,
+    "extracted_files": 296,
+    "failed_files": 0,
+    "syntax_recovery_files": 37,
+    "state": "partial",
+    "observed_analysis_seconds_excluding_download": 9.6,
+    "observed_result": "4312 functions, hotspot ranking and dependency graph available",
+    "interpretation": "Partial static analysis, not complete game understanding, a build success guarantee, or a benchmark performance guarantee."
+  },
+  "preservation": {
+    "baseline": "reports/verification-report-index-2026-10-09.json",
+    "static_report_files_checked": 226,
+    "hash_mismatches": 0,
+    "reports_landing_unchanged": true,
+    "live_result_sha256_before_and_after_delete_restore": "C8ACE7C2606F517A2CEA7697C5684D2C7B2A9B66ADF347D52675F81FDF37D0EF",
+    "live_input_g_game_c_sha256_before_and_after_delete_restore": "53DE0AA103E269D25AE2B5965F18732BDFB2C6769CB4369DF01A0FA009D44480",
+    "existing_three_user_records_deleted": false,
+    "verification_job_restored_at_handoff": true,
+    "original_sources_or_existing_static_reports_changed_by_this_feedback_work": false
+  },
+  "limitations": [
+    "The old 8765 server could not be stopped by the execution policy; use only the final 8766 instance for this feedback session. Concurrent servers sharing a record store are not supported.",
+    "No new native browser folder-drag gesture or real mobile viewport check was performed in this resumed verification; upload tests and responsive CSS checks remain automated evidence.",
+    "Mouse tooltip behavior is covered by CSS and review; actual resumed interaction verified keyboard focus, not a physical mouse hover.",
+    "No Git commit, branch, push or pull request was created.",
+    "No final report or presentation was produced in this UI feedback task.",
+    "The local web app is not a complete security sandbox and does not add AI-generated advice or automatic code editing."
+  ]
+}

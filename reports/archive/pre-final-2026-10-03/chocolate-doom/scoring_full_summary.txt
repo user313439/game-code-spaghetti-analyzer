@@ -1,0 +1,14 @@
+=== G-SI-Full vs G-SI-Static (top hotspot 비교) ===
+project: Chocolate Doom  window: 12 months
+
+rank  G-SI Full  G-SI Static       Δ      CR  fqn
+   1     100.00        98.99   +1.01       4  i_video
+   2      99.66       100.00   -0.34       0  i_system
+   3      99.32        99.66   -0.34       1  m_misc
+   4      98.99        98.31   +0.68       4  m_argv
+   5      98.65        99.32   -0.67       0  strife.p_switch
+   6      98.31        92.57   +5.74       6  heretic.d_main
+   7      97.97        96.62   +1.35       3  strife.d_main
+   8      97.64        95.61   +2.03       3  doom.d_main
+   9      97.30        97.30   -0.00       2  deh_main
+  10      96.96        94.93   +2.03       2  strife.g_game

@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -33,6 +34,9 @@ class MethodMetrics:
     is_game_loop_entry: bool
     invoked_names: list[str]
     game_loop_centrality: float = 0.0
+    symbol_id: str = ""
+    invoked_symbols: list[str] = field(default_factory=list)
+    source_fqn: str = ""
 
 
 @dataclass
@@ -61,6 +65,7 @@ class ClassMetrics:
     cycle_edges: int = 0           # 자신이 관여한 SCC 내부 edge 수 (in + out)
     global_state: int = 0
     game_loop_centrality: float = 0.0
+    source_fqn: str = ""
 
 
 @dataclass
@@ -113,12 +118,19 @@ def compute_metrics(ast_data: dict) -> MetricsResult:
 def _build_units(ast_data: dict) -> tuple[list[ClassMetrics], list[MethodMetrics]]:
     classes: list[ClassMetrics] = []
     methods: list[MethodMetrics] = []
+    class_counts = Counter(c["fully_qualified_name"] for f in ast_data.get("files", [])
+                           for c in f.get("classes", []))
 
     for f in ast_data.get("files", []):
         file_path = f.get("relative_path") or f.get("path", "")
         for c in f.get("classes", []):
+            source_fqn = c["fully_qualified_name"]
+            node_fqn = source_fqn
+            if class_counts[source_fqn] > 1:
+                node_fqn = f"{source_fqn}@{file_path}:{c['start_line']}:{c.get('kind', 'class')}"
             cls = ClassMetrics(
-                fqn=c["fully_qualified_name"],
+                fqn=node_fqn,
+                source_fqn=source_fqn,
                 name=c["name"],
                 file_path=file_path,
                 start_line=c["start_line"],
@@ -141,10 +153,19 @@ def _build_units(ast_data: dict) -> tuple[list[ClassMetrics], list[MethodMetrics
                     loc=m["loc"],
                     is_game_loop_entry=bool(m.get("is_game_loop_entry", False)),
                     invoked_names=list(m.get("invoked_names", [])),
+                    symbol_id=m.get("symbol_id") or "",
+                    invoked_symbols=list(m.get("invoked_symbols", [])),
+                    source_fqn=f"{source_fqn}.{m['name']}",
                 )
                 cls.methods.append(method)
                 methods.append(method)
             classes.append(cls)
+
+    # 소스 위치를 추가해 오버로드와 플랫폼별 동명 선언을 독립된 노드로 보존한다.
+    method_counts = Counter(m.fqn for m in methods)
+    for i, m in enumerate(methods):
+        if method_counts[m.fqn] > 1:
+            m.fqn = f"{m.fqn}@{m.file_path}:{m.start_line}:{i}"
 
     return classes, methods
 
@@ -175,6 +196,7 @@ def _build_class_graph(classes: list[ClassMetrics]) -> nx.DiGraph:
     name_to_fqns: dict[str, list[str]] = {}
     for c in classes:
         name_to_fqns.setdefault(c.name, []).append(c.fqn)
+        name_to_fqns.setdefault(c.source_fqn or c.fqn, []).append(c.fqn)
     fqn_set = {c.fqn for c in classes}
 
     for c in classes:
@@ -183,7 +205,7 @@ def _build_class_graph(classes: list[ClassMetrics]) -> nx.DiGraph:
             target = _resolve_type_reference(ref, name_to_fqns, fqn_set)
             if target is not None and target != c.fqn:
                 targets.add(target)
-        for t in targets:
+        for t in sorted(targets):
             g.add_edge(c.fqn, t)
 
     return g
@@ -198,11 +220,19 @@ def _resolve_type_reference(
 
     매칭 우선순위:
       1. ref 자체가 프로젝트 FQN과 일치
-      2. ref 의 마지막 점-구분 식별자가 단순 이름과 일치하고, 후보가 유일한 경우
+      2. 수식되지 않은 ref가 단순 이름과 일치하고, 후보가 유일한 경우
       3. 그 외(외부 라이브러리 등)는 매칭 실패 → None
     """
     if not ref:
         return None
+    exact = ref.strip().removeprefix("global::")
+    if exact in fqn_set:
+        return exact
+    exact_candidates = list(dict.fromkeys(name_to_fqns.get(exact, [])))
+    if exact_candidates:
+        return exact_candidates[0] if len(exact_candidates) == 1 else None
+    if "." in exact or "::" in exact:
+        return None  # 외부/미해결 수식 타입을 동명의 로컬 타입으로 대체하지 않는다.
     # 제네릭 부분 제거: List<Foo> → List
     base = ref.split("<", 1)[0].strip().rstrip("[]?")
     if not base:
@@ -212,7 +242,7 @@ def _resolve_type_reference(
         return base
 
     last = base.rsplit(".", 1)[-1]
-    candidates = name_to_fqns.get(last, [])
+    candidates = list(dict.fromkeys(name_to_fqns.get(last, [])))
     if len(candidates) == 1:
         return candidates[0]
     # 동명이클래스가 여러 개인 경우 — semantic 도입 전에는 매칭 불가
@@ -318,9 +348,9 @@ def _compute_game_loop_centrality(
 ) -> None:
     """게임 루프 진입점으로부터 도달 가능한 메서드의 reachability depth(역수)를 점수화한다.
 
-    syntactic 분석에서는 호출 대상 메서드의 정확한 심볼을 알 수 없으므로,
-    `invoked_names`의 마지막 식별자가 프로젝트 내 메서드 단순 이름과 일치하는 경우에 한해
-    엣지로 사용한다. 후속 단계에서 semantic 도입 시 정확도가 향상된다.
+    정확한 semantic 심볼을 우선 사용한다. 옛 AST는 전체 이름이 유일할 때만
+    연결하며, 단순 이름 fallback은 수식되지 않은 호출에만 허용한다.
+    외부 타입과 동명 오버로드를 임의의 로컬 메서드로 연결하지 않는다.
 
     점수 정의:
         depth=0(진입점 자신) → 1.0
@@ -332,14 +362,24 @@ def _compute_game_loop_centrality(
     # 메서드 호출 그래프 빌드 (메서드 FQN 단위, 단순 이름 매칭)
     g: nx.DiGraph = nx.DiGraph()
     name_to_fqns: dict[str, list[str]] = {}
+    exact_to_fqns: dict[str, list[str]] = {}
+    symbols: dict[str, list[str]] = {}
     for m in methods:
         g.add_node(m.fqn)
         name_to_fqns.setdefault(m.name, []).append(m.fqn)
+        exact_to_fqns.setdefault(m.source_fqn or m.fqn, []).append(m.fqn)
+        if m.symbol_id:
+            symbols.setdefault(m.symbol_id, []).append(m.fqn)
 
     for m in methods:
+        for symbol in m.invoked_symbols:
+            candidates = symbols.get(symbol, [])
+            if len(candidates) == 1:
+                g.add_edge(m.fqn, candidates[0])
         for inv in m.invoked_names:
-            last = inv.rsplit(".", 1)[-1].split("<", 1)[0].strip()
-            candidates = name_to_fqns.get(last, [])
+            candidates = exact_to_fqns.get(inv, [])
+            if not candidates and "." not in inv:
+                candidates = name_to_fqns.get(inv.split("<", 1)[0].strip(), [])
             # 후보가 정확히 1개일 때만 엣지 추가 (안전한 매칭)
             if len(candidates) == 1 and candidates[0] != m.fqn:
                 g.add_edge(m.fqn, candidates[0])
@@ -386,8 +426,8 @@ def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
         if fqn not in g:
             return [], []
         # 그래프 엣지: u → v 는 "u 가 v 를 참조" 의미.
-        out_n = list(g.successors(fqn))       # 이 클래스가 참조하는 것 (fan_out 대상)
-        in_n = list(g.predecessors(fqn))      # 이 클래스를 참조하는 것 (fan_in 출처)
+        out_n = sorted(g.successors(fqn))       # 이 클래스가 참조하는 것 (fan_out 대상)
+        in_n = sorted(g.predecessors(fqn))      # 이 클래스를 참조하는 것 (fan_in 출처)
         return in_n, out_n
 
     return {
@@ -397,6 +437,7 @@ def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
         "classes": [
             {
                 "fqn": c.fqn,
+                "source_fqn": c.source_fqn or c.fqn,
                 "name": c.name,
                 "file_path": c.file_path,
                 "start_line": c.start_line,
@@ -423,6 +464,8 @@ def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
         "methods": [
             {
                 "fqn": m.fqn,
+                "source_fqn": m.source_fqn or m.fqn,
+                "symbol_id": m.symbol_id,
                 "class_fqn": m.class_fqn,
                 "file_path": m.file_path,
                 "name": m.name,
@@ -437,7 +480,7 @@ def metrics_to_dict(result: MetricsResult) -> dict[str, Any]:
         ],
         "cycles": [
             {"size": len(scc), "members": sorted(scc)}
-            for scc in sorted(result.sccs, key=len, reverse=True)
+            for scc in sorted(result.sccs, key=lambda s: (-len(s), sorted(s)))
         ],
     }
 

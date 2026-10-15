@@ -1,0 +1,154 @@
+{
+  "schema_version": "tune-0.3",
+  "scoring_method": "class z-score -> weighted sum -> percentile (2 decimals) -> file max",
+  "validation_unit": "project",
+  "aggregation": "equal-weight mean of within-project mean correlations",
+  "case_projects": {
+    "OpenRA.Game": "OpenRA",
+    "OpenRA.Mods.Common": "OpenRA",
+    "OpenRA.Mods.Cnc": "OpenRA",
+    "OpenRA.Mods.D2k": "OpenRA",
+    "OpenRA.Server": "OpenRA",
+    "OpenRA.Platforms.Default": "OpenRA",
+    "Chocolate Doom": "chocolate-doom",
+    "OpenRCT2": "OpenRCT2"
+  },
+  "project_folds": [
+    {
+      "project": "OpenRA",
+      "train_cases": [
+        "Chocolate Doom",
+        "OpenRCT2"
+      ],
+      "holdout_cases": [
+        "OpenRA.Game",
+        "OpenRA.Mods.Common",
+        "OpenRA.Mods.Cnc",
+        "OpenRA.Mods.D2k",
+        "OpenRA.Platforms.Default"
+      ],
+      "weights": {
+        "cc": 0.25,
+        "coupling": 0.4,
+        "dependency_cycle": 0.05,
+        "global_state": 0.25,
+        "game_loop_centrality": 0.05
+      },
+      "per_case_holdout_rho": {
+        "OpenRA.Game": 0.6394,
+        "OpenRA.Mods.Common": 0.5476,
+        "OpenRA.Mods.Cnc": 0.3803,
+        "OpenRA.Mods.D2k": 0.4946,
+        "OpenRA.Platforms.Default": 0.4909
+      },
+      "holdout_rho": 0.5106
+    },
+    {
+      "project": "chocolate-doom",
+      "train_cases": [
+        "OpenRA.Game",
+        "OpenRA.Mods.Common",
+        "OpenRA.Mods.Cnc",
+        "OpenRA.Mods.D2k",
+        "OpenRA.Platforms.Default",
+        "OpenRCT2"
+      ],
+      "holdout_cases": [
+        "Chocolate Doom"
+      ],
+      "weights": {
+        "cc": 0.4,
+        "coupling": 0.2,
+        "dependency_cycle": 0.05,
+        "global_state": 0.3,
+        "game_loop_centrality": 0.05
+      },
+      "per_case_holdout_rho": {
+        "Chocolate Doom": 0.609
+      },
+      "holdout_rho": 0.609
+    },
+    {
+      "project": "OpenRCT2",
+      "train_cases": [
+        "OpenRA.Game",
+        "OpenRA.Mods.Common",
+        "OpenRA.Mods.Cnc",
+        "OpenRA.Mods.D2k",
+        "OpenRA.Platforms.Default",
+        "Chocolate Doom"
+      ],
+      "holdout_cases": [
+        "OpenRCT2"
+      ],
+      "weights": {
+        "cc": 0.35,
+        "coupling": 0.2,
+        "dependency_cycle": 0.1,
+        "global_state": 0.3,
+        "game_loop_centrality": 0.05
+      },
+      "per_case_holdout_rho": {
+        "OpenRCT2": 0.4557
+      },
+      "holdout_rho": 0.4557
+    }
+  ],
+  "input_precision": {
+    "OpenRA.Game": "full precision (raw_exact)",
+    "OpenRA.Mods.Common": "full precision (raw_exact)",
+    "OpenRA.Mods.Cnc": "full precision (raw_exact)",
+    "OpenRA.Mods.D2k": "full precision (raw_exact)",
+    "OpenRA.Server": "full precision (raw_exact)",
+    "OpenRA.Platforms.Default": "full precision (raw_exact)",
+    "Chocolate Doom": "full precision (raw_exact)",
+    "OpenRCT2": "full precision (raw_exact)"
+  },
+  "grid_size": 2226,
+  "n_evaluated": 2226,
+  "min_samples_for_correlation": 5,
+  "default_weights": {
+    "cc": 0.3,
+    "coupling": 0.25,
+    "dependency_cycle": 0.15,
+    "global_state": 0.15,
+    "game_loop_centrality": 0.15
+  },
+  "tuned_weights": {
+    "cc": 0.35,
+    "coupling": 0.25,
+    "dependency_cycle": 0.05,
+    "global_state": 0.3,
+    "game_loop_centrality": 0.05
+  },
+  "per_case_default_rho": {
+    "OpenRA.Game": 0.6011,
+    "OpenRA.Mods.Common": 0.5363,
+    "OpenRA.Mods.Cnc": 0.3681,
+    "OpenRA.Mods.D2k": 0.4915,
+    "OpenRA.Server": null,
+    "OpenRA.Platforms.Default": 0.5692,
+    "Chocolate Doom": 0.5851,
+    "OpenRCT2": 0.4598
+  },
+  "per_case_tuned_rho": {
+    "OpenRA.Game": 0.6567,
+    "OpenRA.Mods.Common": 0.5568,
+    "OpenRA.Mods.Cnc": 0.4461,
+    "OpenRA.Mods.D2k": 0.5052,
+    "OpenRA.Server": null,
+    "OpenRA.Platforms.Default": 0.6316,
+    "Chocolate Doom": 0.6152,
+    "OpenRCT2": 0.4739
+  },
+  "excluded_cases": [
+    "OpenRA.Server"
+  ],
+  "excluded_reason": "see per-case exclusion_reasons",
+  "exclusion_reasons": {
+    "OpenRA.Server": "insufficient samples (n < 5 files with bugfix data)"
+  },
+  "lopo_default_rho": 0.5194,
+  "lopo_tuned_rho": 0.5251,
+  "lopo_note": "all modules of a held-out project are excluded from training; small cases skipped"
+}

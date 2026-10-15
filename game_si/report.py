@@ -43,6 +43,8 @@ def generate_dashboard(
     output_path: Path,
     top_n: int = 30,
     advisor_data: dict | None = None,
+    analysis_status: dict | None = None,
+    project_subtitle: str | None = None,
 ) -> Path:
     """대시보드 HTML을 생성하고 경로를 반환한다.
 
@@ -52,7 +54,8 @@ def generate_dashboard(
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    html_doc = _render_html(project_name, scoring, metrics, top_n, advisor_data)
+    html_doc = _render_html(project_name, scoring, metrics, top_n, advisor_data, analysis_status,
+                            project_subtitle)
     output_path.write_text(html_doc, encoding="utf-8")
     return output_path
 
@@ -68,6 +71,8 @@ def _render_html(
     metrics: MetricsResult,
     top_n: int,
     advisor_data: dict | None = None,
+    analysis_status: dict | None = None,
+    project_subtitle: str | None = None,
 ) -> str:
     analyzed_at = _dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
 
@@ -86,21 +91,36 @@ def _render_html(
     }
     embedded_json = json.dumps(embedded, ensure_ascii=False, indent=None, default=_json_default)
 
-    return _HTML_TEMPLATE.format(
+    file_units = bool(analysis_status and analysis_status.get('backend') == 'clang')
+    return _unit_wording(_HTML_TEMPLATE, file_units).format(
         project_name=html.escape(project_name),
+        project_subtitle=_render_project_subtitle(project_subtitle, analysis_status),
         analyzed_at=analyzed_at,
-        help_box=_render_help_box(),
-        health_hero=_render_health_hero(scoring, metrics),
-        summary_cards=_render_summary_cards(scoring, metrics),
+        help_box=_render_help_box(file_units),
+        analysis_status=_render_analysis_status(analysis_status),
+        health_hero=_render_health_hero(scoring, metrics, file_units),
+        summary_cards=_render_summary_cards(scoring, metrics, file_units),
         grade_donut=_render_grade_donut(scoring.grade_distribution),
-        weights_table=_render_weights_table(scoring.weights),
-        hotspot_table=_render_hotspot_table(hotspots, top_n),
-        module_table=_render_module_table(module_rows),
-        dependency_graph=_render_dependency_graph(scoring, metrics, top_n=50),
-        cycle_explorer=_render_cycle_explorer(metrics, si_by_fqn),
+        weights_table=_render_weights_table(scoring.weights, file_units),
+        hotspot_table=_render_hotspot_table(hotspots, top_n, file_units),
+        module_table=_render_module_table(module_rows, file_units),
+        dependency_graph=_render_dependency_graph(scoring, metrics, top_n=50, file_units=file_units),
+        cycle_explorer=_render_cycle_explorer(metrics, si_by_fqn, file_units),
         refactoring_guide=_render_refactoring_guide(advisor_data),
         embedded_json=embedded_json,
     )
+
+
+def _unit_wording(text: str, file_units: bool) -> str:
+    """Adapt static template wording before interpolating any project/source data."""
+    if not file_units:
+        return text
+    return (text.replace('클래스', '구현 파일').replace('메서드', '함수')
+            .replace('추출된 타입 및 C/C++ 함수 묶음의 총 개수', '선택한 구현 파일 단위의 총 개수')
+            .replace('분석된 모든 함수와 생성자(.ctor)의 합. enum 항목, 자동 속성은 카운트하지 않습니다.',
+                     '선택한 구현 파일에 정의된 함수·생성자·소멸자의 합. 선언과 헤더 본문은 제외합니다.')
+            .replace('.cs 파일과 구현 파일(struct, interface, record 포함)의 개수', '선택한 구현 파일의 개수')
+            .replace('.cs 파일', 'C/C++ 구현 파일'))
 
 
 def _render_refactoring_guide(advisor_data: dict | None) -> str:
@@ -165,6 +185,8 @@ def _render_refactoring_guide(advisor_data: dict | None) -> str:
         '<button class="sec-info" data-target="help-advise" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>'
         f'<span class="advice-meta">model=<code>{model}</code></span>'
         '</div>'
+        '<p class="advice-provenance">각 안내의 점수와 설명은 <strong>생성 당시의 지표</strong>를 기준으로 하며 '
+        '현재 분석 결과와 다를 수 있습니다. 이전 실험 예시를 재사용할 때는 최신 점수·이름·의존성을 별도로 확인하세요.</p>'
         '<div class="sec-explain" id="help-advise" hidden>'
         '<p>각 카드는 <strong>G-SI 상위 hotspot 한 개</strong>에 대한 LLM 의 정성 분석입니다. '
         '카드를 클릭하면 펼쳐집니다. 각 카드는 다음 네 섹션으로 구성됩니다.</p>'
@@ -181,36 +203,219 @@ def _render_refactoring_guide(advisor_data: dict | None) -> str:
     )
 
 
-def _render_help_box() -> str:
+def _render_analysis_status(status: dict | None) -> str:
+    if status is not None and status.get('backend') == 'clang':
+        return _render_clang_status(status)
+    if status is None:
+        return _status_card('unknown', [_status_metric('추출 미확인',
+            '이 결과에는 파일별 분석 상태 기록이 연결되지 않았습니다. 성공 여부와 진단 수를 확인할 수 없습니다.')],
+            '상태 기록이 없어 성공 여부를 확인할 수 없습니다.',
+            ['원본 소스와 결과 생성 기록을 함께 확인하세요.'], None)
+    unit = '클래스 단위' if status.get('language') == 'csharp' else '클래스·함수 묶음 단위'
+    counts = [
+        _status_metric(unit, '점수는 추출한 클래스 또는 C/C++ 함수 묶음별로 계산합니다. 파일 수와 점수 단위 수는 다를 수 있습니다.'),
+        _status_metric('등록 해당 없음', '기본 분석은 별도의 컴파일 설정 등록 목록을 사용하지 않습니다.'),
+        _status_metric(f"추출 {status['analyzed_files']:,}개", '분석 결과에 포함된 소스 파일 수입니다. 완전한 분석을 뜻하지 않으며 구문 복구나 외부 참조로 정보가 빠질 수 있습니다.'),
+        _status_metric('미등록 해당 없음', '기본 분석에는 컴파일 설정 미등록 항목이 없습니다. 선택 언어와 제외 설정에 따른 분석 범위는 별도로 적용됩니다.'),
+        _status_metric(f"접근·추출 실패 {status['failed_files']:,}개", '읽기 또는 추출에 실패한 항목 수입니다. 0개여도 코드 전체가 정확하게 해석됐다는 보증은 아닙니다.'),
+        _status_metric('컴파일 오류 해당 없음', '이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.'),
+        _status_metric('컴파일 경고 해당 없음', '이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.'),
+        _status_metric(f"구문 복구 {status['syntax_files']:,}개 파일", '파서가 읽기 어려운 구문을 건너뛰거나 복구한 파일 수입니다. 관련 함수나 연결 정보가 불완전할 수 있습니다.'),
+    ]
+    return _status_card(status['state'], counts, _status_note(status),
+                        _diagnostic_reasons(status), status)
+
+
+def _render_clang_status(status: dict) -> str:
+    error_reasons = _diagnostic_reasons(status)
+    warning_reasons = _diagnostic_reasons(status, warnings=True)
+    error_hint = ' · '.join(_diagnostic_reasons(status, concise=True)[:2])
+    warning_hint = ' · '.join(_diagnostic_reasons(status, warnings=True, concise=True)[:2])
+    counts = [
+        _status_metric('구현 파일 단위', '선택한 C/C++ 구현 파일별로 점수를 계산합니다. 헤더는 해석에 참고하지만 헤더 안의 함수 본문은 점수 대상에서 제외합니다.'),
+        _status_metric(f"등록 {status['registered_files']:,}개", '이번 분석 범위와 컴파일 설정에 함께 포함된 파일 수입니다. 같은 파일의 여러 설정 중 첫 설정만 사용합니다.'),
+        _status_metric(f"추출 {status['analyzed_files']:,}개", '분석 결과를 받아 저장한 파일 수입니다. 오류가 있는 파일도 읽을 수 있는 부분은 포함하므로, 모든 함수와 연결 정보의 완전한 분석을 뜻하지는 않습니다.'),
+        _status_metric(f"미등록 {status['unregistered_files']:,}개", '선택한 입력 범위에 있지만 컴파일 설정에 등록되지 않아 분석 대상에서 제외한 구현 파일 수입니다.'),
+        _status_metric(f"접근·추출 실패 {status['failed_files']:,}개", '파일 읽기 실패, 분석 작업 중단 또는 시간 초과 등으로 파일 결과를 받지 못한 항목 수입니다. 컴파일러 오류와는 별도로 집계합니다.'),
+        _status_metric(f"컴파일 오류 {status['compiler_error_files']:,}개 파일/{status['compiler_error_count']:,}건",
+            '코드를 정상적으로 해석하지 못한 진단입니다. 게임의 실제 버그 개수는 아닙니다.'
+            + (f'\n이번 진단: {error_hint}.' if status['compiler_error_count'] else ' 수집된 오류 진단은 없습니다.')),
+        _status_metric(f"컴파일 경고 {status['compiler_warning_files']:,}개 파일/{status['compiler_warning_count']:,}건",
+            '분석은 계속할 수 있지만 확인이 필요한 진단입니다. 경고만으로 실패나 실제 버그를 뜻하지 않습니다.'
+            + (f'\n이번 진단: {warning_hint}.' if status['compiler_warning_count'] else ' 수집된 경고 진단은 없습니다.')),
+    ]
+    reasons = error_reasons if status['state'] != 'complete' else []
+    if status['compiler_warning_count']:
+        reasons = [*reasons, *warning_reasons]
+    return _status_card(status['state'], counts, _status_note(status), reasons, status)
+
+
+def _status_metric(label: str, explanation: str) -> str:
+    return (f'<span class="status-metric" tabindex="0" '
+            f'data-tooltip="{html.escape(explanation, quote=True)}" '
+            f'aria-label="{html.escape(label + "。 " + explanation, quote=True)}">'
+            f'{html.escape(label)}</span>')
+
+
+def _diagnostic_reasons(status: dict, warnings: bool = False, concise: bool = False) -> list[str]:
+    """Describe observed diagnostic categories, never infer a game-specific cause."""
+    severities = {'warning'} if warnings else {'error', 'fatal'}
+    messages = ' '.join(str(d.get('message', '')).lower()
+                        for d in status.get('compiler_diagnostics', [])
+                        if d.get('severity') in severities)
+    # Match compiler wording, not project names or paths.
+    reasons = []
+    def add(label: str, explanation: str) -> None:
+        reasons.append(label if concise else explanation)
+
+    if 'forbids macroizing' in messages:
+        add('키워드 매크로 충돌', '코드가 private·protected 같은 언어 키워드를 매크로로 바꾸어, 현재 표준 라이브러리의 보호 규칙과 충돌한 진단이 있습니다.')
+    if 'cast from member pointer' in messages:
+        add('멤버 함수 포인터 변환', '서로 다른 멤버 함수 포인터 사이의 변환을 현재 컴파일러가 허용하지 않은 진단이 있습니다. 관련 호출 정보가 불완전할 수 있습니다.')
+    if 'file not found' in messages:
+        add('누락된 헤더', '필요한 헤더를 찾지 못한 진단이 있습니다. 해당 파일의 존재와 include 설정을 확인해야 합니다.')
+    if 'unknown type name' in messages or 'undeclared identifier' in messages:
+        add('타입·이름 해석 문제', '일부 타입이나 이름을 해석하지 못했습니다. 헤더·매크로·설정 문제 또는 앞선 오류의 영향일 수 있어 원인을 별도로 확인해야 합니다.')
+    if 'string literal' in messages and ('conversion' in messages or 'convert' in messages):
+        add('문자열 상수 변환', '문자열 상수를 수정 가능한 문자 포인터처럼 다루는 코드에 대한 진단이 있습니다. 실제로 문자열을 변경하는지 확인할 필요가 있습니다.')
+    if 'equality comparison with extraneous parentheses' in messages:
+        add('비교 표현식 확인', '괄호로 둘러싼 비교 표현식에 대한 진단이 있습니다. 비교와 대입 중 의도한 표현이 맞는지 확인할 필요가 있습니다.')
+    if "'static' can only be specified" in messages:
+        add('static 선언 위치', 'static을 적은 위치에 대한 진단이 있습니다. 선언과 정의가 현재 언어 규칙에 맞는지 확인할 필요가 있습니다.')
+    if 'memcpy' in messages and 'non-trivially copyable' in messages:
+        add('객체 바이트 복사', '단순 바이트 복사가 안전하다고 보장되지 않는 타입에 memcpy를 사용한 진단이 있습니다. 객체 복사 방식이 적절한지 확인할 필요가 있습니다.')
+    if messages and not reasons:
+        add('원인 추가 확인 필요', '현재 진단만으로 원인을 확정하지 않습니다. 분석 설정과 원본 코드를 함께 확인해야 합니다.')
+    if not warnings:
+        errors = status.get('errors', [])
+        if errors:
+            worker_messages = ' '.join(str(e.get('message', '')).lower() for e in errors)
+            if 'timeout' in worker_messages:
+                add('분석 시간 초과', '분석 작업이 제한 시간 안에 끝나지 않은 항목이 있습니다. 해당 항목의 결과는 받지 못했습니다.')
+            else:
+                add('접근·설정·작업 실패 확인', '파일 접근·분석 작업·설정 또는 저장 단계의 실패가 기록됐습니다. 실패한 항목과 오류 안내를 확인해야 합니다.')
+        if status.get('syntax_files', 0):
+            add('구문 복구 발생', '읽기 어려운 구문을 복구하거나 건너뛴 파일이 있습니다. 관련 함수와 연결 정보가 빠질 수 있습니다.')
+        if not reasons and (status.get('compiler_error_count', 0) or status['state'] != 'complete'):
+            add('원인 추가 확인 필요', '현재 상태 요약만으로 원인을 확정할 수 없습니다. 입력·설정·추출·저장 단계의 원본 진단을 확인해야 합니다.')
+    elif not reasons and status.get('compiler_warning_count', 0):
+        add('원본 경고 확인 필요', '주의가 필요한 컴파일러 진단이 기록됐습니다. 경고의 실제 의미는 원본 진단과 코드를 함께 확인해야 합니다.')
+    return reasons
+
+
+def _status_note(status: dict) -> str:
+    if status['state'] == 'failed':
+        return '최신 실행은 실패했습니다. 남아 있는 결과를 최신 성공 결과로 사용하지 마세요.'
+    if status['state'] == 'partial':
+        return '결과는 얻었지만 일부 정보가 불완전할 수 있어 부분 분석으로 표시합니다.'
+    return '선택한 범위의 분석을 완료했습니다.'
+
+
+def _render_file_coverage(status: dict | None) -> str:
+    """Count selected inputs with returned results and no error/fatal; not accuracy."""
+    if not status or status.get('backend') != 'clang' or status.get('state') != 'partial':
+        return ''
+    counts = [status.get(key) for key in
+              ('registered_files', 'analyzed_files', 'failed_files', 'compiler_error_files')]
+    if any(type(value) is not int for value in counts):
+        return ''
+    registered, analyzed, failed, error_files = counts
+    if not (registered > 0 and failed >= 0 and 0 <= error_files <= analyzed <= registered
+            and analyzed + failed == registered):
+        return ''
+    clean = analyzed - error_files
+    percentage = 100 * clean / registered
+    explanation = ('선택한 등록 입력 중 결과를 얻었고 컴파일 오류가 없던 파일의 비율입니다. '
+                   '경고 파일은 포함하고 추출 실패 파일은 분자에서 제외합니다. 미등록 파일은 계산 대상 밖입니다. '
+                   '정확도나 전체 게임의 분석률을 뜻하지 않습니다.')
+    return ('<div class="status-coverage"><span tabindex="0" '
+            f'data-tooltip="{html.escape(explanation, quote=True)}">컴파일 오류 없는 파일 비율 '
+            f'<strong>{percentage:.1f}%</strong> · {clean:,}/{registered:,}개</span></div>')
+
+
+def _status_card(state: str, counts: list[str], note: str, reasons: list[str],
+                 status: dict | None) -> str:
+    labels = {'complete': '분석 완료', 'partial': '부분 분석', 'failed': '분석 실패',
+              'unknown': '분석 상태 미확인'}
+    summary = {'complete': '분석 상태 설명', 'partial': '왜 부분 분석인가요?',
+               'failed': '왜 분석에 실패했나요?', 'unknown': '분석 상태 설명'}[state]
+    native = bool(status and status.get('backend') == 'clang')
+    scope = (f"선택한 구현 파일 {status['registered_files']:,}개 대상" if native else
+             '선택한 소스 범위 대상' if status else '분석 범위 미확인')
+    limitations = ''.join(f'<li>{html.escape(str(item))}</li>'
+                          for item in (status or {}).get('limitations', []))
+    reason_body = ''.join(f'<li>{html.escape(reason)}</li>' for reason in reasons)
+    if not reason_body:
+        reason_body = '<li>선택한 범위에 대한 결과입니다. 완료 표시는 전체 게임의 완전한 해석이나 빌드 성공을 보증하지 않습니다.</li>'
+    warning_body = ''
+    if state == 'complete' and status and status.get('compiler_warning_count', 0):
+        warnings = ''.join(f'<li>{html.escape(item)}</li>'
+                           for item in _diagnostic_reasons(status, warnings=True))
+        warning_body = f'<h3>기록된 경고 참고</h3><ul>{warnings}</ul>'
+    details = ('' if state == 'complete' else
+               f'<details class="analysis-info"><summary>{summary}</summary><ul>{reason_body}</ul></details>')
+    details += ('<details class="analysis-info"><summary>분석 범위와 한계</summary>'
+                f'<ul>{limitations}</ul>{warning_body}'
+                '<p>전체 설정과 진단은 원본 분석 데이터에 보존되어 있습니다.</p></details>')
+    heading = labels[state]
+    if state == 'complete':
+        completion_tip = ('선택한 분석 대상 기준의 완료 표시입니다. '
+                          '정확도나 전체 게임의 분석률, 빌드 성공률을 뜻하지 않습니다. ')
+        completion_tip += ('등록된 선택 입력 기준이며 미등록 파일은 제외합니다. 경고가 남을 수 있습니다.'
+                           if native else
+                           '기본 분석은 컴파일러 진단을 수집하지 않으므로 컴파일 오류가 없다는 뜻은 아닙니다.')
+        heading += (' · <span class="status-completion" tabindex="0" '
+                    f'data-tooltip="{html.escape(completion_tip, quote=True)}">100%</span>')
+    return (f'<aside class="analysis-status{" partial" if state != "complete" else ""}" aria-label="분석 상태">'
+            f'<div class="status-heading"><strong>{heading}</strong><span>{html.escape(scope)}</span></div>'
+            f'{_render_file_coverage(status)}'
+            f'<div class="status-counts">{" · ".join(counts)}</div>'
+            f'<p class="status-note">{html.escape(note)}</p>'
+            f'{details}</aside>')
+
+
+def _render_project_subtitle(subtitle: str | None, status: dict | None) -> str:
+    if subtitle is None:
+        subtitle = ('선택한 구현 파일 · 컴파일 설정 기반 분석' if status and status.get('backend') == 'clang'
+                    else '선택한 소스 코드 · 기본 정적 분석')
+    return f'<p class="report-subtitle">{html.escape(subtitle)}</p>' if subtitle else ''
+
+
+def _render_help_box(file_units: bool = False, analysis_status: dict | None = None) -> str:
     """대시보드 상단에 두는 \"이 대시보드 읽는 법\" 도움말 박스.
 
     각 섹션의 상세 설명은 섹션 헤더 옆 ⓘ 토글로 분리되어 있으므로,
-    이 박스는 전체적인 점수 의미와 등급 색상 안내만 담는다.
+    이 박스는 점수 의미·등급 색상과 화면 사용법을 담는다.
     """
-    return '''<details class="help" open>
-    <summary>이 대시보드 읽는 법 (펼치기 / 접기)</summary>
+    help_box = _unit_wording('''<details class="help">
+    <summary>대시보드 읽는 법</summary>
     <div class="help-body">
-        <p><strong>Game Spaghetti Index (G-SI)</strong>는 게임 코드의 각 클래스가 다른 코드와 얼마나 얽혀 있는지를 0~100점으로 측정한 지표입니다. <strong>점수가 높을수록 위험</strong>합니다.</p>
+        <p><strong>Game Spaghetti Index (G-SI)</strong>는 분석한 클래스 집합 내부의 <strong>상대적인 검토 우선순위</strong>입니다. 절대 품질·결함 확률이나 프로젝트 간 우열을 뜻하지 않습니다.</p>
+        <p>동점은 상단 백분위로 계산합니다. 모두 동점이면 100/E여도 심각한 결함의 증거가 아니며, 순위로 후보를 구분할 수 없습니다. 원시 지표와 실제 소스를 함께 확인하세요.</p>
         <p class="help-grade">
             등급 의미 →
-            <span class="grade-badge" style="background:#3b8e5a">A</span> 안전 ·
-            <span class="grade-badge" style="background:#7fb95a">B</span> 일반 ·
-            <span class="grade-badge" style="background:#e3b341">C</span> 보통 ·
-            <span class="grade-badge" style="background:#ef7d3c">D</span> 리팩토링 후보 ·
-            <span class="grade-badge" style="background:#d24343">E</span> 심각
+            <span class="grade-badge" style="background:#3b8e5a">A</span> 0~20 미만 ·
+            <span class="grade-badge" style="background:#7fb95a">B</span> 20~40 미만 ·
+            <span class="grade-badge" style="background:#e3b341">C</span> 40~60 미만 ·
+            <span class="grade-badge" style="background:#ef7d3c">D</span> 60~80 미만 ·
+            <span class="grade-badge" style="background:#d24343">E</span> 80~100
         </p>
         <p class="help-tip">💡 각 섹션 제목 옆의 <strong>「ⓘ 이 섹션이 뭔가요?」</strong> 버튼을 누르면 그 섹션이 무엇을 보여주는지 자세한 설명이 나옵니다. 화면 곳곳의 항목에 마우스를 올리면 그 자리에서 짧은 설명이 풍선으로 표시됩니다.</p>
     </div>
-</details>'''
+</details>''', file_units)
+    return help_box
 
 
-def _render_health_hero(scoring: ScoringResult, metrics: MetricsResult) -> str:
+def _render_health_hero(scoring: ScoringResult, metrics: MetricsResult, file_units: bool = False) -> str:
     """프로젝트 종합 점수(Project Health)를 큰 히어로 카드로 표시."""
     ph = scoring.project_health
     if ph is None:
         return ""
     color = GRADE_COLORS[ph.grade]
+    unit = '구현 파일' if file_units else '클래스'
     desc = _health_description(ph)
+    if len({c.raw_score for c in scoring.class_scores}) <= 1:
+        desc += " 현재 가중합이 모두 동점이므로 순위는 후보 구분에 유효하지 않습니다."
     return f'''<div class="health-hero">
         <div class="health-circle" style="border-color:{color}">
             <div class="health-grade" style="color:{color}">{ph.grade}</div>
@@ -218,16 +423,16 @@ def _render_health_hero(scoring: ScoringResult, metrics: MetricsResult) -> str:
             <div class="health-unit">/ 100</div>
         </div>
         <div class="health-info">
-            <div class="health-title">Project Health</div>
+            <div class="health-title">구조 요약 (보조 Health)</div>
             <div class="health-desc">{desc}</div>
             <div class="health-stats">
-                <div data-tooltip="프로젝트 내 모든 클래스의 G-SI 점수 평균. 종합 점수에 45% 기여">
+                <div data-tooltip="프로젝트 내 모든 {unit}의 G-SI 점수 평균. 종합 점수에 45% 기여">
                     <span class="hs-label">평균 G-SI</span><span class="hs-value">{ph.avg_si:.1f}</span></div>
-                <div data-tooltip="G-SI 60 이상(D·E 등급)인 클래스의 비율. 종합 점수에 25% 기여">
-                    <span class="hs-label">위험(D+E) 비율</span><span class="hs-value">{ph.risk_ratio * 100:.1f}%</span></div>
-                <div data-tooltip="순환 참조에 빠진 클래스 묶음의 수(크기 ≥ 2). 종합 점수에 15% 기여">
+                <div data-tooltip="G-SI 60 이상(D·E 등급)인 {unit}의 비율. 종합 점수에 25% 기여">
+                    <span class="hs-label">상대 D+E 비율</span><span class="hs-value">{ph.risk_ratio * 100:.1f}%</span></div>
+                <div data-tooltip="순환 참조에 빠진 {unit} 묶음의 수(크기 ≥ 2). 종합 점수에 15% 기여">
                     <span class="hs-label">순환 의존성</span><span class="hs-value">{ph.cycle_count}</span></div>
-                <div data-tooltip="클래스 한 개당 평균적으로 몇 개의 다른 클래스와 연결되는지(fan-in + fan-out 평균). 종합 점수에 15% 기여">
+                <div data-tooltip="{unit} 한 개당 평균적으로 몇 개의 다른 {unit}와 연결되는지(fan-in + fan-out 평균). 종합 점수에 15% 기여">
                     <span class="hs-label">평균 결합도</span><span class="hs-value">{ph.avg_coupling:.2f}</span></div>
             </div>
         </div>
@@ -235,16 +440,7 @@ def _render_health_hero(scoring: ScoringResult, metrics: MetricsResult) -> str:
 
 
 def _health_description(ph) -> str:
-    g = ph.grade
-    if g == "A":
-        return "전반적으로 깔끔하게 정리된 코드베이스입니다."
-    if g == "B":
-        return "일부 주의 항목이 있으나 전반적으로 양호한 코드베이스입니다."
-    if g == "C":
-        return "평균 수준의 코드베이스. 일부 모듈에서 결합도와 순환을 주기적으로 점검하세요."
-    if g == "D":
-        return "리팩토링 후보 클래스가 적지 않습니다. Hotspot Table 상위 항목부터 분리·정리를 권장합니다."
-    return "위험도가 높은 코드베이스. 변경 전 영향 분석과 테스트 보강이 필요한 클래스가 다수 존재합니다."
+    return "상대 순위·순환·결합도를 합친 검증되지 않은 보조 수치입니다. 절대 품질이나 프로젝트 간 비교에는 사용하지 마세요."
 
 
 def _json_default(obj: Any) -> Any:
@@ -258,7 +454,7 @@ def _json_default(obj: Any) -> Any:
 # ---------------------------------------------------------------------------
 
 
-def _render_summary_cards(scoring: ScoringResult, metrics: MetricsResult) -> str:
+def _render_summary_cards(scoring: ScoringResult, metrics: MetricsResult, file_units: bool = False) -> str:
     si_values = [c.si for c in scoring.class_scores]
     avg_si = sum(si_values) / len(si_values) if si_values else 0.0
     max_si = max(si_values) if si_values else 0.0
@@ -266,18 +462,23 @@ def _render_summary_cards(scoring: ScoringResult, metrics: MetricsResult) -> str
 
     cards = [
         ("분석 클래스", f"{scoring.total_classes:,}",
-         "Roslyn으로 파싱한 클래스 · 구조체 · 인터페이스 · 레코드의 합계"),
+         "분석기가 추출한 타입 또는 C/C++ 함수 묶음의 합계"),
         ("분석 메서드", f"{scoring.total_methods:,}",
          "분석된 모든 메서드와 생성자의 합계"),
         ("의존성 순환(SCC ≥ 2)", f"{len(metrics.sccs):,}",
          "A→B→C→A처럼 서로 참조해서 빙빙 도는 클래스 묶음의 개수. 적을수록 좋음"),
         ("평균 G-SI", f"{avg_si:.1f}",
-         "모든 클래스의 G-SI 점수 평균. 0~100, 낮을수록 깔끔한 코드베이스"),
+         "클래스 상대 백분위 평균. 절대 품질 비교에는 사용하지 않음"),
         ("최대 G-SI", f"{max_si:.1f}",
-         "이 프로젝트에서 가장 위험한 한 클래스의 G-SI 점수"),
-        ("위험(D/E) 클래스", f"{risk_count:,}",
-         "G-SI가 60 이상인 클래스 수. 변경 시 주의가 필요한 클래스"),
+         "최대 상대 백분위. 비어 있지 않은 분석은 공식상 항상 100"),
+        ("상대 D/E 클래스", f"{risk_count:,}",
+         "상대 백분위 60 이상인 클래스 수. 실제 결함 여부는 별도 검토"),
     ]
+    if file_units:
+        cards = [(_unit_wording(label, True), value, _unit_wording(tip, True))
+                 for label, value, tip in cards]
+        cards[0] = (cards[0][0], cards[0][1], '선택한 구현 파일 단위의 합계')
+        cards[1] = (cards[1][0], cards[1][1], '선택한 구현 파일에 정의된 함수·생성자·소멸자의 합계')
     return "".join(
         f'<div class="card" data-tooltip="{html.escape(tip)}">'
         f'<div class="card-label">{html.escape(label)}</div>'
@@ -330,7 +531,7 @@ def _render_grade_donut(distribution: dict[str, int]) -> str:
     </div>'''
 
 
-def _render_weights_table(weights: dict[str, float]) -> str:
+def _render_weights_table(weights: dict[str, float], file_units: bool = False) -> str:
     tooltips = {
         "cc": "Cyclomatic Complexity — 메서드 안의 if/for/case 등 분기 수",
         "coupling": "Coupling — 다른 클래스와 얼마나 연결되어 있는지 (fan-in + fan-out)",
@@ -339,7 +540,7 @@ def _render_weights_table(weights: dict[str, float]) -> str:
         "game_loop_centrality": "GameLoopCentrality — Tick/Update/Render 등 게임 루프 진입점에서 얼마나 가까운지",
     }
     rows = "".join(
-        f'<tr><td data-tooltip="{html.escape(tooltips.get(k, ""))}">{html.escape(k)}</td>'
+        f'<tr><td data-tooltip="{html.escape(_unit_wording(tooltips.get(k, ""), file_units))}">{html.escape(k)}</td>'
         f'<td class="num">{v:.3f}</td></tr>'
         for k, v in weights.items()
     )
@@ -349,17 +550,20 @@ def _render_weights_table(weights: dict[str, float]) -> str:
     </table>'''
 
 
-def _render_hotspot_table(hotspots, top_n: int) -> str:
+def _render_hotspot_table(hotspots, top_n: int, file_units: bool = False) -> str:
     """표 골격만 렌더링. 본문은 클라이언트 측에서 등급 필터에 따라 동적으로 그린다."""
+    unit = '구현 파일' if file_units else '클래스'
     notice = (
         f'<div class="table-notice">'
-        f'기본은 전체 클래스 중 <strong>G-SI 상위 {top_n}개</strong>를 표시합니다. '
+        f'기본은 전체 {unit} 중 <strong>G-SI 상위 {top_n}개</strong>를 표시합니다. '
         f'특정 등급(A~E)을 선택하면 <strong>그 등급 안에서</strong> 상위 {top_n}개를 다시 보여줍니다. '
         f'전체 등급 분포는 위 등급 분포 차트에서 확인하세요.'
         f'</div>'
     )
 
     def th(label: str, sort: str | None = None, tip: str | None = None, num: bool = False) -> str:
+        label = _unit_wording(label, file_units)
+        tip = _unit_wording(tip, file_units) if tip else tip
         parts = ['<th']
         classes: list[str] = []
         if sort:
@@ -381,26 +585,26 @@ def _render_hotspot_table(hotspots, top_n: int) -> str:
         <input type="text" id="hotspot-filter" placeholder="텍스트 검색: FQN 또는 파일 경로 부분 일치">
         <select id="grade-filter">
             <option value="">전체 등급에서 상위 {top_n}</option>
-            <option value="E">E 등급만 (심각)</option>
+            <option value="E">E 등급만 (상대 80~100)</option>
             <option value="D">D 등급만 (리팩토링 후보)</option>
             <option value="C">C 등급만 (보통)</option>
             <option value="B">B 등급만 (일반)</option>
-            <option value="A">A 등급만 (안전)</option>
+            <option value="A">A 등급만 (상대 0~20 미만)</option>
         </select>
         <span id="hotspot-count" class="hotspot-count"></span>
     </div>
     <table class="hotspot-table" id="hotspot-table">
         <thead><tr>
             <th class="num" data-tooltip="G-SI 점수 기준 등수">#</th>
-            <th data-tooltip="A(안전, 하위 20%) ~ E(심각, 상위 20%)">등급</th>
-            {th("G-SI", sort="num", num=True, tip="0~100. 프로젝트 내 분포 백분위. 높을수록 위험")}
+            <th data-tooltip="A~E는 상대 백분위 구간이며 동점 때문에 균등하지 않을 수 있음">등급</th>
+            {th("G-SI", sort="num", num=True, tip="0~100. 분석 집합 내부 상대 백분위. 절대 품질 아님")}
             {th("클래스 FQN", sort="str", tip="네임스페이스를 포함한 정규 이름")}
             {th("CC", sort="num", num=True, tip="Cyclomatic Complexity. 메서드 안의 if/for/case 등 분기 수. 클래스 단위는 상위 10% 평균")}
             {th("Coupling", sort="num", num=True, tip="다른 클래스를 참조하는 수(fan-out) + 참조받는 수(fan-in)")}
             {th("GlobalState", sort="num", num=True, tip="전역(static) 변수와 싱글톤 인스턴스에 접근한 횟수")}
             {th("CycleSize", sort="num", num=True, tip="순환 참조에 빠진 묶음의 크기. 0이면 순환에 포함되지 않음")}
             {th("GameLoop", sort="num", num=True, tip="Tick/Update/Render 같은 진입점으로부터의 가까움. 1.0이면 진입점 그 자체")}
-            <th data-tooltip="이 클래스가 위험으로 분류된 가장 큰 두 항목">주요 원인</th>
+            <th data-tooltip="이 {unit}가 위험으로 분류된 가장 큰 두 항목">주요 원인</th>
             <th data-tooltip="파일 경로 : 시작 라인">위치</th>
         </tr></thead>
         <tbody id="hotspot-tbody"></tbody>
@@ -431,6 +635,7 @@ def _render_dependency_graph(
     scoring: ScoringResult,
     metrics: MetricsResult,
     top_n: int = 50,
+    file_units: bool = False,
 ) -> str:
     """상위 hotspot 클래스와 그 인접 노드를 SVG force-directed 그래프로 렌더링한다.
 
@@ -439,6 +644,7 @@ def _render_dependency_graph(
     한눈에 의존성 구조를 파악할 수 있다.
     """
     import networkx as nx
+    unit = '구현 파일' if file_units else '클래스'
 
     g = metrics.class_graph
     if g.number_of_nodes() == 0:
@@ -568,7 +774,7 @@ def _render_dependency_graph(
         <em>마우스를 노드에 올리면 우측에 상세 정보가 나타납니다.</em>
     </div>
     <div class="graph-controls">
-        <input type="text" id="graph-search" placeholder="그래프 안 클래스 검색 (이름의 일부 입력)">
+        <input type="text" id="graph-search" placeholder="그래프 안 {unit} 검색 (이름의 일부 입력)">
         <div class="grade-toggle" id="graph-grade-toggle">
             <span class="gt-label">등급 강조:</span>
             <button data-grade="" class="gt-btn gt-active">전체</button>
@@ -598,16 +804,17 @@ def _render_dependency_graph(
         </svg>
         <aside class="graph-info" id="graph-info">
             <div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.<br><br>
-            아래 검색창에 클래스 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>
+            아래 검색창에 {unit} 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>
         </aside>
     </div>
     <script id="graph-node-info" type="application/json">{info_json}</script>'''
 
 
-def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
+def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict, file_units: bool = False) -> str:
     """크기 ≥ 2 인 SCC 목록을 표시한다. 각 cycle의 멤버 클래스와 평균 G-SI를 보여준다."""
     # 섹션 상단의 ⓘ 토글이 설명을 대체하므로 내부 intro는 비워둔다.
     intro = ""
+    unit = '구현 파일' if file_units else '클래스'
 
     total = len(metrics.sccs)
     if total == 0:
@@ -616,7 +823,7 @@ def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
             'data-tooltip="크기가 2 이상인 순환 의존성이 하나도 발견되지 않았습니다. 좋은 신호입니다.">'
             '<div class="cc-number">0</div>'
             '<div class="cc-label">발견된 순환 묶음 (전체)</div>'
-            '<div class="cc-hint">✅ 좋은 신호 — 클래스들이 한 방향으로 흐름</div>'
+            f'<div class="cc-hint">✅ 좋은 신호 — {unit}들이 한 방향으로 흐름</div>'
             '</div>'
         )
         return intro + count_card
@@ -629,7 +836,7 @@ def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
         f'data-tooltip="이 프로젝트 전체에서 발견된 순환 의존성 묶음의 수입니다. 상위 N개가 아니라 전부 표시됩니다.">'
         f'<div class="cc-number">{total}</div>'
         f'<div class="cc-label">발견된 순환 묶음 (전체)</div>'
-        f'<div class="cc-hint">가장 큰 묶음의 크기: <strong>{largest}개 클래스</strong></div>'
+        f'<div class="cc-hint">가장 큰 묶음의 크기: <strong>{largest}개 {unit}</strong></div>'
         f'</div>'
     )
 
@@ -649,8 +856,8 @@ def _render_cycle_explorer(metrics: MetricsResult, si_lookup: dict) -> str:
         )
         more = f" ... 외 {len(members) - 20}개" if len(members) > 20 else ""
         tip = (
-            f"이 묶음 안의 {len(scc)}개 클래스는 서로 참조 사슬을 이루고 있어 "
-            f"한 클래스를 수정하면 나머지에도 영향이 갈 수 있습니다."
+            f"이 묶음 안의 {len(scc)}개 {unit}는 서로 참조 사슬을 이루고 있어 "
+            f"한 {unit}를 수정하면 나머지에도 영향이 갈 수 있습니다."
         )
         rows.append(
             f'<details class="cycle-entry" data-tooltip="{html.escape(tip)}"><summary>'
@@ -673,9 +880,12 @@ def _grade(score: float) -> str:
     return "E"
 
 
-def _render_module_table(modules) -> str:
+def _render_module_table(modules, file_units: bool = False) -> str:
     # 섹션 상단의 ⓘ 토글이 설명을 대체하므로 내부 intro는 더 이상 그리지 않는다.
     intro = ""
+    unit = '구현 파일' if file_units else '클래스'
+    source_label = 'C/C++ 구현 파일' if file_units else '.cs 파일'
+    count_tip = '선택한 구현 파일의 합' if file_units else '클래스 · 구조체 · 인터페이스 · 레코드의 합'
     rows = []
     for ms in modules:
         rows.append(
@@ -692,12 +902,12 @@ def _render_module_table(modules) -> str:
     return f'''{intro}
     <table class="module-table">
         <thead><tr>
-            <th data-tooltip="분석 입력 폴더 바로 아래의 1단계 폴더 이름. (root)는 폴더에 들어있지 않고 분석 폴더 바로 아래에 놓인 .cs 파일들">모듈</th>
-            <th data-tooltip="모듈 내 클래스 평균을 기준으로 한 등급">등급</th>
-            <th class="num" data-tooltip="모듈 내 모든 클래스의 G-SI 평균">평균 G-SI</th>
-            <th class="num" data-tooltip="모듈에서 가장 위험한 클래스 하나의 G-SI">최대 G-SI</th>
-            <th class="num" data-tooltip="모듈에 속한 .cs 파일 수">파일 수</th>
-            <th class="num" data-tooltip="모듈에 속한 클래스 · 구조체 · 인터페이스 · 레코드의 합">클래스 수</th>
+            <th data-tooltip="분석 입력 폴더 바로 아래의 1단계 폴더 이름. (root)는 폴더에 들어있지 않고 분석 폴더 바로 아래에 놓인 {source_label}들">모듈</th>
+            <th data-tooltip="모듈 내 파일별 최대 G-SI의 평균을 기준으로 한 구간">등급</th>
+            <th class="num" data-tooltip="모듈 내 파일별 최대 G-SI를 파일 동일 비중으로 평균">평균 G-SI</th>
+            <th class="num" data-tooltip="모듈에서 가장 위험한 {unit} 하나의 G-SI">최대 G-SI</th>
+            <th class="num" data-tooltip="모듈에 속한 {source_label} 수">파일 수</th>
+            <th class="num" data-tooltip="모듈에 속한 {count_tip}">{unit} 수</th>
         </tr></thead>
         <tbody>{body}</tbody>
     </table>'''
@@ -726,6 +936,8 @@ _HTML_TEMPLATE = r"""<!doctype html>
   }}
   header {{ padding: 24px 32px; background: var(--panel); border-bottom: 1px solid var(--border); }}
   header h1 {{ margin: 0 0 4px 0; font-size: 22px; }}
+  header .report-subtitle {{ margin: 4px 0; color: #cbd5e1; font-size: 14px; }}
+  header .report-kind {{ color: var(--muted); font-size: 12px; margin-bottom: 8px; }}
   header .meta {{ color: var(--muted); font-size: 13px; }}
   main {{ padding: 24px 32px; max-width: 1400px; margin: 0 auto; }}
   section {{ margin-bottom: 32px; }}
@@ -793,7 +1005,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
   th, td {{ padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }}
   th {{ background: var(--panel2); color: #cbd5e1; font-weight: 600; position: sticky; top: 0; }}
   th.sortable {{ cursor: pointer; user-select: none; }}
-  th.sortable::after {{ content: " ↕"; color: var(--muted); font-size: 11px; }}
+  th.sortable::before {{ content: " ↕"; color: var(--muted); font-size: 11px; }}
   th.num, td.num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
   td.rank {{ color: var(--muted); }}
   td.fqn {{ font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px; }}
@@ -899,7 +1111,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
     border: 1px solid #334155;
     box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   }}
-  [data-tooltip]:hover::after {{ opacity: 1; }}
+  [data-tooltip]:hover::after, [data-tooltip]:focus::after {{ opacity: 1; }}
   th[data-tooltip] {{ cursor: help; }}
 
   /* Graph controls — 검색 + 등급 토글 */
@@ -964,33 +1176,58 @@ _HTML_TEMPLATE = r"""<!doctype html>
                    border-radius: 4px; background: rgba(255,255,255,0.05); }}
   .cycle-member.grade-D, .cycle-member.grade-E {{ background: rgba(210,67,67,0.15); }}
   .empty {{ color: var(--muted); padding: 12px; text-align: center; }}
+  .analysis-status, .analysis-info {{ padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 20px; color: var(--muted); font-size: 13px; }}
+  .analysis-status > strong {{ color: var(--fg); margin-right: 16px; }}
+  .analysis-status > span {{ display: inline-block; }}
+  .analysis-status.partial {{ border-left: 3px solid #e3b341; }}
+  .analysis-status.partial > strong {{ color: #e3b341; }}
+  .status-heading {{ display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; margin-bottom: 12px; }}
+  .status-heading strong {{ color: var(--fg); font-size: 18px; }}
+  .analysis-status.partial .status-heading strong {{ color: #e3b341; }}
+  .status-counts {{ display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; color: #cbd5e1; line-height: 1.8; }}
+  .status-metric {{ display: inline-block; border-bottom: 1px dotted #64748b; }}
+  .status-metric:focus {{ outline: 2px solid var(--accent); outline-offset: 3px; }}
+  .status-metric::after {{ left: 0; transform: none; width: 320px; max-width: min(320px, 80vw); bottom: auto; top: calc(100% + 8px); }}
+  .status-note {{ margin: 12px 0; line-height: 1.7; }}
+  .status-metric::after {{ white-space: pre-line; }}
+  .status-coverage {{ margin: 0 0 12px; color: #cbd5e1; font-size: 14px; }}
+  .status-coverage strong {{ color: var(--fg); font-size: 18px; margin: 0 3px; }}
+  .analysis-status .analysis-info {{ padding: 0; border: 0; margin: 10px 0 0; }}
+  .analysis-info > summary {{ cursor: pointer; color: var(--accent); }}
+  .analysis-info h3 {{ font-size: 13px; color: var(--fg); }}
+  .analysis-issues {{ max-height: 240px; overflow: auto; overflow-wrap: anywhere; }}
+  .analysis-info ul {{ padding-left: 20px; }}
   footer {{ padding: 20px 32px; color: var(--muted); font-size: 12px; text-align: center; border-top: 1px solid var(--border); }}
 </style>
 </head>
 <body>
 <header>
-  <h1>{project_name} <span style="color: var(--muted); font-weight: 400; font-size: 15px;">Game Spaghetti Index Report</span></h1>
+  <h1>{project_name}</h1>
+  {project_subtitle}
+  <div class="report-kind">Game Spaghetti Index Report</div>
   <div class="meta">분석 시각: {analyzed_at}</div>
 </header>
 <main>
 
 {help_box}
 
+{analysis_status}
+
 <section>
   <div class="sec-head">
-    <h2>Project Health</h2>
+    <h2>구조 요약 (보조 Health)</h2>
     <button class="sec-info" data-target="help-health" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-health" hidden>
-    <p><strong>이 프로젝트의 스파게티 정도를 한 숫자로 답하는 종합 점수</strong>입니다. 0~100 점, 점수가 높을수록 코드가 전반적으로 엉켜 있다는 뜻입니다.</p>
+    <p><strong>검증되지 않은 보조 구조 요약</strong>입니다. 상대 순위 기반 항목을 포함하므로 절대 코드 품질이나 프로젝트 간 우열을 판정하지 않습니다.</p>
     <p>다음 네 가지 신호를 가중 평균합니다.</p>
     <ul>
       <li><strong>평균 G-SI (45%)</strong> — 프로젝트 안 모든 클래스의 G-SI 점수를 단순 평균. 가장 큰 비중.</li>
-      <li><strong>위험(D+E) 비율 (25%)</strong> — G-SI 60 이상(=D 등급 이상)인 클래스가 전체에서 차지하는 비율을 0~100 점으로 환산.</li>
+      <li><strong>상대 D+E 비율 (25%)</strong> — G-SI 60 이상인 클래스 비율. 결함 비율이 아닙니다.</li>
       <li><strong>순환 의존성 수 (15%)</strong> — A→B→C→A 처럼 서로 참조해서 빙빙 도는 묶음의 개수. 로그 스케일 적용(0 → 0점, 1 → 30점, 5 → 70점, 20 이상 → 100점).</li>
       <li><strong>평균 결합도 (15%)</strong> — 클래스 한 개당 평균적으로 몇 개의 다른 클래스와 연결되는지(fan-in+fan-out 평균). 평균 10 이상이면 100점으로 saturate.</li>
     </ul>
-    <p>등급 기준은 다른 점수와 동일하게 A(0~19) · B(20~39) · C(40~59) · D(60~79) · E(80~100) 입니다. 발표 슬라이드에 "이 프로젝트는 C 등급(47점) — 평균 수준의 코드베이스" 같은 한 줄 요약으로 쓰기 좋은 숫자입니다.</p>
+    <p>A~E는 수치 구간만 표시합니다. 평균 G-SI와 D/E 비율은 백분위 공식과 동점에 영향을 받으므로, 이 수치를 전체 품질의 증거로 발표하지 마세요.</p>
   </div>
   {health_hero}
 </section>
@@ -1003,12 +1240,12 @@ _HTML_TEMPLATE = r"""<!doctype html>
   <div class="sec-explain" id="help-summary" hidden>
     <p>분석 규모와 위험 신호를 6개 숫자로 압축한 카드 묶음입니다.</p>
     <ul>
-      <li><strong>분석 클래스</strong> — Roslyn으로 파싱한 class · struct · interface · record · enum의 총 개수.</li>
+      <li><strong>분석 클래스</strong> — 추출된 타입 및 C/C++ 함수 묶음의 총 개수.</li>
       <li><strong>분석 메서드</strong> — 분석된 모든 메서드와 생성자(.ctor)의 합. enum 항목, 자동 속성은 카운트하지 않습니다.</li>
       <li><strong>의존성 순환(SCC ≥ 2)</strong> — 크기가 2 이상인 강한 연결 요소(Strongly Connected Component). 적을수록 좋고, 0이면 의존성이 한 방향으로 흐른다는 좋은 신호입니다.</li>
       <li><strong>평균 G-SI</strong> — 클래스 단위 G-SI 점수의 단순 평균. Project Health의 가장 큰 입력입니다.</li>
-      <li><strong>최대 G-SI</strong> — 이 프로젝트에서 가장 위험한 한 클래스의 G-SI. 보통 95~100점이 나옵니다 (percentile rank 특성상).</li>
-      <li><strong>위험(D/E) 클래스</strong> — G-SI 60 이상인 클래스의 수. 변경할 때 영향 분석과 테스트 보강이 필요한 클래스들입니다.</li>
+      <li><strong>최대 G-SI</strong> — 최대 상대 백분위. 비어 있지 않은 분석 집합에서는 항상 100이므로 품질 비교 정보가 없습니다.</li>
+      <li><strong>상대 D/E 클래스</strong> — G-SI 60 이상인 클래스 수. 실제 결함이나 리팩토링 필요성은 소스 검토로 확인합니다.</li>
     </ul>
     <p>각 카드에 마우스를 올리면 동일한 설명이 풍선으로 표시됩니다.</p>
   </div>
@@ -1021,9 +1258,9 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-dist" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-dist" hidden>
-    <p><strong>왼쪽 등급 분포 차트</strong>는 프로젝트 안의 모든 클래스를 등급별로 나눠 비율을 보여줍니다. G-SI 점수는 프로젝트 내부의 분포에서 percentile rank로 계산하므로, 다섯 등급(A~E)이 각각 약 20% 씩 거의 균등하게 분포하는 것이 정상입니다.</p>
-    <p>이 차트가 의미하는 것은 절대적인 위험도가 아니라 <strong>"이 프로젝트 안에서의 상대적 위치"</strong>입니다. 다른 프로젝트와 직접 비교하려면 raw 점수 분포(평균 G-SI, 최대 G-SI 등)를 함께 봐야 합니다.</p>
-    <p><strong>오른쪽 표</strong>는 G-SI 산식에서 각 항목이 어느 정도 비중으로 가중 평균되는지 정리한 것입니다. 각 항목 이름에 마우스를 올리면 무엇을 측정하는지 한국어 설명이 풍선으로 나타납니다. 본 작품은 default 가중치로 산식의 신뢰도를 확보하고, 후속 단계에서 데이터 기반 튜닝(<code>--weights tuned</code>) 옵션을 추가할 예정입니다.</p>
+    <p><strong>왼쪽 등급 분포</strong>는 분석 집합 내부의 상대 백분위 구간입니다. 동점이 많으면 분포가 불균등하며 모두 동점이면 전부 E가 됩니다.</p>
+    <p>평균·최대 G-SI를 보더라도 다른 프로젝트와 절대 품질을 비교할 수 없습니다. 원시 메트릭과 실제 소스를 함께 확인하세요.</p>
+    <p><strong>오른쪽 표</strong>는 고정 기본 가중치입니다. 튜닝 옵션도 구현되어 있지만, 가중치 탐색과 지표 제거 실험은 탐색적 결과이며 산식의 신뢰성을 자동으로 입증하지 않습니다.</p>
   </div>
   <div class="grid-2">
     <div class="panel">{grade_donut}</div>
@@ -1094,12 +1331,12 @@ _HTML_TEMPLATE = r"""<!doctype html>
     <button class="sec-info" data-target="help-module" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
   </div>
   <div class="sec-explain" id="help-module" hidden>
-    <p>클래스 단위로 계산된 G-SI 점수를 <strong>최상위 폴더(모듈) 단위로 집계</strong>한 표입니다. "이 폴더 안 클래스들이 평균적으로 얼마나 위험한가"를 한눈에 봅니다.</p>
+    <p>클래스 G-SI의 파일별 최대값을 <strong>최상위 폴더(모듈) 단위로 집계</strong>한 표입니다. 상대 순위 요약이며 절대 품질이 아닙니다.</p>
     <p><strong>컬럼 의미</strong></p>
     <ul>
       <li><strong>모듈</strong> — 분석 입력 폴더 바로 아래의 1단계 폴더 이름. 예를 들어 OpenRA.Game을 분석하면 Network, Server, Map 등이 모듈로 잡힙니다. <code>(root)</code>는 폴더 안에 들어있지 않고 분석 폴더 바로 밑에 놓인 .cs 파일들을 한 모듈로 묶은 것입니다.</li>
-      <li><strong>등급</strong> — 모듈 내 클래스 평균 G-SI를 기준으로 한 A~E 등급.</li>
-      <li><strong>평균 G-SI</strong> — 모듈에 속한 모든 클래스의 G-SI 평균. 모듈 전체의 위험도를 가장 잘 대표하는 값입니다.</li>
+      <li><strong>등급</strong> — 모듈 내 파일 최대 G-SI의 평균을 기준으로 한 A~E 구간.</li>
+      <li><strong>평균 G-SI</strong> — 각 파일의 si_max를 구한 뒤 파일별 동일 비중으로 평균. 클래스 전체 평균과 다릅니다.</li>
       <li><strong>최대 G-SI</strong> — 모듈에서 가장 위험한 클래스 하나의 G-SI. 평균은 낮은데 최대만 높다면 그 모듈에 핀포인트 hotspot이 있다는 신호입니다.</li>
       <li><strong>파일 수 · 클래스 수</strong> — 모듈에 속한 .cs 파일과 클래스(struct, interface, record 포함)의 개수.</li>
     </ul>

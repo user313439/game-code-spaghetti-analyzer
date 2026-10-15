@@ -12,6 +12,8 @@ docs/*draft*.md
 docs/*roadmap*.md
 docs/*WIP*.md
 docs/_*
+*.hwp
+*.hwpx
 
 # --- OS --------------------------------------------------------------------
 Thumbs.db

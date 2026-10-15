@@ -1,0 +1,34 @@
+=== G-SI Validation (Phase A) ===
+repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
+subdir:         OpenRA.Mods.Cnc
+date range:     * .. *
+commits seen:   1559
+bug-fix found:  282
+classes total:  278  (with bug-fix: 245)
+files total:    140  (with bug-fix: 119)
+unmatched changes (non-class files): 326
+
+Class-level Spearman correlation (vs file bug-fix count):
+  si_vs_bugfix            n= 278  rho= +0.1078  p=0.08128
+  loc_vs_bugfix           n= 278  rho= +0.1478  p=0.01649
+  cc_vs_bugfix            n= 278  rho= +0.1444  p=0.01913
+
+File-level Spearman correlation (vs file bug-fix count):
+  file_si_vs_bugfix       n= 140  rho= +0.3681  p=1.128e-05
+  file_loc_vs_bugfix      n= 140  rho= +0.5714  p=1.532e-13
+  file_cc_vs_bugfix       n= 140  rho= +0.4920  p=9.149e-10
+
+Top bug-fix touched analysis files:
+    10  FileFormats/BlowfishKeyProvider.cs
+    10  Traits/TDGunboat.cs
+     8  CncLoadScreen.cs
+     8  UtilityCommands/ImportGen2MapCommand.cs
+     7  Traits/Disguise.cs
+     6  SpriteLoaders/ShpTDLoader.cs
+     6  Graphics/VoxelLoader.cs
+     6  Traits/World/TSEditorResourceLayer.cs
+     6  Traits/World/TSVeinsRenderer.cs
+     6  UtilityCommands/ImportTiberianDawnMapCommand.cs
+
+Notes:
+  - bug-fix 변경 파일 중 326 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.

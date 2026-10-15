@@ -1,0 +1,32 @@
+=== Weight Tuning (plan §4.6) ===
+scoring: class z-score -> percentile (2 decimals) -> file maximum
+aggregation: equal project weight; modules of one project held out together
+grid size: 2,226 candidates
+evaluated: 2,226
+
+default weights: cc=0.30 coupling=0.25 dependency_cycle=0.15 global_state=0.15 game_loop_centrality=0.15
+tuned weights:   cc=0.35 coupling=0.25 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
+
+per-case file-level Spearman ρ (vs file bug-fix count, n≥5 required):
+  case                          default      tuned        Δ
+  OpenRA.Game                   +0.6011    +0.6567  +0.0556
+  OpenRA.Mods.Common            +0.5363    +0.5568  +0.0205
+  OpenRA.Mods.Cnc               +0.3681    +0.4461  +0.0780
+  OpenRA.Mods.D2k               +0.4915    +0.5052  +0.0137
+  OpenRA.Server              excluded: insufficient samples (n < 5 files with bugfix data)
+  OpenRA.Platforms.Default      +0.5692    +0.6316  +0.0624
+  Chocolate Doom                +0.5851    +0.6152  +0.0301
+  OpenRCT2                      +0.4598    +0.4739  +0.0142
+
+* excluded 케이스는 표본 부족 또는 상수값 때문에 상관을 계산할 수 없다. 각 사례의 제외 이유를 위에 표시하며 프로젝트 평균과 학습에서 제외한다.
+
+LOPO (Leave-One-Project-Out) cross-validation [excluded 케이스 제외]:
+  default (project mean ρ):     +0.5194
+  tuned (hold-out ρ avg):       +0.5251
+  Δ (tuned − default):          +0.0057
+  held out OpenRA: ρ=+0.5106; cc=0.25 coupling=0.40 dependency_cycle=0.05 global_state=0.25 game_loop_centrality=0.05
+  held out chocolate-doom: ρ=+0.6090; cc=0.40 coupling=0.20 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
+  held out OpenRCT2: ρ=+0.4557; cc=0.35 coupling=0.20 dependency_cycle=0.10 global_state=0.30 game_loop_centrality=0.05
+
+평균 차이는 기술 통계이며, 개선 또는 동등성의 통계적 유의성 검정은 수행하지 않았다.
+전체 데이터로 선택한 tuned 가중치의 per-case 값은 학습 결과이며, fold별 hold-out 값과 구분한다.

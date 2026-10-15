@@ -1,0 +1,152 @@
+{
+  "date": "2026-10-09",
+  "scope": "presentation-only update of 11 live case dashboards",
+  "reports": [
+    {
+      "case": "chocolate-doom",
+      "name": "chocolate-doom",
+      "state": "partial",
+      "before_sha256": "98c8f260ea7b10001ebf22485ba01db36da2a3d566e9cbf012d5fa9a7095f5ac",
+      "after_sha256": "cd943c7e2a1ac12082094988ae7d5984ec4f455472eaaa96681ce46324d809ce",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "doom3-gameplay",
+      "name": "DOOM 3 - gameplay source (neo/game)",
+      "state": "partial",
+      "before_sha256": "e67c223d194760eeea9e898a3749b33242eb0b4ea4e2b1ae33c0cd979ce2078f",
+      "after_sha256": "fdcdfde9eedfa64f355eef2f644af2a85556c6ba6115e1f25bba884ec31dc3fe",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "doom3-gameplay-clang",
+      "name": "DOOM 3",
+      "state": "partial",
+      "before_sha256": "15bb0c6e52de89530fd4826cd4fe8dd8e78575afa4fb6faede3efd199b27025b",
+      "after_sha256": "cc6a10b11ec087a910878ae1707f1c8a57ebc67d4e86ba5e3df63ae44713444a",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-game",
+      "name": "openra-game",
+      "state": "complete",
+      "before_sha256": "ac86cc2735f331b24df7d87677808092f077bd46222e5cfabff65b02004b8164",
+      "after_sha256": "a753c74e65614b46d5022121030a7dfcfcc0274ebee8ba24cf45f4181e2a38e1",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-mods-cnc",
+      "name": "openra-mods-cnc",
+      "state": "complete",
+      "before_sha256": "666ac1bb421fe878f6c8b347b7e44b4c87235d8e25e9c2144e76a7361938a1bd",
+      "after_sha256": "a4e6c91d1d4d32e7bef15fb2955df3ac8b35f8fb17d7fb726d402e642e8803c3",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-mods-common",
+      "name": "openra-mods-common",
+      "state": "complete",
+      "before_sha256": "53b10253504317000873d19107acd3b9ed56d7044f0d2949b227731787283e48",
+      "after_sha256": "85d7126d48c1c3a768f02155315ff667292e05df9a389ee1747d8c86c2c0e81f",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-mods-d2k",
+      "name": "openra-mods-d2k",
+      "state": "complete",
+      "before_sha256": "37c0b782840d5cde1371ed7c8a64bf3d183257bcb991bb89d9638d2e00003960",
+      "after_sha256": "9f6e9ce253951086bf2cef8171aa45c923b17f54c84dad395e67327befb1904e",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-platforms-default",
+      "name": "openra-platforms-default",
+      "state": "complete",
+      "before_sha256": "874847e72fbd750e328e2d0ed16588218bed548389965d1dc02e6db520febaf2",
+      "after_sha256": "f654e77b87268b2061b140e69fe2737760dde35bbe4c7695c3db42ba86167526",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openra-server",
+      "name": "openra-server",
+      "state": "complete",
+      "before_sha256": "8eb510efa411456376bb6919be5709352693c239ca3a29405a240700a7d9dce1",
+      "after_sha256": "aa5578005bce4e2c870dfd56cb9f387925776f4e68e47356f71fde8a2cc040bd",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openrct2",
+      "name": "openrct2",
+      "state": "partial",
+      "before_sha256": "a4683768bc67373316bf388659da3c3b107ed62b3fe300a8feb4fb1fb612938c",
+      "after_sha256": "4809caf1c01f1ccf70632b8997204f360bd44c06e48dc02799b33fa8d46f970f",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    },
+    {
+      "case": "openrct2-clang-sample",
+      "name": "OpenRCT2",
+      "state": "complete",
+      "before_sha256": "f4d6e1909ee783b08bb84e4b3c33db9b07eecfa9491865861f5693020796aabb",
+      "after_sha256": "5d46e7220a041ae3983788098babcee4799b4342bbf2b9b3bf1f2f50e1445006",
+      "scripts_unchanged": true,
+      "nonpresentation_unchanged": true,
+      "analysis_time_unchanged": true,
+      "javascript_checks": 1
+    }
+  ],
+  "json_files_preserved": 166,
+  "all_analysis_json_unchanged": true,
+  "root_index_unchanged": true,
+  "archived_html_unchanged": true,
+  "original_analysis_times_preserved": true,
+  "actual_browser_interaction_verified": false,
+  "browser_limitation": "Local file URL access is blocked by browser policy; no workaround attempted.",
+  "git_writes": false,
+  "paid_ai_calls": 0,
+  "game_analyses_rerun": false,
+  "full_native_enabled_tests": {
+    "passed": 280,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 52.57,
+    "command": "py -3.10 -B -m pytest tests/ -q -p no:cacheprovider"
+  },
+  "new_ui_tests": 23,
+  "initial_red_tests": 22,
+  "focused_diff_whitespace_check_passed": true,
+  "verification_notes": [
+    "Initial focused run selected the older x86 .NET runtime; existing x64 .NET runtime PATH used for subsequent complete runs without installation or config-file changes.",
+    "Existing tests that expected raw paths and configuration dumps were updated to verify truthful compact UI plus preservation in original JSON.",
+    "The first refresh preparation detected SVG title elements as well as the document title and stopped before changing live HTML; replacement was scoped to the head title and all prepared documents then verified before writing."
+  ]
+}

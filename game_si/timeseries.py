@@ -1,6 +1,6 @@
 """W14 Phase D — G-SI 시계열 분석.
 
-`docs/plan_final_draft.md` §7.4 의 Phase D 확장 실험을 수행한다.
+`docs/_planning/plan_final_draft.md` §7.4 의 Phase D 확장 실험을 수행한다.
 
 * 대상 repo 의 git history 에서 균등 간격으로 N 개 커밋을 샘플링한다.
 * 각 시점에서 별도 git worktree 를 만들어 분석을 수행 — **원본 working tree
@@ -464,7 +464,8 @@ def _render_line_chart(points: list[TimeSeriesPoint]) -> str:
         "<section>"
         "<h2>Project Health 추이</h2>"
         "<p class='hint'>본 그래프는 plan §4.5 의 percentile rank 정의에 따라 산출된 G-SI 와 "
-        "프로젝트 단일 종합 점수(Project Health) 의 시간 변화이다. 0=건강, 100=고위험.</p>"
+        "보조 구조 요약의 시간 변화이다. 절대 품질·개선 효과로 해석하지 않는다. "
+        "각 시점은 서로 다른 분석 집합에서 표준화·백분위를 계산한다.</p>"
         + "".join(out)
         + "</section>"
     )
@@ -533,7 +534,7 @@ def _render_grade_stack(points: list[TimeSeriesPoint]) -> str:
     return (
         "<section><h2>등급 분포 시계열</h2>"
         "<p class='hint'>각 색은 A~E 등급의 비율. percentile rank 정의상 안정 분포가 기본이지만, "
-        "구조가 단순화/복잡화 되면 분포 자체가 이동할 수 있다.</p>"
+        "동점 비율과 분석 집합의 변화도 분포에 영향을 준다. 분포 이동만으로 구조 개선/악화를 판정하지 않는다.</p>"
         + "".join(out)
         + "</section>"
     )

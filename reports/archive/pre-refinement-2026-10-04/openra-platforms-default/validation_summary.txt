@@ -1,0 +1,34 @@
+=== G-SI Validation (Phase A) ===
+repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
+subdir:         OpenRA.Platforms.Default
+date range:     * .. *
+commits seen:   263
+bug-fix found:  47
+classes total:  33  (with bug-fix: 29)
+files total:    18  (with bug-fix: 14)
+unmatched changes (non-class files): 2
+
+Class-level Spearman correlation (vs file bug-fix count):
+  si_vs_bugfix            n=  33  rho= +0.0171  p=0.9275
+  loc_vs_bugfix           n=  33  rho= +0.2636  p=0.151
+  cc_vs_bugfix            n=  33  rho= +0.1712  p=0.3575
+
+File-level Spearman correlation (vs file bug-fix count):
+  file_si_vs_bugfix       n=  18  rho= +0.5692  p=0.01504
+  file_loc_vs_bugfix      n=  18  rho= +0.8231  p=1.146e-05
+  file_cc_vs_bugfix       n=  18  rho= +0.8064  p=2.664e-05
+
+Top bug-fix touched analysis files:
+    14  Sdl2PlatformWindow.cs
+    10  OpenAlSoundEngine.cs
+     9  ThreadedGraphicsContext.cs
+     7  OpenGL.cs
+     5  Shader.cs
+     5  Sdl2Input.cs
+     3  Sdl2HardwareCursor.cs
+     3  FreeTypeFont.cs
+     3  DummySoundEngine.cs
+     3  MultiTapDetection.cs
+
+Notes:
+  - bug-fix 변경 파일 중 2 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.

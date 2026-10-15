@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-11",
+  "scope": "First localhost source-import and analysis application",
+  "tests": {
+    "command": "py -3.10 -m pytest tests -q --tb=short",
+    "native_library_enabled": true,
+    "passed": 384,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 59.74,
+    "new_web_tests": 72
+  },
+  "browser_checks": {
+    "github": "Public mevdschee/2048.c imported with pinned commit, actual analyze completed and new dashboard opened",
+    "zip": "Local C fixture selected with file chooser, imported and actual analyze completed",
+    "folder": "Local C fixture folder selected with file chooser, relative paths preserved, imported and actual analyze completed",
+    "history": "Three complete records observed after server restart",
+    "examples": "Nine existing report links observed separately from new analysis history",
+    "dashboard": "New result opened and collapsed reading guide expanded by click",
+    "native_mouse_drag": "Not exercised; directory traversal, multiple batches, relative paths and limits verified by JavaScript tests",
+    "screenshot": ".cache/web/main-screen.jpg"
+  },
+  "integration_checks": [
+    "ZIP, folder and direct CLI produced identical metrics after removing only input-path provenance",
+    "Actual C# Roslyn sample execution through web job manager",
+    "Actual Clang C++ sample with original local folder and compile database through web job manager",
+    "Compile backend DOOM full analysis not rerun in this UI change"
+  ],
+  "packaging": {"wheel_built": true, "static_html_css_js_included": true, "javascript_syntax_passed": true},
+  "preservation": {
+    "reference": "reports/verification-report-index-2026-10-09.json",
+    "preserved_files_verified": 226,
+    "hash_mismatches": 0,
+    "existing_landing_page_unchanged": true
+  },
+  "reviews": "Independent spec and quality reviews; confirmed findings reproduced by failing regression tests and fixed; final review found no remaining P1/P2 issues in reviewed scope",
+  "limitations": [
+    "Loopback-only local application, not a hosted public service or complete security sandbox",
+    "GitHub public default branch only; no private auth or automatic submodule/LFS setup",
+    "C# requires existing .NET/Roslyn environment; Clang requires compatible native library and compile configuration",
+    "Analysis is static approximation for chosen source scope, not guaranteed whole-game semantics",
+    "AI advice generation and automatic code modification not wired into first web version"
+  ],
+  "git": {"committed": false, "pushed": false}
+}

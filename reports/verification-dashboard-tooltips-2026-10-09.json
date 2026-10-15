@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-09",
+  "scope": "Shorter compiler diagnostic tooltips",
+  "reports": [
+    {
+      "case": "chocolate-doom",
+      "updated": false,
+      "before_sha256": "cd943c7e2a1ac12082094988ae7d5984ec4f455472eaaa96681ce46324d809ce",
+      "after_sha256": "cd943c7e2a1ac12082094988ae7d5984ec4f455472eaaa96681ce46324d809ce",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "doom3-gameplay",
+      "updated": false,
+      "before_sha256": "fdcdfde9eedfa64f355eef2f644af2a85556c6ba6115e1f25bba884ec31dc3fe",
+      "after_sha256": "fdcdfde9eedfa64f355eef2f644af2a85556c6ba6115e1f25bba884ec31dc3fe",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "doom3-gameplay-clang",
+      "updated": true,
+      "before_sha256": "cc6a10b11ec087a910878ae1707f1c8a57ebc67d4e86ba5e3df63ae44713444a",
+      "after_sha256": "e0597e4bc1fcccfa9f805149c2ed4d59fd9d97a8178dc09b9be0879191ef9ae2",
+      "error_tooltip": "코드를 정상적으로 해석하지 못한 진단입니다. 게임의 실제 버그 개수는 아닙니다. 이번 진단: 키워드 매크로 충돌 · 멤버 함수 포인터 변환.",
+      "warning_tooltip": "분석은 계속할 수 있지만 확인이 필요한 진단입니다. 경고만으로 실패나 실제 버그를 뜻하지 않습니다. 이번 진단: 문자열 상수 변환 · 비교 표현식 확인.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openra-game",
+      "updated": false,
+      "before_sha256": "a753c74e65614b46d5022121030a7dfcfcc0274ebee8ba24cf45f4181e2a38e1",
+      "after_sha256": "a753c74e65614b46d5022121030a7dfcfcc0274ebee8ba24cf45f4181e2a38e1",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openra-mods-cnc",
+      "updated": false,
+      "before_sha256": "a4e6c91d1d4d32e7bef15fb2955df3ac8b35f8fb17d7fb726d402e642e8803c3",
+      "after_sha256": "a4e6c91d1d4d32e7bef15fb2955df3ac8b35f8fb17d7fb726d402e642e8803c3",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openra-mods-common",
+      "updated": false,
+      "before_sha256": "85d7126d48c1c3a768f02155315ff667292e05df9a389ee1747d8c86c2c0e81f",
+      "after_sha256": "85d7126d48c1c3a768f02155315ff667292e05df9a389ee1747d8c86c2c0e81f",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openra-mods-d2k",
+      "updated": false,
+      "before_sha256": "9f6e9ce253951086bf2cef8171aa45c923b17f54c84dad395e67327befb1904e",
+      "after_sha256": "9f6e9ce253951086bf2cef8171aa45c923b17f54c84dad395e67327befb1904e",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openra-platforms-default",
+      "updated": false,
+      "before_sha256": "f654e77b87268b2061b140e69fe2737760dde35bbe4c7695c3db42ba86167526",
+      "after_sha256": "f654e77b87268b2061b140e69fe2737760dde35bbe4c7695c3db42ba86167526",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openra-server",
+      "updated": false,
+      "before_sha256": "aa5578005bce4e2c870dfd56cb9f387925776f4e68e47356f71fde8a2cc040bd",
+      "after_sha256": "aa5578005bce4e2c870dfd56cb9f387925776f4e68e47356f71fde8a2cc040bd",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openrct2",
+      "updated": false,
+      "before_sha256": "4809caf1c01f1ccf70632b8997204f360bd44c06e48dc02799b33fa8d46f970f",
+      "after_sha256": "4809caf1c01f1ccf70632b8997204f360bd44c06e48dc02799b33fa8d46f970f",
+      "error_tooltip": "이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.",
+      "warning_tooltip": "이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    },
+    {
+      "case": "openrct2-clang-sample",
+      "updated": true,
+      "before_sha256": "5d46e7220a041ae3983788098babcee4799b4342bbf2b9b3bf1f2f50e1445006",
+      "after_sha256": "4aee8534e24517b578b636ee1d2697cbf3276d0225674629977e69ad3d204462",
+      "error_tooltip": "코드를 정상적으로 해석하지 못한 진단입니다. 게임의 실제 버그 개수는 아닙니다. 수집된 오류 진단은 없습니다.",
+      "warning_tooltip": "분석은 계속할 수 있지만 확인이 필요한 진단입니다. 경고만으로 실패나 실제 버그를 뜻하지 않습니다. 수집된 경고 진단은 없습니다.",
+      "scripts_unchanged": true,
+      "nonstatus_html_unchanged": true
+    }
+  ],
+  "checked_cases": 11,
+  "updated_cases": 2,
+  "preserved_json_count": 167,
+  "all_prior_json_unchanged": true,
+  "root_index_unchanged": true,
+  "analysis_times_scores_and_scripts_unchanged": true,
+  "actual_browser_interaction_verified": false,
+  "git_writes": false,
+  "paid_ai_calls": 0,
+  "full_native_enabled_tests": {
+    "passed": 284,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 52.22
+  },
+  "ui_tests_passed": 27,
+  "focused_diff_whitespace_check_passed": true
+}

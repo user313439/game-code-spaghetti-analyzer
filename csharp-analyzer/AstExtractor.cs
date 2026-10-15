@@ -147,6 +147,7 @@ public static class AstExtractor
         var node = new MethodNode
         {
             Name = method.Identifier.Text,
+            SymbolId = (model.GetDeclaredSymbol(method) as IMethodSymbol)?.OriginalDefinition.GetDocumentationCommentId(),
             Signature = BuildSignature(method),
             StartLine = lineSpan.StartLinePosition.Line + 1,
             EndLine = lineSpan.EndLinePosition.Line + 1,
@@ -161,6 +162,7 @@ public static class AstExtractor
         };
 
         node.InvokedNames.AddRange(bodyWalker.InvokedNames.OrderBy(s => s));
+        node.InvokedSymbols.AddRange(bodyWalker.InvokedSymbols.OrderBy(s => s));
         return node;
     }
 
@@ -204,6 +206,7 @@ public static class AstExtractor
         var node = new MethodNode
         {
             Name = ".ctor",
+            SymbolId = (model.GetDeclaredSymbol(ctor) as IMethodSymbol)?.OriginalDefinition.GetDocumentationCommentId(),
             Signature = $"{ctor.Identifier.Text}({string.Join(", ", ctor.ParameterList.Parameters.Select(p => p.Type?.ToString() ?? "?"))})",
             StartLine = lineSpan.StartLinePosition.Line + 1,
             EndLine = lineSpan.EndLinePosition.Line + 1,
@@ -217,6 +220,7 @@ public static class AstExtractor
             IsGameLoopEntry = false,
         };
         node.InvokedNames.AddRange(bodyWalker.InvokedNames.OrderBy(s => s));
+        node.InvokedSymbols.AddRange(bodyWalker.InvokedSymbols.OrderBy(s => s));
         return node;
     }
 
@@ -228,16 +232,16 @@ public static class AstExtractor
 
     /// <summary>
     /// INamedTypeSymbol 의 FQN 을 "Namespace.OuterType.TypeName" 형식으로 구성.
-    /// global namespace 는 빈 문자열로 처리하고, 제네릭은 단순 이름만 (예: List).
+    /// global namespace 는 빈 문자열로 처리하고 제네릭 원형의 타입 매개변수를 보존한다.
     /// </summary>
     public static string FormatFqn(INamedTypeSymbol symbol)
     {
         var format = new SymbolDisplayFormat(
             globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-            genericsOptions: SymbolDisplayGenericsOptions.None,
+            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
             miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
-        return symbol.ToDisplayString(format);
+        return symbol.OriginalDefinition.ToDisplayString(format);
     }
 
     private static string BuildFullyQualifiedNameSyntactic(BaseTypeDeclarationSyntax typeDecl)

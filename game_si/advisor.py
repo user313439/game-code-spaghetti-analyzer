@@ -6,7 +6,7 @@
 * **리팩토링 방향** — 게임 도메인 맥락에 맞는 구체적 제안
 * **테스트 우선순위** — 안전한 변경을 위해 먼저 작성할 테스트
 
-`docs/plan_final_draft.md` §3 / §6.4 에 따라 자동 코드 수정 기능은 본 작품
+`docs/_planning/plan_final_draft.md` §3 / §6.4 에 따라 자동 코드 수정 기능은 본 작품
 범위 외이며, LLM 입력에는 **원본 소스 전체를 보내지 않는다** — 지표값,
 메서드 시그니처, 가장 복잡한 메서드의 짧은 스니펫만 사용한다.
 
@@ -215,7 +215,8 @@ def _estimate_cost(usage_total: dict[str, int]) -> float:
 
 def _select_top_method(class_node: dict) -> dict | None:
     """클래스 내 메서드 중 CC 가 가장 높은 것 1개. 동률은 LOC 우선."""
-    methods = class_node.get("methods", [])
+    methods = [method for method in class_node.get("methods", [])
+               if not method.get("is_macro_generated", False)]
     if not methods:
         return None
     return max(

@@ -1,0 +1,189 @@
+{
+  "schema_version": "timeseries-0.1",
+  "project": "Chocolate Doom",
+  "repo": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\chocolate-doom",
+  "subdir": "src",
+  "lang": "c",
+  "samples": 8,
+  "since": null,
+  "until": null,
+  "points": [
+    {
+      "sha": "66a2cc66d7504c9b64e1c461e62ad2a9d964fa95",
+      "short_sha": "66a2cc66d7",
+      "date": "2005-07-23",
+      "subject": "Initial revision",
+      "health_score": 52.44,
+      "health_grade": "C",
+      "avg_si": 50.81,
+      "risk_ratio": 0.4032,
+      "cycle_count": 1,
+      "classes_total": 62,
+      "methods_total": 713,
+      "grade_distribution": {
+        "A": 12,
+        "B": 12,
+        "C": 13,
+        "D": 12,
+        "E": 13
+      },
+      "bugfix_commits_since_prev": 0,
+      "analysis_elapsed_ms": 2480
+    },
+    {
+      "sha": "a653fb6e0cfab8b5bbe71ae7652e1a9af810b065",
+      "short_sha": "a653fb6e0c",
+      "date": "2007-02-07",
+      "subject": "Revert previous change: throwing away the key state seems to be the Doom 1.9 behavior.",
+      "health_score": 52.51,
+      "health_grade": "C",
+      "avg_si": 50.55,
+      "risk_ratio": 0.4105,
+      "cycle_count": 1,
+      "classes_total": 95,
+      "methods_total": 1078,
+      "grade_distribution": {
+        "A": 18,
+        "B": 19,
+        "C": 19,
+        "D": 19,
+        "E": 20
+      },
+      "bugfix_commits_since_prev": 127,
+      "analysis_elapsed_ms": 3521
+    },
+    {
+      "sha": "8089e905e3ce33bfbe8377d71bb6d75f5868edbd",
+      "short_sha": "8089e905e3",
+      "date": "2009-10-01",
+      "subject": "Remove temporary MIDI file after loading MIDI data. Stop all playing OPL voices when music is shut down.",
+      "health_score": 52.32,
+      "health_grade": "C",
+      "avg_si": 50.51,
+      "risk_ratio": 0.4038,
+      "cycle_count": 1,
+      "classes_total": 104,
+      "methods_total": 1202,
+      "grade_distribution": {
+        "A": 20,
+        "B": 21,
+        "C": 21,
+        "D": 21,
+        "E": 21
+      },
+      "bugfix_commits_since_prev": 124,
+      "analysis_elapsed_ms": 4369
+    },
+    {
+      "sha": "b2a59b3eec1dcc040f58bdd5e88bfed55face2fe",
+      "short_sha": "b2a59b3eec",
+      "date": "2013-03-03",
+      "subject": "Fix improper freeing of temp_timidity_cfg.",
+      "health_score": 50.77,
+      "health_grade": "C",
+      "avg_si": 50.36,
+      "risk_ratio": 0.4021,
+      "cycle_count": 3,
+      "classes_total": 286,
+      "methods_total": 4215,
+      "grade_distribution": {
+        "A": 57,
+        "B": 56,
+        "C": 58,
+        "D": 57,
+        "E": 58
+      },
+      "bugfix_commits_since_prev": 179,
+      "analysis_elapsed_ms": 16300
+    },
+    {
+      "sha": "9eab7159e57ac633387066c1d239e651a3c45f4c",
+      "short_sha": "9eab7159e5",
+      "date": "2015-10-22",
+      "subject": "Fix \"`gcc_struct' attribute directive ignored\" warnings",
+      "health_score": 51.75,
+      "health_grade": "C",
+      "avg_si": 50.35,
+      "risk_ratio": 0.4035,
+      "cycle_count": 3,
+      "classes_total": 285,
+      "methods_total": 4297,
+      "grade_distribution": {
+        "A": 56,
+        "B": 56,
+        "C": 58,
+        "D": 57,
+        "E": 58
+      },
+      "bugfix_commits_since_prev": 143,
+      "analysis_elapsed_ms": 10119
+    },
+    {
+      "sha": "2550ff5bd989d5b52eabe32c21d8ded4f29b16f9",
+      "short_sha": "2550ff5bd9",
+      "date": "2018-05-15",
+      "subject": "d_iwad: Fix memory leak in CheckDirectoryHasIWAD",
+      "health_score": 50.27,
+      "health_grade": "C",
+      "avg_si": 50.35,
+      "risk_ratio": 0.4007,
+      "cycle_count": 2,
+      "classes_total": 287,
+      "methods_total": 4301,
+      "grade_distribution": {
+        "A": 57,
+        "B": 57,
+        "C": 58,
+        "D": 57,
+        "E": 58
+      },
+      "bugfix_commits_since_prev": 81,
+      "analysis_elapsed_ms": 11848
+    },
+    {
+      "sha": "cd7cc921f38545a47ed8bc16620ce58c816639e1",
+      "short_sha": "cd7cc921f3",
+      "date": "2020-10-21",
+      "subject": "Remove extra assignments of variables (#1323)",
+      "health_score": 50.49,
+      "health_grade": "C",
+      "avg_si": 50.34,
+      "risk_ratio": 0.4034,
+      "cycle_count": 2,
+      "classes_total": 290,
+      "methods_total": 4344,
+      "grade_distribution": {
+        "A": 57,
+        "B": 58,
+        "C": 58,
+        "D": 58,
+        "E": 59
+      },
+      "bugfix_commits_since_prev": 102,
+      "analysis_elapsed_ms": 9566
+    },
+    {
+      "sha": "c62b634f394e64dd51dec7e6f890496f43a56ade",
+      "short_sha": "c62b634f39",
+      "date": "2026-05-16",
+      "subject": "strife: Mirror the `mouse_fire_countdown` in joystick logic as well (#1796)",
+      "health_score": 50.57,
+      "health_grade": "C",
+      "avg_si": 50.35,
+      "risk_ratio": 0.402,
+      "cycle_count": 2,
+      "classes_total": 296,
+      "methods_total": 4311,
+      "grade_distribution": {
+        "A": 58,
+        "B": 60,
+        "C": 59,
+        "D": 59,
+        "E": 60
+      },
+      "bugfix_commits_since_prev": 84,
+      "analysis_elapsed_ms": 12123
+    }
+  ],
+  "notes": []
+}

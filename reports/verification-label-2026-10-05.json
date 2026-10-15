@@ -1,0 +1,12 @@
+{
+  "review_date_kst": "2026-10-05",
+  "scope": "Presentation-only follow-up: remove the year/semester label from the landing header and footer. Historical snapshots and experiment dates are preserved.",
+  "base_verification": "verification-safety-ui-2026-10-05.json",
+  "previous_index_sha256": "076cbee220bc52f94f09dd671e5605b778789d5f239bd84017112ecec41f40e2",
+  "current_index_sha256": "a29ed3aa469e0326a4f8443534c6ca9fcb3bcb8515bae9f4a27a00aec821c26f",
+  "header_verified": true,
+  "footer_verified": true,
+  "tests_passed": 105,
+  "browser_interaction_verified": false,
+  "note": "The base verification records the pre-label-edit snapshot. This follow-up records the changed landing page without overwriting that snapshot. Analysis source and case outputs were not changed."
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": "si-0.2",
+  "weights": {
+    "cc": 0.3,
+    "coupling": 0.25,
+    "dependency_cycle": 0.15,
+    "global_state": 0.15,
+    "game_loop_centrality": 0.15
+  },
+  "project_health": {
+    "score": 70.0,
+    "grade": "D",
+    "avg_si": 100.0,
+    "risk_ratio": 1.0,
+    "cycle_count": 0,
+    "avg_coupling": 0.0,
+    "components": {
+      "avg_si": 100.0,
+      "risk_score": 100.0,
+      "cycle_score": 0.0,
+      "coupling_norm": 0.0,
+      "weight_avg_si": 0.45,
+      "weight_risk_ratio": 0.25,
+      "weight_cycle_score": 0.15,
+      "weight_coupling_norm": 0.15
+    }
+  },
+  "total_classes": 1,
+  "total_methods": 3,
+  "grade_distribution": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "D": 0,
+    "E": 1
+  },
+  "class_scores": [
+    {
+      "fqn": "OpenRA.Server.Program",
+      "name": "Program",
+      "file_path": "Program.cs",
+      "module": "(root)",
+      "start_line": 23,
+      "end_line": 123,
+      "kind": "class",
+      "loc": 96,
+      "raw": {
+        "cc": 12.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 30.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 30.0,
+        "game_loop_centrality": 0.0
+      },
+      "z": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_score": 0.0,
+      "si": 100.0,
+      "grade": "E",
+      "top_reasons": []
+    }
+  ],
+  "file_scores": [
+    {
+      "file_path": "Program.cs",
+      "module": "(root)",
+      "si_mean": 100.0,
+      "si_max": 100.0,
+      "grade": "E",
+      "class_count": 1
+    }
+  ],
+  "module_scores": [
+    {
+      "module": "(root)",
+      "si_mean": 100.0,
+      "si_max": 100.0,
+      "grade": "E",
+      "class_count": 1,
+      "file_count": 1
+    }
+  ]
+}

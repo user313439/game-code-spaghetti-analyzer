@@ -1,0 +1,32 @@
+{
+  "verified_on": "2026-10-13",
+  "scope": "Default light-blue theme, real input/analysis browser verification and documentation cleanup; no Git or final submission artifacts",
+  "local_url": "http://127.0.0.1:8766/",
+  "default_theme": "blue",
+  "comparison_themes": ["light", "dark"],
+  "server_session": 57385,
+  "browser": "Codex in-app browser",
+  "tests": {"command": "py -3.10 -m pytest tests -q --tb=short", "passed": 425, "failed": 0, "skipped": 0, "elapsed_seconds": 72.00, "native_environment": ".NET on PATH and compatible GAME_SI_TEST_CLANG_LIBRARY", "javascript_syntax_exit_code": 0},
+  "followup_checks": [{"scope": "Web input/jobs/API/UI/integration and report status", "passed": 161, "elapsed_seconds": 16.81}, {"scope": "Web/API after independent preservation-test improvement", "passed": 55, "elapsed_seconds": 7.98}],
+  "red_green": {"default_theme_and_links": "7 failures before change, all 54 related web/API checks passed after implementation", "sort_tooltip": "2 regressions failed before separating sort marker from tooltip; both passed after fix"},
+  "new_browser_runs": [
+    {"id": "e0f71bc2be3949fba7a1f73dd2f8ac47", "kind": "github", "repository": "https://github.com/OpenRA/OpenRA", "branch": "bleed", "commit": "e180e3225f3930272dd451917467631618f8976f", "language": "csharp", "scope": "All imported folders, C# only; includes engine/modules/tools/tests", "files": 1517, "classes": 3287, "methods": 11674, "cycles": 8, "failed_files": 0, "syntax_files": 0, "state": "complete", "analysis_seconds": 28.338},
+    {"id": "82d2ab97e4a347b09024d5b154294883", "name": "검수 ZIP 2048", "kind": "zip", "input": "Previously downloaded 2048.c source archive via actual file chooser", "files": 1, "functions": 19, "state": "complete", "analysis_seconds": 1.119},
+    {"id": "67a907f0a47b46549e50422572cdf4e9", "name": "검수 폴더 2048", "kind": "folder", "input": "Same 2048.c input directory via actual folder chooser", "files": 1, "functions": 19, "state": "complete", "analysis_seconds": 0.854}
+  ],
+  "timing_method": "Persisted job.finished_at minus job.started_at; excludes source import and user selection. Observations on this PC, not a benchmark guarantee.",
+  "interactions": {
+    "github_enter": "Imports only; language/scope confirmation and analysis button required separately",
+    "invalid_github_branch_url": "https://github.com/OpenRA/OpenRA/tree/bleed rejected with helpful message; no new job",
+    "hotspot": "Server search: 30 of 54 matches (3287 total). E grade filter: 18 of 18 matches",
+    "graph": "Game search: 7 highlighted nodes. Zoom viewBox 140 72 1120 576; reset restored original. Clicking node showed actual class metrics and neighbors. Cycle expansion showed members; dashboard help opened and closed",
+    "history": "Actual name/size/latest sorting verified. Only newly created ZIP job soft-deleted then restored; hidden result HTTP 404 then restored 200; original six records retained"
+  },
+  "tooltip_fix": {"root_cause": "th.sortable::after overrode attr(data-tooltip) content and showed only sort arrow", "change": "Canonical report sort marker moved to ::before; response CSS bridges saved reports without overwriting them. Empty-search table minimum height and end-column tooltip alignment added", "browser_evidence": "Actual CC header click left :hover true, full description visible. At narrow viewport document/content widths both 785px; table/client and scroll heights both 160px", "viewport_reset": true, "screenshots": [".cache/web/final-empty-search-tooltip-2026-10-13.png", ".cache/web/final-empty-search-tooltip-fixed-2026-10-13.png", ".cache/web/final-narrow-tooltip-2026-10-13.png"]},
+  "preservation": {"report_files_checked": 226, "hash_mismatches": 0, "reports_index_unchanged": true, "original_user_jobs": ["d776ad5dd9674078aeab4f58790aba35", "d1fd1194e607495192ad38b0009ff2d2", "2b41103dd6cd4f158bb60afd48b0ca05", "aa235511f5544d9eaf4bc915b7acf316", "9a93498b87bb423397301ed3968cc4c7", "f371aca5f40d487ca96be56c52aab87a"], "new_jobs_restored": true},
+  "limits": ["User direct experience and OS Explorer drag gesture not performed by the user yet", "No full cross-browser/accessibility/security certification", "No new paid AI calls or web AI integration", "No game build/runtime verification", "Complete 100% is selected-range processing status, not whole-game understanding or bug detection accuracy", "Git publish-file content/secrets audit is deferred until explicitly requested Git stage"],
+  "final_screenshots": [".cache/web/final-default-main-2026-10-13.png", ".cache/web/final-openra-result-2026-10-13.png", ".cache/web/final-history-2026-10-13.png"],
+  "git": "No staging, commits, branches, tags, pushes or resets",
+  "independent_review": {"critical": 0, "important": 0, "minor_addressed": "Strengthened existing-example preservation test to compare actual source bytes and dark FileResponse, not repeated default-blue responses", "limits": "Reviewer read code/docs/job metadata/screenshots; did not independently rerun full tests or preservation hashes"},
+  "status": "agent_steps_1_to_3_verified_user_experience_pending"
+}

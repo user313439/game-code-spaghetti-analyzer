@@ -1,0 +1,17 @@
+{
+  "verified_on": "2026-10-15",
+  "scope": "Pre-publication recheck and explicit file selection requested by user; no history rewrite, new experiments, paid API calls or final-report creation",
+  "repository": "https://github.com/user313439/game-code-spaghetti-analyzer",
+  "branch": "main",
+  "base_local_commit": "4584789",
+  "existing_unpushed_commits": 20,
+  "remote_ahead_commits_after_fetch": 0,
+  "tests": {"command": "py -3.10 -m pytest tests -q --tb=short", "passed": 425, "failed": 0, "skipped": 0, "elapsed_seconds": 74.84, "native_environment": ".NET on PATH and compatible GAME_SI_TEST_CLANG_LIBRARY", "javascript_syntax_exit_code": 0},
+  "preservation": {"report_files_checked": 226, "hash_mismatches": 0, "reports_index_unchanged": true, "approved_midterm_modified": false},
+  "initial_candidate_audit": {"files": 325, "total_mib": 45.41, "files_over_5_mib": 0, "credential_token_private_key_or_credential_url_pattern_hits": 0, "internal_private_path_mentions": "Three public guide documents describe excluded private directories, not their contents"},
+  "history_pattern_scan": {"commits": 20, "credential_pattern_hit_files": 0},
+  "excluded_from_new_commits": [".env and credentials", "docs/_* including approved midterm and private handoff", "docs/superpowers internal plans", "tmp/ and root personal prompt files", "school HWP/PPTX/PDF/DOCX materials", "benchmarks source repositories", ".cache/web source inputs and user history", "build outputs and binaries", "raw ast.json and metrics.json at every report depth"],
+  "audit_limit": "Pattern scans and filename/size checks are not complete proof that arbitrary content is secret-free. No matching credential patterns were detected in the inspected candidate files and existing unpushed commits.",
+  "interpretation": "User accepts proceeding after agent verification. User direct experience and actual Explorer drag are not represented as performed. Git dates and existing history remain unchanged; new commits record actual current work.",
+  "publication_status": "This document records checks before commit and push; confirm publication with the actual remote main commit, not this file alone. No tag or GitHub Release was requested."
+}

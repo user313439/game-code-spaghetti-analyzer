@@ -1,0 +1,47 @@
+=== Phase B: G-SI vs Lizard (max CC) ===
+project:       openra-game
+scoring:       docs\_verification\2026-10-03\openra-game\scoring.json
+analyzed_path: benchmarks\OpenRA\OpenRA.Game
+files: us=226 liz=226 matched=226
+spearman(si vs liz_max_cc): rho=+0.6481  p=0
+
+Top-N Jaccard:
+  top- 5: 0.667
+  top-10: 0.429
+  top-30: 0.364
+
+Common top-30 (양쪽 모두 hotspot, 정렬 = G-SI rank):
+  gsi# 1 liz# 3 | si=100.0 [E] liz_cc= 50  Server/Server.cs
+  gsi# 2 liz# 1 | si= 99.8 [E] liz_cc= 88  Network/UnitOrders.cs
+  gsi# 3 liz# 8 | si= 99.7 [E] liz_cc= 26  Game.cs
+  gsi# 4 liz# 2 | si= 99.5 [E] liz_cc= 54  MiniYaml.cs
+  gsi# 5 liz# 4 | si= 99.4 [E] liz_cc= 44  Support/VariableExpression.cs
+  gsi# 6 liz#16 | si= 99.1 [E] liz_cc= 19  Map/Map.cs
+  gsi# 7 liz#14 | si= 99.0 [E] liz_cc= 21  Map/MapPreview.cs
+  gsi#10 liz# 7 | si= 98.3 [E] liz_cc= 30  Network/Order.cs
+  gsi#11 liz# 6 | si= 98.2 [E] liz_cc= 32  Server/VoteKickTracker.cs
+  gsi#12 liz# 9 | si= 98.0 [E] liz_cc= 26  FileFormats/Png.cs
+
+G-SI 단독 top-30 (Lizard top-30 에는 없음 — Phase B 정성 분석 후보):
+  gsi# 8 liz#156 | si= 98.7 [E] liz_cc=  2  Primitives/int2.cs
+  gsi# 9 liz#38 | si= 98.5 [E] liz_cc= 10  FieldLoader.cs
+  gsi#13 liz#112 | si= 97.9 [E] liz_cc=  5  Primitives/float2.cs
+  gsi#14 liz#49 | si= 97.8 [E] liz_cc=  9  Renderer.cs
+  gsi#15 liz#32 | si= 97.6 [E] liz_cc= 11  Graphics/WorldRenderer.cs
+  gsi#16 liz#181 | si= 97.5 [E] liz_cc=  2  MPos.cs
+  gsi#17 liz#184 | si= 97.3 [E] liz_cc=  2  Traits/TraitsInterfaces.cs
+  gsi#18 liz#135 | si= 97.2 [E] liz_cc=  4  CPos.cs
+  gsi#19 liz#68 | si= 97.0 [E] liz_cc=  8  Graphics/CursorManager.cs
+  gsi#20 liz#51 | si= 96.9 [E] liz_cc=  9  World.cs
+
+Lizard 단독 top-30 (G-SI top-30 에는 없음):
+  gsi#31 liz# 5 | si= 94.6 [E] liz_cc= 38  Sound/Sound.cs
+  gsi#33 liz#10 | si= 94.2 [E] liz_cc= 26  Scripting/ScriptTypes.cs
+  gsi#40 liz#12 | si= 93.1 [E] liz_cc= 22  FieldSaver.cs
+  gsi#43 liz#15 | si= 92.5 [E] liz_cc= 21  Network/Connection.cs
+  gsi#67 liz#17 | si= 88.8 [E] liz_cc= 18  Primitives/Polygon.cs
+  gsi#35 liz#19 | si= 93.9 [E] liz_cc= 17  Network/GameServer.cs
+  gsi#41 liz#20 | si= 93.0 [E] liz_cc= 16  Graphics/SpriteRenderer.cs
+  gsi#207 liz#21 | si= 49.7 [C] liz_cc= 16  Primitives/Int32Matrix4x4.cs
+  gsi#58 liz#22 | si= 90.3 [E] liz_cc= 14  Graphics/Util.cs
+  gsi#46 liz#26 | si= 92.1 [E] liz_cc= 12  Activities/Activity.cs

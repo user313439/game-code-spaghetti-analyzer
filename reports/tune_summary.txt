@@ -1,26 +1,32 @@
 === Weight Tuning (plan §4.6) ===
+scoring: class z-score -> percentile (2 decimals) -> file maximum
+aggregation: equal project weight; modules of one project held out together
 grid size: 2,226 candidates
 evaluated: 2,226
 
 default weights: cc=0.30 coupling=0.25 dependency_cycle=0.15 global_state=0.15 game_loop_centrality=0.15
-tuned weights:   cc=0.40 coupling=0.20 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
+tuned weights:   cc=0.35 coupling=0.25 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
 
 per-case file-level Spearman ρ (vs file bug-fix count, n≥5 required):
   case                          default      tuned        Δ
-  OpenRA.Game                   +0.5986    +0.6613  +0.0626
-  OpenRA.Mods.Common            +0.5421    +0.5674  +0.0253
-  OpenRA.Mods.Cnc               +0.3703    +0.4653  +0.0951
-  OpenRA.Mods.D2k               +0.4991    +0.4834  -0.0157
-  OpenRA.Server                    excluded: insufficient samples (n<5)
-  OpenRA.Platforms.Default      +0.5829    +0.6834  +0.1005
-  Chocolate Doom                +0.5851    +0.6090  +0.0239
-  OpenRCT2                      +0.4604    +0.4727  +0.0122
+  openra-game                   +0.6050    +0.6564  +0.0515
+  openra-mods-common            +0.5353    +0.5562  +0.0209
+  openra-mods-cnc               +0.3671    +0.4444  +0.0773
+  openra-mods-d2k               +0.4981    +0.4951  -0.0030
+  openra-server              excluded: insufficient samples (n < 5 files with bugfix data)
+  openra-platforms-default      +0.5692    +0.6316  +0.0624
+  chocolate-doom                +0.5851    +0.6152  +0.0301
+  openrct2                      +0.4687    +0.4778  +0.0091
 
-* excluded 케이스는 분석 가능한 파일 수가 5 개 미만이라 Spearman 상관계수가 통계적으로 평가 불가능하다. 단일 진입점 프로그램 구조에서 G-SI 동작을 보여주는 표본 부족 사례로 별도 표시한다.
+* excluded 케이스는 표본 부족 또는 상수값 때문에 상관을 계산할 수 없다. 각 사례의 제외 이유를 위에 표시하며 프로젝트 평균과 학습에서 제외한다.
 
 LOPO (Leave-One-Project-Out) cross-validation [excluded 케이스 제외]:
-  default (avg of per-case ρ):  +0.5198
-  tuned (hold-out ρ avg):       +0.5486
-  Δ (tuned − default):          +0.0288
+  default (project mean ρ):     +0.5229
+  tuned (hold-out ρ avg):       +0.5269
+  Δ (tuned − default):          +0.0040
+  held out OpenRA: ρ=+0.5099; cc=0.25 coupling=0.40 dependency_cycle=0.05 global_state=0.25 game_loop_centrality=0.05
+  held out chocolate-doom: ρ=+0.5974; cc=0.40 coupling=0.25 dependency_cycle=0.05 global_state=0.20 game_loop_centrality=0.10
+  held out OpenRCT2: ρ=+0.4735; cc=0.40 coupling=0.20 dependency_cycle=0.05 global_state=0.30 game_loop_centrality=0.05
 
-→ tuned weights 가 LOPO 검증에서 default 대비 개선됨.
+평균 차이는 기술 통계이며, 개선 또는 동등성의 통계적 유의성 검정은 수행하지 않았다.
+전체 데이터로 선택한 tuned 가중치의 per-case 값은 학습 결과이며, fold별 hold-out 값과 구분한다.

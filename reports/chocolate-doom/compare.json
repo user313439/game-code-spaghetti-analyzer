@@ -1,7 +1,7 @@
 {
   "schema_version": "compare-0.1",
-  "project": "Chocolate Doom",
-  "scoring_path": "reports\\chocolate-doom\\scoring.json",
+  "project": "src",
+  "scoring_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-03-refinement\\chocolate-doom\\scoring.json",
   "analyzed_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\chocolate-doom\\src",
   "files_analyzed_by_us": 296,
   "files_analyzed_by_lizard": 475,
@@ -12,13 +12,13 @@
     "10": 0.1111,
     "30": 0.3333
   },
-  "spearman_si_vs_lizard_cc": 0.702,
+  "spearman_si_vs_lizard_cc": 0.7082,
   "spearman_p": 0.0,
   "gsi_only_topN": [
     {
       "file_path": "i_system.c",
       "rank_gsi": 1,
-      "rank_lizard": 155,
+      "rank_lizard": 159,
       "si": 100.0,
       "grade": "E",
       "lizard_max_cc": 12,
@@ -27,7 +27,7 @@
     {
       "file_path": "m_misc.c",
       "rank_gsi": 2,
-      "rank_lizard": 171,
+      "rank_lizard": 174,
       "si": 99.66,
       "grade": "E",
       "lizard_max_cc": 10,
@@ -45,7 +45,7 @@
     {
       "file_path": "z_zone.c",
       "rank_gsi": 5,
-      "rank_lizard": 165,
+      "rank_lizard": 168,
       "si": 98.65,
       "grade": "E",
       "lizard_max_cc": 11,
@@ -54,47 +54,47 @@
     {
       "file_path": "m_argv.c",
       "rank_gsi": 6,
-      "rank_lizard": 76,
+      "rank_lizard": 75,
       "si": 98.31,
       "grade": "E",
       "lizard_max_cc": 26,
       "lizard_nloc": 361
     },
     {
-      "file_path": "v_video.c",
-      "rank_gsi": 7,
-      "rank_lizard": 161,
-      "si": 97.97,
-      "grade": "E",
-      "lizard_max_cc": 11,
-      "lizard_nloc": 667
-    },
-    {
       "file_path": "w_wad.c",
-      "rank_gsi": 8,
+      "rank_gsi": 7,
       "rank_lizard": 154,
-      "si": 97.64,
+      "si": 97.97,
       "grade": "E",
       "lizard_max_cc": 13,
       "lizard_nloc": 360
     },
     {
-      "file_path": "deh_main.c",
-      "rank_gsi": 9,
-      "rank_lizard": 144,
-      "si": 97.3,
+      "file_path": "v_video.c",
+      "rank_gsi": 8,
+      "rank_lizard": 167,
+      "si": 97.64,
       "grade": "E",
-      "lizard_max_cc": 13,
-      "lizard_nloc": 294
+      "lizard_max_cc": 11,
+      "lizard_nloc": 667
     },
     {
       "file_path": "d_loop.c",
-      "rank_gsi": 12,
-      "rank_lizard": 105,
-      "si": 96.28,
+      "rank_gsi": 10,
+      "rank_lizard": 104,
+      "si": 96.96,
       "grade": "E",
       "lizard_max_cc": 18,
       "lizard_nloc": 490
+    },
+    {
+      "file_path": "deh_main.c",
+      "rank_gsi": 11,
+      "rank_lizard": 143,
+      "si": 96.62,
+      "grade": "E",
+      "lizard_max_cc": 13,
+      "lizard_nloc": 294
     },
     {
       "file_path": "doom/st_stuff.c",
@@ -108,29 +108,29 @@
     {
       "file_path": "net_server.c",
       "rank_gsi": 18,
-      "rank_lizard": 81,
+      "rank_lizard": 80,
       "si": 94.26,
       "grade": "E",
       "lizard_max_cc": 24,
       "lizard_nloc": 1340
     },
     {
-      "file_path": "deh_str.c",
-      "rank_gsi": 19,
-      "rank_lizard": 92,
-      "si": 93.92,
-      "grade": "E",
-      "lizard_max_cc": 21,
-      "lizard_nloc": 264
-    },
-    {
       "file_path": "net_client.c",
-      "rank_gsi": 22,
-      "rank_lizard": 133,
-      "si": 92.91,
+      "rank_gsi": 19,
+      "rank_lizard": 136,
+      "si": 93.92,
       "grade": "E",
       "lizard_max_cc": 15,
       "lizard_nloc": 753
+    },
+    {
+      "file_path": "deh_str.c",
+      "rank_gsi": 22,
+      "rank_lizard": 92,
+      "si": 92.91,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 264
     },
     {
       "file_path": "heretic/d_main.c",
@@ -143,9 +143,9 @@
     },
     {
       "file_path": "i_joystick.c",
-      "rank_gsi": 26,
-      "rank_lizard": 115,
-      "si": 91.55,
+      "rank_gsi": 29,
+      "rank_lizard": 114,
+      "si": 90.54,
       "grade": "E",
       "lizard_max_cc": 17,
       "lizard_nloc": 609
@@ -163,27 +163,27 @@
     },
     {
       "file_path": "heretic/mn_menu.c",
-      "rank_gsi": 35,
+      "rank_gsi": 34,
       "rank_lizard": 6,
-      "si": 88.51,
+      "si": 88.85,
       "grade": "E",
       "lizard_max_cc": 136,
       "lizard_nloc": 1405
     },
     {
       "file_path": "strife/m_menu.c",
-      "rank_gsi": 44,
+      "rank_gsi": 43,
       "rank_lizard": 7,
-      "si": 85.47,
+      "si": 85.81,
       "grade": "E",
       "lizard_max_cc": 121,
       "lizard_nloc": 1585
     },
     {
       "file_path": "doom/m_menu.c",
-      "rank_gsi": 50,
+      "rank_gsi": 48,
       "rank_lizard": 11,
-      "si": 83.45,
+      "si": 84.12,
       "grade": "E",
       "lizard_max_cc": 112,
       "lizard_nloc": 1529
@@ -199,45 +199,45 @@
     },
     {
       "file_path": "doom/p_spec.c",
-      "rank_gsi": 67,
+      "rank_gsi": 65,
       "rank_lizard": 17,
-      "si": 77.7,
+      "si": 78.38,
       "grade": "D",
       "lizard_max_cc": 94,
       "lizard_nloc": 928
     },
     {
       "file_path": "hexen/p_user.c",
-      "rank_gsi": 58,
+      "rank_gsi": 56,
       "rank_lizard": 19,
-      "si": 80.74,
+      "si": 81.42,
       "grade": "E",
       "lizard_max_cc": 88,
       "lizard_nloc": 1375
     },
     {
       "file_path": "heretic/p_inter.c",
-      "rank_gsi": 36,
+      "rank_gsi": 35,
       "rank_lizard": 21,
-      "si": 88.18,
+      "si": 88.51,
       "grade": "E",
       "lizard_max_cc": 85,
       "lizard_nloc": 1144
     },
     {
       "file_path": "hexen/p_mobj.c",
-      "rank_gsi": 65,
+      "rank_gsi": 64,
       "rank_lizard": 22,
-      "si": 78.38,
+      "si": 78.72,
       "grade": "D",
       "lizard_max_cc": 82,
       "lizard_nloc": 1867
     },
     {
       "file_path": "heretic/p_switch.c",
-      "rank_gsi": 38,
+      "rank_gsi": 37,
       "rank_lizard": 23,
-      "si": 87.5,
+      "si": 87.84,
       "grade": "E",
       "lizard_max_cc": 81,
       "lizard_nloc": 293
@@ -253,39 +253,39 @@
     },
     {
       "file_path": "heretic/p_spec.c",
-      "rank_gsi": 71,
+      "rank_gsi": 69,
       "rank_lizard": 25,
-      "si": 76.35,
+      "si": 77.03,
       "grade": "D",
       "lizard_max_cc": 63,
       "lizard_nloc": 989
     },
     {
-      "file_path": "heretic/r_segs.c",
-      "rank_gsi": 54,
+      "file_path": "doom/r_segs.c",
+      "rank_gsi": 44,
       "rank_lizard": 28,
-      "si": 82.09,
+      "si": 85.47,
       "grade": "E",
       "lizard_max_cc": 59,
-      "lizard_nloc": 455
+      "lizard_nloc": 501
     },
     {
       "file_path": "heretic/p_mobj.c",
-      "rank_gsi": 84,
+      "rank_gsi": 85,
       "rank_lizard": 29,
-      "si": 71.96,
+      "si": 71.62,
       "grade": "D",
       "lizard_max_cc": 59,
       "lizard_nloc": 1216
     },
     {
-      "file_path": "doom/r_segs.c",
-      "rank_gsi": 46,
+      "file_path": "heretic/r_segs.c",
+      "rank_gsi": 51,
       "rank_lizard": 30,
-      "si": 84.8,
+      "si": 83.11,
       "grade": "E",
       "lizard_max_cc": 59,
-      "lizard_nloc": 501
+      "lizard_nloc": 455
     }
   ],
   "common_topN": [
@@ -300,18 +300,18 @@
     },
     {
       "file_path": "heretic/g_game.c",
-      "rank_gsi": 10,
+      "rank_gsi": 9,
       "rank_lizard": 5,
-      "si": 96.96,
+      "si": 97.3,
       "grade": "E",
       "lizard_max_cc": 143,
       "lizard_nloc": 1591
     },
     {
       "file_path": "strife/d_main.c",
-      "rank_gsi": 11,
-      "rank_lizard": 26,
-      "si": 96.62,
+      "rank_gsi": 12,
+      "rank_lizard": 27,
+      "si": 96.28,
       "grade": "E",
       "lizard_max_cc": 60,
       "lizard_nloc": 1199
@@ -328,7 +328,7 @@
     {
       "file_path": "doom/d_main.c",
       "rank_gsi": 14,
-      "rank_lizard": 27,
+      "rank_lizard": 26,
       "si": 95.61,
       "grade": "E",
       "lizard_max_cc": 60,
@@ -390,27 +390,27 @@
     },
     {
       "file_path": "strife/p_spec.c",
-      "rank_gsi": 27,
+      "rank_gsi": 26,
       "rank_lizard": 2,
-      "si": 91.22,
+      "si": 91.55,
       "grade": "E",
       "lizard_max_cc": 161,
       "lizard_nloc": 1193
     },
     {
       "file_path": "hexen/p_inter.c",
-      "rank_gsi": 28,
+      "rank_gsi": 27,
       "rank_lizard": 8,
-      "si": 90.88,
+      "si": 91.22,
       "grade": "E",
       "lizard_max_cc": 120,
       "lizard_nloc": 1773
     },
     {
       "file_path": "strife/st_stuff.c",
-      "rank_gsi": 29,
+      "rank_gsi": 28,
       "rank_lizard": 16,
-      "si": 90.54,
+      "si": 90.88,
       "grade": "E",
       "lizard_max_cc": 96,
       "lizard_nloc": 990
@@ -426,6 +426,7 @@
     }
   ],
   "notes": [
+    "동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다.",
     "Lizard 가 분석한 475 파일 중 291 만 G-SI 분석 파일과 매칭. 분석기가 본문 .c/.cpp 만 보지만 Lizard 는 헤더도 함께 보는 등 범위 차이일 수 있음."
   ]
 }

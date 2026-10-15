@@ -1,0 +1,48 @@
+{
+  "verified_on": "2026-10-12",
+  "purpose": "Reconnect local web app and measure a larger real repository through the actual browser workflow",
+  "local_url": "http://127.0.0.1:8766/",
+  "server_session": 26530,
+  "browser": "Codex in-app browser",
+  "chrome_observation": "Existing Chrome tab first showed connection refused because the server was stopped. After server startup, Chrome automation showed ERR_BLOCKED_BY_CLIENT. HTTP health and the in-app browser succeeded. No Chrome security settings were changed; blocking cause was not established.",
+  "enter_behavior_verified": "Pressing Enter in the repository URL field submits source import. Analysis starts only after scope/language confirmation and pressing the separate analysis button.",
+  "job": {
+    "id": "d1fd1194e607495192ad38b0009ff2d2",
+    "repository": "https://github.com/OpenRA/OpenRA",
+    "branch": "bleed",
+    "commit": "e180e3225f3930272dd451917467631618f8976f",
+    "archive_bytes": 38656569,
+    "imported_source_and_header_bytes": 7520041,
+    "imported_implementation_files": {"csharp": 1517, "c": 1, "cpp": 0},
+    "scope": "All imported folders, C# only; includes engine, modules, tools and tests; not all language or asset files",
+    "import_seconds": 7.25,
+    "import_timing_method": "Ready job.json filesystem modification timestamp minus job.created_at, read before the analysis request",
+    "analysis_seconds": 28.67,
+    "analysis_timing_method": "Persisted job.finished_at minus job.started_at",
+    "import_plus_analysis_seconds_excluding_user_selection_delay": 35.92,
+    "state": "complete",
+    "analyzed_files": 1517,
+    "failed_files": 0,
+    "syntax_recovery_files": 0,
+    "classes": 3287,
+    "methods": 11674,
+    "class_dependency_edges": 7080,
+    "dependency_cycles": 8,
+    "result_url": "/results/d1fd1194e607495192ad38b0009ff2d2/index.html",
+    "browser_observation": "Analysis complete 100% for selected scope; 30 hotspot rows and 150 graph nodes rendered",
+    "screenshot": ".cache/web/openra-live-2026-10-12.jpg"
+  },
+  "previous_runs_for_context_not_rerun_today": [
+    {"project": "2048.c", "analyzed_files": 1, "analysis_seconds": 0.95, "state": "complete"},
+    {"project": "Chocolate Doom", "scope": "src", "analyzed_files": 296, "analysis_seconds": 9.61, "state": "partial"}
+  ],
+  "limits_confirmed_from_code": {
+    "compressed_zip_or_github_download_bytes": 104857600,
+    "uncompressed_archive_or_source_bytes": 1073741824,
+    "max_entries": 20000,
+    "analysis_timeout_seconds": 1800,
+    "note": "Limits are safety ceilings, not a guarantee that all repositories below them are analyzable. Large-source performance depends on language, syntax, settings, hardware and network."
+  },
+  "interpretation": "No parse/extraction failures were observed for the selected C# input. Complete 100% is a processing status, not accuracy, bug detection rate, whole-game understanding or a build guarantee. C# project settings and external DLLs are not automatically loaded.",
+  "changes": "Only normal new web job input/results and this verification record were created. No application source changes, Git commits, pushes, browser security changes, AI calls or final submission artifacts."
+}

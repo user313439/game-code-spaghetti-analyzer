@@ -7,6 +7,13 @@
     "global_state": 0.15,
     "game_loop_centrality": 0.15
   },
+  "ranking_info": {
+    "scope": "within_analysis_relative",
+    "informative": true,
+    "unique_raw_scores": 29,
+    "largest_tie_fraction": 0.15151515151515152,
+    "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. 동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다."
+  },
   "project_health": {
     "score": 37.47,
     "grade": "B",
@@ -51,6 +58,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.412,
         "coupling": 0.9345,
@@ -76,6 +90,13 @@
       "kind": "class",
       "loc": 30,
       "raw": {
+        "cc": 1.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 1.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -113,6 +134,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -0.6075,
@@ -141,6 +169,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -0.6075,
@@ -163,6 +198,13 @@
       "kind": "class",
       "loc": 112,
       "raw": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 24.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 5.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -200,6 +242,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -1.1214,
@@ -222,6 +271,13 @@
       "kind": "class",
       "loc": 71,
       "raw": {
+        "cc": 5.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 5.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -256,6 +312,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -0.0935,
@@ -278,6 +341,13 @@
       "kind": "class",
       "loc": 16,
       "raw": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 1.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -312,6 +382,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2906,
         "coupling": -0.6075,
@@ -334,6 +411,13 @@
       "kind": "class",
       "loc": 311,
       "raw": {
+        "cc": 9.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 42.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 9.0,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
@@ -371,6 +455,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6547,
         "coupling": -0.6075,
@@ -399,6 +490,13 @@
         "global_state": 5.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.412,
         "coupling": -0.0935,
@@ -421,6 +519,13 @@
       "kind": "class",
       "loc": 57,
       "raw": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 23.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -458,6 +563,13 @@
         "global_state": 12.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.3163,
         "coupling": 0.4205,
@@ -483,6 +595,13 @@
       "kind": "class",
       "loc": 298,
       "raw": {
+        "cc": 18.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 21.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 18.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -520,6 +639,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6547,
         "coupling": -1.1214,
@@ -542,6 +668,13 @@
       "kind": "class",
       "loc": 242,
       "raw": {
+        "cc": 8.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 38.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 8.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -579,6 +712,13 @@
         "global_state": 8.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 8.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0478,
         "coupling": -0.6075,
@@ -601,6 +741,13 @@
       "kind": "class",
       "loc": 224,
       "raw": {
+        "cc": 42.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 66.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 42.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -638,6 +785,13 @@
         "global_state": 88.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 25.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 88.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 2.3798,
         "coupling": 1.9625,
@@ -663,6 +817,13 @@
       "kind": "class",
       "loc": 221,
       "raw": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 36.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -700,6 +861,13 @@
         "global_state": 6.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 6.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.412,
         "coupling": -0.0935,
@@ -722,6 +890,13 @@
       "kind": "class",
       "loc": 157,
       "raw": {
+        "cc": 5.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 22.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 5.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -759,6 +934,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.412,
         "coupling": 2.4765,
@@ -784,6 +966,13 @@
       "kind": "class",
       "loc": 294,
       "raw": {
+        "cc": 4.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -821,6 +1010,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.3163,
         "coupling": -0.6075,
@@ -852,6 +1048,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -0.6075,
@@ -865,7 +1068,7 @@
       "top_reasons": []
     },
     {
-      "fqn": "OpenRA.Platforms.Default.ThreadedVertexBuffer",
+      "fqn": "OpenRA.Platforms.Default.ThreadedVertexBuffer<T>",
       "name": "ThreadedVertexBuffer",
       "file_path": "ThreadedGraphicsContext.cs",
       "module": "(root)",
@@ -874,6 +1077,13 @@
       "kind": "class",
       "loc": 55,
       "raw": {
+        "cc": 2.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 2.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -908,6 +1118,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -0.6075,
@@ -930,6 +1147,13 @@
       "kind": "class",
       "loc": 68,
       "raw": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 2.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -964,6 +1188,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5333,
         "coupling": -0.6075,
@@ -977,7 +1208,7 @@
       "top_reasons": []
     },
     {
-      "fqn": "OpenRA.Platforms.Default.VertexBuffer",
+      "fqn": "OpenRA.Platforms.Default.VertexBuffer<T>",
       "name": "VertexBuffer",
       "file_path": "VertexBuffer.cs",
       "module": "(root)",
@@ -986,6 +1217,13 @@
       "kind": "class",
       "loc": 94,
       "raw": {
+        "cc": 2.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 2.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -1160,5 +1398,19 @@
       "class_count": 33,
       "file_count": 18
     }
-  ]
+  ],
+  "analysis_status": {
+    "state": "complete",
+    "language": "csharp",
+    "analyzed_files": 18,
+    "failed_files": 0,
+    "syntax_files": 0,
+    "errors": [],
+    "diagnostics": [],
+    "limitations": [
+      "결과는 선택한 언어와 분석 대상에 한정됩니다. 완료 표시는 코드 전체를 정확히 이해했다는 보증이 아닙니다.",
+      "동적 호출·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프는 완전히 해석하지 않습니다.",
+      "C# 프로젝트 설정과 외부 DLL을 자동으로 읽지 않습니다. 해석되지 않은 호출은 이름 기반 근사 또는 연결 누락이 발생할 수 있습니다."
+    ]
+  }
 }

@@ -3,7 +3,7 @@
   "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRA",
   "subdir": "OpenRA.Mods.D2k",
   "since": null,
-  "until": null,
+  "until": "2026-10-03",
   "keywords": [
     "fix",
     "bug",
@@ -24,8 +24,8 @@
     {
       "name": "si_vs_bugfix",
       "n": 48,
-      "spearman_rho": 0.1289,
-      "p_value": 0.398335
+      "spearman_rho": 0.1305,
+      "p_value": 0.392417
     },
     {
       "name": "loc_vs_bugfix",
@@ -44,8 +44,8 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 23,
-      "spearman_rho": 0.4915,
-      "p_value": 0.019423
+      "spearman_rho": 0.4981,
+      "p_value": 0.017541
     },
     {
       "name": "file_loc_vs_bugfix",
@@ -255,7 +255,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Graphics.D2kSpriteSequence",
       "file_path": "Graphics/D2kSpriteSequence.cs",
-      "si": 54.17,
+      "si": 56.25,
       "grade": "C",
       "cc_max": 8.0,
       "loc": 70,
@@ -282,7 +282,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.PackageLoaders.D2kSoundResourcesLoader.D2kSoundResources",
       "file_path": "PackageLoaders/D2kSoundResources.cs",
-      "si": 79.17,
+      "si": 72.92,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 44,
@@ -327,7 +327,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.SpriteLoaders.R8Loader.RemappableFrame",
       "file_path": "SpriteLoaders/R8Loader.cs",
-      "si": 47.92,
+      "si": 50.0,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 11,
@@ -363,7 +363,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.D2kActorPreviewPlaceBuildingPreviewPreview",
       "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
-      "si": 75.0,
+      "si": 77.08,
       "grade": "D",
       "cc_max": 11.0,
       "loc": 53,
@@ -399,7 +399,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.HarvesterInsurance",
       "file_path": "Traits/Player/HarvesterInsurance.cs",
-      "si": 52.08,
+      "si": 47.92,
       "grade": "C",
       "cc_max": 4.0,
       "loc": 18,
@@ -453,7 +453,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.BuildableTerrainLayer",
       "file_path": "Traits/World/BuildableTerrainLayer.cs",
-      "si": 77.08,
+      "si": 79.17,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 91,
@@ -471,7 +471,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.D2kMapGeneratorInfo.Parameters",
       "file_path": "Traits/World/D2kMapGenerator.cs",
-      "si": 50.0,
+      "si": 52.08,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 32,
@@ -525,7 +525,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.SonicBlastRenderer",
       "file_path": "Traits/World/SonicBlastRenderer.cs",
-      "si": 72.92,
+      "si": 75.0,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 48,
@@ -570,7 +570,7 @@
     {
       "fqn": "OpenRA.Mods.D2k.Traits.AttractsWorms",
       "file_path": "Traits/AttractsWorms.cs",
-      "si": 56.25,
+      "si": 54.17,
       "grade": "C",
       "cc_max": 3.0,
       "loc": 38,
@@ -670,8 +670,8 @@
     },
     {
       "file_path": "Graphics/D2kSpriteSequence.cs",
-      "si_max": 54.17,
-      "si_mean": 39.59,
+      "si_max": 56.25,
+      "si_mean": 40.62,
       "loc_total": 75,
       "cc_max": 8.0,
       "class_count": 2,
@@ -688,8 +688,8 @@
     },
     {
       "file_path": "PackageLoaders/D2kSoundResources.cs",
-      "si_max": 79.17,
-      "si_mean": 68.75,
+      "si_max": 72.92,
+      "si_mean": 66.67,
       "loc_total": 55,
       "cc_max": 3.0,
       "class_count": 3,
@@ -707,7 +707,7 @@
     {
       "file_path": "SpriteLoaders/R8Loader.cs",
       "si_max": 83.33,
-      "si_mean": 65.28,
+      "si_mean": 65.97,
       "loc_total": 125,
       "cc_max": 10.0,
       "class_count": 3,
@@ -715,8 +715,8 @@
     },
     {
       "file_path": "Traits/Buildings/D2kActorPreviewPlaceBuildingPreview.cs",
-      "si_max": 75.0,
-      "si_mean": 48.61,
+      "si_max": 77.08,
+      "si_mean": 49.31,
       "loc_total": 61,
       "cc_max": 11.0,
       "class_count": 3,
@@ -733,8 +733,8 @@
     },
     {
       "file_path": "Traits/Player/HarvesterInsurance.cs",
-      "si_max": 52.08,
-      "si_mean": 41.66,
+      "si_max": 47.92,
+      "si_mean": 39.59,
       "loc_total": 19,
       "cc_max": 4.0,
       "class_count": 2,
@@ -760,8 +760,8 @@
     },
     {
       "file_path": "Traits/World/BuildableTerrainLayer.cs",
-      "si_max": 77.08,
-      "si_mean": 60.41,
+      "si_max": 79.17,
+      "si_mean": 61.46,
       "loc_total": 92,
       "cc_max": 5.0,
       "class_count": 2,
@@ -770,7 +770,7 @@
     {
       "file_path": "Traits/World/D2kMapGenerator.cs",
       "si_max": 100.0,
-      "si_mean": 58.33,
+      "si_mean": 59.03,
       "loc_total": 447,
       "cc_max": 33.0,
       "class_count": 3,
@@ -787,8 +787,8 @@
     },
     {
       "file_path": "Traits/World/SonicBlastRenderer.cs",
-      "si_max": 72.92,
-      "si_mean": 58.34,
+      "si_max": 75.0,
+      "si_mean": 59.38,
       "loc_total": 49,
       "cc_max": 2.0,
       "class_count": 2,
@@ -805,8 +805,8 @@
     },
     {
       "file_path": "Traits/AttractsWorms.cs",
-      "si_max": 56.25,
-      "si_mean": 40.62,
+      "si_max": 54.17,
+      "si_mean": 39.59,
       "loc_total": 39,
       "cc_max": 3.0,
       "class_count": 2,

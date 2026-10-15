@@ -1,0 +1,327 @@
+{
+  "state": "partial",
+  "language": "cpp",
+  "analyzed_files": 71,
+  "failed_files": 0,
+  "syntax_files": 52,
+  "errors": [],
+  "diagnostics": [
+    {
+      "path": "Actor.cpp",
+      "kind": "syntax",
+      "line": 364,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "AFEntity.cpp",
+      "kind": "syntax",
+      "line": 43,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "ai/AAS_routing.cpp",
+      "kind": "syntax",
+      "line": 693,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "ai/AI.cpp",
+      "kind": "syntax",
+      "line": 2576,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "ai/AI_events.cpp",
+      "kind": "syntax",
+      "line": 164,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "ai/AI_Vagary.cpp",
+      "kind": "syntax",
+      "line": 53,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "anim/Anim_Blend.cpp",
+      "kind": "syntax",
+      "line": 264,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "anim/Anim_Testmodel.cpp",
+      "kind": "syntax",
+      "line": 56,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "BrittleFracture.cpp",
+      "kind": "syntax",
+      "line": 35,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Camera.cpp",
+      "kind": "syntax",
+      "line": 44,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "EndLevel.cpp",
+      "kind": "syntax",
+      "line": 44,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Entity.cpp",
+      "kind": "syntax",
+      "line": 109,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Fx.cpp",
+      "kind": "syntax",
+      "line": 45,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Game_local.cpp",
+      "kind": "syntax",
+      "line": 1362,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "GameEdit.cpp",
+      "kind": "syntax",
+      "line": 43,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "gamesys/Callbacks.cpp",
+      "kind": "syntax",
+      "line": 36,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "gamesys/Class.cpp",
+      "kind": "syntax",
+      "line": 232,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "gamesys/Event.cpp",
+      "kind": "syntax",
+      "line": 270,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "gamesys/SaveGame.cpp",
+      "kind": "syntax",
+      "line": 142,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "gamesys/SysCmds.cpp",
+      "kind": "syntax",
+      "line": 132,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Item.cpp",
+      "kind": "syntax",
+      "line": 50,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Light.cpp",
+      "kind": "syntax",
+      "line": 53,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Misc.cpp",
+      "kind": "syntax",
+      "line": 51,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Moveable.cpp",
+      "kind": "syntax",
+      "line": 47,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Mover.cpp",
+      "kind": "syntax",
+      "line": 92,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Clip.cpp",
+      "kind": "syntax",
+      "line": 964,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Force.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Force_Constant.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Force_Drag.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Force_Field.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Force_Spring.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_Actor.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_AF.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_Base.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_Monster.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_Parametric.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_Player.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_RigidBody.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_Static.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "physics/Physics_StaticMulti.cpp",
+      "kind": "syntax",
+      "line": 34,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Player.cpp",
+      "kind": "syntax",
+      "line": 82,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Projectile.cpp",
+      "kind": "syntax",
+      "line": 52,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Pvs.cpp",
+      "kind": "syntax",
+      "line": 137,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "script/Script_Compiler.cpp",
+      "kind": "syntax",
+      "line": 284,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "script/Script_Thread.cpp",
+      "kind": "syntax",
+      "line": 114,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "SecurityCamera.cpp",
+      "kind": "syntax",
+      "line": 54,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Sound.cpp",
+      "kind": "syntax",
+      "line": 46,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Target.cpp",
+      "kind": "syntax",
+      "line": 47,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Trigger.cpp",
+      "kind": "syntax",
+      "line": 46,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "Weapon.cpp",
+      "kind": "syntax",
+      "line": 74,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    },
+    {
+      "path": "WorldSpawn.cpp",
+      "kind": "syntax",
+      "line": 47,
+      "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+    }
+  ],
+  "limitations": [
+    "결과는 선택한 언어와 분석 대상에 한정됩니다. 완료 표시는 코드 전체를 정확히 이해했다는 보증이 아닙니다.",
+    "동적 호출·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프는 완전히 해석하지 않습니다.",
+    "C/C++는 구문 기반 분석입니다. 매크로·템플릿·헤더 본문과 외부 라이브러리의 완전한 의미 해석은 지원하지 않습니다."
+  ]
+}

@@ -1,0 +1,384 @@
+{
+  "schema_version": "compare-0.1",
+  "project": "openra-mods-common",
+  "scoring_path": "docs\\_verification\\2026-10-03\\openra-mods-common\\scoring.json",
+  "analyzed_path": "benchmarks\\OpenRA\\OpenRA.Mods.Common",
+  "files_analyzed_by_us": 1080,
+  "files_analyzed_by_lizard": 1080,
+  "files_matched": 1080,
+  "top_n": 30,
+  "jaccard_topN": {
+    "5": 0.25,
+    "10": 0.6667,
+    "30": 0.5
+  },
+  "spearman_si_vs_lizard_cc": 0.7926,
+  "spearman_p": 0.0,
+  "gsi_only_topN": [
+    {
+      "file_path": "Traits/Conditions/ConditionalTrait.cs",
+      "rank_gsi": 1,
+      "rank_lizard": 665,
+      "si": 100.0,
+      "grade": "E",
+      "lizard_max_cc": 4,
+      "lizard_nloc": 54
+    },
+    {
+      "file_path": "Traits/BotModules/Squads/States/GroundStates.cs",
+      "rank_gsi": 4,
+      "rank_lizard": 240,
+      "si": 99.82,
+      "grade": "E",
+      "lizard_max_cc": 10,
+      "lizard_nloc": 195
+    },
+    {
+      "file_path": "Traits/BotModules/Squads/States/AirStates.cs",
+      "rank_gsi": 14,
+      "rank_lizard": 223,
+      "si": 99.18,
+      "grade": "E",
+      "lizard_max_cc": 10,
+      "lizard_nloc": 180
+    },
+    {
+      "file_path": "Widgets/Logic/ReplayBrowserLogic.cs",
+      "rank_gsi": 18,
+      "rank_lizard": 33,
+      "si": 99.0,
+      "grade": "E",
+      "lizard_max_cc": 30,
+      "lizard_nloc": 705
+    },
+    {
+      "file_path": "Widgets/Logic/LoadGameBrowserLogic.cs",
+      "rank_gsi": 20,
+      "rank_lizard": 31,
+      "si": 98.86,
+      "grade": "E",
+      "lizard_max_cc": 30,
+      "lizard_nloc": 825
+    },
+    {
+      "file_path": "Widgets/ViewportControllerWidget.cs",
+      "rank_gsi": 21,
+      "rank_lizard": 36,
+      "si": 98.81,
+      "grade": "E",
+      "lizard_max_cc": 27,
+      "lizard_nloc": 398
+    },
+    {
+      "file_path": "Widgets/ProductionPaletteWidget.cs",
+      "rank_gsi": 24,
+      "rank_lizard": 62,
+      "si": 98.63,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 505
+    },
+    {
+      "file_path": "Traits/Mobile.cs",
+      "rank_gsi": 28,
+      "rank_lizard": 152,
+      "si": 98.45,
+      "grade": "E",
+      "lizard_max_cc": 13,
+      "lizard_nloc": 785
+    },
+    {
+      "file_path": "Traits/BotModules/Squads/States/ProtectionStates.cs",
+      "rank_gsi": 29,
+      "rank_lizard": 484,
+      "si": 98.4,
+      "grade": "E",
+      "lizard_max_cc": 6,
+      "lizard_nloc": 60
+    },
+    {
+      "file_path": "Activities/Resupply.cs",
+      "rank_gsi": 30,
+      "rank_lizard": 37,
+      "si": 98.36,
+      "grade": "E",
+      "lizard_max_cc": 26,
+      "lizard_nloc": 245
+    }
+  ],
+  "lizard_only_topN": [
+    {
+      "file_path": "MapGenerator/MatrixUtils.cs",
+      "rank_gsi": 58,
+      "rank_lizard": 11,
+      "si": 96.95,
+      "grade": "E",
+      "lizard_max_cc": 51,
+      "lizard_nloc": 1256
+    },
+    {
+      "file_path": "Traits/BotModules/McvExpansionManagerBotModule.cs",
+      "rank_gsi": 33,
+      "rank_lizard": 15,
+      "si": 98.22,
+      "grade": "E",
+      "lizard_max_cc": 40,
+      "lizard_nloc": 582
+    },
+    {
+      "file_path": "Activities/Air/FlyAttack.cs",
+      "rank_gsi": 32,
+      "rank_lizard": 21,
+      "si": 98.27,
+      "grade": "E",
+      "lizard_max_cc": 36,
+      "lizard_nloc": 222
+    },
+    {
+      "file_path": "Widgets/Logic/Ingame/CommandBarLogic.cs",
+      "rank_gsi": 38,
+      "rank_lizard": 22,
+      "si": 97.9,
+      "grade": "E",
+      "lizard_max_cc": 35,
+      "lizard_nloc": 257
+    },
+    {
+      "file_path": "Widgets/Logic/MapChooserLogic.cs",
+      "rank_gsi": 49,
+      "rank_lizard": 23,
+      "si": 97.36,
+      "grade": "E",
+      "lizard_max_cc": 33,
+      "lizard_nloc": 525
+    },
+    {
+      "file_path": "UtilityCommands/FuzzMapGeneratorCommand.cs",
+      "rank_gsi": 68,
+      "rank_lizard": 24,
+      "si": 96.49,
+      "grade": "E",
+      "lizard_max_cc": 33,
+      "lizard_nloc": 287
+    },
+    {
+      "file_path": "Widgets/Logic/Ingame/ProductionTooltipLogic.cs",
+      "rank_gsi": 103,
+      "rank_lizard": 25,
+      "si": 94.8,
+      "grade": "E",
+      "lizard_max_cc": 32,
+      "lizard_nloc": 146
+    },
+    {
+      "file_path": "Util.cs",
+      "rank_gsi": 203,
+      "rank_lizard": 27,
+      "si": 90.11,
+      "grade": "E",
+      "lizard_max_cc": 32,
+      "lizard_nloc": 278
+    },
+    {
+      "file_path": "Traits/BotModules/HarvesterBotModule.cs",
+      "rank_gsi": 35,
+      "rank_lizard": 29,
+      "si": 98.04,
+      "grade": "E",
+      "lizard_max_cc": 31,
+      "lizard_nloc": 348
+    },
+    {
+      "file_path": "Traits/Player/DeveloperMode.cs",
+      "rank_gsi": 106,
+      "rank_lizard": 30,
+      "si": 94.67,
+      "grade": "E",
+      "lizard_max_cc": 30,
+      "lizard_nloc": 216
+    }
+  ],
+  "common_topN": [
+    {
+      "file_path": "Widgets/TextFieldWidget.cs",
+      "rank_gsi": 2,
+      "rank_lizard": 2,
+      "si": 99.91,
+      "grade": "E",
+      "lizard_max_cc": 98,
+      "lizard_nloc": 470
+    },
+    {
+      "file_path": "Widgets/Logic/Lobby/LobbyLogic.cs",
+      "rank_gsi": 3,
+      "rank_lizard": 5,
+      "si": 99.86,
+      "grade": "E",
+      "lizard_max_cc": 75,
+      "lizard_nloc": 840
+    },
+    {
+      "file_path": "Widgets/Logic/AssetBrowserLogic.cs",
+      "rank_gsi": 5,
+      "rank_lizard": 7,
+      "si": 99.77,
+      "grade": "E",
+      "lizard_max_cc": 65,
+      "lizard_nloc": 627
+    },
+    {
+      "file_path": "Widgets/Logic/Ingame/IngameChatLogic.cs",
+      "rank_gsi": 6,
+      "rank_lizard": 9,
+      "si": 99.68,
+      "grade": "E",
+      "lizard_max_cc": 58,
+      "lizard_nloc": 296
+    },
+    {
+      "file_path": "MapGenerator/Terraformer.cs",
+      "rank_gsi": 7,
+      "rank_lizard": 4,
+      "si": 99.64,
+      "grade": "E",
+      "lizard_max_cc": 75,
+      "lizard_nloc": 1651
+    },
+    {
+      "file_path": "MapGenerator/TilingPath.cs",
+      "rank_gsi": 8,
+      "rank_lizard": 1,
+      "si": 99.59,
+      "grade": "E",
+      "lizard_max_cc": 117,
+      "lizard_nloc": 936
+    },
+    {
+      "file_path": "Traits/World/ClassicMapGenerator.cs",
+      "rank_gsi": 9,
+      "rank_lizard": 3,
+      "si": 99.54,
+      "grade": "E",
+      "lizard_max_cc": 76,
+      "lizard_nloc": 874
+    },
+    {
+      "file_path": "UpdateRules/Rules/20230225/ExplicitSequenceFilenames.cs",
+      "rank_gsi": 10,
+      "rank_lizard": 6,
+      "si": 99.5,
+      "grade": "E",
+      "lizard_max_cc": 70,
+      "lizard_nloc": 390
+    },
+    {
+      "file_path": "Widgets/ScrollableLineGraphWidget.cs",
+      "rank_gsi": 11,
+      "rank_lizard": 12,
+      "si": 99.32,
+      "grade": "E",
+      "lizard_max_cc": 49,
+      "lizard_nloc": 475
+    },
+    {
+      "file_path": "Traits/Air/Aircraft.cs",
+      "rank_gsi": 12,
+      "rank_lizard": 26,
+      "si": 99.27,
+      "grade": "E",
+      "lizard_max_cc": 32,
+      "lizard_nloc": 1021
+    },
+    {
+      "file_path": "Activities/Air/Fly.cs",
+      "rank_gsi": 13,
+      "rank_lizard": 18,
+      "si": 99.23,
+      "grade": "E",
+      "lizard_max_cc": 38,
+      "lizard_nloc": 192
+    },
+    {
+      "file_path": "Traits/BotModules/BotModuleLogic/BaseBuilderQueueManager.cs",
+      "rank_gsi": 15,
+      "rank_lizard": 10,
+      "si": 99.13,
+      "grade": "E",
+      "lizard_max_cc": 55,
+      "lizard_nloc": 452
+    },
+    {
+      "file_path": "Widgets/Logic/Ingame/GameInfoStatsLogic.cs",
+      "rank_gsi": 16,
+      "rank_lizard": 8,
+      "si": 99.09,
+      "grade": "E",
+      "lizard_max_cc": 59,
+      "lizard_nloc": 269
+    },
+    {
+      "file_path": "Traits/Player/PlaceBuilding.cs",
+      "rank_gsi": 17,
+      "rank_lizard": 16,
+      "si": 99.04,
+      "grade": "E",
+      "lizard_max_cc": 39,
+      "lizard_nloc": 198
+    },
+    {
+      "file_path": "Activities/Air/Land.cs",
+      "rank_gsi": 19,
+      "rank_lizard": 28,
+      "si": 98.91,
+      "grade": "E",
+      "lizard_max_cc": 32,
+      "lizard_nloc": 192
+    },
+    {
+      "file_path": "Traits/Attack/AttackFollow.cs",
+      "rank_gsi": 22,
+      "rank_lizard": 13,
+      "si": 98.77,
+      "grade": "E",
+      "lizard_max_cc": 45,
+      "lizard_nloc": 354
+    },
+    {
+      "file_path": "Projectiles/Missile.cs",
+      "rank_gsi": 23,
+      "rank_lizard": 19,
+      "si": 98.68,
+      "grade": "E",
+      "lizard_max_cc": 38,
+      "lizard_nloc": 649
+    },
+    {
+      "file_path": "EditorBrushes/EditorDefaultBrush.cs",
+      "rank_gsi": 25,
+      "rank_lizard": 14,
+      "si": 98.59,
+      "grade": "E",
+      "lizard_max_cc": 41,
+      "lizard_nloc": 485
+    },
+    {
+      "file_path": "MapGenerator/RampTiler.cs",
+      "rank_gsi": 26,
+      "rank_lizard": 17,
+      "si": 98.54,
+      "grade": "E",
+      "lizard_max_cc": 38,
+      "lizard_nloc": 570
+    },
+    {
+      "file_path": "Widgets/Logic/ServerListLogic.cs",
+      "rank_gsi": 27,
+      "rank_lizard": 20,
+      "si": 98.5,
+      "grade": "E",
+      "lizard_max_cc": 36,
+      "lizard_nloc": 694
+    }
+  ],
+  "notes": []
+}

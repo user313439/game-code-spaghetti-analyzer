@@ -43,6 +43,7 @@ def compute_change_risk(
     repo: Path,
     subdir: str | None,
     months: int = 12,
+    until: str | None = None,
 ) -> dict[str, ChangeRiskRow]:
     """저장소 git 로그 기준 파일별 ChangeRisk 값 산출.
 
@@ -61,15 +62,18 @@ def compute_change_risk(
         ``file_path`` (subdir 기준 상대경로, POSIX) → ChangeRiskRow.
     """
     repo = Path(repo).resolve()
-    since_date = (_dt.datetime.utcnow() - _dt.timedelta(days=months * 30)).strftime("%Y-%m-%d")
+    end_date = _dt.date.fromisoformat(until) if until else _dt.datetime.utcnow().date()
+    since_date = (end_date - _dt.timedelta(days=months * 30)).isoformat()
 
     args = [
         "log",
         "--pretty=format:__COMMIT__\x01%H\x01%s",
         "--name-only",
         "--no-merges",
-        f"--since={since_date}",
+        f"--since={since_date}T00:00:00Z",
     ]
+    if until:
+        args.append(f"--until={until}T23:59:59Z")
     if subdir:
         args.extend(["--", subdir])
 

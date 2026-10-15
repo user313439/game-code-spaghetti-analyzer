@@ -1,0 +1,447 @@
+{
+  "run_at_utc": "2026-10-04T15:58:52.732879+00:00",
+  "review_date_kst": "2026-10-05",
+  "scope": "8 current static analyses, exception behavior and dashboard updates; historical statistics unchanged",
+  "browser_interaction_verified": false,
+  "checks": [
+    {
+      "name": "input:OpenRA",
+      "passed": true
+    },
+    {
+      "name": "input:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "input:OpenRCT2",
+      "passed": true
+    },
+    {
+      "name": "execution:openra-game",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openra-game",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openra-game",
+      "passed": true
+    },
+    {
+      "name": "status:openra-game",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openra-game",
+      "passed": true
+    },
+    {
+      "name": "limits:openra-game",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openra-game",
+      "passed": true
+    },
+    {
+      "name": "js:openra-game:1",
+      "passed": true
+    },
+    {
+      "name": "execution:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "status:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "limits:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openra-mods-common",
+      "passed": true
+    },
+    {
+      "name": "js:openra-mods-common:1",
+      "passed": true
+    },
+    {
+      "name": "execution:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "status:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "limits:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openra-mods-cnc",
+      "passed": true
+    },
+    {
+      "name": "js:openra-mods-cnc:1",
+      "passed": true
+    },
+    {
+      "name": "execution:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "status:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "limits:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openra-mods-d2k",
+      "passed": true
+    },
+    {
+      "name": "js:openra-mods-d2k:1",
+      "passed": true
+    },
+    {
+      "name": "execution:openra-server",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openra-server",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openra-server",
+      "passed": true
+    },
+    {
+      "name": "status:openra-server",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openra-server",
+      "passed": true
+    },
+    {
+      "name": "limits:openra-server",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openra-server",
+      "passed": true
+    },
+    {
+      "name": "js:openra-server:0",
+      "passed": true
+    },
+    {
+      "name": "execution:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "status:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "limits:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openra-platforms-default",
+      "passed": true
+    },
+    {
+      "name": "js:openra-platforms-default:1",
+      "passed": true
+    },
+    {
+      "name": "execution:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "status:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "limits:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:chocolate-doom",
+      "passed": true
+    },
+    {
+      "name": "js:chocolate-doom:1",
+      "passed": true
+    },
+    {
+      "name": "execution:openrct2",
+      "passed": true
+    },
+    {
+      "name": "all-scores-unchanged:openrct2",
+      "passed": true
+    },
+    {
+      "name": "all-metrics-unchanged:openrct2",
+      "passed": true
+    },
+    {
+      "name": "status:openrct2",
+      "passed": true
+    },
+    {
+      "name": "help-collapsed:openrct2",
+      "passed": true
+    },
+    {
+      "name": "limits:openrct2",
+      "passed": true
+    },
+    {
+      "name": "partial-visible:openrct2",
+      "passed": true
+    },
+    {
+      "name": "js:openrct2:1",
+      "passed": true
+    },
+    {
+      "name": "landing-intro",
+      "passed": true
+    },
+    {
+      "name": "landing-centered",
+      "passed": true
+    },
+    {
+      "name": "landing-link:openra-game/index.html",
+      "passed": true
+    },
+    {
+      "name": "landing-link:openra-mods-common/index.html",
+      "passed": true
+    },
+    {
+      "name": "landing-link:chocolate-doom/index.html",
+      "passed": true
+    },
+    {
+      "name": "landing-link:openrct2/index.html",
+      "passed": true
+    },
+    {
+      "name": "all-tests",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "cases": {
+    "openra-game": {
+      "state": "complete",
+      "analyzed_files": 226,
+      "failed_files": 0,
+      "syntax_files": 0,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "openra-mods-common": {
+      "state": "complete",
+      "analyzed_files": 1080,
+      "failed_files": 0,
+      "syntax_files": 0,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "openra-mods-cnc": {
+      "state": "complete",
+      "analyzed_files": 140,
+      "failed_files": 0,
+      "syntax_files": 0,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "openra-mods-d2k": {
+      "state": "complete",
+      "analyzed_files": 23,
+      "failed_files": 0,
+      "syntax_files": 0,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "openra-server": {
+      "state": "complete",
+      "analyzed_files": 1,
+      "failed_files": 0,
+      "syntax_files": 0,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "openra-platforms-default": {
+      "state": "complete",
+      "analyzed_files": 18,
+      "failed_files": 0,
+      "syntax_files": 0,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "chocolate-doom": {
+      "state": "partial",
+      "analyzed_files": 296,
+      "failed_files": 0,
+      "syntax_files": 37,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    },
+    "openrct2": {
+      "state": "partial",
+      "analyzed_files": 544,
+      "failed_files": 0,
+      "syntax_files": 36,
+      "scores_unchanged": true,
+      "metrics_unchanged": true
+    }
+  },
+  "tests_passed": 105,
+  "source_sha256": {
+    "game_si/ablation.py": "67fee891a941df20cb2427f0ed604a6c813d435286a7423835628a6678f2f5ee",
+    "game_si/advisor.py": "a99666727aa39c864332420f741a32c05c4f576044d825c236872ce5cdd9ef00",
+    "game_si/analyzer.py": "a49bdf4e26dedac8bb0a8be59e7838500758debf0c2b39fbfd1b543435f7d2d0",
+    "game_si/change_risk.py": "3296472dd4b78e815919750a2667f9c120cf0c318ca612d687cb9e56327cdf26",
+    "game_si/cli.py": "3f8844c0c9c414573700031c39f8f182a968d166132d509d4a39d2b7849234c9",
+    "game_si/compare.py": "454f7dc590e9a44ebf4497960e87fd72c2818824d3e6c2357e71a883b27ef2a5",
+    "game_si/cpp_analyzer.py": "087ae361cf3cf54662d601059386cc2764c2b9f4f34c413f4a5f5e6741b72724",
+    "game_si/diagnostics.py": "be17cfdce1badd8ab38066a94e4f60f1ab6d41b2f79731e42277501915fb4ab7",
+    "game_si/diff.py": "e95a3985fcb4f34a2f4c70c92c889d8886dbaad101f900e53da1b116d9945940",
+    "game_si/gitlog.py": "920ff0d6564cd169599826361e8208b34d86e9c0a426af09b53056601c9be57b",
+    "game_si/metrics.py": "78ba5984f13bb2b7de21a9cb91344fa87acbb85e72da03bd78c40a38e637bb41",
+    "game_si/report.py": "b78bdadeb638d470876a3990a0c3581c19b38c9150fb46912ee6a7e3184a76ea",
+    "game_si/si.py": "0fab3b9218c1dc76053c1e8a0a1a4e2577c9422fcb64ec2ad4a82654c4cdfb48",
+    "game_si/timeseries.py": "d45065a71d6637e49d2cd56b649d1209ae8cf9446aa0e2918b4b35bf46041979",
+    "game_si/tune.py": "8c3b2fe5d5ab731b7cf0b639a37c45e70d3b34d11e85ad3dd64acde35b27ab95",
+    "game_si/validate.py": "5107441934782c47c019c0fb175a4dac4637421092ab71f2c8cb11c03efa4335",
+    "game_si/validate_report.py": "333a5bd6e333809fda5a4c9eeb3cea42eeaeecc50df460ee323d42173157728b",
+    "game_si/__init__.py": "09568c7c1f390bd47a805baa22c9cd45e12577a1698756ac9d1891be6284fe6b",
+    "game_si/__main__.py": "6f9f273aad09d77631b22c3c38cfbd666f4a43e85cc32c2b79eb514fdacc2cb7",
+    "csharp-analyzer/AstExtractor.cs": "15ede472f766c395344eab6cdbab627e3e5c326e6ffb66898dad84336663a2dd",
+    "csharp-analyzer/CyclomaticComplexityWalker.cs": "2894dd4142d1c58ac10fe621b71b6553f8a314e5810e8cf83ce35f1bdab51c77",
+    "csharp-analyzer/MethodBodyWalker.cs": "eef7bce22ae4f665a47a339bb07f95c4124c75bcf34a467e7b7c1d0f2378a0ff",
+    "csharp-analyzer/Models.cs": "10b007837570d837b445087a4bf2c8395af245f15a620784da7fc419bca5c984",
+    "csharp-analyzer/Program.cs": "811165f2283b1141abc4958fe8e4f2e8494f4a35787566452843143261fede39",
+    "tests/test_analysis_safety.py": "f5f287a04d5cdd36bb5e5b313426cb35a9ffe301ea4cbfac69395040505b4c83",
+    "tests/test_cpp_analyzer.py": "170dd6f8825472ea7bd71b47ede88957cb66b4c58608b44299a08cce03bfc24c",
+    "tests/test_refinement.py": "847bb0282318968bb1958835241d5442e707d6968956d8c8ce69806483082d12",
+    "tests/test_reproducibility.py": "d8ab447fb2bddd40ea9ec8eb034b1d2f962f9ecb7474273d5972d0e58fd2736a",
+    "tests/test_validate.py": "4e80d4a3b8ee0604b6864acc53d43a05e3468a75f76f81c58bb88deb282f63fa",
+    "tests/test_w14_extensions.py": "50c8dea241c90c1da66b880eeee738863de171166fe38e6e16d71323e406b4ef"
+  },
+  "artifact_sha256": {
+    "openra-game/ast.json": "2e5cd344b11dbe3b6a89be2976fef4198ebe923a0b3bf00f51ec8ad7d538d508",
+    "openra-game/metrics.json": "1a649f76b9edcde153bb67e790fe1f9f9e91eca3e0fc647dce6398b6a0b7ec7b",
+    "openra-game/scoring.json": "3e6f439d4cddcd72b6b0e180d928240691996c2565b55a58704e013b22a3ee41",
+    "openra-game/analysis_status.json": "360bc29578ebbfeefdcc667f748d57e5a05dfc4065a24ec147c28922c5a5eef9",
+    "openra-game/index.html": "ac86cc2735f331b24df7d87677808092f077bd46222e5cfabff65b02004b8164",
+    "openra-mods-common/ast.json": "61e6c76bafb7405b25ffcd92aee814250e76a36b22edf4f878e8c86bc4a50610",
+    "openra-mods-common/metrics.json": "ebfbc8c155b8b476d0b8642276d2e004cbe4c00fd0b46a116d7208b955deaeeb",
+    "openra-mods-common/scoring.json": "baf09169f68c848ed3843685be5eb9920a761e0e2a8ddc5021f08833e2624ae5",
+    "openra-mods-common/analysis_status.json": "7adb0cd7a56a000edf7b5740909b1faeb13d6ff8ddf8a4de23f5f4bfbbe65d1e",
+    "openra-mods-common/index.html": "53b10253504317000873d19107acd3b9ed56d7044f0d2949b227731787283e48",
+    "openra-mods-cnc/ast.json": "01a3d65dfcb839fd0e656163709b5f73ab12086df4c67d77c108f9bc268942da",
+    "openra-mods-cnc/metrics.json": "928c1ca4132916d0b3d27e62365ca3766c395703a34801b5dd7ef797026b2eae",
+    "openra-mods-cnc/scoring.json": "80da60440f2ae573c09e35e6c364377dd9aa88d3ce3b0869af5cb86e636f37bb",
+    "openra-mods-cnc/analysis_status.json": "736556b2bdeb5622baaceee577546d95eef79efe908267693ce030392f1be7d7",
+    "openra-mods-cnc/index.html": "666ac1bb421fe878f6c8b347b7e44b4c87235d8e25e9c2144e76a7361938a1bd",
+    "openra-mods-d2k/ast.json": "12d11af8bbbb762805cac49267700fd7d8b4befd38c7fb97fdae699a63bc8912",
+    "openra-mods-d2k/metrics.json": "c3d3a271d3ee3c2b3a92be410627c3b3d05d6af281f1417edc3b919eae518c61",
+    "openra-mods-d2k/scoring.json": "7a985510b6554ef285b2e3ea14120cab08f9616764a9b98adbad6b74be3339b5",
+    "openra-mods-d2k/analysis_status.json": "48a82f0fc5c185575bf59aaa25ad436602829b29758314b5c7a0ef107698bade",
+    "openra-mods-d2k/index.html": "37c0b782840d5cde1371ed7c8a64bf3d183257bcb991bb89d9638d2e00003960",
+    "openra-server/ast.json": "2c47a67d1f2be6758f8d98feba43d5b695a37e7ee502e7350139a58913da4ba6",
+    "openra-server/metrics.json": "c89c291b38ff5ec249ca9994d412d312cdebe041a9d86a3fe6579c153aed4811",
+    "openra-server/scoring.json": "0af418893b46351ee455d75cac370d174bfa3512a163ce9e605f8124255b6f66",
+    "openra-server/analysis_status.json": "bee5a4cd5ffef00dae07129236a3fb33f638b0ba4869a8a217a368ce149e0796",
+    "openra-server/index.html": "8eb510efa411456376bb6919be5709352693c239ca3a29405a240700a7d9dce1",
+    "openra-platforms-default/ast.json": "2e0ae2c9ffcb7745d0c80182621cae01209d22bc81d5a03c3953706df2af5f21",
+    "openra-platforms-default/metrics.json": "f160cae9f4b3995f6de5e68fe20f8e1a97e7b2c910ea1d293fa37e06eb38c37d",
+    "openra-platforms-default/scoring.json": "04bb5fde70fd22bf5dca19f0a1d4eab4da6dc37e76c9ee97f52755f3ec2f0ab6",
+    "openra-platforms-default/analysis_status.json": "db087305d5f22de24a3de1be1100af2082a850816e3350f85ba63a74afe48eff",
+    "openra-platforms-default/index.html": "874847e72fbd750e328e2d0ed16588218bed548389965d1dc02e6db520febaf2",
+    "chocolate-doom/ast.json": "1ef8ee86a776f1cb46a5a241113c65427c1def919bb037094dcc2d01a9c838a6",
+    "chocolate-doom/metrics.json": "c61de101606dba155699345a9c9a8c04aeaa0f6a8f90e22b6e6b450add14d5bd",
+    "chocolate-doom/scoring.json": "59df0d6f5d4bc6f67f3f2eb14b277a16adc2ae9af77fa440d4b3345c92d29184",
+    "chocolate-doom/analysis_status.json": "91e974511b597c4191b5e03216fa3e1f447814aabcdbca1d960559a87a110091",
+    "chocolate-doom/index.html": "98c8f260ea7b10001ebf22485ba01db36da2a3d566e9cbf012d5fa9a7095f5ac",
+    "openrct2/ast.json": "0ea3f8d65542070dbd66b8db6c450effa37b0fc0885cd58b55348dd572711831",
+    "openrct2/metrics.json": "b9e6cc2c567c4492777a8853cd084341149eec0cdc6c6d1162b3a81a47103317",
+    "openrct2/scoring.json": "4fcfc1e7fdfa062ddefd14fa9eb09acf3669caf9d839e6cd925e03e795b151a1",
+    "openrct2/analysis_status.json": "573b216230d879b532480e41f2b629568636032144bb60c2f461ae116984de90",
+    "openrct2/index.html": "a4683768bc67373316bf388659da3c3b107ed62b3fe300a8feb4fb1fb612938c",
+    "index.html": "076cbee220bc52f94f09dd671e5605b778789d5f239bd84017112ecec41f40e2"
+  }
+}

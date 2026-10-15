@@ -1,0 +1,57 @@
+{
+  "review_date_kst": "2026-10-08",
+  "run_at_utc": "2026-10-08T14:30:02.506463+00:00",
+  "scope": "Fresh resume check of unchanged product and experiment artifacts; no new game runs",
+  "experiment_evidence": "reports/verification-clang-integration-2026-10-07.json",
+  "experiment_evidence_sha256": "7654ee903305987a71fe0e1126d27685f6ca1dfd1ed23fbb14ffd3d323a398c0",
+  "checks": {
+    "fresh_full_suite": true,
+    "prior_required_checks_passed": true,
+    "product_sources_match_experiment_record": true,
+    "new_result_artifacts_match_experiment_record": true,
+    "previous_47_artifacts_unchanged": true,
+    "benchmark_sources_unchanged": true,
+    "benchmark_revisions_unchanged": true
+  },
+  "all_required_checks_passed": true,
+  "source_fingerprints_match": {
+    "game_si/clang_config.py": true,
+    "game_si/clang_analyzer.py": true,
+    "game_si/clang_worker.py": true,
+    "game_si/cli.py": true,
+    "game_si/diagnostics.py": true,
+    "game_si/report.py": true,
+    "game_si/advisor.py": true,
+    "game_si/metrics.py": true,
+    "game_si/si.py": true,
+    "pyproject.toml": true,
+    "tests/test_clang_analysis.py": true,
+    "tests/test_clang_integration.py": true
+  },
+  "artifact_fingerprints_match": {
+    "doom3": {
+      "analysis_status.json": true,
+      "ast.json": true,
+      "index.html": true,
+      "metrics.json": true,
+      "scoring.json": true
+    },
+    "openrct2": {
+      "analysis_status.json": true,
+      "ast.json": true,
+      "index.html": true,
+      "metrics.json": true,
+      "scoring.json": true
+    }
+  },
+  "tests": {
+    "command": "py -3.10 -B -m pytest tests/ -q -p no:cacheprovider (native runtime enabled)",
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 28%]\n........................................................................ [ 56%]\n........................................................................ [ 84%]\n.........................................                                [100%]\n257 passed in 56.36s\n",
+    "stderr": ""
+  },
+  "browser_interaction_verified": false,
+  "game_build_or_execution_verified": false,
+  "new_ai_api_calls": 0,
+  "git_writes_performed": false
+}

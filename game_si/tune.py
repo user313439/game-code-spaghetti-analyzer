@@ -12,8 +12,8 @@ plan §4.6 의 가중치 운용 방식을 구현한다.
 **search 전략**: 5 차원 가중치를 0.05 step grid 로 탐색. 각 weight ∈ [0.05, 0.40],
 합 = 1 제약. raw point 가 ~3000 개 정도라 평가는 빠르다.
 
-**LOPO**: K=4 케이스. 각 폴드에서 3 케이스로 평균 ρ 최대 가중치 찾기 → 빠진 1
-케이스에서 그 가중치로 ρ 측정. 4 폴드 평균을 LOPO 성능으로 보고.
+**LOPO**: 원본 프로젝트를 통째로 제외한다. 같은 프로젝트의 여러 모듈은
+train/hold-out에 나뉘지 않는다. 프로젝트별 평균 ρ를 동일 가중 평균한다.
 
 본 모듈은 scipy 의존성 없이 표준 라이브러리만으로 동작한다 (Spearman 은
 `validate.spearman` 재사용).
@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import Iterable
 
 from .validate import spearman
+from .si import _z_score_rows, _percentile_rank, _normalize_weights
 
 
 WEIGHT_KEYS = ("cc", "coupling", "dependency_cycle", "global_state", "game_loop_centrality")
@@ -40,12 +41,18 @@ GRID_STEPS = (0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40)
 class CaseData:
     """튜닝에 사용할 케이스 데이터.
 
-    raw_by_file : 파일 단위 raw metric (cc/coupling/...)
+    raw_by_file : 파일 목록 및 단일 클래스 입력의 raw metric
     bugfix_by_file : 파일 단위 bug-fix 카운트 (validate 산출물)
+    class_raw_by_file : 실제 scoring의 클래스별 raw metric (집계 전)
+    입력 데이터는 생성 후 변경하지 않는다 (표준화 결과를 재사용).
     """
     name: str
     raw_by_file: dict[str, dict[str, float]]
     bugfix_by_file: dict[str, int]
+    project_group: str | None = None
+    class_raw_by_file: dict[str, list[dict[str, float]]] | None = None
+    _z_by_file: dict[str, list[dict[str, float]]] | None = field(default=None, init=False, repr=False)
+    raw_precision: str = "full precision (in-memory)"
 
 
 @dataclass
@@ -58,6 +65,10 @@ class TuneResult:
     lopo_tuned_rho: float
     grid_size: int
     n_evaluated: int
+    case_projects: dict[str, str] = field(default_factory=dict)
+    project_folds: list[dict] = field(default_factory=list)
+    exclusion_reasons: dict[str, str] = field(default_factory=dict)
+    input_precision: dict[str, str] = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -65,12 +76,15 @@ class TuneResult:
 # ---------------------------------------------------------------------------
 
 
-def load_case_data(case_name: str, scoring_path: Path, validation_path: Path) -> CaseData:
+def load_case_data(
+    case_name: str, scoring_path: Path, validation_path: Path,
+    project_group: str | None = None,
+) -> CaseData:
     """`scoring.json` (raw 메트릭) + `validation.json` (bug-fix 카운트) 로 케이스 데이터 구성.
 
-    파일 단위로 집계: scoring.json 의 class_scores 를 file_path 별로 묶어
-    raw 메트릭의 max 값(파일 대표값) 을 사용. bug-fix count 는 validation.json
-    의 file_rows 또는 rows 에서 추출.
+    클래스 raw를 보존하여 본 분석과 동일한 순서로 점수를 재계산한다.
+    bug-fix count는 validation.json의 file_rows 또는 rows에서 추출.
+    프로젝트 그룹은 명시값 또는 validation의 저장소 경로에서 결정한다.
     """
     with open(scoring_path, "r", encoding="utf-8") as f:
         scoring = json.load(f)
@@ -79,11 +93,16 @@ def load_case_data(case_name: str, scoring_path: Path, validation_path: Path) ->
 
     # 파일 단위 raw — 클래스 raw 의 max (파일 대표값)
     raw_by_file: dict[str, dict[str, float]] = {}
+    class_raw_by_file: dict[str, list[dict[str, float]]] = {}
     for c in scoring.get("class_scores", []):
         fp = c["file_path"].replace("\\", "/")
+        raw = c.get("raw_exact", c.get("raw", {}))
+        class_raw_by_file.setdefault(fp, []).append({
+            k: float(raw.get(k, 0.0)) for k in WEIGHT_KEYS
+        })
         cur = raw_by_file.setdefault(fp, {k: 0.0 for k in WEIGHT_KEYS})
         for k in WEIGHT_KEYS:
-            v = float(c.get("raw", {}).get(k, 0.0))
+            v = float(raw.get(k, 0.0))
             if v > cur[k]:
                 cur[k] = v
 
@@ -97,10 +116,16 @@ def load_case_data(case_name: str, scoring_path: Path, validation_path: Path) ->
         for row in validation.get("rows", []):
             fp = row["file_path"].replace("\\", "/")
             cnt = int(row.get("bugfix_count", 0))
-            if cnt > bugfix_by_file.get(fp, 0):
-                bugfix_by_file[fp] = cnt
+            bugfix_by_file[fp] = max(bugfix_by_file.get(fp, 0), cnt)
 
-    return CaseData(name=case_name, raw_by_file=raw_by_file, bugfix_by_file=bugfix_by_file)
+    if project_group is None:
+        repo = str(validation.get("repo_path", "")).replace("\\", "/").rstrip("/")
+        project_group = repo.rsplit("/", 1)[-1] if repo else case_name
+    case = CaseData(case_name, raw_by_file, bugfix_by_file, project_group, class_raw_by_file)
+    case.raw_precision = ("full precision (raw_exact)" if all(
+        "raw_exact" in c for c in scoring.get("class_scores", [])
+    ) else "legacy rounded raw (approximate)")
+    return case
 
 
 # ---------------------------------------------------------------------------
@@ -135,14 +160,29 @@ def evaluate_weights(case: CaseData, weights: dict[str, float]) -> float:
     LOPO 평균 등 후속 집계에서는 NaN 케이스를 명시적으로 제외하며, 텍스트
     요약에서는 "excluded: insufficient samples (n<5)" 로 표시한다.
 
-    Percentile rank 변환은 단조 함수라 Spearman 값에는 영향 없음 → 생략.
+    모든 클래스 기준 표준화 → 가중합 → 백분위(소수 둘째 자리) → 파일 최대값.
+    저장된 scoring.json을 사용하는 validate와 동일한 계산·반올림을 적용한다.
     """
     matched_files = [f for f in case.raw_by_file if f in case.bugfix_by_file]
     if len(matched_files) < MIN_SAMPLES_FOR_CORRELATION:
         return float("nan")
-    rows = [case.raw_by_file[f] for f in matched_files]
-    z_rows = _zscore_columns(rows)
-    si_scores = [sum(weights[k] * z[k] for k in WEIGHT_KEYS) for z in z_rows]
+    if case._z_by_file is None:
+        raw = case.class_raw_by_file
+        if raw is None:
+            raw = {f: [row] for f, row in case.raw_by_file.items()}
+        paths = [f for f, rows in raw.items() for _ in rows]
+        z_rows = _z_score_rows([row for rows in raw.values() for row in rows])
+        case._z_by_file = {}
+        for path, z in zip(paths, z_rows):
+            case._z_by_file.setdefault(path, []).append(z)
+    w = _normalize_weights(weights)
+    class_paths = [f for f, rows in case._z_by_file.items() for _ in rows]
+    raw_scores = [sum(w[k] * z[k] for k in w)
+                  for rows in case._z_by_file.values() for z in rows]
+    file_scores: dict[str, float] = {}
+    for path, score in zip(class_paths, _percentile_rank(raw_scores)):
+        file_scores[path] = max(file_scores.get(path, 0.0), round(score, 2))
+    si_scores = [file_scores[f] for f in matched_files]
     bug = [float(case.bugfix_by_file[f]) for f in matched_files]
     rho, _ = spearman(si_scores, bug)
     return rho
@@ -151,6 +191,20 @@ def evaluate_weights(case: CaseData, weights: dict[str, float]) -> float:
 def matched_files_count(case: CaseData) -> int:
     """case 의 raw_by_file 중 bug-fix 데이터가 있는 파일 수."""
     return sum(1 for f in case.raw_by_file if f in case.bugfix_by_file)
+
+
+def _exclusion_reason(case: CaseData) -> str | None:
+    """기본값과 공정하게 비교할 수 있는 사례를 사전에 결정한다."""
+    from .si import DEFAULT_WEIGHTS_STATIC
+    matched = [f for f in case.raw_by_file if f in case.bugfix_by_file]
+    if len(matched) < MIN_SAMPLES_FOR_CORRELATION:
+        return "insufficient samples (n < 5 files with bugfix data)"
+    if len({case.bugfix_by_file[f] for f in matched}) < 2:
+        return "constant bug-fix counts"
+    rho = evaluate_weights(case, DEFAULT_WEIGHTS_STATIC)
+    if rho != rho:
+        return "undefined default correlation (constant scores)"
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -170,25 +224,34 @@ def _candidate_weights() -> Iterable[dict[str, float]]:
 def find_best_weights(
     cases: list[CaseData],
     rho_aggregator=None,
+    evaluation_cache: dict | None = None,
 ) -> tuple[dict[str, float], float, int]:
     """주어진 케이스들의 평균 ρ 최대화 weight 탐색. (best_weights, best_score, n_evaluated)"""
-    if rho_aggregator is None:
-        rho_aggregator = lambda rhos: sum(rhos) / len(rhos) if rhos else float("nan")
-
     best_w = None
     best_score = float("-inf")
     n = 0
     for w in _candidate_weights():
-        rhos = [evaluate_weights(c, w) for c in cases]
-        rhos = [r for r in rhos if r == r]  # NaN 제거
-        if not rhos:
+        rhos = {}
+        for c in cases:
+            key = (c.name, tuple(w[k] for k in WEIGHT_KEYS))
+            if evaluation_cache is not None and key in evaluation_cache:
+                rho = evaluation_cache[key]
+            else:
+                rho = evaluate_weights(c, w)
+                if evaluation_cache is not None:
+                    evaluation_cache[key] = rho
+            rhos[c.name] = rho
+        valid = [r for r in rhos.values() if r == r]
+        if len(valid) != len(cases):
             continue
-        score = rho_aggregator(rhos)
+        score = rho_aggregator(valid) if rho_aggregator else _project_mean(cases, rhos)
         n += 1
         if score > best_score:
             best_score = score
             best_w = w
-    return best_w or {k: 1.0 / len(WEIGHT_KEYS) for k in WEIGHT_KEYS}, best_score, n
+    if best_w is None:
+        raise ValueError("No valid weight candidates with an evaluable correlation.")
+    return best_w, best_score, n
 
 
 # ---------------------------------------------------------------------------
@@ -196,20 +259,48 @@ def find_best_weights(
 # ---------------------------------------------------------------------------
 
 
-def lopo_cross_validation(cases: list[CaseData]) -> tuple[float, dict[str, float]]:
-    """Leave-One-Project-Out: K=len(cases). 매 폴드에서 K-1 으로 best weight 찾고,
-    빠진 케이스에서 ρ 측정. 모든 폴드의 hold-out ρ 평균을 반환.
+def _project_mean(cases: list[CaseData], rhos: dict[str, float]) -> float:
+    groups: dict[str, list[float]] = {}
+    for case in cases:
+        rho = rhos[case.name]
+        if rho == rho:
+            groups.setdefault(case.project_group or case.name, []).append(rho)
+    means = [sum(vals) / len(vals) for vals in groups.values()]
+    return sum(means) / len(means) if means else float("nan")
+
+
+def lopo_cross_validation(
+    cases: list[CaseData], evaluation_cache: dict | None = None,
+    fold_details: list[dict] | None = None,
+) -> tuple[float, dict[str, float]]:
+    """같은 원본 프로젝트의 모든 모듈을 함께 hold-out한다.
 
     Returns
     -------
     (avg_holdout_rho, per_case_holdout_rho)
     """
     holdout: dict[str, float] = {}
-    for i, held in enumerate(cases):
-        train = [c for j, c in enumerate(cases) if j != i]
-        best_w, _, _ = find_best_weights(train)
-        rho = evaluate_weights(held, best_w)
-        holdout[held.name] = rho
+    valid_cases = [c for c in cases if _exclusion_reason(c) is None]
+    projects = list(dict.fromkeys(c.project_group or c.name for c in valid_cases))
+    if len(projects) < 2:
+        raise ValueError("LOPO requires at least two projects with evaluable correlations.")
+    for project in projects:
+        train = [c for c in valid_cases if (c.project_group or c.name) != project]
+        held = [c for c in valid_cases if (c.project_group or c.name) == project]
+        best_w, _, _ = find_best_weights(train, evaluation_cache=evaluation_cache)
+        rhos = {c.name: evaluate_weights(c, best_w) for c in held}
+        if any(v != v for v in rhos.values()):
+            raise ValueError(f"LOPO hold-out project {project} has an undefined module correlation.")
+        holdout[project] = _project_mean(held, rhos)
+        if holdout[project] != holdout[project]:
+            raise ValueError(f"LOPO hold-out project {project} has no evaluable correlation.")
+        if fold_details is not None:
+            fold_details.append({
+                "project": project, "train_cases": [c.name for c in train],
+                "holdout_cases": [c.name for c in held], "weights": best_w,
+                "per_case_holdout_rho": {k: round(v, 4) if v == v else None for k, v in rhos.items()},
+                "holdout_rho": round(holdout[project], 4),
+            })
     valid = [v for v in holdout.values() if v == v]
     return (sum(valid) / len(valid)) if valid else float("nan"), holdout
 
@@ -223,15 +314,23 @@ def run_tune(cases: list[CaseData]) -> TuneResult:
     from .si import DEFAULT_WEIGHTS_STATIC
 
     default_w = dict(DEFAULT_WEIGHTS_STATIC)
+    if len({c.name for c in cases}) != len(cases):
+        raise ValueError("Case names must be unique.")
+    cache: dict = {}
     # default 평가
     default_per_case = {c.name: evaluate_weights(c, default_w) for c in cases}
+    exclusions = {c.name: reason for c in cases if (reason := _exclusion_reason(c)) is not None}
+    valid_cases = [c for c in cases if c.name not in exclusions]
+    if len({c.project_group or c.name for c in valid_cases}) < 2:
+        raise ValueError("LOPO requires at least two projects with evaluable correlations.")
     # tuned 평가 — 전체 케이스로 최적
-    tuned_w, tuned_avg, n_eval = find_best_weights(cases)
-    tuned_per_case = {c.name: evaluate_weights(c, tuned_w) for c in cases}
+    tuned_w, tuned_avg, n_eval = find_best_weights(valid_cases, evaluation_cache=cache)
+    tuned_per_case = {c.name: (float("nan") if c.name in exclusions else evaluate_weights(c, tuned_w))
+                      for c in cases}
     # LOPO
-    lopo_default_rhos = list(default_per_case.values())
-    lopo_default = sum(r for r in lopo_default_rhos if r == r) / max(1, sum(1 for r in lopo_default_rhos if r == r))
-    lopo_tuned, _ = lopo_cross_validation(cases)
+    lopo_default = _project_mean(cases, default_per_case)
+    folds: list[dict] = []
+    lopo_tuned, _ = lopo_cross_validation(cases, evaluation_cache=cache, fold_details=folds)
 
     # grid_size 추정
     grid_total = sum(1 for _ in _candidate_weights())
@@ -245,6 +344,10 @@ def run_tune(cases: list[CaseData]) -> TuneResult:
         lopo_tuned_rho=lopo_tuned,
         grid_size=grid_total,
         n_evaluated=n_eval,
+        case_projects={c.name: c.project_group or c.name for c in cases},
+        project_folds=folds,
+        exclusion_reasons=exclusions,
+        input_precision={c.name: c.raw_precision for c in cases},
     )
 
 
@@ -261,7 +364,13 @@ def to_dict(r: TuneResult) -> dict:
         or math.isnan(r.per_case_tuned_rho.get(name, float("nan")))
     ]
     return {
-        "schema_version": "tune-0.2",
+        "schema_version": "tune-0.3",
+        "scoring_method": "class z-score -> weighted sum -> percentile (2 decimals) -> file max",
+        "validation_unit": "project",
+        "aggregation": "equal-weight mean of within-project mean correlations",
+        "case_projects": r.case_projects,
+        "project_folds": r.project_folds,
+        "input_precision": r.input_precision,
         "grid_size": r.grid_size,
         "n_evaluated": r.n_evaluated,
         "min_samples_for_correlation": MIN_SAMPLES_FOR_CORRELATION,
@@ -276,10 +385,11 @@ def to_dict(r: TuneResult) -> dict:
             for k, v in r.per_case_tuned_rho.items()
         },
         "excluded_cases": excluded,
-        "excluded_reason": "insufficient samples (n < 5 files with bugfix data)",
+        "excluded_reason": "see per-case exclusion_reasons",
+        "exclusion_reasons": r.exclusion_reasons,
         "lopo_default_rho": round(r.lopo_default_rho, 4),
         "lopo_tuned_rho": round(r.lopo_tuned_rho, 4),
-        "lopo_note": "excluded cases are skipped in LOPO averages",
+        "lopo_note": "all modules of a held-out project are excluded from training; small cases skipped",
     }
 
 
@@ -287,6 +397,8 @@ def format_summary(r: TuneResult) -> str:
     import math
     out: list[str] = []
     out.append("=== Weight Tuning (plan §4.6) ===")
+    out.append("scoring: class z-score -> percentile (2 decimals) -> file maximum")
+    out.append("aggregation: equal project weight; modules of one project held out together")
     out.append(f"grid size: {r.grid_size:,} candidates")
     out.append(f"evaluated: {r.n_evaluated:,}")
     out.append("")
@@ -301,7 +413,7 @@ def format_summary(r: TuneResult) -> str:
         t = r.per_case_tuned_rho.get(name, float("nan"))
         if math.isnan(d) or math.isnan(t):
             out.append(
-                f"  {name:<26} {'excluded: insufficient samples (n<5)':>42}"
+                f"  {name:<26} excluded: {r.exclusion_reasons.get(name, 'undefined correlation')}"
             )
             excluded.append(name)
             continue
@@ -310,21 +422,19 @@ def format_summary(r: TuneResult) -> str:
     out.append("")
     if excluded:
         out.append(
-            "* excluded 케이스는 분석 가능한 파일 수가 5 개 미만이라 Spearman "
-            "상관계수가 통계적으로 평가 불가능하다. 단일 진입점 프로그램 "
-            "구조에서 G-SI 동작을 보여주는 표본 부족 사례로 별도 표시한다."
+            "* excluded 케이스는 표본 부족 또는 상수값 때문에 상관을 계산할 수 없다. "
+            "각 사례의 제외 이유를 위에 표시하며 프로젝트 평균과 학습에서 제외한다."
         )
         out.append("")
     out.append("LOPO (Leave-One-Project-Out) cross-validation [excluded 케이스 제외]:")
-    out.append(f"  default (avg of per-case ρ):  {r.lopo_default_rho:+.4f}")
+    out.append(f"  default (project mean ρ):     {r.lopo_default_rho:+.4f}")
     out.append(f"  tuned (hold-out ρ avg):       {r.lopo_tuned_rho:+.4f}")
     delta = r.lopo_tuned_rho - r.lopo_default_rho
     out.append(f"  Δ (tuned − default):          {delta:+.4f}")
+    for fold in r.project_folds:
+        out.append(f"  held out {fold['project']}: ρ={fold['holdout_rho']:+.4f}; "
+                   + " ".join(f"{k}={v:.2f}" for k, v in fold["weights"].items()))
     out.append("")
-    if delta > 0.01:
-        out.append("→ tuned weights 가 LOPO 검증에서 default 대비 개선됨.")
-    elif delta < -0.01:
-        out.append("→ tuned weights 가 LOPO 에서 overfitting 신호 (개선 못 함).")
-    else:
-        out.append("→ tuned weights 의 LOPO 성능이 default 와 사실상 동일.")
+    out.append("평균 차이는 기술 통계이며, 개선 또는 동등성의 통계적 유의성 검정은 수행하지 않았다.")
+    out.append("전체 데이터로 선택한 tuned 가중치의 per-case 값은 학습 결과이며, fold별 hold-out 값과 구분한다.")
     return "\n".join(out)

@@ -1,7 +1,7 @@
 === G-SI Validation (Phase A) ===
 repo:           C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA
 subdir:         OpenRA.Mods.Cnc
-date range:     * .. *
+date range:     * .. 2026-10-03
 commits seen:   1559
 bug-fix found:  282
 classes total:  278  (with bug-fix: 245)
@@ -9,12 +9,12 @@ files total:    140  (with bug-fix: 119)
 unmatched changes (non-class files): 326
 
 Class-level Spearman correlation (vs file bug-fix count):
-  si_vs_bugfix            n= 278  rho= +0.1078  p=0.08128
+  si_vs_bugfix            n= 278  rho= +0.1061  p=0.08632
   loc_vs_bugfix           n= 278  rho= +0.1478  p=0.01649
   cc_vs_bugfix            n= 278  rho= +0.1444  p=0.01913
 
 File-level Spearman correlation (vs file bug-fix count):
-  file_si_vs_bugfix       n= 140  rho= +0.3681  p=1.128e-05
+  file_si_vs_bugfix       n= 140  rho= +0.3671  p=1.2e-05
   file_loc_vs_bugfix      n= 140  rho= +0.5714  p=1.532e-13
   file_cc_vs_bugfix       n= 140  rho= +0.4920  p=9.149e-10
 

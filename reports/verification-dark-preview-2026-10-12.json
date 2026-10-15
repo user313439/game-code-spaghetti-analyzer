@@ -1,0 +1,63 @@
+{
+  "verified_on": "2026-10-12",
+  "scope": "Opt-in dark preview of the local web app, matching the existing analysis report palette with readability refinements",
+  "preview_url": "http://127.0.0.1:8766/?theme=dark",
+  "original_url": "http://127.0.0.1:8766/",
+  "changed_application_files": ["game_si/web/static/app.js", "game_si/web/static/app.css"],
+  "behavior": "Only theme=dark sets data-preview-theme. All added styles are scoped to that attribute. The default theme stays light. No analysis, upload, history or results behavior was changed.",
+  "reference": "reports/openra-game/index.html root palette: #0f172a background, #111827 panel, #e5e7eb foreground, #94a3b8 muted, #60a5fa accent",
+  "visual_review": [
+    {
+      "step": 1,
+      "surface": "Main GitHub input",
+      "health": "Verified",
+      "screenshot": ".cache/web/dark-preview-01-main.png",
+      "notes": "Layout kept. Dark card boundary, clearer input border, active tab underline and readable helper text make task entry distinct without changing the report's color family."
+    },
+    {
+      "step": 2,
+      "surface": "File input and expanded advanced settings",
+      "health": "Verified",
+      "screenshot": ".cache/web/dark-preview-02-input.png",
+      "notes": "Drop zone, selection message, secondary buttons, native selects and optional name field use coherent dark surfaces. No source uploaded during this preview review."
+    },
+    {
+      "step": 3,
+      "surface": "Example cards and history",
+      "health": "Verified",
+      "screenshot": ".cache/web/dark-preview-03-examples.png",
+      "notes": "White card background left over from the light theme was reproduced in computed browser styles and fixed after a failing regression. Game headings are 16px and descriptions 13px; result links remain unchanged. History cards were also checked in the actual browser."
+    }
+  ],
+  "small_screen_check": {
+    "screenshot": ".cache/web/dark-preview-mobile.png",
+    "requested_viewport": {"width": 390, "height": 844},
+    "observed_content_width": 375,
+    "observed_client_width": 375,
+    "advanced_fields": "single column",
+    "horizontal_overflow": false,
+    "viewport_override_reset": true
+  },
+  "selected_color_contrast_ratios": {
+    "helper_on_page": 6.96,
+    "helper_on_panel": 6.92,
+    "primary_button_text": 7.02,
+    "input_boundary": 3.75,
+    "limit": "Selected computed colors checked mathematically; this does not establish complete accessibility compliance or validate every hover/disabled/error state."
+  },
+  "default_theme_browser_check": {"theme_attribute": null, "page_background": "rgb(247, 248, 246)", "panel_background": "rgb(255, 255, 255)"},
+  "tests": {
+    "command": "py -3.10 -m pytest tests/test_web_inputs.py tests/test_web_jobs.py tests/test_web_app.py tests/test_web_ui.py tests/test_web_integration.py -q --tb=short",
+    "native_environment": ".NET on PATH and compatible GAME_SI_TEST_CLANG_LIBRARY configured",
+    "passed": 100,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 15.25,
+    "javascript_syntax_check": "node --check game_si/web/static/app.js",
+    "javascript_syntax_exit_code": 0,
+    "red_observed": "Dark activation and palette initially failed; card background and control readability regressions also failed before their fixes."
+  },
+  "independent_code_review": "Passed after the readability refinements; no critical, important or minor findings within this scoped preview",
+  "status": "preview_ready_for_user_feedback_not_the_default_theme",
+  "preservation": "Original bright stylesheet rules, existing layout, analysis results and stored records were not replaced. No Git changes were committed or pushed."
+}

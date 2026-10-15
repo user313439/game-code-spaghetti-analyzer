@@ -7,6 +7,13 @@
     "global_state": 0.15,
     "game_loop_centrality": 0.15
   },
+  "ranking_info": {
+    "scope": "within_analysis_relative",
+    "informative": true,
+    "unique_raw_scores": 249,
+    "largest_tie_fraction": 0.04391891891891892,
+    "warning": "G-SI와 A~E는 분석 집합 내부 상대 순위입니다. 절대 품질·결함 확률이 아닙니다. 동점은 상단 백분위로 계산하며, 모두 동점이면 100/E여도 위험을 입증하지 않습니다. Health는 검증되지 않은 보조 구조 요약으로 프로젝트 간 우열 판정에 사용하지 않습니다."
+  },
   "project_health": {
     "score": 50.57,
     "grade": "C",
@@ -51,6 +58,13 @@
         "global_state": 18.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 11.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 18.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3318,
         "coupling": -0.4729,
@@ -79,6 +93,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.2083,
@@ -101,6 +122,13 @@
       "kind": "compilation_unit",
       "loc": 24,
       "raw": {
+        "cc": 2.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.2
+      },
+      "raw_exact": {
         "cc": 2.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -138,6 +166,13 @@
         "global_state": 38.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 16.0,
+        "dependency_cycle": 41.0,
+        "global_state": 38.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.458,
         "coupling": 0.5855,
@@ -163,6 +198,13 @@
       "kind": "compilation_unit",
       "loc": 674,
       "raw": {
+        "cc": 14.0,
+        "coupling": 22.0,
+        "dependency_cycle": 47.0,
+        "global_state": 91.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 14.0,
         "coupling": 22.0,
         "dependency_cycle": 47.0,
@@ -200,6 +242,13 @@
         "global_state": 11.0,
         "game_loop_centrality": 0.2
       },
+      "raw_exact": {
+        "cc": 13.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 11.0,
+        "game_loop_centrality": 0.2
+      },
       "z": {
         "cc": -0.2477,
         "coupling": -0.076,
@@ -225,6 +274,13 @@
       "kind": "compilation_unit",
       "loc": 268,
       "raw": {
+        "cc": 16.0,
+        "coupling": 19.0,
+        "dependency_cycle": 36.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 16.0,
         "coupling": 19.0,
         "dependency_cycle": 36.0,
@@ -262,6 +318,13 @@
         "global_state": 14.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 13.0,
+        "coupling": 76.0,
+        "dependency_cycle": 39.0,
+        "global_state": 14.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2477,
         "coupling": 4.5542,
@@ -287,6 +350,13 @@
       "kind": "compilation_unit",
       "loc": 154,
       "raw": {
+        "cc": 7.0,
+        "coupling": 14.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 7.0,
         "coupling": 14.0,
         "dependency_cycle": 0.0,
@@ -324,6 +394,13 @@
         "global_state": 27.0,
         "game_loop_centrality": 0.3333
       },
+      "raw_exact": {
+        "cc": 22.0,
+        "coupling": 34.0,
+        "dependency_cycle": 40.0,
+        "global_state": 27.0,
+        "game_loop_centrality": 0.3333333333333333
+      },
       "z": {
         "cc": 0.1308,
         "coupling": 1.7761,
@@ -355,6 +432,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5421,
         "coupling": -0.2744,
@@ -378,6 +462,13 @@
       "loc": 968,
       "raw": {
         "cc": 27.3333,
+        "coupling": 10.0,
+        "dependency_cycle": 0.0,
+        "global_state": 308.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 27.333333333333332,
         "coupling": 10.0,
         "dependency_cycle": 0.0,
         "global_state": 308.0,
@@ -414,6 +505,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -436,6 +534,13 @@
       "kind": "compilation_unit",
       "loc": 1654,
       "raw": {
+        "cc": 47.0,
+        "coupling": 22.0,
+        "dependency_cycle": 0.0,
+        "global_state": 103.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 47.0,
         "coupling": 22.0,
         "dependency_cycle": 0.0,
@@ -473,6 +578,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": 0.1225,
@@ -498,6 +610,13 @@
       "kind": "compilation_unit",
       "loc": 62,
       "raw": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 5.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -532,6 +651,13 @@
         "global_state": 3.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
@@ -554,6 +680,13 @@
       "kind": "compilation_unit",
       "loc": 78,
       "raw": {
+        "cc": 10.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 10.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -588,6 +721,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -610,6 +750,13 @@
       "kind": "compilation_unit",
       "loc": 100,
       "raw": {
+        "cc": 6.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -644,6 +791,13 @@
         "global_state": 7.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.3406,
@@ -666,6 +820,13 @@
       "kind": "compilation_unit",
       "loc": 97,
       "raw": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -700,6 +861,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
@@ -722,6 +890,13 @@
       "kind": "compilation_unit",
       "loc": 64,
       "raw": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -756,6 +931,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
@@ -778,6 +960,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -812,6 +1001,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -834,6 +1030,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -868,6 +1071,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -890,6 +1100,13 @@
       "kind": "compilation_unit",
       "loc": 510,
       "raw": {
+        "cc": 43.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 107.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 43.0,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
@@ -927,6 +1144,13 @@
         "global_state": 57.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 57.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4159,
         "coupling": -0.2744,
@@ -950,6 +1174,13 @@
       "loc": 1969,
       "raw": {
         "cc": 57.6667,
+        "coupling": 13.0,
+        "dependency_cycle": 0.0,
+        "global_state": 585.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 57.666666666666664,
         "coupling": 13.0,
         "dependency_cycle": 0.0,
         "global_state": 585.0,
@@ -986,6 +1217,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.5,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.437,
         "coupling": -0.4067,
@@ -1008,6 +1246,13 @@
       "kind": "compilation_unit",
       "loc": 355,
       "raw": {
+        "cc": 28.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 86.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 28.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -1045,6 +1290,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -1067,6 +1319,13 @@
       "kind": "compilation_unit",
       "loc": 1369,
       "raw": {
+        "cc": 29.0,
+        "coupling": 12.0,
+        "dependency_cycle": 0.0,
+        "global_state": 294.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 29.0,
         "coupling": 12.0,
         "dependency_cycle": 0.0,
@@ -1104,6 +1363,13 @@
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
@@ -1126,6 +1392,13 @@
       "kind": "compilation_unit",
       "loc": 250,
       "raw": {
+        "cc": 28.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 28.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -1163,6 +1436,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 42.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.9718,
         "coupling": -0.2744,
@@ -1194,6 +1474,13 @@
         "global_state": 46.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 21.666666666666668,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 46.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.1167,
         "coupling": -0.4067,
@@ -1219,6 +1506,13 @@
       "kind": "compilation_unit",
       "loc": 502,
       "raw": {
+        "cc": 30.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 30.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -1256,6 +1550,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 101.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 3.4529,
         "coupling": -0.3406,
@@ -1287,6 +1588,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.4067,
@@ -1309,6 +1617,13 @@
       "kind": "compilation_unit",
       "loc": 1128,
       "raw": {
+        "cc": 21.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 236.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 21.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -1346,6 +1661,13 @@
         "global_state": 63.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 63.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
@@ -1371,6 +1693,13 @@
       "kind": "compilation_unit",
       "loc": 908,
       "raw": {
+        "cc": 37.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 18.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 37.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -1408,6 +1737,13 @@
         "global_state": 19.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 19.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0046,
         "coupling": -0.3406,
@@ -1434,6 +1770,13 @@
       "loc": 652,
       "raw": {
         "cc": 13.3333,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 8.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 13.333333333333334,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
         "global_state": 8.0,
@@ -1467,6 +1810,13 @@
         "global_state": 8.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.8,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 8.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3823,
         "coupling": -0.2083,
@@ -1489,6 +1839,13 @@
       "kind": "compilation_unit",
       "loc": 642,
       "raw": {
+        "cc": 18.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 115.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 18.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -1526,6 +1883,13 @@
         "global_state": 40.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 18.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 40.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0375,
         "coupling": -0.4067,
@@ -1548,6 +1912,13 @@
       "kind": "compilation_unit",
       "loc": 1215,
       "raw": {
+        "cc": 59.5,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 34.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 59.5,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -1585,6 +1956,13 @@
         "global_state": 29.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 119.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 4.2098,
         "coupling": -0.3406,
@@ -1610,6 +1988,13 @@
       "kind": "compilation_unit",
       "loc": 91,
       "raw": {
+        "cc": 13.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 13.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -1644,6 +2029,13 @@
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.458,
         "coupling": -0.4067,
@@ -1666,6 +2058,13 @@
       "kind": "compilation_unit",
       "loc": 297,
       "raw": {
+        "cc": 37.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 37.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -1703,6 +2102,13 @@
         "global_state": 50.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 50.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
@@ -1725,6 +2131,13 @@
       "kind": "compilation_unit",
       "loc": 620,
       "raw": {
+        "cc": 16.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 114.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 16.0,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
@@ -1762,6 +2175,13 @@
         "global_state": 225.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 225.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2898,
         "coupling": -0.1421,
@@ -1787,6 +2207,13 @@
       "kind": "compilation_unit",
       "loc": 657,
       "raw": {
+        "cc": 11.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 67.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 11.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -1824,6 +2251,13 @@
         "global_state": 54.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 54.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2898,
         "coupling": -0.2744,
@@ -1846,6 +2280,13 @@
       "kind": "compilation_unit",
       "loc": 624,
       "raw": {
+        "cc": 57.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 203.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 57.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -1883,6 +2324,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.4067,
@@ -1905,6 +2353,13 @@
       "kind": "compilation_unit",
       "loc": 759,
       "raw": {
+        "cc": 29.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 102.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 29.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -1942,6 +2397,13 @@
         "global_state": 53.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 18.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 53.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0375,
         "coupling": -0.0098,
@@ -1964,6 +2426,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -1998,6 +2467,13 @@
         "global_state": 4.0,
         "game_loop_centrality": 0.3333
       },
+      "raw_exact": {
+        "cc": 13.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.3333333333333333
+      },
       "z": {
         "cc": -0.2477,
         "coupling": -0.1421,
@@ -2023,6 +2499,13 @@
       "kind": "compilation_unit",
       "loc": 978,
       "raw": {
+        "cc": 39.0,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 283.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 39.0,
         "coupling": 8.0,
         "dependency_cycle": 0.0,
@@ -2060,6 +2543,13 @@
         "global_state": 22.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 22.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4159,
         "coupling": -0.1421,
@@ -2083,6 +2573,13 @@
       "loc": 1338,
       "raw": {
         "cc": 27.3333,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 417.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 27.333333333333332,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
         "global_state": 417.0,
@@ -2113,6 +2610,13 @@
       "kind": "compilation_unit",
       "loc": 248,
       "raw": {
+        "cc": 10.0,
+        "coupling": 6.0,
+        "dependency_cycle": 36.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 10.0,
         "coupling": 6.0,
         "dependency_cycle": 36.0,
@@ -2150,6 +2654,13 @@
         "global_state": 309.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 29.333333333333332,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 309.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.4391,
         "coupling": -0.1421,
@@ -2175,6 +2686,13 @@
       "kind": "compilation_unit",
       "loc": 318,
       "raw": {
+        "cc": 25.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 69.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 25.0,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
@@ -2212,6 +2730,13 @@
         "global_state": 109.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 23.0,
+        "coupling": 17.0,
+        "dependency_cycle": 0.0,
+        "global_state": 109.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.1728,
         "coupling": 0.6516,
@@ -2237,6 +2762,13 @@
       "kind": "compilation_unit",
       "loc": 154,
       "raw": {
+        "cc": 6.0,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 8.0,
         "dependency_cycle": 0.0,
@@ -2274,6 +2806,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
@@ -2296,6 +2835,13 @@
       "kind": "compilation_unit",
       "loc": 131,
       "raw": {
+        "cc": 6.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -2330,6 +2876,13 @@
         "global_state": 7.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.2083,
@@ -2352,6 +2905,13 @@
       "kind": "compilation_unit",
       "loc": 115,
       "raw": {
+        "cc": 4.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 13.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -2386,6 +2946,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.2744,
@@ -2408,6 +2975,13 @@
       "kind": "compilation_unit",
       "loc": 74,
       "raw": {
+        "cc": 4.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -2442,6 +3016,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.2083,
@@ -2464,6 +3045,13 @@
       "kind": "compilation_unit",
       "loc": 274,
       "raw": {
+        "cc": 10.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 32.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 10.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -2493,6 +3081,13 @@
       "loc": 1767,
       "raw": {
         "cc": 71.6667,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 546.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 71.66666666666667,
         "coupling": 9.0,
         "dependency_cycle": 0.0,
         "global_state": 546.0,
@@ -2529,6 +3124,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -2551,6 +3153,13 @@
       "kind": "compilation_unit",
       "loc": 799,
       "raw": {
+        "cc": 17.5,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 164.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 17.5,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -2588,6 +3197,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -2610,6 +3226,13 @@
       "kind": "compilation_unit",
       "loc": 19,
       "raw": {
+        "cc": 1.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 1.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -2644,6 +3267,13 @@
         "global_state": 251.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 51.666666666666664,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 251.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 1.3783,
         "coupling": 0.0563,
@@ -2669,6 +3299,13 @@
       "kind": "compilation_unit",
       "loc": 188,
       "raw": {
+        "cc": 21.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 21.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -2706,6 +3343,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 31.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.5092,
         "coupling": -0.3406,
@@ -2737,6 +3381,13 @@
         "global_state": 29.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 15.777777777777779,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1309,
         "coupling": -0.2744,
@@ -2759,6 +3410,13 @@
       "kind": "compilation_unit",
       "loc": 408,
       "raw": {
+        "cc": 24.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 24.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -2796,6 +3454,13 @@
         "global_state": 8.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 86.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 8.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 2.8221,
         "coupling": -0.2744,
@@ -2827,6 +3492,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.4067,
@@ -2849,6 +3521,13 @@
       "kind": "compilation_unit",
       "loc": 1223,
       "raw": {
+        "cc": 30.5,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 262.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 30.5,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -2886,6 +3565,13 @@
         "global_state": 47.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 47.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
@@ -2908,6 +3594,13 @@
       "kind": "compilation_unit",
       "loc": 1305,
       "raw": {
+        "cc": 50.5,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 33.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 50.5,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -2945,6 +3638,13 @@
         "global_state": 19.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 19.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0046,
         "coupling": -0.3406,
@@ -2970,6 +3670,13 @@
       "kind": "compilation_unit",
       "loc": 1213,
       "raw": {
+        "cc": 12.6,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 39.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 12.6,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -3004,6 +3711,13 @@
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.6,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3907,
         "coupling": -0.2744,
@@ -3026,6 +3740,13 @@
       "kind": "compilation_unit",
       "loc": 511,
       "raw": {
+        "cc": 14.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 104.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 14.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -3063,6 +3784,13 @@
         "global_state": 12.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 21.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0887,
         "coupling": -0.4729,
@@ -3088,6 +3816,13 @@
       "kind": "compilation_unit",
       "loc": 903,
       "raw": {
+        "cc": 55.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 74.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 55.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -3125,6 +3860,13 @@
         "global_state": 27.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 82.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 27.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 2.6539,
         "coupling": -0.2744,
@@ -3150,6 +3892,13 @@
       "kind": "compilation_unit",
       "loc": 128,
       "raw": {
+        "cc": 15.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 15.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -3184,6 +3933,13 @@
         "global_state": 12.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5421,
         "coupling": -0.3406,
@@ -3206,6 +3962,13 @@
       "kind": "compilation_unit",
       "loc": 860,
       "raw": {
+        "cc": 54.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 21.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 54.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -3243,6 +4006,13 @@
         "global_state": 51.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 51.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
@@ -3265,6 +4035,13 @@
       "kind": "compilation_unit",
       "loc": 505,
       "raw": {
+        "cc": 15.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 71.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 15.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -3302,6 +4079,13 @@
         "global_state": 148.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 148.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.458,
         "coupling": -0.2744,
@@ -3327,6 +4111,13 @@
       "kind": "compilation_unit",
       "loc": 584,
       "raw": {
+        "cc": 11.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 62.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 11.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -3364,6 +4155,13 @@
         "global_state": 59.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 39.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 59.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.8456,
         "coupling": -0.3406,
@@ -3389,6 +4187,13 @@
       "kind": "compilation_unit",
       "loc": 557,
       "raw": {
+        "cc": 57.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 161.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 57.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -3426,6 +4231,13 @@
         "global_state": 109.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 29.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 109.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.4251,
         "coupling": -0.3406,
@@ -3451,6 +4263,13 @@
       "kind": "compilation_unit",
       "loc": 533,
       "raw": {
+        "cc": 32.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 126.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 32.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -3488,6 +4307,13 @@
         "global_state": 203.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 20.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 203.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0467,
         "coupling": -0.1421,
@@ -3513,6 +4339,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -3547,6 +4380,13 @@
         "global_state": 4.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.25,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4475,
         "coupling": -0.4729,
@@ -3570,6 +4410,13 @@
       "loc": 1245,
       "raw": {
         "cc": 28.3333,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 287.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 28.333333333333332,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
         "global_state": 287.0,
@@ -3600,6 +4447,13 @@
       "kind": "compilation_unit",
       "loc": 329,
       "raw": {
+        "cc": 29.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 69.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 29.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -3637,6 +4491,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5421,
         "coupling": 0.1225,
@@ -3668,6 +4529,13 @@
         "global_state": 56.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 56.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2898,
         "coupling": -0.2744,
@@ -3690,6 +4558,13 @@
       "kind": "compilation_unit",
       "loc": 1844,
       "raw": {
+        "cc": 59.5,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 581.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 59.5,
         "coupling": 9.0,
         "dependency_cycle": 0.0,
@@ -3727,6 +4602,13 @@
         "global_state": 99.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 13.5,
+        "coupling": 14.0,
+        "dependency_cycle": 0.0,
+        "global_state": 99.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2267,
         "coupling": 0.4532,
@@ -3758,6 +4640,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -3780,6 +4669,13 @@
       "kind": "compilation_unit",
       "loc": 402,
       "raw": {
+        "cc": 15.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 71.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 15.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -3817,6 +4713,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -3845,6 +4748,13 @@
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
@@ -3867,6 +4777,13 @@
       "kind": "compilation_unit",
       "loc": 1347,
       "raw": {
+        "cc": 42.0,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 275.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 42.0,
         "coupling": 8.0,
         "dependency_cycle": 0.0,
@@ -3904,6 +4821,13 @@
         "global_state": 265.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.923076923076923,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 265.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5453,
         "coupling": -0.3406,
@@ -3929,6 +4853,13 @@
       "kind": "compilation_unit",
       "loc": 353,
       "raw": {
+        "cc": 26.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 37.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 26.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -3966,6 +4897,13 @@
         "global_state": 14.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 18.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 14.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0375,
         "coupling": -0.4729,
@@ -3988,6 +4926,13 @@
       "kind": "compilation_unit",
       "loc": 220,
       "raw": {
+        "cc": 25.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 25.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -4025,6 +4970,13 @@
         "global_state": 22.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 21.88235294117647,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 22.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.1258,
         "coupling": -0.4067,
@@ -4050,6 +5002,13 @@
       "kind": "compilation_unit",
       "loc": 792,
       "raw": {
+        "cc": 23.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 42.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 23.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -4087,6 +5046,13 @@
         "global_state": 5.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 106.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 3.6632,
         "coupling": -0.3406,
@@ -4118,6 +5084,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 17.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0795,
         "coupling": -0.4729,
@@ -4140,6 +5113,13 @@
       "kind": "compilation_unit",
       "loc": 1840,
       "raw": {
+        "cc": 60.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 405.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 60.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -4177,6 +5157,13 @@
         "global_state": 47.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 48.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 47.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 1.2241,
         "coupling": -0.2744,
@@ -4203,6 +5190,13 @@
       "loc": 2022,
       "raw": {
         "cc": 64.6667,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 47.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 64.66666666666667,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
         "global_state": 47.0,
@@ -4239,6 +5233,13 @@
         "global_state": 12.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.4067,
@@ -4262,6 +5263,13 @@
       "loc": 1585,
       "raw": {
         "cc": 12.8333,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
+        "cc": 12.833333333333334,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
         "global_state": 29.0,
@@ -4295,6 +5303,13 @@
         "global_state": 139.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 15.666666666666666,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 139.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1356,
         "coupling": -0.1421,
@@ -4320,6 +5335,13 @@
       "kind": "compilation_unit",
       "loc": 307,
       "raw": {
+        "cc": 21.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 21.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -4357,6 +5379,13 @@
         "global_state": 23.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 100.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 23.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 3.4108,
         "coupling": -0.3406,
@@ -4382,6 +5411,13 @@
       "kind": "compilation_unit",
       "loc": 95,
       "raw": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 31.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 8.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -4416,6 +5452,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 18.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0375,
         "coupling": -0.4067,
@@ -4438,6 +5481,13 @@
       "kind": "compilation_unit",
       "loc": 308,
       "raw": {
+        "cc": 23.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 23.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -4475,6 +5525,13 @@
         "global_state": 12.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 12.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5421,
         "coupling": -0.4729,
@@ -4497,6 +5554,13 @@
       "kind": "compilation_unit",
       "loc": 1432,
       "raw": {
+        "cc": 71.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 21.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 71.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -4534,6 +5598,13 @@
         "global_state": 62.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 22.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 62.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.1308,
         "coupling": -0.3406,
@@ -4565,6 +5636,13 @@
         "global_state": 53.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 17.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 53.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0795,
         "coupling": -0.3406,
@@ -4587,6 +5665,13 @@
       "kind": "compilation_unit",
       "loc": 467,
       "raw": {
+        "cc": 15.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 70.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 15.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -4624,6 +5709,13 @@
         "global_state": 164.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 164.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.458,
         "coupling": -0.2744,
@@ -4649,6 +5741,13 @@
       "kind": "compilation_unit",
       "loc": 584,
       "raw": {
+        "cc": 11.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 62.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 11.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -4686,6 +5785,13 @@
         "global_state": 70.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 46.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 70.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 1.14,
         "coupling": -0.4067,
@@ -4711,6 +5817,13 @@
       "kind": "compilation_unit",
       "loc": 558,
       "raw": {
+        "cc": 55.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 159.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 55.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -4748,6 +5861,13 @@
         "global_state": 106.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 29.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 106.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.4251,
         "coupling": -0.4067,
@@ -4773,6 +5893,13 @@
       "kind": "compilation_unit",
       "loc": 768,
       "raw": {
+        "cc": 24.5,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 145.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 24.5,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -4810,6 +5937,13 @@
         "global_state": 318.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 18.2,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 318.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.029,
         "coupling": -0.076,
@@ -4835,6 +5969,13 @@
       "kind": "compilation_unit",
       "loc": 235,
       "raw": {
+        "cc": 19.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 76.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 19.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -4872,6 +6013,13 @@
         "global_state": 28.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 20.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 28.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.0467,
         "coupling": -0.3406,
@@ -4897,6 +6045,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -4931,6 +6086,13 @@
         "global_state": 11.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 11.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.2744,
@@ -4953,6 +6115,13 @@
       "kind": "compilation_unit",
       "loc": 2792,
       "raw": {
+        "cc": 12.5,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 55.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 12.5,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -4987,6 +6156,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.3406,
@@ -5009,6 +6185,13 @@
       "kind": "compilation_unit",
       "loc": 45,
       "raw": {
+        "cc": 4.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -5043,6 +6226,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.1421,
@@ -5065,6 +6255,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 5.0,
+        "dependency_cycle": 34.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 5.0,
         "dependency_cycle": 34.0,
@@ -5102,6 +6299,13 @@
         "global_state": 28.0,
         "game_loop_centrality": 0.25
       },
+      "raw_exact": {
+        "cc": 13.0,
+        "coupling": 21.0,
+        "dependency_cycle": 36.0,
+        "global_state": 28.0,
+        "game_loop_centrality": 0.25
+      },
       "z": {
         "cc": -0.2477,
         "coupling": 0.9162,
@@ -5127,6 +6331,13 @@
       "kind": "compilation_unit",
       "loc": 695,
       "raw": {
+        "cc": 16.0,
+        "coupling": 22.0,
+        "dependency_cycle": 38.0,
+        "global_state": 120.0,
+        "game_loop_centrality": 0.25
+      },
+      "raw_exact": {
         "cc": 16.0,
         "coupling": 22.0,
         "dependency_cycle": 38.0,
@@ -5164,6 +6375,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6262,
         "coupling": -0.2744,
@@ -5186,6 +6404,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 13.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 13.0,
         "dependency_cycle": 0.0,
@@ -5223,6 +6448,13 @@
         "global_state": 181.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.75,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 181.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2582,
         "coupling": 0.0563,
@@ -5254,6 +6486,13 @@
         "global_state": 44.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 44.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5421,
         "coupling": -0.1421,
@@ -5276,6 +6515,13 @@
       "kind": "compilation_unit",
       "loc": 62,
       "raw": {
+        "cc": 3.0,
+        "coupling": 12.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 3.0,
         "coupling": 12.0,
         "dependency_cycle": 0.0,
@@ -5313,6 +6559,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.0098,
@@ -5335,6 +6588,13 @@
       "kind": "compilation_unit",
       "loc": 392,
       "raw": {
+        "cc": 8.0,
+        "coupling": 20.0,
+        "dependency_cycle": 37.0,
+        "global_state": 79.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 8.0,
         "coupling": 20.0,
         "dependency_cycle": 37.0,
@@ -5372,6 +6632,13 @@
         "global_state": 22.0,
         "game_loop_centrality": 0.3333
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 156.0,
+        "dependency_cycle": 63.0,
+        "global_state": 22.0,
+        "game_loop_centrality": 0.3333333333333333
+      },
       "z": {
         "cc": -0.2898,
         "coupling": 9.8459,
@@ -5397,6 +6664,13 @@
       "kind": "compilation_unit",
       "loc": 40,
       "raw": {
+        "cc": 2.0,
+        "coupling": 34.0,
+        "dependency_cycle": 0.0,
+        "global_state": 6.0,
+        "game_loop_centrality": 0.5
+      },
+      "raw_exact": {
         "cc": 2.0,
         "coupling": 34.0,
         "dependency_cycle": 0.0,
@@ -5434,6 +6708,13 @@
         "global_state": 263.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 19.333333333333332,
+        "coupling": 54.0,
+        "dependency_cycle": 51.0,
+        "global_state": 263.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.0186,
         "coupling": 3.099,
@@ -5459,6 +6740,13 @@
       "kind": "compilation_unit",
       "loc": 209,
       "raw": {
+        "cc": 6.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 23.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -5493,6 +6781,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.0098,
@@ -5515,6 +6810,13 @@
       "kind": "compilation_unit",
       "loc": 259,
       "raw": {
+        "cc": 25.0,
+        "coupling": 57.0,
+        "dependency_cycle": 50.0,
+        "global_state": 28.0,
+        "game_loop_centrality": 0.5
+      },
+      "raw_exact": {
         "cc": 25.0,
         "coupling": 57.0,
         "dependency_cycle": 50.0,
@@ -5552,6 +6854,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.2
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 24.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.2
+      },
       "z": {
         "cc": -0.5841,
         "coupling": 1.1146,
@@ -5583,6 +6892,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.458,
         "coupling": -0.076,
@@ -5605,6 +6921,13 @@
       "kind": "compilation_unit",
       "loc": 625,
       "raw": {
+        "cc": 13.5,
+        "coupling": 28.0,
+        "dependency_cycle": 43.0,
+        "global_state": 40.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 13.5,
         "coupling": 28.0,
         "dependency_cycle": 43.0,
@@ -5642,6 +6965,13 @@
         "global_state": 148.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 31.0,
+        "dependency_cycle": 0.0,
+        "global_state": 148.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7103,
         "coupling": 1.5777,
@@ -5667,6 +6997,13 @@
       "kind": "compilation_unit",
       "loc": 22,
       "raw": {
+        "cc": 3.0,
+        "coupling": 8.0,
+        "dependency_cycle": 36.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.5
+      },
+      "raw_exact": {
         "cc": 3.0,
         "coupling": 8.0,
         "dependency_cycle": 36.0,
@@ -5704,6 +7041,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.5
       },
+      "raw_exact": {
+        "cc": 10.0,
+        "coupling": 116.0,
+        "dependency_cycle": 58.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.5
+      },
       "z": {
         "cc": -0.3739,
         "coupling": 7.2,
@@ -5729,6 +7073,13 @@
       "kind": "compilation_unit",
       "loc": 141,
       "raw": {
+        "cc": 6.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -5763,6 +7114,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.3406,
@@ -5791,6 +7149,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2898,
         "coupling": -0.1421,
@@ -5813,6 +7178,13 @@
       "kind": "compilation_unit",
       "loc": 558,
       "raw": {
+        "cc": 45.0,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 34.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 45.0,
         "coupling": 8.0,
         "dependency_cycle": 0.0,
@@ -5850,6 +7222,13 @@
         "global_state": 148.0,
         "game_loop_centrality": 0.3333
       },
+      "raw_exact": {
+        "cc": 13.666666666666666,
+        "coupling": 26.0,
+        "dependency_cycle": 53.0,
+        "global_state": 148.0,
+        "game_loop_centrality": 0.3333333333333333
+      },
       "z": {
         "cc": -0.2197,
         "coupling": 1.2469,
@@ -5875,6 +7254,13 @@
       "kind": "compilation_unit",
       "loc": 433,
       "raw": {
+        "cc": 13.0,
+        "coupling": 12.0,
+        "dependency_cycle": 41.0,
+        "global_state": 15.0,
+        "game_loop_centrality": 0.25
+      },
+      "raw_exact": {
         "cc": 13.0,
         "coupling": 12.0,
         "dependency_cycle": 41.0,
@@ -5912,6 +7298,13 @@
         "global_state": 3.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6682,
         "coupling": 0.1225,
@@ -5937,6 +7330,13 @@
       "kind": "compilation_unit",
       "loc": 369,
       "raw": {
+        "cc": 13.0,
+        "coupling": 10.0,
+        "dependency_cycle": 41.0,
+        "global_state": 49.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 13.0,
         "coupling": 10.0,
         "dependency_cycle": 41.0,
@@ -5974,6 +7374,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.3333
       },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 9.0,
+        "dependency_cycle": 40.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.3333333333333333
+      },
       "z": {
         "cc": -0.6682,
         "coupling": 0.1225,
@@ -5999,6 +7406,13 @@
       "kind": "compilation_unit",
       "loc": 139,
       "raw": {
+        "cc": 2.0,
+        "coupling": 5.0,
+        "dependency_cycle": 37.0,
+        "global_state": 18.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 2.0,
         "coupling": 5.0,
         "dependency_cycle": 37.0,
@@ -6036,6 +7450,13 @@
         "global_state": 4.0,
         "game_loop_centrality": 0.3333
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 9.0,
+        "dependency_cycle": 41.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.3333333333333333
+      },
       "z": {
         "cc": -0.5841,
         "coupling": 0.1225,
@@ -6061,6 +7482,13 @@
       "kind": "compilation_unit",
       "loc": 14,
       "raw": {
+        "cc": 1.0,
+        "coupling": 3.0,
+        "dependency_cycle": 34.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 1.0,
         "coupling": 3.0,
         "dependency_cycle": 34.0,
@@ -6098,6 +7526,13 @@
         "global_state": 70.0,
         "game_loop_centrality": 0.25
       },
+      "raw_exact": {
+        "cc": 10.666666666666666,
+        "coupling": 15.0,
+        "dependency_cycle": 43.0,
+        "global_state": 70.0,
+        "game_loop_centrality": 0.25
+      },
       "z": {
         "cc": -0.3458,
         "coupling": 0.5193,
@@ -6123,6 +7558,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 10.0,
+        "dependency_cycle": 41.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 10.0,
         "dependency_cycle": 41.0,
@@ -6160,6 +7602,13 @@
         "global_state": 180.0,
         "game_loop_centrality": 0.5
       },
+      "raw_exact": {
+        "cc": 18.5,
+        "coupling": 18.0,
+        "dependency_cycle": 46.0,
+        "global_state": 180.0,
+        "game_loop_centrality": 0.5
+      },
       "z": {
         "cc": -0.0164,
         "coupling": 0.7178,
@@ -6185,6 +7634,13 @@
       "kind": "compilation_unit",
       "loc": 598,
       "raw": {
+        "cc": 21.5,
+        "coupling": 7.0,
+        "dependency_cycle": 39.0,
+        "global_state": 6.0,
+        "game_loop_centrality": 0.25
+      },
+      "raw_exact": {
         "cc": 21.5,
         "coupling": 7.0,
         "dependency_cycle": 39.0,
@@ -6222,6 +7678,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.1421,
@@ -6244,6 +7707,13 @@
       "kind": "compilation_unit",
       "loc": 20,
       "raw": {
+        "cc": 1.0,
+        "coupling": 4.0,
+        "dependency_cycle": 13.0,
+        "global_state": 4.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 1.0,
         "coupling": 4.0,
         "dependency_cycle": 13.0,
@@ -6281,6 +7751,13 @@
         "global_state": 36.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 5.0,
+        "dependency_cycle": 13.0,
+        "global_state": 36.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4159,
         "coupling": -0.1421,
@@ -6306,6 +7783,13 @@
       "kind": "compilation_unit",
       "loc": 153,
       "raw": {
+        "cc": 3.0,
+        "coupling": 10.0,
+        "dependency_cycle": 17.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 3.0,
         "coupling": 10.0,
         "dependency_cycle": 17.0,
@@ -6343,6 +7827,13 @@
         "global_state": 136.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 13.0,
+        "dependency_cycle": 19.0,
+        "global_state": 136.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4159,
         "coupling": 0.387,
@@ -6368,6 +7859,13 @@
       "kind": "compilation_unit",
       "loc": 359,
       "raw": {
+        "cc": 9.0,
+        "coupling": 9.0,
+        "dependency_cycle": 15.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 9.0,
         "coupling": 9.0,
         "dependency_cycle": 15.0,
@@ -6405,6 +7903,13 @@
         "global_state": 7.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 6.0,
+        "coupling": 15.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5421,
         "coupling": 0.5193,
@@ -6430,6 +7935,13 @@
       "kind": "compilation_unit",
       "loc": 250,
       "raw": {
+        "cc": 5.0,
+        "coupling": 23.0,
+        "dependency_cycle": 26.0,
+        "global_state": 45.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 5.0,
         "coupling": 23.0,
         "dependency_cycle": 26.0,
@@ -6467,6 +7979,13 @@
         "global_state": 16.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 7.0,
+        "dependency_cycle": 14.0,
+        "global_state": 16.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.0098,
@@ -6492,6 +8011,13 @@
       "kind": "compilation_unit",
       "loc": 978,
       "raw": {
+        "cc": 10.5,
+        "coupling": 11.0,
+        "dependency_cycle": 14.0,
+        "global_state": 130.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 10.5,
         "coupling": 11.0,
         "dependency_cycle": 14.0,
@@ -6529,6 +8055,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -6551,6 +8084,13 @@
       "kind": "compilation_unit",
       "loc": 228,
       "raw": {
+        "cc": 8.0,
+        "coupling": 6.0,
+        "dependency_cycle": 14.0,
+        "global_state": 64.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 8.0,
         "coupling": 6.0,
         "dependency_cycle": 14.0,
@@ -6588,6 +8128,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.5,
+        "coupling": 6.0,
+        "dependency_cycle": 13.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3949,
         "coupling": -0.076,
@@ -6613,6 +8160,13 @@
       "kind": "compilation_unit",
       "loc": 462,
       "raw": {
+        "cc": 9.5,
+        "coupling": 6.0,
+        "dependency_cycle": 13.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 9.5,
         "coupling": 6.0,
         "dependency_cycle": 13.0,
@@ -6650,6 +8204,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
@@ -6678,6 +8239,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.3406,
@@ -6700,6 +8268,13 @@
       "kind": "compilation_unit",
       "loc": 258,
       "raw": {
+        "cc": 10.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 10.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -6737,6 +8312,13 @@
         "global_state": 282.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 27.333333333333332,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 282.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.355,
         "coupling": 0.1225,
@@ -6768,6 +8350,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -6790,6 +8379,13 @@
       "kind": "compilation_unit",
       "loc": 1711,
       "raw": {
+        "cc": 41.0,
+        "coupling": 23.0,
+        "dependency_cycle": 0.0,
+        "global_state": 173.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 41.0,
         "coupling": 23.0,
         "dependency_cycle": 0.0,
@@ -6827,6 +8423,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 8.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4159,
         "coupling": 0.0563,
@@ -6852,6 +8455,13 @@
       "kind": "compilation_unit",
       "loc": 62,
       "raw": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 5.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -6886,6 +8496,13 @@
         "global_state": 3.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 10.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3739,
         "coupling": -0.3406,
@@ -6908,6 +8525,13 @@
       "kind": "compilation_unit",
       "loc": 100,
       "raw": {
+        "cc": 6.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -6942,6 +8566,13 @@
         "global_state": 7.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.3406,
@@ -6964,6 +8595,13 @@
       "kind": "compilation_unit",
       "loc": 97,
       "raw": {
+        "cc": 6.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 3.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 6.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -6998,6 +8636,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 5.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5841,
         "coupling": -0.3406,
@@ -7020,6 +8665,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -7054,6 +8706,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6262,
         "coupling": -0.3406,
@@ -7076,6 +8735,13 @@
       "kind": "compilation_unit",
       "loc": 50,
       "raw": {
+        "cc": 4.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 4.0,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -7110,6 +8776,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -7132,6 +8805,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -7166,6 +8846,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4729,
@@ -7188,6 +8875,13 @@
       "kind": "compilation_unit",
       "loc": 563,
       "raw": {
+        "cc": 30.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 190.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 30.0,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -7225,6 +8919,13 @@
         "global_state": 54.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 54.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.4159,
         "coupling": -0.2744,
@@ -7247,6 +8948,13 @@
       "kind": "compilation_unit",
       "loc": 1890,
       "raw": {
+        "cc": 55.25,
+        "coupling": 14.0,
+        "dependency_cycle": 0.0,
+        "global_state": 533.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 55.25,
         "coupling": 14.0,
         "dependency_cycle": 0.0,
@@ -7284,6 +8992,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 9.5,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3949,
         "coupling": -0.4067,
@@ -7306,6 +9021,13 @@
       "kind": "compilation_unit",
       "loc": 448,
       "raw": {
+        "cc": 28.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 105.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 28.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -7343,6 +9065,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -7365,6 +9094,13 @@
       "kind": "compilation_unit",
       "loc": 1494,
       "raw": {
+        "cc": 32.2,
+        "coupling": 14.0,
+        "dependency_cycle": 0.0,
+        "global_state": 279.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 32.2,
         "coupling": 14.0,
         "dependency_cycle": 0.0,
@@ -7402,6 +9138,13 @@
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.4729,
@@ -7424,6 +9167,13 @@
       "kind": "compilation_unit",
       "loc": 317,
       "raw": {
+        "cc": 7.0,
+        "coupling": 9.0,
+        "dependency_cycle": 0.0,
+        "global_state": 17.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 7.0,
         "coupling": 9.0,
         "dependency_cycle": 0.0,
@@ -7461,6 +9211,13 @@
         "global_state": 19.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 28.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.3831,
         "coupling": -0.4067,
@@ -7486,6 +9243,13 @@
       "kind": "compilation_unit",
       "loc": 924,
       "raw": {
+        "cc": 88.0,
+        "coupling": 18.0,
+        "dependency_cycle": 0.0,
+        "global_state": 116.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 88.0,
         "coupling": 18.0,
         "dependency_cycle": 0.0,
@@ -7523,6 +9287,13 @@
         "global_state": 29.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 79.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 29.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 2.5277,
         "coupling": -0.2083,
@@ -7548,6 +9319,13 @@
       "kind": "compilation_unit",
       "loc": 2421,
       "raw": {
+        "cc": 21.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 41.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 21.0,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -7585,6 +9363,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 29.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.4251,
         "coupling": -0.4067,
@@ -7610,6 +9395,13 @@
       "kind": "compilation_unit",
       "loc": 1261,
       "raw": {
+        "cc": 100.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 26.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 100.0,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -7647,6 +9439,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 7.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.5,
         "coupling": -0.4067,
@@ -7669,6 +9468,13 @@
       "kind": "compilation_unit",
       "loc": 1265,
       "raw": {
+        "cc": 21.5,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 256.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 21.5,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -7706,6 +9512,13 @@
         "global_state": 56.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 56.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
@@ -7728,6 +9541,13 @@
       "kind": "compilation_unit",
       "loc": 1132,
       "raw": {
+        "cc": 34.5,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 36.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 34.5,
         "coupling": 2.0,
         "dependency_cycle": 0.0,
@@ -7765,6 +9585,13 @@
         "global_state": 19.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 25.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 19.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 0.2569,
         "coupling": -0.3406,
@@ -7790,6 +9617,13 @@
       "kind": "compilation_unit",
       "loc": 740,
       "raw": {
+        "cc": 15.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 15.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -7824,6 +9658,13 @@
         "global_state": 8.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 11.4,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 8.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.315,
         "coupling": -0.2083,
@@ -7846,6 +9687,13 @@
       "kind": "compilation_unit",
       "loc": 620,
       "raw": {
+        "cc": 16.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 113.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 16.0,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -7883,6 +9731,13 @@
         "global_state": 32.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 18.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 32.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0375,
         "coupling": -0.4067,
@@ -7905,6 +9760,13 @@
       "kind": "compilation_unit",
       "loc": 1625,
       "raw": {
+        "cc": 92.5,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 67.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 92.5,
         "coupling": 7.0,
         "dependency_cycle": 0.0,
@@ -7942,6 +9804,13 @@
         "global_state": 43.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 212.0,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 43.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": 8.1207,
         "coupling": -0.0098,
@@ -7967,6 +9836,13 @@
       "kind": "compilation_unit",
       "loc": 106,
       "raw": {
+        "cc": 15.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 15.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -8001,6 +9877,13 @@
         "global_state": 10.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 8.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.458,
         "coupling": -0.4067,
@@ -8023,6 +9906,13 @@
       "kind": "compilation_unit",
       "loc": 775,
       "raw": {
+        "cc": 57.0,
+        "coupling": 6.0,
+        "dependency_cycle": 0.0,
+        "global_state": 7.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 57.0,
         "coupling": 6.0,
         "dependency_cycle": 0.0,
@@ -8060,6 +9950,13 @@
         "global_state": 50.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 16.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 50.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1216,
         "coupling": -0.3406,
@@ -8082,6 +9979,13 @@
       "kind": "compilation_unit",
       "loc": 722,
       "raw": {
+        "cc": 19.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 115.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 19.0,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
@@ -8119,6 +10023,13 @@
         "global_state": 250.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 17.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 250.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.0795,
         "coupling": -0.1421,
@@ -8144,6 +10055,13 @@
       "kind": "compilation_unit",
       "loc": 702,
       "raw": {
+        "cc": 11.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 77.0,
+        "game_loop_centrality": 1.0
+      },
+      "raw_exact": {
         "cc": 11.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -8181,6 +10099,13 @@
         "global_state": 52.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 12.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 52.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.2898,
         "coupling": -0.2744,
@@ -8203,6 +10128,13 @@
       "kind": "compilation_unit",
       "loc": 635,
       "raw": {
+        "cc": 57.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 203.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 57.0,
         "coupling": 1.0,
         "dependency_cycle": 0.0,
@@ -8240,6 +10172,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 1.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7523,
         "coupling": -0.4067,
@@ -8262,6 +10201,13 @@
       "kind": "compilation_unit",
       "loc": 835,
       "raw": {
+        "cc": 29.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 108.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 29.0,
         "coupling": 4.0,
         "dependency_cycle": 0.0,
@@ -8299,6 +10245,13 @@
         "global_state": 69.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 14.5,
+        "coupling": 7.0,
+        "dependency_cycle": 0.0,
+        "global_state": 69.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.1846,
         "coupling": -0.0098,
@@ -8324,6 +10277,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 0.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 0.0,
         "dependency_cycle": 0.0,
@@ -8358,6 +10318,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 11.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3318,
         "coupling": -0.1421,
@@ -8380,6 +10347,13 @@
       "kind": "compilation_unit",
       "loc": 1157,
       "raw": {
+        "cc": 56.5,
+        "coupling": 10.0,
+        "dependency_cycle": 0.0,
+        "global_state": 307.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 56.5,
         "coupling": 10.0,
         "dependency_cycle": 0.0,
@@ -8417,6 +10391,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 1.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.4067,
@@ -8439,6 +10420,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 5.0,
         "dependency_cycle": 0.0,
@@ -8473,6 +10461,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 3.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.6682,
         "coupling": -0.3406,
@@ -8495,6 +10490,13 @@
       "kind": "compilation_unit",
       "loc": 104,
       "raw": {
+        "cc": 3.0,
+        "coupling": 10.0,
+        "dependency_cycle": 40.0,
+        "global_state": 28.0,
+        "game_loop_centrality": 0.5
+      },
+      "raw_exact": {
         "cc": 3.0,
         "coupling": 10.0,
         "dependency_cycle": 40.0,
@@ -8532,6 +10534,13 @@
         "global_state": 32.0,
         "game_loop_centrality": 0.5
       },
+      "raw_exact": {
+        "cc": 10.0,
+        "coupling": 62.0,
+        "dependency_cycle": 41.0,
+        "global_state": 32.0,
+        "game_loop_centrality": 0.5
+      },
       "z": {
         "cc": -0.3739,
         "coupling": 3.6282,
@@ -8557,6 +10566,13 @@
       "kind": "compilation_unit",
       "loc": 54,
       "raw": {
+        "cc": 3.0,
+        "coupling": 9.0,
+        "dependency_cycle": 36.0,
+        "global_state": 10.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 3.0,
         "coupling": 9.0,
         "dependency_cycle": 36.0,
@@ -8594,6 +10610,13 @@
         "global_state": 2.0,
         "game_loop_centrality": 0.1667
       },
+      "raw_exact": {
+        "cc": 4.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 2.0,
+        "game_loop_centrality": 0.16666666666666666
+      },
       "z": {
         "cc": -0.6262,
         "coupling": -0.2083,
@@ -8619,6 +10642,13 @@
       "kind": "compilation_unit",
       "loc": 0,
       "raw": {
+        "cc": 0.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 0.0,
         "coupling": 3.0,
         "dependency_cycle": 0.0,
@@ -8653,6 +10683,13 @@
         "global_state": 1.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 2.0,
+        "coupling": 3.0,
+        "dependency_cycle": 0.0,
+        "global_state": 1.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7103,
         "coupling": -0.2744,
@@ -8681,6 +10718,13 @@
         "global_state": 0.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 0.0,
+        "coupling": 4.0,
+        "dependency_cycle": 0.0,
+        "global_state": 0.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.7944,
         "coupling": -0.2083,
@@ -8703,6 +10747,13 @@
       "kind": "compilation_unit",
       "loc": 218,
       "raw": {
+        "cc": 19.0,
+        "coupling": 11.0,
+        "dependency_cycle": 0.0,
+        "global_state": 5.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 19.0,
         "coupling": 11.0,
         "dependency_cycle": 0.0,
@@ -8740,6 +10791,13 @@
         "global_state": 63.0,
         "game_loop_centrality": 1.0
       },
+      "raw_exact": {
+        "cc": 26.0,
+        "coupling": 5.0,
+        "dependency_cycle": 0.0,
+        "global_state": 63.0,
+        "game_loop_centrality": 1.0
+      },
       "z": {
         "cc": 0.299,
         "coupling": -0.1421,
@@ -8770,6 +10828,13 @@
         "dependency_cycle": 48.0,
         "global_state": 60.0,
         "game_loop_centrality": 0.3333
+      },
+      "raw_exact": {
+        "cc": 13.0,
+        "coupling": 62.0,
+        "dependency_cycle": 48.0,
+        "global_state": 60.0,
+        "game_loop_centrality": 0.3333333333333333
       },
       "z": {
         "cc": -0.2477,
@@ -8802,6 +10867,13 @@
         "global_state": 9.0,
         "game_loop_centrality": 0.0
       },
+      "raw_exact": {
+        "cc": 10.0,
+        "coupling": 2.0,
+        "dependency_cycle": 0.0,
+        "global_state": 9.0,
+        "game_loop_centrality": 0.0
+      },
       "z": {
         "cc": -0.3739,
         "coupling": -0.3406,
@@ -8824,6 +10896,13 @@
       "kind": "compilation_unit",
       "loc": 415,
       "raw": {
+        "cc": 11.0,
+        "coupling": 90.0,
+        "dependency_cycle": 48.0,
+        "global_state": 38.0,
+        "game_loop_centrality": 0.0
+      },
+      "raw_exact": {
         "cc": 11.0,
         "coupling": 90.0,
         "dependency_cycle": 48.0,
@@ -11265,5 +13344,242 @@
       "class_count": 59,
       "file_count": 59
     }
-  ]
+  ],
+  "analysis_status": {
+    "state": "partial",
+    "language": "c",
+    "analyzed_files": 296,
+    "failed_files": 0,
+    "syntax_files": 37,
+    "errors": [],
+    "diagnostics": [
+      {
+        "path": "doom/d_main.c",
+        "kind": "syntax",
+        "line": 1442,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "doom/deh_frame.c",
+        "kind": "syntax",
+        "line": 30,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "doom/deh_sound.c",
+        "kind": "syntax",
+        "line": 27,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "doom/deh_thing.c",
+        "kind": "syntax",
+        "line": 29,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "doom/deh_weapon.c",
+        "kind": "syntax",
+        "line": 30,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "doom/g_game.c",
+        "kind": "syntax",
+        "line": 1,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "doom/r_data.c",
+        "kind": "syntax",
+        "line": 59,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "heretic/deh_frame.c",
+        "kind": "syntax",
+        "line": 176,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "heretic/deh_sound.c",
+        "kind": "syntax",
+        "line": 31,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "heretic/deh_thing.c",
+        "kind": "syntax",
+        "line": 31,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "heretic/deh_weapon.c",
+        "kind": "syntax",
+        "line": 32,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "heretic/p_switch.c",
+        "kind": "syntax",
+        "line": 54,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "hexen/p_acs.c",
+        "kind": "syntax",
+        "line": 45,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "i_glob.c",
+        "kind": "syntax",
+        "line": 55,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "i_oplmusic.c",
+        "kind": "syntax",
+        "line": 49,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "i_sound.c",
+        "kind": "syntax",
+        "line": 88,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "i_winmusic.c",
+        "kind": "syntax",
+        "line": 189,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "m_config.c",
+        "kind": "syntax",
+        "line": 945,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "m_misc.c",
+        "kind": "syntax",
+        "line": 843,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "midifile.c",
+        "kind": "syntax",
+        "line": 38,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "mus2mid.c",
+        "kind": "syntax",
+        "line": 57,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "net_query.c",
+        "kind": "syntax",
+        "line": 686,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "net_server.c",
+        "kind": "syntax",
+        "line": 187,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "setup/display.c",
+        "kind": "syntax",
+        "line": 207,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "setup/sound.c",
+        "kind": "syntax",
+        "line": 286,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/d_main.c",
+        "kind": "syntax",
+        "line": 1680,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/deh_frame.c",
+        "kind": "syntax",
+        "line": 30,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/deh_sound.c",
+        "kind": "syntax",
+        "line": 27,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/deh_thing.c",
+        "kind": "syntax",
+        "line": 29,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/deh_weapon.c",
+        "kind": "syntax",
+        "line": 30,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/g_game.c",
+        "kind": "syntax",
+        "line": 1,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/m_saves.c",
+        "kind": "syntax",
+        "line": 347,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/p_setup.c",
+        "kind": "syntax",
+        "line": 727,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "strife/r_data.c",
+        "kind": "syntax",
+        "line": 55,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "v_video.c",
+        "kind": "syntax",
+        "line": 628,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "w_file.c",
+        "kind": "syntax",
+        "line": 31,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      },
+      {
+        "path": "w_wad.c",
+        "kind": "syntax",
+        "line": 38,
+        "message": "문법 오류 또는 파서가 해석하지 못한 구문이 있습니다. 복구 가능한 부분을 추출했으므로 결과가 불완전할 수 있습니다."
+      }
+    ],
+    "limitations": [
+      "결과는 선택한 언어와 분석 대상에 한정됩니다. 완료 표시는 코드 전체를 정확히 이해했다는 보증이 아닙니다.",
+      "동적 호출·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프는 완전히 해석하지 않습니다.",
+      "C/C++는 구문 기반 분석입니다. 매크로·템플릿·헤더 본문과 외부 라이브러리의 완전한 의미 해석은 지원하지 않습니다."
+    ]
+  }
 }

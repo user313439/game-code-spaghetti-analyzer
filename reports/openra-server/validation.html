@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>OpenRA.Server — G-SI Validation (Phase A)</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", "Noto Sans KR", sans-serif;
+          color: #222; background: #fff; margin: 0; padding: 24px; line-height: 1.5; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 28px 0 10px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+  h3 { font-size: 14px; margin: 14px 0 6px; color: #555; }
+  table { border-collapse: collapse; font-size: 13px; }
+  .meta { margin: 6px 0 0; }
+  .meta th { text-align: left; color: #666; font-weight: 500; padding: 2px 12px 2px 0; width: 150px; }
+  .meta td { padding: 2px 0; font-family: ui-monospace, Consolas, monospace; color: #222; }
+  table.corr { margin: 4px 0 6px; min-width: 460px; }
+  table.corr th, table.corr td { padding: 4px 10px; border-bottom: 1px solid #f0f0f0; }
+  table.corr th { background: #f7f7f7; font-weight: 500; text-align: left; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.rho { font-weight: 600; }
+  tr.rho-pos-strong td.rho { color: #1f7a3a; }
+  tr.rho-pos td.rho { color: #5a9d4a; }
+  tr.rho-neg td.rho { color: #c47b30; }
+  tr.rho-neg-strong td.rho { color: #b53a3a; }
+  .corr-block { display: inline-block; vertical-align: top; margin-right: 24px; }
+  .hint { color: #666; font-size: 12px; margin: 2px 0 6px; max-width: 700px; }
+  .scatter { width: 100%; max-width: 760px; height: auto; }
+  table.top { min-width: 600px; }
+  table.top th, table.top td { padding: 4px 10px; border-bottom: 1px solid #f0f0f0; }
+  table.top th { background: #f7f7f7; font-weight: 500; text-align: left; }
+  .badge { display: inline-block; width: 18px; height: 18px; line-height: 18px;
+            text-align: center; color: #fff; font-size: 11px; font-weight: 600;
+            border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 12px; background: #f6f8fa; padding: 1px 4px; border-radius: 3px; }
+  ul.notes li { color: #555; }
+  footer { margin-top: 40px; color: #888; font-size: 11px; }
+</style>
+</head>
+<body>
+<h1>OpenRA.Server — G-SI Validation (Phase A)</h1>
+<p class="hint">Plan §7.1 Phase A — Git bug-fix 커밋 빈도와 G-SI / LOC / CC 간의 Spearman 순위 상관 검증.</p>
+<table class='meta'><tr><th>repo</th><td>C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRA</td></tr>
+<tr><th>subdir</th><td>OpenRA.Server</td></tr>
+<tr><th>date range</th><td>* .. 2026-10-03</td></tr>
+<tr><th>commits scanned</th><td>137</td></tr>
+<tr><th>bug-fix commits</th><td>28</td></tr>
+<tr><th>classes / files</th><td>1 classes (1 touched) · 1 files (1 touched)</td></tr>
+<tr><th>unmatched changes</th><td>21 (non-class assets/configs)</td></tr>
+<tr><th>keywords</th><td>fix, bug, crash, regression, hotfix, patch, defect</td></tr></table>
+<section><h2>Spearman 순위 상관계수</h2><div class='corr-block'><h3>파일 단위</h3><p class='hint'>Git 변경의 자연 단위가 파일이므로 1차 해석 지표로 사용한다. 정렬 기준은 plan §4.1: 파일 si_max, loc 합, cc_max.</p><table class='corr'><thead><tr><th>지표</th><th>n</th><th>Spearman ρ</th><th>p-value</th></tr></thead><tbody><tr class='rho-na'><td>file_si_vs_bugfix</td><td class='num'>1</td><td class='num rho'>—</td><td class='num p'>—</td></tr><tr class='rho-na'><td>file_loc_vs_bugfix</td><td class='num'>1</td><td class='num rho'>—</td><td class='num p'>—</td></tr><tr class='rho-na'><td>file_cc_vs_bugfix</td><td class='num'>1</td><td class='num rho'>—</td><td class='num p'>—</td></tr></tbody></table></div><div class='corr-block'><h3>클래스 단위</h3><p class='hint'>한 파일에 다수 클래스가 있을 경우 동일 bug-fix 카운트를 공유한다. 결과 해석 시 plan §13 &quot;분석 단위 부적합&quot; 항을 참고한다.</p><table class='corr'><thead><tr><th>지표</th><th>n</th><th>Spearman ρ</th><th>p-value</th></tr></thead><tbody><tr class='rho-na'><td>si_vs_bugfix</td><td class='num'>1</td><td class='num rho'>—</td><td class='num p'>—</td></tr><tr class='rho-na'><td>loc_vs_bugfix</td><td class='num'>1</td><td class='num rho'>—</td><td class='num p'>—</td></tr><tr class='rho-na'><td>cc_vs_bugfix</td><td class='num'>1</td><td class='num rho'>—</td><td class='num p'>—</td></tr></tbody></table></div></section>
+<section><h2>산점도: 파일 G-SI(max) vs bug-fix 빈도</h2><p class='hint'>각 점은 분석된 한 개의 .cs 파일이다. 색상은 파일 si_max 의 등급(A~E)이며, 회색조 점(왼쪽 아래) 은 bug-fix 가 없는 파일이다. 점에 마우스를 올리면 파일 경로가 표시된다.</p><svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" class="scatter"><rect x="60" y="30" width="636" height="340" fill="#fafafa" stroke="#ddd"/><line x1="60.0" y1="30" x2="60.0" y2="370" stroke="#eee"/><text x="60.0" y="388" text-anchor="middle" font-size="11" fill="#666">0</text><line x1="187.2" y1="30" x2="187.2" y2="370" stroke="#eee"/><text x="187.2" y="388" text-anchor="middle" font-size="11" fill="#666">20</text><line x1="314.4" y1="30" x2="314.4" y2="370" stroke="#eee"/><text x="314.4" y="388" text-anchor="middle" font-size="11" fill="#666">40</text><line x1="441.6" y1="30" x2="441.6" y2="370" stroke="#eee"/><text x="441.6" y="388" text-anchor="middle" font-size="11" fill="#666">60</text><line x1="568.8" y1="30" x2="568.8" y2="370" stroke="#eee"/><text x="568.8" y="388" text-anchor="middle" font-size="11" fill="#666">80</text><line x1="696.0" y1="30" x2="696.0" y2="370" stroke="#eee"/><text x="696.0" y="388" text-anchor="middle" font-size="11" fill="#666">100</text><line x1="60" y1="370.0" x2="696" y2="370.0" stroke="#eee"/><text x="54" y="374.0" text-anchor="end" font-size="11" fill="#666">0</text><line x1="60" y1="294.4" x2="696" y2="294.4" stroke="#eee"/><text x="54" y="298.4" text-anchor="end" font-size="11" fill="#666">2</text><line x1="60" y1="218.9" x2="696" y2="218.9" stroke="#eee"/><text x="54" y="222.9" text-anchor="end" font-size="11" fill="#666">4</text><line x1="60" y1="143.3" x2="696" y2="143.3" stroke="#eee"/><text x="54" y="147.3" text-anchor="end" font-size="11" fill="#666">6</text><line x1="60" y1="67.8" x2="696" y2="67.8" stroke="#eee"/><text x="54" y="71.8" text-anchor="end" font-size="11" fill="#666">8</text><line x1="60" y1="30.0" x2="696" y2="30.0" stroke="#eee"/><text x="54" y="34.0" text-anchor="end" font-size="11" fill="#666">9</text><text x="378.0" y="408" text-anchor="middle" font-size="12" fill="#333">파일 G-SI (max within file, 0~100)</text><text x="14" y="200.0" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90 14 200.0)">bug-fix commit touch count</text><circle cx="696.0" cy="30.0" r="4.5" fill="#d24343" fill-opacity="0.85" stroke="#333" stroke-width="0.4"><title>Program.cs\nG-SI(max)=100.0  classes=1  LOC=96  bug-fix=9</title></circle></svg></section>
+<section><h2>가장 자주 bug-fix 된 분석 파일 (상위 15)</h2><table class='top'><thead><tr><th>fix #</th><th>파일</th><th>G-SI (max)</th><th>LOC</th></tr></thead><tbody><tr><td class='num'>9</td><td><span class='badge' style='background:#d24343'>E</span> <code>Program.cs</code></td><td class='num'>100.0</td><td class='num'>96</td></tr></tbody></table></section>
+<section><h2>진단 메모</h2><ul class='notes'><li>bug-fix 변경 파일 중 21 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음.</li></ul></section>
+<footer>생성: game-si validate · 본 페이지는 단일 파일 HTML이며 CDN 등 외부 리소스에 의존하지 않는다.</footer>
+</body>
+</html>

@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>DOOM 3 - gameplay source (neo/game) — Game Spaghetti Index Report</title>
+<style>
+  :root {
+    --bg: #0f172a; --panel: #111827; --panel2: #1f2937;
+    --fg: #e5e7eb; --muted: #94a3b8; --accent: #60a5fa; --border: #1f2937;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.5; font-size: 14px;
+  }
+  header { padding: 24px 32px; background: var(--panel); border-bottom: 1px solid var(--border); }
+  header h1 { margin: 0 0 4px 0; font-size: 22px; }
+  header .report-subtitle { margin: 4px 0; color: #cbd5e1; font-size: 14px; }
+  header .report-kind { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  header .meta { color: var(--muted); font-size: 13px; }
+  main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  section { margin-bottom: 32px; }
+  section h2 { font-size: 17px; margin: 0; color: #cbd5e1; }
+  .sec-head { display: flex; gap: 12px; align-items: baseline; margin-bottom: 12px;
+               padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .sec-info { background: transparent; color: var(--accent); border: 1px solid var(--border);
+               padding: 2px 10px; border-radius: 999px; font-size: 11px; cursor: pointer;
+               white-space: nowrap; transition: all 0.1s; }
+  .sec-info:hover { background: rgba(96,165,250,0.1); border-color: var(--accent); }
+  .sec-info[aria-expanded="true"] { background: var(--accent); color: #0b1322; border-color: var(--accent); }
+  .hidden-section { display: none; }
+  .advice-meta { color: var(--muted); font-size: 12px; margin-left: auto; }
+  .advice-meta code { background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 3px; }
+  .advice-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+                  margin-bottom: 10px; }
+  .advice-card[data-grade="E"] { border-left: 4px solid #d24343; }
+  .advice-card[data-grade="D"] { border-left: 4px solid #ef7d3c; }
+  .advice-card[data-grade="C"] { border-left: 4px solid #e3b341; }
+  .advice-card[data-grade="B"] { border-left: 4px solid #7fb95a; }
+  .advice-card[data-grade="A"] { border-left: 4px solid #3b8e5a; }
+  .advice-card summary { cursor: pointer; padding: 12px 16px; display: flex; align-items: center;
+                          gap: 12px; font-size: 13px; user-select: none; }
+  .advice-card summary:hover { background: rgba(255,255,255,0.02); }
+  .advice-card summary::-webkit-details-marker { display: none; }
+  .advice-rank { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 28px; }
+  .advice-si { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 80px; }
+  .advice-fqn { font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px;
+                 background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; }
+  .advice-path { color: var(--muted); font-size: 12px; margin-left: auto; }
+  .advice-path code { background: rgba(255,255,255,0.06); padding: 0 4px; border-radius: 3px; }
+  .advice-body { padding: 0 18px 14px 18px; border-top: 1px solid var(--border); }
+  .advice-block { margin-top: 14px; }
+  .advice-block h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--accent); }
+  .advice-block ul { margin: 0; padding-left: 22px; }
+  .advice-block li { margin-bottom: 6px; color: #d1d5db; line-height: 1.55; }
+  .advice-uncertainty { margin-top: 14px; padding: 10px 12px; background: rgba(96,165,250,0.06);
+                          border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0;
+                          color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+  .advice-uncertainty strong { color: var(--accent); }
+  .sec-explain { background: rgba(96,165,250,0.06); border-left: 3px solid var(--accent);
+                  padding: 14px 18px; margin-bottom: 12px; font-size: 13px; line-height: 1.7;
+                  color: #cbd5e1; border-radius: 0 6px 6px 0; }
+  .sec-explain strong { color: #e5e7eb; }
+  .sec-explain em { color: var(--accent); font-style: normal; }
+  .sec-explain code { background: rgba(255,255,255,0.08); padding: 1px 6px;
+                        border-radius: 3px; font-size: 12px; }
+  .sec-explain p { margin: 0 0 10px 0; }
+  .sec-explain p:last-child { margin-bottom: 0; }
+  .sec-explain ul { margin: 6px 0 10px 0; padding-left: 22px; }
+  .sec-explain li { margin-bottom: 4px; }
+  .card-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .card { background: var(--panel); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border); }
+  .card-label { color: var(--muted); font-size: 12px; }
+  .card-value { font-size: 22px; font-weight: 600; margin-top: 4px; }
+  .grid-2 { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
+  .panel { background: var(--panel); padding: 16px; border-radius: 8px; border: 1px solid var(--border); }
+  .donut-container { display: flex; align-items: center; gap: 16px; }
+  .donut { flex-shrink: 0; }
+  .legend { display: flex; flex-direction: column; gap: 6px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .legend-item .count { color: var(--muted); margin-left: auto; }
+  .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { background: var(--panel2); color: #cbd5e1; font-weight: 600; position: sticky; top: 0; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable::after { content: " ↕"; color: var(--muted); font-size: 11px; }
+  th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.rank { color: var(--muted); }
+  td.fqn { font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px; }
+  td.path code { font-size: 11px; color: var(--muted); }
+  td.empty { text-align: center; color: var(--muted); padding: 20px; }
+  tr[data-grade="E"] { background: rgba(210,67,67,0.07); }
+  tr[data-grade="D"] { background: rgba(239,125,60,0.05); }
+  .grade-badge { display: inline-block; padding: 2px 8px; border-radius: 999px;
+                  color: #fff; font-weight: 600; font-size: 12px; min-width: 22px; text-align: center; }
+  .kv-table th, .kv-table td { padding: 6px 10px; }
+  .table-controls { display: flex; gap: 8px; margin-bottom: 8px; }
+  .table-controls input, .table-controls select {
+    background: var(--panel2); color: var(--fg); border: 1px solid var(--border);
+    padding: 6px 10px; border-radius: 6px; font-size: 13px;
+  }
+  .table-controls input { flex: 1; }
+  .graph-panel { overflow: hidden; }
+  .graph-meta { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  .graph-meta em { color: var(--accent); font-style: normal; }
+  .graph-wrap { display: grid; grid-template-columns: 1fr 280px; gap: 12px; align-items: stretch; }
+  .depgraph { display: block; background: #0b1322; border-radius: 6px; width: 100%; height: 620px; }
+  .depgraph .node { cursor: pointer; transition: opacity 0.15s; }
+  .depgraph .node text { pointer-events: none; opacity: 0.7; }
+  .depgraph .node:hover circle { stroke: var(--accent); stroke-width: 3; }
+  .depgraph .node:hover text { opacity: 1; font-weight: 600; font-size: 12px; }
+  .depgraph.has-hover .node:not(.hl):not(.hl-neighbor) { opacity: 0.18; }
+  .depgraph.has-hover .edge:not(.hl-edge) { stroke-opacity: 0.08; }
+  .depgraph .edge.hl-edge { stroke: var(--accent); stroke-width: 1.6; stroke-opacity: 1; }
+  .graph-info { background: #0b1322; border-radius: 6px; padding: 14px; min-height: 620px;
+                 font-size: 13px; overflow-y: auto; }
+  .graph-info .info-empty { color: var(--muted); text-align: center; padding-top: 60px; line-height: 1.6; }
+  .graph-info .info-fqn { font-family: ui-monospace, monospace; font-size: 12px;
+                            word-break: break-all; color: #e2e8f0; margin-bottom: 8px; }
+  .graph-info .info-grade { display: inline-block; padding: 4px 12px; border-radius: 999px;
+                              color: #fff; font-weight: 700; font-size: 13px; }
+  .graph-info .info-si { font-size: 28px; font-weight: 700; margin-left: 8px; }
+  .graph-info dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px;
+                    margin: 12px 0; font-size: 12px; }
+  .graph-info dt { color: var(--muted); }
+  .graph-info dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  .graph-info .info-section { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .graph-info .info-section h4 { font-size: 11px; color: var(--muted); margin: 0 0 4px 0;
+                                    text-transform: uppercase; letter-spacing: 0.04em; }
+  .graph-info code.neighbor { display: inline-block; background: rgba(255,255,255,0.06);
+                                padding: 1px 6px; border-radius: 4px; font-size: 11px;
+                                margin: 2px 4px 2px 0; }
+
+  /* Project Health hero card */
+  .health-hero { display: flex; gap: 24px; align-items: center; background: var(--panel);
+                  padding: 24px; border-radius: 10px; border: 1px solid var(--border); }
+  .health-circle { width: 140px; height: 140px; border-radius: 50%; border: 6px solid;
+                    display: flex; flex-direction: column; align-items: center; justify-content: center;
+                    flex-shrink: 0; background: var(--panel2); }
+  .health-grade { font-size: 36px; font-weight: 800; line-height: 1; }
+  .health-score { font-size: 28px; font-weight: 600; margin-top: 4px; color: var(--fg); }
+  .health-unit { color: var(--muted); font-size: 12px; }
+  .health-info { flex: 1; }
+  .health-title { font-size: 13px; color: var(--muted); text-transform: uppercase;
+                   letter-spacing: 0.05em; margin-bottom: 4px; }
+  .health-desc { font-size: 15px; margin-bottom: 14px; line-height: 1.5; }
+  .health-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .health-stats > div { background: var(--panel2); padding: 10px 12px; border-radius: 6px;
+                          display: flex; flex-direction: column; }
+  .hs-label { color: var(--muted); font-size: 12px; }
+  .hs-value { font-size: 18px; font-weight: 600; margin-top: 2px; }
+
+  /* Help box */
+  .help { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+           padding: 12px 16px; margin-bottom: 24px; }
+  .help > summary { cursor: pointer; color: var(--accent); font-weight: 600; user-select: none; }
+  .help-body { margin-top: 12px; font-size: 13px; line-height: 1.6; color: #cbd5e1; }
+  .help-body ul { padding-left: 22px; }
+  .help-body li { margin-bottom: 6px; }
+  .help-body .help-grade { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; }
+  .help-body .help-grade .grade-badge { margin: 0 4px; }
+
+  /* Hotspot notice / count */
+  .table-notice { background: rgba(96, 165, 250, 0.07); border: 1px solid rgba(96, 165, 250, 0.25);
+                   border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px;
+                   color: #cbd5e1; }
+  .table-notice strong { color: var(--accent); }
+  .hotspot-count { color: var(--muted); font-size: 12px; align-self: center; }
+
+  /* 섹션 소개 문구 */
+  .section-intro { background: rgba(96, 165, 250, 0.05); border-left: 3px solid var(--accent);
+                    padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: #cbd5e1;
+                    border-radius: 0 6px 6px 0; }
+  .section-intro strong { color: #e5e7eb; }
+  .section-intro code { background: rgba(255,255,255,0.08); padding: 1px 6px;
+                          border-radius: 3px; font-size: 12px; }
+
+  /* Custom tooltip — [data-tooltip] 속성이 있는 요소 hover 시 표시 */
+  [data-tooltip] { position: relative; cursor: help; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; left: 50%; bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    background: #020617; color: #f1f5f9; padding: 8px 10px; border-radius: 6px;
+    font-size: 12px; line-height: 1.4; font-weight: 400;
+    white-space: normal; width: max-content; max-width: 260px;
+    text-align: left; pointer-events: none; opacity: 0;
+    transition: opacity 0.12s; z-index: 100;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  [data-tooltip]:hover::after, [data-tooltip]:focus::after { opacity: 1; }
+  th[data-tooltip] { cursor: help; }
+
+  /* Graph controls — 검색 + 등급 토글 */
+  .graph-controls { display: flex; gap: 12px; align-items: center; margin-bottom: 10px;
+                     flex-wrap: wrap; }
+  .graph-controls input {
+    background: var(--panel2); color: var(--fg); border: 1px solid var(--border);
+    padding: 6px 10px; border-radius: 6px; font-size: 13px; flex: 1; min-width: 280px;
+  }
+  .grade-toggle { display: flex; gap: 4px; align-items: center; }
+  .gt-label { color: var(--muted); font-size: 12px; margin-right: 4px; }
+  .gt-btn { background: var(--panel2); color: var(--muted); border: 1px solid var(--border);
+             padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+             cursor: pointer; transition: all 0.1s; }
+  .gt-btn:hover { color: var(--fg); border-color: #475569; }
+  .gt-btn.gt-active { color: #fff; }
+  .gt-btn[data-grade="A"].gt-active { background: #3b8e5a; border-color: #3b8e5a; }
+  .gt-btn[data-grade="B"].gt-active { background: #7fb95a; border-color: #7fb95a; }
+  .gt-btn[data-grade="C"].gt-active { background: #e3b341; border-color: #e3b341; color: #111; }
+  .gt-btn[data-grade="D"].gt-active { background: #ef7d3c; border-color: #ef7d3c; }
+  .gt-btn[data-grade="E"].gt-active { background: #d24343; border-color: #d24343; }
+  .gt-btn[data-grade=""].gt-active { background: var(--accent); border-color: var(--accent); }
+  .graph-match-count { color: var(--muted); font-size: 12px; }
+  .graph-match-count.warn { color: #fbbf24; }
+  .graph-zoom { display: flex; gap: 4px; }
+  .graph-zoom button { background: var(--panel2); color: var(--fg); border: 1px solid var(--border);
+                         padding: 4px 12px; border-radius: 6px; font-size: 13px; cursor: pointer;
+                         font-weight: 600; min-width: 38px; }
+  .graph-zoom button:hover { background: #1f2a3a; border-color: var(--accent); }
+  .graph-tip { background: rgba(96,165,250,0.06); border-radius: 4px;
+                padding: 8px 12px; margin-bottom: 10px; font-size: 12px; color: #cbd5e1; }
+  .graph-tip strong { color: var(--accent); }
+  .depgraph { cursor: grab; }
+  .depgraph.dragging { cursor: grabbing; }
+
+  /* 검색 매치 강조 */
+  .depgraph .node.search-match circle {
+    stroke: #fff; stroke-width: 2.5;
+    filter: drop-shadow(0 0 6px rgba(96, 165, 250, 0.9));
+  }
+  .depgraph .node.search-match text { opacity: 1; font-weight: 700; font-size: 11px; fill: #fff; }
+  .depgraph.has-search .node:not(.search-match):not(.hl):not(.hl-neighbor) { opacity: 0.25; }
+
+  .help-body .help-tip { margin-top: 10px; padding: 8px 12px; background: rgba(96,165,250,0.06);
+                           border-radius: 4px; font-size: 12px; }
+  .cycle-count { background: var(--panel2); border-radius: 8px; padding: 16px 20px;
+                  display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px;
+                  border-left: 4px solid #d24343; max-width: 480px; }
+  .cycle-count-zero { border-left-color: #3b8e5a; }
+  .cc-number { font-size: 36px; font-weight: 800; line-height: 1; color: #f1f5f9;
+                font-variant-numeric: tabular-nums; }
+  .cc-label { color: var(--muted); font-size: 13px; }
+  .cc-hint { color: #cbd5e1; font-size: 12px; margin-top: 4px; }
+  .cycle-list details { background: var(--panel2); padding: 10px 12px; border-radius: 6px; margin-bottom: 6px; }
+  .cycle-list summary { cursor: pointer; display: flex; gap: 12px; align-items: center; }
+  .cycle-stat { color: #cbd5e1; font-size: 13px; }
+  .cycle-stat strong { color: #f1f5f9; font-variant-numeric: tabular-nums; }
+  .cycle-rank { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .cycle-list ul { margin: 10px 0 0 24px; padding: 0; }
+  .cycle-list li { margin-bottom: 2px; }
+  .cycle-member { font-family: ui-monospace, monospace; font-size: 12px; padding: 1px 6px;
+                   border-radius: 4px; background: rgba(255,255,255,0.05); }
+  .cycle-member.grade-D, .cycle-member.grade-E { background: rgba(210,67,67,0.15); }
+  .empty { color: var(--muted); padding: 12px; text-align: center; }
+  .analysis-status, .analysis-info { padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 20px; color: var(--muted); font-size: 13px; }
+  .analysis-status > strong { color: var(--fg); margin-right: 16px; }
+  .analysis-status > span { display: inline-block; }
+  .analysis-status.partial { border-left: 3px solid #e3b341; }
+  .analysis-status.partial > strong { color: #e3b341; }
+  .status-heading { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; margin-bottom: 12px; }
+  .status-heading strong { color: var(--fg); font-size: 18px; }
+  .analysis-status.partial .status-heading strong { color: #e3b341; }
+  .status-counts { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; color: #cbd5e1; line-height: 1.8; }
+  .status-metric { display: inline-block; border-bottom: 1px dotted #64748b; }
+  .status-metric:focus { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .status-metric::after { left: 0; transform: none; width: 320px; max-width: min(320px, 80vw); bottom: auto; top: calc(100% + 8px); }
+  .status-note { margin: 12px 0; line-height: 1.7; }
+  .status-metric::after { white-space: pre-line; }
+  .status-coverage { margin: 0 0 12px; color: #cbd5e1; font-size: 14px; }
+  .status-coverage strong { color: var(--fg); font-size: 18px; margin: 0 3px; }
+  .analysis-status .analysis-info { padding: 0; border: 0; margin: 10px 0 0; }
+  .analysis-info > summary { cursor: pointer; color: var(--accent); }
+  .analysis-info h3 { font-size: 13px; color: var(--fg); }
+  .analysis-issues { max-height: 240px; overflow: auto; overflow-wrap: anywhere; }
+  .analysis-info ul { padding-left: 20px; }
+  footer { padding: 20px 32px; color: var(--muted); font-size: 12px; text-align: center; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<header>
+  <h1>DOOM 3 - gameplay source (neo/game)</h1>
+  <p class="report-subtitle">선택한 소스 코드 · 기본 정적 분석</p>
+  <div class="report-kind">Game Spaghetti Index Report</div>
+  <div class="meta">분석 시각: 2026-10-05 11:12 UTC</div>
+</header>
+<main>
+
+<details class="help">
+    <summary>대시보드 읽는 법</summary>
+    <div class="help-body">
+        <p><strong>Game Spaghetti Index (G-SI)</strong>는 분석한 클래스 집합 내부의 <strong>상대적인 검토 우선순위</strong>입니다. 절대 품질·결함 확률이나 프로젝트 간 우열을 뜻하지 않습니다.</p>
+        <p>동점은 상단 백분위로 계산합니다. 모두 동점이면 100/E여도 심각한 결함의 증거가 아니며, 순위로 후보를 구분할 수 없습니다. 원시 지표와 실제 소스를 함께 확인하세요.</p>
+        <p class="help-grade">
+            등급 의미 →
+            <span class="grade-badge" style="background:#3b8e5a">A</span> 0~20 미만 ·
+            <span class="grade-badge" style="background:#7fb95a">B</span> 20~40 미만 ·
+            <span class="grade-badge" style="background:#e3b341">C</span> 40~60 미만 ·
+            <span class="grade-badge" style="background:#ef7d3c">D</span> 60~80 미만 ·
+            <span class="grade-badge" style="background:#d24343">E</span> 80~100
+        </p>
+        <p class="help-tip">💡 각 섹션 제목 옆의 <strong>「ⓘ 이 섹션이 뭔가요?」</strong> 버튼을 누르면 그 섹션이 무엇을 보여주는지 자세한 설명이 나옵니다. 화면 곳곳의 항목에 마우스를 올리면 그 자리에서 짧은 설명이 풍선으로 표시됩니다.</p>
+    </div>
+</details>
+
+<aside class="analysis-status partial" aria-label="분석 상태"><div class="status-heading"><strong>부분 분석</strong><span>선택한 소스 범위 대상</span></div><div class="status-counts"><span class="status-metric" tabindex="0" data-tooltip="점수는 추출한 클래스 또는 C/C++ 함수 묶음별로 계산합니다. 파일 수와 점수 단위 수는 다를 수 있습니다." aria-label="클래스·함수 묶음 단위。 점수는 추출한 클래스 또는 C/C++ 함수 묶음별로 계산합니다. 파일 수와 점수 단위 수는 다를 수 있습니다.">클래스·함수 묶음 단위</span> · <span class="status-metric" tabindex="0" data-tooltip="기본 분석은 별도의 컴파일 설정 등록 목록을 사용하지 않습니다." aria-label="등록 해당 없음。 기본 분석은 별도의 컴파일 설정 등록 목록을 사용하지 않습니다.">등록 해당 없음</span> · <span class="status-metric" tabindex="0" data-tooltip="분석 결과에 포함된 소스 파일 수입니다. 완전한 분석을 뜻하지 않으며 구문 복구나 외부 참조로 정보가 빠질 수 있습니다." aria-label="추출 71개。 분석 결과에 포함된 소스 파일 수입니다. 완전한 분석을 뜻하지 않으며 구문 복구나 외부 참조로 정보가 빠질 수 있습니다.">추출 71개</span> · <span class="status-metric" tabindex="0" data-tooltip="기본 분석에는 컴파일 설정 미등록 항목이 없습니다. 선택 언어와 제외 설정에 따른 분석 범위는 별도로 적용됩니다." aria-label="미등록 해당 없음。 기본 분석에는 컴파일 설정 미등록 항목이 없습니다. 선택 언어와 제외 설정에 따른 분석 범위는 별도로 적용됩니다.">미등록 해당 없음</span> · <span class="status-metric" tabindex="0" data-tooltip="읽기 또는 추출에 실패한 항목 수입니다. 0개여도 코드 전체가 정확하게 해석됐다는 보증은 아닙니다." aria-label="접근·추출 실패 0개。 읽기 또는 추출에 실패한 항목 수입니다. 0개여도 코드 전체가 정확하게 해석됐다는 보증은 아닙니다.">접근·추출 실패 0개</span> · <span class="status-metric" tabindex="0" data-tooltip="이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다." aria-label="컴파일 오류 해당 없음。 이 방식에서는 컴파일러 진단을 수집하지 않습니다. 게임의 실제 버그 개수나 컴파일 오류가 0개라는 뜻이 아닙니다.">컴파일 오류 해당 없음</span> · <span class="status-metric" tabindex="0" data-tooltip="이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다." aria-label="컴파일 경고 해당 없음。 이 방식에서는 컴파일러 경고를 수집하지 않습니다. 경고가 없음을 검증한 결과는 아닙니다.">컴파일 경고 해당 없음</span> · <span class="status-metric" tabindex="0" data-tooltip="파서가 읽기 어려운 구문을 건너뛰거나 복구한 파일 수입니다. 관련 함수나 연결 정보가 불완전할 수 있습니다." aria-label="구문 복구 52개 파일。 파서가 읽기 어려운 구문을 건너뛰거나 복구한 파일 수입니다. 관련 함수나 연결 정보가 불완전할 수 있습니다.">구문 복구 52개 파일</span></div><p class="status-note">결과는 얻었지만 일부 정보가 불완전할 수 있어 부분 분석으로 표시합니다.</p><details class="analysis-info"><summary>왜 부분 분석인가요?</summary><ul><li>읽기 어려운 구문을 복구하거나 건너뛴 파일이 있습니다. 관련 함수와 연결 정보가 빠질 수 있습니다.</li></ul></details><details class="analysis-info"><summary>분석 범위와 한계</summary><ul><li>결과는 선택한 언어와 분석 대상에 한정됩니다. 완료 표시는 코드 전체를 정확히 이해했다는 보증이 아닙니다.</li><li>동적 호출·이벤트·런타임 상태와 이름 패턴 밖의 게임 루프는 완전히 해석하지 않습니다.</li><li>C/C++는 구문 기반 분석입니다. 매크로·템플릿·헤더 본문과 외부 라이브러리의 완전한 의미 해석은 지원하지 않습니다.</li></ul><p>전체 설정과 진단은 원본 분석 데이터에 보존되어 있습니다.</p></details></aside>
+
+<section>
+  <div class="sec-head">
+    <h2>구조 요약 (보조 Health)</h2>
+    <button class="sec-info" data-target="help-health" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-health" hidden>
+    <p><strong>검증되지 않은 보조 구조 요약</strong>입니다. 상대 순위 기반 항목을 포함하므로 절대 코드 품질이나 프로젝트 간 우열을 판정하지 않습니다.</p>
+    <p>다음 네 가지 신호를 가중 평균합니다.</p>
+    <ul>
+      <li><strong>평균 G-SI (45%)</strong> — 프로젝트 안 모든 클래스의 G-SI 점수를 단순 평균. 가장 큰 비중.</li>
+      <li><strong>상대 D+E 비율 (25%)</strong> — G-SI 60 이상인 클래스 비율. 결함 비율이 아닙니다.</li>
+      <li><strong>순환 의존성 수 (15%)</strong> — A→B→C→A 처럼 서로 참조해서 빙빙 도는 묶음의 개수. 로그 스케일 적용(0 → 0점, 1 → 30점, 5 → 70점, 20 이상 → 100점).</li>
+      <li><strong>평균 결합도 (15%)</strong> — 클래스 한 개당 평균적으로 몇 개의 다른 클래스와 연결되는지(fan-in+fan-out 평균). 평균 10 이상이면 100점으로 saturate.</li>
+    </ul>
+    <p>A~E는 수치 구간만 표시합니다. 평균 G-SI와 D/E 비율은 백분위 공식과 동점에 영향을 받으므로, 이 수치를 전체 품질의 증거로 발표하지 마세요.</p>
+  </div>
+  <div class="health-hero">
+        <div class="health-circle" style="border-color:#7fb95a">
+            <div class="health-grade" style="color:#7fb95a">B</div>
+            <div class="health-score">37</div>
+            <div class="health-unit">/ 100</div>
+        </div>
+        <div class="health-info">
+            <div class="health-title">구조 요약 (보조 Health)</div>
+            <div class="health-desc">상대 순위·순환·결합도를 합친 검증되지 않은 보조 수치입니다. 절대 품질이나 프로젝트 간 비교에는 사용하지 마세요.</div>
+            <div class="health-stats">
+                <div data-tooltip="프로젝트 내 모든 클래스의 G-SI 점수 평균. 종합 점수에 45% 기여">
+                    <span class="hs-label">평균 G-SI</span><span class="hs-value">52.2</span></div>
+                <div data-tooltip="G-SI 60 이상(D·E 등급)인 클래스의 비율. 종합 점수에 25% 기여">
+                    <span class="hs-label">상대 D+E 비율</span><span class="hs-value">40.2%</span></div>
+                <div data-tooltip="순환 참조에 빠진 클래스 묶음의 수(크기 ≥ 2). 종합 점수에 15% 기여">
+                    <span class="hs-label">순환 의존성</span><span class="hs-value">0</span></div>
+                <div data-tooltip="클래스 한 개당 평균적으로 몇 개의 다른 클래스와 연결되는지(fan-in + fan-out 평균). 종합 점수에 15% 기여">
+                    <span class="hs-label">평균 결합도</span><span class="hs-value">1.98</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Summary</h2>
+    <button class="sec-info" data-target="help-summary" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-summary" hidden>
+    <p>분석 규모와 위험 신호를 6개 숫자로 압축한 카드 묶음입니다.</p>
+    <ul>
+      <li><strong>분석 클래스</strong> — 추출된 타입 및 C/C++ 함수 묶음의 총 개수.</li>
+      <li><strong>분석 메서드</strong> — 분석된 모든 메서드와 생성자(.ctor)의 합. enum 항목, 자동 속성은 카운트하지 않습니다.</li>
+      <li><strong>의존성 순환(SCC ≥ 2)</strong> — 크기가 2 이상인 강한 연결 요소(Strongly Connected Component). 적을수록 좋고, 0이면 의존성이 한 방향으로 흐른다는 좋은 신호입니다.</li>
+      <li><strong>평균 G-SI</strong> — 클래스 단위 G-SI 점수의 단순 평균. Project Health의 가장 큰 입력입니다.</li>
+      <li><strong>최대 G-SI</strong> — 최대 상대 백분위. 비어 있지 않은 분석 집합에서는 항상 100이므로 품질 비교 정보가 없습니다.</li>
+      <li><strong>상대 D/E 클래스</strong> — G-SI 60 이상인 클래스 수. 실제 결함이나 리팩토링 필요성은 소스 검토로 확인합니다.</li>
+    </ul>
+    <p>각 카드에 마우스를 올리면 동일한 설명이 풍선으로 표시됩니다.</p>
+  </div>
+  <div class="card-row"><div class="card" data-tooltip="분석기가 추출한 타입 또는 C/C++ 함수 묶음의 합계"><div class="card-label">분석 클래스</div><div class="card-value">87</div></div><div class="card" data-tooltip="분석된 모든 메서드와 생성자의 합계"><div class="card-label">분석 메서드</div><div class="card-value">4,089</div></div><div class="card" data-tooltip="A→B→C→A처럼 서로 참조해서 빙빙 도는 클래스 묶음의 개수. 적을수록 좋음"><div class="card-label">의존성 순환(SCC ≥ 2)</div><div class="card-value">0</div></div><div class="card" data-tooltip="클래스 상대 백분위 평균. 절대 품질 비교에는 사용하지 않음"><div class="card-label">평균 G-SI</div><div class="card-value">52.2</div></div><div class="card" data-tooltip="최대 상대 백분위. 비어 있지 않은 분석은 공식상 항상 100"><div class="card-label">최대 G-SI</div><div class="card-value">100.0</div></div><div class="card" data-tooltip="상대 백분위 60 이상인 클래스 수. 실제 결함 여부는 별도 검토"><div class="card-label">상대 D/E 클래스</div><div class="card-value">35</div></div></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>등급 분포 및 가중치</h2>
+    <button class="sec-info" data-target="help-dist" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-dist" hidden>
+    <p><strong>왼쪽 등급 분포</strong>는 분석 집합 내부의 상대 백분위 구간입니다. 동점이 많으면 분포가 불균등하며 모두 동점이면 전부 E가 됩니다.</p>
+    <p>평균·최대 G-SI를 보더라도 다른 프로젝트와 절대 품질을 비교할 수 없습니다. 원시 메트릭과 실제 소스를 함께 확인하세요.</p>
+    <p><strong>오른쪽 표</strong>는 고정 기본 가중치입니다. 튜닝 옵션도 구현되어 있지만, 가중치 탐색과 지표 제거 실험은 탐색적 결과이며 산식의 신뢰성을 자동으로 입증하지 않습니다.</p>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="donut-container">
+        <svg viewBox="0 0 180 180" width="180" height="180" class="donut">
+            <circle cx="90" cy="90" r="70" fill="none" stroke="#1f2937" stroke-width="28"/>
+            <circle cx="90" cy="90" r="70" fill="none" stroke="#3b8e5a" stroke-width="28" stroke-dasharray="85.942 439.823" stroke-dashoffset="-0.000" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="70" fill="none" stroke="#7fb95a" stroke-width="28" stroke-dasharray="85.942 439.823" stroke-dashoffset="-85.942" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="70" fill="none" stroke="#e3b341" stroke-width="28" stroke-dasharray="90.998 439.823" stroke-dashoffset="-171.885" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="70" fill="none" stroke="#ef7d3c" stroke-width="28" stroke-dasharray="85.942 439.823" stroke-dashoffset="-262.883" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="70" fill="none" stroke="#d24343" stroke-width="28" stroke-dasharray="90.998 439.823" stroke-dashoffset="-348.825" transform="rotate(-90 90 90)"/>
+            <text x="90" y="90" text-anchor="middle" dominant-baseline="central"
+                  fill="#cbd5e1" font-size="20" font-weight="600">87</text>
+        </svg>
+        <div class="legend"><div class="legend-item"><span class="swatch" style="background:#3b8e5a"></span><span>A</span><span class="count">17 (19.5%)</span></div><div class="legend-item"><span class="swatch" style="background:#7fb95a"></span><span>B</span><span class="count">17 (19.5%)</span></div><div class="legend-item"><span class="swatch" style="background:#e3b341"></span><span>C</span><span class="count">18 (20.7%)</span></div><div class="legend-item"><span class="swatch" style="background:#ef7d3c"></span><span>D</span><span class="count">17 (19.5%)</span></div><div class="legend-item"><span class="swatch" style="background:#d24343"></span><span>E</span><span class="count">18 (20.7%)</span></div></div>
+    </div></div>
+    <div class="panel"><table class="kv-table">
+        <thead><tr><th>항목</th><th class="num">가중치</th></tr></thead>
+        <tbody><tr><td data-tooltip="Cyclomatic Complexity — 메서드 안의 if/for/case 등 분기 수">cc</td><td class="num">0.300</td></tr><tr><td data-tooltip="Coupling — 다른 클래스와 얼마나 연결되어 있는지 (fan-in + fan-out)">coupling</td><td class="num">0.250</td></tr><tr><td data-tooltip="DependencyCycle — 순환 참조에 빠졌는지, 묶음의 크기는 얼마인지">dependency_cycle</td><td class="num">0.150</td></tr><tr><td data-tooltip="GlobalState — 전역/static 변수와 싱글톤 인스턴스에 얼마나 의존하는지">global_state</td><td class="num">0.150</td></tr><tr><td data-tooltip="GameLoopCentrality — Tick/Update/Render 등 게임 루프 진입점에서 얼마나 가까운지">game_loop_centrality</td><td class="num">0.150</td></tr></tbody>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Hotspot Table (G-SI 상위)</h2>
+    <button class="sec-info" data-target="help-hotspot" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-hotspot" hidden>
+    <p><strong>위험한 순서로 정렬된 클래스 목록</strong>입니다. 기본은 전체 클래스 중 G-SI 상위 N개를 보여주며, 두 가지 방법으로 표를 좁힐 수 있습니다.</p>
+    <ul>
+      <li><strong>등급 필터</strong> — A~E 중 하나를 선택하면 <em>그 등급 안에서 다시 상위 N개</em>를 골라 표를 새로 그립니다. "B 등급 안에서 가장 위험한 30개"처럼 봅니다.</li>
+      <li><strong>텍스트 검색</strong> — 클래스의 정규 이름(FQN)이나 파일 경로 일부를 입력하면 일치하는 클래스만 남깁니다. 등급 필터와 동시 적용 가능합니다.</li>
+    </ul>
+    <p><strong>컬럼별 의미</strong> — 헤더에 마우스를 올리면 각 컬럼이 무엇을 측정하는지 설명이 표시됩니다. 컬럼 헤더를 클릭하면 그 항목 기준으로 정렬됩니다(다시 누르면 역순). 우측 카운터는 "현재 보이는 행 수 / 조건을 만족하는 전체 / 프로젝트 전체"를 보여줍니다.</p>
+    <p><strong>주요 원인</strong> 컬럼은 G-SI 점수에 가장 크게 기여한 두 항목을 알려 줍니다. 예를 들어 "cc, global_state" 는 그 클래스가 분기가 많고 전역 상태에 강하게 의존한다는 뜻입니다.</p>
+  </div>
+  <div class="table-notice">기본은 전체 클래스 중 <strong>G-SI 상위 30개</strong>를 표시합니다. 특정 등급(A~E)을 선택하면 <strong>그 등급 안에서</strong> 상위 30개를 다시 보여줍니다. 전체 등급 분포는 위 등급 분포 차트에서 확인하세요.</div>
+    <div class="table-controls">
+        <input type="text" id="hotspot-filter" placeholder="텍스트 검색: FQN 또는 파일 경로 부분 일치">
+        <select id="grade-filter">
+            <option value="">전체 등급에서 상위 30</option>
+            <option value="E">E 등급만 (상대 80~100)</option>
+            <option value="D">D 등급만 (리팩토링 후보)</option>
+            <option value="C">C 등급만 (보통)</option>
+            <option value="B">B 등급만 (일반)</option>
+            <option value="A">A 등급만 (상대 0~20 미만)</option>
+        </select>
+        <span id="hotspot-count" class="hotspot-count"></span>
+    </div>
+    <table class="hotspot-table" id="hotspot-table">
+        <thead><tr>
+            <th class="num" data-tooltip="G-SI 점수 기준 등수">#</th>
+            <th data-tooltip="A~E는 상대 백분위 구간이며 동점 때문에 균등하지 않을 수 있음">등급</th>
+            <th data-sort="num" class="sortable num" data-tooltip="0~100. 분석 집합 내부 상대 백분위. 절대 품질 아님">G-SI</th>
+            <th data-sort="str" class="sortable" data-tooltip="네임스페이스를 포함한 정규 이름">클래스 FQN</th>
+            <th data-sort="num" class="sortable num" data-tooltip="Cyclomatic Complexity. 메서드 안의 if/for/case 등 분기 수. 클래스 단위는 상위 10% 평균">CC</th>
+            <th data-sort="num" class="sortable num" data-tooltip="다른 클래스를 참조하는 수(fan-out) + 참조받는 수(fan-in)">Coupling</th>
+            <th data-sort="num" class="sortable num" data-tooltip="전역(static) 변수와 싱글톤 인스턴스에 접근한 횟수">GlobalState</th>
+            <th data-sort="num" class="sortable num" data-tooltip="순환 참조에 빠진 묶음의 크기. 0이면 순환에 포함되지 않음">CycleSize</th>
+            <th data-sort="num" class="sortable num" data-tooltip="Tick/Update/Render 같은 진입점으로부터의 가까움. 1.0이면 진입점 그 자체">GameLoop</th>
+            <th data-tooltip="이 클래스가 위험으로 분류된 가장 큰 두 항목">주요 원인</th>
+            <th data-tooltip="파일 경로 : 시작 라인">위치</th>
+        </tr></thead>
+        <tbody id="hotspot-tbody"></tbody>
+    </table>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Dependency Graph (G-SI 상위 hotspot 중심)</h2>
+    <button class="sec-info" data-target="help-graph" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-graph" hidden>
+    <p><strong>위험 클래스 주변의 참조 관계</strong>를 점과 선으로 그린 그래프입니다.</p>
+    <ul>
+      <li><strong>점(노드) = 클래스</strong>. 색은 등급(A 녹색 ~ E 빨강), 크기는 결합도(다른 클래스와 연결된 정도)에 비례합니다.</li>
+      <li><strong>선(엣지) = 한 클래스가 다른 클래스를 참조하는 의존성</strong>. 화살표 방향은 "이 클래스를 사용한다"의 방향입니다.</li>
+      <li><strong>표시 범위</strong> — G-SI 상위 hotspot 부터 채우고 그 인접 클래스까지 포함하되, 노드 수가 최대 150개를 넘지 않도록 제한합니다. 그래서 작은 프로젝트는 그래프 전체가, 큰 프로젝트는 가장 위험한 영역만 표시됩니다.</li>
+      <li><strong>A · B 등급 노드가 보이지 않는 이유</strong> — 그래프 자체가 위험 클래스 중심으로 그려지기 때문에 표시 범위 안에는 거의 D · E 등급(과 일부 C)만 포함됩니다. A · B 클래스는 위 등급 분포 차트와 Hotspot Table 등급 필터에서 확인하세요.</li>
+    </ul>
+    <p><strong>사용법</strong></p>
+    <ul>
+      <li><strong>마우스 휠</strong> — 커서 위치를 중심으로 확대 / 축소.</li>
+      <li><strong>드래그</strong> — 보이는 영역 이동(pan).</li>
+      <li><strong>＋ / − / 리셋 버튼</strong> — 중앙 기준 확대 / 축소 / 처음 배율로 복귀.</li>
+      <li><strong>노드 hover</strong> — 그 클래스가 진해지고 인접 노드 / 엣지만 강조, 나머지는 흐려짐. 우측 패널에 FQN · G-SI · 등급 · 메트릭 · fan-in/out · 인접 클래스 샘플이 표시됩니다.</li>
+      <li><strong>검색</strong> — 이름의 일부를 입력하면 매칭 노드가 흰 후광으로 강조됩니다. 매칭 안 된 노드는 흐려지지만 hover로 인접 관계는 그대로 볼 수 있습니다.</li>
+      <li><strong>등급 강조 버튼</strong> — A~E 중 하나를 누르면 그 등급 노드만 강조. 검색과 동시 적용 가능합니다.</li>
+    </ul>
+  </div>
+  <div class="panel graph-panel"><div class="graph-meta">
+        표시 노드 85 · 엣지 86 ·
+        (G-SI 상위 50개 hotspot + 1-홉 이웃) ·
+        <em>마우스를 노드에 올리면 우측에 상세 정보가 나타납니다.</em>
+    </div>
+    <div class="graph-controls">
+        <input type="text" id="graph-search" placeholder="그래프 안 클래스 검색 (이름의 일부 입력)">
+        <div class="grade-toggle" id="graph-grade-toggle">
+            <span class="gt-label">등급 강조:</span>
+            <button data-grade="" class="gt-btn gt-active">전체</button>
+            <button data-grade="A" class="gt-btn">A</button>
+            <button data-grade="B" class="gt-btn">B</button>
+            <button data-grade="C" class="gt-btn">C</button>
+            <button data-grade="D" class="gt-btn">D</button>
+            <button data-grade="E" class="gt-btn">E</button>
+        </div>
+        <span class="graph-match-count" id="graph-match-count"></span>
+        <div class="graph-zoom" id="graph-zoom">
+            <button id="zoom-in" data-tooltip="확대 (또는 마우스 휠 위)">＋</button>
+            <button id="zoom-out" data-tooltip="축소 (또는 마우스 휠 아래)">−</button>
+            <button id="zoom-reset" data-tooltip="원래 크기로 복귀">리셋</button>
+        </div>
+    </div>
+    <div class="graph-tip">💡 <strong>그래프 사용법</strong> — 마우스 휠로 확대/축소, 드래그로 이동, 노드 위에 마우스를 올리면 우측에 상세 정보가 표시됩니다.</div>
+    <div class="graph-wrap">
+        <svg viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid meet" class="depgraph" id="depgraph">
+            <defs>
+                <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0,0 L8,4 L0,8 z" fill="#64748b"/>
+                </marker>
+            </defs>
+            <g class="edges"><line class="edge" data-src="0" data-dst="24" x1="949.9" y1="120.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="1" data-dst="24" x1="1095.9" y1="95.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="2" data-dst="24" x1="584.5" y1="62.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="3" data-dst="24" x1="710.9" y1="112.2" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="5" data-dst="24" x1="746.5" y1="122.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="6" data-dst="24" x1="1234.1" y1="69.9" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="7" data-dst="24" x1="639.2" y1="63.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="8" data-dst="24" x1="741.6" y1="97.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="9" data-dst="24" x1="959.4" y1="73.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="10" data-dst="24" x1="1047.7" y1="61.2" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="11" data-dst="24" x1="681.2" y1="75.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="12" data-dst="24" x1="988.6" y1="117.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="13" data-dst="24" x1="689.3" y1="93.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="14" data-dst="24" x1="897.6" y1="50.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="15" data-dst="24" x1="1098.5" y1="66.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="16" data-dst="24" x1="807.0" y1="123.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="17" data-dst="24" x1="1206.9" y1="109.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="18" data-dst="24" x1="652.4" y1="55.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="19" data-dst="24" x1="1177.2" y1="86.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="20" data-dst="24" x1="628.4" y1="89.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="21" data-dst="24" x1="671.6" y1="114.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="22" data-dst="24" x1="791.2" y1="97.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="23" data-dst="24" x1="879.9" y1="94.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="25" data-dst="24" x1="1255.1" y1="106.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="26" data-dst="24" x1="1161.0" y1="112.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="28" data-dst="24" x1="555.9" y1="332.9" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="28" data-dst="27" x1="555.9" y1="332.9" x2="50.0" y2="670.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="28" data-dst="34" x1="555.9" y1="332.9" x2="847.9" y2="129.4" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="29" data-dst="24" x1="565.4" y1="77.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="30" data-dst="24" x1="825.3" y1="68.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="31" data-dst="24" x1="920.7" y1="113.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="31" data-dst="34" x1="920.7" y1="113.1" x2="847.9" y2="129.4" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="32" data-dst="24" x1="878.5" y1="120.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="32" data-dst="34" x1="878.5" y1="120.5" x2="847.9" y2="129.4" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="33" data-dst="24" x1="804.2" y1="111.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="34" data-dst="24" x1="847.9" y1="129.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="35" data-dst="24" x1="1155.1" y1="66.2" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="36" data-dst="24" x1="635.7" y1="108.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="37" data-dst="24" x1="1005.0" y1="105.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="38" data-dst="24" x1="1151.2" y1="57.0" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="39" data-dst="24" x1="830.1" y1="57.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="40" data-dst="24" x1="1214.7" y1="100.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="41" data-dst="24" x1="774.9" y1="52.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="42" data-dst="24" x1="751.8" y1="72.0" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="43" data-dst="24" x1="1059.4" y1="103.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="44" data-dst="24" x1="1301.1" y1="91.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="45" data-dst="24" x1="688.9" y1="100.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="46" data-dst="24" x1="1164.5" y1="95.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="47" data-dst="24" x1="1234.4" y1="91.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="48" data-dst="24" x1="982.7" y1="82.3" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="49" data-dst="24" x1="556.5" y1="57.2" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="50" data-dst="24" x1="618.9" y1="99.3" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="51" data-dst="24" x1="832.6" y1="86.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="52" data-dst="24" x1="1237.9" y1="79.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="53" data-dst="24" x1="832.3" y1="102.0" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="54" data-dst="24" x1="601.2" y1="54.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="55" data-dst="24" x1="695.3" y1="63.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="56" data-dst="24" x1="1137.4" y1="106.2" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="57" data-dst="24" x1="1034.5" y1="118.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="58" data-dst="24" x1="1203.3" y1="66.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="59" data-dst="24" x1="1291.0" y1="97.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="60" data-dst="24" x1="1106.2" y1="121.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="61" data-dst="24" x1="720.8" y1="54.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="62" data-dst="24" x1="758.3" y1="82.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="63" data-dst="24" x1="1077.0" y1="110.0" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="64" data-dst="24" x1="553.3" y1="88.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="65" data-dst="24" x1="887.1" y1="65.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="66" data-dst="24" x1="620.3" y1="75.7" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="67" data-dst="24" x1="1313.7" y1="83.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="68" data-dst="24" x1="953.4" y1="102.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="69" data-dst="24" x1="932.0" y1="129.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="70" data-dst="24" x1="1310.2" y1="73.3" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="71" data-dst="24" x1="1124.1" y1="80.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="72" data-dst="24" x1="675.5" y1="50.0" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="73" data-dst="24" x1="1061.1" y1="88.3" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="74" data-dst="24" x1="555.6" y1="70.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="75" data-dst="24" x1="1273.3" y1="71.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="76" data-dst="24" x1="672.1" y1="85.2" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="77" data-dst="24" x1="1350.0" y1="75.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="78" data-dst="24" x1="1084.5" y1="116.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="79" data-dst="24" x1="857.4" y1="112.6" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="80" data-dst="24" x1="896.2" y1="105.1" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="81" data-dst="24" x1="972.2" y1="92.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="82" data-dst="24" x1="756.2" y1="111.4" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="83" data-dst="24" x1="760.6" y1="62.5" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/><line class="edge" data-src="84" data-dst="24" x1="585.5" y1="92.8" x2="971.0" y2="63.0" stroke="#334155" stroke-width="0.8" stroke-opacity="0.6" marker-end="url(#arrow)"/></g>
+            <g class="nodes"><g class="node" data-idx="0" data-fqn="Actor"><title>Actor (G-SI=72)</title><circle cx="949.9" cy="120.5" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="949.9" y="111.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Actor</text></g><g class="node" data-idx="1" data-fqn="AF"><title>AF (G-SI=54)</title><circle cx="1095.9" cy="95.8" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="1095.9" y="86.5" text-anchor="middle" fill="#cbd5e1" font-size="10">AF</text></g><g class="node" data-idx="2" data-fqn="AFEntity"><title>AFEntity (G-SI=37)</title><circle cx="584.5" cy="62.4" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="584.5" y="53.1" text-anchor="middle" fill="#cbd5e1" font-size="10">AFEntity</text></g><g class="node" data-idx="3" data-fqn="ai.AAS_debug"><title>ai.AAS_debug (G-SI=47)</title><circle cx="710.9" cy="112.2" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="710.9" y="102.9" text-anchor="middle" fill="#cbd5e1" font-size="10">AAS_debug</text></g><g class="node" data-idx="4" data-fqn="ai.AAS_pathing"><title>ai.AAS_pathing (G-SI=66)</title><circle cx="583.4" cy="658.7" r="6.0" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="583.4" y="649.7" text-anchor="middle" fill="#cbd5e1" font-size="10">AAS_pathing</text></g><g class="node" data-idx="5" data-fqn="ai.AAS_routing"><title>ai.AAS_routing (G-SI=63)</title><circle cx="746.5" cy="122.1" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="746.5" y="112.8" text-anchor="middle" fill="#cbd5e1" font-size="10">AAS_routing</text></g><g class="node" data-idx="6" data-fqn="ai.AI"><title>ai.AI (G-SI=53)</title><circle cx="1234.1" cy="69.9" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="1234.1" y="60.6" text-anchor="middle" fill="#cbd5e1" font-size="10">AI</text></g><g class="node" data-idx="7" data-fqn="ai.AI_events"><title>ai.AI_events (G-SI=71)</title><circle cx="639.2" cy="63.8" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="639.2" y="54.5" text-anchor="middle" fill="#cbd5e1" font-size="10">AI_events</text></g><g class="node" data-idx="8" data-fqn="ai.AI_pathing"><title>ai.AI_pathing (G-SI=87)</title><circle cx="741.6" cy="97.7" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="741.6" y="88.4" text-anchor="middle" fill="#cbd5e1" font-size="10">AI_pathing</text></g><g class="node" data-idx="9" data-fqn="obstacle_s"><title>obstacle_s (G-SI=20)</title><circle cx="959.4" cy="73.5" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="959.4" y="64.2" text-anchor="middle" fill="#cbd5e1" font-size="10">obstacle_s</text></g><g class="node" data-idx="10" data-fqn="pathNode_s"><title>pathNode_s (G-SI=20)</title><circle cx="1047.7" cy="61.2" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1047.7" y="51.9" text-anchor="middle" fill="#cbd5e1" font-size="10">pathNode_s</text></g><g class="node" data-idx="11" data-fqn="pathTrace_s"><title>pathTrace_s (G-SI=20)</title><circle cx="681.2" cy="75.1" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="681.2" y="65.8" text-anchor="middle" fill="#cbd5e1" font-size="10">pathTrace_s</text></g><g class="node" data-idx="12" data-fqn="ballistics_s"><title>ballistics_s (G-SI=20)</title><circle cx="988.6" cy="117.6" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="988.6" y="108.3" text-anchor="middle" fill="#cbd5e1" font-size="10">ballistics_s</text></g><g class="node" data-idx="13" data-fqn="ai.AI_Vagary"><title>ai.AI_Vagary (G-SI=31)</title><circle cx="689.3" cy="93.7" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="689.3" y="84.4" text-anchor="middle" fill="#cbd5e1" font-size="10">AI_Vagary</text></g><g class="node" data-idx="14" data-fqn="idAI_Vagary"><title>idAI_Vagary (G-SI=20)</title><circle cx="897.6" cy="50.1" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="897.6" y="40.8" text-anchor="middle" fill="#cbd5e1" font-size="10">idAI_Vagary</text></g><g class="node" data-idx="15" data-fqn="anim.Anim"><title>anim.Anim (G-SI=83)</title><circle cx="1098.5" cy="66.8" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="1098.5" y="57.5" text-anchor="middle" fill="#cbd5e1" font-size="10">Anim</text></g><g class="node" data-idx="16" data-fqn="anim.Anim_Blend"><title>anim.Anim_Blend (G-SI=90)</title><circle cx="807.0" cy="123.1" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="807.0" y="113.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Anim_Blend</text></g><g class="node" data-idx="17" data-fqn="anim.Anim_Import"><title>anim.Anim_Import (G-SI=78)</title><circle cx="1206.9" cy="109.8" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="1206.9" y="100.5" text-anchor="middle" fill="#cbd5e1" font-size="10">Anim_Import</text></g><g class="node" data-idx="18" data-fqn="anim.Anim_Testmodel"><title>anim.Anim_Testmodel (G-SI=84)</title><circle cx="652.4" cy="55.1" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="652.4" y="45.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Anim_Testmodel</text></g><g class="node" data-idx="19" data-fqn="BrittleFracture"><title>BrittleFracture (G-SI=49)</title><circle cx="1177.2" cy="86.7" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="1177.2" y="77.4" text-anchor="middle" fill="#cbd5e1" font-size="10">BrittleFracture</text></g><g class="node" data-idx="20" data-fqn="Camera"><title>Camera (G-SI=46)</title><circle cx="628.4" cy="89.8" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="628.4" y="80.5" text-anchor="middle" fill="#cbd5e1" font-size="10">Camera</text></g><g class="node" data-idx="21" data-fqn="EndLevel"><title>EndLevel (G-SI=55)</title><circle cx="671.6" cy="114.7" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="671.6" y="105.4" text-anchor="middle" fill="#cbd5e1" font-size="10">EndLevel</text></g><g class="node" data-idx="22" data-fqn="Entity"><title>Entity (G-SI=80)</title><circle cx="791.2" cy="97.5" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="791.2" y="88.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Entity</text></g><g class="node" data-idx="23" data-fqn="Fx"><title>Fx (G-SI=75)</title><circle cx="879.9" cy="94.5" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="879.9" y="85.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Fx</text></g><g class="node" data-idx="24" data-fqn="Game_local"><title>Game_local (G-SI=100)</title><circle cx="971.0" cy="63.0" r="20.0" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="971.0" y="40.0" text-anchor="middle" fill="#cbd5e1" font-size="10">Game_local</text></g><g class="node" data-idx="25" data-fqn="Game_network"><title>Game_network (G-SI=89)</title><circle cx="1255.1" cy="106.5" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="1255.1" y="97.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Game_network</text></g><g class="node" data-idx="26" data-fqn="GameEdit"><title>GameEdit (G-SI=76)</title><circle cx="1161.0" cy="112.6" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="1161.0" y="103.3" text-anchor="middle" fill="#cbd5e1" font-size="10">GameEdit</text></g><g class="node" data-idx="27" data-fqn="gamesys.Callbacks"><title>gamesys.Callbacks (G-SI=20)</title><circle cx="50.0" cy="670.0" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="50.0" y="660.7" text-anchor="middle" fill="#cbd5e1" font-size="10">Callbacks</text></g><g class="node" data-idx="28" data-fqn="gamesys.Class"><title>gamesys.Class (G-SI=60)</title><circle cx="555.9" cy="332.9" r="6.9" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="555.9" y="323.0" text-anchor="middle" fill="#cbd5e1" font-size="10">Class</text></g><g class="node" data-idx="29" data-fqn="gamesys.DebugGraph"><title>gamesys.DebugGraph (G-SI=51)</title><circle cx="565.4" cy="77.7" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="565.4" y="68.4" text-anchor="middle" fill="#cbd5e1" font-size="10">DebugGraph</text></g><g class="node" data-idx="30" data-fqn="gamesys.Event"><title>gamesys.Event (G-SI=86)</title><circle cx="825.3" cy="68.6" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="825.3" y="59.3" text-anchor="middle" fill="#cbd5e1" font-size="10">Event</text></g><g class="node" data-idx="31" data-fqn="gamesys.SaveGame"><title>gamesys.SaveGame (G-SI=41)</title><circle cx="920.7" cy="113.1" r="6.6" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="920.7" y="103.5" text-anchor="middle" fill="#cbd5e1" font-size="10">SaveGame</text></g><g class="node" data-idx="32" data-fqn="gamesys.SysCmds"><title>gamesys.SysCmds (G-SI=85)</title><circle cx="878.5" cy="120.5" r="6.6" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="878.5" y="110.9" text-anchor="middle" fill="#cbd5e1" font-size="10">SysCmds</text></g><g class="node" data-idx="33" data-fqn="gameVersion_s"><title>gameVersion_s (G-SI=21)</title><circle cx="804.2" cy="111.4" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="804.2" y="102.1" text-anchor="middle" fill="#cbd5e1" font-size="10">gameVersion_s</text></g><g class="node" data-idx="34" data-fqn="gamesys.TypeInfo"><title>gamesys.TypeInfo (G-SI=98)</title><circle cx="847.9" cy="129.4" r="7.2" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="847.9" y="119.2" text-anchor="middle" fill="#cbd5e1" font-size="10">TypeInfo</text></g><g class="node" data-idx="35" data-fqn="idTypeInfoTools"><title>idTypeInfoTools (G-SI=20)</title><circle cx="1155.1" cy="66.2" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1155.1" y="56.9" text-anchor="middle" fill="#cbd5e1" font-size="10">idTypeInfoTools</text></g><g class="node" data-idx="36" data-fqn="IK"><title>IK (G-SI=57)</title><circle cx="635.7" cy="108.1" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="635.7" y="98.8" text-anchor="middle" fill="#cbd5e1" font-size="10">IK</text></g><g class="node" data-idx="37" data-fqn="Item"><title>Item (G-SI=39)</title><circle cx="1005.0" cy="105.4" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="1005.0" y="96.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Item</text></g><g class="node" data-idx="38" data-fqn="Light"><title>Light (G-SI=32)</title><circle cx="1151.2" cy="57.0" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="1151.2" y="47.7" text-anchor="middle" fill="#cbd5e1" font-size="10">Light</text></g><g class="node" data-idx="39" data-fqn="Misc"><title>Misc (G-SI=74)</title><circle cx="830.1" cy="57.5" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="830.1" y="48.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Misc</text></g><g class="node" data-idx="40" data-fqn="Moveable"><title>Moveable (G-SI=44)</title><circle cx="1214.7" cy="100.8" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="1214.7" y="91.5" text-anchor="middle" fill="#cbd5e1" font-size="10">Moveable</text></g><g class="node" data-idx="41" data-fqn="Mover"><title>Mover (G-SI=64)</title><circle cx="774.9" cy="52.4" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="774.9" y="43.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Mover</text></g><g class="node" data-idx="42" data-fqn="MultiplayerGame"><title>MultiplayerGame (G-SI=93)</title><circle cx="751.8" cy="72.0" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="751.8" y="62.7" text-anchor="middle" fill="#cbd5e1" font-size="10">MultiplayerGame</text></g><g class="node" data-idx="43" data-fqn="physics.Clip"><title>physics.Clip (G-SI=77)</title><circle cx="1059.4" cy="103.1" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="1059.4" y="93.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Clip</text></g><g class="node" data-idx="44" data-fqn="clipSector_s"><title>clipSector_s (G-SI=20)</title><circle cx="1301.1" cy="91.4" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1301.1" y="82.1" text-anchor="middle" fill="#cbd5e1" font-size="10">clipSector_s</text></g><g class="node" data-idx="45" data-fqn="clipLink_s"><title>clipLink_s (G-SI=20)</title><circle cx="688.9" cy="100.6" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="688.9" y="91.3" text-anchor="middle" fill="#cbd5e1" font-size="10">clipLink_s</text></g><g class="node" data-idx="46" data-fqn="trmCache_s"><title>trmCache_s (G-SI=20)</title><circle cx="1164.5" cy="95.8" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1164.5" y="86.5" text-anchor="middle" fill="#cbd5e1" font-size="10">trmCache_s</text></g><g class="node" data-idx="47" data-fqn="listParms_s"><title>listParms_s (G-SI=20)</title><circle cx="1234.4" cy="91.6" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1234.4" y="82.3" text-anchor="middle" fill="#cbd5e1" font-size="10">listParms_s</text></g><g class="node" data-idx="48" data-fqn="physics.Force"><title>physics.Force (G-SI=23)</title><circle cx="982.7" cy="82.3" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="982.7" y="73.0" text-anchor="middle" fill="#cbd5e1" font-size="10">Force</text></g><g class="node" data-idx="49" data-fqn="physics.Force_Constant"><title>physics.Force_Constant (G-SI=23)</title><circle cx="556.5" cy="57.2" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="556.5" y="47.9" text-anchor="middle" fill="#cbd5e1" font-size="10">Force_Constant</text></g><g class="node" data-idx="50" data-fqn="physics.Force_Drag"><title>physics.Force_Drag (G-SI=36)</title><circle cx="618.9" cy="99.3" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="618.9" y="90.0" text-anchor="middle" fill="#cbd5e1" font-size="10">Force_Drag</text></g><g class="node" data-idx="51" data-fqn="physics.Force_Field"><title>physics.Force_Field (G-SI=52)</title><circle cx="832.6" cy="86.1" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="832.6" y="76.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Force_Field</text></g><g class="node" data-idx="52" data-fqn="physics.Force_Spring"><title>physics.Force_Spring (G-SI=33)</title><circle cx="1237.9" cy="79.6" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="1237.9" y="70.3" text-anchor="middle" fill="#cbd5e1" font-size="10">Force_Spring</text></g><g class="node" data-idx="53" data-fqn="physics.Physics"><title>physics.Physics (G-SI=48)</title><circle cx="832.3" cy="102.0" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="832.3" y="92.7" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics</text></g><g class="node" data-idx="54" data-fqn="physics.Physics_Actor"><title>physics.Physics_Actor (G-SI=24)</title><circle cx="601.2" cy="54.5" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="601.2" y="45.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_Actor</text></g><g class="node" data-idx="55" data-fqn="physics.Physics_AF"><title>physics.Physics_AF (G-SI=95)</title><circle cx="695.3" cy="63.1" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="695.3" y="53.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_AF</text></g><g class="node" data-idx="56" data-fqn="physics.Physics_Base"><title>physics.Physics_Base (G-SI=38)</title><circle cx="1137.4" cy="106.2" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="1137.4" y="96.9" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_Base</text></g><g class="node" data-idx="57" data-fqn="physics.Physics_Monster"><title>physics.Physics_Monster (G-SI=82)</title><circle cx="1034.5" cy="118.5" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="1034.5" y="109.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_Monster</text></g><g class="node" data-idx="58" data-fqn="physics.Physics_Parametric"><title>physics.Physics_Parametric (G-SI=29)</title><circle cx="1203.3" cy="66.7" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="1203.3" y="57.4" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_Parametric</text></g><g class="node" data-idx="59" data-fqn="physics.Physics_Player"><title>physics.Physics_Player (G-SI=97)</title><circle cx="1291.0" cy="97.4" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="1291.0" y="88.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_Player</text></g><g class="node" data-idx="60" data-fqn="physics.Physics_RigidBody"><title>physics.Physics_RigidBody (G-SI=92)</title><circle cx="1106.2" cy="121.6" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="1106.2" y="112.3" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_RigidBody</text></g><g class="node" data-idx="61" data-fqn="rigidBodyDerivatives_s"><title>rigidBodyDerivatives_s (G-SI=20)</title><circle cx="720.8" cy="54.8" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="720.8" y="45.5" text-anchor="middle" fill="#cbd5e1" font-size="10">rigidBodyDerivatives_s</text></g><g class="node" data-idx="62" data-fqn="physics.Physics_Static"><title>physics.Physics_Static (G-SI=25)</title><circle cx="758.3" cy="82.6" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="758.3" y="73.3" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_Static</text></g><g class="node" data-idx="63" data-fqn="physics.Physics_StaticMulti"><title>physics.Physics_StaticMulti (G-SI=45)</title><circle cx="1077.0" cy="110.0" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="1077.0" y="100.7" text-anchor="middle" fill="#cbd5e1" font-size="10">Physics_StaticMulti</text></g><g class="node" data-idx="64" data-fqn="physics.Push"><title>physics.Push (G-SI=28)</title><circle cx="553.3" cy="88.1" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="553.3" y="78.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Push</text></g><g class="node" data-idx="65" data-fqn="Player"><title>Player (G-SI=94)</title><circle cx="887.1" cy="65.4" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="887.1" y="56.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Player</text></g><g class="node" data-idx="66" data-fqn="PlayerIcon"><title>PlayerIcon (G-SI=62)</title><circle cx="620.3" cy="75.7" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="620.3" y="66.4" text-anchor="middle" fill="#cbd5e1" font-size="10">PlayerIcon</text></g><g class="node" data-idx="67" data-fqn="PlayerView"><title>PlayerView (G-SI=79)</title><circle cx="1313.7" cy="83.6" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="1313.7" y="74.3" text-anchor="middle" fill="#cbd5e1" font-size="10">PlayerView</text></g><g class="node" data-idx="68" data-fqn="Projectile"><title>Projectile (G-SI=68)</title><circle cx="953.4" cy="102.4" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="953.4" y="93.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Projectile</text></g><g class="node" data-idx="69" data-fqn="Pvs"><title>Pvs (G-SI=61)</title><circle cx="932.0" cy="129.4" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="932.0" y="120.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Pvs</text></g><g class="node" data-idx="70" data-fqn="pvsPassage_s"><title>pvsPassage_s (G-SI=20)</title><circle cx="1310.2" cy="73.3" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1310.2" y="64.0" text-anchor="middle" fill="#cbd5e1" font-size="10">pvsPassage_s</text></g><g class="node" data-idx="71" data-fqn="pvsPortal_s"><title>pvsPortal_s (G-SI=20)</title><circle cx="1124.1" cy="80.4" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1124.1" y="71.1" text-anchor="middle" fill="#cbd5e1" font-size="10">pvsPortal_s</text></g><g class="node" data-idx="72" data-fqn="pvsArea_s"><title>pvsArea_s (G-SI=20)</title><circle cx="675.5" cy="50.0" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="675.5" y="40.7" text-anchor="middle" fill="#cbd5e1" font-size="10">pvsArea_s</text></g><g class="node" data-idx="73" data-fqn="pvsStack_s"><title>pvsStack_s (G-SI=20)</title><circle cx="1061.1" cy="88.3" r="6.3" fill="#3b8e5a" stroke="#0f172a" stroke-width="1.2"/><text x="1061.1" y="79.0" text-anchor="middle" fill="#cbd5e1" font-size="10">pvsStack_s</text></g><g class="node" data-idx="74" data-fqn="script.Script_Compiler"><title>script.Script_Compiler (G-SI=91)</title><circle cx="555.6" cy="70.8" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="555.6" y="61.5" text-anchor="middle" fill="#cbd5e1" font-size="10">Script_Compiler</text></g><g class="node" data-idx="75" data-fqn="script.Script_Interpreter"><title>script.Script_Interpreter (G-SI=99)</title><circle cx="1273.3" cy="71.4" r="6.3" fill="#d24343" stroke="#0f172a" stroke-width="1.2"/><text x="1273.3" y="62.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Script_Interpreter</text></g><g class="node" data-idx="76" data-fqn="script.Script_Program"><title>script.Script_Program (G-SI=69)</title><circle cx="672.1" cy="85.2" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="672.1" y="75.9" text-anchor="middle" fill="#cbd5e1" font-size="10">Script_Program</text></g><g class="node" data-idx="77" data-fqn="script.Script_Thread"><title>script.Script_Thread (G-SI=70)</title><circle cx="1350.0" cy="75.1" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="1350.0" y="65.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Script_Thread</text></g><g class="node" data-idx="78" data-fqn="SecurityCamera"><title>SecurityCamera (G-SI=43)</title><circle cx="1084.5" cy="116.8" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="1084.5" y="107.5" text-anchor="middle" fill="#cbd5e1" font-size="10">SecurityCamera</text></g><g class="node" data-idx="79" data-fqn="SmokeParticles"><title>SmokeParticles (G-SI=67)</title><circle cx="857.4" cy="112.6" r="6.3" fill="#ef7d3c" stroke="#0f172a" stroke-width="1.2"/><text x="857.4" y="103.3" text-anchor="middle" fill="#cbd5e1" font-size="10">SmokeParticles</text></g><g class="node" data-idx="80" data-fqn="Sound"><title>Sound (G-SI=34)</title><circle cx="896.2" cy="105.1" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="896.2" y="95.8" text-anchor="middle" fill="#cbd5e1" font-size="10">Sound</text></g><g class="node" data-idx="81" data-fqn="Target"><title>Target (G-SI=56)</title><circle cx="972.2" cy="92.4" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="972.2" y="83.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Target</text></g><g class="node" data-idx="82" data-fqn="Trigger"><title>Trigger (G-SI=40)</title><circle cx="756.2" cy="111.4" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="756.2" y="102.1" text-anchor="middle" fill="#cbd5e1" font-size="10">Trigger</text></g><g class="node" data-idx="83" data-fqn="Weapon"><title>Weapon (G-SI=59)</title><circle cx="760.6" cy="62.5" r="6.3" fill="#e3b341" stroke="#0f172a" stroke-width="1.2"/><text x="760.6" y="53.2" text-anchor="middle" fill="#cbd5e1" font-size="10">Weapon</text></g><g class="node" data-idx="84" data-fqn="WorldSpawn"><title>WorldSpawn (G-SI=28)</title><circle cx="585.5" cy="92.8" r="6.3" fill="#7fb95a" stroke="#0f172a" stroke-width="1.2"/><text x="585.5" y="83.5" text-anchor="middle" fill="#cbd5e1" font-size="10">WorldSpawn</text></g></g>
+        </svg>
+        <aside class="graph-info" id="graph-info">
+            <div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.<br><br>
+            아래 검색창에 클래스 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>
+        </aside>
+    </div>
+    <script id="graph-node-info" type="application/json">{"0": {"fqn": "Actor", "grade": "D", "si": 72.41379310344827, "raw": {"cc": 13.833333333333334, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "cc"], "file_path": "Actor.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "1": {"fqn": "AF", "grade": "C", "si": 54.02298850574713, "raw": {"cc": 22.333333333333332, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "AF.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "2": {"fqn": "AFEntity", "grade": "B", "si": 36.7816091954023, "raw": {"cc": 10.5, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 9.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "AFEntity.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "3": {"fqn": "ai.AAS_debug", "grade": "C", "si": 47.12643678160919, "raw": {"cc": 14.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.3333333333333333}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "ai/AAS_debug.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "4": {"fqn": "ai.AAS_pathing", "grade": "D", "si": 65.51724137931035, "raw": {"cc": 25.0, "coupling": 0.0, "dependency_cycle": 0.0, "global_state": 10.0, "game_loop_centrality": 0.2}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "ai/AAS_pathing.cpp", "start_line": 1, "fan_in": 0, "fan_out": 0, "neighbor_idxs": [], "sample_neighbors": {"in": [], "out": []}}, "5": {"fqn": "ai.AAS_routing", "grade": "D", "si": 63.2183908045977, "raw": {"cc": 26.333333333333332, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.2}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "ai/AAS_routing.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "6": {"fqn": "ai.AI", "grade": "C", "si": 52.87356321839081, "raw": {"cc": 21.666666666666668, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 1.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "ai/AI.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "7": {"fqn": "ai.AI_events", "grade": "D", "si": 71.26436781609196, "raw": {"cc": 10.25, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 8.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "ai/AI_events.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "8": {"fqn": "ai.AI_pathing", "grade": "E", "si": 87.35632183908046, "raw": {"cc": 28.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 28.0, "game_loop_centrality": 0.3333333333333333}, "top_reasons": ["cc", "global_state"], "file_path": "ai/AI_pathing.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "9": {"fqn": "obstacle_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "ai/AI_pathing.cpp", "start_line": 60, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "10": {"fqn": "pathNode_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "ai/AI_pathing.cpp", "start_line": 66, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "11": {"fqn": "pathTrace_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "ai/AI_pathing.cpp", "start_line": 1017, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "12": {"fqn": "ballistics_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "ai/AI_pathing.cpp", "start_line": 1288, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "13": {"fqn": "ai.AI_Vagary", "grade": "B", "si": 31.03448275862069, "raw": {"cc": 10.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "ai/AI_Vagary.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "14": {"fqn": "idAI_Vagary", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "ai/AI_Vagary.cpp", "start_line": 41, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "15": {"fqn": "anim.Anim", "grade": "E", "si": 82.75862068965517, "raw": {"cc": 20.666666666666668, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "cc"], "file_path": "anim/Anim.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "16": {"fqn": "anim.Anim_Blend", "grade": "E", "si": 89.65517241379311, "raw": {"cc": 29.125, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 4.0, "game_loop_centrality": 1.0}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "anim/Anim_Blend.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "17": {"fqn": "anim.Anim_Import", "grade": "D", "si": 78.16091954022988, "raw": {"cc": 22.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 36.0, "game_loop_centrality": 0.0}, "top_reasons": ["global_state", "cc"], "file_path": "anim/Anim_Import.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "18": {"fqn": "anim.Anim_Testmodel", "grade": "E", "si": 83.9080459770115, "raw": {"cc": 24.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "cc"], "file_path": "anim/Anim_Testmodel.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "19": {"fqn": "BrittleFracture", "grade": "C", "si": 49.42528735632184, "raw": {"cc": 18.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 8.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "BrittleFracture.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "20": {"fqn": "Camera", "grade": "C", "si": 45.97701149425287, "raw": {"cc": 17.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 1.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "Camera.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "21": {"fqn": "EndLevel", "grade": "C", "si": 55.172413793103445, "raw": {"cc": 3.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "EndLevel.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "22": {"fqn": "Entity", "grade": "E", "si": 80.45977011494253, "raw": {"cc": 13.434782608695652, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 10.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "Entity.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "23": {"fqn": "Fx", "grade": "D", "si": 74.71264367816092, "raw": {"cc": 34.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 2.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "Fx.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "24": {"fqn": "Game_local", "grade": "E", "si": 100.0, "raw": {"cc": 24.363636363636363, "coupling": 82.0, "dependency_cycle": 0.0, "global_state": 64.0, "game_loop_centrality": 1.0}, "top_reasons": ["coupling", "global_state"], "file_path": "Game_local.cpp", "start_line": 1, "fan_in": 82, "fan_out": 0, "neighbor_idxs": [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84], "sample_neighbors": {"in": ["Actor", "AF", "AFEntity", "AAS_debug", "AAS_routing"], "out": []}}, "25": {"fqn": "Game_network", "grade": "E", "si": 88.50574712643679, "raw": {"cc": 35.666666666666664, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 9.0, "game_loop_centrality": 0.5}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "Game_network.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "26": {"fqn": "GameEdit", "grade": "D", "si": 75.86206896551724, "raw": {"cc": 15.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "cc"], "file_path": "GameEdit.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "27": {"fqn": "gamesys.Callbacks", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "gamesys/Callbacks.cpp", "start_line": 1, "fan_in": 1, "fan_out": 0, "neighbor_idxs": [28], "sample_neighbors": {"in": ["Class"], "out": []}}, "28": {"fqn": "gamesys.Class", "grade": "C", "si": 59.77011494252874, "raw": {"cc": 10.4, "coupling": 3.0, "dependency_cycle": 0.0, "global_state": 12.0, "game_loop_centrality": 0.3333333333333333}, "top_reasons": ["coupling", "global_state"], "file_path": "gamesys/Class.cpp", "start_line": 1, "fan_in": 0, "fan_out": 3, "neighbor_idxs": [24, 27, 34], "sample_neighbors": {"in": [], "out": ["Game_local", "Callbacks", "TypeInfo"]}}, "29": {"fqn": "gamesys.DebugGraph", "grade": "C", "si": 50.57471264367817, "raw": {"cc": 2.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "gamesys/DebugGraph.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "30": {"fqn": "gamesys.Event", "grade": "E", "si": 86.20689655172413, "raw": {"cc": 22.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 32.0, "game_loop_centrality": 0.5}, "top_reasons": ["global_state", "cc"], "file_path": "gamesys/Event.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "31": {"fqn": "gamesys.SaveGame", "grade": "C", "si": 41.37931034482759, "raw": {"cc": 3.888888888888889, "coupling": 2.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.5}, "top_reasons": ["game_loop_centrality", "coupling"], "file_path": "gamesys/SaveGame.cpp", "start_line": 1, "fan_in": 0, "fan_out": 2, "neighbor_idxs": [24, 34], "sample_neighbors": {"in": [], "out": ["Game_local", "TypeInfo"]}}, "32": {"fqn": "gamesys.SysCmds", "grade": "E", "si": 85.0574712643678, "raw": {"cc": 15.571428571428571, "coupling": 2.0, "dependency_cycle": 0.0, "global_state": 41.0, "game_loop_centrality": 0.5}, "top_reasons": ["global_state", "game_loop_centrality"], "file_path": "gamesys/SysCmds.cpp", "start_line": 1, "fan_in": 0, "fan_out": 2, "neighbor_idxs": [24, 34], "sample_neighbors": {"in": [], "out": ["Game_local", "TypeInfo"]}}, "33": {"fqn": "gameVersion_s", "grade": "B", "si": 20.689655172413794, "raw": {"cc": 1.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "gamesys/SysCvar.cpp", "start_line": 53, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "34": {"fqn": "gamesys.TypeInfo", "grade": "E", "si": 97.70114942528735, "raw": {"cc": 84.5, "coupling": 4.0, "dependency_cycle": 0.0, "global_state": 40.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "global_state"], "file_path": "gamesys/TypeInfo.cpp", "start_line": 1, "fan_in": 3, "fan_out": 1, "neighbor_idxs": [28, 31, 32, 24], "sample_neighbors": {"in": ["Class", "SaveGame", "SysCmds"], "out": ["Game_local"]}}, "35": {"fqn": "idTypeInfoTools", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "gamesys/TypeInfo.cpp", "start_line": 51, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "36": {"fqn": "IK", "grade": "C", "si": 57.47126436781609, "raw": {"cc": 24.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "IK.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "37": {"fqn": "Item", "grade": "B", "si": 39.08045977011494, "raw": {"cc": 9.666666666666666, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 12.0, "game_loop_centrality": 0.0}, "top_reasons": ["global_state", "dependency_cycle"], "file_path": "Item.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "38": {"fqn": "Light", "grade": "B", "si": 32.18390804597701, "raw": {"cc": 10.6, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Light.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "39": {"fqn": "Misc", "grade": "D", "si": 73.5632183908046, "raw": {"cc": 9.133333333333333, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 12.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "global_state"], "file_path": "Misc.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "40": {"fqn": "Moveable", "grade": "C", "si": 43.67816091954023, "raw": {"cc": 12.75, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 9.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Moveable.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "41": {"fqn": "Mover", "grade": "D", "si": 64.36781609195403, "raw": {"cc": 10.947368421052632, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 48.0, "game_loop_centrality": 0.0}, "top_reasons": ["global_state", "dependency_cycle"], "file_path": "Mover.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "42": {"fqn": "MultiplayerGame", "grade": "E", "si": 93.10344827586206, "raw": {"cc": 34.25, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 27.0, "game_loop_centrality": 1.0}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "MultiplayerGame.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "43": {"fqn": "physics.Clip", "grade": "D", "si": 77.01149425287356, "raw": {"cc": 15.8, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 24.0, "game_loop_centrality": 0.5}, "top_reasons": ["global_state", "game_loop_centrality"], "file_path": "physics/Clip.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "44": {"fqn": "clipSector_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Clip.cpp", "start_line": 37, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "45": {"fqn": "clipLink_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Clip.cpp", "start_line": 44, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "46": {"fqn": "trmCache_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Clip.cpp", "start_line": 52, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "47": {"fqn": "listParms_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Clip.cpp", "start_line": 739, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "48": {"fqn": "physics.Force", "grade": "B", "si": 22.988505747126435, "raw": {"cc": 2.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Force.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "49": {"fqn": "physics.Force_Constant", "grade": "B", "si": 22.988505747126435, "raw": {"cc": 2.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Force_Constant.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "50": {"fqn": "physics.Force_Drag", "grade": "B", "si": 35.63218390804598, "raw": {"cc": 4.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.5}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "physics/Force_Drag.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "51": {"fqn": "physics.Force_Field", "grade": "C", "si": 51.724137931034484, "raw": {"cc": 22.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "physics/Force_Field.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "52": {"fqn": "physics.Force_Spring", "grade": "B", "si": 33.33333333333333, "raw": {"cc": 12.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Force_Spring.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "53": {"fqn": "physics.Physics", "grade": "C", "si": 48.275862068965516, "raw": {"cc": 1.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "physics/Physics.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "54": {"fqn": "physics.Physics_Actor", "grade": "B", "si": 24.137931034482758, "raw": {"cc": 4.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Physics_Actor.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "55": {"fqn": "physics.Physics_AF", "grade": "E", "si": 95.40229885057471, "raw": {"cc": 11.617647058823529, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 98.0, "game_loop_centrality": 1.0}, "top_reasons": ["global_state", "game_loop_centrality"], "file_path": "physics/Physics_AF.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "56": {"fqn": "physics.Physics_Base", "grade": "B", "si": 37.93103448275862, "raw": {"cc": 4.571428571428571, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.5}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "physics/Physics_Base.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "57": {"fqn": "physics.Physics_Monster", "grade": "E", "si": 81.60919540229885, "raw": {"cc": 9.5, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 26.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "global_state"], "file_path": "physics/Physics_Monster.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "58": {"fqn": "physics.Physics_Parametric", "grade": "B", "si": 28.735632183908045, "raw": {"cc": 7.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Physics_Parametric.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "59": {"fqn": "physics.Physics_Player", "grade": "E", "si": 96.55172413793103, "raw": {"cc": 18.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 101.0, "game_loop_centrality": 1.0}, "top_reasons": ["global_state", "game_loop_centrality"], "file_path": "physics/Physics_Player.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "60": {"fqn": "physics.Physics_RigidBody", "grade": "E", "si": 91.95402298850574, "raw": {"cc": 10.333333333333334, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 66.0, "game_loop_centrality": 1.0}, "top_reasons": ["global_state", "game_loop_centrality"], "file_path": "physics/Physics_RigidBody.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "61": {"fqn": "rigidBodyDerivatives_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Physics_RigidBody.cpp", "start_line": 58, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "62": {"fqn": "physics.Physics_Static", "grade": "B", "si": 25.287356321839084, "raw": {"cc": 4.333333333333333, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Physics_Static.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "63": {"fqn": "physics.Physics_StaticMulti", "grade": "C", "si": 44.827586206896555, "raw": {"cc": 8.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 6.0, "game_loop_centrality": 0.3333333333333333}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "physics/Physics_StaticMulti.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "64": {"fqn": "physics.Push", "grade": "B", "si": 27.586206896551722, "raw": {"cc": 6.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "physics/Push.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "65": {"fqn": "Player", "grade": "E", "si": 94.25287356321839, "raw": {"cc": 29.95, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 38.0, "game_loop_centrality": 1.0}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "Player.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "66": {"fqn": "PlayerIcon", "grade": "D", "si": 62.06896551724138, "raw": {"cc": 7.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 1.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "dependency_cycle"], "file_path": "PlayerIcon.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "67": {"fqn": "PlayerView", "grade": "D", "si": 79.3103448275862, "raw": {"cc": 17.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 1.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "cc"], "file_path": "PlayerView.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "68": {"fqn": "Projectile", "grade": "D", "si": 67.81609195402298, "raw": {"cc": 22.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 18.0, "game_loop_centrality": 0.14285714285714285}, "top_reasons": ["cc", "global_state"], "file_path": "Projectile.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "69": {"fqn": "Pvs", "grade": "D", "si": 60.91954022988506, "raw": {"cc": 19.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.3333333333333333}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "Pvs.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "70": {"fqn": "pvsPassage_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Pvs.cpp", "start_line": 37, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "71": {"fqn": "pvsPortal_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Pvs.cpp", "start_line": 42, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "72": {"fqn": "pvsArea_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Pvs.cpp", "start_line": 54, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "73": {"fqn": "pvsStack_s", "grade": "A", "si": 19.54022988505747, "raw": {"cc": 0.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Pvs.cpp", "start_line": 61, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "74": {"fqn": "script.Script_Compiler", "grade": "E", "si": 90.80459770114942, "raw": {"cc": 41.2, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 33.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "global_state"], "file_path": "script/Script_Compiler.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "75": {"fqn": "script.Script_Interpreter", "grade": "E", "si": 98.85057471264368, "raw": {"cc": 110.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "script/Script_Interpreter.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "76": {"fqn": "script.Script_Program", "grade": "D", "si": 68.96551724137932, "raw": {"cc": 10.555555555555555, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 37.0, "game_loop_centrality": 0.3333333333333333}, "top_reasons": ["global_state", "game_loop_centrality"], "file_path": "script/Script_Program.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "77": {"fqn": "script.Script_Thread", "grade": "D", "si": 70.11494252873564, "raw": {"cc": 5.333333333333333, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 20.0, "game_loop_centrality": 1.0}, "top_reasons": ["game_loop_centrality", "global_state"], "file_path": "script/Script_Thread.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "78": {"fqn": "SecurityCamera", "grade": "C", "si": 42.5287356321839, "raw": {"cc": 11.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 11.0, "game_loop_centrality": 0.0}, "top_reasons": ["global_state", "dependency_cycle"], "file_path": "SecurityCamera.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "79": {"fqn": "SmokeParticles", "grade": "D", "si": 66.66666666666666, "raw": {"cc": 21.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 2.0, "game_loop_centrality": 0.5}, "top_reasons": ["cc", "game_loop_centrality"], "file_path": "SmokeParticles.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "80": {"fqn": "Sound", "grade": "B", "si": 34.48275862068966, "raw": {"cc": 10.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 8.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "Sound.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "81": {"fqn": "Target", "grade": "C", "si": 56.32183908045977, "raw": {"cc": 19.8, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 10.0, "game_loop_centrality": 0.0}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "Target.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "82": {"fqn": "Trigger", "grade": "C", "si": 40.229885057471265, "raw": {"cc": 10.4, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 11.0, "game_loop_centrality": 0.0}, "top_reasons": ["global_state", "dependency_cycle"], "file_path": "Trigger.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "83": {"fqn": "Weapon", "grade": "C", "si": 58.620689655172406, "raw": {"cc": 18.3, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 3.0, "game_loop_centrality": 0.25}, "top_reasons": ["cc", "dependency_cycle"], "file_path": "Weapon.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}, "84": {"fqn": "WorldSpawn", "grade": "B", "si": 27.586206896551722, "raw": {"cc": 6.0, "coupling": 1.0, "dependency_cycle": 0.0, "global_state": 0.0, "game_loop_centrality": 0.0}, "top_reasons": [], "file_path": "WorldSpawn.cpp", "start_line": 1, "fan_in": 0, "fan_out": 1, "neighbor_idxs": [24], "sample_neighbors": {"in": [], "out": ["Game_local"]}}}</script></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Cycle Explorer (Strongly Connected Components)</h2>
+    <button class="sec-info" data-target="help-cycle" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-cycle" hidden>
+    <p><strong>A → B → C → A 처럼 서로 참조해서 빙빙 도는 클래스 묶음</strong>(Strongly Connected Component, SCC)을 모은 섹션입니다.</p>
+    <p>일반적으로 의존성은 한 방향으로 흘러야 합니다(예: UI → 로직 → 데이터). 그런데 두 클래스가 서로를 참조하기 시작하면, 한쪽을 수정할 때 반드시 다른 쪽도 함께 신경 써야 합니다. 이런 묶음이 3개, 4개로 커지면 영향 범위 추적이 사실상 불가능에 가까워집니다. 그래서 SCC는 리팩토링 1순위 후보입니다.</p>
+    <p>본 섹션의 <strong>카운트 카드 숫자가 곧 프로젝트 안의 모든 SCC 수</strong>입니다. 상위 N개를 보여주는 것이 아니라 전부 나열합니다. 프로젝트마다 수치가 다른데, 예를 들어 OpenRA.Game 모듈은 5개, OpenRA.Mods.Common 모듈은 4개의 묶음이 있습니다.</p>
+    <p>각 항목을 클릭하면 그 묶음에 속한 클래스 FQN 목록이 펼쳐집니다. 묶음 안의 모든 클래스가 동일한 SCC에 있다는 사실 자체가 이미 위험 신호이므로, 점수가 낮은 클래스라도 함께 정리 대상이 됩니다.</p>
+  </div>
+  <div class="panel"><div class="cycle-count cycle-count-zero" data-tooltip="크기가 2 이상인 순환 의존성이 하나도 발견되지 않았습니다. 좋은 신호입니다."><div class="cc-number">0</div><div class="cc-label">발견된 순환 묶음 (전체)</div><div class="cc-hint">✅ 좋은 신호 — 클래스들이 한 방향으로 흐름</div></div></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Module Summary</h2>
+    <button class="sec-info" data-target="help-module" aria-expanded="false">ⓘ 이 섹션이 뭔가요?</button>
+  </div>
+  <div class="sec-explain" id="help-module" hidden>
+    <p>클래스 G-SI의 파일별 최대값을 <strong>최상위 폴더(모듈) 단위로 집계</strong>한 표입니다. 상대 순위 요약이며 절대 품질이 아닙니다.</p>
+    <p><strong>컬럼 의미</strong></p>
+    <ul>
+      <li><strong>모듈</strong> — 분석 입력 폴더 바로 아래의 1단계 폴더 이름. 예를 들어 OpenRA.Game을 분석하면 Network, Server, Map 등이 모듈로 잡힙니다. <code>(root)</code>는 폴더 안에 들어있지 않고 분석 폴더 바로 밑에 놓인 .cs 파일들을 한 모듈로 묶은 것입니다.</li>
+      <li><strong>등급</strong> — 모듈 내 파일 최대 G-SI의 평균을 기준으로 한 A~E 구간.</li>
+      <li><strong>평균 G-SI</strong> — 각 파일의 si_max를 구한 뒤 파일별 동일 비중으로 평균. 클래스 전체 평균과 다릅니다.</li>
+      <li><strong>최대 G-SI</strong> — 모듈에서 가장 위험한 클래스 하나의 G-SI. 평균은 낮은데 최대만 높다면 그 모듈에 핀포인트 hotspot이 있다는 신호입니다.</li>
+      <li><strong>파일 수 · 클래스 수</strong> — 모듈에 속한 .cs 파일과 클래스(struct, interface, record 포함)의 개수.</li>
+    </ul>
+    <p>모듈 단위로 보면 어느 컴포넌트가 통째로 정리 대상인지, 아니면 특정 클래스만 문제인지 빠르게 판단할 수 있습니다.</p>
+  </div>
+  
+    <table class="module-table">
+        <thead><tr>
+            <th data-tooltip="분석 입력 폴더 바로 아래의 1단계 폴더 이름. (root)는 폴더에 들어있지 않고 분석 폴더 바로 아래에 놓인 .cs 파일들">모듈</th>
+            <th data-tooltip="모듈 내 파일별 최대 G-SI의 평균을 기준으로 한 구간">등급</th>
+            <th class="num" data-tooltip="모듈 내 파일별 최대 G-SI를 파일 동일 비중으로 평균">평균 G-SI</th>
+            <th class="num" data-tooltip="모듈에서 가장 위험한 클래스 하나의 G-SI">최대 G-SI</th>
+            <th class="num" data-tooltip="모듈에 속한 .cs 파일 수">파일 수</th>
+            <th class="num" data-tooltip="모듈에 속한 클래스 · 구조체 · 인터페이스 · 레코드의 합">클래스 수</th>
+        </tr></thead>
+        <tbody><tr><td>(root)</td><td><span class="grade-badge" style="background:#ef7d3c">D</span></td><td class="num">60.9</td><td class="num">100.0</td><td class="num">30</td><td class="num">34</td></tr><tr><td>script</td><td><span class="grade-badge" style="background:#d24343">E</span></td><td class="num">82.2</td><td class="num">98.9</td><td class="num">4</td><td class="num">4</td></tr><tr><td>gamesys</td><td><span class="grade-badge" style="background:#e3b341">C</span></td><td class="num">57.6</td><td class="num">97.7</td><td class="num">8</td><td class="num">9</td></tr><tr><td>physics</td><td><span class="grade-badge" style="background:#e3b341">C</span></td><td class="num">49.8</td><td class="num">96.6</td><td class="num">17</td><td class="num">22</td></tr><tr><td>anim</td><td><span class="grade-badge" style="background:#d24343">E</span></td><td class="num">83.6</td><td class="num">89.7</td><td class="num">4</td><td class="num">4</td></tr><tr><td>ai</td><td><span class="grade-badge" style="background:#e3b341">C</span></td><td class="num">56.0</td><td class="num">87.4</td><td class="num">8</td><td class="num">14</td></tr></tbody>
+    </table>
+</section>
+
+<section id="refactoring-guide-empty" class="hidden-section"></section>
+
+</main>
+<footer>
+  Generated by <code>game-si</code> · static-only metrics (G-SI-Static) · CDN-free single-file report
+</footer>
+
+<script>
+(function() {
+  const dataRoot = {"project": "DOOM 3 - gameplay source (neo/game)", "analyzed_at": "2026-10-05 11:12 UTC", "hotspot_top_n": 30, "grade_colors": {"A": "#3b8e5a", "B": "#7fb95a", "C": "#e3b341", "D": "#ef7d3c", "E": "#d24343"}, "all_classes": [{"fqn": "Actor", "file_path": "Actor.cpp", "start_line": 1, "grade": "D", "si": 72.4, "cc": 13.8, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "cc"]}, {"fqn": "AF", "file_path": "AF.cpp", "start_line": 1, "grade": "C", "si": 54.0, "cc": 22.3, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "AFEntity", "file_path": "AFEntity.cpp", "start_line": 1, "grade": "B", "si": 36.8, "cc": 10.5, "coupling": 1, "global_state": 9, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "ai.AAS", "file_path": "ai/AAS.cpp", "start_line": 1, "grade": "B", "si": 29.9, "cc": 5.0, "coupling": 0, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.25, "top_reasons": []}, {"fqn": "ai.AAS_debug", "file_path": "ai/AAS_debug.cpp", "start_line": 1, "grade": "C", "si": 47.1, "cc": 14.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.33, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "ai.AAS_pathing", "file_path": "ai/AAS_pathing.cpp", "start_line": 1, "grade": "D", "si": 65.5, "cc": 25.0, "coupling": 0, "global_state": 10, "dependency_cycle": 0, "game_loop_centrality": 0.2, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "wallEdge_s", "file_path": "ai/AAS_pathing.cpp", "start_line": 546, "grade": "A", "si": 1.1, "cc": 0.0, "coupling": 0, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "ai.AAS_routing", "file_path": "ai/AAS_routing.cpp", "start_line": 1, "grade": "D", "si": 63.2, "cc": 26.3, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.2, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "ai.AI", "file_path": "ai/AI.cpp", "start_line": 1, "grade": "C", "si": 52.9, "cc": 21.7, "coupling": 1, "global_state": 1, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "ai.AI_events", "file_path": "ai/AI_events.cpp", "start_line": 1, "grade": "D", "si": 71.3, "cc": 10.2, "coupling": 1, "global_state": 8, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "ai.AI_pathing", "file_path": "ai/AI_pathing.cpp", "start_line": 1, "grade": "E", "si": 87.4, "cc": 28.0, "coupling": 1, "global_state": 28, "dependency_cycle": 0, "game_loop_centrality": 0.33, "top_reasons": ["cc", "global_state"]}, {"fqn": "obstacle_s", "file_path": "ai/AI_pathing.cpp", "start_line": 60, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "pathNode_s", "file_path": "ai/AI_pathing.cpp", "start_line": 66, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "pathTrace_s", "file_path": "ai/AI_pathing.cpp", "start_line": 1017, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "ballistics_s", "file_path": "ai/AI_pathing.cpp", "start_line": 1288, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "ai.AI_Vagary", "file_path": "ai/AI_Vagary.cpp", "start_line": 1, "grade": "B", "si": 31.0, "cc": 10.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "idAI_Vagary", "file_path": "ai/AI_Vagary.cpp", "start_line": 41, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "anim.Anim", "file_path": "anim/Anim.cpp", "start_line": 1, "grade": "E", "si": 82.8, "cc": 20.7, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "cc"]}, {"fqn": "anim.Anim_Blend", "file_path": "anim/Anim_Blend.cpp", "start_line": 1, "grade": "E", "si": 89.7, "cc": 29.1, "coupling": 1, "global_state": 4, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "anim.Anim_Import", "file_path": "anim/Anim_Import.cpp", "start_line": 1, "grade": "D", "si": 78.2, "cc": 22.0, "coupling": 1, "global_state": 36, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["global_state", "cc"]}, {"fqn": "anim.Anim_Testmodel", "file_path": "anim/Anim_Testmodel.cpp", "start_line": 1, "grade": "E", "si": 83.9, "cc": 24.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "cc"]}, {"fqn": "BrittleFracture", "file_path": "BrittleFracture.cpp", "start_line": 1, "grade": "C", "si": 49.4, "cc": 18.0, "coupling": 1, "global_state": 8, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "Camera", "file_path": "Camera.cpp", "start_line": 1, "grade": "C", "si": 46.0, "cc": 17.0, "coupling": 1, "global_state": 1, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "EndLevel", "file_path": "EndLevel.cpp", "start_line": 1, "grade": "C", "si": 55.2, "cc": 3.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "Entity", "file_path": "Entity.cpp", "start_line": 1, "grade": "E", "si": 80.5, "cc": 13.4, "coupling": 1, "global_state": 10, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "Fx", "file_path": "Fx.cpp", "start_line": 1, "grade": "D", "si": 74.7, "cc": 34.0, "coupling": 1, "global_state": 2, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "Game_local", "file_path": "Game_local.cpp", "start_line": 1, "grade": "E", "si": 100.0, "cc": 24.4, "coupling": 82, "global_state": 64, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["coupling", "global_state"]}, {"fqn": "Game_network", "file_path": "Game_network.cpp", "start_line": 1, "grade": "E", "si": 88.5, "cc": 35.7, "coupling": 1, "global_state": 9, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "GameEdit", "file_path": "GameEdit.cpp", "start_line": 1, "grade": "D", "si": 75.9, "cc": 15.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "cc"]}, {"fqn": "gamesys.Callbacks", "file_path": "gamesys/Callbacks.cpp", "start_line": 1, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "gamesys.Class", "file_path": "gamesys/Class.cpp", "start_line": 1, "grade": "C", "si": 59.8, "cc": 10.4, "coupling": 3, "global_state": 12, "dependency_cycle": 0, "game_loop_centrality": 0.33, "top_reasons": ["coupling", "global_state"]}, {"fqn": "gamesys.DebugGraph", "file_path": "gamesys/DebugGraph.cpp", "start_line": 1, "grade": "C", "si": 50.6, "cc": 2.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "gamesys.Event", "file_path": "gamesys/Event.cpp", "start_line": 1, "grade": "E", "si": 86.2, "cc": 22.0, "coupling": 1, "global_state": 32, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["global_state", "cc"]}, {"fqn": "gamesys.SaveGame", "file_path": "gamesys/SaveGame.cpp", "start_line": 1, "grade": "C", "si": 41.4, "cc": 3.9, "coupling": 2, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["game_loop_centrality", "coupling"]}, {"fqn": "gamesys.SysCmds", "file_path": "gamesys/SysCmds.cpp", "start_line": 1, "grade": "E", "si": 85.1, "cc": 15.6, "coupling": 2, "global_state": 41, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["global_state", "game_loop_centrality"]}, {"fqn": "gameVersion_s", "file_path": "gamesys/SysCvar.cpp", "start_line": 53, "grade": "B", "si": 20.7, "cc": 1.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "gamesys.TypeInfo", "file_path": "gamesys/TypeInfo.cpp", "start_line": 1, "grade": "E", "si": 97.7, "cc": 84.5, "coupling": 4, "global_state": 40, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "global_state"]}, {"fqn": "idTypeInfoTools", "file_path": "gamesys/TypeInfo.cpp", "start_line": 51, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "IK", "file_path": "IK.cpp", "start_line": 1, "grade": "C", "si": 57.5, "cc": 24.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "Item", "file_path": "Item.cpp", "start_line": 1, "grade": "B", "si": 39.1, "cc": 9.7, "coupling": 1, "global_state": 12, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["global_state", "dependency_cycle"]}, {"fqn": "Light", "file_path": "Light.cpp", "start_line": 1, "grade": "B", "si": 32.2, "cc": 10.6, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "Misc", "file_path": "Misc.cpp", "start_line": 1, "grade": "D", "si": 73.6, "cc": 9.1, "coupling": 1, "global_state": 12, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "global_state"]}, {"fqn": "Moveable", "file_path": "Moveable.cpp", "start_line": 1, "grade": "C", "si": 43.7, "cc": 12.8, "coupling": 1, "global_state": 9, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "Mover", "file_path": "Mover.cpp", "start_line": 1, "grade": "D", "si": 64.4, "cc": 10.9, "coupling": 1, "global_state": 48, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["global_state", "dependency_cycle"]}, {"fqn": "MultiplayerGame", "file_path": "MultiplayerGame.cpp", "start_line": 1, "grade": "E", "si": 93.1, "cc": 34.2, "coupling": 1, "global_state": 27, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "physics.Clip", "file_path": "physics/Clip.cpp", "start_line": 1, "grade": "D", "si": 77.0, "cc": 15.8, "coupling": 1, "global_state": 24, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["global_state", "game_loop_centrality"]}, {"fqn": "clipSector_s", "file_path": "physics/Clip.cpp", "start_line": 37, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "clipLink_s", "file_path": "physics/Clip.cpp", "start_line": 44, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "trmCache_s", "file_path": "physics/Clip.cpp", "start_line": 52, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "listParms_s", "file_path": "physics/Clip.cpp", "start_line": 739, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Force", "file_path": "physics/Force.cpp", "start_line": 1, "grade": "B", "si": 23.0, "cc": 2.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Force_Constant", "file_path": "physics/Force_Constant.cpp", "start_line": 1, "grade": "B", "si": 23.0, "cc": 2.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Force_Drag", "file_path": "physics/Force_Drag.cpp", "start_line": 1, "grade": "B", "si": 35.6, "cc": 4.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "physics.Force_Field", "file_path": "physics/Force_Field.cpp", "start_line": 1, "grade": "C", "si": 51.7, "cc": 22.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "physics.Force_Spring", "file_path": "physics/Force_Spring.cpp", "start_line": 1, "grade": "B", "si": 33.3, "cc": 12.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Physics", "file_path": "physics/Physics.cpp", "start_line": 1, "grade": "C", "si": 48.3, "cc": 1.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "physics.Physics_Actor", "file_path": "physics/Physics_Actor.cpp", "start_line": 1, "grade": "B", "si": 24.1, "cc": 4.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Physics_AF", "file_path": "physics/Physics_AF.cpp", "start_line": 1, "grade": "E", "si": 95.4, "cc": 11.6, "coupling": 1, "global_state": 98, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["global_state", "game_loop_centrality"]}, {"fqn": "physics.Physics_Base", "file_path": "physics/Physics_Base.cpp", "start_line": 1, "grade": "B", "si": 37.9, "cc": 4.6, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "physics.Physics_Monster", "file_path": "physics/Physics_Monster.cpp", "start_line": 1, "grade": "E", "si": 81.6, "cc": 9.5, "coupling": 1, "global_state": 26, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "global_state"]}, {"fqn": "physics.Physics_Parametric", "file_path": "physics/Physics_Parametric.cpp", "start_line": 1, "grade": "B", "si": 28.7, "cc": 7.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Physics_Player", "file_path": "physics/Physics_Player.cpp", "start_line": 1, "grade": "E", "si": 96.6, "cc": 18.0, "coupling": 1, "global_state": 101, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["global_state", "game_loop_centrality"]}, {"fqn": "physics.Physics_RigidBody", "file_path": "physics/Physics_RigidBody.cpp", "start_line": 1, "grade": "E", "si": 92.0, "cc": 10.3, "coupling": 1, "global_state": 66, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["global_state", "game_loop_centrality"]}, {"fqn": "rigidBodyDerivatives_s", "file_path": "physics/Physics_RigidBody.cpp", "start_line": 58, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Physics_Static", "file_path": "physics/Physics_Static.cpp", "start_line": 1, "grade": "B", "si": 25.3, "cc": 4.3, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "physics.Physics_StaticMulti", "file_path": "physics/Physics_StaticMulti.cpp", "start_line": 1, "grade": "C", "si": 44.8, "cc": 8.0, "coupling": 1, "global_state": 6, "dependency_cycle": 0, "game_loop_centrality": 0.33, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "physics.Push", "file_path": "physics/Push.cpp", "start_line": 1, "grade": "B", "si": 27.6, "cc": 6.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "Player", "file_path": "Player.cpp", "start_line": 1, "grade": "E", "si": 94.3, "cc": 29.9, "coupling": 1, "global_state": 38, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "PlayerIcon", "file_path": "PlayerIcon.cpp", "start_line": 1, "grade": "D", "si": 62.1, "cc": 7.0, "coupling": 1, "global_state": 1, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "dependency_cycle"]}, {"fqn": "PlayerView", "file_path": "PlayerView.cpp", "start_line": 1, "grade": "D", "si": 79.3, "cc": 17.0, "coupling": 1, "global_state": 1, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "cc"]}, {"fqn": "Projectile", "file_path": "Projectile.cpp", "start_line": 1, "grade": "D", "si": 67.8, "cc": 22.0, "coupling": 1, "global_state": 18, "dependency_cycle": 0, "game_loop_centrality": 0.14, "top_reasons": ["cc", "global_state"]}, {"fqn": "Pvs", "file_path": "Pvs.cpp", "start_line": 1, "grade": "D", "si": 60.9, "cc": 19.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.33, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "pvsPassage_s", "file_path": "Pvs.cpp", "start_line": 37, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "pvsPortal_s", "file_path": "Pvs.cpp", "start_line": 42, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "pvsArea_s", "file_path": "Pvs.cpp", "start_line": 54, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "pvsStack_s", "file_path": "Pvs.cpp", "start_line": 61, "grade": "A", "si": 19.5, "cc": 0.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "script.Script_Compiler", "file_path": "script/Script_Compiler.cpp", "start_line": 1, "grade": "E", "si": 90.8, "cc": 41.2, "coupling": 1, "global_state": 33, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "global_state"]}, {"fqn": "script.Script_Interpreter", "file_path": "script/Script_Interpreter.cpp", "start_line": 1, "grade": "E", "si": 98.9, "cc": 110.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "script.Script_Program", "file_path": "script/Script_Program.cpp", "start_line": 1, "grade": "D", "si": 69.0, "cc": 10.6, "coupling": 1, "global_state": 37, "dependency_cycle": 0, "game_loop_centrality": 0.33, "top_reasons": ["global_state", "game_loop_centrality"]}, {"fqn": "script.Script_Thread", "file_path": "script/Script_Thread.cpp", "start_line": 1, "grade": "D", "si": 70.1, "cc": 5.3, "coupling": 1, "global_state": 20, "dependency_cycle": 0, "game_loop_centrality": 1.0, "top_reasons": ["game_loop_centrality", "global_state"]}, {"fqn": "SecurityCamera", "file_path": "SecurityCamera.cpp", "start_line": 1, "grade": "C", "si": 42.5, "cc": 11.0, "coupling": 1, "global_state": 11, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["global_state", "dependency_cycle"]}, {"fqn": "SmokeParticles", "file_path": "SmokeParticles.cpp", "start_line": 1, "grade": "D", "si": 66.7, "cc": 21.0, "coupling": 1, "global_state": 2, "dependency_cycle": 0, "game_loop_centrality": 0.5, "top_reasons": ["cc", "game_loop_centrality"]}, {"fqn": "Sound", "file_path": "Sound.cpp", "start_line": 1, "grade": "B", "si": 34.5, "cc": 10.0, "coupling": 1, "global_state": 8, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}, {"fqn": "Target", "file_path": "Target.cpp", "start_line": 1, "grade": "C", "si": 56.3, "cc": 19.8, "coupling": 1, "global_state": 10, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "Trigger", "file_path": "Trigger.cpp", "start_line": 1, "grade": "C", "si": 40.2, "cc": 10.4, "coupling": 1, "global_state": 11, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": ["global_state", "dependency_cycle"]}, {"fqn": "Weapon", "file_path": "Weapon.cpp", "start_line": 1, "grade": "C", "si": 58.6, "cc": 18.3, "coupling": 1, "global_state": 3, "dependency_cycle": 0, "game_loop_centrality": 0.25, "top_reasons": ["cc", "dependency_cycle"]}, {"fqn": "WorldSpawn", "file_path": "WorldSpawn.cpp", "start_line": 1, "grade": "B", "si": 27.6, "cc": 6.0, "coupling": 1, "global_state": 0, "dependency_cycle": 0, "game_loop_centrality": 0.0, "top_reasons": []}], "cycle_count": 0};
+  window.__GAME_SI__ = dataRoot;
+  const GRADE_COLORS = dataRoot.grade_colors;
+  const TOP_N = dataRoot.hotspot_top_n || 30;
+  const ALL_CLASSES = dataRoot.all_classes || [];
+
+  // ----- Hotspot Table 동적 렌더링 -----
+  const textInput = document.getElementById('hotspot-filter');
+  const gradeSelect = document.getElementById('grade-filter');
+  const tbody = document.getElementById('hotspot-tbody');
+  const countSpan = document.getElementById('hotspot-count');
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+  }
+
+  let sortKey = 'si';
+  let sortAsc = false;
+
+  function renderHotspots() {
+    if (!tbody) return;
+    const needle = (textInput.value || '').toLowerCase();
+    const grade = gradeSelect.value;
+
+    // 1) 등급/텍스트 필터로 후보 추출
+    let candidates = ALL_CLASSES.filter(c => {
+      if (grade && c.grade !== grade) return false;
+      if (needle) {
+        const text = (c.fqn + ' ' + c.file_path).toLowerCase();
+        if (!text.includes(needle)) return false;
+      }
+      return true;
+    });
+
+    // 2) 정렬
+    candidates.sort((a, b) => {
+      const av = a[sortKey];
+      const bv = b[sortKey];
+      const cmp = (typeof av === 'number') ? (av - bv) : String(av).localeCompare(String(bv));
+      return cmp * (sortAsc ? 1 : -1);
+    });
+
+    const totalMatched = candidates.length;
+    const shown = candidates.slice(0, TOP_N);
+
+    // 3) DOM 렌더링
+    if (shown.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="11" class="empty">조건에 맞는 클래스가 없습니다.</td></tr>';
+    } else {
+      tbody.innerHTML = shown.map((c, i) => {
+        const reasons = (c.top_reasons && c.top_reasons.length) ? c.top_reasons.join(', ') : '—';
+        const color = GRADE_COLORS[c.grade] || '#475569';
+        return `<tr data-grade="${c.grade}">
+          <td class="num rank">${i + 1}</td>
+          <td><span class="grade-badge" style="background:${color}">${c.grade}</span></td>
+          <td class="num">${c.si.toFixed(1)}</td>
+          <td class="fqn" title="${escapeHtml(c.fqn)}">${escapeHtml(c.fqn)}</td>
+          <td class="num">${c.cc.toFixed(1)}</td>
+          <td class="num">${c.coupling}</td>
+          <td class="num">${c.global_state}</td>
+          <td class="num">${c.dependency_cycle}</td>
+          <td class="num">${c.game_loop_centrality.toFixed(2)}</td>
+          <td class="reasons">${escapeHtml(reasons)}</td>
+          <td class="path"><code>${escapeHtml(c.file_path)}:${c.start_line}</code></td>
+        </tr>`;
+      }).join('');
+    }
+
+    if (countSpan) {
+      if (grade || needle) {
+        countSpan.textContent = `${shown.length} / ${totalMatched} 개 표시 (전체 ${ALL_CLASSES.length})`;
+      } else {
+        countSpan.textContent = `${shown.length} / ${ALL_CLASSES.length} 개 표시`;
+      }
+    }
+  }
+
+  if (textInput) textInput.addEventListener('input', renderHotspots);
+  if (gradeSelect) gradeSelect.addEventListener('change', renderHotspots);
+
+  // 컬럼 정렬: 헤더 클릭으로 sortKey 변경
+  const sortableHeaders = {
+    2: 'si', 3: 'fqn', 4: 'cc', 5: 'coupling',
+    6: 'global_state', 7: 'dependency_cycle', 8: 'game_loop_centrality'
+  };
+  const table = document.getElementById('hotspot-table');
+  if (table) {
+    table.querySelectorAll('th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const colIdx = Array.from(th.parentNode.children).indexOf(th);
+        const key = sortableHeaders[colIdx];
+        if (!key) return;
+        if (sortKey === key) {
+          sortAsc = !sortAsc;
+        } else {
+          sortKey = key;
+          sortAsc = (key === 'fqn');  // 이름은 오름차순 디폴트, 수치는 내림차순
+        }
+        renderHotspots();
+      });
+    });
+  }
+
+  renderHotspots();
+
+  // ----- Dependency Graph 인터랙션 -----
+  // GRADE_COLORS는 이미 위에서 dataRoot.grade_colors로 선언되어 있다 (중복 선언 금지).
+  const graphSvg = document.getElementById('depgraph');
+  const graphInfo = document.getElementById('graph-info');
+  const nodeInfoScript = document.getElementById('graph-node-info');
+  if (graphSvg && graphInfo && nodeInfoScript) {
+    const nodeInfo = JSON.parse(nodeInfoScript.textContent);
+    const allNodes = graphSvg.querySelectorAll('.node');
+    const allEdges = graphSvg.querySelectorAll('.edge');
+
+    function clearHl() {
+      graphSvg.classList.remove('has-hover');
+      allNodes.forEach(n => n.classList.remove('hl', 'hl-neighbor'));
+      allEdges.forEach(e => e.classList.remove('hl-edge'));
+    }
+
+    function renderInfo(idx) {
+      const info = nodeInfo[idx];
+      if (!info) return;
+      const color = GRADE_COLORS[info.grade] || '#475569';
+      const reasons = (info.top_reasons && info.top_reasons.length)
+        ? info.top_reasons.join(', ') : '—';
+      const raw = info.raw || {};
+      const inList = (info.sample_neighbors && info.sample_neighbors.in.length)
+        ? info.sample_neighbors.in.map(n => `<code class="neighbor">${n}</code>`).join('')
+        : '<span style="color: var(--muted); font-size: 11px;">없음</span>';
+      const outList = (info.sample_neighbors && info.sample_neighbors.out.length)
+        ? info.sample_neighbors.out.map(n => `<code class="neighbor">${n}</code>`).join('')
+        : '<span style="color: var(--muted); font-size: 11px;">없음</span>';
+      graphInfo.innerHTML = `
+        <div class="info-fqn">${info.fqn}</div>
+        <div>
+          <span class="info-grade" style="background:${color}">${info.grade}</span>
+          <span class="info-si">${info.si !== null ? info.si.toFixed(0) : '?'}</span>
+          <span style="color: var(--muted); font-size: 13px;">/ 100</span>
+        </div>
+        <dl>
+          <dt>Cyclomatic Complexity</dt><dd>${(raw.cc || 0).toFixed(1)}</dd>
+          <dt>Coupling</dt><dd>${Math.round(raw.coupling || 0)}</dd>
+          <dt>Global State</dt><dd>${Math.round(raw.global_state || 0)}</dd>
+          <dt>Cycle Size</dt><dd>${Math.round(raw.dependency_cycle || 0)}</dd>
+          <dt>Game Loop Centrality</dt><dd>${(raw.game_loop_centrality || 0).toFixed(2)}</dd>
+          <dt>Fan-in / Fan-out</dt><dd>${info.fan_in || 0} / ${info.fan_out || 0}</dd>
+        </dl>
+        <div class="info-section">
+          <h4>주요 위험 원인</h4>
+          <div style="font-size: 12px;">${reasons}</div>
+        </div>
+        <div class="info-section">
+          <h4>이 클래스를 참조하는 클래스 (샘플)</h4>
+          <div>${inList}</div>
+        </div>
+        <div class="info-section">
+          <h4>이 클래스가 참조하는 클래스 (샘플)</h4>
+          <div>${outList}</div>
+        </div>
+      `;
+    }
+
+    function highlight(node) {
+      clearHl();
+      graphSvg.classList.add('has-hover');
+      node.classList.add('hl');
+      const idx = node.getAttribute('data-idx');
+      const info = nodeInfo[idx];
+      const neighborIdxs = new Set((info && info.neighbor_idxs) || []);
+      allNodes.forEach(n => {
+        const ni = n.getAttribute('data-idx');
+        if (neighborIdxs.has(parseInt(ni, 10))) n.classList.add('hl-neighbor');
+      });
+      allEdges.forEach(e => {
+        const src = parseInt(e.getAttribute('data-src'), 10);
+        const dst = parseInt(e.getAttribute('data-dst'), 10);
+        if (src === parseInt(idx, 10) || dst === parseInt(idx, 10)) {
+          e.classList.add('hl-edge');
+        }
+      });
+      renderInfo(idx);
+    }
+
+    allNodes.forEach(node => {
+      node.addEventListener('mouseenter', () => highlight(node));
+    });
+
+    // ----- Dependency Graph 검색 & 등급 토글 -----
+    const graphSearch = document.getElementById('graph-search');
+    const gradeToggle = document.getElementById('graph-grade-toggle');
+    const matchCount = document.getElementById('graph-match-count');
+
+    function getNodeGrade(nodeEl) {
+      const idx = nodeEl.getAttribute('data-idx');
+      const info = nodeInfo[idx];
+      return info ? info.grade : null;
+    }
+
+    function applyGraphSearch() {
+      const needle = (graphSearch ? graphSearch.value : '').trim().toLowerCase();
+      const activeGradeBtn = gradeToggle ? gradeToggle.querySelector('.gt-active') : null;
+      const gradeFilter = activeGradeBtn ? activeGradeBtn.getAttribute('data-grade') : '';
+      const hasFilter = !!(needle || gradeFilter);
+
+      let matched = 0;
+      allNodes.forEach(node => {
+        const fqn = (node.getAttribute('data-fqn') || '').toLowerCase();
+        const grade = getNodeGrade(node);
+        const textOk = !needle || fqn.includes(needle);
+        const gradeOk = !gradeFilter || grade === gradeFilter;
+        if (hasFilter && textOk && gradeOk) {
+          node.classList.add('search-match');
+          matched++;
+        } else {
+          node.classList.remove('search-match');
+        }
+      });
+      graphSvg.classList.toggle('has-search', hasFilter);
+
+      if (matchCount) {
+        if (hasFilter) {
+          if (matched === 0) {
+            const reason = gradeFilter
+              ? `이 그래프에는 ${gradeFilter} 등급 노드가 없습니다 (그래프는 위험 클래스 중심 표시)`
+              : `검색어와 일치하는 노드가 없습니다`;
+            matchCount.textContent = reason;
+            matchCount.classList.add('warn');
+          } else {
+            matchCount.textContent = `${matched}개 노드 강조됨`;
+            matchCount.classList.remove('warn');
+          }
+        } else {
+          matchCount.textContent = '';
+          matchCount.classList.remove('warn');
+        }
+      }
+    }
+
+    if (graphSearch) graphSearch.addEventListener('input', applyGraphSearch);
+    if (gradeToggle) {
+      gradeToggle.querySelectorAll('.gt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          gradeToggle.querySelectorAll('.gt-btn').forEach(b => b.classList.remove('gt-active'));
+          btn.classList.add('gt-active');
+          applyGraphSearch();
+        });
+      });
+    }
+
+    graphSvg.addEventListener('mouseleave', () => {
+      clearHl();
+      graphInfo.innerHTML = '<div class="info-empty">노드 위에 마우스를 올리면<br>여기에 상세 정보가 나타납니다.<br><br>아래 검색창에 클래스 이름을 입력하거나 등급 버튼을 누르면<br>해당 노드가 강조됩니다.</div>';
+    });
+
+    // ----- Dependency Graph zoom / pan -----
+    const initialVB = graphSvg.getAttribute('viewBox').split(' ').map(Number);
+    let vb = { x: initialVB[0], y: initialVB[1], w: initialVB[2], h: initialVB[3] };
+
+    function applyVB() {
+      graphSvg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+    }
+
+    function zoomAt(factor, focusX, focusY) {
+      // focusX/Y in viewBox coords
+      const newW = vb.w / factor;
+      const newH = vb.h / factor;
+      // 최소·최대 줌 제한
+      if (newW < initialVB[2] * 0.1 || newW > initialVB[2] * 4) return;
+      vb.x = focusX - (focusX - vb.x) / factor;
+      vb.y = focusY - (focusY - vb.y) / factor;
+      vb.w = newW;
+      vb.h = newH;
+      applyVB();
+    }
+
+    graphSvg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const pt = graphSvg.createSVGPoint();
+      pt.x = e.clientX; pt.y = e.clientY;
+      const sp = pt.matrixTransform(graphSvg.getScreenCTM().inverse());
+      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      zoomAt(factor, sp.x, sp.y);
+    }, { passive: false });
+
+    let dragging = false, dragStart = null;
+    graphSvg.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.node')) return; // 노드 위에서는 hover 동작 우선
+      dragging = true;
+      dragStart = { x: e.clientX, y: e.clientY, vbX: vb.x, vbY: vb.y };
+      graphSvg.classList.add('dragging');
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const rect = graphSvg.getBoundingClientRect();
+      const scaleX = vb.w / rect.width;
+      const scaleY = vb.h / rect.height;
+      vb.x = dragStart.vbX - (e.clientX - dragStart.x) * scaleX;
+      vb.y = dragStart.vbY - (e.clientY - dragStart.y) * scaleY;
+      applyVB();
+    });
+    window.addEventListener('mouseup', () => {
+      dragging = false;
+      graphSvg.classList.remove('dragging');
+    });
+
+    const zoomIn = document.getElementById('zoom-in');
+    const zoomOut = document.getElementById('zoom-out');
+    const zoomReset = document.getElementById('zoom-reset');
+    if (zoomIn) zoomIn.addEventListener('click', () => zoomAt(1.25, vb.x + vb.w / 2, vb.y + vb.h / 2));
+    if (zoomOut) zoomOut.addEventListener('click', () => zoomAt(1 / 1.25, vb.x + vb.w / 2, vb.y + vb.h / 2));
+    if (zoomReset) zoomReset.addEventListener('click', () => {
+      vb = { x: initialVB[0], y: initialVB[1], w: initialVB[2], h: initialVB[3] };
+      applyVB();
+    });
+  }
+
+  // ----- 섹션 헤더 ⓘ 설명 토글 -----
+  document.querySelectorAll('.sec-info').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const isHidden = target.hasAttribute('hidden');
+      if (isHidden) {
+        target.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '✕ 설명 닫기';
+      } else {
+        target.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.textContent = 'ⓘ 이 섹션이 뭔가요?';
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

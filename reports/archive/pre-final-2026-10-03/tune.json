@@ -1,0 +1,47 @@
+{
+  "schema_version": "tune-0.2",
+  "grid_size": 2226,
+  "n_evaluated": 2226,
+  "min_samples_for_correlation": 5,
+  "default_weights": {
+    "cc": 0.3,
+    "coupling": 0.25,
+    "dependency_cycle": 0.15,
+    "global_state": 0.15,
+    "game_loop_centrality": 0.15
+  },
+  "tuned_weights": {
+    "cc": 0.4,
+    "coupling": 0.2,
+    "dependency_cycle": 0.05,
+    "global_state": 0.3,
+    "game_loop_centrality": 0.05
+  },
+  "per_case_default_rho": {
+    "OpenRA.Game": 0.5986,
+    "OpenRA.Mods.Common": 0.5421,
+    "OpenRA.Mods.Cnc": 0.3703,
+    "OpenRA.Mods.D2k": 0.4991,
+    "OpenRA.Server": null,
+    "OpenRA.Platforms.Default": 0.5829,
+    "Chocolate Doom": 0.5851,
+    "OpenRCT2": 0.4604
+  },
+  "per_case_tuned_rho": {
+    "OpenRA.Game": 0.6613,
+    "OpenRA.Mods.Common": 0.5674,
+    "OpenRA.Mods.Cnc": 0.4653,
+    "OpenRA.Mods.D2k": 0.4834,
+    "OpenRA.Server": null,
+    "OpenRA.Platforms.Default": 0.6834,
+    "Chocolate Doom": 0.609,
+    "OpenRCT2": 0.4727
+  },
+  "excluded_cases": [
+    "OpenRA.Server"
+  ],
+  "excluded_reason": "insufficient samples (n < 5 files with bugfix data)",
+  "lopo_default_rho": 0.5198,
+  "lopo_tuned_rho": 0.5486,
+  "lopo_note": "excluded cases are skipped in LOPO averages"
+}

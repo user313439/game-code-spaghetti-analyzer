@@ -1,7 +1,7 @@
 {
   "schema_version": "compare-0.1",
-  "project": "OpenRCT2",
-  "scoring_path": "reports\\openrct2\\scoring.json",
+  "project": "openrct2",
+  "scoring_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\docs\\_verification\\2026-10-03-refinement\\openrct2\\scoring.json",
   "analyzed_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\OpenRCT2\\src\\openrct2",
   "files_analyzed_by_us": 544,
   "files_analyzed_by_lizard": 1188,
@@ -9,16 +9,16 @@
   "top_n": 30,
   "jaccard_topN": {
     "5": 0.1111,
-    "10": 0.1111,
+    "10": 0.0526,
     "30": 0.25
   },
-  "spearman_si_vs_lizard_cc": 0.5317,
+  "spearman_si_vs_lizard_cc": 0.5345,
   "spearman_p": 0.0,
   "gsi_only_topN": [
     {
       "file_path": "Context.cpp",
       "rank_gsi": 2,
-      "rank_lizard": 179,
+      "rank_lizard": 174,
       "si": 99.84,
       "grade": "E",
       "lizard_max_cc": 16,
@@ -36,7 +36,7 @@
     {
       "file_path": "drawing/Drawing.cpp",
       "rank_gsi": 5,
-      "rank_lizard": 106,
+      "rank_lizard": 105,
       "si": 99.37,
       "grade": "E",
       "lizard_max_cc": 24,
@@ -45,7 +45,7 @@
     {
       "file_path": "ride/RideData.cpp",
       "rank_gsi": 6,
-      "rank_lizard": 299,
+      "rank_lizard": 318,
       "si": 99.21,
       "grade": "E",
       "lizard_max_cc": 8,
@@ -54,7 +54,7 @@
     {
       "file_path": "GameState.cpp",
       "rank_gsi": 7,
-      "rank_lizard": 82,
+      "rank_lizard": 83,
       "si": 99.06,
       "grade": "E",
       "lizard_max_cc": 30,
@@ -63,7 +63,7 @@
     {
       "file_path": "world/Map.cpp",
       "rank_gsi": 8,
-      "rank_lizard": 59,
+      "rank_lizard": 60,
       "si": 98.9,
       "grade": "E",
       "lizard_max_cc": 40,
@@ -72,7 +72,7 @@
     {
       "file_path": "Diagnostic.cpp",
       "rank_gsi": 9,
-      "rank_lizard": 431,
+      "rank_lizard": 426,
       "si": 98.74,
       "grade": "E",
       "lizard_max_cc": 3,
@@ -80,44 +80,53 @@
     },
     {
       "file_path": "Game.cpp",
-      "rank_gsi": 13,
-      "rank_lizard": 297,
-      "si": 98.11,
+      "rank_gsi": 10,
+      "rank_lizard": 281,
+      "si": 98.58,
       "grade": "E",
       "lizard_max_cc": 9,
       "lizard_nloc": 615
     },
     {
-      "file_path": "scenario/Scenario.cpp",
-      "rank_gsi": 14,
-      "rank_lizard": 219,
-      "si": 97.96,
-      "grade": "E",
-      "lizard_max_cc": 13,
-      "lizard_nloc": 481
-    },
-    {
       "file_path": "paint/Paint.cpp",
-      "rank_gsi": 15,
+      "rank_gsi": 11,
       "rank_lizard": 87,
-      "si": 97.8,
+      "si": 98.43,
       "grade": "E",
       "lizard_max_cc": 29,
       "lizard_nloc": 806
     },
     {
+      "file_path": "scenario/Scenario.cpp",
+      "rank_gsi": 15,
+      "rank_lizard": 228,
+      "si": 97.8,
+      "grade": "E",
+      "lizard_max_cc": 13,
+      "lizard_nloc": 481
+    },
+    {
       "file_path": "ride/RideConstruction.cpp",
       "rank_gsi": 16,
-      "rank_lizard": 49,
+      "rank_lizard": 50,
       "si": 97.64,
       "grade": "E",
       "lizard_max_cc": 49,
       "lizard_nloc": 1400
     },
     {
+      "file_path": "paint/vehicle/VehiclePaint.cpp",
+      "rank_gsi": 18,
+      "rank_lizard": 120,
+      "si": 97.33,
+      "grade": "E",
+      "lizard_max_cc": 21,
+      "lizard_nloc": 4324
+    },
+    {
       "file_path": "world/MapAnimation.cpp",
       "rank_gsi": 19,
-      "rank_lizard": 101,
+      "rank_lizard": 100,
       "si": 97.17,
       "grade": "E",
       "lizard_max_cc": 26,
@@ -125,9 +134,9 @@
     },
     {
       "file_path": "ride/Vehicle.TrackMotion.cpp",
-      "rank_gsi": 20,
+      "rank_gsi": 21,
       "rank_lizard": 42,
-      "si": 97.01,
+      "si": 96.86,
       "grade": "E",
       "lizard_max_cc": 53,
       "lizard_nloc": 1321
@@ -143,65 +152,56 @@
     },
     {
       "file_path": "entity/EntityRegistry.cpp",
-      "rank_gsi": 26,
-      "rank_lizard": 272,
-      "si": 96.07,
+      "rank_gsi": 27,
+      "rank_lizard": 269,
+      "si": 95.91,
       "grade": "E",
       "lizard_max_cc": 10,
       "lizard_nloc": 446
     },
     {
-      "file_path": "paint/vehicle/VehiclePaint.cpp",
-      "rank_gsi": 27,
-      "rank_lizard": 121,
-      "si": 95.91,
+      "file_path": "ride/TrackDesign.cpp",
+      "rank_gsi": 29,
+      "rank_lizard": 41,
+      "si": 95.6,
       "grade": "E",
-      "lizard_max_cc": 21,
-      "lizard_nloc": 4324
+      "lizard_max_cc": 54,
+      "lizard_nloc": 1833
     },
     {
       "file_path": "interface/Chat.cpp",
-      "rank_gsi": 28,
-      "rank_lizard": 200,
-      "si": 95.75,
+      "rank_gsi": 30,
+      "rank_lizard": 192,
+      "si": 95.44,
       "grade": "E",
       "lizard_max_cc": 15,
       "lizard_nloc": 255
-    },
-    {
-      "file_path": "management/Research.cpp",
-      "rank_gsi": 29,
-      "rank_lizard": 155,
-      "si": 95.6,
-      "grade": "E",
-      "lizard_max_cc": 18,
-      "lizard_nloc": 883
     }
   ],
   "lizard_only_topN": [
     {
       "file_path": "paint/track/coaster/SingleRailRollerCoaster.cpp",
-      "rank_gsi": 299,
+      "rank_gsi": 305,
       "rank_lizard": 5,
-      "si": 51.89,
+      "si": 51.1,
       "grade": "C",
       "lizard_max_cc": 257,
       "lizard_nloc": 20117
     },
     {
       "file_path": "paint/track/coaster/HybridCoaster.cpp",
-      "rank_gsi": 300,
+      "rank_gsi": 304,
       "rank_lizard": 7,
-      "si": 51.89,
+      "si": 51.1,
       "grade": "C",
       "lizard_max_cc": 225,
       "lizard_nloc": 14838
     },
     {
       "file_path": "paint/track/coaster/LimLaunchedRollerCoaster.cpp",
-      "rank_gsi": 54,
+      "rank_gsi": 56,
       "rank_lizard": 8,
-      "si": 91.67,
+      "si": 91.35,
       "grade": "E",
       "lizard_max_cc": 208,
       "lizard_nloc": 5956
@@ -216,46 +216,55 @@
       "lizard_nloc": 13264
     },
     {
+      "file_path": "paint/track/coaster/MiniRollerCoaster.cpp",
+      "rank_gsi": 35,
+      "rank_lizard": 12,
+      "si": 94.65,
+      "grade": "E",
+      "lizard_max_cc": 146,
+      "lizard_nloc": 9017
+    },
+    {
       "file_path": "paint/track/coaster/FlyingRollerCoasterInverted.cpp",
-      "rank_gsi": 42,
+      "rank_gsi": 44,
       "rank_lizard": 14,
-      "si": 93.55,
+      "si": 93.24,
       "grade": "E",
       "lizard_max_cc": 139,
       "lizard_nloc": 8694
     },
     {
       "file_path": "paint/track/coaster/ClassicStandUpRollerCoaster.cpp",
-      "rank_gsi": 35,
+      "rank_gsi": 37,
       "rank_lizard": 15,
-      "si": 94.65,
+      "si": 94.34,
       "grade": "E",
       "lizard_max_cc": 118,
       "lizard_nloc": 1420
     },
     {
       "file_path": "paint/track/coaster/MultiDimensionRollerCoaster.cpp",
-      "rank_gsi": 37,
+      "rank_gsi": 42,
       "rank_lizard": 17,
-      "si": 94.34,
+      "si": 93.55,
       "grade": "E",
       "lizard_max_cc": 107,
       "lizard_nloc": 7711
     },
     {
       "file_path": "paint/track/coaster/LayDownRollerCoasterInverted.cpp",
-      "rank_gsi": 45,
+      "rank_gsi": 48,
       "rank_lizard": 19,
-      "si": 93.08,
+      "si": 92.61,
       "grade": "E",
       "lizard_max_cc": 103,
       "lizard_nloc": 7982
     },
     {
       "file_path": "paint/track/coaster/MineTrainCoaster.cpp",
-      "rank_gsi": 41,
+      "rank_gsi": 45,
       "rank_lizard": 20,
-      "si": 93.71,
+      "si": 93.08,
       "grade": "E",
       "lizard_max_cc": 101,
       "lizard_nloc": 7023
@@ -264,52 +273,43 @@
       "file_path": "entity/Guest.cpp",
       "rank_gsi": 278,
       "rank_lizard": 21,
-      "si": 54.25,
+      "si": 54.72,
       "grade": "C",
       "lizard_max_cc": 97,
       "lizard_nloc": 6195
     },
     {
       "file_path": "paint/track/coaster/AlpineCoaster.cpp",
-      "rank_gsi": 297,
+      "rank_gsi": 303,
       "rank_lizard": 22,
-      "si": 51.89,
+      "si": 51.1,
       "grade": "C",
       "lizard_max_cc": 93,
       "lizard_nloc": 7330
     },
     {
-      "file_path": "paint/tile_element/Paint.Surface.cpp",
-      "rank_gsi": 44,
-      "rank_lizard": 23,
-      "si": 93.24,
-      "grade": "E",
-      "lizard_max_cc": 88,
-      "lizard_nloc": 1285
-    },
-    {
       "file_path": "interface/InteractiveConsole.cpp",
-      "rank_gsi": 64,
+      "rank_gsi": 63,
       "rank_lizard": 24,
-      "si": 90.09,
+      "si": 90.25,
       "grade": "E",
       "lizard_max_cc": 83,
       "lizard_nloc": 1841
     },
     {
       "file_path": "paint/track/coaster/MineRide.cpp",
-      "rank_gsi": 57,
+      "rank_gsi": 61,
       "rank_lizard": 25,
-      "si": 91.19,
+      "si": 90.57,
       "grade": "E",
       "lizard_max_cc": 81,
       "lizard_nloc": 5430
     },
     {
       "file_path": "peep/GuestPathfinding.cpp",
-      "rank_gsi": 358,
+      "rank_gsi": 361,
       "rank_lizard": 26,
-      "si": 37.58,
+      "si": 36.48,
       "grade": "B",
       "lizard_max_cc": 78,
       "lizard_nloc": 1365
@@ -325,7 +325,7 @@
     },
     {
       "file_path": "actions/track/TrackPlaceAction.cpp",
-      "rank_gsi": 196,
+      "rank_gsi": 197,
       "rank_lizard": 29,
       "si": 69.03,
       "grade": "D",
@@ -334,9 +334,9 @@
     },
     {
       "file_path": "drawing/TTFSDLPort.cpp",
-      "rank_gsi": 534,
+      "rank_gsi": 525,
       "rank_lizard": 30,
-      "si": 4.25,
+      "si": 4.09,
       "grade": "A",
       "lizard_max_cc": 66,
       "lizard_nloc": 1073
@@ -363,27 +363,27 @@
     },
     {
       "file_path": "paint/track/coaster/TwisterRollerCoaster.cpp",
-      "rank_gsi": 10,
+      "rank_gsi": 12,
       "rank_lizard": 3,
-      "si": 98.58,
+      "si": 98.27,
       "grade": "E",
       "lizard_max_cc": 267,
       "lizard_nloc": 20284
     },
     {
       "file_path": "paint/track/coaster/CorkscrewRollerCoaster.cpp",
-      "rank_gsi": 11,
+      "rank_gsi": 13,
       "rank_lizard": 2,
-      "si": 98.43,
+      "si": 98.11,
       "grade": "E",
       "lizard_max_cc": 268,
       "lizard_nloc": 20544
     },
     {
       "file_path": "paint/track/coaster/InvertedRollerCoaster.cpp",
-      "rank_gsi": 12,
+      "rank_gsi": 14,
       "rank_lizard": 11,
-      "si": 98.27,
+      "si": 97.96,
       "grade": "E",
       "lizard_max_cc": 150,
       "lizard_nloc": 11077
@@ -399,58 +399,60 @@
     },
     {
       "file_path": "paint/track/coaster/StandUpRollerCoaster.cpp",
-      "rank_gsi": 18,
+      "rank_gsi": 20,
       "rank_lizard": 6,
-      "si": 97.33,
+      "si": 97.01,
       "grade": "E",
       "lizard_max_cc": 249,
       "lizard_nloc": 18505
     },
     {
       "file_path": "paint/track/coaster/CompactInvertedCoaster.cpp",
-      "rank_gsi": 21,
+      "rank_gsi": 23,
       "rank_lizard": 16,
-      "si": 96.86,
+      "si": 96.54,
       "grade": "E",
       "lizard_max_cc": 115,
       "lizard_nloc": 9417
     },
     {
-      "file_path": "paint/track/coaster/JuniorRollerCoaster.cpp",
-      "rank_gsi": 23,
-      "rank_lizard": 18,
-      "si": 96.54,
+      "file_path": "paint/tile_element/Paint.Surface.cpp",
+      "rank_gsi": 24,
+      "rank_lizard": 23,
+      "si": 96.38,
       "grade": "E",
-      "lizard_max_cc": 106,
-      "lizard_nloc": 5367
+      "lizard_max_cc": 88,
+      "lizard_nloc": 1285
     },
     {
       "file_path": "paint/track/coaster/LatticeTriangleTrack.cpp",
-      "rank_gsi": 24,
+      "rank_gsi": 25,
       "rank_lizard": 4,
-      "si": 96.38,
+      "si": 96.23,
       "grade": "E",
       "lizard_max_cc": 261,
       "lizard_nloc": 19659
     },
     {
+      "file_path": "paint/track/coaster/JuniorRollerCoaster.cpp",
+      "rank_gsi": 26,
+      "rank_lizard": 18,
+      "si": 96.07,
+      "grade": "E",
+      "lizard_max_cc": 106,
+      "lizard_nloc": 5367
+    },
+    {
       "file_path": "paint/track/coaster/LoopingRollerCoaster.cpp",
-      "rank_gsi": 25,
+      "rank_gsi": 28,
       "rank_lizard": 13,
-      "si": 96.23,
+      "si": 95.75,
       "grade": "E",
       "lizard_max_cc": 140,
       "lizard_nloc": 10295
-    },
-    {
-      "file_path": "paint/track/coaster/MiniRollerCoaster.cpp",
-      "rank_gsi": 30,
-      "rank_lizard": 12,
-      "si": 95.44,
-      "grade": "E",
-      "lizard_max_cc": 146,
-      "lizard_nloc": 9017
     }
   ],
-  "notes": []
+  "notes": [
+    "동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다."
+  ]
 }
