@@ -1,19 +1,19 @@
 # G-SI 공식 상세 (Game Spaghetti Index)
 
-본 문서는 `docs/plan_final_draft.md` §4 의 G-SI 공식을 구현 시점의 실제 정의·운용 방식으로 옮긴 것이다. 측정 결과 데이터는 `docs/benchmark-manifest.md` 의 §3 ~ §8 을 참조한다.
+본 문서는 `docs/_planning/plan_final_draft.md` §4 의 G-SI 공식을 구현 시점의 실제 정의·운용 방식으로 옮긴 것이다. 측정 결과 데이터는 `docs/benchmark-manifest.md` 의 §3 ~ §8 을 참조한다.
 
 ## 1. 정의
 
 게임 엔진 기반 프로젝트의 C# 및 C/C++ 코드를 정적으로 분석하여, **함수 → 클래스 → 파일 → 모듈** 단위로 산출되는 **0 ~ 100 점**의 위험 지수.
 
-점수는 프로젝트 내부 분포에서의 **percentile rank** 로 표현되어, "프로젝트 내 상대적 위험도" 로 해석된다. 예: 80 점 = 해당 프로젝트 내 상위 20% 위험 구간.
+점수는 분석 집합 내부 **percentile rank**로 표현되는 상대 검토 우선순위다. 절대 품질·결함 확률이 아니다. 80 이상은 백분위 구간이며 동점 때문에 실제 클래스 수의 정확한 상위 20%와 다를 수 있다. 최신 보완 결과는 [refinement-review.md](refinement-review.md), 아래 이전 수치 표는 보완 전 검증 기록이다.
 
 ## 2. 분석 단위와 집계 규칙
 
 | 단위 | 산출 방식 |
 |---|---|
-| **메서드/함수** | 본 공식으로 직접 계산 |
-| **클래스** | 소속 메서드의 (평균, 최대값, 상위 10% 평균) 보고. 대표값은 **상위 10% 평균** |
+| **메서드/함수** | CC·LOC·게임 루프 관련 신호를 추출. 독립적인 5항목 G-SI는 직접 산출하지 않음 |
+| **클래스** | CC 대표값은 메서드 CC의 **상위 10% 평균**. 결합도·순환·전역 상태·루프 신호와 함께 클래스 기준 표준화 후 G-SI 계산 |
 | **파일** | 소속 클래스 점수의 (평균, 최대값) 보고. 대표값은 **최대값** |
 | **모듈** | 소속 파일 점수의 평균과 최대값 보고. 대표값은 **평균** |
 
@@ -30,7 +30,7 @@ raw_static(unit) = 0.30 · Z(CC)
                  + 0.15 · Z(GlobalState)
                  + 0.15 · Z(GameLoopCentrality)
 
-G-SI-Static(unit) = 100 · percentile_rank(raw_static, within = project)
+G-SI-Static(class) = percentile_rank(raw_static, within = analyzed case)
 ```
 
 가중치는 `game_si/si.py` 의 `DEFAULT_WEIGHTS_STATIC` 에 정의되며, `analyze --weights tuned` 옵션으로 `game_si/tune.py` 의 학습 결과를 사용할 수 있다 (§7 참고).
@@ -47,10 +47,10 @@ raw_full(unit) = 0.25 · Z(CC)
                + 0.15 · Z(GameLoopCentrality)
                + 0.10 · Z(ChangeRisk)
 
-G-SI-Full(unit) = 100 · percentile_rank(raw_full, within = project)
+G-SI-Full(class) = percentile_rank(raw_full, within = analyzed case)
 ```
 
-`python -m game_si score-full <input> --repo <repo> --subdir <subdir> --months 12 --out <dir>` 로 산출한다.
+`python -m game_si score-full <input> --repo <repo> --subdir <subdir> --months 12 --until 2026-10-03 --out <dir>`로 산출한다. 종료일은 UTC로 고정하고 결과 JSON에 기간을 저장한다. 이 예의 시작일은 2025-10-08이다 (12개월을 360일로 근사).
 
 ## 5. 각 항목 정의 및 측정 방법
 
@@ -59,7 +59,7 @@ G-SI-Full(unit) = 100 · percentile_rank(raw_full, within = project)
 제어 흐름의 분기 수. 시작값 1, 다음 노드를 만날 때마다 +1.
 
 - `if`, `while`, `for`, `foreach`, `do` 문
-- `switch` 의 각 `case` 라벨 (`default` 는 본 구현에서 단순화상 포함)
+- C# `switch`의 각 `case` 라벨 (`default` 제외). C/C++ 파서의 근사 규칙과 언어별 차이는 고려해야 함.
 - `switch` 식의 각 arm
 - `catch` 절
 - 삼항 연산자 `?:`
@@ -97,7 +97,7 @@ DependencyCycle(class) = cycle_size + cycle_edges,  if class ∈ SCC(size ≥ 2)
 GlobalState(class) = |static_member_accesses| + |singleton_accesses|
 ```
 
-- **C#**: Roslyn `SemanticModel` 이 `IFieldSymbol.IsStatic && !IsConst && !IsReadOnly` 또는 `IPropertySymbol.IsStatic` 으로 정확히 판정. 싱글톤형 식별자(`Instance`, `Current`, `Singleton`, `Shared`, `Default`, `Main`, `Active`) 는 이름 휴리스틱.
+- **C#**: mutable static 필드와 static 속성뿐 아니라 static 메서드 접근도 현재 포함한다. 따라서 실제 전역 상태 변경 횟수가 아니라 **정적/싱글톤 접근의 구조 대리 지표**다. 싱글톤형 식별자는 이름 휴리스틱이다. 타입 전체 walker는 중첩 타입의 접근도 부모에 포함할 수 있어 과대 계상 가능성이 있다. C#은 unique 접근 문자열 수이며 C/C++ 반복 접근 횟수와 동일한 측정 단위가 아니다.
 - **C/C++**: 파일 최상위 `static` / `extern` / 전역 변수 식별자가 함수 본문에서 사용된 횟수 (중복 허용).
 
 ### 5.5 GameLoopCentrality
@@ -115,6 +115,10 @@ GameLoopCentrality(method) = 1 / (1 + depth),  if reachable from entry
 - **C/C++**: `MainLoop`, `D_DoomLoop`, `*Tick`, `*Frame`, `Render`, `Render*`, `*Draw`, `Update`, `*Update`, `On*`
 
 클래스 단위 GameLoopCentrality 는 소속 메서드 중 최댓값.
+
+C#은 Roslyn 문서 심볼 ID로 오버로드·제네릭 원형을 연결한다. local function은 독립 메서드 노드로 추출하지 않으며 동명 클래스 메서드로 연결하지 않는다. 옛 AST는 정확한 전체 호출명을 먼저 확인하고, 수식되지 않은 단순 이름만 유일한 후보일 때 연결한다. 외부·모호한 수식 이름은 임의 연결하지 않는다. 이는 정적 근사이며 런타임 실행 빈도, virtual/delegate/event dispatch를 완전하게 추적하지 않는다.
+
+동명 타입 선언은 소스 파일·위치로 구분해 덮어쓰기를 방지한다. partial 선언을 완전한 하나의 의미 타입으로 병합하지 않으며, 모호한 참조는 보수적으로 제외하므로 결합도를 과소 추정할 수 있다. 위치 기반 식별자는 커밋 간 동일 객체 추적의 한계가 있다.
 
 ### 5.6 ChangeRisk (G-SI-Full 전용)
 
@@ -147,6 +151,8 @@ percentile_rank(x, within = project) = (해당 프로젝트 내에서 x 이하�
 
 본 정의로 G-SI 는 **0 이상 100 이하** 의 단조 양의 척도이며, 등급 해석이 프로젝트 내부 분포에서의 상대적 위치로 일관된다.
 
+동점은 `≤` 공식상 상단 백분위를 공유한다. 모두 같은 가중합이면 모두 100/E지만 후보를 구분할 정보가 없다. 비어 있지 않은 집합의 최대값은 항상 100이다. `ranking_info`에 순위의 유효성, 고유 가중합 수, 최대 동점 집단 비율 및 해석 경고를 저장한다. 분석 집합이 달라지면 점수도 바뀌므로 diff/CI와 시계열 차이는 절대 품질 변화의 증거가 아니다.
+
 ## 7. 가중치 운용 모드 (plan §4.6)
 
 세 가지 모드를 모두 지원한다 — `analyze --weights {default,tuned,custom}`.
@@ -161,18 +167,20 @@ percentile_rank(x, within = project) = (해당 프로젝트 내에서 x 이하�
 
 ### 7.2 tuned
 
-`game_si/tune.py` 가 5 차원 가중치 grid (step 0.05, sum=1 제약, 2,226 후보) 를 탐색해 케이스 평균 Spearman ρ 를 최대화. Leave-One-Project-Out 교차 검증으로 일반화 검증.
+`game_si/tune.py`는 5차원 가중치 grid (step 0.05, sum=1, 2,226 후보)를 탐색한다. 클래스 전체 기준 Z-score → 가중합 → 백분위(소수 둘째 자리) → 파일 최대값을 사용하여 본 분석과 계산 순서를 맞춘다. 같은 원본 프로젝트의 모듈은 함께 hold-out한다. 목적함수와 최종 평균은 프로젝트별 평균 상관의 동일 가중 평균이다. 세 프로젝트의 사례 연구로, 보편적인 일반화 성능을 입증하지 않는다.
+
+재계산에는 `scoring.json`의 반올림 전 `raw_exact`를 사용한다. 과거 JSON의 `raw`만 있는 경우는 근사 계산으로 표시한다. 최소 5파일 및 기본 상관 계산 가능 조건을 만족하는 원본 프로젝트가 2개 이상이어야 한다. 상수 bug-fix 값 등 제외 사유를 사례별로 기록한다. 후보나 hold-out에서 비교 대상 일부를 버려 평균을 높이지 않으며, 검증 모듈의 상관이 정의되지 않으면 비교 불가 오류로 처리한다.
 
 ```bash
 python -m game_si tune --case OpenRA.Game=reports/openra-game --case ...
 # → reports/tune.json + reports/tune_summary.txt
 ```
 
-본 작품의 8-케이스 학습 결과 (Roslyn semantic 도입 후):
+2026-10-03 재검증: 8개 사례 중 Server 제외, 원본 프로젝트 3개. 전체 자료로 선택한 배포용 후보 가중치 (학습 결과이며 fold 가중치와 다름):
 
 | 항목 | cc | coupling | dependency_cycle | global_state | game_loop_centrality |
 |---|---:|---:|---:|---:|---:|
-| **tuned (본 작품)** | **0.40** | **0.20** | **0.05** | **0.30** | **0.05** |
+| **tuned (본 작품)** | **0.35** | **0.25** | **0.05** | **0.30** | **0.05** |
 
 `analyze --weights tuned` 가 `reports/tune.json` 의 `tuned_weights` 를 자동 로드해 적용한다.
 
@@ -196,23 +204,23 @@ JSON 형식:
 }
 ```
 
-합이 1 이 아니어도 내부적으로 정규화된다 (`_normalize_weights`).
+합이 1 이 아니어도 내부적으로 정규화된다 (`_normalize_weights`). 알려진 지표 키·유한한 0 이상 숫자·양수 합이어야 한다. 음수, 불리언, null/배열, 비유한 값 및 표현 범위를 넘는 수는 오류로 처리한다.
 
 ## 8. 등급표
 
 | 점수 | 등급 | 의미 (프로젝트 내 상대 위치) | 해석 |
 |---|---|---|---|
-| 0–19 | **A** | 하위 20% | 단순하고 독립적인 코드 |
-| 20–39 | **B** | 20–40% | 일반적인 유지보수 가능 범위 |
-| 40–59 | **C** | 40–60% (중앙) | 평균 수준의 코드 |
-| 60–79 | **D** | 상위 20–40% | 리팩토링 후보 |
-| 80–100 | **E** | 상위 20% | 변경 전 영향 분석 및 테스트 보강이 필요한 위험 구간 |
+| 0 이상 20 미만 | **A** | 낮은 상대 순위 구간 | 안전함을 보증하지 않음 |
+| 20 이상 40 미만 | **B** | 상대 순위 구간 | 절대 품질 판정 아님 |
+| 40 이상 60 미만 | **C** | 상대 순위 구간 | 평균적인 품질이라는 뜻이 아님 |
+| 60 이상 80 미만 | **D** | 높은 상대 순위 구간 | 실제 소스 점검 후보 |
+| 80–100 | **E** | 높은 상대 순위 구간 | 실제 소스 점검 후보, 결함의 증거 아님 |
 
 `game_si/si.py` 의 `_grade(score)` 에서 구현.
 
 ## 9. Project Health — 프로젝트 단일 종합 점수
 
-여러 메트릭의 가중 평균으로 프로젝트 전체의 단일 점수 (0 ~ 100) 를 산출한다. 본 점수는 G-SI 의 분포 통계로부터 파생되며, "프로젝트 전체가 얼마나 위험한가" 를 한 줄로 보고할 때 사용된다.
+여러 메트릭의 가중 평균으로 보조 구조 요약(0~100)을 산출한다. 상대 백분위 평균과 D/E 비율이 포함되어 공식·동점에 강하게 영향받는다. 별도로 타당성을 검증한 절대 품질 척도가 아니며 프로젝트 간 우열 판정에 사용하지 않는다. 호환성을 위해 수식과 JSON 필드명은 유지한다.
 
 ```text
 Project Health = 0.45 · avg_si
@@ -236,20 +244,20 @@ Project Health = 0.45 · avg_si
 
 | 케이스 | 언어 | n | G-SI ρ | LOC ρ | CC ρ |
 |---|---|---:|---:|---:|---:|
-| OpenRA.Game | C# | 226 | **+0.580** | +0.699 | +0.552 |
-| OpenRA.Mods.Common | C# | 1,080 | **+0.541** | +0.613 | +0.527 |
-| Chocolate Doom | C | 296 | **+0.582** | +0.616 | +0.468 |
-| OpenRCT2 | C++ | 544 | **+0.458** | +0.406 | +0.368 |
+| OpenRA.Game | C# | 226 | **+0.601** | +0.699 | +0.552 |
+| OpenRA.Mods.Common | C# | 1,080 | **+0.536** | +0.613 | +0.527 |
+| Chocolate Doom | C | 296 | **+0.585** | +0.616 | +0.468 |
+| OpenRCT2 | C++ | 544 | **+0.460** | +0.406 | +0.368 |
 
-모두 p<1e-13. plan §3.1 의 RQ1 (위험 구간 식별의 일관성) 정량 지지.
+과거 bug-fix 커밋 빈도와의 양의 상관이다. p-value는 정규근사이며 JSON의 반올림·수치 정밀도로 0이 출력될 수 있다. 실제 위험의 정답 또는 미래 결함 예측 성능으로 해석하지 않는다.
 
-추가로 8-케이스 LOPO 평균 ρ (Roslyn semantic 도입 + W14 후속 개선 후, `docs/benchmark-manifest.md` §8.1 참조):
+추가로 2026-10-03 원본 프로젝트 단위 LOPO 평균 ρ (`reports/tune.json`, 계산 방식 tune-0.3):
 
 | | default ρ | tuned ρ | Δ |
 |---|---:|---:|---:|
-| LOPO 평균 | +0.5198 | **+0.5486** | **+0.0288** |
+| 3프로젝트 LOPO 평균 | +0.5194 | **+0.5251** | **+0.0057** |
 
-tuned 가중치가 default 대비 LOPO 검증에서 **+0.029** 개선 — 본 작품의 가중치 학습이 새 프로젝트에도 일반화됨을 시사.
+평균 차이는 +0.0057로 작고, 개선의 통계적 유의성은 검정하지 않았다. 기본 가중치를 기본 동작으로 유지한다. 이전 +0.0288은 파일 지표 우선 집계 및 모듈 단위 분리의 과거 결과로 보존하며 새 수치와 동일 실험으로 비교하지 않는다.
 
 ## 11. 한계 및 향후 작업
 

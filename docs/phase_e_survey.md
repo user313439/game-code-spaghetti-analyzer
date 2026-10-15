@@ -14,7 +14,7 @@ plan §7.5 의 정성 평가용 자료. 동료 학생 또는 게임/SW 분야 �
 
 1. "게임 코드는 일반 코드와 비교해 매 프레임 실행되는 게임 루프, 잦은 업데이트, 깊은 결합 때문에 위험 패턴이 다르게 누적된다" — 한 문장 소개.
 2. 본 도구가 산출하는 5 가지 메트릭을 한 줄씩만 설명: CC · Coupling · DependencyCycle · GlobalState · GameLoopCentrality.
-3. 점수는 프로젝트 내부 percentile rank 로 0~100 점. 80+ 는 상위 20% 위험 구간 (등급 E).
+3. 점수는 분석 집합 내부 상대 백분위다. 절대 품질/결함 확률이 아니며 동점 때문에 80+가 정확히 전체 클래스의 20%라는 뜻은 아니다. 모두 동점이면 100/E여도 후보를 구분하지 못한다.
 
 ### 1.2 라이브 데모 (10 ~ 12 분)
 
@@ -22,12 +22,12 @@ plan §7.5 의 정성 평가용 자료. 동료 학생 또는 게임/SW 분야 �
 
 | 단계 | 보여 줄 파일 / 명령 | 핵심 메시지 |
 |---|---|---|
-| 1 | `reports/openra-game/index.html` 의 Hotspot Table 상위 5 | "점수 100 인 단일 파일이 무엇인지, 등급 표시 색이 어떻게 동작하는지" |
-| 2 | 같은 페이지의 Dependency Graph | "노드 크기·색이 결합도·등급을 나타낸다. hub 가 god-object" |
-| 3 | `reports/openra-game/validation.html` (Phase A 산점도) | "이 hotspot 들이 실제로 자주 bug-fix 된다 — ρ=+0.58, p<1e-6" |
-| 4 | `reports/openra-game/compare_summary.txt` (Phase B) | "Lizard 가 못 잡는 것도 G-SI 는 잡는다 — `int2.cs`, `Keycode.cs`" |
-| 5 | `reports/chocolate-doom/advisor.md` 의 첫 hotspot (i_system.c) | "LLM 이 SCC 크기 32 를 인용하고 DosEmulationState 캡슐화를 제안" |
-| 6 | `reports/openra-game/timeseries.html` | "OpenRA 는 16 년간 cycles 0→5, health 38→48 로 단조 악화" |
+| 1 | `reports/openra-game/index.html` 의 Hotspot Table 상위 5 | "점수 100인 클래스의 위치와 상대 등급 표시를 확인한다" |
+| 2 | 같은 페이지의 Dependency Graph | "노드 크기·색은 구조 지표다. 기반 타입의 높은 연결 수가 결함이라는 뜻은 아니다" |
+| 3 | `reports/openra-game/validation.html` (Phase A 산점도) | "과거 메시지 기반 bug-fix 횟수와 파일 단위 관련성 ρ=0.6050. 미래 결함 예측이 아니다" |
+| 4 | `docs/case-study-review.md`와 Phase B | "양쪽 단독 후보를 모두 검토한다. int2는 높은 점수를 무조건 나쁜 코드로 읽으면 안 되는 반례다" |
+| 5 | `reports/chocolate-doom/advisor.md` (과거 AI 예시) | "생성 당시 지표의 예시이며 최신 검증은 아니다. 제안의 타당성을 소스로 별도 확인한다" |
+| 6 | `reports/openra-game/timeseries.html` | "같은 과거 커밋을 수정 분석기로 재측정했다. 단조 악화나 절대 품질 개선을 뜻하지 않는다" |
 
 > 게임 도메인 친숙도가 높은 대상자(a 버전)에게는 추가로 OpenRCT2 의 `paint.track.coaster.*` (CC 200+) 또는 OpenRA 의 `Renderer.cs` (CC=9 인데 결합도 hub) 같은 도메인 특화 사례를 한 개 더 보여 준다.
 
@@ -57,9 +57,9 @@ plan §7.5 의 정성 평가용 자료. 동료 학생 또는 게임/SW 분야 �
 | Q1 | 도구를 통해 코드의 변경 위험 구간을 직관적으로 파악할 수 있었다. (plan §7.5 항목) | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
 | Q2 | 의존성 그래프 시각화가 코드 구조 이해에 도움이 되었다. (plan §7.5 항목) | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
 | Q3 | LLM 이 생성한 리팩토링 제안이 납득 가능한 수준이었다. (plan §7.5 항목) | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
-| Q4 | bug-fix 빈도와 G-SI 의 상관 그래프(Phase A) 가 도구의 신뢰성을 높였다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
-| Q5 | Lizard 와의 비교(Phase B) 에서 G-SI 만 식별하는 hotspot 사례가 도구의 차별점을 잘 보여 줬다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
-| Q6 | 시계열 그래프(Phase D) 가 코드베이스 진화의 추세를 명확히 드러냈다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
+| Q4 | 과거 bug-fix 상관 그래프와 해석의 한계를 이해할 수 있었다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
+| Q5 | Lizard와 G-SI의 후보 차이를 소스 검토에 활용할 수 있을 것 같다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
+| Q6 | 시계열 수치와 절대 품질 변화의 차이를 이해할 수 있었다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
 | Q7 | 본 도구를 실제 게임/소프트웨어 프로젝트에 도입하고 싶다. | ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5 |
 
 ## 4. 주관식 (각 항목 1 ~ 3 문장)
