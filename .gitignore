@@ -5,6 +5,10 @@
 # `git add -f <파일>` 로 강제 추가.
 /*.pdf
 
+# 학교 제출 양식·발표 자료 원본과 Office 임시 파일은 로컬에만 둔다.
+/*.pptx
+~$*
+
 # --- Local working drafts -------------------------------------------------
 # 검토 단계의 초안·로드맵 문서는 추적하지 않는다. 확정된 문서만 별도 이름으로 commit.
 *.draft.md
@@ -62,6 +66,8 @@ benchmarks/
 reports/*/ast.json
 reports/*/metrics.json
 reports/sample-*/
+reports/archive/**/ast.json
+reports/archive/**/metrics.json
 
 # --- Python (정적 분석 엔진 후보) ------------------------------------------
 __pycache__/
@@ -106,3 +112,6 @@ api_key.json
 *.log
 *.tmp
 .cache/
+.superpowers/
+.claude/
+/tmp/
