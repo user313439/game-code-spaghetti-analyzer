@@ -5,6 +5,7 @@ import json
 import lzma
 import re
 import stat
+import tarfile
 import time
 import urllib.error
 import urllib.parse
@@ -13,7 +14,12 @@ import zipfile
 import zlib
 from pathlib import Path, PurePosixPath
 
-MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
+MAX_ARCHIVE_BYTES = 100 * 1024 * 1024        # uploaded ZIP (stored, then extracted)
+# GitHub import streams the archive and keeps only source files, so assets cost time, not disk.
+MAX_DOWNLOAD_BYTES = 2 * 1024 ** 3
+MAX_UNPACKED_BYTES = 8 * 1024 ** 3
+MAX_ARCHIVE_MEMBERS = 500_000
+DOWNLOAD_SECONDS = 15 * 60
 MAX_SOURCE_BYTES = 1024 * 1024 * 1024
 MAX_FILES = 20_000
 IGNORED = {'.git', '.vs', 'bin', 'obj', 'node_modules', 'packages', 'build',
@@ -92,6 +98,62 @@ def extract_zip(stream, destination: Path, cancelled=lambda: False) -> None:
         raise ValueError('ZIP을 읽을 수 없습니다. 정상적인 소스 ZIP을 선택해 주세요.') from exc
 
 
+def extract_tar_stream(stream, destination: Path, cancelled=lambda: False) -> None:
+    """Read a .tar.gz once, front to back, and write only source files. Images, sounds and other
+    assets pass through without touching the disk; links and special files are never written."""
+    unpacked = written = files = members = 0
+    seen = set()
+    try:
+        with tarfile.open(fileobj=stream, mode='r|gz') as archive:
+            for member in archive:
+                if cancelled():
+                    raise ValueError('소스 가져오기가 중단되었습니다.')
+                members += 1
+                unpacked += max(0, member.size)
+                if members > MAX_ARCHIVE_MEMBERS or unpacked > MAX_UNPACKED_BYTES:
+                    raise ValueError('저장소 묶음이 너무 큽니다. 분석할 소스 폴더만 직접 선택해 주세요.')
+                if not member.isfile() or not is_source(member.name):
+                    continue
+                safe_relative(member.name)
+                key = member.name.casefold()
+                if key in seen:
+                    raise ValueError('대소문자만 다른 같은 경로의 소스가 있어 가져올 수 없습니다.')
+                seen.add(key)
+                files += 1
+                written += member.size
+                if files > MAX_FILES:
+                    raise ValueError(f'소스 파일이 {MAX_FILES:,}개를 넘습니다. 분석할 소스 폴더만 직접 선택해 주세요.')
+                if written > MAX_SOURCE_BYTES:
+                    raise ValueError('소스 용량이 1 GiB를 초과합니다. 분석할 소스 폴더만 직접 선택해 주세요.')
+                path = target_path(destination, member.name)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                source = archive.extractfile(member)
+                with path.open('xb') as output:
+                    while chunk := source.read(64 * 1024):
+                        if cancelled():
+                            raise ValueError('소스 가져오기가 중단되었습니다.')
+                        output.write(chunk)
+    except (tarfile.TarError, zlib.error, EOFError, OSError) as exc:
+        raise ValueError('GitHub 소스 묶음을 읽지 못했습니다. 다시 시도하거나 소스 폴더를 직접 선택해 주세요.') from exc
+
+
+class _Download:
+    """The archive response, read with size, time and cancel limits."""
+
+    def __init__(self, response, cancelled, deadline):
+        self.response, self.cancelled, self.deadline, self.size = response, cancelled, deadline, 0
+
+    def read(self, size=-1):
+        if self.cancelled():
+            raise ValueError('소스 가져오기가 중단되었습니다.')
+        data = self.response.read(size if size and size > 0 else 64 * 1024)
+        self.size += len(data)
+        if self.size > MAX_DOWNLOAD_BYTES or time.monotonic() > self.deadline:
+            raise ValueError(f'가져오기 용량({MAX_DOWNLOAD_BYTES // 1024 ** 3} GiB) 또는 시간({DOWNLOAD_SECONDS // 60}분) 제한을 '
+                             '초과했습니다. 분석할 소스 폴더를 직접 선택해 주세요.')
+        return data
+
+
 def inspect_source(root: Path) -> dict:
     counts = dict(csharp=0, c=0, cpp=0)
     folders = {'.'}
@@ -145,14 +207,14 @@ class GitHubRedirect(urllib.request.HTTPRedirectHandler):
 def fetch_repository(url: str, destination: Path, cancelled=lambda: False) -> dict:
     owner, repo = parse_repository(url)
     opener = urllib.request.build_opener(GitHubRedirect())
-    deadline = time.monotonic() + 120
+    deadline = time.monotonic() + DOWNLOAD_SECONDS
 
-    def request(address):
+    def request(address, timeout=15):
         if cancelled():
             raise ValueError('소스 가져오기가 중단되었습니다.')
         return opener.open(urllib.request.Request(github_url(address), headers={
             'User-Agent': 'Game-SI-local-analysis', 'Accept': 'application/vnd.github+json',
-        }), timeout=15)
+        }), timeout=timeout)
 
     def read_json(address):
         with request(address) as response:
@@ -170,17 +232,9 @@ def fetch_repository(url: str, destination: Path, cancelled=lambda: False) -> di
         commit = read_json(base + '/commits/' + urllib.parse.quote(branch, safe=''))['sha']
         if not re.fullmatch(r'[0-9a-f]{40}', commit):
             raise ValueError('GitHub 소스 버전을 확인하지 못했습니다.')
-        archive_path = destination.parent / 'repository.zip'
-        size = 0
-        with request(base + '/zipball/' + commit) as response, archive_path.open('xb') as output:
-            while chunk := response.read(64 * 1024):
-                if cancelled():
-                    raise ValueError('소스 가져오기가 중단되었습니다.')
-                size += len(chunk)
-                if size > MAX_ARCHIVE_BYTES or time.monotonic() > deadline:
-                    raise ValueError('가져오기 용량 또는 시간 제한을 초과했습니다. 소스 폴더를 직접 선택해 주세요.')
-                output.write(chunk)
-        extract_zip(archive_path, destination, cancelled=cancelled)
+        # GitHub builds large archives on the fly, so the first bytes may take a while.
+        with request(base + '/tarball/' + commit, timeout=90) as response:
+            extract_tar_stream(_Download(response, cancelled, deadline), destination, cancelled=cancelled)
         return {'repository': f'https://github.com/{owner}/{repo}', 'commit': commit, 'branch': branch}
     except urllib.error.HTTPError as exc:
         message = ('공개 저장소를 찾지 못했습니다. 주소와 공개 여부를 확인해 주세요.'

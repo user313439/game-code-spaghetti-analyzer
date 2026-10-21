@@ -16,7 +16,9 @@ header .report-subtitle,section h2,th,
 .section-intro,.sec-explain,.advice-uncertainty{border-left-color:var(--accent)}
 .sec-info[aria-expanded="true"],.gt-btn[data-grade=""].gt-active{color:#fff}
 .sec-info:hover,.advice-card summary:hover{background:#edf5f1}
-#hotspot-table{display:block;max-width:100%;min-height:160px;overflow-x:auto}
+.sec-info[aria-expanded="true"]:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+#hotspot-table{display:table;width:100%;max-width:none}
+.report-table-scroll{width:100%;max-width:100%;min-height:160px;overflow-x:auto}
 #hotspot-table [data-tooltip]::after{bottom:auto;top:calc(100% + 6px);left:0;transform:none}
 #hotspot-table th.sortable[data-tooltip]::after{content:attr(data-tooltip)}
 #hotspot-table th.sortable::before{content:" ↕";color:var(--muted);font-size:11px}

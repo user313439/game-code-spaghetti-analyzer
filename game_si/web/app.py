@@ -6,30 +6,41 @@ import json
 import re
 import secrets
 import threading
+import time
 from pathlib import Path
+from typing import Annotated
 
 from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 
-from . import inputs
+from . import diagnosis, inputs, tangle as tangle_measure
+from .prescription import Prescriptions
 from .jobs import BusyError, JobManager, REPO_ROOT
+from .assistant_jobs import AssistantJobs
+from .assistant import capabilities
+from .demo import DemoGame
+from .casual_demo import CasualDemo
 
 STATIC = Path(__file__).parent / 'static'
+APP_UI = STATIC / 'app'
 
 
-def report_response(path: Path, theme: str | None = None):
+def report_response(path: Path, theme: str | None = None, embedded: bool = False):
     theme = theme if theme in {'light', 'dark', 'blue'} else 'blue'
-    if theme not in {'light', 'blue'} or path.suffix != '.html':
+    if path.suffix != '.html' or (theme == 'dark' and not embedded):
         return FileResponse(path)
     document = path.read_text(encoding='utf-8')
     if '</head>' not in document:
         return FileResponse(path)
-    css = (STATIC / 'report-light.css').read_text(encoding='utf-8')
+    css = (STATIC / 'report-light.css').read_text(encoding='utf-8') if theme != 'dark' else ''
     if theme == 'blue':
         css += '\n' + (STATIC / 'report-blue.css').read_text(encoding='utf-8')
     style = f'<style id="report-{theme}-preview">' + css + '</style>'
+    if embedded:
+        style += '<style>' + (STATIC / 'report-embed.css').read_text('utf8') + '</style>'
+    document = document.replace('</body>', '<script id="report-layout-preview">' + (STATIC / 'report-embed.js').read_text('utf8') + '</script></body>')
     return HTMLResponse(document.replace('</head>', style + '</head>', 1))
 
 
@@ -104,7 +115,7 @@ class LocalOnlyMiddleware:
 
         async def secure_send(message):
             if message['type'] == 'http.response.start':
-                report = scope['path'].startswith(('/results/', '/examples/'))
+                report = scope['path'].startswith(('/results/', '/examples/')) or (scope['path'].startswith('/revisions/') and scope['path'].endswith('.html'))
                 csp = ("default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; "
                        "img-src data:; sandbox allow-scripts allow-downloads; base-uri 'none'; form-action 'none'"
                        if report else "default-src 'self'; script-src 'self'; style-src 'self'; "
@@ -132,17 +143,71 @@ class AnalysisRequest(BaseModel):
     clang_library: str = Field(default='', max_length=2048)
 
 
+class AssistantRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    action: str = Field(max_length=20)
+    service: str = Field(max_length=20)
+    mode: str = Field(max_length=10)
+    candidate: str = Field(default='', max_length=2048)
+    candidates: list[Annotated[str, Field(max_length=2048)]] = Field(default_factory=list, max_length=5)
+    model: str = Field(default='', max_length=100)
+    api_key: str = Field(default='', max_length=500, repr=False)
+    use_prescription: bool = False
+    direct: bool = False
+
+
+class PlayRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    ok: bool
+    note: str = Field(default='', max_length=300)
+
+
+class PrescriptionRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    service: str = Field(max_length=20)
+    mode: str = Field(max_length=10)
+    model: str = Field(default='', max_length=100)
+    api_key: str = Field(default='', max_length=500, repr=False)
+
+
+class ApplyRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    preview_id: str = Field(max_length=32)
+
+
+class DemoLaunchRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    version: str = Field(max_length=10)
+
+
 def create_app(jobs_root: Path | None = None) -> FastAPI:
     token = secrets.token_hex(32)
     manager = JobManager(jobs_root or REPO_ROOT / '.cache/web/jobs')
+    assistant = AssistantJobs(manager)
+    prescriptions = Prescriptions(assistant, current=lambda ident: (assistant.current_result(ident), assistant.current_revision(ident), assistant.base_source(ident)))
+    assistant.prescriptions = prescriptions
+    demo = DemoGame(assistant)
+    casual_demo = CasualDemo(assistant)
+    maintenance_demo = CasualDemo(assistant, REPO_ROOT / 'docs/_demo_phase_v3')
+    def demo_for(ident):
+        if maintenance_demo.registered(ident):
+            return maintenance_demo
+        return casual_demo if casual_demo.registered(ident) else demo
 
     @asynccontextmanager
     async def lifespan(app):
         yield
+        prescriptions.close()
+        assistant.close()
         manager.close()
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.manager = manager
+    app.state.assistant = assistant
+    app.state.prescriptions = prescriptions
+    app.state.demo = demo
+    app.state.casual_demo = casual_demo
+    app.state.maintenance_demo = maintenance_demo
     app.add_middleware(LocalOnlyMiddleware, token=token)
 
     @app.exception_handler(ValueError)
@@ -156,22 +221,158 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
 
     @app.get('/')
     def home():
-        return FileResponse(STATIC / 'index.html')
+        return FileResponse(APP_UI / 'index.html', media_type='text/html; charset=utf-8')
 
-    @app.get('/static/{filename}')
-    def static(filename: str):
-        if filename not in {'app.css', 'app.js'}:
+    @app.get('/ui/{filename}')
+    def ui_asset(filename: str):
+        if not re.fullmatch(r'[a-z0-9-]+\.(js|css)', filename) or not (APP_UI / filename).is_file():
             raise KeyError(filename)
-        return FileResponse(STATIC / filename)
+        media = 'text/javascript' if filename.endswith('.js') else 'text/css'
+        return FileResponse(APP_UI / filename, media_type=f'{media}; charset=utf-8')
 
     @app.get('/api/session')
     def session():
         return {'token': token, 'limits': {'archive_bytes': inputs.MAX_ARCHIVE_BYTES,
                                          'source_bytes': inputs.MAX_SOURCE_BYTES, 'files': inputs.MAX_FILES}}
 
+    @app.get('/workspace/{ident}')
+    def workspace(ident: str):
+        # Links saved from the previous UI open the same analysis in the redesigned app; the
+        # diagnosis page itself explains an analysis that has not finished yet.
+        if not re.fullmatch('[a-f0-9]{32}', ident):
+            raise KeyError(ident)
+        manager.get(ident)
+        return RedirectResponse(f'/#/job/{ident}/diagnosis', status_code=307)
+
+    @app.get('/api/assistant/connections')
+    def connections():
+        return capabilities()
+
+    @app.get('/api/jobs/{ident}/assistant/candidates')
+    def candidates(ident: str):
+        return assistant.candidates(ident)
+
+    @app.get('/api/jobs/{ident}/assistant')
+    def assistant_state(ident: str):
+        state = assistant.get(ident)
+        # A preview made on another round can no longer be applied; the page asks for a new one.
+        state['preview_stale'] = bool(state.get('preview')) and state.get('base_revision') != assistant.current_revision(ident)
+        return state
+
+    @app.get('/api/jobs/{ident}/assistant/review')
+    def assistant_review(ident: str):
+        return assistant.reviews.get(ident)
+
+    @app.post('/api/jobs/{ident}/assistant', status_code=202)
+    def generate_advice(ident: str, body: AssistantRequest):
+        return assistant.start(ident, body.model_dump())
+
+    @app.post('/api/jobs/{ident}/assistant/apply', status_code=202)
+    def apply_advice(ident: str, body: ApplyRequest):
+        return assistant.apply(ident, body.preview_id)
+
+    @app.post('/api/jobs/{ident}/assistant/cancel')
+    def cancel_advice(ident: str):
+        return assistant.cancel(ident)
+
+    @app.get('/api/jobs/{ident}/demo')
+    def demo_state(ident: str):
+        manager.get(ident)
+        return demo_for(ident).get(ident)
+
+    @app.post('/api/jobs/{ident}/demo/prepare', status_code=202)
+    def prepare_demo(ident: str):
+        return demo_for(ident).prepare(ident)
+
+    @app.post('/api/jobs/{ident}/demo/launch')
+    def launch_demo(ident: str, body: DemoLaunchRequest):
+        return demo_for(ident).launch(ident, body.version)
+
+    @app.get('/revisions/{ident}/{revision}/{filename}')
+    def revision_result(ident: str, revision: str, filename: str, theme: str | None = None):
+        assistant.folder(ident)
+        if not re.fullmatch('[a-f0-9]{32}', revision) or filename not in {'index.html', 'modified-source.zip', 'comparison.json'}:
+            raise KeyError(filename)
+        folder = manager.directory(ident) / 'revisions' / revision
+        path = folder / ('result/index.html' if filename == 'index.html' else filename)
+        if not path.is_file():
+            raise KeyError(filename)
+        return report_response(path, theme) if filename == 'index.html' else FileResponse(path)
+
     @app.get('/api/jobs')
     def history(include_deleted: bool = False):
         return manager.list(include_deleted=include_deleted)
+
+    def result_folder(ident, revision=None):
+        record = manager.get(ident)
+        if record['state'] not in {'complete', 'partial'}:
+            raise BusyError('분석이 끝난 뒤 진단을 볼 수 있습니다.')
+        folder = manager.directory(ident) / 'result'
+        if revision is not None:
+            if not re.fullmatch('[a-f0-9]{32}', revision):
+                raise ValueError('올바르지 않은 수정본 번호입니다.')
+            folder = manager.directory(ident) / 'revisions' / revision / 'result'
+        if not (folder / 'scoring.json').is_file() or not (folder / 'metrics.json').is_file():
+            raise KeyError('result')
+        return folder
+
+    @app.get('/api/jobs/{ident}/diagnosis')
+    def job_diagnosis(ident: str, revision: str | None = None):
+        folder = result_folder(ident, revision)
+        current = None
+        if revision is None:
+            current = assistant.current_revision(ident)
+            if current:
+                folder = result_folder(ident, current)
+        data = dict(diagnosis.load(folder))
+        rounds = assistant.rounds(ident)
+        data['round'] = rounds['current'] if revision is None else next((r['round'] for r in rounds['rounds'] if r['revision'] == revision), None)
+        data['revision'] = current if revision is None else revision
+        return data
+
+    @app.get('/api/jobs/{ident}/prescription')
+    def job_prescription(ident: str):
+        assistant.folder(ident)
+        return prescriptions.get(ident)
+
+    @app.post('/api/jobs/{ident}/prescription', status_code=202)
+    def start_prescription(ident: str, body: PrescriptionRequest):
+        assistant.folder(ident)
+        return prescriptions.start(ident, body.model_dump())
+
+    @app.post('/api/jobs/{ident}/prescription/cancel')
+    def cancel_prescription(ident: str):
+        assistant.folder(ident)
+        return prescriptions.cancel(ident)
+
+    @app.get('/api/jobs/{ident}/tangle')
+    def job_tangle(ident: str):
+        def measured(folder):
+            return tangle_measure.measure(json.loads((folder / 'metrics.json').read_text('utf8')))
+        base = measured(result_folder(ident))
+        data = assistant.rounds(ident)
+        rounds = [{'round': 0, 'revision': None, 'active': True, **tangle_measure.compare(base, base)}]
+        for item in data['rounds']:
+            folder = result_folder(ident, item['revision'])
+            rounds.append({'round': item['round'], 'revision': item['revision'], 'active': item['round'] <= data['current'],
+                           **tangle_measure.compare(base, measured(folder))})
+        return {'rounds': rounds, 'current': data['current']}
+
+    @app.get('/api/jobs/{ident}/rounds')
+    def job_rounds(ident: str):
+        data = assistant.rounds(ident)
+        for item in data['rounds']:
+            path = manager.directory(ident) / 'revisions' / item['revision'] / 'comparison.json'
+            item['comparison'] = json.loads(path.read_text('utf8')) if path.is_file() else None
+        return data
+
+    @app.post('/api/jobs/{ident}/rounds/undo')
+    def undo_round(ident: str):
+        return assistant.undo_round(ident)
+
+    @app.post('/api/jobs/{ident}/rounds/{number}/play')
+    def confirm_play(ident: str, number: int, body: PlayRequest):
+        return assistant.record_check(ident, number, 'play', {'ok': body.ok, 'note': body.note, 'at': time.time()})
 
     @app.get('/api/jobs/{ident}')
     def job(ident: str):
@@ -274,6 +475,10 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
 
     @app.post('/api/jobs/{ident}/delete')
     def delete(ident: str):
+        record = manager.get(ident)
+        if record['state'] in {'complete', 'partial'} and (assistant.get(ident)['state'] == 'running' or assistant.reviews.busy(ident)
+                                                           or prescriptions.busy(ident)):
+            raise BusyError('AI 작업이 끝난 뒤 기록을 삭제해 주세요.')
         return manager.delete(ident)
 
     @app.post('/api/jobs/{ident}/restore')
@@ -281,14 +486,14 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
         return manager.restore(ident)
 
     @app.get('/results/{ident}/{filename}')
-    def result(ident: str, filename: str, theme: str | None = None):
+    def result(ident: str, filename: str, theme: str | None = None, embedded: bool = False):
         if filename not in {'index.html', 'scoring.json', 'analysis_status.json'}:
             raise KeyError(filename)
         record = manager.get(ident)
         path = manager.directory(ident) / 'result' / filename
         if record['state'] not in {'complete', 'partial'} or not path.is_file():
             raise KeyError(ident)
-        return report_response(path, theme)
+        return report_response(path, theme, embedded=embedded)
 
     @app.get('/api/examples')
     def examples():

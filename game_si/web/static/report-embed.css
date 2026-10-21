@@ -1,0 +1,6 @@
+/* The workspace owns page scrolling; wide ranking tables scroll only inside themselves. */
+html,body{height:auto!important;min-height:0!important}
+html{overflow-x:hidden;overflow-y:hidden}
+body>header{display:none}
+#hotspot-table{display:table;width:100%;max-width:none}
+.report-table-scroll{width:100%;max-width:100%;min-height:160px;overflow-x:auto}

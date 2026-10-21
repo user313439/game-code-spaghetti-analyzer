@@ -4,6 +4,7 @@
 .help-body .help-tip,.advice-uncertainty{background:#e3eff8;border-color:#c0d6e8}
 .section-intro,.sec-explain,.advice-uncertainty{border-left-color:var(--accent)}
 .sec-info:hover,.advice-card summary:hover{background:#e3eff8}
+.sec-info[aria-expanded="true"]:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 .table-controls input,.table-controls select,.graph-controls input,
 .graph-zoom button,.gt-btn{border-color:#7793ad}
 .graph-zoom button:hover,.gt-btn:hover{background:#dbe9f5;border-color:var(--accent)}
