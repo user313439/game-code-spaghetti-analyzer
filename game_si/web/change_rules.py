@@ -13,7 +13,7 @@ import re
 
 C_FAMILY = {'.c', '.h', '.cpp', '.cc', '.cxx', '.hpp'}
 # Control characters other than tab/CR/LF, Unicode line breaks, and trigraphs (??/ is a backslash).
-UNSAFE = re.compile('[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\x85  ]|\\?\\?[=/\'()!<>-]')
+UNSAFE = re.compile('[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\x85\u2028\u2029]|\\?\\?[=/\'()!<>-]')
 RAW_INCLUDE = re.compile(r'^[ \t]*#[ \t]*include[ \t]*(?:<[^<>"\\]+>|"[^"<>\\]+")[ \t]*\r?$')
 RAW_USING = re.compile(r'^[ \t]*using[ \t]+(?:static[ \t]+)?[A-Za-z_][\w.]*[ \t]*;[ \t]*\r?$')   # no aliases
 LOGICAL_INCLUDE = re.compile(r'^#\s*include\s*(<[^<>"]+>|"[^"<>]+")$')
