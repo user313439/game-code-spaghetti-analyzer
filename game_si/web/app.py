@@ -19,7 +19,7 @@ from . import diagnosis, inputs, tangle as tangle_measure
 from .prescription import Prescriptions
 from .jobs import BusyError, JobManager, REPO_ROOT
 from .assistant_jobs import AssistantJobs
-from .assistant import capabilities
+from .assistant import capabilities, list_models
 from .demo import DemoGame
 from .casual_demo import CasualDemo
 
@@ -152,6 +152,7 @@ class AssistantRequest(BaseModel):
     candidates: list[Annotated[str, Field(max_length=2048)]] = Field(default_factory=list, max_length=5)
     model: str = Field(default='', max_length=100)
     api_key: str = Field(default='', max_length=500, repr=False)
+    base_url: str = Field(default='', max_length=300)
     use_prescription: bool = False
     direct: bool = False
 
@@ -167,6 +168,13 @@ class PrescriptionRequest(BaseModel):
     service: str = Field(max_length=20)
     mode: str = Field(max_length=10)
     model: str = Field(default='', max_length=100)
+    api_key: str = Field(default='', max_length=500, repr=False)
+    base_url: str = Field(default='', max_length=300)
+
+
+class ModelListRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    base_url: str = Field(max_length=300)
     api_key: str = Field(default='', max_length=500, repr=False)
 
 
@@ -247,6 +255,11 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
     @app.get('/api/assistant/connections')
     def connections():
         return capabilities()
+
+    @app.post('/api/assistant/models')
+    def connection_models(body: ModelListRequest):
+        # Lists the models of an OpenAI-compatible address; nothing is generated, the key is not kept.
+        return {'models': list_models(body.base_url, body.api_key)}
 
     @app.get('/api/jobs/{ident}/assistant/candidates')
     def candidates(ident: str):

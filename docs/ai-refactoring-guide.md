@@ -43,8 +43,9 @@
 | Claude Code | 공식 CLI 설치 또는 Claude 데스크톱 앱에 포함된 Claude Code(자동으로 찾음), 본인 계정 로그인(`claude auth login`) | 계정 사용량. 화면에 로그인 여부와 로그인 명령을 표시. 모델 칸에 `opus` 등을 적으면 그 모델 사용 |
 | Gemini CLI | 공식 CLI 설치, 본인 Google 계정 로그인 | 계정 무료/구독 한도. 연결 구현, 실제 응답 검증 전 |
 | 본인 API 키 | 서비스의 API 키와 사용 가능한 모델 이름 | 키의 계정에 과금. 요청·응답 대역 검사만 수행, 실제 유료 호출 미수행 |
+| 다른 AI (주소로 연결) | OpenAI 호환 API 주소, 모델 이름, 필요하면 API 키. 화면에서 OpenAI·Gemini·Claude API·OpenRouter·DeepSeek·Mistral·Groq·Ollama·LM Studio 주소를 고르거나 직접 입력 | 키의 계정에 과금, 이 PC의 Ollama·LM Studio는 무료. ‘모델 목록 불러오기’(GET /models)로 생성 없이 연결 확인. 가짜 서버로 요청 형식·JSON 모드 미지원 재시도·응답 해석을 테스트 |
 
-공식 로컬 프로그램을 도구 없이 실행해 응답만 받는 방식이며, 웹이 다른 서비스의 로그인 정보를 가져오지 않습니다. 계정 모드에는 환경의 API 키를 넘기지 않고 다른 서비스나 API로 자동 전환하지 않습니다. 설치 확인은 로그인 성공이나 잔여 한도를 뜻하지 않습니다. API 키는 기록·보고서·브라우저 저장소에 남기지 않고 요청할 때만 사용합니다(서비스·방식·모델 선택만 기억합니다).
+공식 로컬 프로그램을 도구 없이 실행해 응답만 받는 방식이며, 웹이 다른 서비스의 로그인 정보를 가져오지 않습니다. 계정 모드에는 환경의 API 키를 넘기지 않습니다. 고른 프로그램이 이 PC에 없으면 화면이 연결 방법을 ‘API 키’로 바꿔 보여 주며, 요청을 보낸 뒤 서버가 다른 서비스로 바꾸지는 않습니다. 설치 확인은 로그인 성공이나 잔여 한도를 뜻하지 않습니다. 주소로 연결할 때 이 PC 밖의 주소는 https만 받습니다(키가 암호화되지 않은 채 전송되지 않도록). API 키는 기록·보고서·브라우저 저장소에 남기지 않고 요청할 때만 사용합니다(서비스·방식·모델·주소 선택만 기억합니다).
 
 공식 근거: [Codex 인증](https://learn.chatgpt.com/docs/auth), [Codex 비대화형 실행](https://learn.chatgpt.com/docs/non-interactive-mode), [Claude Code 비대화형 실행](https://code.claude.com/docs/en/headless), [Claude 사용 조건](https://code.claude.com/docs/en/legal-and-compliance), [Gemini 인증](https://geminicli.com/docs/get-started/authentication/), [Gemini 도구 제한](https://geminicli.com/docs/reference/policy-engine/).
 

@@ -176,3 +176,20 @@ assert.deepEqual(diff.parseUnified(dashes)[2].left, [2, "--y"]);
 assert.deepEqual(diff.lineCounts({created: true, after: "a\nb\n"}), {add: 2, rem: 0});
 '''.replace('DIFF', json.dumps((APP / 'diff.js').as_uri()))
     run(script)
+
+
+def test_ai_connection_defaults_and_missing_fields():
+    run('''
+const rows = [{id: "codex", installed: false}, {id: "claude", installed: true, logged_in: true}, {id: "gemini", installed: true}, {id: "compatible", installed: false}];
+assert.deepEqual(core.pickConnection(rows), {service: "claude", mode: "cli"});
+// A program that is not on this PC is reached with an API key instead of being refused.
+assert.deepEqual(core.pickConnection(rows, {service: "codex", mode: "cli"}), {service: "codex", mode: "api"});
+assert.deepEqual(core.pickConnection(rows, {service: "compatible"}), {service: "compatible", mode: "api"});
+assert.deepEqual(core.pickConnection([{id: "claude", installed: false}, {id: "compatible"}]), {service: "compatible", mode: "api"});
+assert.equal(core.connectionProblem({service: "claude", mode: "cli"}), null);
+assert.match(core.connectionProblem({service: "claude", mode: "api", model: "m"}), /API 키/);
+assert.match(core.connectionProblem({service: "compatible", mode: "api", model: "m"}), /주소/);
+assert.match(core.connectionProblem({service: "compatible", mode: "api", base_url: "http://localhost:11434/v1"}), /모델/);
+assert.equal(core.connectionProblem({service: "compatible", mode: "api", base_url: "http://localhost:11434/v1", model: "llama3.1"}), null);
+assert.equal(core.aiName("compatible", "llama3.1"), "llama3.1"); assert.equal(core.aiName("claude"), "Claude Code");
+''')

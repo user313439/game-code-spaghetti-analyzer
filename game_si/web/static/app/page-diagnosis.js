@@ -110,19 +110,27 @@ export async function render(view, ctx, {jobId}) {
       h("p", {class: "sub"}, `부르는 ${label} ${v.fout} · 불리는 ${label} ${v.fin} · ${v.in_cycle ? "순환 고리 안" : "순환 고리 밖"}`),
       unit ? h("button", {class: "btn ghost sm block", type: "button", onclick: () => openCard(unit.fqn)}, "진단서에서 자세히 보기") : null);
   }
+  const viewHelp = h("p", {class: "help"});
+  const helpText = which => which === "map" ? `점을 누르면 그 ${label}의 연결만 보입니다. 휠로 확대·축소합니다.` : `${obj(label)} 누르면 점수의 이유와 연결이 펼쳐집니다.`;
+  viewHelp.textContent = helpText("cards");
   function setView(which) {
+    viewHelp.textContent = helpText(which);
     viewSeg.querySelectorAll("button").forEach(b => { b.classList.toggle("on", b.dataset.v === which); b.setAttribute("aria-pressed", String(b.dataset.v === which)); });
     mapCard.hidden = which !== "map";
     cards.hidden = which === "map";
     if (which === "map") { ensureMap(); map.refresh(); }
   }
   function showOnMap(id) { setView("map"); requestAnimationFrame(() => map.focusOn(id)); }
-  function openCard(id) {
+  function openCard(id, flash = false) {
     const index = data.units.findIndex(u => u.fqn === id);
     if (index >= FIRST_CARDS && !showAll) { showAll = true; drawCards(); }
     setView("cards");
     const el = cards.querySelector(`#${CSS.escape(`fc-${id}`)}`);
-    if (el) { el.classList.add("open"); el.scrollIntoView({behavior: "smooth", block: "center"}); }
+    if (!el) return;
+    el.classList.add("open");
+    el.querySelector(".fhead")?.setAttribute("aria-expanded", "true");
+    el.scrollIntoView({behavior: "smooth", block: "start"});
+    if (flash) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
   }
   const viewSeg = h("div", {class: "seg"},
     h("button", {type: "button", class: "on", "aria-pressed": "true", dataset: {v: "cards"}, onclick: () => setView("cards")}, "진단서"),
@@ -136,14 +144,17 @@ export async function render(view, ctx, {jobId}) {
   const panel = createPrescriptionPanel(ctx, {jobId, data, onPlan: names => {
     if (names.join("|") === plan.join("|")) return;   // polling repeats the same plan; keep cards as they are
     plan = names; drawCards(); map?.setPlan(plan);
+  }, onFocus: id => {
+    // Same view, that file: on the map it is picked and centred; in the report its card opens.
+    if (!mapCard.hidden && map) { map.focusOn(id); mapCard.scrollIntoView({behavior: "smooth", block: "nearest"}); }
+    else openCard(id, true);
   }});
   view.append(h("section", {class: "wrap wide"},
     h("div", {class: "page-head"},
-      h("div", null, h("div", {class: "eyebrow"}, `엉킴 진단 · ${job.name} · ${lang} ${s.units}개 ${label}${data.round ? ` · ${data.round}라운드 수정본 기준` : ""}`), h("h1", {class: "h1"}, data.headline),
+      h("div", null, h("div", {class: "eyebrow"}, `엉킴 진단 · ${lang} ${s.units}개 ${label}${data.round ? ` · ${data.round}라운드 수정본 기준` : ""}`), h("h1", {class: "h1"}, data.headline),
         s.backend === "clang" && s.state === "complete" ? h("p", {class: "chip good"}, "✓ 정밀 분석(Clang) · 모든 파일을 컴파일러 기준으로 해석했습니다") : null,
         s.state === "partial" && s.backend === "clang" ? h("p", {class: "chip warn"}, `⚠ ${s.compiler_error_files || 0}개 파일에서 컴파일 오류가 있어 일부만 해석했습니다`) : null,
-        s.state === "partial" && s.backend !== "clang" ? h("p", {class: "chip warn"}, `⚠ ${s.syntax_files}개 파일은 일부 문법을 건너뛰고 분석했습니다`) : null),
-      viewSeg),
+        s.state === "partial" && s.backend !== "clang" ? h("p", {class: "chip warn"}, `⚠ ${s.syntax_files}개 파일은 일부 문법을 건너뛰고 분석했습니다`) : null)),
     h("div", {class: "layout"},
       h("div", null,
         h("div", {class: "sum"},
@@ -151,6 +162,8 @@ export async function render(view, ctx, {jobId}) {
           h("div", {class: "card stat"}, h("b", null, s.cycle_size > 1 ? `${s.cycle_size}개 ${label}` : "없음"), h("span", null, "서로 꼬리를 무는 순환 고리")),
           h("div", {class: "card stat"}, h("b", null, `${s.links.toLocaleString()}개`), h("span", null, `${label} 사이 연결선`)),
           h("div", {class: "card stat"}, h("b", null, worst ? `CC ${worst.cc}` : "—"), h("span", null, worst ? `가장 복잡한 함수 · ${worst.name}` : "함수 정보 없음"))),
+        // The tabs sit right above what they switch.
+        h("div", {class: "viewbar"}, viewSeg, viewHelp),
         cards, mapCard,
         h("p", {class: "foot"}, h("a", {href: reportHref(), target: "_blank", rel: "noopener", onclick: e => { e.currentTarget.href = reportHref(); }}, "원본 HTML 보고서 열기 ↗"),
           " · G-SI는 이 프로젝트 안에서의 순위(0~100)이며, 먼저 살펴볼 곳을 고르는 데 씁니다.")),

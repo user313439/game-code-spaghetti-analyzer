@@ -14,11 +14,28 @@ import tempfile
 import threading
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 from .change_rules import C_FAMILY, includes, resolves_to, unsafe_text
 
 SERVICES = {'codex': 'Codex', 'claude': 'Claude Code', 'gemini': 'Gemini CLI'}
+# Any other AI: most services and local model servers speak the OpenAI chat-completions API.
+COMPATIBLE = 'compatible'
+CONNECTIONS = {**SERVICES, COMPATIBLE: '다른 AI'}
+PRESETS = [
+    {'name': 'OpenAI (ChatGPT)', 'url': 'https://api.openai.com/v1'},
+    {'name': 'Google Gemini', 'url': 'https://generativelanguage.googleapis.com/v1beta/openai'},
+    {'name': 'Anthropic Claude', 'url': 'https://api.anthropic.com/v1'},
+    {'name': 'OpenRouter (여러 AI)', 'url': 'https://openrouter.ai/api/v1'},
+    {'name': 'DeepSeek', 'url': 'https://api.deepseek.com/v1'},
+    {'name': 'Mistral', 'url': 'https://api.mistral.ai/v1'},
+    {'name': 'Groq', 'url': 'https://api.groq.com/openai/v1'},
+    {'name': 'Ollama (이 PC)', 'url': 'http://localhost:11434/v1', 'local': True},
+    {'name': 'LM Studio (이 PC)', 'url': 'http://localhost:1234/v1', 'local': True},
+]
+LOCAL_HOSTS = {'localhost', '127.0.0.1', '::1'}
+MODEL_NAME = re.compile(r'[A-Za-z0-9_.:/@-]{1,100}')
 EXTENSIONS = {'.c', '.cpp', '.cc', '.cxx', '.h', '.hpp', '.cs'}
 MAX_FILE_BYTES = 180_000
 CLI_TIMEOUT = 600   # a change over several files can take minutes; the page offers a cancel button
@@ -379,7 +396,111 @@ def capabilities():
             row['logged_in'] = claude_logged_in(command)
             row['login_command'] = subprocess.list2cmdline(command + ['auth', 'login'])
         rows.append(row)
+    rows.append({'id': COMPATIBLE, 'name': CONNECTIONS[COMPATIBLE], 'installed': False, 'api': True, 'presets': PRESETS})
     return rows
+
+
+def check_base_url(url) -> str:
+    """Address of an OpenAI-compatible API. The key travels to it, so it must be https unless the
+    server runs on this PC (Ollama, LM Studio); no user:password part, no query."""
+    if not isinstance(url, str) or not url.strip() or len(url) > 300:
+        raise ValueError('연결할 AI의 주소를 입력해 주세요. 예: https://api.openai.com/v1')
+    parts = urllib.parse.urlsplit(url.strip())
+    host = (parts.hostname or '').lower()
+    if parts.scheme not in {'http', 'https'} or not host or parts.username or parts.password or parts.query or parts.fragment:
+        raise ValueError('AI 주소는 https://로 시작하는 주소여야 합니다. 예: https://api.openai.com/v1')
+    if parts.scheme == 'http' and host not in LOCAL_HOSTS:
+        raise ValueError('이 PC 밖의 AI 주소는 https://로 시작해야 합니다(키가 암호화되지 않은 채 전송되지 않도록).')
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path.rstrip('/'), '', ''))
+
+
+def validate_connection(body) -> None:
+    """Same rules for the prescription, the review and the change preview."""
+    service, mode = body.get('service'), body.get('mode')
+    if service not in CONNECTIONS or mode not in {'cli', 'api'}:
+        raise ValueError('AI 연결 방식을 선택해 주세요.')
+    model = body.get('model', '')
+    if model and not MODEL_NAME.fullmatch(model):
+        raise ValueError('모델 이름을 확인해 주세요.')
+    if service == COMPATIBLE:
+        check_base_url(body.get('base_url', ''))
+        if not model:
+            raise ValueError('사용할 모델 이름을 입력해 주세요. ‘모델 목록 불러오기’로 고를 수 있습니다.')
+        return
+    if mode == 'api' and (not body.get('api_key') or not model):
+        raise ValueError('본인 API 키와 모델 이름이 필요합니다.')
+
+
+def connection_extras(body) -> dict:
+    # Only an address-based connection needs more than service/mode/model/key.
+    return {'base_url': body.get('base_url', '')} if body.get('service') == COMPATIBLE else {}
+
+
+def _json_request(url, key, body=None, timeout=CLI_TIMEOUT):
+    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+    if key:
+        headers['Authorization'] = 'Bearer ' + key
+    data = None if body is None else json.dumps(body).encode('utf8')
+    request = urllib.request.Request(url, data=data, headers=headers, method='GET' if body is None else 'POST')
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return json.loads(response.read(4_000_000))
+
+
+def _http_message(exc) -> str:
+    if isinstance(exc, urllib.error.HTTPError):
+        return {401: 'API 키가 맞지 않습니다.', 403: '이 키로는 사용할 수 없는 기능이나 모델입니다.',
+                404: '주소나 모델 이름을 찾지 못했습니다. 주소 끝이 /v1처럼 API 경로까지 들어갔는지 확인해 주세요.',
+                429: '사용 한도나 요청 빈도 제한에 걸렸습니다. 잠시 뒤 다시 시도해 주세요.'}.get(
+            exc.code, f'AI 서버가 오류를 돌려주었습니다(HTTP {exc.code}).')
+    return 'AI 주소에 연결하지 못했습니다. 주소와 인터넷 연결, 이 PC의 AI 서버가 켜져 있는지 확인해 주세요.'
+
+
+def list_models(base_url, api_key='') -> list[str]:
+    """Model names the server offers (GET /models). Asks for nothing to be generated."""
+    base = check_base_url(base_url)
+    try:
+        data = _json_request(base + '/models', api_key, timeout=15)
+    except (urllib.error.URLError, TimeoutError, ValueError) as exc:
+        raise ValueError(_http_message(exc)) from exc
+    rows = data.get('data') if isinstance(data, dict) else data
+    names = [row.get('id') if isinstance(row, dict) else row for row in rows or []]
+    return sorted({n for n in names if isinstance(n, str) and MODEL_NAME.fullmatch(n)})[:200]
+
+
+def _reply_json(text):
+    # Reasoning models may think aloud first; some wrap the JSON in prose or a code fence.
+    text = re.sub(r'<think>.*?</think>', '', text or '', flags=re.S).strip()
+    try:
+        return parse_json(text)
+    except json.JSONDecodeError:
+        start, end = text.find('{'), text.rfind('}')
+        if start < 0 or end <= start:
+            raise
+        return json.loads(text[start:end + 1])
+
+
+def _compatible(prompt, model, key, base_url, schema, guidance, validate):
+    url = check_base_url(base_url) + '/chat/completions'
+    system = guidance + '\n답은 다음 JSON 스키마를 따르는 JSON 객체 하나만 쓴다. 다른 문장은 쓰지 않는다.\n' + json.dumps(schema, ensure_ascii=False)
+    body = {'model': model, 'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': prompt}],
+            'response_format': {'type': 'json_object'}}
+    try:
+        try:
+            data = _json_request(url, key, body)
+        except urllib.error.HTTPError as exc:
+            if exc.code not in {400, 422}:
+                raise
+            body.pop('response_format')   # some servers do not know JSON mode; the prompt still asks for JSON
+            data = _json_request(url, key, body)
+    except (urllib.error.URLError, TimeoutError) as exc:
+        raise ValueError(_http_message(exc)) from exc
+    try:
+        content = data['choices'][0]['message']['content']
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ValueError('AI 서버의 응답 형식을 읽지 못했습니다. OpenAI 호환 주소인지 확인해 주세요.') from exc
+    if isinstance(content, list):
+        content = ''.join(part.get('text', '') for part in content if isinstance(part, dict))
+    return validate(_reply_json(content))
 
 
 def validate_advice(data):
@@ -525,16 +646,19 @@ def run_cli(command, prompt, root):
             OWNERS.pop(process, None)
 
 
-def call_provider(service, mode, prompt, model='', api_key='', *, schema=None, guidance=None, validate=None,
+def call_provider(service, mode, prompt, model='', api_key='', *, base_url='', schema=None, guidance=None, validate=None,
                   gemini_hint='JSON 형식의 개선 제안만 반환하세요. 도구를 사용하지 마세요.'):
     schema = schema or ADVICE_SCHEMA
     guidance = guidance or GUIDANCE
     validate = validate or validate_advice
     if service == 'openai':
         service = 'codex'
+    if service == COMPATIBLE:
+        validate_connection({'service': service, 'mode': 'api', 'model': model, 'base_url': base_url})
+        return _compatible(prompt, model, api_key, base_url, schema, guidance, validate)
     if service not in SERVICES or mode not in {'cli', 'api'}:
         raise ValueError('AI 연결 방식을 확인해 주세요.')
-    if model and not re.fullmatch(r'[A-Za-z0-9_.:-]{1,100}', model):
+    if model and not MODEL_NAME.fullmatch(model):
         raise ValueError('모델 이름을 확인해 주세요.')
     if mode == 'api':
         if not api_key or len(api_key) > 500:
@@ -544,7 +668,8 @@ def call_provider(service, mode, prompt, model='', api_key='', *, schema=None, g
         return _api(service, prompt, model, api_key, schema, guidance, validate)
     command = executable(service)
     if not command:
-        raise ValueError(f'{SERVICES[service]} 공식 프로그램을 설치하고 본인 계정으로 로그인해 주세요.')
+        raise ValueError(f'이 PC에서 {SERVICES[service]} 프로그램을 찾지 못했습니다. 연결 방법을 ‘API 키’로 바꾸거나, '
+                         '프로그램을 설치하고 로그인한 뒤 다시 시도해 주세요.')
     with tempfile.TemporaryDirectory(prefix='game-si-advice-') as folder:
         root = Path(folder)
         output = root / 'reply.json'
