@@ -94,11 +94,8 @@ class AssistantReviews:
         return assistant.validate_scope(advice,list(hashes))
 
     def start(self,ident,body):
+        assistant.validate_connection(body)
         service,mode=body.get('service'),body.get('mode')
-        if service not in assistant.SERVICES or mode not in {'cli','api'}:
-            raise ValueError('AI 연결 방식을 선택해 주세요.')
-        if mode=='api' and (not body.get('api_key') or not body.get('model')):
-            raise ValueError('본인 API 키와 모델 이름이 필요합니다.')
         with self.lock:
             record=self._record(ident)
             if self.busy(ident) or self.owner.get(ident).get('state')=='running':
@@ -122,7 +119,8 @@ class AssistantReviews:
 
     def _run(self,ident,body,prompt,key):
         try:
-            data=assistant.call_provider(body['service'],body['mode'],prompt,body.get('model',''),body.get('api_key',''))
+            data=assistant.call_provider(body['service'],body['mode'],prompt,body.get('model',''),body.get('api_key',''),
+                                       **assistant.connection_extras(body))
             with self.lock:
                 record=self.records[ident];state=record['active']
                 selected,_,hashes=self._snapshot(ident)

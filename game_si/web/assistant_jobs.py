@@ -227,11 +227,8 @@ class AssistantJobs:
         selected = [available[name] for name in sorted(names)]
         if len({c['file_path'] for c in selected}) != len(selected):
             raise ValueError('같은 파일의 후보는 하나만 선택해 주세요.')
+        assistant.validate_connection(body)
         service, mode = body.get('service'), body.get('mode')
-        if service not in assistant.SERVICES or mode not in {'cli', 'api'}:
-            raise ValueError('AI 연결 방식을 선택해 주세요.')
-        if mode == 'api' and not body.get('api_key'):
-            raise ValueError('사용자 본인의 API 키가 필요합니다.')
         root = self.base_source(ident)
         sources = {c['file_path']: assistant.source_file(root, c['file_path']).read_bytes() for c in selected}
         if action == 'preview':
@@ -333,7 +330,8 @@ class AssistantJobs:
                     self.states[ident]['context']=context
             self._progress(ident, 'ai', 'AI가 선택한 코드를 함께 검토하고 있습니다.', 1, indeterminate=True)
             with assistant.owned_by(('assistant', ident, run)):
-                data = assistant.call_provider(body['service'], body['mode'], prompt, body.get('model', ''), body.get('api_key', ''))
+                data = assistant.call_provider(body['service'], body['mode'], prompt, body.get('model', ''), body.get('api_key', ''),
+                                                  **assistant.connection_extras(body))
             assistant.validate_scope(data,list(sources),preview=body['action']=='preview',companions=set(companions))
             validate_target_methods(data,methods)
             if body['action']=='preview':

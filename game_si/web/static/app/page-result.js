@@ -139,6 +139,8 @@ export async function render(view, ctx, {jobId}) {
             h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 함수·초과 복잡도·전역 상태 접근을 처음 상태와 비교한 값입니다. G-SI 같은 순위가 아니라 실제 양이라 작은 개선도 드러납니다."),
             cur.same_units ? null : h("p", {class: "chip warn"}, `⚠ 분석된 ${label} 구성이 처음과 달라(추가·삭제) 총량을 그대로 비교하기 어렵습니다`),
             parts), chart),
+          // The total above compares with the first analysis; these four compare with the round before.
+          h("p", {class: "help sum-note"}, `아래 네 값은 ${n > 1 ? `${n - 1}라운드` : "처음 상태"}와 비교한 이번 ${n}라운드의 변화입니다.`),
           h("div", {class: "sum"}, ...KEYS.map(([key, title]) => stat(key, title))),
           h("div", {class: "card sec"}, h("div", {class: "h2"}, "함수별 변화"), h("p", {class: "help"}, "다시 분석해서 측정한 값입니다."), fnTable),
           h("div", {class: "card sec"}, h("div", {class: "h2"}, `${label} 점수`), h("p", {class: "help"}, `G-SI는 프로젝트 안에서의 순위라서, 다른 ${label === "파일" ? "파일과" : "클래스와"} 비교한 위치가 같으면 그대로입니다.`), fileTable),

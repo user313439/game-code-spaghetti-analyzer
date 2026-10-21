@@ -223,3 +223,39 @@ export function whyRows(unit, summary) {
 export function barTone(pct) {
   return pct >= 85 ? "hot" : pct >= 60 ? "warm" : "cool";
 }
+
+// ---------------------------------------------------------------- AI connection
+export const AI_LABELS = {claude: "Claude", codex: "ChatGPT (Codex)", gemini: "Gemini", compatible: "다른 AI (주소로 연결)"};
+const PROGRAM_NAMES = {claude: "Claude Code", codex: "Codex", gemini: "Gemini CLI"};
+
+// Name shown next to a result: the program, or the model for an address-based connection.
+export function aiName(service, model = "") {
+  if (service === "compatible") return model || "다른 AI";
+  return PROGRAM_NAMES[service] || service || "";
+}
+
+// First choice when nothing is remembered: a program on this PC that is logged in, then any
+// program on this PC, then a connection by address. A program that is not on this PC is reached
+// with an API key instead, so the request can still go through.
+export function pickConnection(connections, saved = {}) {
+  const ids = connections.map(c => c.id);
+  const programs = connections.filter(c => c.id !== "compatible");
+  let service = ids.includes(saved.service) ? saved.service
+    : (programs.find(c => c.installed && c.logged_in !== false) || programs.find(c => c.installed))?.id
+      || (ids.includes("compatible") ? "compatible" : ids[0] || "claude");
+  const chosen = connections.find(c => c.id === service);
+  let mode = saved.service === service && saved.mode === "api" ? "api" : "cli";
+  if (service === "compatible" || (chosen && !chosen.installed)) mode = "api";
+  return {service, mode};
+}
+
+// What is still missing before the request can be sent (null when complete).
+export function connectionProblem(value) {
+  if (value.service === "compatible") {
+    if (!value.base_url) return "연결할 AI의 주소를 입력해 주세요.";
+    if (!value.model) return "사용할 모델 이름을 입력해 주세요. ‘모델 목록 불러오기’로 고를 수 있습니다.";
+    return null;
+  }
+  if (value.mode === "api" && (!value.api_key || !value.model)) return "API 키와 모델 이름을 입력해 주세요.";
+  return null;
+}

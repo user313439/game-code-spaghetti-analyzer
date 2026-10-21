@@ -1,4 +1,4 @@
-import {elapsedText, obj} from "./core.js";
+import {aiName, elapsedText, obj} from "./core.js";
 import {diffView, lineCounts} from "./diff.js";
 import {connectionPicker} from "./prescription.js";
 import {fill, h, notice, progressBlock} from "./ui.js";
@@ -44,7 +44,7 @@ export async function render(view, ctx, {jobId, query}) {
     // After a cancelled or failed request the same files stay picked, ready to try again.
     const retry = ["cancelled", "failed"].includes(state.state) && state.action === "preview" ? state.candidates || [] : [];
     const chosen = new Set((retry.length ? retry : pick || !plan.length ? [] : plan.map(f => f.name)).filter(n => editable.has(n)));
-    const picker = connectionPicker(connections);
+    const picker = connectionPicker(connections, ctx.api);
     const go = h("button", {class: "btn primary", type: "button"}, "변경안 만들기 →");
     const count = h("span", {class: "sub"});
     const sync = () => { count.textContent = `${chosen.size}개 ${label} 선택 · 최대 5개`; go.disabled = !chosen.size; };
@@ -90,8 +90,9 @@ export async function render(view, ctx, {jobId, query}) {
     fill(bar, h("div", {class: "in"}, count, h("span", {class: "push"}), go));
     sync();
     go.addEventListener("click", async () => {
+      const missing = picker.problem();
+      if (missing) { say(missing); return; }
       const body = {action: "preview", candidates: [...chosen], ...picker.value()};
-      if (body.mode === "api" && (!body.api_key || !body.model)) { say("API 키와 모델 이름을 입력해 주세요."); return; }
       const fromPlan = plan.length && !pick && [...chosen].every(n => plan.some(f => f.name === n));
       body[fromPlan ? "use_prescription" : "direct"] = true;
       go.disabled = true;
@@ -147,10 +148,17 @@ export async function render(view, ctx, {jobId, query}) {
         h("b", null, f.path), h("div", {class: "tags"}, extra, h("span", {class: "plus"}, `+${f.add}`), h("span", {class: "minus"}, `−${f.rem}`)));
       return el;
     };
+    // Files the AI read (the picked files and their same-name headers) but decided to leave as they are.
+    const keptItems = kept.map(r => ({path: r.path, role: "kept", review: r}));
+    const keptItem = f => h("button", {type: "button", class: `fitem kept ${f === selected ? "on" : ""}`, "aria-pressed": String(f === selected), dataset: {path: f.path},
+      onclick: () => { selected = f; paint(); left.querySelector(`[data-path="${CSS.escape(f.path)}"]`)?.focus(); }},
+      h("b", null, f.path), h("div", {class: "tags"}, h("span", {class: "tag keep"}, "그대로 둠")));
     function paint() {
-      fill(left, h("div", {class: "h3"}, "처방 대상"),
+      fill(left, h("div", {class: "h3"}, `바뀌는 파일 ${targets.length}개`),
         ...targets.map(f => item(f, h("span", {class: "tag chg"}, reviews.get(f.path)?.change_type === "declarations" ? "선언 정리" : "변경"))),
-        ...kept.map(r => h("div", {class: "fitem static"}, h("b", null, r.path), h("div", {class: "tags"}, h("span", {class: "tag keep"}, "유지")))),
+        keptItems.length ? h("details", {class: "group kept", open: keptItems.includes(selected)}, h("summary", null, `AI가 함께 읽고 그대로 둔 파일 ${keptItems.length}개`),
+          h("p", {class: "help"}, "처방에 들어 있거나 고른 파일의 짝 헤더라서 함께 보냈지만, 이번 변경안에서는 바꾸지 않은 파일입니다. 누르면 그대로 둔 이유를 볼 수 있습니다."),
+          ...keptItems.map(keptItem)) : null,
         partners.length ? h("details", {class: "group", open: partners.includes(selected)}, h("summary", null, `함께 수정되는 파일 ${partners.length}개`),
           h("p", {class: "help"}, "#include/using 줄만 바뀝니다."), ...partners.map(f => item(f, h("span", {class: "tag keep"}, "include")))) : null,
         created.length ? h("div", null, h("div", {class: "h3 gap"}, "새 파일"), ...created.map(f => item(f, h("span", {class: "tag new"}, "새 헤더")))) : null,
@@ -160,11 +168,24 @@ export async function render(view, ctx, {jobId, query}) {
         el.classList.toggle("on", on);
         if (el.tagName === "BUTTON") el.setAttribute("aria-pressed", String(on));
       }
+      const r = reviews.get(selected.path);
+      if (selected.role === "kept") {
+        fill(center, h("div", {class: "dhead"}, h("b", null, selected.path), h("span", {class: "push sub"}, "변경 없음")),
+          h("p", {class: "nochange"}, "이 파일은 이번 변경안에서 바뀌지 않습니다. 오른쪽에서 AI가 그대로 둔 이유를 볼 수 있습니다."));
+        // A review the server filled in for a context-only file says nothing of its own; say it plainly.
+        const filled = (r?.finding || "").startsWith("AI가 이 파일을 따로 설명하지 않았습니다");
+        fill(right, h("div", {class: "eyebrow"}, `AI 소견 · ${selected.path}`),
+          filled || !r ? h("div", {class: "bubble"}, h("h4", null, "왜 함께 보냈나요?"), "고른 파일과 같은 이름의 헤더라서 문맥으로 함께 보냈습니다. AI는 이 파일을 바꾸지 않았습니다.")
+            : [h("div", {class: "bubble"}, h("h4", null, "이 파일은 어떤 역할인가요?"), r.role),
+              h("div", {class: "bubble"}, h("h4", null, "왜 그대로 두나요?"), r.reason),
+              h("div", {class: "bubble"}, h("h4", null, "AI가 본 내용"), r.finding),
+              r.change ? h("div", {class: "bubble"}, h("h4", null, "AI의 판단"), r.change) : null]);
+        return;
+      }
       fill(center, h("div", {class: "dhead"}, h("b", null, selected.path),
-        ...(reviews.get(selected.path)?.targets || []).map(t => h("span", {class: "chip mono"}, t)),
+        ...(r?.targets || []).map(t => h("span", {class: "chip mono"}, t)),
         ...(selected.added_helpers || []).map(t => h("span", {class: "chip mono new"}, `새 함수 ${t}`)),
         h("span", {class: "push sub"}, h("span", {class: "plus"}, `+${selected.add}`), " ", h("span", {class: "minus"}, `−${selected.rem}`))), diffView(selected));
-      const r = reviews.get(selected.path);
       if (selected.role === "companion") {
         fill(right, h("div", {class: "eyebrow"}, `함께 수정 · ${selected.path}`), h("div", {class: "bubble"}, h("h4", null, "왜 함께 바꾸나요?"), companions.get(selected.path) || ""),
           h("div", {class: "bubble"}, h("h4", null, "무엇이 바뀌나요?"), "#include/using 줄만 바뀝니다. 이 파일의 함수와 동작 코드는 그대로입니다."));
@@ -186,7 +207,7 @@ export async function render(view, ctx, {jobId, query}) {
       h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `AI 리팩토링 · ${targets.length}개 ${label} 변경안`), h("h1", {class: "h1"}, o.title || "변경안"))),
       slot,
       h("div", {class: "card overview"}, h("div", {class: "row-gap"}, h("div", {class: "h2"}, "전체 요약"),
-        h("span", {class: "sub"}, `${state.service === "claude" ? "Claude Code" : state.service === "codex" ? "Codex" : state.service} · ${state.finished_at && state.started_at ? Math.round(state.finished_at - state.started_at) + "초" : ""}`)),
+        h("span", {class: "sub"}, `${aiName(state.service, state.model)} · ${state.finished_at && state.started_at ? Math.round(state.finished_at - state.started_at) + "초" : ""}`)),
         h("div", {class: "ovgrid"}, ...[["무엇이 문제인가요?", o.problem], ["왜 바꿔야 하나요?", o.reason], ["어떻게 바꾸나요?", o.change], ["무엇이 좋아지나요?", o.expected_effect]]
           .map(([q, a], i) => h("div", {class: "q"}, h("h4", null, h("i", null, i + 1), q), a || "")))),
       h("div", {class: "bench"}, left, center, right));

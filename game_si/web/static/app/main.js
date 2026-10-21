@@ -37,9 +37,9 @@ function setTheme(value) {
 
 // Header steps for job pages. available: which later steps can be opened.
 ctx.setSteps = (jobId, active, available = {}) => {
-  const nav = document.getElementById("steps");
-  if (!jobId) { nav.hidden = true; nav.replaceChildren(); return; }
-  nav.hidden = false;
+  const nav = document.getElementById("steps"), bar = document.getElementById("jobbar");
+  if (!jobId) { bar.hidden = true; nav.replaceChildren(); return; }
+  bar.hidden = false;
   fill(nav, ...STEPS.map(([name, suffix], i) => {
     const done = i < active, on = i === active;
     const open = i === 0 || (i === 1 && available.diagnosis !== false) || (i === 2 && available.refactor) || (i === 3 && available.result);
@@ -49,7 +49,7 @@ ctx.setSteps = (jobId, active, available = {}) => {
       : h("span", {class: `step ${done ? "done" : ""} ${on ? "on" : ""} ${open ? "" : "locked"}`, "aria-current": on ? "step" : null}, ...content);
   }));
 };
-ctx.setCrumb = text => { document.getElementById("crumb").textContent = text || ""; };
+ctx.setCrumb = text => { const el = document.getElementById("crumb"); el.textContent = text || ""; el.title = text || ""; };
 
 function shell() {
   const header = h("header", {class: "topbar"},
@@ -58,10 +58,13 @@ function shell() {
       h("a", {href: "#/", dataset: {nav: "new"}}, "새 분석"),
       h("a", {href: "#/history", dataset: {nav: "history"}}, "분석 기록"),
       h("a", {href: "#/examples", dataset: {nav: "examples"}}, "예시 결과")),
-    h("div", {id: "crumb", class: "crumb"}),
-    h("nav", {id: "steps", class: "steps", "aria-label": "진행 단계", hidden: true}),
     h("button", {id: "theme", class: "icon-btn", type: "button", onclick: () => setTheme(theme() === "dark" ? "light" : "dark")}, "☾"));
-  document.body.prepend(h("a", {class: "skip", href: "#view", onclick: e => { e.preventDefault(); document.getElementById("view").focus(); }}, "본문으로 이동"), header);
+  // Job pages: which code is open and where the user is in the four steps, under the main header.
+  const jobbar = h("div", {id: "jobbar", class: "jobbar", hidden: true},
+    h("div", {class: "jobbar-in"},
+      h("div", {class: "jobtitle"}, h("small", null, "분석 중인 코드"), h("b", {id: "crumb"})),
+      h("nav", {id: "steps", class: "steps", "aria-label": "진행 단계"})));
+  document.body.prepend(h("a", {class: "skip", href: "#view", onclick: e => { e.preventDefault(); document.getElementById("view").focus(); }}, "본문으로 이동"), header, jobbar);
   setTheme(theme());
 }
 
