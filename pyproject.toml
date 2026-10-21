@@ -40,4 +40,4 @@ include = ["game_si*"]
 exclude = ["tests*", "benchmarks*", "reports*", "dashboard*", "csharp-analyzer*"]
 
 [tool.setuptools.package-data]
-"game_si.web" = ["static/*.html", "static/*.css", "static/*.js"]
+"game_si.web" = ["static/*.css", "static/*.js", "static/app/*.html", "static/app/*.css", "static/app/*.js"]

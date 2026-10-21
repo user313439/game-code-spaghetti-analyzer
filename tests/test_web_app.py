@@ -75,7 +75,9 @@ def test_white_preview_preserves_saved_reports_data_and_access_rules(client):
     assert response.status_code == 200
     assert 'id="report-light-preview"' in response.text
     assert 'const data={score:42};' in response.text
-    assert response.text.replace(response.text[response.text.index('<style id="report-light-preview">'):response.text.index('</style>') + len('</style>')], '') == original
+    rendered = response.text.replace(response.text[response.text.index('<style id="report-light-preview">'):response.text.index('</style>') + len('</style>')], '')
+    injected = '<script id="report-layout-preview">' + (app_module().STATIC / 'report-embed.js').read_text('utf8') + '</script>'
+    assert rendered.replace(injected, '') == original
     assert page.read_text(encoding='utf-8') == original
     assert client.get(f'/results/{ident}/scoring.json?theme=light').json() == {'score': 42}
     assert client.get(f'/results/{ident}/scoring.json').json() == {'score': 42}
@@ -93,7 +95,9 @@ def test_white_preview_also_applies_to_existing_examples_without_replacing_them(
     assert white.status_code == 200
     assert 'id="report-light-preview"' in white.text
     assert '--bg:#f7f8f6' in white.text
-    assert '#hotspot-table{display:block;max-width:100%;min-height:160px;overflow-x:auto}' in white.text
+    assert '#hotspot-table{display:table;width:100%;max-width:none}' in white.text
+    assert '.report-table-scroll{width:100%;max-width:100%;min-height:160px;overflow-x:auto}' in white.text
+    assert 'id="report-layout-preview"' in white.text
     assert '#hotspot-table th.sortable[data-tooltip]::after{content:attr(data-tooltip)}' in white.text
     assert '[data-tooltip]::after{display:none;' in white.text
     assert '.gt-btn[data-grade="D"].gt-active{color:#061108}' in white.text
@@ -116,10 +120,22 @@ def test_blue_preview_has_its_own_palette_and_preserves_the_other_versions(clien
     assert 'sandbox allow-scripts allow-downloads' in response.headers['content-security-policy']
 
 
-def test_default_page_has_blue_styling_before_javascript_runs(client):
+def test_default_page_is_the_redesigned_app_with_theme_before_styles(client):
     response = client.get('/')
-    assert '<html lang="ko" data-preview-theme="blue">' in response.text
-    assert '<meta name="theme-color" content="#eaf2f9">' in response.text
+    text = response.text
+    assert response.status_code == 200 and '<main id="view"' in text
+    assert text.index('/ui/theme-init.js') < text.index('/ui/app.css') < text.index('/ui/main.js')
+    assert "script-src 'self'" in response.headers['content-security-policy']
+    assert '<script>' not in text and 'style=' not in text   # CSP forbids inline script/style
+
+
+def test_ui_assets_are_whitelisted_with_correct_types(client):
+    js = client.get('/ui/main.js')
+    assert js.status_code == 200 and js.headers['content-type'].startswith('text/javascript')
+    assert client.get('/ui/app.css').headers['content-type'].startswith('text/css')
+    for bad in ['/ui/index.html', '/ui/..%2Fapp.py', '/ui/Main.js', '/ui/missing.js', '/ui/app.css.map']:
+        assert client.get(bad).status_code == 404, bad
+    assert client.get('/legacy').status_code == 404 and client.get('/static/app.js').status_code == 404
 
 
 @pytest.fixture
@@ -205,7 +221,7 @@ def test_ui_resources_are_same_origin(client):
     response = client.get('/')
     assert response.status_code == 200
     assert "script-src 'self'" in response.headers['content-security-policy']
-    assert client.get('/static/app.js').status_code == 200
+    assert client.get('/ui/main.js').status_code == 200
 
 
 def test_cancelled_import_blocks_next_until_worker_exits(client, monkeypatch):

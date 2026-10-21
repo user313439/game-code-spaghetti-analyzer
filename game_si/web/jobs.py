@@ -13,6 +13,7 @@ from pathlib import Path
 
 import psutil
 
+from . import clang_presets
 from .inputs import inspect_source, target_path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -92,6 +93,10 @@ class JobManager:
 
     def ready(self, ident: str, source=None):
         scan = inspect_source(self.directory(ident) / 'input')
+        try:   # folders that are the prepared demo game: they can get the precise (Clang) analysis
+            scan['presets'] = clang_presets.detect(self.directory(ident) / 'input')
+        except OSError:
+            scan['presets'] = []
         with self.lock:
             if self.closed or ident in self.cancellations or self.records[ident]['state'] != 'importing':
                 return
@@ -149,6 +154,26 @@ class JobManager:
             self.update(ident, deleted_at=None)
             return self.get(ident)
 
+    def _resolve(self, ident, options):
+        # 'clang-auto': precise analysis with the build settings the app keeps for a recognised game.
+        if options.get('backend') != 'clang-auto':
+            return options
+        local = options.get('local_path', '').strip()
+        root = Path(local).resolve() if local else self.directory(ident) / 'input'
+        subdir = options.get('subdir', '.')
+        selected = root if subdir == '.' else target_path(root, subdir)
+        hit = clang_presets.match(selected) if selected.is_dir() else None
+        if not hit:
+            raise ValueError('이 폴더에는 준비된 빌드 설정이 없습니다. 기본 분석을 선택해 주세요.')
+        library = clang_presets.libclang()
+        if library is None:
+            raise ValueError('정밀 분석에 필요한 Clang 라이브러리를 찾지 못했습니다. 기본 분석을 선택해 주세요.')
+        folder = selected if hit['folder'] == '.' else selected / hit['folder']
+        database = clang_presets.write_database(folder, hit['key'], self.directory(ident) / 'compile_commands.json')
+        return {**options, 'lang': clang_presets.PRESETS[hit['key']]['language'], 'backend': 'clang',
+                'compile_commands': str(database), 'clang_library': str(library),
+                'preset': hit['key'], 'preset_folder': hit['folder']}
+
     def _command(self, ident, options):
         lang = options.get('lang', 'auto')
         backend = options.get('backend', 'tree-sitter')
@@ -190,6 +215,7 @@ class JobManager:
                 raise BusyError('현재 작업이 끝난 뒤 분석을 시작해 주세요.')
             if self.records[ident]['state'] != 'ready':
                 raise ValueError('새 소스를 가져온 뒤 분석을 시작해 주세요.')
+            options = self._resolve(ident, options)
             command = self._command(ident, options)
             self.update(ident, state='running', stage='분석기 준비', started_at=time.time(), options=options)
             worker = threading.Thread(target=self._run, args=(ident, command), daemon=True)
