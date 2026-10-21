@@ -7,8 +7,10 @@
 
 | 파일 | 용도 |
 |---|---|
-| `local-web-guide.md` | 로컬 웹 실행·GitHub/파일 입력·분석 기록·실제 시연 순서 |
-| `web-final-review.md` | 기본 라이트 블루 확정 후 검수와 남은 제출 작업. 웹 상태의 최신 기준 |
+| `local-web-guide.md` | 로컬 웹 실행·GitHub/파일 입력·정밀 분석(시연 게임)·분석 기록·실제 시연 순서 |
+| `ai-refactoring-guide.md` | 2026-10-20 재설계 웹의 AI 처방·리팩토링·검증 흐름, 변경안 검사 규칙, 엉킴 총량, AI 연결 |
+| `superpowers/specs/2026-10-19-web-redesign-design.md` | 웹 재설계 설계서(4단계 화면·라운드·처방 계약)와 구현과 다른 점 |
+| `web-final-review.md` | 10월 13일 기준 웹 검수 기록(재설계 이전). 현재 흐름은 위 두 안내서 기준 |
 | `benchmark-manifest.md` | 전체 검증 결과와 재현 명령. 보고서/발표 자료의 핵심 근거 |
 | `si-formula.md` | G-SI 공식, 가중치, 등급 체계 설명 |
 | `progress_checklist.md` | 산출물과 테스트 점검표 |
@@ -33,7 +35,11 @@
 | `progress_checklist.md` | 결과/보안/재현 점검표 |
 | `phase_e_survey.md` | 사용자 피드백 설문 양식 |
 | `local-web-guide.md` | 현재 웹 사용 안내 |
-| `web-final-review.md` | 현재 웹 검수·제출 전 상태 |
+| `ai-refactoring-guide.md` | AI 처방·리팩토링·검증 안내 |
+| `superpowers/specs/2026-10-19-web-redesign-design.md` | 웹 재설계 설계서 |
+| `web-final-review.md` | 10월 13일 웹 검수 기록(재설계 이전) |
+| `multi-advisor-verification-2026-10-18.md`, `joint-advisor-verification-2026-10-19.md`, `advisor-experience-verification-2026-10-18.md`, `ai-refactoring-verification-2026-10-18.md` | 재설계 이전 AI 검토 화면의 검증 기록 |
+| `maintenance-workflow-verification-2026-10-19.md` | OpenTyrian 실제 수정·빌드·계산 비교·직접 플레이 검증 기록 |
 
 ## 내부 작업 문서
 
