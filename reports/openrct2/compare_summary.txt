@@ -1,50 +1,50 @@
 === Phase B: G-SI vs Lizard (max CC) ===
 project:       openrct2
-scoring:       C:\Users\dudwl\Desktop\Projects\졸업작품\docs\_verification\2026-10-03-refinement\openrct2\scoring.json
+scoring:       C:\Users\dudwl\Desktop\Projects\졸업작품\docs\_verification\2026-10-22-cpp-scope\openrct2\scoring.json
 analyzed_path: C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\OpenRCT2\src\openrct2
 files: us=544 liz=1188 matched=544
-spearman(si vs liz_max_cc): rho=+0.5345  p=0
+spearman(si vs liz_max_cc): rho=+0.6583  p=0
 
 Top-N Jaccard:
   top- 5: 0.111
   top-10: 0.053
-  top-30: 0.250
+  top-30: 0.200
 
 Common top-30 (양쪽 모두 hotspot, 정렬 = G-SI rank):
   gsi# 1 liz# 1 | si=100.0 [E] liz_cc=559  park/Legacy.cpp
-  gsi# 4 liz#28 | si= 99.5 [E] liz_cc= 71  ride/Vehicle.cpp
-  gsi#12 liz# 3 | si= 98.3 [E] liz_cc=267  paint/track/coaster/TwisterRollerCoaster.cpp
-  gsi#13 liz# 2 | si= 98.1 [E] liz_cc=268  paint/track/coaster/CorkscrewRollerCoaster.cpp
-  gsi#14 liz#11 | si= 98.0 [E] liz_cc=150  paint/track/coaster/InvertedRollerCoaster.cpp
-  gsi#17 liz# 9 | si= 97.5 [E] liz_cc=174  drawing/Drawing.Sprite.cpp
-  gsi#20 liz# 6 | si= 97.0 [E] liz_cc=249  paint/track/coaster/StandUpRollerCoaster.cpp
-  gsi#23 liz#16 | si= 96.5 [E] liz_cc=115  paint/track/coaster/CompactInvertedCoaster.cpp
-  gsi#24 liz#23 | si= 96.4 [E] liz_cc= 88  paint/tile_element/Paint.Surface.cpp
-  gsi#25 liz# 4 | si= 96.2 [E] liz_cc=261  paint/track/coaster/LatticeTriangleTrack.cpp
+  gsi# 6 liz#28 | si= 99.3 [E] liz_cc= 71  ride/Vehicle.cpp
+  gsi# 9 liz#21 | si= 98.8 [E] liz_cc= 97  entity/Guest.cpp
+  gsi#17 liz# 3 | si= 97.7 [E] liz_cc=267  paint/track/coaster/TwisterRollerCoaster.cpp
+  gsi#18 liz# 2 | si= 97.5 [E] liz_cc=268  paint/track/coaster/CorkscrewRollerCoaster.cpp
+  gsi#19 liz#11 | si= 97.3 [E] liz_cc=150  paint/track/coaster/InvertedRollerCoaster.cpp
+  gsi#23 liz# 9 | si= 96.8 [E] liz_cc=174  drawing/Drawing.Sprite.cpp
+  gsi#27 liz#23 | si= 96.2 [E] liz_cc= 88  paint/tile_element/Paint.Surface.cpp
+  gsi#28 liz# 6 | si= 96.0 [E] liz_cc=249  paint/track/coaster/StandUpRollerCoaster.cpp
+  gsi#30 liz#18 | si= 95.7 [E] liz_cc=106  paint/track/coaster/JuniorRollerCoaster.cpp
 
 G-SI 단독 top-30 (Lizard top-30 에는 없음 — Phase B 정성 분석 후보):
-  gsi# 2 liz#174 | si= 99.8 [E] liz_cc= 16  Context.cpp
-  gsi# 3 liz#71 | si= 99.7 [E] liz_cc= 34  ride/Ride.cpp
-  gsi# 5 liz#105 | si= 99.4 [E] liz_cc= 24  drawing/Drawing.cpp
-  gsi# 6 liz#318 | si= 99.2 [E] liz_cc=  8  ride/RideData.cpp
-  gsi# 7 liz#83 | si= 99.1 [E] liz_cc= 30  GameState.cpp
-  gsi# 8 liz#60 | si= 98.9 [E] liz_cc= 40  world/Map.cpp
-  gsi# 9 liz#426 | si= 98.7 [E] liz_cc=  3  Diagnostic.cpp
-  gsi#10 liz#281 | si= 98.6 [E] liz_cc=  9  Game.cpp
-  gsi#11 liz#87 | si= 98.4 [E] liz_cc= 29  paint/Paint.cpp
-  gsi#15 liz#228 | si= 97.8 [E] liz_cc= 13  scenario/Scenario.cpp
+  gsi# 2 liz#83 | si= 99.8 [E] liz_cc= 30  GameState.cpp
+  gsi# 3 liz#174 | si= 99.7 [E] liz_cc= 16  Context.cpp
+  gsi# 4 liz#60 | si= 99.6 [E] liz_cc= 40  world/Map.cpp
+  gsi# 5 liz#71 | si= 99.4 [E] liz_cc= 34  ride/Ride.cpp
+  gsi# 7 liz#105 | si= 99.1 [E] liz_cc= 24  drawing/Drawing.cpp
+  gsi# 8 liz#318 | si= 99.0 [E] liz_cc=  8  ride/RideData.cpp
+  gsi#10 liz#426 | si= 98.7 [E] liz_cc=  3  Diagnostic.cpp
+  gsi#11 liz#184 | si= 98.5 [E] liz_cc= 16  world/Park.cpp
+  gsi#12 liz#87 | si= 98.4 [E] liz_cc= 29  paint/Paint.cpp
+  gsi#13 liz#36 | si= 98.2 [E] liz_cc= 57  entity/Peep.cpp
 
 Lizard 단독 top-30 (G-SI top-30 에는 없음):
-  gsi#305 liz# 5 | si= 51.1 [C] liz_cc=257  paint/track/coaster/SingleRailRollerCoaster.cpp
-  gsi#304 liz# 7 | si= 51.1 [C] liz_cc=225  paint/track/coaster/HybridCoaster.cpp
-  gsi#56 liz# 8 | si= 91.3 [E] liz_cc=208  paint/track/coaster/LimLaunchedRollerCoaster.cpp
-  gsi#84 liz#10 | si= 87.0 [E] liz_cc=157  paint/track/coaster/WoodenRollerCoaster.cpp
-  gsi#35 liz#12 | si= 94.7 [E] liz_cc=146  paint/track/coaster/MiniRollerCoaster.cpp
-  gsi#44 liz#14 | si= 93.2 [E] liz_cc=139  paint/track/coaster/FlyingRollerCoasterInverted.cpp
-  gsi#37 liz#15 | si= 94.3 [E] liz_cc=118  paint/track/coaster/ClassicStandUpRollerCoaster.cpp
-  gsi#42 liz#17 | si= 93.5 [E] liz_cc=107  paint/track/coaster/MultiDimensionRollerCoaster.cpp
-  gsi#48 liz#19 | si= 92.6 [E] liz_cc=103  paint/track/coaster/LayDownRollerCoasterInverted.cpp
-  gsi#45 liz#20 | si= 93.1 [E] liz_cc=101  paint/track/coaster/MineTrainCoaster.cpp
+  gsi#42 liz# 4 | si= 94.0 [E] liz_cc=261  paint/track/coaster/LatticeTriangleTrack.cpp
+  gsi#32 liz# 5 | si= 95.4 [E] liz_cc=257  paint/track/coaster/SingleRailRollerCoaster.cpp
+  gsi#41 liz# 7 | si= 94.1 [E] liz_cc=225  paint/track/coaster/HybridCoaster.cpp
+  gsi#77 liz# 8 | si= 88.8 [E] liz_cc=208  paint/track/coaster/LimLaunchedRollerCoaster.cpp
+  gsi#118 liz#10 | si= 82.7 [E] liz_cc=157  paint/track/coaster/WoodenRollerCoaster.cpp
+  gsi#47 liz#12 | si= 93.2 [E] liz_cc=146  paint/track/coaster/MiniRollerCoaster.cpp
+  gsi#46 liz#13 | si= 93.4 [E] liz_cc=140  paint/track/coaster/LoopingRollerCoaster.cpp
+  gsi#64 liz#14 | si= 90.7 [E] liz_cc=139  paint/track/coaster/FlyingRollerCoasterInverted.cpp
+  gsi#63 liz#15 | si= 90.9 [E] liz_cc=118  paint/track/coaster/ClassicStandUpRollerCoaster.cpp
+  gsi#33 liz#16 | si= 95.3 [E] liz_cc=115  paint/track/coaster/CompactInvertedCoaster.cpp
 
 Notes:
   - 동점은 파일 경로 오름차순으로 결정한다. Top-N 경계의 동점에 유의한다.

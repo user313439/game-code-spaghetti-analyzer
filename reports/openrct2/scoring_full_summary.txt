@@ -3,12 +3,12 @@ project: openrct2  window: 12 months (2025-10-08 .. 2026-10-03, UTC)
 
 rank  G-SI Full  G-SI Static       Δ      CR  fqn
    1     100.00       100.00   +0.00      10  park.Legacy
-   2      99.84        99.69   +0.15      62  ride.Ride
-   3      99.69        99.53   +0.16      75  ride.Vehicle
-   4      99.53        99.84   -0.31      13  OpenRCT2.Context
-   5      99.37        99.37   +0.00      36  drawing.Drawing
-   6      99.21        97.64   +1.57      31  ride.RideConstruction
-   7      99.06        99.21   -0.15       8  ride.RideData
-   8      98.90        99.06   -0.16       7  GameState
-   9      98.74        98.90   -0.16      21  world.Map
-  10      98.58        98.11   +0.47      10  paint.track.coaster.CorkscrewRollerCoaster
+   2      99.85        99.41   +0.44      62  ride.Ride
+   3      99.71        99.26   +0.45      75  ride.Vehicle
+   4      99.56        99.85   -0.29       7  GameState
+   5      99.41        99.71   -0.30      13  Context
+   6      99.26        99.56   -0.30      21  world.Map
+   7      99.12        99.12   -0.00      36  drawing.Drawing
+   8      98.97        98.82   +0.15      43  entity.Guest
+   9      98.82        98.24   +0.58      29  entity.Peep
+  10      98.68        98.97   -0.29       8  ride.RideData

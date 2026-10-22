@@ -24,19 +24,19 @@
     {
       "name": "si_vs_bugfix",
       "n": 296,
-      "spearman_rho": 0.5851,
+      "spearman_rho": 0.6011,
       "p_value": 0.0
     },
     {
       "name": "loc_vs_bugfix",
       "n": 296,
-      "spearman_rho": 0.6158,
+      "spearman_rho": 0.6824,
       "p_value": 0.0
     },
     {
       "name": "cc_vs_bugfix",
       "n": 296,
-      "spearman_rho": 0.4676,
+      "spearman_rho": 0.5025,
       "p_value": 0.0
     }
   ],
@@ -44,19 +44,19 @@
     {
       "name": "file_si_vs_bugfix",
       "n": 296,
-      "spearman_rho": 0.5851,
+      "spearman_rho": 0.6011,
       "p_value": 0.0
     },
     {
       "name": "file_loc_vs_bugfix",
       "n": 296,
-      "spearman_rho": 0.6158,
+      "spearman_rho": 0.6824,
       "p_value": 0.0
     },
     {
       "name": "file_cc_vs_bugfix",
       "n": 296,
-      "spearman_rho": 0.4676,
+      "spearman_rho": 0.5025,
       "p_value": 0.0
     }
   ],
@@ -228,7 +228,7 @@
     {
       "fqn": "aes_prng",
       "file_path": "aes_prng.c",
-      "si": 28.04,
+      "si": 26.69,
       "grade": "B",
       "cc_max": 11.0,
       "loc": 170,
@@ -237,7 +237,7 @@
     {
       "fqn": "d_dedicated",
       "file_path": "d_dedicated.c",
-      "si": 12.16,
+      "si": 11.15,
       "grade": "A",
       "cc_max": 1.0,
       "loc": 16,
@@ -246,7 +246,7 @@
     {
       "fqn": "d_event",
       "file_path": "d_event.c",
-      "si": 42.23,
+      "si": 40.2,
       "grade": "C",
       "cc_max": 2.0,
       "loc": 24,
@@ -255,10 +255,10 @@
     {
       "fqn": "d_iwad",
       "file_path": "d_iwad.c",
-      "si": 77.7,
+      "si": 77.36,
       "grade": "D",
-      "cc_max": 8.0,
-      "loc": 413,
+      "cc_max": 7.0,
+      "loc": 678,
       "bugfix_count": 26
     },
     {
@@ -273,7 +273,7 @@
     {
       "fqn": "d_mode",
       "file_path": "d_mode.c",
-      "si": 56.76,
+      "si": 56.08,
       "grade": "C",
       "cc_max": 13.0,
       "loc": 149,
@@ -300,7 +300,7 @@
     {
       "fqn": "deh_mapping",
       "file_path": "deh_mapping.c",
-      "si": 46.96,
+      "si": 45.27,
       "grade": "C",
       "cc_max": 7.0,
       "loc": 154,
@@ -318,7 +318,7 @@
     {
       "fqn": "deh_text",
       "file_path": "deh_text.c",
-      "si": 22.64,
+      "si": 21.28,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 68,
@@ -354,7 +354,7 @@
     {
       "fqn": "doom.d_net",
       "file_path": "doom/d_net.c",
-      "si": 37.5,
+      "si": 35.47,
       "grade": "B",
       "cc_max": 7.0,
       "loc": 220,
@@ -363,7 +363,7 @@
     {
       "fqn": "doom.deh_ammo",
       "file_path": "doom/deh_ammo.c",
-      "si": 16.89,
+      "si": 15.54,
       "grade": "A",
       "cc_max": 5.0,
       "loc": 62,
@@ -372,7 +372,7 @@
     {
       "fqn": "doom.deh_bexstr",
       "file_path": "doom/deh_bexstr.c",
-      "si": 14.86,
+      "si": 13.51,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 30,
@@ -381,7 +381,7 @@
     {
       "fqn": "doom.deh_cheat",
       "file_path": "doom/deh_cheat.c",
-      "si": 26.69,
+      "si": 25.34,
       "grade": "B",
       "cc_max": 10.0,
       "loc": 78,
@@ -399,7 +399,7 @@
     {
       "fqn": "doom.deh_frame",
       "file_path": "doom/deh_frame.c",
-      "si": 22.64,
+      "si": 21.28,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 100,
@@ -408,7 +408,7 @@
     {
       "fqn": "doom.deh_misc",
       "file_path": "doom/deh_misc.c",
-      "si": 24.32,
+      "si": 22.97,
       "grade": "B",
       "cc_max": 7.0,
       "loc": 61,
@@ -417,7 +417,7 @@
     {
       "fqn": "doom.deh_ptr",
       "file_path": "doom/deh_ptr.c",
-      "si": 19.59,
+      "si": 18.58,
       "grade": "A",
       "cc_max": 6.0,
       "loc": 97,
@@ -426,7 +426,7 @@
     {
       "fqn": "doom.deh_sound",
       "file_path": "doom/deh_sound.c",
-      "si": 16.89,
+      "si": 15.54,
       "grade": "A",
       "cc_max": 5.0,
       "loc": 52,
@@ -435,7 +435,7 @@
     {
       "fqn": "doom.deh_thing",
       "file_path": "doom/deh_thing.c",
-      "si": 14.19,
+      "si": 12.84,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 64,
@@ -444,7 +444,7 @@
     {
       "fqn": "doom.deh_weapon",
       "file_path": "doom/deh_weapon.c",
-      "si": 14.19,
+      "si": 12.84,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 50,
@@ -489,7 +489,7 @@
     {
       "fqn": "doom.f_finale",
       "file_path": "doom/f_finale.c",
-      "si": 74.32,
+      "si": 73.65,
       "grade": "D",
       "cc_max": 43.0,
       "loc": 510,
@@ -498,7 +498,7 @@
     {
       "fqn": "doom.f_wipe",
       "file_path": "doom/f_wipe.c",
-      "si": 39.19,
+      "si": 37.16,
       "grade": "B",
       "cc_max": 9.0,
       "loc": 240,
@@ -516,7 +516,7 @@
     {
       "fqn": "doom.hu_lib",
       "file_path": "doom/hu_lib.c",
-      "si": 21.62,
+      "si": 20.27,
       "grade": "B",
       "cc_max": 8.5,
       "loc": 285,
@@ -525,7 +525,7 @@
     {
       "fqn": "doom.hu_stuff",
       "file_path": "doom/hu_stuff.c",
-      "si": 67.23,
+      "si": 66.89,
       "grade": "D",
       "cc_max": 28.0,
       "loc": 355,
@@ -543,7 +543,7 @@
     {
       "fqn": "doom.m_menu",
       "file_path": "doom/m_menu.c",
-      "si": 84.12,
+      "si": 84.46,
       "grade": "E",
       "cc_max": 29.0,
       "loc": 1369,
@@ -561,7 +561,7 @@
     {
       "fqn": "doom.p_ceilng",
       "file_path": "doom/p_ceilng.c",
-      "si": 54.73,
+      "si": 54.05,
       "grade": "C",
       "cc_max": 28.0,
       "loc": 250,
@@ -570,7 +570,7 @@
     {
       "fqn": "doom.p_doors",
       "file_path": "doom/p_doors.c",
-      "si": 65.88,
+      "si": 65.54,
       "grade": "D",
       "cc_max": 42.0,
       "loc": 485,
@@ -579,7 +579,7 @@
     {
       "fqn": "doom.p_enemy",
       "file_path": "doom/p_enemy.c",
-      "si": 50.34,
+      "si": 49.32,
       "grade": "C",
       "cc_max": 21.6667,
       "loc": 1656,
@@ -588,7 +588,7 @@
     {
       "fqn": "doom.p_floor",
       "file_path": "doom/p_floor.c",
-      "si": 53.72,
+      "si": 53.04,
       "grade": "C",
       "cc_max": 30.0,
       "loc": 502,
@@ -606,7 +606,7 @@
     {
       "fqn": "doom.p_lights",
       "file_path": "doom/p_lights.c",
-      "si": 18.24,
+      "si": 17.23,
       "grade": "A",
       "cc_max": 7.0,
       "loc": 241,
@@ -615,7 +615,7 @@
     {
       "fqn": "doom.p_map",
       "file_path": "doom/p_map.c",
-      "si": 70.95,
+      "si": 70.27,
       "grade": "D",
       "cc_max": 21.0,
       "loc": 1128,
@@ -624,7 +624,7 @@
     {
       "fqn": "doom.p_maputl",
       "file_path": "doom/p_maputl.c",
-      "si": 48.99,
+      "si": 47.97,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 758,
@@ -633,7 +633,7 @@
     {
       "fqn": "doom.p_mobj",
       "file_path": "doom/p_mobj.c",
-      "si": 62.84,
+      "si": 62.16,
       "grade": "D",
       "cc_max": 37.0,
       "loc": 908,
@@ -642,7 +642,7 @@
     {
       "fqn": "doom.p_plats",
       "file_path": "doom/p_plats.c",
-      "si": 43.92,
+      "si": 42.57,
       "grade": "C",
       "cc_max": 19.0,
       "loc": 248,
@@ -651,7 +651,7 @@
     {
       "fqn": "doom.p_pspr",
       "file_path": "doom/p_pspr.c",
-      "si": 30.74,
+      "si": 29.39,
       "grade": "B",
       "cc_max": 13.3333,
       "loc": 652,
@@ -660,7 +660,7 @@
     {
       "fqn": "doom.p_saveg",
       "file_path": "doom/p_saveg.c",
-      "si": 31.42,
+      "si": 30.07,
       "grade": "B",
       "cc_max": 9.8,
       "loc": 1618,
@@ -669,7 +669,7 @@
     {
       "fqn": "doom.p_setup",
       "file_path": "doom/p_setup.c",
-      "si": 62.16,
+      "si": 61.49,
       "grade": "D",
       "cc_max": 18.0,
       "loc": 642,
@@ -678,7 +678,7 @@
     {
       "fqn": "doom.p_sight",
       "file_path": "doom/p_sight.c",
-      "si": 44.26,
+      "si": 42.91,
       "grade": "C",
       "cc_max": 18.0,
       "loc": 312,
@@ -687,7 +687,7 @@
     {
       "fqn": "doom.p_spec",
       "file_path": "doom/p_spec.c",
-      "si": 78.38,
+      "si": 78.04,
       "grade": "D",
       "cc_max": 59.5,
       "loc": 1215,
@@ -705,7 +705,7 @@
     {
       "fqn": "doom.p_telept",
       "file_path": "doom/p_telept.c",
-      "si": 27.03,
+      "si": 25.68,
       "grade": "B",
       "cc_max": 13.0,
       "loc": 91,
@@ -714,7 +714,7 @@
     {
       "fqn": "doom.p_tick",
       "file_path": "doom/p_tick.c",
-      "si": 25.0,
+      "si": 23.65,
       "grade": "B",
       "cc_max": 8.0,
       "loc": 72,
@@ -723,8 +723,8 @@
     {
       "fqn": "doom.p_user",
       "file_path": "doom/p_user.c",
-      "si": 60.47,
-      "grade": "D",
+      "si": 59.8,
+      "grade": "C",
       "cc_max": 37.0,
       "loc": 297,
       "bugfix_count": 0
@@ -732,7 +732,7 @@
     {
       "fqn": "doom.r_bsp",
       "file_path": "doom/r_bsp.c",
-      "si": 45.61,
+      "si": 44.26,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 420,
@@ -741,7 +741,7 @@
     {
       "fqn": "doom.r_data",
       "file_path": "doom/r_data.c",
-      "si": 59.12,
+      "si": 58.45,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 620,
@@ -750,7 +750,7 @@
     {
       "fqn": "doom.r_draw",
       "file_path": "doom/r_draw.c",
-      "si": 65.54,
+      "si": 65.2,
       "grade": "D",
       "cc_max": 12.0,
       "loc": 586,
@@ -768,8 +768,8 @@
     {
       "fqn": "doom.r_plane",
       "file_path": "doom/r_plane.c",
-      "si": 40.88,
-      "grade": "C",
+      "si": 38.85,
+      "grade": "B",
       "cc_max": 12.0,
       "loc": 311,
       "bugfix_count": 2
@@ -795,7 +795,7 @@
     {
       "fqn": "doom.r_things",
       "file_path": "doom/r_things.c",
-      "si": 66.22,
+      "si": 65.88,
       "grade": "D",
       "cc_max": 29.0,
       "loc": 759,
@@ -804,7 +804,7 @@
     {
       "fqn": "doom.s_sound",
       "file_path": "doom/s_sound.c",
-      "si": 57.09,
+      "si": 56.42,
       "grade": "C",
       "cc_max": 18.0,
       "loc": 561,
@@ -822,7 +822,7 @@
     {
       "fqn": "doom.st_lib",
       "file_path": "doom/st_lib.c",
-      "si": 59.8,
+      "si": 58.78,
       "grade": "C",
       "cc_max": 13.0,
       "loc": 206,
@@ -840,7 +840,7 @@
     {
       "fqn": "doom.statdump",
       "file_path": "doom/statdump.c",
-      "si": 35.81,
+      "si": 34.12,
       "grade": "B",
       "cc_max": 9.0,
       "loc": 274,
@@ -858,7 +858,7 @@
     {
       "fqn": "gusconf",
       "file_path": "gusconf.c",
-      "si": 69.26,
+      "si": 68.58,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 248,
@@ -876,7 +876,7 @@
     {
       "fqn": "heretic.ct_chat",
       "file_path": "heretic/ct_chat.c",
-      "si": 61.49,
+      "si": 60.47,
       "grade": "D",
       "cc_max": 25.0,
       "loc": 318,
@@ -894,7 +894,7 @@
     {
       "fqn": "heretic.d_net",
       "file_path": "heretic/d_net.c",
-      "si": 32.43,
+      "si": 31.08,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 154,
@@ -903,7 +903,7 @@
     {
       "fqn": "heretic.deh_ammo",
       "file_path": "heretic/deh_ammo.c",
-      "si": 16.89,
+      "si": 15.54,
       "grade": "A",
       "cc_max": 5.0,
       "loc": 72,
@@ -912,7 +912,7 @@
     {
       "fqn": "heretic.deh_frame",
       "file_path": "heretic/deh_frame.c",
-      "si": 26.01,
+      "si": 24.66,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 131,
@@ -921,7 +921,7 @@
     {
       "fqn": "heretic.deh_htext",
       "file_path": "heretic/deh_htext.c",
-      "si": 27.7,
+      "si": 26.35,
       "grade": "B",
       "cc_max": 7.0,
       "loc": 149,
@@ -930,7 +930,7 @@
     {
       "fqn": "heretic.deh_htic",
       "file_path": "heretic/deh_htic.c",
-      "si": 28.38,
+      "si": 27.03,
       "grade": "B",
       "cc_max": 4.0,
       "loc": 115,
@@ -939,7 +939,7 @@
     {
       "fqn": "heretic.deh_sound",
       "file_path": "heretic/deh_sound.c",
-      "si": 18.92,
+      "si": 17.91,
       "grade": "A",
       "cc_max": 5.0,
       "loc": 56,
@@ -948,8 +948,8 @@
     {
       "fqn": "heretic.deh_thing",
       "file_path": "heretic/deh_thing.c",
-      "si": 20.95,
-      "grade": "B",
+      "si": 19.26,
+      "grade": "A",
       "cc_max": 4.0,
       "loc": 74,
       "bugfix_count": 2
@@ -957,7 +957,7 @@
     {
       "fqn": "heretic.deh_weapon",
       "file_path": "heretic/deh_weapon.c",
-      "si": 23.31,
+      "si": 21.96,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 68,
@@ -966,7 +966,7 @@
     {
       "fqn": "heretic.f_finale",
       "file_path": "heretic/f_finale.c",
-      "si": 34.12,
+      "si": 32.43,
       "grade": "B",
       "cc_max": 10.0,
       "loc": 274,
@@ -993,7 +993,7 @@
     {
       "fqn": "heretic.in_lude",
       "file_path": "heretic/in_lude.c",
-      "si": 63.18,
+      "si": 62.5,
       "grade": "D",
       "cc_max": 17.5,
       "loc": 799,
@@ -1029,7 +1029,7 @@
     {
       "fqn": "heretic.p_ceilng",
       "file_path": "heretic/p_ceilng.c",
-      "si": 44.93,
+      "si": 43.58,
       "grade": "C",
       "cc_max": 21.0,
       "loc": 188,
@@ -1038,7 +1038,7 @@
     {
       "fqn": "heretic.p_doors",
       "file_path": "heretic/p_doors.c",
-      "si": 57.43,
+      "si": 56.76,
       "grade": "C",
       "cc_max": 31.0,
       "loc": 316,
@@ -1047,7 +1047,7 @@
     {
       "fqn": "heretic.p_enemy",
       "file_path": "heretic/p_enemy.c",
-      "si": 42.91,
+      "si": 40.88,
       "grade": "C",
       "cc_max": 15.7778,
       "loc": 1939,
@@ -1056,7 +1056,7 @@
     {
       "fqn": "heretic.p_floor",
       "file_path": "heretic/p_floor.c",
-      "si": 46.62,
+      "si": 45.95,
       "grade": "C",
       "cc_max": 24.0,
       "loc": 408,
@@ -1074,7 +1074,7 @@
     {
       "fqn": "heretic.p_lights",
       "file_path": "heretic/p_lights.c",
-      "si": 18.24,
+      "si": 17.23,
       "grade": "A",
       "cc_max": 7.0,
       "loc": 188,
@@ -1083,7 +1083,7 @@
     {
       "fqn": "heretic.p_map",
       "file_path": "heretic/p_map.c",
-      "si": 75.34,
+      "si": 75.0,
       "grade": "D",
       "cc_max": 30.5,
       "loc": 1223,
@@ -1092,7 +1092,7 @@
     {
       "fqn": "heretic.p_maputl",
       "file_path": "heretic/p_maputl.c",
-      "si": 44.59,
+      "si": 43.24,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 543,
@@ -1101,7 +1101,7 @@
     {
       "fqn": "heretic.p_mobj",
       "file_path": "heretic/p_mobj.c",
-      "si": 71.62,
+      "si": 70.95,
       "grade": "D",
       "cc_max": 50.5,
       "loc": 1305,
@@ -1110,7 +1110,7 @@
     {
       "fqn": "heretic.p_plats",
       "file_path": "heretic/p_plats.c",
-      "si": 43.92,
+      "si": 42.57,
       "grade": "C",
       "cc_max": 19.0,
       "loc": 216,
@@ -1119,7 +1119,7 @@
     {
       "fqn": "heretic.p_pspr",
       "file_path": "heretic/p_pspr.c",
-      "si": 36.82,
+      "si": 34.8,
       "grade": "B",
       "cc_max": 12.6,
       "loc": 1213,
@@ -1128,7 +1128,7 @@
     {
       "fqn": "heretic.p_saveg",
       "file_path": "heretic/p_saveg.c",
-      "si": 29.39,
+      "si": 28.04,
       "grade": "B",
       "cc_max": 9.6,
       "loc": 1631,
@@ -1137,7 +1137,7 @@
     {
       "fqn": "heretic.p_setup",
       "file_path": "heretic/p_setup.c",
-      "si": 55.74,
+      "si": 54.39,
       "grade": "C",
       "cc_max": 14.0,
       "loc": 511,
@@ -1146,8 +1146,8 @@
     {
       "fqn": "heretic.p_sight",
       "file_path": "heretic/p_sight.c",
-      "si": 41.55,
-      "grade": "C",
+      "si": 39.53,
+      "grade": "B",
       "cc_max": 21.0,
       "loc": 262,
       "bugfix_count": 2
@@ -1155,7 +1155,7 @@
     {
       "fqn": "heretic.p_spec",
       "file_path": "heretic/p_spec.c",
-      "si": 77.03,
+      "si": 76.69,
       "grade": "D",
       "cc_max": 55.0,
       "loc": 903,
@@ -1173,7 +1173,7 @@
     {
       "fqn": "heretic.p_telept",
       "file_path": "heretic/p_telept.c",
-      "si": 31.76,
+      "si": 30.74,
       "grade": "B",
       "cc_max": 15.0,
       "loc": 128,
@@ -1182,7 +1182,7 @@
     {
       "fqn": "heretic.p_tick",
       "file_path": "heretic/p_tick.c",
-      "si": 22.97,
+      "si": 21.62,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 68,
@@ -1191,7 +1191,7 @@
     {
       "fqn": "heretic.p_user",
       "file_path": "heretic/p_user.c",
-      "si": 72.64,
+      "si": 71.96,
       "grade": "D",
       "cc_max": 54.0,
       "loc": 860,
@@ -1200,7 +1200,7 @@
     {
       "fqn": "heretic.r_bsp",
       "file_path": "heretic/r_bsp.c",
-      "si": 45.95,
+      "si": 44.59,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 334,
@@ -1209,7 +1209,7 @@
     {
       "fqn": "heretic.r_data",
       "file_path": "heretic/r_data.c",
-      "si": 49.66,
+      "si": 48.65,
       "grade": "C",
       "cc_max": 15.0,
       "loc": 505,
@@ -1218,7 +1218,7 @@
     {
       "fqn": "heretic.r_draw",
       "file_path": "heretic/r_draw.c",
-      "si": 51.69,
+      "si": 51.01,
       "grade": "C",
       "cc_max": 8.0,
       "loc": 352,
@@ -1236,7 +1236,7 @@
     {
       "fqn": "heretic.r_plane",
       "file_path": "heretic/r_plane.c",
-      "si": 67.91,
+      "si": 67.57,
       "grade": "D",
       "cc_max": 39.0,
       "loc": 340,
@@ -1254,7 +1254,7 @@
     {
       "fqn": "heretic.r_things",
       "file_path": "heretic/r_things.c",
-      "si": 64.86,
+      "si": 64.53,
       "grade": "D",
       "cc_max": 29.0,
       "loc": 759,
@@ -1263,7 +1263,7 @@
     {
       "fqn": "heretic.s_sound",
       "file_path": "heretic/s_sound.c",
-      "si": 69.93,
+      "si": 69.26,
       "grade": "D",
       "cc_max": 32.0,
       "loc": 533,
@@ -1272,7 +1272,7 @@
     {
       "fqn": "heretic.sb_bar",
       "file_path": "heretic/sb_bar.c",
-      "si": 69.59,
+      "si": 68.92,
       "grade": "D",
       "cc_max": 20.0,
       "loc": 931,
@@ -1290,7 +1290,7 @@
     {
       "fqn": "hexen.a_action",
       "file_path": "hexen/a_action.c",
-      "si": 18.58,
+      "si": 17.57,
       "grade": "A",
       "cc_max": 8.25,
       "loc": 802,
@@ -1299,7 +1299,7 @@
     {
       "fqn": "hexen.am_map",
       "file_path": "hexen/am_map.c",
-      "si": 77.36,
+      "si": 77.03,
       "grade": "D",
       "cc_max": 28.3333,
       "loc": 1245,
@@ -1308,7 +1308,7 @@
     {
       "fqn": "hexen.ct_chat",
       "file_path": "hexen/ct_chat.c",
-      "si": 63.51,
+      "si": 62.84,
       "grade": "D",
       "cc_max": 29.0,
       "loc": 329,
@@ -1317,7 +1317,7 @@
     {
       "fqn": "hexen.d_net",
       "file_path": "hexen/d_net.c",
-      "si": 35.14,
+      "si": 33.45,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 208,
@@ -1326,8 +1326,8 @@
     {
       "fqn": "hexen.f_finale",
       "file_path": "hexen/f_finale.c",
-      "si": 41.89,
-      "grade": "C",
+      "si": 39.86,
+      "grade": "B",
       "cc_max": 12.0,
       "loc": 249,
       "bugfix_count": 3
@@ -1344,7 +1344,7 @@
     {
       "fqn": "hexen.h2_main",
       "file_path": "hexen/h2_main.c",
-      "si": 64.53,
+      "si": 63.85,
       "grade": "D",
       "cc_max": 13.5,
       "loc": 928,
@@ -1362,7 +1362,7 @@
     {
       "fqn": "hexen.in_lude",
       "file_path": "hexen/in_lude.c",
-      "si": 50.68,
+      "si": 49.66,
       "grade": "C",
       "cc_max": 15.0,
       "loc": 402,
@@ -1398,7 +1398,7 @@
     {
       "fqn": "hexen.p_acs",
       "file_path": "hexen/p_acs.c",
-      "si": 61.82,
+      "si": 60.81,
       "grade": "D",
       "cc_max": 5.9231,
       "loc": 1360,
@@ -1407,7 +1407,7 @@
     {
       "fqn": "hexen.p_anim",
       "file_path": "hexen/p_anim.c",
-      "si": 55.41,
+      "si": 54.73,
       "grade": "C",
       "cc_max": 26.0,
       "loc": 353,
@@ -1416,7 +1416,7 @@
     {
       "fqn": "hexen.p_ceilng",
       "file_path": "hexen/p_ceilng.c",
-      "si": 38.51,
+      "si": 36.82,
       "grade": "B",
       "cc_max": 18.0,
       "loc": 218,
@@ -1425,7 +1425,7 @@
     {
       "fqn": "hexen.p_doors",
       "file_path": "hexen/p_doors.c",
-      "si": 46.28,
+      "si": 44.93,
       "grade": "C",
       "cc_max": 25.0,
       "loc": 220,
@@ -1434,7 +1434,7 @@
     {
       "fqn": "hexen.p_enemy",
       "file_path": "hexen/p_enemy.c",
-      "si": 47.64,
+      "si": 46.62,
       "grade": "C",
       "cc_max": 21.8824,
       "loc": 4218,
@@ -1443,7 +1443,7 @@
     {
       "fqn": "hexen.p_floor",
       "file_path": "hexen/p_floor.c",
-      "si": 51.35,
+      "si": 50.68,
       "grade": "C",
       "cc_max": 23.0,
       "loc": 792,
@@ -1461,7 +1461,7 @@
     {
       "fqn": "hexen.p_lights",
       "file_path": "hexen/p_lights.c",
-      "si": 33.45,
+      "si": 31.76,
       "grade": "B",
       "cc_max": 17.0,
       "loc": 303,
@@ -1479,7 +1479,7 @@
     {
       "fqn": "hexen.p_maputl",
       "file_path": "hexen/p_maputl.c",
-      "si": 72.3,
+      "si": 71.62,
       "grade": "D",
       "cc_max": 48.0,
       "loc": 821,
@@ -1488,7 +1488,7 @@
     {
       "fqn": "hexen.p_mobj",
       "file_path": "hexen/p_mobj.c",
-      "si": 78.72,
+      "si": 78.38,
       "grade": "D",
       "cc_max": 64.6667,
       "loc": 2022,
@@ -1497,7 +1497,7 @@
     {
       "fqn": "hexen.p_plats",
       "file_path": "hexen/p_plats.c",
-      "si": 37.16,
+      "si": 35.14,
       "grade": "B",
       "cc_max": 16.0,
       "loc": 222,
@@ -1506,7 +1506,7 @@
     {
       "fqn": "hexen.p_pspr",
       "file_path": "hexen/p_pspr.c",
-      "si": 32.09,
+      "si": 30.41,
       "grade": "B",
       "cc_max": 12.8333,
       "loc": 1585,
@@ -1515,8 +1515,8 @@
     {
       "fqn": "hexen.p_setup",
       "file_path": "hexen/p_setup.c",
-      "si": 60.81,
-      "grade": "D",
+      "si": 59.46,
+      "grade": "C",
       "cc_max": 15.6667,
       "loc": 816,
       "bugfix_count": 6
@@ -1524,8 +1524,8 @@
     {
       "fqn": "hexen.p_sight",
       "file_path": "hexen/p_sight.c",
-      "si": 41.55,
-      "grade": "C",
+      "si": 39.53,
+      "grade": "B",
       "cc_max": 21.0,
       "loc": 307,
       "bugfix_count": 1
@@ -1542,7 +1542,7 @@
     {
       "fqn": "hexen.p_switch",
       "file_path": "hexen/p_switch.c",
-      "si": 27.36,
+      "si": 26.01,
       "grade": "B",
       "cc_max": 8.0,
       "loc": 95,
@@ -1551,7 +1551,7 @@
     {
       "fqn": "hexen.p_telept",
       "file_path": "hexen/p_telept.c",
-      "si": 37.84,
+      "si": 35.81,
       "grade": "B",
       "cc_max": 18.0,
       "loc": 134,
@@ -1560,7 +1560,7 @@
     {
       "fqn": "hexen.p_things",
       "file_path": "hexen/p_things.c",
-      "si": 43.24,
+      "si": 41.22,
       "grade": "C",
       "cc_max": 23.0,
       "loc": 308,
@@ -1569,7 +1569,7 @@
     {
       "fqn": "hexen.p_tick",
       "file_path": "hexen/p_tick.c",
-      "si": 15.2,
+      "si": 13.85,
       "grade": "A",
       "cc_max": 6.0,
       "loc": 66,
@@ -1587,7 +1587,7 @@
     {
       "fqn": "hexen.po_man",
       "file_path": "hexen/po_man.c",
-      "si": 56.42,
+      "si": 55.74,
       "grade": "C",
       "cc_max": 22.0,
       "loc": 1279,
@@ -1596,7 +1596,7 @@
     {
       "fqn": "hexen.r_bsp",
       "file_path": "hexen/r_bsp.c",
-      "si": 48.31,
+      "si": 46.96,
       "grade": "C",
       "cc_max": 17.0,
       "loc": 354,
@@ -1605,7 +1605,7 @@
     {
       "fqn": "hexen.r_data",
       "file_path": "hexen/r_data.c",
-      "si": 48.65,
+      "si": 47.64,
       "grade": "C",
       "cc_max": 15.0,
       "loc": 467,
@@ -1614,7 +1614,7 @@
     {
       "fqn": "hexen.r_draw",
       "file_path": "hexen/r_draw.c",
-      "si": 55.07,
+      "si": 53.38,
       "grade": "C",
       "cc_max": 8.0,
       "loc": 372,
@@ -1632,7 +1632,7 @@
     {
       "fqn": "hexen.r_plane",
       "file_path": "hexen/r_plane.c",
-      "si": 71.28,
+      "si": 70.61,
       "grade": "D",
       "cc_max": 46.0,
       "loc": 425,
@@ -1650,7 +1650,7 @@
     {
       "fqn": "hexen.r_things",
       "file_path": "hexen/r_things.c",
-      "si": 63.85,
+      "si": 63.18,
       "grade": "D",
       "cc_max": 29.0,
       "loc": 787,
@@ -1659,7 +1659,7 @@
     {
       "fqn": "hexen.s_sound",
       "file_path": "hexen/s_sound.c",
-      "si": 68.92,
+      "si": 67.91,
       "grade": "D",
       "cc_max": 24.5,
       "loc": 768,
@@ -1668,7 +1668,7 @@
     {
       "fqn": "hexen.sb_bar",
       "file_path": "hexen/sb_bar.c",
-      "si": 75.0,
+      "si": 74.66,
       "grade": "D",
       "cc_max": 18.2,
       "loc": 1432,
@@ -1677,7 +1677,7 @@
     {
       "fqn": "hexen.sc_man",
       "file_path": "hexen/sc_man.c",
-      "si": 52.7,
+      "si": 52.03,
       "grade": "C",
       "cc_max": 19.0,
       "loc": 235,
@@ -1686,7 +1686,7 @@
     {
       "fqn": "hexen.sn_sonix",
       "file_path": "hexen/sn_sonix.c",
-      "si": 47.97,
+      "si": 47.3,
       "grade": "C",
       "cc_max": 20.0,
       "loc": 330,
@@ -1704,7 +1704,7 @@
     {
       "fqn": "hexen.st_start",
       "file_path": "hexen/st_start.c",
-      "si": 23.65,
+      "si": 22.3,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 127,
@@ -1713,8 +1713,8 @@
     {
       "fqn": "hexen.sv_save",
       "file_path": "hexen/sv_save.c",
-      "si": 40.2,
-      "grade": "C",
+      "si": 38.18,
+      "grade": "B",
       "cc_max": 12.5,
       "loc": 2792,
       "bugfix_count": 7
@@ -1722,7 +1722,7 @@
     {
       "fqn": "i_cdmus",
       "file_path": "i_cdmus.c",
-      "si": 10.47,
+      "si": 10.14,
       "grade": "A",
       "cc_max": 1.0,
       "loc": 39,
@@ -1731,8 +1731,8 @@
     {
       "fqn": "i_endoom",
       "file_path": "i_endoom.c",
-      "si": 20.95,
-      "grade": "B",
+      "si": 19.26,
+      "grade": "A",
       "cc_max": 4.0,
       "loc": 45,
       "bugfix_count": 2
@@ -1740,19 +1740,19 @@
     {
       "fqn": "i_flmusic",
       "file_path": "i_flmusic.c",
-      "si": 12.84,
-      "grade": "A",
-      "cc_max": 0.0,
-      "loc": 0,
+      "si": 41.55,
+      "grade": "C",
+      "cc_max": 8.0,
+      "loc": 230,
       "bugfix_count": 2
     },
     {
       "fqn": "i_glob",
       "file_path": "i_glob.c",
-      "si": 59.46,
-      "grade": "C",
-      "cc_max": 0.0,
-      "loc": 0,
+      "si": 64.19,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 292,
       "bugfix_count": 7
     },
     {
@@ -1776,7 +1776,7 @@
     {
       "fqn": "i_main",
       "file_path": "i_main.c",
-      "si": 17.23,
+      "si": 15.88,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 38,
@@ -1785,16 +1785,16 @@
     {
       "fqn": "i_musicpack",
       "file_path": "i_musicpack.c",
-      "si": 33.11,
-      "grade": "B",
-      "cc_max": 0.0,
-      "loc": 0,
+      "si": 57.43,
+      "grade": "C",
+      "cc_max": 10.5,
+      "loc": 997,
       "bugfix_count": 3
     },
     {
       "fqn": "i_oplmusic",
       "file_path": "i_oplmusic.c",
-      "si": 65.2,
+      "si": 64.86,
       "grade": "D",
       "cc_max": 12.75,
       "loc": 1395,
@@ -1803,7 +1803,7 @@
     {
       "fqn": "i_pcsound",
       "file_path": "i_pcsound.c",
-      "si": 34.8,
+      "si": 33.11,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 235,
@@ -1812,19 +1812,19 @@
     {
       "fqn": "i_sdlmusic",
       "file_path": "i_sdlmusic.c",
-      "si": 39.53,
-      "grade": "B",
-      "cc_max": 3.0,
-      "loc": 62,
+      "si": 46.28,
+      "grade": "C",
+      "cc_max": 6.0,
+      "loc": 327,
       "bugfix_count": 15
     },
     {
       "fqn": "i_sdlsound",
       "file_path": "i_sdlsound.c",
-      "si": 20.27,
-      "grade": "B",
-      "cc_max": 0.0,
-      "loc": 0,
+      "si": 41.89,
+      "grade": "C",
+      "cc_max": 9.0,
+      "loc": 911,
       "bugfix_count": 23
     },
     {
@@ -1866,7 +1866,7 @@
     {
       "fqn": "i_videohr",
       "file_path": "i_videohr.c",
-      "si": 29.05,
+      "si": 27.36,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 209,
@@ -1875,25 +1875,25 @@
     {
       "fqn": "i_winmusic",
       "file_path": "i_winmusic.c",
-      "si": 20.27,
-      "grade": "B",
-      "cc_max": 0.0,
-      "loc": 0,
+      "si": 79.05,
+      "grade": "D",
+      "cc_max": 34.2,
+      "loc": 1525,
       "bugfix_count": 11
     },
     {
       "fqn": "m_argv",
       "file_path": "m_argv.c",
-      "si": 98.31,
+      "si": 98.65,
       "grade": "E",
       "cc_max": 25.0,
-      "loc": 259,
+      "loc": 467,
       "bugfix_count": 10
     },
     {
       "fqn": "m_bbox",
       "file_path": "m_bbox.c",
-      "si": 66.55,
+      "si": 66.22,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 20,
@@ -1902,7 +1902,7 @@
     {
       "fqn": "m_cheat",
       "file_path": "m_cheat.c",
-      "si": 31.08,
+      "si": 29.73,
       "grade": "B",
       "cc_max": 8.0,
       "loc": 53,
@@ -1920,7 +1920,7 @@
     {
       "fqn": "m_controls",
       "file_path": "m_controls.c",
-      "si": 73.65,
+      "si": 72.97,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 214,
@@ -1929,7 +1929,7 @@
     {
       "fqn": "m_fixed",
       "file_path": "m_fixed.c",
-      "si": 79.05,
+      "si": 78.72,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 22,
@@ -1940,14 +1940,14 @@
       "file_path": "m_misc.c",
       "si": 99.66,
       "grade": "E",
-      "cc_max": 10.0,
-      "loc": 703,
+      "cc_max": 8.6667,
+      "loc": 775,
       "bugfix_count": 18
     },
     {
       "fqn": "memio",
       "file_path": "memio.c",
-      "si": 30.41,
+      "si": 29.05,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 141,
@@ -1956,28 +1956,28 @@
     {
       "fqn": "midifallback",
       "file_path": "midifallback.c",
-      "si": 10.14,
-      "grade": "A",
-      "cc_max": 0.0,
-      "loc": 0,
+      "si": 50.34,
+      "grade": "C",
+      "cc_max": 12.0,
+      "loc": 317,
       "bugfix_count": 0
     },
     {
       "fqn": "midifile",
       "file_path": "midifile.c",
-      "si": 36.49,
+      "si": 37.84,
       "grade": "B",
-      "cc_max": 12.0,
-      "loc": 585,
+      "cc_max": 15.0,
+      "loc": 686,
       "bugfix_count": 8
     },
     {
       "fqn": "mus2mid",
       "file_path": "mus2mid.c",
-      "si": 73.31,
+      "si": 72.64,
       "grade": "D",
       "cc_max": 45.0,
-      "loc": 558,
+      "loc": 593,
       "bugfix_count": 4
     },
     {
@@ -1992,7 +1992,7 @@
     {
       "fqn": "net_common",
       "file_path": "net_common.c",
-      "si": 84.46,
+      "si": 84.12,
       "grade": "E",
       "cc_max": 13.0,
       "loc": 433,
@@ -2001,7 +2001,7 @@
     {
       "fqn": "net_dedicated",
       "file_path": "net_dedicated.c",
-      "si": 30.07,
+      "si": 28.72,
       "grade": "B",
       "cc_max": 3.0,
       "loc": 32,
@@ -2010,7 +2010,7 @@
     {
       "fqn": "net_gui",
       "file_path": "net_gui.c",
-      "si": 76.69,
+      "si": 76.35,
       "grade": "D",
       "cc_max": 13.0,
       "loc": 369,
@@ -2019,7 +2019,7 @@
     {
       "fqn": "net_io",
       "file_path": "net_io.c",
-      "si": 76.35,
+      "si": 76.01,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 100,
@@ -2028,7 +2028,7 @@
     {
       "fqn": "net_loop",
       "file_path": "net_loop.c",
-      "si": 64.19,
+      "si": 63.51,
       "grade": "D",
       "cc_max": 2.0,
       "loc": 139,
@@ -2037,7 +2037,7 @@
     {
       "fqn": "net_packet",
       "file_path": "net_packet.c",
-      "si": 78.04,
+      "si": 77.7,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 256,
@@ -2046,7 +2046,7 @@
     {
       "fqn": "net_petname",
       "file_path": "net_petname.c",
-      "si": 58.45,
+      "si": 58.11,
       "grade": "C",
       "cc_max": 1.0,
       "loc": 14,
@@ -2064,10 +2064,10 @@
     {
       "fqn": "net_sdl",
       "file_path": "net_sdl.c",
-      "si": 68.24,
+      "si": 74.32,
       "grade": "D",
-      "cc_max": 0.0,
-      "loc": 0,
+      "cc_max": 8.0,
+      "loc": 323,
       "bugfix_count": 5
     },
     {
@@ -2091,7 +2091,7 @@
     {
       "fqn": "p_rejectpad",
       "file_path": "p_rejectpad.c",
-      "si": 25.68,
+      "si": 24.32,
       "grade": "B",
       "cc_max": 5.0,
       "loc": 52,
@@ -2100,7 +2100,7 @@
     {
       "fqn": "setup.compatibility",
       "file_path": "setup/compatibility.c",
-      "si": 35.47,
+      "si": 33.78,
       "grade": "B",
       "cc_max": 1.0,
       "loc": 20,
@@ -2109,7 +2109,7 @@
     {
       "fqn": "setup.display",
       "file_path": "setup/display.c",
-      "si": 54.05,
+      "si": 52.7,
       "grade": "C",
       "cc_max": 9.0,
       "loc": 195,
@@ -2118,16 +2118,16 @@
     {
       "fqn": "setup.execute",
       "file_path": "setup/execute.c",
-      "si": 53.04,
+      "si": 55.41,
       "grade": "C",
-      "cc_max": 3.0,
-      "loc": 153,
+      "cc_max": 4.0,
+      "loc": 339,
       "bugfix_count": 4
     },
     {
       "fqn": "setup.joystick",
       "file_path": "setup/joystick.c",
-      "si": 72.97,
+      "si": 72.3,
       "grade": "D",
       "cc_max": 9.0,
       "loc": 636,
@@ -2136,7 +2136,7 @@
     {
       "fqn": "setup.keyboard",
       "file_path": "setup/keyboard.c",
-      "si": 58.11,
+      "si": 57.77,
       "grade": "C",
       "cc_max": 9.0,
       "loc": 359,
@@ -2145,7 +2145,7 @@
     {
       "fqn": "setup.mainmenu",
       "file_path": "setup/mainmenu.c",
-      "si": 49.32,
+      "si": 48.31,
       "grade": "C",
       "cc_max": 6.0,
       "loc": 265,
@@ -2154,7 +2154,7 @@
     {
       "fqn": "setup.mode",
       "file_path": "setup/mode.c",
-      "si": 74.66,
+      "si": 73.99,
       "grade": "D",
       "cc_max": 5.0,
       "loc": 250,
@@ -2163,7 +2163,7 @@
     {
       "fqn": "setup.mouse",
       "file_path": "setup/mouse.c",
-      "si": 50.0,
+      "si": 48.99,
       "grade": "C",
       "cc_max": 5.0,
       "loc": 115,
@@ -2172,7 +2172,7 @@
     {
       "fqn": "setup.multiplayer",
       "file_path": "setup/multiplayer.c",
-      "si": 70.27,
+      "si": 69.59,
       "grade": "D",
       "cc_max": 10.5,
       "loc": 978,
@@ -2190,16 +2190,16 @@
     {
       "fqn": "setup.sound",
       "file_path": "setup/sound.c",
-      "si": 58.78,
-      "grade": "C",
+      "si": 61.15,
+      "grade": "D",
       "cc_max": 8.0,
-      "loc": 228,
+      "loc": 278,
       "bugfix_count": 7
     },
     {
       "fqn": "setup.txt_joyaxis",
       "file_path": "setup/txt_joyaxis.c",
-      "si": 51.01,
+      "si": 50.0,
       "grade": "C",
       "cc_max": 9.5,
       "loc": 571,
@@ -2208,7 +2208,7 @@
     {
       "fqn": "setup.txt_joybinput",
       "file_path": "setup/txt_joybinput.c",
-      "si": 53.38,
+      "si": 52.36,
       "grade": "C",
       "cc_max": 9.5,
       "loc": 462,
@@ -2217,7 +2217,7 @@
     {
       "fqn": "setup.txt_keyinput",
       "file_path": "setup/txt_keyinput.c",
-      "si": 14.53,
+      "si": 13.18,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 135,
@@ -2226,8 +2226,8 @@
     {
       "fqn": "setup.txt_mouseinput",
       "file_path": "setup/txt_mouseinput.c",
-      "si": 21.28,
-      "grade": "B",
+      "si": 19.93,
+      "grade": "A",
       "cc_max": 7.0,
       "loc": 133,
       "bugfix_count": 1
@@ -2235,7 +2235,7 @@
     {
       "fqn": "sha1",
       "file_path": "sha1.c",
-      "si": 76.01,
+      "si": 75.68,
       "grade": "D",
       "cc_max": 10.0,
       "loc": 258,
@@ -2271,7 +2271,7 @@
     {
       "fqn": "strife.d_net",
       "file_path": "strife/d_net.c",
-      "si": 38.85,
+      "si": 36.49,
       "grade": "B",
       "cc_max": 9.0,
       "loc": 223,
@@ -2280,7 +2280,7 @@
     {
       "fqn": "strife.deh_ammo",
       "file_path": "strife/deh_ammo.c",
-      "si": 16.89,
+      "si": 15.54,
       "grade": "A",
       "cc_max": 5.0,
       "loc": 62,
@@ -2289,7 +2289,7 @@
     {
       "fqn": "strife.deh_cheat",
       "file_path": "strife/deh_cheat.c",
-      "si": 26.69,
+      "si": 25.34,
       "grade": "B",
       "cc_max": 10.0,
       "loc": 78,
@@ -2298,7 +2298,7 @@
     {
       "fqn": "strife.deh_frame",
       "file_path": "strife/deh_frame.c",
-      "si": 22.64,
+      "si": 21.28,
       "grade": "B",
       "cc_max": 6.0,
       "loc": 100,
@@ -2307,7 +2307,7 @@
     {
       "fqn": "strife.deh_misc",
       "file_path": "strife/deh_misc.c",
-      "si": 24.32,
+      "si": 22.97,
       "grade": "B",
       "cc_max": 7.0,
       "loc": 61,
@@ -2316,7 +2316,7 @@
     {
       "fqn": "strife.deh_ptr",
       "file_path": "strife/deh_ptr.c",
-      "si": 19.59,
+      "si": 18.58,
       "grade": "A",
       "cc_max": 6.0,
       "loc": 97,
@@ -2325,7 +2325,7 @@
     {
       "fqn": "strife.deh_sound",
       "file_path": "strife/deh_sound.c",
-      "si": 16.89,
+      "si": 15.54,
       "grade": "A",
       "cc_max": 5.0,
       "loc": 52,
@@ -2343,7 +2343,7 @@
     {
       "fqn": "strife.deh_thing",
       "file_path": "strife/deh_thing.c",
-      "si": 14.19,
+      "si": 12.84,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 64,
@@ -2352,7 +2352,7 @@
     {
       "fqn": "strife.deh_weapon",
       "file_path": "strife/deh_weapon.c",
-      "si": 14.19,
+      "si": 12.84,
       "grade": "A",
       "cc_max": 4.0,
       "loc": 50,
@@ -2388,16 +2388,16 @@
     {
       "fqn": "strife.f_finale",
       "file_path": "strife/f_finale.c",
-      "si": 73.99,
+      "si": 73.31,
       "grade": "D",
       "cc_max": 30.0,
-      "loc": 563,
+      "loc": 593,
       "bugfix_count": 6
     },
     {
       "fqn": "strife.f_wipe",
       "file_path": "strife/f_wipe.c",
-      "si": 38.18,
+      "si": 36.15,
       "grade": "B",
       "cc_max": 9.0,
       "loc": 223,
@@ -2415,7 +2415,7 @@
     {
       "fqn": "strife.hu_lib",
       "file_path": "strife/hu_lib.c",
-      "si": 25.34,
+      "si": 23.99,
       "grade": "B",
       "cc_max": 9.5,
       "loc": 319,
@@ -2424,7 +2424,7 @@
     {
       "fqn": "strife.hu_stuff",
       "file_path": "strife/hu_stuff.c",
-      "si": 68.58,
+      "si": 68.24,
       "grade": "D",
       "cc_max": 28.0,
       "loc": 448,
@@ -2460,7 +2460,7 @@
     {
       "fqn": "strife.m_saves",
       "file_path": "strife/m_saves.c",
-      "si": 39.86,
+      "si": 37.5,
       "grade": "B",
       "cc_max": 7.0,
       "loc": 317,
@@ -2469,7 +2469,7 @@
     {
       "fqn": "strife.p_ceilng",
       "file_path": "strife/p_ceilng.c",
-      "si": 54.73,
+      "si": 54.05,
       "grade": "C",
       "cc_max": 28.0,
       "loc": 264,
@@ -2505,7 +2505,7 @@
     {
       "fqn": "strife.p_floor",
       "file_path": "strife/p_floor.c",
-      "si": 52.36,
+      "si": 51.69,
       "grade": "C",
       "cc_max": 29.0,
       "loc": 530,
@@ -2523,7 +2523,7 @@
     {
       "fqn": "strife.p_lights",
       "file_path": "strife/p_lights.c",
-      "si": 18.24,
+      "si": 17.23,
       "grade": "A",
       "cc_max": 7.0,
       "loc": 240,
@@ -2532,7 +2532,7 @@
     {
       "fqn": "strife.p_map",
       "file_path": "strife/p_map.c",
-      "si": 71.96,
+      "si": 71.28,
       "grade": "D",
       "cc_max": 21.5,
       "loc": 1265,
@@ -2541,7 +2541,7 @@
     {
       "fqn": "strife.p_maputl",
       "file_path": "strife/p_maputl.c",
-      "si": 47.3,
+      "si": 45.61,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 712,
@@ -2550,7 +2550,7 @@
     {
       "fqn": "strife.p_mobj",
       "file_path": "strife/p_mobj.c",
-      "si": 62.5,
+      "si": 61.82,
       "grade": "D",
       "cc_max": 34.5,
       "loc": 1132,
@@ -2559,7 +2559,7 @@
     {
       "fqn": "strife.p_plats",
       "file_path": "strife/p_plats.c",
-      "si": 52.03,
+      "si": 51.35,
       "grade": "C",
       "cc_max": 25.0,
       "loc": 290,
@@ -2568,7 +2568,7 @@
     {
       "fqn": "strife.p_pspr",
       "file_path": "strife/p_pspr.c",
-      "si": 32.77,
+      "si": 31.42,
       "grade": "B",
       "cc_max": 15.0,
       "loc": 740,
@@ -2577,7 +2577,7 @@
     {
       "fqn": "strife.p_saveg",
       "file_path": "strife/p_saveg.c",
-      "si": 33.78,
+      "si": 32.09,
       "grade": "B",
       "cc_max": 11.4,
       "loc": 1900,
@@ -2586,8 +2586,8 @@
     {
       "fqn": "strife.p_setup",
       "file_path": "strife/p_setup.c",
-      "si": 60.14,
-      "grade": "D",
+      "si": 59.12,
+      "grade": "C",
       "cc_max": 16.0,
       "loc": 620,
       "bugfix_count": 4
@@ -2595,7 +2595,7 @@
     {
       "fqn": "strife.p_sight",
       "file_path": "strife/p_sight.c",
-      "si": 42.57,
+      "si": 40.54,
       "grade": "C",
       "cc_max": 18.0,
       "loc": 272,
@@ -2622,7 +2622,7 @@
     {
       "fqn": "strife.p_telept",
       "file_path": "strife/p_telept.c",
-      "si": 29.73,
+      "si": 28.38,
       "grade": "B",
       "cc_max": 15.0,
       "loc": 106,
@@ -2631,7 +2631,7 @@
     {
       "fqn": "strife.p_tick",
       "file_path": "strife/p_tick.c",
-      "si": 25.0,
+      "si": 23.65,
       "grade": "B",
       "cc_max": 8.0,
       "loc": 74,
@@ -2640,7 +2640,7 @@
     {
       "fqn": "strife.p_user",
       "file_path": "strife/p_user.c",
-      "si": 75.68,
+      "si": 75.34,
       "grade": "D",
       "cc_max": 57.0,
       "loc": 775,
@@ -2649,7 +2649,7 @@
     {
       "fqn": "strife.r_bsp",
       "file_path": "strife/r_bsp.c",
-      "si": 45.61,
+      "si": 44.26,
       "grade": "C",
       "cc_max": 16.0,
       "loc": 420,
@@ -2658,7 +2658,7 @@
     {
       "fqn": "strife.r_data",
       "file_path": "strife/r_data.c",
-      "si": 61.15,
+      "si": 60.14,
       "grade": "D",
       "cc_max": 19.0,
       "loc": 722,
@@ -2667,7 +2667,7 @@
     {
       "fqn": "strife.r_draw",
       "file_path": "strife/r_draw.c",
-      "si": 70.61,
+      "si": 69.93,
       "grade": "D",
       "cc_max": 17.0,
       "loc": 594,
@@ -2685,8 +2685,8 @@
     {
       "fqn": "strife.r_plane",
       "file_path": "strife/r_plane.c",
-      "si": 40.54,
-      "grade": "C",
+      "si": 38.51,
+      "grade": "B",
       "cc_max": 12.0,
       "loc": 308,
       "bugfix_count": 1
@@ -2712,7 +2712,7 @@
     {
       "fqn": "strife.r_things",
       "file_path": "strife/r_things.c",
-      "si": 66.89,
+      "si": 66.55,
       "grade": "D",
       "cc_max": 29.0,
       "loc": 835,
@@ -2721,7 +2721,7 @@
     {
       "fqn": "strife.s_sound",
       "file_path": "strife/s_sound.c",
-      "si": 56.08,
+      "si": 55.07,
       "grade": "C",
       "cc_max": 14.5,
       "loc": 589,
@@ -2739,7 +2739,7 @@
     {
       "fqn": "strife.st_lib",
       "file_path": "strife/st_lib.c",
-      "si": 34.46,
+      "si": 32.77,
       "grade": "B",
       "cc_max": 11.0,
       "loc": 108,
@@ -2766,7 +2766,7 @@
     {
       "fqn": "strife.wi_stuff",
       "file_path": "strife/wi_stuff.c",
-      "si": 12.84,
+      "si": 11.49,
       "grade": "A",
       "cc_max": 0.0,
       "loc": 0,
@@ -2775,7 +2775,7 @@
     {
       "fqn": "tables",
       "file_path": "tables.c",
-      "si": 11.49,
+      "si": 10.47,
       "grade": "A",
       "cc_max": 3.0,
       "loc": 22,
@@ -2795,14 +2795,14 @@
       "file_path": "v_video.c",
       "si": 97.64,
       "grade": "E",
-      "cc_max": 10.0,
-      "loc": 673,
+      "cc_max": 10.5,
+      "loc": 782,
       "bugfix_count": 15
     },
     {
       "fqn": "w_checksum",
       "file_path": "w_checksum.c",
-      "si": 67.57,
+      "si": 67.23,
       "grade": "D",
       "cc_max": 3.0,
       "loc": 54,
@@ -2811,7 +2811,7 @@
     {
       "fqn": "w_file",
       "file_path": "w_file.c",
-      "si": 36.15,
+      "si": 34.46,
       "grade": "B",
       "cc_max": 4.0,
       "loc": 42,
@@ -2820,16 +2820,16 @@
     {
       "fqn": "w_file_posix",
       "file_path": "w_file_posix.c",
-      "si": 10.81,
+      "si": 16.22,
       "grade": "A",
-      "cc_max": 0.0,
-      "loc": 0,
+      "cc_max": 4.0,
+      "loc": 118,
       "bugfix_count": 0
     },
     {
       "fqn": "w_file_stdc",
       "file_path": "w_file_stdc.c",
-      "si": 11.82,
+      "si": 10.81,
       "grade": "A",
       "cc_max": 2.0,
       "loc": 50,
@@ -2838,16 +2838,16 @@
     {
       "fqn": "w_file_win32",
       "file_path": "w_file_win32.c",
-      "si": 11.15,
+      "si": 19.59,
       "grade": "A",
-      "cc_max": 0.0,
-      "loc": 0,
+      "cc_max": 4.0,
+      "loc": 138,
       "bugfix_count": 5
     },
     {
       "fqn": "w_main",
       "file_path": "w_main.c",
-      "si": 57.77,
+      "si": 57.09,
       "grade": "C",
       "cc_max": 19.0,
       "loc": 218,
@@ -2874,16 +2874,16 @@
     {
       "fqn": "z_native",
       "file_path": "z_native.c",
-      "si": 28.72,
+      "si": 27.7,
       "grade": "B",
       "cc_max": 10.0,
-      "loc": 353,
+      "loc": 380,
       "bugfix_count": 5
     },
     {
       "fqn": "z_zone",
       "file_path": "z_zone.c",
-      "si": 98.65,
+      "si": 98.31,
       "grade": "E",
       "cc_max": 11.0,
       "loc": 415,
@@ -2893,8 +2893,8 @@
   "file_rows": [
     {
       "file_path": "aes_prng.c",
-      "si_max": 28.04,
-      "si_mean": 28.04,
+      "si_max": 26.69,
+      "si_mean": 26.69,
       "loc_total": 170,
       "cc_max": 11.0,
       "class_count": 1,
@@ -2902,8 +2902,8 @@
     },
     {
       "file_path": "d_dedicated.c",
-      "si_max": 12.16,
-      "si_mean": 12.16,
+      "si_max": 11.15,
+      "si_mean": 11.15,
       "loc_total": 16,
       "cc_max": 1.0,
       "class_count": 1,
@@ -2911,8 +2911,8 @@
     },
     {
       "file_path": "d_event.c",
-      "si_max": 42.23,
-      "si_mean": 42.23,
+      "si_max": 40.2,
+      "si_mean": 40.2,
       "loc_total": 24,
       "cc_max": 2.0,
       "class_count": 1,
@@ -2920,10 +2920,10 @@
     },
     {
       "file_path": "d_iwad.c",
-      "si_max": 77.7,
-      "si_mean": 77.7,
-      "loc_total": 413,
-      "cc_max": 8.0,
+      "si_max": 77.36,
+      "si_mean": 77.36,
+      "loc_total": 678,
+      "cc_max": 7.0,
       "class_count": 1,
       "bugfix_count": 26
     },
@@ -2938,8 +2938,8 @@
     },
     {
       "file_path": "d_mode.c",
-      "si_max": 56.76,
-      "si_mean": 56.76,
+      "si_max": 56.08,
+      "si_mean": 56.08,
       "loc_total": 149,
       "cc_max": 13.0,
       "class_count": 1,
@@ -2965,8 +2965,8 @@
     },
     {
       "file_path": "deh_mapping.c",
-      "si_max": 46.96,
-      "si_mean": 46.96,
+      "si_max": 45.27,
+      "si_mean": 45.27,
       "loc_total": 154,
       "cc_max": 7.0,
       "class_count": 1,
@@ -2983,8 +2983,8 @@
     },
     {
       "file_path": "deh_text.c",
-      "si_max": 22.64,
-      "si_mean": 22.64,
+      "si_max": 21.28,
+      "si_mean": 21.28,
       "loc_total": 68,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3019,8 +3019,8 @@
     },
     {
       "file_path": "doom/d_net.c",
-      "si_max": 37.5,
-      "si_mean": 37.5,
+      "si_max": 35.47,
+      "si_mean": 35.47,
       "loc_total": 220,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3028,8 +3028,8 @@
     },
     {
       "file_path": "doom/deh_ammo.c",
-      "si_max": 16.89,
-      "si_mean": 16.89,
+      "si_max": 15.54,
+      "si_mean": 15.54,
       "loc_total": 62,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3037,8 +3037,8 @@
     },
     {
       "file_path": "doom/deh_bexstr.c",
-      "si_max": 14.86,
-      "si_mean": 14.86,
+      "si_max": 13.51,
+      "si_mean": 13.51,
       "loc_total": 30,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3046,8 +3046,8 @@
     },
     {
       "file_path": "doom/deh_cheat.c",
-      "si_max": 26.69,
-      "si_mean": 26.69,
+      "si_max": 25.34,
+      "si_mean": 25.34,
       "loc_total": 78,
       "cc_max": 10.0,
       "class_count": 1,
@@ -3064,8 +3064,8 @@
     },
     {
       "file_path": "doom/deh_frame.c",
-      "si_max": 22.64,
-      "si_mean": 22.64,
+      "si_max": 21.28,
+      "si_mean": 21.28,
       "loc_total": 100,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3073,8 +3073,8 @@
     },
     {
       "file_path": "doom/deh_misc.c",
-      "si_max": 24.32,
-      "si_mean": 24.32,
+      "si_max": 22.97,
+      "si_mean": 22.97,
       "loc_total": 61,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3082,8 +3082,8 @@
     },
     {
       "file_path": "doom/deh_ptr.c",
-      "si_max": 19.59,
-      "si_mean": 19.59,
+      "si_max": 18.58,
+      "si_mean": 18.58,
       "loc_total": 97,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3091,8 +3091,8 @@
     },
     {
       "file_path": "doom/deh_sound.c",
-      "si_max": 16.89,
-      "si_mean": 16.89,
+      "si_max": 15.54,
+      "si_mean": 15.54,
       "loc_total": 52,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3100,8 +3100,8 @@
     },
     {
       "file_path": "doom/deh_thing.c",
-      "si_max": 14.19,
-      "si_mean": 14.19,
+      "si_max": 12.84,
+      "si_mean": 12.84,
       "loc_total": 64,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3109,8 +3109,8 @@
     },
     {
       "file_path": "doom/deh_weapon.c",
-      "si_max": 14.19,
-      "si_mean": 14.19,
+      "si_max": 12.84,
+      "si_mean": 12.84,
       "loc_total": 50,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3154,8 +3154,8 @@
     },
     {
       "file_path": "doom/f_finale.c",
-      "si_max": 74.32,
-      "si_mean": 74.32,
+      "si_max": 73.65,
+      "si_mean": 73.65,
       "loc_total": 510,
       "cc_max": 43.0,
       "class_count": 1,
@@ -3163,8 +3163,8 @@
     },
     {
       "file_path": "doom/f_wipe.c",
-      "si_max": 39.19,
-      "si_mean": 39.19,
+      "si_max": 37.16,
+      "si_mean": 37.16,
       "loc_total": 240,
       "cc_max": 9.0,
       "class_count": 1,
@@ -3181,8 +3181,8 @@
     },
     {
       "file_path": "doom/hu_lib.c",
-      "si_max": 21.62,
-      "si_mean": 21.62,
+      "si_max": 20.27,
+      "si_mean": 20.27,
       "loc_total": 285,
       "cc_max": 8.5,
       "class_count": 1,
@@ -3190,8 +3190,8 @@
     },
     {
       "file_path": "doom/hu_stuff.c",
-      "si_max": 67.23,
-      "si_mean": 67.23,
+      "si_max": 66.89,
+      "si_mean": 66.89,
       "loc_total": 355,
       "cc_max": 28.0,
       "class_count": 1,
@@ -3208,8 +3208,8 @@
     },
     {
       "file_path": "doom/m_menu.c",
-      "si_max": 84.12,
-      "si_mean": 84.12,
+      "si_max": 84.46,
+      "si_mean": 84.46,
       "loc_total": 1369,
       "cc_max": 29.0,
       "class_count": 1,
@@ -3226,8 +3226,8 @@
     },
     {
       "file_path": "doom/p_ceilng.c",
-      "si_max": 54.73,
-      "si_mean": 54.73,
+      "si_max": 54.05,
+      "si_mean": 54.05,
       "loc_total": 250,
       "cc_max": 28.0,
       "class_count": 1,
@@ -3235,8 +3235,8 @@
     },
     {
       "file_path": "doom/p_doors.c",
-      "si_max": 65.88,
-      "si_mean": 65.88,
+      "si_max": 65.54,
+      "si_mean": 65.54,
       "loc_total": 485,
       "cc_max": 42.0,
       "class_count": 1,
@@ -3244,8 +3244,8 @@
     },
     {
       "file_path": "doom/p_enemy.c",
-      "si_max": 50.34,
-      "si_mean": 50.34,
+      "si_max": 49.32,
+      "si_mean": 49.32,
       "loc_total": 1656,
       "cc_max": 21.6667,
       "class_count": 1,
@@ -3253,8 +3253,8 @@
     },
     {
       "file_path": "doom/p_floor.c",
-      "si_max": 53.72,
-      "si_mean": 53.72,
+      "si_max": 53.04,
+      "si_mean": 53.04,
       "loc_total": 502,
       "cc_max": 30.0,
       "class_count": 1,
@@ -3271,8 +3271,8 @@
     },
     {
       "file_path": "doom/p_lights.c",
-      "si_max": 18.24,
-      "si_mean": 18.24,
+      "si_max": 17.23,
+      "si_mean": 17.23,
       "loc_total": 241,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3280,8 +3280,8 @@
     },
     {
       "file_path": "doom/p_map.c",
-      "si_max": 70.95,
-      "si_mean": 70.95,
+      "si_max": 70.27,
+      "si_mean": 70.27,
       "loc_total": 1128,
       "cc_max": 21.0,
       "class_count": 1,
@@ -3289,8 +3289,8 @@
     },
     {
       "file_path": "doom/p_maputl.c",
-      "si_max": 48.99,
-      "si_mean": 48.99,
+      "si_max": 47.97,
+      "si_mean": 47.97,
       "loc_total": 758,
       "cc_max": 16.0,
       "class_count": 1,
@@ -3298,8 +3298,8 @@
     },
     {
       "file_path": "doom/p_mobj.c",
-      "si_max": 62.84,
-      "si_mean": 62.84,
+      "si_max": 62.16,
+      "si_mean": 62.16,
       "loc_total": 908,
       "cc_max": 37.0,
       "class_count": 1,
@@ -3307,8 +3307,8 @@
     },
     {
       "file_path": "doom/p_plats.c",
-      "si_max": 43.92,
-      "si_mean": 43.92,
+      "si_max": 42.57,
+      "si_mean": 42.57,
       "loc_total": 248,
       "cc_max": 19.0,
       "class_count": 1,
@@ -3316,8 +3316,8 @@
     },
     {
       "file_path": "doom/p_pspr.c",
-      "si_max": 30.74,
-      "si_mean": 30.74,
+      "si_max": 29.39,
+      "si_mean": 29.39,
       "loc_total": 652,
       "cc_max": 13.3333,
       "class_count": 1,
@@ -3325,8 +3325,8 @@
     },
     {
       "file_path": "doom/p_saveg.c",
-      "si_max": 31.42,
-      "si_mean": 31.42,
+      "si_max": 30.07,
+      "si_mean": 30.07,
       "loc_total": 1618,
       "cc_max": 9.8,
       "class_count": 1,
@@ -3334,8 +3334,8 @@
     },
     {
       "file_path": "doom/p_setup.c",
-      "si_max": 62.16,
-      "si_mean": 62.16,
+      "si_max": 61.49,
+      "si_mean": 61.49,
       "loc_total": 642,
       "cc_max": 18.0,
       "class_count": 1,
@@ -3343,8 +3343,8 @@
     },
     {
       "file_path": "doom/p_sight.c",
-      "si_max": 44.26,
-      "si_mean": 44.26,
+      "si_max": 42.91,
+      "si_mean": 42.91,
       "loc_total": 312,
       "cc_max": 18.0,
       "class_count": 1,
@@ -3352,8 +3352,8 @@
     },
     {
       "file_path": "doom/p_spec.c",
-      "si_max": 78.38,
-      "si_mean": 78.38,
+      "si_max": 78.04,
+      "si_mean": 78.04,
       "loc_total": 1215,
       "cc_max": 59.5,
       "class_count": 1,
@@ -3370,8 +3370,8 @@
     },
     {
       "file_path": "doom/p_telept.c",
-      "si_max": 27.03,
-      "si_mean": 27.03,
+      "si_max": 25.68,
+      "si_mean": 25.68,
       "loc_total": 91,
       "cc_max": 13.0,
       "class_count": 1,
@@ -3379,8 +3379,8 @@
     },
     {
       "file_path": "doom/p_tick.c",
-      "si_max": 25.0,
-      "si_mean": 25.0,
+      "si_max": 23.65,
+      "si_mean": 23.65,
       "loc_total": 72,
       "cc_max": 8.0,
       "class_count": 1,
@@ -3388,8 +3388,8 @@
     },
     {
       "file_path": "doom/p_user.c",
-      "si_max": 60.47,
-      "si_mean": 60.47,
+      "si_max": 59.8,
+      "si_mean": 59.8,
       "loc_total": 297,
       "cc_max": 37.0,
       "class_count": 1,
@@ -3397,8 +3397,8 @@
     },
     {
       "file_path": "doom/r_bsp.c",
-      "si_max": 45.61,
-      "si_mean": 45.61,
+      "si_max": 44.26,
+      "si_mean": 44.26,
       "loc_total": 420,
       "cc_max": 16.0,
       "class_count": 1,
@@ -3406,8 +3406,8 @@
     },
     {
       "file_path": "doom/r_data.c",
-      "si_max": 59.12,
-      "si_mean": 59.12,
+      "si_max": 58.45,
+      "si_mean": 58.45,
       "loc_total": 620,
       "cc_max": 16.0,
       "class_count": 1,
@@ -3415,8 +3415,8 @@
     },
     {
       "file_path": "doom/r_draw.c",
-      "si_max": 65.54,
-      "si_mean": 65.54,
+      "si_max": 65.2,
+      "si_mean": 65.2,
       "loc_total": 586,
       "cc_max": 12.0,
       "class_count": 1,
@@ -3433,8 +3433,8 @@
     },
     {
       "file_path": "doom/r_plane.c",
-      "si_max": 40.88,
-      "si_mean": 40.88,
+      "si_max": 38.85,
+      "si_mean": 38.85,
       "loc_total": 311,
       "cc_max": 12.0,
       "class_count": 1,
@@ -3460,8 +3460,8 @@
     },
     {
       "file_path": "doom/r_things.c",
-      "si_max": 66.22,
-      "si_mean": 66.22,
+      "si_max": 65.88,
+      "si_mean": 65.88,
       "loc_total": 759,
       "cc_max": 29.0,
       "class_count": 1,
@@ -3469,8 +3469,8 @@
     },
     {
       "file_path": "doom/s_sound.c",
-      "si_max": 57.09,
-      "si_mean": 57.09,
+      "si_max": 56.42,
+      "si_mean": 56.42,
       "loc_total": 561,
       "cc_max": 18.0,
       "class_count": 1,
@@ -3487,8 +3487,8 @@
     },
     {
       "file_path": "doom/st_lib.c",
-      "si_max": 59.8,
-      "si_mean": 59.8,
+      "si_max": 58.78,
+      "si_mean": 58.78,
       "loc_total": 206,
       "cc_max": 13.0,
       "class_count": 1,
@@ -3505,8 +3505,8 @@
     },
     {
       "file_path": "doom/statdump.c",
-      "si_max": 35.81,
-      "si_mean": 35.81,
+      "si_max": 34.12,
+      "si_mean": 34.12,
       "loc_total": 274,
       "cc_max": 9.0,
       "class_count": 1,
@@ -3523,8 +3523,8 @@
     },
     {
       "file_path": "gusconf.c",
-      "si_max": 69.26,
-      "si_mean": 69.26,
+      "si_max": 68.58,
+      "si_mean": 68.58,
       "loc_total": 248,
       "cc_max": 10.0,
       "class_count": 1,
@@ -3541,8 +3541,8 @@
     },
     {
       "file_path": "heretic/ct_chat.c",
-      "si_max": 61.49,
-      "si_mean": 61.49,
+      "si_max": 60.47,
+      "si_mean": 60.47,
       "loc_total": 318,
       "cc_max": 25.0,
       "class_count": 1,
@@ -3559,8 +3559,8 @@
     },
     {
       "file_path": "heretic/d_net.c",
-      "si_max": 32.43,
-      "si_mean": 32.43,
+      "si_max": 31.08,
+      "si_mean": 31.08,
       "loc_total": 154,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3568,8 +3568,8 @@
     },
     {
       "file_path": "heretic/deh_ammo.c",
-      "si_max": 16.89,
-      "si_mean": 16.89,
+      "si_max": 15.54,
+      "si_mean": 15.54,
       "loc_total": 72,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3577,8 +3577,8 @@
     },
     {
       "file_path": "heretic/deh_frame.c",
-      "si_max": 26.01,
-      "si_mean": 26.01,
+      "si_max": 24.66,
+      "si_mean": 24.66,
       "loc_total": 131,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3586,8 +3586,8 @@
     },
     {
       "file_path": "heretic/deh_htext.c",
-      "si_max": 27.7,
-      "si_mean": 27.7,
+      "si_max": 26.35,
+      "si_mean": 26.35,
       "loc_total": 149,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3595,8 +3595,8 @@
     },
     {
       "file_path": "heretic/deh_htic.c",
-      "si_max": 28.38,
-      "si_mean": 28.38,
+      "si_max": 27.03,
+      "si_mean": 27.03,
       "loc_total": 115,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3604,8 +3604,8 @@
     },
     {
       "file_path": "heretic/deh_sound.c",
-      "si_max": 18.92,
-      "si_mean": 18.92,
+      "si_max": 17.91,
+      "si_mean": 17.91,
       "loc_total": 56,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3613,8 +3613,8 @@
     },
     {
       "file_path": "heretic/deh_thing.c",
-      "si_max": 20.95,
-      "si_mean": 20.95,
+      "si_max": 19.26,
+      "si_mean": 19.26,
       "loc_total": 74,
       "cc_max": 4.0,
       "class_count": 1,
@@ -3622,8 +3622,8 @@
     },
     {
       "file_path": "heretic/deh_weapon.c",
-      "si_max": 23.31,
-      "si_mean": 23.31,
+      "si_max": 21.96,
+      "si_mean": 21.96,
       "loc_total": 68,
       "cc_max": 5.0,
       "class_count": 1,
@@ -3631,8 +3631,8 @@
     },
     {
       "file_path": "heretic/f_finale.c",
-      "si_max": 34.12,
-      "si_mean": 34.12,
+      "si_max": 32.43,
+      "si_mean": 32.43,
       "loc_total": 274,
       "cc_max": 10.0,
       "class_count": 1,
@@ -3658,8 +3658,8 @@
     },
     {
       "file_path": "heretic/in_lude.c",
-      "si_max": 63.18,
-      "si_mean": 63.18,
+      "si_max": 62.5,
+      "si_mean": 62.5,
       "loc_total": 799,
       "cc_max": 17.5,
       "class_count": 1,
@@ -3694,8 +3694,8 @@
     },
     {
       "file_path": "heretic/p_ceilng.c",
-      "si_max": 44.93,
-      "si_mean": 44.93,
+      "si_max": 43.58,
+      "si_mean": 43.58,
       "loc_total": 188,
       "cc_max": 21.0,
       "class_count": 1,
@@ -3703,8 +3703,8 @@
     },
     {
       "file_path": "heretic/p_doors.c",
-      "si_max": 57.43,
-      "si_mean": 57.43,
+      "si_max": 56.76,
+      "si_mean": 56.76,
       "loc_total": 316,
       "cc_max": 31.0,
       "class_count": 1,
@@ -3712,8 +3712,8 @@
     },
     {
       "file_path": "heretic/p_enemy.c",
-      "si_max": 42.91,
-      "si_mean": 42.91,
+      "si_max": 40.88,
+      "si_mean": 40.88,
       "loc_total": 1939,
       "cc_max": 15.7778,
       "class_count": 1,
@@ -3721,8 +3721,8 @@
     },
     {
       "file_path": "heretic/p_floor.c",
-      "si_max": 46.62,
-      "si_mean": 46.62,
+      "si_max": 45.95,
+      "si_mean": 45.95,
       "loc_total": 408,
       "cc_max": 24.0,
       "class_count": 1,
@@ -3739,8 +3739,8 @@
     },
     {
       "file_path": "heretic/p_lights.c",
-      "si_max": 18.24,
-      "si_mean": 18.24,
+      "si_max": 17.23,
+      "si_mean": 17.23,
       "loc_total": 188,
       "cc_max": 7.0,
       "class_count": 1,
@@ -3748,8 +3748,8 @@
     },
     {
       "file_path": "heretic/p_map.c",
-      "si_max": 75.34,
-      "si_mean": 75.34,
+      "si_max": 75.0,
+      "si_mean": 75.0,
       "loc_total": 1223,
       "cc_max": 30.5,
       "class_count": 1,
@@ -3757,8 +3757,8 @@
     },
     {
       "file_path": "heretic/p_maputl.c",
-      "si_max": 44.59,
-      "si_mean": 44.59,
+      "si_max": 43.24,
+      "si_mean": 43.24,
       "loc_total": 543,
       "cc_max": 16.0,
       "class_count": 1,
@@ -3766,8 +3766,8 @@
     },
     {
       "file_path": "heretic/p_mobj.c",
-      "si_max": 71.62,
-      "si_mean": 71.62,
+      "si_max": 70.95,
+      "si_mean": 70.95,
       "loc_total": 1305,
       "cc_max": 50.5,
       "class_count": 1,
@@ -3775,8 +3775,8 @@
     },
     {
       "file_path": "heretic/p_plats.c",
-      "si_max": 43.92,
-      "si_mean": 43.92,
+      "si_max": 42.57,
+      "si_mean": 42.57,
       "loc_total": 216,
       "cc_max": 19.0,
       "class_count": 1,
@@ -3784,8 +3784,8 @@
     },
     {
       "file_path": "heretic/p_pspr.c",
-      "si_max": 36.82,
-      "si_mean": 36.82,
+      "si_max": 34.8,
+      "si_mean": 34.8,
       "loc_total": 1213,
       "cc_max": 12.6,
       "class_count": 1,
@@ -3793,8 +3793,8 @@
     },
     {
       "file_path": "heretic/p_saveg.c",
-      "si_max": 29.39,
-      "si_mean": 29.39,
+      "si_max": 28.04,
+      "si_mean": 28.04,
       "loc_total": 1631,
       "cc_max": 9.6,
       "class_count": 1,
@@ -3802,8 +3802,8 @@
     },
     {
       "file_path": "heretic/p_setup.c",
-      "si_max": 55.74,
-      "si_mean": 55.74,
+      "si_max": 54.39,
+      "si_mean": 54.39,
       "loc_total": 511,
       "cc_max": 14.0,
       "class_count": 1,
@@ -3811,8 +3811,8 @@
     },
     {
       "file_path": "heretic/p_sight.c",
-      "si_max": 41.55,
-      "si_mean": 41.55,
+      "si_max": 39.53,
+      "si_mean": 39.53,
       "loc_total": 262,
       "cc_max": 21.0,
       "class_count": 1,
@@ -3820,8 +3820,8 @@
     },
     {
       "file_path": "heretic/p_spec.c",
-      "si_max": 77.03,
-      "si_mean": 77.03,
+      "si_max": 76.69,
+      "si_mean": 76.69,
       "loc_total": 903,
       "cc_max": 55.0,
       "class_count": 1,
@@ -3838,8 +3838,8 @@
     },
     {
       "file_path": "heretic/p_telept.c",
-      "si_max": 31.76,
-      "si_mean": 31.76,
+      "si_max": 30.74,
+      "si_mean": 30.74,
       "loc_total": 128,
       "cc_max": 15.0,
       "class_count": 1,
@@ -3847,8 +3847,8 @@
     },
     {
       "file_path": "heretic/p_tick.c",
-      "si_max": 22.97,
-      "si_mean": 22.97,
+      "si_max": 21.62,
+      "si_mean": 21.62,
       "loc_total": 68,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3856,8 +3856,8 @@
     },
     {
       "file_path": "heretic/p_user.c",
-      "si_max": 72.64,
-      "si_mean": 72.64,
+      "si_max": 71.96,
+      "si_mean": 71.96,
       "loc_total": 860,
       "cc_max": 54.0,
       "class_count": 1,
@@ -3865,8 +3865,8 @@
     },
     {
       "file_path": "heretic/r_bsp.c",
-      "si_max": 45.95,
-      "si_mean": 45.95,
+      "si_max": 44.59,
+      "si_mean": 44.59,
       "loc_total": 334,
       "cc_max": 16.0,
       "class_count": 1,
@@ -3874,8 +3874,8 @@
     },
     {
       "file_path": "heretic/r_data.c",
-      "si_max": 49.66,
-      "si_mean": 49.66,
+      "si_max": 48.65,
+      "si_mean": 48.65,
       "loc_total": 505,
       "cc_max": 15.0,
       "class_count": 1,
@@ -3883,8 +3883,8 @@
     },
     {
       "file_path": "heretic/r_draw.c",
-      "si_max": 51.69,
-      "si_mean": 51.69,
+      "si_max": 51.01,
+      "si_mean": 51.01,
       "loc_total": 352,
       "cc_max": 8.0,
       "class_count": 1,
@@ -3901,8 +3901,8 @@
     },
     {
       "file_path": "heretic/r_plane.c",
-      "si_max": 67.91,
-      "si_mean": 67.91,
+      "si_max": 67.57,
+      "si_mean": 67.57,
       "loc_total": 340,
       "cc_max": 39.0,
       "class_count": 1,
@@ -3919,8 +3919,8 @@
     },
     {
       "file_path": "heretic/r_things.c",
-      "si_max": 64.86,
-      "si_mean": 64.86,
+      "si_max": 64.53,
+      "si_mean": 64.53,
       "loc_total": 759,
       "cc_max": 29.0,
       "class_count": 1,
@@ -3928,8 +3928,8 @@
     },
     {
       "file_path": "heretic/s_sound.c",
-      "si_max": 69.93,
-      "si_mean": 69.93,
+      "si_max": 69.26,
+      "si_mean": 69.26,
       "loc_total": 533,
       "cc_max": 32.0,
       "class_count": 1,
@@ -3937,8 +3937,8 @@
     },
     {
       "file_path": "heretic/sb_bar.c",
-      "si_max": 69.59,
-      "si_mean": 69.59,
+      "si_max": 68.92,
+      "si_mean": 68.92,
       "loc_total": 931,
       "cc_max": 20.0,
       "class_count": 1,
@@ -3955,8 +3955,8 @@
     },
     {
       "file_path": "hexen/a_action.c",
-      "si_max": 18.58,
-      "si_mean": 18.58,
+      "si_max": 17.57,
+      "si_mean": 17.57,
       "loc_total": 802,
       "cc_max": 8.25,
       "class_count": 1,
@@ -3964,8 +3964,8 @@
     },
     {
       "file_path": "hexen/am_map.c",
-      "si_max": 77.36,
-      "si_mean": 77.36,
+      "si_max": 77.03,
+      "si_mean": 77.03,
       "loc_total": 1245,
       "cc_max": 28.3333,
       "class_count": 1,
@@ -3973,8 +3973,8 @@
     },
     {
       "file_path": "hexen/ct_chat.c",
-      "si_max": 63.51,
-      "si_mean": 63.51,
+      "si_max": 62.84,
+      "si_mean": 62.84,
       "loc_total": 329,
       "cc_max": 29.0,
       "class_count": 1,
@@ -3982,8 +3982,8 @@
     },
     {
       "file_path": "hexen/d_net.c",
-      "si_max": 35.14,
-      "si_mean": 35.14,
+      "si_max": 33.45,
+      "si_mean": 33.45,
       "loc_total": 208,
       "cc_max": 6.0,
       "class_count": 1,
@@ -3991,8 +3991,8 @@
     },
     {
       "file_path": "hexen/f_finale.c",
-      "si_max": 41.89,
-      "si_mean": 41.89,
+      "si_max": 39.86,
+      "si_mean": 39.86,
       "loc_total": 249,
       "cc_max": 12.0,
       "class_count": 1,
@@ -4009,8 +4009,8 @@
     },
     {
       "file_path": "hexen/h2_main.c",
-      "si_max": 64.53,
-      "si_mean": 64.53,
+      "si_max": 63.85,
+      "si_mean": 63.85,
       "loc_total": 928,
       "cc_max": 13.5,
       "class_count": 1,
@@ -4027,8 +4027,8 @@
     },
     {
       "file_path": "hexen/in_lude.c",
-      "si_max": 50.68,
-      "si_mean": 50.68,
+      "si_max": 49.66,
+      "si_mean": 49.66,
       "loc_total": 402,
       "cc_max": 15.0,
       "class_count": 1,
@@ -4063,8 +4063,8 @@
     },
     {
       "file_path": "hexen/p_acs.c",
-      "si_max": 61.82,
-      "si_mean": 61.82,
+      "si_max": 60.81,
+      "si_mean": 60.81,
       "loc_total": 1360,
       "cc_max": 5.9231,
       "class_count": 1,
@@ -4072,8 +4072,8 @@
     },
     {
       "file_path": "hexen/p_anim.c",
-      "si_max": 55.41,
-      "si_mean": 55.41,
+      "si_max": 54.73,
+      "si_mean": 54.73,
       "loc_total": 353,
       "cc_max": 26.0,
       "class_count": 1,
@@ -4081,8 +4081,8 @@
     },
     {
       "file_path": "hexen/p_ceilng.c",
-      "si_max": 38.51,
-      "si_mean": 38.51,
+      "si_max": 36.82,
+      "si_mean": 36.82,
       "loc_total": 218,
       "cc_max": 18.0,
       "class_count": 1,
@@ -4090,8 +4090,8 @@
     },
     {
       "file_path": "hexen/p_doors.c",
-      "si_max": 46.28,
-      "si_mean": 46.28,
+      "si_max": 44.93,
+      "si_mean": 44.93,
       "loc_total": 220,
       "cc_max": 25.0,
       "class_count": 1,
@@ -4099,8 +4099,8 @@
     },
     {
       "file_path": "hexen/p_enemy.c",
-      "si_max": 47.64,
-      "si_mean": 47.64,
+      "si_max": 46.62,
+      "si_mean": 46.62,
       "loc_total": 4218,
       "cc_max": 21.8824,
       "class_count": 1,
@@ -4108,8 +4108,8 @@
     },
     {
       "file_path": "hexen/p_floor.c",
-      "si_max": 51.35,
-      "si_mean": 51.35,
+      "si_max": 50.68,
+      "si_mean": 50.68,
       "loc_total": 792,
       "cc_max": 23.0,
       "class_count": 1,
@@ -4126,8 +4126,8 @@
     },
     {
       "file_path": "hexen/p_lights.c",
-      "si_max": 33.45,
-      "si_mean": 33.45,
+      "si_max": 31.76,
+      "si_mean": 31.76,
       "loc_total": 303,
       "cc_max": 17.0,
       "class_count": 1,
@@ -4144,8 +4144,8 @@
     },
     {
       "file_path": "hexen/p_maputl.c",
-      "si_max": 72.3,
-      "si_mean": 72.3,
+      "si_max": 71.62,
+      "si_mean": 71.62,
       "loc_total": 821,
       "cc_max": 48.0,
       "class_count": 1,
@@ -4153,8 +4153,8 @@
     },
     {
       "file_path": "hexen/p_mobj.c",
-      "si_max": 78.72,
-      "si_mean": 78.72,
+      "si_max": 78.38,
+      "si_mean": 78.38,
       "loc_total": 2022,
       "cc_max": 64.6667,
       "class_count": 1,
@@ -4162,8 +4162,8 @@
     },
     {
       "file_path": "hexen/p_plats.c",
-      "si_max": 37.16,
-      "si_mean": 37.16,
+      "si_max": 35.14,
+      "si_mean": 35.14,
       "loc_total": 222,
       "cc_max": 16.0,
       "class_count": 1,
@@ -4171,8 +4171,8 @@
     },
     {
       "file_path": "hexen/p_pspr.c",
-      "si_max": 32.09,
-      "si_mean": 32.09,
+      "si_max": 30.41,
+      "si_mean": 30.41,
       "loc_total": 1585,
       "cc_max": 12.8333,
       "class_count": 1,
@@ -4180,8 +4180,8 @@
     },
     {
       "file_path": "hexen/p_setup.c",
-      "si_max": 60.81,
-      "si_mean": 60.81,
+      "si_max": 59.46,
+      "si_mean": 59.46,
       "loc_total": 816,
       "cc_max": 15.6667,
       "class_count": 1,
@@ -4189,8 +4189,8 @@
     },
     {
       "file_path": "hexen/p_sight.c",
-      "si_max": 41.55,
-      "si_mean": 41.55,
+      "si_max": 39.53,
+      "si_mean": 39.53,
       "loc_total": 307,
       "cc_max": 21.0,
       "class_count": 1,
@@ -4207,8 +4207,8 @@
     },
     {
       "file_path": "hexen/p_switch.c",
-      "si_max": 27.36,
-      "si_mean": 27.36,
+      "si_max": 26.01,
+      "si_mean": 26.01,
       "loc_total": 95,
       "cc_max": 8.0,
       "class_count": 1,
@@ -4216,8 +4216,8 @@
     },
     {
       "file_path": "hexen/p_telept.c",
-      "si_max": 37.84,
-      "si_mean": 37.84,
+      "si_max": 35.81,
+      "si_mean": 35.81,
       "loc_total": 134,
       "cc_max": 18.0,
       "class_count": 1,
@@ -4225,8 +4225,8 @@
     },
     {
       "file_path": "hexen/p_things.c",
-      "si_max": 43.24,
-      "si_mean": 43.24,
+      "si_max": 41.22,
+      "si_mean": 41.22,
       "loc_total": 308,
       "cc_max": 23.0,
       "class_count": 1,
@@ -4234,8 +4234,8 @@
     },
     {
       "file_path": "hexen/p_tick.c",
-      "si_max": 15.2,
-      "si_mean": 15.2,
+      "si_max": 13.85,
+      "si_mean": 13.85,
       "loc_total": 66,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4252,8 +4252,8 @@
     },
     {
       "file_path": "hexen/po_man.c",
-      "si_max": 56.42,
-      "si_mean": 56.42,
+      "si_max": 55.74,
+      "si_mean": 55.74,
       "loc_total": 1279,
       "cc_max": 22.0,
       "class_count": 1,
@@ -4261,8 +4261,8 @@
     },
     {
       "file_path": "hexen/r_bsp.c",
-      "si_max": 48.31,
-      "si_mean": 48.31,
+      "si_max": 46.96,
+      "si_mean": 46.96,
       "loc_total": 354,
       "cc_max": 17.0,
       "class_count": 1,
@@ -4270,8 +4270,8 @@
     },
     {
       "file_path": "hexen/r_data.c",
-      "si_max": 48.65,
-      "si_mean": 48.65,
+      "si_max": 47.64,
+      "si_mean": 47.64,
       "loc_total": 467,
       "cc_max": 15.0,
       "class_count": 1,
@@ -4279,8 +4279,8 @@
     },
     {
       "file_path": "hexen/r_draw.c",
-      "si_max": 55.07,
-      "si_mean": 55.07,
+      "si_max": 53.38,
+      "si_mean": 53.38,
       "loc_total": 372,
       "cc_max": 8.0,
       "class_count": 1,
@@ -4297,8 +4297,8 @@
     },
     {
       "file_path": "hexen/r_plane.c",
-      "si_max": 71.28,
-      "si_mean": 71.28,
+      "si_max": 70.61,
+      "si_mean": 70.61,
       "loc_total": 425,
       "cc_max": 46.0,
       "class_count": 1,
@@ -4315,8 +4315,8 @@
     },
     {
       "file_path": "hexen/r_things.c",
-      "si_max": 63.85,
-      "si_mean": 63.85,
+      "si_max": 63.18,
+      "si_mean": 63.18,
       "loc_total": 787,
       "cc_max": 29.0,
       "class_count": 1,
@@ -4324,8 +4324,8 @@
     },
     {
       "file_path": "hexen/s_sound.c",
-      "si_max": 68.92,
-      "si_mean": 68.92,
+      "si_max": 67.91,
+      "si_mean": 67.91,
       "loc_total": 768,
       "cc_max": 24.5,
       "class_count": 1,
@@ -4333,8 +4333,8 @@
     },
     {
       "file_path": "hexen/sb_bar.c",
-      "si_max": 75.0,
-      "si_mean": 75.0,
+      "si_max": 74.66,
+      "si_mean": 74.66,
       "loc_total": 1432,
       "cc_max": 18.2,
       "class_count": 1,
@@ -4342,8 +4342,8 @@
     },
     {
       "file_path": "hexen/sc_man.c",
-      "si_max": 52.7,
-      "si_mean": 52.7,
+      "si_max": 52.03,
+      "si_mean": 52.03,
       "loc_total": 235,
       "cc_max": 19.0,
       "class_count": 1,
@@ -4351,8 +4351,8 @@
     },
     {
       "file_path": "hexen/sn_sonix.c",
-      "si_max": 47.97,
-      "si_mean": 47.97,
+      "si_max": 47.3,
+      "si_mean": 47.3,
       "loc_total": 330,
       "cc_max": 20.0,
       "class_count": 1,
@@ -4369,8 +4369,8 @@
     },
     {
       "file_path": "hexen/st_start.c",
-      "si_max": 23.65,
-      "si_mean": 23.65,
+      "si_max": 22.3,
+      "si_mean": 22.3,
       "loc_total": 127,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4378,8 +4378,8 @@
     },
     {
       "file_path": "hexen/sv_save.c",
-      "si_max": 40.2,
-      "si_mean": 40.2,
+      "si_max": 38.18,
+      "si_mean": 38.18,
       "loc_total": 2792,
       "cc_max": 12.5,
       "class_count": 1,
@@ -4387,8 +4387,8 @@
     },
     {
       "file_path": "i_cdmus.c",
-      "si_max": 10.47,
-      "si_mean": 10.47,
+      "si_max": 10.14,
+      "si_mean": 10.14,
       "loc_total": 39,
       "cc_max": 1.0,
       "class_count": 1,
@@ -4396,8 +4396,8 @@
     },
     {
       "file_path": "i_endoom.c",
-      "si_max": 20.95,
-      "si_mean": 20.95,
+      "si_max": 19.26,
+      "si_mean": 19.26,
       "loc_total": 45,
       "cc_max": 4.0,
       "class_count": 1,
@@ -4405,19 +4405,19 @@
     },
     {
       "file_path": "i_flmusic.c",
-      "si_max": 12.84,
-      "si_mean": 12.84,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 41.55,
+      "si_mean": 41.55,
+      "loc_total": 230,
+      "cc_max": 8.0,
       "class_count": 1,
       "bugfix_count": 2
     },
     {
       "file_path": "i_glob.c",
-      "si_max": 59.46,
-      "si_mean": 59.46,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 64.19,
+      "si_mean": 64.19,
+      "loc_total": 292,
+      "cc_max": 8.0,
       "class_count": 1,
       "bugfix_count": 7
     },
@@ -4441,8 +4441,8 @@
     },
     {
       "file_path": "i_main.c",
-      "si_max": 17.23,
-      "si_mean": 17.23,
+      "si_max": 15.88,
+      "si_mean": 15.88,
       "loc_total": 38,
       "cc_max": 4.0,
       "class_count": 1,
@@ -4450,17 +4450,17 @@
     },
     {
       "file_path": "i_musicpack.c",
-      "si_max": 33.11,
-      "si_mean": 33.11,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 57.43,
+      "si_mean": 57.43,
+      "loc_total": 997,
+      "cc_max": 10.5,
       "class_count": 1,
       "bugfix_count": 3
     },
     {
       "file_path": "i_oplmusic.c",
-      "si_max": 65.2,
-      "si_mean": 65.2,
+      "si_max": 64.86,
+      "si_mean": 64.86,
       "loc_total": 1395,
       "cc_max": 12.75,
       "class_count": 1,
@@ -4468,8 +4468,8 @@
     },
     {
       "file_path": "i_pcsound.c",
-      "si_max": 34.8,
-      "si_mean": 34.8,
+      "si_max": 33.11,
+      "si_mean": 33.11,
       "loc_total": 235,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4477,19 +4477,19 @@
     },
     {
       "file_path": "i_sdlmusic.c",
-      "si_max": 39.53,
-      "si_mean": 39.53,
-      "loc_total": 62,
-      "cc_max": 3.0,
+      "si_max": 46.28,
+      "si_mean": 46.28,
+      "loc_total": 327,
+      "cc_max": 6.0,
       "class_count": 1,
       "bugfix_count": 15
     },
     {
       "file_path": "i_sdlsound.c",
-      "si_max": 20.27,
-      "si_mean": 20.27,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 41.89,
+      "si_mean": 41.89,
+      "loc_total": 911,
+      "cc_max": 9.0,
       "class_count": 1,
       "bugfix_count": 23
     },
@@ -4531,8 +4531,8 @@
     },
     {
       "file_path": "i_videohr.c",
-      "si_max": 29.05,
-      "si_mean": 29.05,
+      "si_max": 27.36,
+      "si_mean": 27.36,
       "loc_total": 209,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4540,26 +4540,26 @@
     },
     {
       "file_path": "i_winmusic.c",
-      "si_max": 20.27,
-      "si_mean": 20.27,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 79.05,
+      "si_mean": 79.05,
+      "loc_total": 1525,
+      "cc_max": 34.2,
       "class_count": 1,
       "bugfix_count": 11
     },
     {
       "file_path": "m_argv.c",
-      "si_max": 98.31,
-      "si_mean": 98.31,
-      "loc_total": 259,
+      "si_max": 98.65,
+      "si_mean": 98.65,
+      "loc_total": 467,
       "cc_max": 25.0,
       "class_count": 1,
       "bugfix_count": 10
     },
     {
       "file_path": "m_bbox.c",
-      "si_max": 66.55,
-      "si_mean": 66.55,
+      "si_max": 66.22,
+      "si_mean": 66.22,
       "loc_total": 20,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4567,8 +4567,8 @@
     },
     {
       "file_path": "m_cheat.c",
-      "si_max": 31.08,
-      "si_mean": 31.08,
+      "si_max": 29.73,
+      "si_mean": 29.73,
       "loc_total": 53,
       "cc_max": 8.0,
       "class_count": 1,
@@ -4585,8 +4585,8 @@
     },
     {
       "file_path": "m_controls.c",
-      "si_max": 73.65,
-      "si_mean": 73.65,
+      "si_max": 72.97,
+      "si_mean": 72.97,
       "loc_total": 214,
       "cc_max": 2.0,
       "class_count": 1,
@@ -4594,8 +4594,8 @@
     },
     {
       "file_path": "m_fixed.c",
-      "si_max": 79.05,
-      "si_mean": 79.05,
+      "si_max": 78.72,
+      "si_mean": 78.72,
       "loc_total": 22,
       "cc_max": 3.0,
       "class_count": 1,
@@ -4605,15 +4605,15 @@
       "file_path": "m_misc.c",
       "si_max": 99.66,
       "si_mean": 99.66,
-      "loc_total": 703,
-      "cc_max": 10.0,
+      "loc_total": 775,
+      "cc_max": 8.6667,
       "class_count": 1,
       "bugfix_count": 18
     },
     {
       "file_path": "memio.c",
-      "si_max": 30.41,
-      "si_mean": 30.41,
+      "si_max": 29.05,
+      "si_mean": 29.05,
       "loc_total": 141,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4621,27 +4621,27 @@
     },
     {
       "file_path": "midifallback.c",
-      "si_max": 10.14,
-      "si_mean": 10.14,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 50.34,
+      "si_mean": 50.34,
+      "loc_total": 317,
+      "cc_max": 12.0,
       "class_count": 1,
       "bugfix_count": 0
     },
     {
       "file_path": "midifile.c",
-      "si_max": 36.49,
-      "si_mean": 36.49,
-      "loc_total": 585,
-      "cc_max": 12.0,
+      "si_max": 37.84,
+      "si_mean": 37.84,
+      "loc_total": 686,
+      "cc_max": 15.0,
       "class_count": 1,
       "bugfix_count": 8
     },
     {
       "file_path": "mus2mid.c",
-      "si_max": 73.31,
-      "si_mean": 73.31,
-      "loc_total": 558,
+      "si_max": 72.64,
+      "si_mean": 72.64,
+      "loc_total": 593,
       "cc_max": 45.0,
       "class_count": 1,
       "bugfix_count": 4
@@ -4657,8 +4657,8 @@
     },
     {
       "file_path": "net_common.c",
-      "si_max": 84.46,
-      "si_mean": 84.46,
+      "si_max": 84.12,
+      "si_mean": 84.12,
       "loc_total": 433,
       "cc_max": 13.0,
       "class_count": 1,
@@ -4666,8 +4666,8 @@
     },
     {
       "file_path": "net_dedicated.c",
-      "si_max": 30.07,
-      "si_mean": 30.07,
+      "si_max": 28.72,
+      "si_mean": 28.72,
       "loc_total": 32,
       "cc_max": 3.0,
       "class_count": 1,
@@ -4675,8 +4675,8 @@
     },
     {
       "file_path": "net_gui.c",
-      "si_max": 76.69,
-      "si_mean": 76.69,
+      "si_max": 76.35,
+      "si_mean": 76.35,
       "loc_total": 369,
       "cc_max": 13.0,
       "class_count": 1,
@@ -4684,8 +4684,8 @@
     },
     {
       "file_path": "net_io.c",
-      "si_max": 76.35,
-      "si_mean": 76.35,
+      "si_max": 76.01,
+      "si_mean": 76.01,
       "loc_total": 100,
       "cc_max": 3.0,
       "class_count": 1,
@@ -4693,8 +4693,8 @@
     },
     {
       "file_path": "net_loop.c",
-      "si_max": 64.19,
-      "si_mean": 64.19,
+      "si_max": 63.51,
+      "si_mean": 63.51,
       "loc_total": 139,
       "cc_max": 2.0,
       "class_count": 1,
@@ -4702,8 +4702,8 @@
     },
     {
       "file_path": "net_packet.c",
-      "si_max": 78.04,
-      "si_mean": 78.04,
+      "si_max": 77.7,
+      "si_mean": 77.7,
       "loc_total": 256,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4711,8 +4711,8 @@
     },
     {
       "file_path": "net_petname.c",
-      "si_max": 58.45,
-      "si_mean": 58.45,
+      "si_max": 58.11,
+      "si_mean": 58.11,
       "loc_total": 14,
       "cc_max": 1.0,
       "class_count": 1,
@@ -4729,10 +4729,10 @@
     },
     {
       "file_path": "net_sdl.c",
-      "si_max": 68.24,
-      "si_mean": 68.24,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 74.32,
+      "si_mean": 74.32,
+      "loc_total": 323,
+      "cc_max": 8.0,
       "class_count": 1,
       "bugfix_count": 5
     },
@@ -4756,8 +4756,8 @@
     },
     {
       "file_path": "p_rejectpad.c",
-      "si_max": 25.68,
-      "si_mean": 25.68,
+      "si_max": 24.32,
+      "si_mean": 24.32,
       "loc_total": 52,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4765,8 +4765,8 @@
     },
     {
       "file_path": "setup/compatibility.c",
-      "si_max": 35.47,
-      "si_mean": 35.47,
+      "si_max": 33.78,
+      "si_mean": 33.78,
       "loc_total": 20,
       "cc_max": 1.0,
       "class_count": 1,
@@ -4774,8 +4774,8 @@
     },
     {
       "file_path": "setup/display.c",
-      "si_max": 54.05,
-      "si_mean": 54.05,
+      "si_max": 52.7,
+      "si_mean": 52.7,
       "loc_total": 195,
       "cc_max": 9.0,
       "class_count": 1,
@@ -4783,17 +4783,17 @@
     },
     {
       "file_path": "setup/execute.c",
-      "si_max": 53.04,
-      "si_mean": 53.04,
-      "loc_total": 153,
-      "cc_max": 3.0,
+      "si_max": 55.41,
+      "si_mean": 55.41,
+      "loc_total": 339,
+      "cc_max": 4.0,
       "class_count": 1,
       "bugfix_count": 4
     },
     {
       "file_path": "setup/joystick.c",
-      "si_max": 72.97,
-      "si_mean": 72.97,
+      "si_max": 72.3,
+      "si_mean": 72.3,
       "loc_total": 636,
       "cc_max": 9.0,
       "class_count": 1,
@@ -4801,8 +4801,8 @@
     },
     {
       "file_path": "setup/keyboard.c",
-      "si_max": 58.11,
-      "si_mean": 58.11,
+      "si_max": 57.77,
+      "si_mean": 57.77,
       "loc_total": 359,
       "cc_max": 9.0,
       "class_count": 1,
@@ -4810,8 +4810,8 @@
     },
     {
       "file_path": "setup/mainmenu.c",
-      "si_max": 49.32,
-      "si_mean": 49.32,
+      "si_max": 48.31,
+      "si_mean": 48.31,
       "loc_total": 265,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4819,8 +4819,8 @@
     },
     {
       "file_path": "setup/mode.c",
-      "si_max": 74.66,
-      "si_mean": 74.66,
+      "si_max": 73.99,
+      "si_mean": 73.99,
       "loc_total": 250,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4828,8 +4828,8 @@
     },
     {
       "file_path": "setup/mouse.c",
-      "si_max": 50.0,
-      "si_mean": 50.0,
+      "si_max": 48.99,
+      "si_mean": 48.99,
       "loc_total": 115,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4837,8 +4837,8 @@
     },
     {
       "file_path": "setup/multiplayer.c",
-      "si_max": 70.27,
-      "si_mean": 70.27,
+      "si_max": 69.59,
+      "si_mean": 69.59,
       "loc_total": 978,
       "cc_max": 10.5,
       "class_count": 1,
@@ -4855,17 +4855,17 @@
     },
     {
       "file_path": "setup/sound.c",
-      "si_max": 58.78,
-      "si_mean": 58.78,
-      "loc_total": 228,
+      "si_max": 61.15,
+      "si_mean": 61.15,
+      "loc_total": 278,
       "cc_max": 8.0,
       "class_count": 1,
       "bugfix_count": 7
     },
     {
       "file_path": "setup/txt_joyaxis.c",
-      "si_max": 51.01,
-      "si_mean": 51.01,
+      "si_max": 50.0,
+      "si_mean": 50.0,
       "loc_total": 571,
       "cc_max": 9.5,
       "class_count": 1,
@@ -4873,8 +4873,8 @@
     },
     {
       "file_path": "setup/txt_joybinput.c",
-      "si_max": 53.38,
-      "si_mean": 53.38,
+      "si_max": 52.36,
+      "si_mean": 52.36,
       "loc_total": 462,
       "cc_max": 9.5,
       "class_count": 1,
@@ -4882,8 +4882,8 @@
     },
     {
       "file_path": "setup/txt_keyinput.c",
-      "si_max": 14.53,
-      "si_mean": 14.53,
+      "si_max": 13.18,
+      "si_mean": 13.18,
       "loc_total": 135,
       "cc_max": 4.0,
       "class_count": 1,
@@ -4891,8 +4891,8 @@
     },
     {
       "file_path": "setup/txt_mouseinput.c",
-      "si_max": 21.28,
-      "si_mean": 21.28,
+      "si_max": 19.93,
+      "si_mean": 19.93,
       "loc_total": 133,
       "cc_max": 7.0,
       "class_count": 1,
@@ -4900,8 +4900,8 @@
     },
     {
       "file_path": "sha1.c",
-      "si_max": 76.01,
-      "si_mean": 76.01,
+      "si_max": 75.68,
+      "si_mean": 75.68,
       "loc_total": 258,
       "cc_max": 10.0,
       "class_count": 1,
@@ -4936,8 +4936,8 @@
     },
     {
       "file_path": "strife/d_net.c",
-      "si_max": 38.85,
-      "si_mean": 38.85,
+      "si_max": 36.49,
+      "si_mean": 36.49,
       "loc_total": 223,
       "cc_max": 9.0,
       "class_count": 1,
@@ -4945,8 +4945,8 @@
     },
     {
       "file_path": "strife/deh_ammo.c",
-      "si_max": 16.89,
-      "si_mean": 16.89,
+      "si_max": 15.54,
+      "si_mean": 15.54,
       "loc_total": 62,
       "cc_max": 5.0,
       "class_count": 1,
@@ -4954,8 +4954,8 @@
     },
     {
       "file_path": "strife/deh_cheat.c",
-      "si_max": 26.69,
-      "si_mean": 26.69,
+      "si_max": 25.34,
+      "si_mean": 25.34,
       "loc_total": 78,
       "cc_max": 10.0,
       "class_count": 1,
@@ -4963,8 +4963,8 @@
     },
     {
       "file_path": "strife/deh_frame.c",
-      "si_max": 22.64,
-      "si_mean": 22.64,
+      "si_max": 21.28,
+      "si_mean": 21.28,
       "loc_total": 100,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4972,8 +4972,8 @@
     },
     {
       "file_path": "strife/deh_misc.c",
-      "si_max": 24.32,
-      "si_mean": 24.32,
+      "si_max": 22.97,
+      "si_mean": 22.97,
       "loc_total": 61,
       "cc_max": 7.0,
       "class_count": 1,
@@ -4981,8 +4981,8 @@
     },
     {
       "file_path": "strife/deh_ptr.c",
-      "si_max": 19.59,
-      "si_mean": 19.59,
+      "si_max": 18.58,
+      "si_mean": 18.58,
       "loc_total": 97,
       "cc_max": 6.0,
       "class_count": 1,
@@ -4990,8 +4990,8 @@
     },
     {
       "file_path": "strife/deh_sound.c",
-      "si_max": 16.89,
-      "si_mean": 16.89,
+      "si_max": 15.54,
+      "si_mean": 15.54,
       "loc_total": 52,
       "cc_max": 5.0,
       "class_count": 1,
@@ -5008,8 +5008,8 @@
     },
     {
       "file_path": "strife/deh_thing.c",
-      "si_max": 14.19,
-      "si_mean": 14.19,
+      "si_max": 12.84,
+      "si_mean": 12.84,
       "loc_total": 64,
       "cc_max": 4.0,
       "class_count": 1,
@@ -5017,8 +5017,8 @@
     },
     {
       "file_path": "strife/deh_weapon.c",
-      "si_max": 14.19,
-      "si_mean": 14.19,
+      "si_max": 12.84,
+      "si_mean": 12.84,
       "loc_total": 50,
       "cc_max": 4.0,
       "class_count": 1,
@@ -5053,17 +5053,17 @@
     },
     {
       "file_path": "strife/f_finale.c",
-      "si_max": 73.99,
-      "si_mean": 73.99,
-      "loc_total": 563,
+      "si_max": 73.31,
+      "si_mean": 73.31,
+      "loc_total": 593,
       "cc_max": 30.0,
       "class_count": 1,
       "bugfix_count": 6
     },
     {
       "file_path": "strife/f_wipe.c",
-      "si_max": 38.18,
-      "si_mean": 38.18,
+      "si_max": 36.15,
+      "si_mean": 36.15,
       "loc_total": 223,
       "cc_max": 9.0,
       "class_count": 1,
@@ -5080,8 +5080,8 @@
     },
     {
       "file_path": "strife/hu_lib.c",
-      "si_max": 25.34,
-      "si_mean": 25.34,
+      "si_max": 23.99,
+      "si_mean": 23.99,
       "loc_total": 319,
       "cc_max": 9.5,
       "class_count": 1,
@@ -5089,8 +5089,8 @@
     },
     {
       "file_path": "strife/hu_stuff.c",
-      "si_max": 68.58,
-      "si_mean": 68.58,
+      "si_max": 68.24,
+      "si_mean": 68.24,
       "loc_total": 448,
       "cc_max": 28.0,
       "class_count": 1,
@@ -5125,8 +5125,8 @@
     },
     {
       "file_path": "strife/m_saves.c",
-      "si_max": 39.86,
-      "si_mean": 39.86,
+      "si_max": 37.5,
+      "si_mean": 37.5,
       "loc_total": 317,
       "cc_max": 7.0,
       "class_count": 1,
@@ -5134,8 +5134,8 @@
     },
     {
       "file_path": "strife/p_ceilng.c",
-      "si_max": 54.73,
-      "si_mean": 54.73,
+      "si_max": 54.05,
+      "si_mean": 54.05,
       "loc_total": 264,
       "cc_max": 28.0,
       "class_count": 1,
@@ -5170,8 +5170,8 @@
     },
     {
       "file_path": "strife/p_floor.c",
-      "si_max": 52.36,
-      "si_mean": 52.36,
+      "si_max": 51.69,
+      "si_mean": 51.69,
       "loc_total": 530,
       "cc_max": 29.0,
       "class_count": 1,
@@ -5188,8 +5188,8 @@
     },
     {
       "file_path": "strife/p_lights.c",
-      "si_max": 18.24,
-      "si_mean": 18.24,
+      "si_max": 17.23,
+      "si_mean": 17.23,
       "loc_total": 240,
       "cc_max": 7.0,
       "class_count": 1,
@@ -5197,8 +5197,8 @@
     },
     {
       "file_path": "strife/p_map.c",
-      "si_max": 71.96,
-      "si_mean": 71.96,
+      "si_max": 71.28,
+      "si_mean": 71.28,
       "loc_total": 1265,
       "cc_max": 21.5,
       "class_count": 1,
@@ -5206,8 +5206,8 @@
     },
     {
       "file_path": "strife/p_maputl.c",
-      "si_max": 47.3,
-      "si_mean": 47.3,
+      "si_max": 45.61,
+      "si_mean": 45.61,
       "loc_total": 712,
       "cc_max": 16.0,
       "class_count": 1,
@@ -5215,8 +5215,8 @@
     },
     {
       "file_path": "strife/p_mobj.c",
-      "si_max": 62.5,
-      "si_mean": 62.5,
+      "si_max": 61.82,
+      "si_mean": 61.82,
       "loc_total": 1132,
       "cc_max": 34.5,
       "class_count": 1,
@@ -5224,8 +5224,8 @@
     },
     {
       "file_path": "strife/p_plats.c",
-      "si_max": 52.03,
-      "si_mean": 52.03,
+      "si_max": 51.35,
+      "si_mean": 51.35,
       "loc_total": 290,
       "cc_max": 25.0,
       "class_count": 1,
@@ -5233,8 +5233,8 @@
     },
     {
       "file_path": "strife/p_pspr.c",
-      "si_max": 32.77,
-      "si_mean": 32.77,
+      "si_max": 31.42,
+      "si_mean": 31.42,
       "loc_total": 740,
       "cc_max": 15.0,
       "class_count": 1,
@@ -5242,8 +5242,8 @@
     },
     {
       "file_path": "strife/p_saveg.c",
-      "si_max": 33.78,
-      "si_mean": 33.78,
+      "si_max": 32.09,
+      "si_mean": 32.09,
       "loc_total": 1900,
       "cc_max": 11.4,
       "class_count": 1,
@@ -5251,8 +5251,8 @@
     },
     {
       "file_path": "strife/p_setup.c",
-      "si_max": 60.14,
-      "si_mean": 60.14,
+      "si_max": 59.12,
+      "si_mean": 59.12,
       "loc_total": 620,
       "cc_max": 16.0,
       "class_count": 1,
@@ -5260,8 +5260,8 @@
     },
     {
       "file_path": "strife/p_sight.c",
-      "si_max": 42.57,
-      "si_mean": 42.57,
+      "si_max": 40.54,
+      "si_mean": 40.54,
       "loc_total": 272,
       "cc_max": 18.0,
       "class_count": 1,
@@ -5287,8 +5287,8 @@
     },
     {
       "file_path": "strife/p_telept.c",
-      "si_max": 29.73,
-      "si_mean": 29.73,
+      "si_max": 28.38,
+      "si_mean": 28.38,
       "loc_total": 106,
       "cc_max": 15.0,
       "class_count": 1,
@@ -5296,8 +5296,8 @@
     },
     {
       "file_path": "strife/p_tick.c",
-      "si_max": 25.0,
-      "si_mean": 25.0,
+      "si_max": 23.65,
+      "si_mean": 23.65,
       "loc_total": 74,
       "cc_max": 8.0,
       "class_count": 1,
@@ -5305,8 +5305,8 @@
     },
     {
       "file_path": "strife/p_user.c",
-      "si_max": 75.68,
-      "si_mean": 75.68,
+      "si_max": 75.34,
+      "si_mean": 75.34,
       "loc_total": 775,
       "cc_max": 57.0,
       "class_count": 1,
@@ -5314,8 +5314,8 @@
     },
     {
       "file_path": "strife/r_bsp.c",
-      "si_max": 45.61,
-      "si_mean": 45.61,
+      "si_max": 44.26,
+      "si_mean": 44.26,
       "loc_total": 420,
       "cc_max": 16.0,
       "class_count": 1,
@@ -5323,8 +5323,8 @@
     },
     {
       "file_path": "strife/r_data.c",
-      "si_max": 61.15,
-      "si_mean": 61.15,
+      "si_max": 60.14,
+      "si_mean": 60.14,
       "loc_total": 722,
       "cc_max": 19.0,
       "class_count": 1,
@@ -5332,8 +5332,8 @@
     },
     {
       "file_path": "strife/r_draw.c",
-      "si_max": 70.61,
-      "si_mean": 70.61,
+      "si_max": 69.93,
+      "si_mean": 69.93,
       "loc_total": 594,
       "cc_max": 17.0,
       "class_count": 1,
@@ -5350,8 +5350,8 @@
     },
     {
       "file_path": "strife/r_plane.c",
-      "si_max": 40.54,
-      "si_mean": 40.54,
+      "si_max": 38.51,
+      "si_mean": 38.51,
       "loc_total": 308,
       "cc_max": 12.0,
       "class_count": 1,
@@ -5377,8 +5377,8 @@
     },
     {
       "file_path": "strife/r_things.c",
-      "si_max": 66.89,
-      "si_mean": 66.89,
+      "si_max": 66.55,
+      "si_mean": 66.55,
       "loc_total": 835,
       "cc_max": 29.0,
       "class_count": 1,
@@ -5386,8 +5386,8 @@
     },
     {
       "file_path": "strife/s_sound.c",
-      "si_max": 56.08,
-      "si_mean": 56.08,
+      "si_max": 55.07,
+      "si_mean": 55.07,
       "loc_total": 589,
       "cc_max": 14.5,
       "class_count": 1,
@@ -5404,8 +5404,8 @@
     },
     {
       "file_path": "strife/st_lib.c",
-      "si_max": 34.46,
-      "si_mean": 34.46,
+      "si_max": 32.77,
+      "si_mean": 32.77,
       "loc_total": 108,
       "cc_max": 11.0,
       "class_count": 1,
@@ -5431,8 +5431,8 @@
     },
     {
       "file_path": "strife/wi_stuff.c",
-      "si_max": 12.84,
-      "si_mean": 12.84,
+      "si_max": 11.49,
+      "si_mean": 11.49,
       "loc_total": 0,
       "cc_max": 0.0,
       "class_count": 1,
@@ -5440,8 +5440,8 @@
     },
     {
       "file_path": "tables.c",
-      "si_max": 11.49,
-      "si_mean": 11.49,
+      "si_max": 10.47,
+      "si_mean": 10.47,
       "loc_total": 22,
       "cc_max": 3.0,
       "class_count": 1,
@@ -5460,15 +5460,15 @@
       "file_path": "v_video.c",
       "si_max": 97.64,
       "si_mean": 97.64,
-      "loc_total": 673,
-      "cc_max": 10.0,
+      "loc_total": 782,
+      "cc_max": 10.5,
       "class_count": 1,
       "bugfix_count": 15
     },
     {
       "file_path": "w_checksum.c",
-      "si_max": 67.57,
-      "si_mean": 67.57,
+      "si_max": 67.23,
+      "si_mean": 67.23,
       "loc_total": 54,
       "cc_max": 3.0,
       "class_count": 1,
@@ -5476,8 +5476,8 @@
     },
     {
       "file_path": "w_file.c",
-      "si_max": 36.15,
-      "si_mean": 36.15,
+      "si_max": 34.46,
+      "si_mean": 34.46,
       "loc_total": 42,
       "cc_max": 4.0,
       "class_count": 1,
@@ -5485,17 +5485,17 @@
     },
     {
       "file_path": "w_file_posix.c",
-      "si_max": 10.81,
-      "si_mean": 10.81,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 16.22,
+      "si_mean": 16.22,
+      "loc_total": 118,
+      "cc_max": 4.0,
       "class_count": 1,
       "bugfix_count": 0
     },
     {
       "file_path": "w_file_stdc.c",
-      "si_max": 11.82,
-      "si_mean": 11.82,
+      "si_max": 10.81,
+      "si_mean": 10.81,
       "loc_total": 50,
       "cc_max": 2.0,
       "class_count": 1,
@@ -5503,17 +5503,17 @@
     },
     {
       "file_path": "w_file_win32.c",
-      "si_max": 11.15,
-      "si_mean": 11.15,
-      "loc_total": 0,
-      "cc_max": 0.0,
+      "si_max": 19.59,
+      "si_mean": 19.59,
+      "loc_total": 138,
+      "cc_max": 4.0,
       "class_count": 1,
       "bugfix_count": 5
     },
     {
       "file_path": "w_main.c",
-      "si_max": 57.77,
-      "si_mean": 57.77,
+      "si_max": 57.09,
+      "si_mean": 57.09,
       "loc_total": 218,
       "cc_max": 19.0,
       "class_count": 1,
@@ -5539,17 +5539,17 @@
     },
     {
       "file_path": "z_native.c",
-      "si_max": 28.72,
-      "si_mean": 28.72,
-      "loc_total": 353,
+      "si_max": 27.7,
+      "si_mean": 27.7,
+      "loc_total": 380,
       "cc_max": 10.0,
       "class_count": 1,
       "bugfix_count": 5
     },
     {
       "file_path": "z_zone.c",
-      "si_max": 98.65,
-      "si_mean": 98.65,
+      "si_max": 98.31,
+      "si_mean": 98.31,
       "loc_total": 415,
       "cc_max": 11.0,
       "class_count": 1,

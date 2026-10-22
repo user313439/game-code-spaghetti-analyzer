@@ -39,8 +39,8 @@
 |---|---|---|
 | OpenRA.Game | [reports/openra-game/index.html](../reports/openra-game/index.html) | 668 클래스 / 2,793 메서드 / Health C |
 | OpenRA.Mods.Common | [reports/openra-mods-common/index.html](../reports/openra-mods-common/index.html) | 2,194 클래스 / 7,321 메서드 / Health C |
-| Chocolate Doom | [reports/chocolate-doom/index.html](../reports/chocolate-doom/index.html) | 296 파일 / 4,311 함수 / 보조 Health C; 구문 복구에 따른 부분 분석 |
-| OpenRCT2 | [reports/openrct2/index.html](../reports/openrct2/index.html) | 544 파일 / 636 단위 / 5,766 함수 / 보조 Health C; 부분 분석 |
+| Chocolate Doom | [reports/chocolate-doom/index.html](../reports/chocolate-doom/index.html) | 296 파일 / 4,544 함수 / 보조 Health C; 구문 복구에 따른 부분 분석 (2026-10-22 재측정) |
+| OpenRCT2 | [reports/openrct2/index.html](../reports/openrct2/index.html) | 544 파일 / 680 단위 / 10,890 함수 / 보조 Health C; 부분 분석 (2026-10-22 재측정) |
 | DOOM 3 (별도 Clang 사례) | [reports/doom3-gameplay-clang/index.html](../reports/doom3-gameplay-clang/index.html) | 선택 구현 파일 69개 / 4,375 함수 / 부분 분석. 기존 통계 8사례와 별도 |
 
 #### 대시보드 체크포인트 (모든 케이스 공통)

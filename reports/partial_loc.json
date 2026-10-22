@@ -1,0 +1,279 @@
+{
+  "source": "reports/<case>/validation.json file_rows (same files as file_correlations); physical lines from benchmarks/ at the fixed commits",
+  "loc": "validate.py loc_total = summed body lines of the functions in the file",
+  "method": {
+    "top_share": "top 20% of files by each score, ties at the cut-off counted fractionally; random = 20%",
+    "partial": "Spearman first-order partial correlation controlling for size; p from Fisher z, sqrt((n-4)/1.06)",
+    "bootstrap": "2000 resamples of files, seed 20261022, percentile 95% interval"
+  },
+  "cases": {
+    "openra-game": {
+      "files": 226,
+      "bugfix_touches": 1650,
+      "files_without_function_loc": 6,
+      "rho": {
+        "gsi": 0.605,
+        "loc": 0.6988,
+        "cc": 0.5517,
+        "lines": 0.714
+      },
+      "p_value_rho": {
+        "gsi": 2.7912274968837744e-24,
+        "loc": 4.1464778742618046e-36,
+        "cc": 2.1529290557908268e-19,
+        "lines": 1.4471965095996974e-38
+      },
+      "partial_given_loc": {
+        "gsi": 0.193,
+        "cc": -0.033
+      },
+      "partial_p": {
+        "gsi": 0.004593945147169516,
+        "cc": 0.6369257482389419
+      },
+      "partial_ci95": {
+        "gsi": [
+          0.057,
+          0.328
+        ],
+        "cc": [
+          -0.151,
+          0.108
+        ]
+      },
+      "partial_given_lines": {
+        "gsi": 0.21,
+        "cc": 0.054
+      },
+      "partial_lines_ci95": {
+        "gsi": [
+          0.073,
+          0.346
+        ],
+        "cc": [
+          -0.082,
+          0.205
+        ]
+      },
+      "rho_gsi_minus_cc": 0.0532,
+      "rho_gsi_minus_cc_ci95": [
+        -0.03,
+        0.145
+      ],
+      "bootstrap_valid_resamples": 2000,
+      "top20_share": {
+        "gsi": 0.552,
+        "loc": 0.541,
+        "cc": 0.457,
+        "lines": 0.575
+      },
+      "top20_vs_random": {
+        "gsi": 2.76,
+        "loc": 2.7,
+        "cc": 2.28,
+        "lines": 2.88
+      }
+    },
+    "openra-mods-common": {
+      "files": 1080,
+      "bugfix_touches": 3413,
+      "files_without_function_loc": 27,
+      "rho": {
+        "gsi": 0.5353,
+        "loc": 0.6129,
+        "cc": 0.5265,
+        "lines": 0.6295
+      },
+      "p_value_rho": {
+        "gsi": 6.736209069903342e-81,
+        "loc": 1.6158201815708182e-114,
+        "cc": 1.1232923459506248e-77,
+        "lines": 3.363206676274679e-123
+      },
+      "partial_given_loc": {
+        "gsi": 0.117,
+        "cc": 0.045
+      },
+      "partial_p": {
+        "gsi": 0.00017856441195725757,
+        "cc": 0.1556750222582379
+      },
+      "partial_ci95": {
+        "gsi": [
+          0.058,
+          0.173
+        ],
+        "cc": [
+          -0.011,
+          0.103
+        ]
+      },
+      "partial_given_lines": {
+        "gsi": 0.102,
+        "cc": 0.073
+      },
+      "partial_lines_ci95": {
+        "gsi": [
+          0.046,
+          0.156
+        ],
+        "cc": [
+          0.014,
+          0.134
+        ]
+      },
+      "rho_gsi_minus_cc": 0.0088,
+      "rho_gsi_minus_cc_ci95": [
+        -0.024,
+        0.042
+      ],
+      "bootstrap_valid_resamples": 2000,
+      "top20_share": {
+        "gsi": 0.46,
+        "loc": 0.477,
+        "cc": 0.419,
+        "lines": 0.48
+      },
+      "top20_vs_random": {
+        "gsi": 2.3,
+        "loc": 2.38,
+        "cc": 2.09,
+        "lines": 2.4
+      }
+    },
+    "chocolate-doom": {
+      "files": 296,
+      "bugfix_touches": 1331,
+      "files_without_function_loc": 24,
+      "rho": {
+        "gsi": 0.6011,
+        "loc": 0.6824,
+        "cc": 0.5025,
+        "lines": 0.5634
+      },
+      "p_value_rho": {
+        "gsi": 7.083538316265883e-31,
+        "loc": 1.1395885493928084e-43,
+        "cc": 3.992453949478497e-20,
+        "lines": 2.8617771152861046e-26
+      },
+      "partial_given_loc": {
+        "gsi": 0.184,
+        "cc": -0.092
+      },
+      "partial_p": {
+        "gsi": 0.0019873701479732227,
+        "cc": 0.12704601423067494
+      },
+      "partial_ci95": {
+        "gsi": [
+          0.058,
+          0.309
+        ],
+        "cc": [
+          -0.212,
+          0.038
+        ]
+      },
+      "partial_given_lines": {
+        "gsi": 0.433,
+        "cc": 0.268
+      },
+      "partial_lines_ci95": {
+        "gsi": [
+          0.299,
+          0.541
+        ],
+        "cc": [
+          0.096,
+          0.401
+        ]
+      },
+      "rho_gsi_minus_cc": 0.0986,
+      "rho_gsi_minus_cc_ci95": [
+        0.025,
+        0.176
+      ],
+      "bootstrap_valid_resamples": 2000,
+      "top20_share": {
+        "gsi": 0.443,
+        "loc": 0.487,
+        "cc": 0.334,
+        "lines": 0.404
+      },
+      "top20_vs_random": {
+        "gsi": 2.21,
+        "loc": 2.43,
+        "cc": 1.67,
+        "lines": 2.02
+      }
+    },
+    "openrct2": {
+      "files": 544,
+      "bugfix_touches": 2875,
+      "files_without_function_loc": 12,
+      "rho": {
+        "gsi": 0.4633,
+        "loc": 0.5419,
+        "cc": 0.3119,
+        "lines": 0.5828
+      },
+      "p_value_rho": {
+        "gsi": 9.22393758854308e-30,
+        "loc": 9.009654333477305e-43,
+        "cc": 3.1336599922264437e-13,
+        "lines": 2.824845901590007e-51
+      },
+      "partial_given_loc": {
+        "gsi": 0.142,
+        "cc": -0.274
+      },
+      "partial_p": {
+        "gsi": 0.0012077176087422735,
+        "cc": 2.1283503651816032e-10
+      },
+      "partial_ci95": {
+        "gsi": [
+          0.047,
+          0.24
+        ],
+        "cc": [
+          -0.351,
+          -0.188
+        ]
+      },
+      "partial_given_lines": {
+        "gsi": 0.119,
+        "cc": -0.237
+      },
+      "partial_lines_ci95": {
+        "gsi": [
+          0.021,
+          0.212
+        ],
+        "cc": [
+          -0.322,
+          -0.145
+        ]
+      },
+      "rho_gsi_minus_cc": 0.1515,
+      "rho_gsi_minus_cc_ci95": [
+        0.082,
+        0.22
+      ],
+      "bootstrap_valid_resamples": 2000,
+      "top20_share": {
+        "gsi": 0.556,
+        "loc": 0.649,
+        "cc": 0.397,
+        "lines": 0.64
+      },
+      "top20_vs_random": {
+        "gsi": 2.78,
+        "loc": 3.24,
+        "cc": 1.98,
+        "lines": 3.2
+      }
+    }
+  }
+}

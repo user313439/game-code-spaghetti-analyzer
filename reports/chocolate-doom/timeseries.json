@@ -19,7 +19,7 @@
       "risk_ratio": 0.4032,
       "cycle_count": 1,
       "classes_total": 62,
-      "methods_total": 713,
+      "methods_total": 715,
       "grade_distribution": {
         "A": 12,
         "B": 12,
@@ -28,7 +28,7 @@
         "E": 13
       },
       "bugfix_commits_since_prev": 0,
-      "analysis_elapsed_ms": 1304
+      "analysis_elapsed_ms": 4436
     },
     {
       "sha": "a653fb6e0cfab8b5bbe71ae7652e1a9af810b065",
@@ -41,7 +41,7 @@
       "risk_ratio": 0.4105,
       "cycle_count": 1,
       "classes_total": 95,
-      "methods_total": 1078,
+      "methods_total": 1085,
       "grade_distribution": {
         "A": 18,
         "B": 19,
@@ -50,7 +50,7 @@
         "E": 20
       },
       "bugfix_commits_since_prev": 127,
-      "analysis_elapsed_ms": 1622
+      "analysis_elapsed_ms": 7056
     },
     {
       "sha": "8089e905e3ce33bfbe8377d71bb6d75f5868edbd",
@@ -63,7 +63,7 @@
       "risk_ratio": 0.4038,
       "cycle_count": 1,
       "classes_total": 104,
-      "methods_total": 1202,
+      "methods_total": 1234,
       "grade_distribution": {
         "A": 20,
         "B": 21,
@@ -72,7 +72,7 @@
         "E": 21
       },
       "bugfix_commits_since_prev": 124,
-      "analysis_elapsed_ms": 1758
+      "analysis_elapsed_ms": 7365
     },
     {
       "sha": "b2a59b3eec1dcc040f58bdd5e88bfed55face2fe",
@@ -81,33 +81,33 @@
       "subject": "Fix improper freeing of temp_timidity_cfg.",
       "health_score": 50.77,
       "health_grade": "C",
-      "avg_si": 50.36,
+      "avg_si": 50.37,
       "risk_ratio": 0.4021,
       "cycle_count": 3,
       "classes_total": 286,
-      "methods_total": 4215,
+      "methods_total": 4265,
       "grade_distribution": {
         "A": 57,
-        "B": 56,
-        "C": 58,
+        "B": 57,
+        "C": 57,
         "D": 57,
         "E": 58
       },
       "bugfix_commits_since_prev": 179,
-      "analysis_elapsed_ms": 6678
+      "analysis_elapsed_ms": 24045
     },
     {
       "sha": "9eab7159e57ac633387066c1d239e651a3c45f4c",
       "short_sha": "9eab7159e5",
       "date": "2015-10-22",
       "subject": "Fix \"`gcc_struct' attribute directive ignored\" warnings",
-      "health_score": 51.75,
+      "health_score": 51.76,
       "health_grade": "C",
       "avg_si": 50.35,
       "risk_ratio": 0.4035,
       "cycle_count": 3,
       "classes_total": 285,
-      "methods_total": 4297,
+      "methods_total": 4338,
       "grade_distribution": {
         "A": 56,
         "B": 56,
@@ -116,7 +116,7 @@
         "E": 58
       },
       "bugfix_commits_since_prev": 143,
-      "analysis_elapsed_ms": 6460
+      "analysis_elapsed_ms": 26172
     },
     {
       "sha": "2550ff5bd989d5b52eabe32c21d8ded4f29b16f9",
@@ -129,7 +129,7 @@
       "risk_ratio": 0.4007,
       "cycle_count": 2,
       "classes_total": 287,
-      "methods_total": 4301,
+      "methods_total": 4351,
       "grade_distribution": {
         "A": 57,
         "B": 57,
@@ -138,7 +138,7 @@
         "E": 58
       },
       "bugfix_commits_since_prev": 81,
-      "analysis_elapsed_ms": 6334
+      "analysis_elapsed_ms": 21643
     },
     {
       "sha": "cd7cc921f38545a47ed8bc16620ce58c816639e1",
@@ -151,38 +151,38 @@
       "risk_ratio": 0.4034,
       "cycle_count": 2,
       "classes_total": 290,
-      "methods_total": 4344,
+      "methods_total": 4416,
       "grade_distribution": {
-        "A": 57,
-        "B": 58,
+        "A": 56,
+        "B": 59,
         "C": 58,
         "D": 58,
         "E": 59
       },
       "bugfix_commits_since_prev": 102,
-      "analysis_elapsed_ms": 6446
+      "analysis_elapsed_ms": 22631
     },
     {
       "sha": "c62b634f394e64dd51dec7e6f890496f43a56ade",
       "short_sha": "c62b634f39",
       "date": "2026-05-16",
       "subject": "strife: Mirror the `mouse_fire_countdown` in joystick logic as well (#1796)",
-      "health_score": 50.57,
+      "health_score": 50.56,
       "health_grade": "C",
       "avg_si": 50.35,
       "risk_ratio": 0.402,
       "cycle_count": 2,
       "classes_total": 296,
-      "methods_total": 4311,
+      "methods_total": 4544,
       "grade_distribution": {
-        "A": 58,
-        "B": 60,
+        "A": 59,
+        "B": 59,
         "C": 59,
         "D": 59,
         "E": 60
       },
       "bugfix_commits_since_prev": 84,
-      "analysis_elapsed_ms": 7004
+      "analysis_elapsed_ms": 20856
     }
   ],
   "notes": []

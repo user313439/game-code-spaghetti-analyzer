@@ -4,11 +4,11 @@ project: src  window: 12 months (2025-10-08 .. 2026-10-03, UTC)
 rank  G-SI Full  G-SI Static       Δ      CR  fqn
    1     100.00       100.00   +0.00       0  i_system
    2      99.66        99.66   +0.00       0  m_misc
-   3      99.32        98.99   +0.33       0  i_video
-   4      98.99        96.62   +2.37       2  deh_main
+   3      99.32        96.62   +2.70       2  deh_main
+   4      98.99        98.99   -0.00       0  i_video
    5      98.65        94.93   +3.72       2  strife.g_game
    6      98.31        99.32   -1.01       0  strife.p_switch
    7      97.97        95.95   +2.02       1  doom.g_game
-   8      97.64        98.31   -0.67       0  m_argv
-   9      97.30        98.65   -1.35       0  z_zone
+   8      97.64        98.65   -1.01       0  m_argv
+   9      97.30        98.31   -1.01       0  z_zone
   10      96.96        97.97   -1.01       0  w_wad

@@ -197,3 +197,70 @@ def test_cpp_nested_class():
     b = by_fqn["Game.Physics.Collider.Bounds"]
     assert b["namespace"] == "Game.Physics"
     assert b["kind"] == "struct"
+
+
+# ---------------------------------------------------------------------------
+# 파일 최상위가 아닌 곳의 함수 정의 (namespace, extern "C", #if, template)
+# ---------------------------------------------------------------------------
+
+
+WRAPPED_CPP = """\
+#include "Widget.h"
+namespace OpenRCT2
+{
+    static int counter = 0;
+    int Alpha(int x)
+    {
+        if (x > 0)
+            return 1;
+        return 0;
+    }
+    namespace Detail
+    {
+        void Beta() { counter++; }
+    }
+    class Widget { public: void Inline() {} };
+    void Widget::Out()
+    {
+        if (counter) {}
+    }
+}
+extern "C" {
+    int Gamma(void) { return 2; }
+}
+extern "C" int Delta(void) { return 3; }
+#ifdef USE_AVX
+void Epsilon() {}
+#else
+void Zeta() {}
+#endif
+#if 0
+void Dead() {}
+#endif
+template <typename T> T Eta(T v) { return v; }
+"""
+
+
+def test_functions_inside_namespace_extern_if_and_template(tmp_path):
+    (tmp_path / "Wrapped.cpp").write_text(WRAPPED_CPP, encoding="utf-8")
+    f = _by_relpath(analyze_cpp(tmp_path).data)["Wrapped.cpp"]
+    unit = next(c for c in f["classes"] if c["kind"] == "compilation_unit")
+    names = sorted(m["name"] for m in unit["methods"])
+    # Inline stays with class Widget; the #if 0 branch is dead code.
+    assert names == ["Alpha", "Beta", "Delta", "Epsilon", "Eta", "Gamma", "Out", "Zeta"]
+    alpha = next(m for m in unit["methods"] if m["name"] == "Alpha")
+    assert alpha["cyclomatic_complexity"] == 2
+    assert alpha["loc"] == 6
+    # A file-scope variable inside the namespace counts as global state.
+    assert unit["static_member_accesses"].count("counter") == 2
+
+
+def test_c_functions_inside_preprocessor_blocks(tmp_path):
+    (tmp_path / "sys.c").write_text(
+        "#ifndef _WIN32\nint ticks;\nint Now(void) { return ticks; }\n#elif defined(MAC)\nint Mac(void) { return 1; }\n#endif\n"
+        "#if 0\nint Old(void) { return 0; }\n#else\nint New(void) { return 1; }\n#endif\n",
+        encoding="utf-8")
+    f = _by_relpath(analyze_cpp(tmp_path).data)["sys.c"]
+    unit = f["classes"][0]
+    assert sorted(m["name"] for m in unit["methods"]) == ["Mac", "New", "Now"]
+    assert unit["static_member_accesses"] == ["ticks"]

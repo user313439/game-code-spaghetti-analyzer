@@ -1,9 +1,9 @@
 === Phase B: G-SI vs Lizard (max CC) ===
 project:       src
-scoring:       C:\Users\dudwl\Desktop\Projects\졸업작품\docs\_verification\2026-10-03-refinement\chocolate-doom\scoring.json
+scoring:       C:\Users\dudwl\Desktop\Projects\졸업작품\docs\_verification\2026-10-22-cpp-scope\chocolate-doom\scoring.json
 analyzed_path: C:\Users\dudwl\Desktop\Projects\졸업작품\benchmarks\chocolate-doom\src
 files: us=296 liz=475 matched=291
-spearman(si vs liz_max_cc): rho=+0.7082  p=0
+spearman(si vs liz_max_cc): rho=+0.7152  p=0
 
 Top-N Jaccard:
   top- 5: 0.111
@@ -26,8 +26,8 @@ G-SI 단독 top-30 (Lizard top-30 에는 없음 — Phase B 정성 분석 후보
   gsi# 1 liz#159 | si=100.0 [E] liz_cc= 12  i_system.c
   gsi# 2 liz#174 | si= 99.7 [E] liz_cc= 10  m_misc.c
   gsi# 4 liz#71 | si= 99.0 [E] liz_cc= 28  i_video.c
-  gsi# 5 liz#168 | si= 98.7 [E] liz_cc= 11  z_zone.c
-  gsi# 6 liz#75 | si= 98.3 [E] liz_cc= 26  m_argv.c
+  gsi# 5 liz#75 | si= 98.7 [E] liz_cc= 26  m_argv.c
+  gsi# 6 liz#168 | si= 98.3 [E] liz_cc= 11  z_zone.c
   gsi# 7 liz#154 | si= 98.0 [E] liz_cc= 13  w_wad.c
   gsi# 8 liz#167 | si= 97.6 [E] liz_cc= 11  v_video.c
   gsi#10 liz#104 | si= 97.0 [E] liz_cc= 18  d_loop.c
@@ -38,12 +38,12 @@ Lizard 단독 top-30 (G-SI top-30 에는 없음):
   gsi#41 liz# 4 | si= 86.5 [E] liz_cc=144  hexen/mn_menu.c
   gsi#34 liz# 6 | si= 88.8 [E] liz_cc=136  heretic/mn_menu.c
   gsi#43 liz# 7 | si= 85.8 [E] liz_cc=121  strife/m_menu.c
-  gsi#48 liz#11 | si= 84.1 [E] liz_cc=112  doom/m_menu.c
+  gsi#47 liz#11 | si= 84.5 [E] liz_cc=112  doom/m_menu.c
   gsi#31 liz#13 | si= 89.9 [E] liz_cc=100  doom/p_inter.c
-  gsi#65 liz#17 | si= 78.4 [D] liz_cc= 94  doom/p_spec.c
+  gsi#66 liz#17 | si= 78.0 [D] liz_cc= 94  doom/p_spec.c
   gsi#56 liz#19 | si= 81.4 [E] liz_cc= 88  hexen/p_user.c
   gsi#35 liz#21 | si= 88.5 [E] liz_cc= 85  heretic/p_inter.c
-  gsi#64 liz#22 | si= 78.7 [D] liz_cc= 82  hexen/p_mobj.c
+  gsi#65 liz#22 | si= 78.4 [D] liz_cc= 82  hexen/p_mobj.c
   gsi#37 liz#23 | si= 87.8 [E] liz_cc= 81  heretic/p_switch.c
 
 Notes:
