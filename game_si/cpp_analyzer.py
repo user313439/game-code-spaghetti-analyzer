@@ -48,7 +48,7 @@ except ImportError:  # pragma: no cover
 
 
 SCHEMA_VERSION = "0.2"  # csharp-analyzer 와 동일 스키마
-ANALYZER_VERSION = "cpp-analyzer-0.1"
+ANALYZER_VERSION = "cpp-analyzer-0.2"
 
 
 # ---------------------------------------------------------------------------
@@ -360,13 +360,13 @@ def _extract_includes(root: Node, src: bytes) -> list[str]:
 
 
 def _extract_global_var_names(root: Node, src: bytes) -> set[str]:
-    """파일 최상위 변수 선언에서 식별자 이름을 모은다.
+    """파일 범위(`_file_scope_items`) 변수 선언에서 식별자 이름을 모은다.
 
     PoC: ``static`` / ``extern`` 한정 + 일반 전역 변수도 포함 (C 에서는 디폴트가 external linkage).
     함수 정의나 클래스 멤버는 제외.
     """
     out: set[str] = set()
-    for child in root.children:
+    for child in _file_scope_items(root, src):
         if child.type != "declaration":
             continue
         # function declaration 은 제외 (parameter_list 가 자식에 있음)
@@ -400,15 +400,45 @@ def _extract_free_functions(
     global_var_names: set[str],
     skip_in_class_methods: bool,
 ) -> list[dict]:
-    """파일 최상위 `function_definition` 노드를 메서드 dict 리스트로 변환."""
+    """파일 범위(`_file_scope_items`)의 `function_definition` 노드를 메서드 dict 리스트로 변환."""
     methods: list[dict] = []
-    for child in root.children:
+    for child in _file_scope_items(root, src):
         if child.type != "function_definition":
             continue
         m = _function_to_method(child, src, global_var_names)
         if m is not None:
             methods.append(m)
     return methods
+
+
+# Children of these nodes are still at file scope. The basic analysis does not run the preprocessor,
+# so it reads every #if/#ifdef branch, except the dead code of a literal `#if 0`.
+_FILE_SCOPE_CONTAINERS = {"namespace_definition", "linkage_specification", "template_declaration", "declaration_list",
+                          "preproc_if", "preproc_ifdef", "preproc_elif", "preproc_elifdef", "preproc_else"}
+
+
+def _file_scope_items(root: Node, src: bytes):
+    """파일 범위의 선언·정의 노드를 순서대로 산출한다.
+
+    파일 최상위뿐 아니라 namespace, extern "C" 블록, template, #if/#ifdef 분기 안의 노드도
+    파일 범위로 본다. 클래스 본문과 함수 본문 안으로는 들어가지 않는다.
+    """
+    stack = list(reversed(root.children))
+    while stack:
+        node = stack.pop()
+        if node.type not in _FILE_SCOPE_CONTAINERS:
+            yield node
+            continue
+        children = node.children
+        if node.type in ("namespace_definition", "linkage_specification"):
+            body = node.child_by_field_name("body")
+            children = [body] if body is not None else []
+        elif node.type == "preproc_if":
+            condition = node.child_by_field_name("condition")
+            if condition is not None and src[condition.start_byte:condition.end_byte].strip() == b"0":
+                alternative = node.child_by_field_name("alternative")
+                children = [alternative] if alternative is not None else []
+        stack.extend(reversed(children))
 
 
 def _extract_cpp_classes(

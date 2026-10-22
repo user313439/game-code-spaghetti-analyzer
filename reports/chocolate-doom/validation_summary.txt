@@ -9,14 +9,14 @@ files total:    296  (with bug-fix: 242)
 unmatched changes (non-class files): 450
 
 Class-level Spearman correlation (vs file bug-fix count):
-  si_vs_bugfix            n= 296  rho= +0.5851  p=0
-  loc_vs_bugfix           n= 296  rho= +0.6158  p=0
-  cc_vs_bugfix            n= 296  rho= +0.4676  p=0
+  si_vs_bugfix            n= 296  rho= +0.6011  p=0
+  loc_vs_bugfix           n= 296  rho= +0.6824  p=0
+  cc_vs_bugfix            n= 296  rho= +0.5025  p=0
 
 File-level Spearman correlation (vs file bug-fix count):
-  file_si_vs_bugfix       n= 296  rho= +0.5851  p=0
-  file_loc_vs_bugfix      n= 296  rho= +0.6158  p=0
-  file_cc_vs_bugfix       n= 296  rho= +0.4676  p=0
+  file_si_vs_bugfix       n= 296  rho= +0.6011  p=0
+  file_loc_vs_bugfix      n= 296  rho= +0.6824  p=0
+  file_cc_vs_bugfix       n= 296  rho= +0.5025  p=0
 
 Top bug-fix touched analysis files:
     60  i_video.c

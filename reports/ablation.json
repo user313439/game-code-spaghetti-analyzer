@@ -203,7 +203,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.5850940740025048,
+          "rho": 0.6011330375622232,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -211,8 +211,8 @@
             "m_misc.c",
             "strife/p_switch.c",
             "i_video.c",
-            "z_zone.c",
             "m_argv.c",
+            "z_zone.c",
             "w_wad.c",
             "v_video.c",
             "heretic/g_game.c",
@@ -244,40 +244,40 @@
           "removed_top_files": []
         },
         "openrct2": {
-          "rho": 0.4687489699563276,
+          "rho": 0.4633397471943798,
           "matched_files": 544,
           "reason": null,
           "top_files": [
             "park/Legacy.cpp",
+            "GameState.cpp",
             "Context.cpp",
+            "world/Map.cpp",
             "ride/Ride.cpp",
             "ride/Vehicle.cpp",
             "drawing/Drawing.cpp",
             "ride/RideData.cpp",
-            "GameState.cpp",
-            "world/Map.cpp",
+            "entity/Guest.cpp",
             "Diagnostic.cpp",
-            "Game.cpp",
+            "world/Park.cpp",
             "paint/Paint.cpp",
+            "entity/Peep.cpp",
+            "Game.cpp",
+            "interface/Viewport.cpp",
+            "core/String.cpp",
             "paint/track/coaster/TwisterRollerCoaster.cpp",
             "paint/track/coaster/CorkscrewRollerCoaster.cpp",
             "paint/track/coaster/InvertedRollerCoaster.cpp",
+            "config/Config.cpp",
+            "drawing/LightFX.cpp",
             "scenario/Scenario.cpp",
-            "ride/RideConstruction.cpp",
             "drawing/Drawing.Sprite.cpp",
-            "paint/vehicle/VehiclePaint.cpp",
-            "world/MapAnimation.cpp",
-            "paint/track/coaster/StandUpRollerCoaster.cpp",
-            "ride/Vehicle.TrackMotion.cpp",
+            "ride/RideConstruction.cpp",
             "ride/TrackPaint.cpp",
-            "paint/track/coaster/CompactInvertedCoaster.cpp",
+            "paint/vehicle/VehiclePaint.cpp",
             "paint/tile_element/Paint.Surface.cpp",
-            "paint/track/coaster/LatticeTriangleTrack.cpp",
-            "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "entity/EntityRegistry.cpp",
-            "paint/track/coaster/LoopingRollerCoaster.cpp",
-            "ride/TrackDesign.cpp",
-            "interface/Chat.cpp"
+            "paint/track/coaster/StandUpRollerCoaster.cpp",
+            "entity/Staff.cpp",
+            "paint/track/coaster/JuniorRollerCoaster.cpp"
           ],
           "actual_top_n": 30,
           "top_jaccard_vs_default": 1.0,
@@ -287,10 +287,10 @@
       },
       "project_mean_rho": {
         "OpenRA": 0.514940335086787,
-        "chocolate-doom": 0.5850940740025048,
-        "OpenRCT2": 0.4687489699563276
+        "chocolate-doom": 0.6011330375622232,
+        "OpenRCT2": 0.4633397471943798
       },
-      "grouped_mean_rho": 0.5229277930152064
+      "grouped_mean_rho": 0.5264710399477966
     },
     "without_cc": {
       "weights": {
@@ -539,7 +539,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.5092563430819479,
+          "rho": 0.5086448350146984,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -600,73 +600,67 @@
           ]
         },
         "openrct2": {
-          "rho": 0.45534154930655785,
+          "rho": 0.4669725474372942,
           "matched_files": 544,
           "reason": null,
           "top_files": [
-            "Context.cpp",
-            "ride/Ride.cpp",
             "GameState.cpp",
-            "drawing/Drawing.cpp",
-            "ride/RideData.cpp",
+            "Context.cpp",
             "world/Map.cpp",
-            "ride/Vehicle.cpp",
+            "ride/Ride.cpp",
+            "ride/RideData.cpp",
+            "drawing/Drawing.cpp",
             "Diagnostic.cpp",
+            "ride/Vehicle.cpp",
             "Game.cpp",
-            "paint/Paint.cpp",
-            "scenario/Scenario.cpp",
-            "paint/vehicle/VehiclePaint.cpp",
-            "entity/EntityRegistry.cpp",
-            "ride/RideConstruction.cpp",
-            "world/MapAnimation.cpp",
-            "core/String.cpp",
-            "paint/track/coaster/TwisterRollerCoaster.cpp",
-            "paint/track/coaster/InvertedRollerCoaster.cpp",
-            "paint/track/coaster/CorkscrewRollerCoaster.cpp",
-            "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "world/tile_element/TrackElement.cpp",
-            "OpenRCT2.cpp",
-            "management/Research.cpp",
-            "interface/Chat.cpp",
-            "management/Finance.cpp",
             "world/Park.cpp",
-            "ride/TrackPaint.cpp",
-            "core/Guard.cpp",
+            "paint/Paint.cpp",
+            "core/String.cpp",
             "interface/Viewport.cpp",
-            "ReplayManager.cpp"
+            "scenario/Scenario.cpp",
+            "config/Config.cpp",
+            "entity/Guest.cpp",
+            "paint/vehicle/VehiclePaint.cpp",
+            "scripting/ScriptEngine.cpp",
+            "drawing/LightFX.cpp",
+            "entity/Peep.cpp",
+            "core/Guard.cpp",
+            "entity/Staff.cpp",
+            "ride/RideConstruction.cpp",
+            "world/tile_element/TrackElement.cpp",
+            "entity/EntityRegistry.cpp",
+            "world/MapAnimation.cpp",
+            "paint/track/coaster/JuniorRollerCoaster.cpp",
+            "paint/track/coaster/InvertedRollerCoaster.cpp",
+            "paint/track/coaster/TwisterRollerCoaster.cpp",
+            "OpenRCT2.cpp"
           ],
           "actual_top_n": 30,
-          "top_jaccard_vs_default": 0.5384615384615384,
+          "top_jaccard_vs_default": 0.6666666666666666,
           "added_top_files": [
             "OpenRCT2.cpp",
-            "ReplayManager.cpp",
             "core/Guard.cpp",
-            "core/String.cpp",
-            "interface/Viewport.cpp",
-            "management/Finance.cpp",
-            "management/Research.cpp",
-            "world/Park.cpp",
+            "entity/EntityRegistry.cpp",
+            "scripting/ScriptEngine.cpp",
+            "world/MapAnimation.cpp",
             "world/tile_element/TrackElement.cpp"
           ],
           "removed_top_files": [
             "drawing/Drawing.Sprite.cpp",
             "paint/tile_element/Paint.Surface.cpp",
-            "paint/track/coaster/CompactInvertedCoaster.cpp",
-            "paint/track/coaster/LatticeTriangleTrack.cpp",
-            "paint/track/coaster/LoopingRollerCoaster.cpp",
+            "paint/track/coaster/CorkscrewRollerCoaster.cpp",
             "paint/track/coaster/StandUpRollerCoaster.cpp",
             "park/Legacy.cpp",
-            "ride/TrackDesign.cpp",
-            "ride/Vehicle.TrackMotion.cpp"
+            "ride/TrackPaint.cpp"
           ]
         }
       },
       "project_mean_rho": {
         "OpenRA": 0.3466427909099392,
-        "chocolate-doom": 0.5092563430819479,
-        "OpenRCT2": 0.45534154930655785
+        "chocolate-doom": 0.5086448350146984,
+        "OpenRCT2": 0.4669725474372942
       },
-      "grouped_mean_rho": 0.4370802277661483
+      "grouped_mean_rho": 0.440753391120644
     },
     "without_coupling": {
       "weights": {
@@ -903,7 +897,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.5566148821937336,
+          "rho": 0.5836815297940835,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -924,16 +918,16 @@
             "strife/p_inter.c",
             "hexen/p_spec.c",
             "strife/p_dialog.c",
+            "m_argv.c",
             "doom/p_inter.c",
             "strife/p_spec.c",
-            "m_argv.c",
             "net_client.c",
             "strife/st_stuff.c",
             "heretic/d_main.c",
             "i_system.c",
             "m_misc.c",
-            "w_merge.c",
             "heretic/p_inter.c",
+            "w_merge.c",
             "heretic/p_switch.c",
             "strife/p_doors.c",
             "heretic/mn_menu.c"
@@ -958,7 +952,7 @@
           ]
         },
         "openrct2": {
-          "rho": 0.40386087565387446,
+          "rho": 0.3957662754143016,
           "matched_files": 544,
           "reason": null,
           "top_files": [
@@ -968,67 +962,75 @@
             "paint/track/coaster/TwisterRollerCoaster.cpp",
             "drawing/Drawing.Sprite.cpp",
             "paint/track/coaster/StandUpRollerCoaster.cpp",
+            "paint/track/coaster/JuniorRollerCoaster.cpp",
+            "drawing/LightFX.cpp",
+            "paint/track/coaster/SingleRailRollerCoaster.cpp",
             "paint/track/coaster/CompactInvertedCoaster.cpp",
             "paint/vehicle/VehiclePaint.cpp",
+            "paint/tile_element/Paint.Surface.cpp",
+            "paint/track/coaster/HybridCoaster.cpp",
+            "entity/Guest.cpp",
             "ride/Vehicle.TrackMotion.cpp",
             "paint/track/coaster/LatticeTriangleTrack.cpp",
-            "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "ride/RideConstruction.cpp",
             "paint/track/coaster/LoopingRollerCoaster.cpp",
-            "ride/Vehicle.cpp",
-            "paint/tile_element/Paint.Surface.cpp",
+            "ride/RideConstruction.cpp",
             "paint/track/coaster/MiniRollerCoaster.cpp",
-            "world/MapAnimation.cpp",
-            "interface/Chat.cpp",
-            "paint/track/coaster/ClassicStandUpRollerCoaster.cpp",
+            "entity/Peep.cpp",
+            "ride/Vehicle.cpp",
             "paint/track/coaster/MultiDimensionRollerCoaster.cpp",
+            "GameState.cpp",
             "paint/track/coaster/FlyingRollerCoasterInverted.cpp",
-            "ride/Ride.cpp",
+            "world/MapAnimation.cpp",
+            "paint/track/coaster/ClassicStandUpRollerCoaster.cpp",
             "paint/track/coaster/MineTrainCoaster.cpp",
+            "interface/Chat.cpp",
             "paint/track/coaster/LayDownRollerCoasterInverted.cpp",
-            "paint/track/thrill/GoKarts.cpp",
-            "interface/Screenshot.cpp",
-            "management/Research.cpp",
-            "Context.cpp",
-            "ride/RideRatings.cpp",
-            "paint/track/coaster/BobsleighCoaster.cpp"
+            "paint/track/coaster/AlpineCoaster.cpp"
           ],
           "actual_top_n": 30,
-          "top_jaccard_vs_default": 0.4634146341463415,
+          "top_jaccard_vs_default": 0.3333333333333333,
           "added_top_files": [
-            "interface/Screenshot.cpp",
-            "management/Research.cpp",
-            "paint/track/coaster/BobsleighCoaster.cpp",
+            "interface/Chat.cpp",
+            "paint/track/coaster/AlpineCoaster.cpp",
             "paint/track/coaster/ClassicStandUpRollerCoaster.cpp",
+            "paint/track/coaster/CompactInvertedCoaster.cpp",
             "paint/track/coaster/FlyingRollerCoasterInverted.cpp",
+            "paint/track/coaster/HybridCoaster.cpp",
+            "paint/track/coaster/LatticeTriangleTrack.cpp",
             "paint/track/coaster/LayDownRollerCoasterInverted.cpp",
+            "paint/track/coaster/LoopingRollerCoaster.cpp",
             "paint/track/coaster/MineTrainCoaster.cpp",
             "paint/track/coaster/MiniRollerCoaster.cpp",
             "paint/track/coaster/MultiDimensionRollerCoaster.cpp",
-            "paint/track/thrill/GoKarts.cpp",
-            "ride/RideRatings.cpp"
+            "paint/track/coaster/SingleRailRollerCoaster.cpp",
+            "ride/Vehicle.TrackMotion.cpp",
+            "world/MapAnimation.cpp"
           ],
           "removed_top_files": [
+            "Context.cpp",
             "Diagnostic.cpp",
             "Game.cpp",
-            "GameState.cpp",
+            "config/Config.cpp",
+            "core/String.cpp",
             "drawing/Drawing.cpp",
-            "entity/EntityRegistry.cpp",
+            "entity/Staff.cpp",
+            "interface/Viewport.cpp",
             "paint/Paint.cpp",
+            "ride/Ride.cpp",
             "ride/RideData.cpp",
-            "ride/TrackDesign.cpp",
             "ride/TrackPaint.cpp",
             "scenario/Scenario.cpp",
-            "world/Map.cpp"
+            "world/Map.cpp",
+            "world/Park.cpp"
           ]
         }
       },
       "project_mean_rho": {
         "OpenRA": 0.5030753978962801,
-        "chocolate-doom": 0.5566148821937336,
-        "OpenRCT2": 0.40386087565387446
+        "chocolate-doom": 0.5836815297940835,
+        "OpenRCT2": 0.3957662754143016
       },
-      "grouped_mean_rho": 0.4878503852479627
+      "grouped_mean_rho": 0.49417440103488836
     },
     "without_dependency_cycle": {
       "weights": {
@@ -1241,7 +1243,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.5897020906262381,
+          "rho": 0.6115594965054373,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -1292,61 +1294,59 @@
           ]
         },
         "openrct2": {
-          "rho": 0.4862330218878097,
+          "rho": 0.5186056914191802,
           "matched_files": 544,
           "reason": null,
           "top_files": [
             "park/Legacy.cpp",
+            "GameState.cpp",
             "Context.cpp",
             "ride/Ride.cpp",
+            "world/Map.cpp",
             "ride/Vehicle.cpp",
             "drawing/Drawing.cpp",
             "ride/RideData.cpp",
-            "GameState.cpp",
+            "entity/Guest.cpp",
             "drawing/Drawing.Sprite.cpp",
-            "ride/Vehicle.TrackMotion.cpp",
-            "world/Map.cpp",
             "Diagnostic.cpp",
+            "entity/Peep.cpp",
+            "world/Park.cpp",
+            "paint/Paint.cpp",
+            "ride/Vehicle.TrackMotion.cpp",
+            "interface/Viewport.cpp",
+            "Game.cpp",
             "paint/track/coaster/TwisterRollerCoaster.cpp",
             "paint/track/coaster/CorkscrewRollerCoaster.cpp",
             "paint/track/coaster/InvertedRollerCoaster.cpp",
-            "Game.cpp",
+            "core/String.cpp",
+            "drawing/LightFX.cpp",
             "paint/track/coaster/LatticeTriangleTrack.cpp",
+            "config/Config.cpp",
             "scenario/Scenario.cpp",
-            "paint/Paint.cpp",
             "ride/RideConstruction.cpp",
             "paint/vehicle/VehiclePaint.cpp",
             "paint/track/coaster/StandUpRollerCoaster.cpp",
-            "world/MapAnimation.cpp",
-            "paint/track/coaster/CompactInvertedCoaster.cpp",
-            "ride/TrackPaint.cpp",
             "paint/tile_element/Paint.Surface.cpp",
-            "OpenRCT2.cpp",
-            "paint/track/coaster/FlyingRollerCoasterInverted.cpp",
-            "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "paint/track/coaster/LayDownRollerCoasterInverted.cpp",
-            "entity/EntityRegistry.cpp"
+            "paint/track/coaster/JuniorRollerCoaster.cpp"
           ],
           "actual_top_n": 30,
-          "top_jaccard_vs_default": 0.8181818181818182,
+          "top_jaccard_vs_default": 0.875,
           "added_top_files": [
-            "OpenRCT2.cpp",
-            "paint/track/coaster/FlyingRollerCoasterInverted.cpp",
-            "paint/track/coaster/LayDownRollerCoasterInverted.cpp"
+            "paint/track/coaster/LatticeTriangleTrack.cpp",
+            "ride/Vehicle.TrackMotion.cpp"
           ],
           "removed_top_files": [
-            "interface/Chat.cpp",
-            "paint/track/coaster/LoopingRollerCoaster.cpp",
-            "ride/TrackDesign.cpp"
+            "entity/Staff.cpp",
+            "ride/TrackPaint.cpp"
           ]
         }
       },
       "project_mean_rho": {
         "OpenRA": 0.5172384602989414,
-        "chocolate-doom": 0.5897020906262381,
-        "OpenRCT2": 0.4862330218878097
+        "chocolate-doom": 0.6115594965054373,
+        "OpenRCT2": 0.5186056914191802
       },
-      "grouped_mean_rho": 0.5310578576043298
+      "grouped_mean_rho": 0.549134549407853
     },
     "without_global_state": {
       "weights": {
@@ -1575,7 +1575,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.541098519674388,
+          "rho": 0.5571521121738893,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -1585,8 +1585,8 @@
             "i_video.c",
             "z_zone.c",
             "m_argv.c",
-            "w_wad.c",
             "v_video.c",
+            "w_wad.c",
             "deh_main.c",
             "d_loop.c",
             "doom/d_main.c",
@@ -1606,8 +1606,8 @@
             "i_joystick.c",
             "heretic/p_inter.c",
             "m_config.c",
-            "w_merge.c",
             "heretic/p_switch.c",
+            "w_merge.c",
             "i_input.c"
           ],
           "actual_top_n": 30,
@@ -1630,64 +1630,60 @@
           ]
         },
         "openrct2": {
-          "rho": 0.4635024111540773,
+          "rho": 0.4361543798807105,
           "matched_files": 544,
           "reason": null,
           "top_files": [
             "park/Legacy.cpp",
+            "GameState.cpp",
             "Context.cpp",
             "ride/Ride.cpp",
+            "world/Map.cpp",
             "ride/Vehicle.cpp",
             "ride/RideData.cpp",
-            "GameState.cpp",
             "drawing/Drawing.cpp",
-            "world/Map.cpp",
             "Diagnostic.cpp",
+            "entity/Guest.cpp",
+            "world/Park.cpp",
             "paint/Paint.cpp",
-            "Game.cpp",
-            "scenario/Scenario.cpp",
-            "world/MapAnimation.cpp",
-            "ride/TrackPaint.cpp",
-            "entity/EntityRegistry.cpp",
-            "paint/tile_element/Paint.TileElement.cpp",
-            "paint/tile_element/Paint.Surface.cpp",
             "core/String.cpp",
+            "Game.cpp",
+            "entity/Peep.cpp",
+            "scenario/Scenario.cpp",
+            "interface/Viewport.cpp",
+            "entity/Staff.cpp",
+            "config/Config.cpp",
+            "ride/TrackPaint.cpp",
+            "world/Footpath.cpp",
+            "core/Guard.cpp",
             "Cheats.cpp",
-            "ride/TrackDesign.cpp",
-            "drawing/Drawing.Sprite.cpp",
-            "interface/Screenshot.cpp",
-            "ReplayManager.cpp",
+            "scripting/ScriptEngine.cpp",
+            "paint/tile_element/Paint.Surface.cpp",
+            "paint/tile_element/Paint.TileElement.cpp",
+            "actions/GameActionRunner.cpp",
+            "entity/EntityRegistry.cpp",
             "world/tile_element/TrackElement.cpp",
-            "management/Finance.cpp",
-            "OpenRCT2.cpp",
-            "ride/Vehicle.TrackMotion.cpp",
-            "management/Research.cpp",
-            "ride/RideRatings.cpp",
-            "world/Park.cpp"
+            "world/MapAnimation.cpp"
           ],
           "actual_top_n": 30,
-          "top_jaccard_vs_default": 0.4634146341463415,
+          "top_jaccard_vs_default": 0.5384615384615384,
           "added_top_files": [
             "Cheats.cpp",
-            "OpenRCT2.cpp",
-            "ReplayManager.cpp",
-            "core/String.cpp",
-            "interface/Screenshot.cpp",
-            "management/Finance.cpp",
-            "management/Research.cpp",
+            "actions/GameActionRunner.cpp",
+            "core/Guard.cpp",
+            "entity/EntityRegistry.cpp",
             "paint/tile_element/Paint.TileElement.cpp",
-            "ride/RideRatings.cpp",
-            "world/Park.cpp",
+            "scripting/ScriptEngine.cpp",
+            "world/Footpath.cpp",
+            "world/MapAnimation.cpp",
             "world/tile_element/TrackElement.cpp"
           ],
           "removed_top_files": [
-            "interface/Chat.cpp",
-            "paint/track/coaster/CompactInvertedCoaster.cpp",
+            "drawing/Drawing.Sprite.cpp",
+            "drawing/LightFX.cpp",
             "paint/track/coaster/CorkscrewRollerCoaster.cpp",
             "paint/track/coaster/InvertedRollerCoaster.cpp",
             "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "paint/track/coaster/LatticeTriangleTrack.cpp",
-            "paint/track/coaster/LoopingRollerCoaster.cpp",
             "paint/track/coaster/StandUpRollerCoaster.cpp",
             "paint/track/coaster/TwisterRollerCoaster.cpp",
             "paint/vehicle/VehiclePaint.cpp",
@@ -1697,10 +1693,10 @@
       },
       "project_mean_rho": {
         "OpenRA": 0.47786505964255727,
-        "chocolate-doom": 0.541098519674388,
-        "OpenRCT2": 0.4635024111540773
+        "chocolate-doom": 0.5571521121738893,
+        "OpenRCT2": 0.4361543798807105
       },
-      "grouped_mean_rho": 0.4941553301570076
+      "grouped_mean_rho": 0.4903905172323857
     },
     "without_game_loop_centrality": {
       "weights": {
@@ -1923,7 +1919,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.6102221610097879,
+          "rho": 0.6279112841703709,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -1932,9 +1928,9 @@
             "m_misc.c",
             "z_zone.c",
             "i_video.c",
+            "m_argv.c",
             "heretic/g_game.c",
             "deh_main.c",
-            "m_argv.c",
             "doom/g_game.c",
             "w_wad.c",
             "hexen/g_game.c",
@@ -1950,8 +1946,8 @@
             "strife/st_stuff.c",
             "hexen/p_spec.c",
             "deh_str.c",
-            "net_server.c",
             "doom/p_inter.c",
+            "net_server.c",
             "d_loop.c",
             "m_config.c",
             "i_joystick.c",
@@ -1972,65 +1968,65 @@
           ]
         },
         "openrct2": {
-          "rho": 0.4581826233270888,
+          "rho": 0.42825237293701607,
           "matched_files": 544,
           "reason": null,
           "top_files": [
             "park/Legacy.cpp",
-            "Context.cpp",
-            "ride/RideData.cpp",
             "GameState.cpp",
-            "drawing/Drawing.cpp",
+            "Context.cpp",
             "world/Map.cpp",
-            "ride/Ride.cpp",
+            "ride/RideData.cpp",
             "Diagnostic.cpp",
+            "drawing/Drawing.cpp",
+            "ride/Ride.cpp",
             "paint/track/coaster/TwisterRollerCoaster.cpp",
             "paint/track/coaster/CorkscrewRollerCoaster.cpp",
             "paint/track/coaster/InvertedRollerCoaster.cpp",
             "ride/Vehicle.cpp",
             "paint/vehicle/VehiclePaint.cpp",
             "paint/track/coaster/StandUpRollerCoaster.cpp",
-            "ride/TrackPaint.cpp",
-            "paint/track/coaster/CompactInvertedCoaster.cpp",
-            "ride/RideConstruction.cpp",
-            "paint/tile_element/Paint.Surface.cpp",
-            "Game.cpp",
-            "paint/Paint.cpp",
-            "drawing/Drawing.Sprite.cpp",
-            "paint/track/coaster/LatticeTriangleTrack.cpp",
             "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "paint/track/coaster/LoopingRollerCoaster.cpp",
-            "ride/TrackDesign.cpp",
-            "paint/tile_element/Paint.TileElement.cpp",
+            "paint/Paint.cpp",
+            "ride/TrackPaint.cpp",
+            "Game.cpp",
+            "interface/Viewport.cpp",
+            "ride/RideConstruction.cpp",
+            "paint/track/coaster/SingleRailRollerCoaster.cpp",
+            "paint/track/coaster/CompactInvertedCoaster.cpp",
+            "paint/tile_element/Paint.Surface.cpp",
+            "entity/Guest.cpp",
+            "drawing/Drawing.Sprite.cpp",
             "core/String.cpp",
-            "Cheats.cpp",
-            "paint/track/coaster/MiniRollerCoaster.cpp",
-            "paint/track/coaster/ClassicStandUpRollerCoaster.cpp"
+            "config/Config.cpp",
+            "paint/track/coaster/HybridCoaster.cpp",
+            "paint/track/coaster/LatticeTriangleTrack.cpp",
+            "ride/TrackDesign.cpp"
           ],
           "actual_top_n": 30,
           "top_jaccard_vs_default": 0.7142857142857143,
           "added_top_files": [
-            "Cheats.cpp",
-            "core/String.cpp",
-            "paint/tile_element/Paint.TileElement.cpp",
-            "paint/track/coaster/ClassicStandUpRollerCoaster.cpp",
-            "paint/track/coaster/MiniRollerCoaster.cpp"
+            "paint/track/coaster/CompactInvertedCoaster.cpp",
+            "paint/track/coaster/HybridCoaster.cpp",
+            "paint/track/coaster/LatticeTriangleTrack.cpp",
+            "paint/track/coaster/SingleRailRollerCoaster.cpp",
+            "ride/TrackDesign.cpp"
           ],
           "removed_top_files": [
-            "entity/EntityRegistry.cpp",
-            "interface/Chat.cpp",
-            "ride/Vehicle.TrackMotion.cpp",
+            "drawing/LightFX.cpp",
+            "entity/Peep.cpp",
+            "entity/Staff.cpp",
             "scenario/Scenario.cpp",
-            "world/MapAnimation.cpp"
+            "world/Park.cpp"
           ]
         }
       },
       "project_mean_rho": {
         "OpenRA": 0.5525931421466674,
-        "chocolate-doom": 0.6102221610097879,
-        "OpenRCT2": 0.4581826233270888
+        "chocolate-doom": 0.6279112841703709,
+        "OpenRCT2": 0.42825237293701607
       },
-      "grouped_mean_rho": 0.5403326421611814
+      "grouped_mean_rho": 0.5362522664180182
     },
     "cc_coupling_only": {
       "weights": {
@@ -2273,7 +2269,7 @@
           "removed_top_files": []
         },
         "chocolate-doom": {
-          "rho": 0.5874202686246135,
+          "rho": 0.611976015590045,
           "matched_files": 296,
           "reason": null,
           "top_files": [
@@ -2292,8 +2288,8 @@
             "m_argv.c",
             "w_wad.c",
             "v_video.c",
-            "i_video.c",
             "heretic/p_inter.c",
+            "i_video.c",
             "heretic/p_switch.c",
             "strife/p_doors.c",
             "heretic/g_game.c",
@@ -2330,99 +2326,93 @@
           ]
         },
         "openrct2": {
-          "rho": 0.4798620217490755,
+          "rho": 0.45192665049478914,
           "matched_files": 544,
           "reason": null,
           "top_files": [
             "park/Legacy.cpp",
+            "GameState.cpp",
             "Context.cpp",
             "ride/RideData.cpp",
-            "GameState.cpp",
             "world/Map.cpp",
             "Diagnostic.cpp",
             "ride/Ride.cpp",
             "drawing/Drawing.cpp",
             "ride/Vehicle.cpp",
-            "ride/TrackPaint.cpp",
+            "core/String.cpp",
             "paint/Paint.cpp",
+            "ride/TrackPaint.cpp",
             "Game.cpp",
             "drawing/Drawing.Sprite.cpp",
             "paint/tile_element/Paint.Surface.cpp",
+            "interface/Viewport.cpp",
+            "entity/Guest.cpp",
             "Cheats.cpp",
             "paint/tile_element/Paint.TileElement.cpp",
-            "core/String.cpp",
-            "ride/TrackDesign.cpp",
-            "OpenRCT2.cpp",
-            "world/tile_element/TrackElement.cpp",
             "world/Park.cpp",
+            "world/Footpath.cpp",
             "core/Guard.cpp",
-            "interface/Viewport.cpp",
-            "entity/EntityRegistry.cpp",
-            "scenario/Scenario.cpp",
-            "world/Scenery.cpp",
-            "interface/InteractiveConsole.cpp",
-            "object/ObjectManager.cpp",
-            "paint/track/coaster/LimLaunchedRollerCoaster.cpp",
-            "ride/Vehicle.Station.cpp"
+            "config/Config.cpp",
+            "OpenRCT2.cpp",
+            "actions/GameActionRunner.cpp",
+            "ride/TrackDesign.cpp",
+            "world/tile_element/TrackElement.cpp",
+            "entity/Peep.cpp",
+            "actions/track/TrackPlaceAction.cpp",
+            "actions/cheats/CheatSetAction.cpp"
           ],
           "actual_top_n": 30,
-          "top_jaccard_vs_default": 0.3953488372093023,
+          "top_jaccard_vs_default": 0.5,
           "added_top_files": [
             "Cheats.cpp",
             "OpenRCT2.cpp",
+            "actions/GameActionRunner.cpp",
+            "actions/cheats/CheatSetAction.cpp",
+            "actions/track/TrackPlaceAction.cpp",
             "core/Guard.cpp",
-            "core/String.cpp",
-            "interface/InteractiveConsole.cpp",
-            "interface/Viewport.cpp",
-            "object/ObjectManager.cpp",
             "paint/tile_element/Paint.TileElement.cpp",
-            "paint/track/coaster/LimLaunchedRollerCoaster.cpp",
-            "ride/Vehicle.Station.cpp",
-            "world/Park.cpp",
-            "world/Scenery.cpp",
+            "ride/TrackDesign.cpp",
+            "world/Footpath.cpp",
             "world/tile_element/TrackElement.cpp"
           ],
           "removed_top_files": [
-            "interface/Chat.cpp",
-            "paint/track/coaster/CompactInvertedCoaster.cpp",
+            "drawing/LightFX.cpp",
+            "entity/Staff.cpp",
             "paint/track/coaster/CorkscrewRollerCoaster.cpp",
             "paint/track/coaster/InvertedRollerCoaster.cpp",
             "paint/track/coaster/JuniorRollerCoaster.cpp",
-            "paint/track/coaster/LatticeTriangleTrack.cpp",
-            "paint/track/coaster/LoopingRollerCoaster.cpp",
             "paint/track/coaster/StandUpRollerCoaster.cpp",
             "paint/track/coaster/TwisterRollerCoaster.cpp",
             "paint/vehicle/VehiclePaint.cpp",
             "ride/RideConstruction.cpp",
-            "ride/Vehicle.TrackMotion.cpp",
-            "world/MapAnimation.cpp"
+            "scenario/Scenario.cpp"
           ]
         }
       },
       "project_mean_rho": {
         "OpenRA": 0.5112230953385818,
-        "chocolate-doom": 0.5874202686246135,
-        "OpenRCT2": 0.4798620217490755
+        "chocolate-doom": 0.611976015590045,
+        "OpenRCT2": 0.45192665049478914
       },
-      "grouped_mean_rho": 0.5261684619040903
+      "grouped_mean_rho": 0.525041920474472
     }
   },
   "input_sha256": {
-    "openra-game/scoring.json": "dabe55c7f4f21df11a021883c945c297b30ee2391ee8b3d0b3b71c5c31af913e",
+    "openra-game/scoring.json": "3e6f439d4cddcd72b6b0e180d928240691996c2565b55a58704e013b22a3ee41",
     "openra-game/validation.json": "de9641a4e536d554a4361d74499c677ac39ddcbf6c4fe3c317893a2051f0d86d",
-    "openra-mods-common/scoring.json": "3b5e304dbe326ca092e4242adb5ffe03b7adc0984bc3d2c6cbb2f29dcdcbbe50",
+    "openra-mods-common/scoring.json": "baf09169f68c848ed3843685be5eb9920a761e0e2a8ddc5021f08833e2624ae5",
     "openra-mods-common/validation.json": "782333d15e65239ed8328e771432362a8caa36bb72031e1df4d871019fc485fe",
-    "openra-mods-cnc/scoring.json": "2b1f5369b4b8ec9ffbb95f554136a6003a40bff78188c1884f947e13f4f4bb1a",
+    "openra-mods-cnc/scoring.json": "80da60440f2ae573c09e35e6c364377dd9aa88d3ce3b0869af5cb86e636f37bb",
     "openra-mods-cnc/validation.json": "25cd9ef271efcdb255eed61a77e21e11a4c3de97f6440fb84be11654f0f21c0a",
-    "openra-mods-d2k/scoring.json": "6436e0bb797ad34e7b3502c6730bf83146796366c3873ee242c8ab38b035d63f",
+    "openra-mods-d2k/scoring.json": "7a985510b6554ef285b2e3ea14120cab08f9616764a9b98adbad6b74be3339b5",
     "openra-mods-d2k/validation.json": "1807099260bc982008662f229392cfc667a4337ed9bb162c84c2cf8a65ac2086",
-    "openra-server/scoring.json": "314399bde8d06b9eaa4397ba118755a6bd691824c5012e8c2667b22d86e1dc4b",
+    "openra-server/scoring.json": "0af418893b46351ee455d75cac370d174bfa3512a163ce9e605f8124255b6f66",
     "openra-server/validation.json": "73ca7480dd1e54db73085d2f0589e4fc07b9db34eeaf85f112230b215aaf6315",
-    "openra-platforms-default/scoring.json": "3d9be402d407b4a499de62825207c84f7218bd34baa1425a0b98e3afbd6e4dd6",
+    "openra-platforms-default/scoring.json": "04bb5fde70fd22bf5dca19f0a1d4eab4da6dc37e76c9ee97f52755f3ec2f0ab6",
     "openra-platforms-default/validation.json": "5f7ebd05cac0f79ebf5a123aa9f813b2ef837be5471bc49710957b7cae75ba55",
-    "chocolate-doom/scoring.json": "3627dc90b35682bc927d323772eaa0e886ee68766a7f42ca6a4d7763872bb3b4",
-    "chocolate-doom/validation.json": "26d06e88d479d83ad8218085bb7b94f29cdf7acdedcf95249eae52fc8bf806b7",
-    "openrct2/scoring.json": "32923ce9473542554525dd726c3d6c1191587afb1a2090f2b20e2b10a9e64f00",
-    "openrct2/validation.json": "6cd3edede764aff521ff46b3e2798f809ce5d73a9831792682769c5c3d855be3"
+    "chocolate-doom/scoring.json": "540f74c501354a893b6f4cbc720027cb7f96a05e4a3c66867960cea0fcca0c9e",
+    "chocolate-doom/validation.json": "c03817ecf5cfcae669db2b503d2b82c0a492ffe88ef8e7bf846098a009f8f86c",
+    "openrct2/scoring.json": "2222b41b3b1dfa7a9b9894f1949696161fe418ec99c23c5ebc42ccb42051985f",
+    "openrct2/validation.json": "2552cf6de694e56a202f30a405be94601bddd8657c2c74d55205a7771e410fa8"
   }
 }

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>game-code-spaghetti-analyzer — 분석 사례</title>
+<style>
+  :root {
+    --bg: #0f172a; --panel: #111827; --panel2: #1f2937;
+    --fg: #e5e7eb; --muted: #94a3b8; --accent: #60a5fa; --border: #1f2937;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.6;
+  }
+  header {
+    padding: 48px 24px 36px;
+    text-align: center;
+    background: linear-gradient(180deg, #1a2540 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0 0 14px; font-size: clamp(24px, 3vw, 32px); line-height: 1.3; letter-spacing: -0.025em; }
+  header .subtitle { color: #cbd5e1; font-size: 15px; max-width: 760px; margin: 0 auto; word-break: keep-all; }
+  header .project-meta { color: var(--muted); font-size: 12px; margin-top: 14px; }
+  header .project-author { color: #cbd5e1; font-size: 13px; margin-top: 6px; }
+  main { padding: 32px; max-width: 1180px; margin: 0 auto; }
+  section { margin-bottom: 40px; }
+  section h2 { font-size: 18px; color: #cbd5e1; margin: 0 0 6px 0; }
+  section .h-sub {
+    color: var(--muted); font-size: 13px; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .intro {
+    background: rgba(96,165,250,0.06); border-left: 3px solid var(--accent);
+    padding: 14px 18px; border-radius: 0 6px 6px 0; font-size: 14px; color: #cbd5e1;
+    margin-bottom: 24px;
+  }
+  .intro strong { color: #e5e7eb; }
+  .intro p { margin: 0 0 8px 0; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro.project-intro { padding: 24px 26px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); }
+  .project-intro .intro-label { color: var(--accent); font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+  .project-intro h2 { color: var(--fg); font-size: 21px; margin: 0 0 14px; letter-spacing: -0.02em; }
+  .project-intro p { line-height: 1.8; margin-bottom: 12px; word-break: keep-all; }
+  .project-intro .intro-note { color: var(--muted); font-size: 12px; padding-top: 12px; border-top: 1px solid var(--border); margin-top: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+  .cards.compact { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; text-decoration: none; color: inherit; display: flex; flex-direction: column;
+    transition: transform 0.12s, border-color 0.12s;
+  }
+  .card.compact { padding: 14px 16px; }
+  .card.disabled { opacity: 0.7; cursor: default; pointer-events: none; }
+  .card:hover:not(.disabled) { transform: translateY(-2px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .grade-badge {
+    display: inline-block; padding: 3px 12px; border-radius: 999px;
+    color: #fff; font-weight: 700; font-size: 13px; min-width: 28px; text-align: center;
+  }
+  .grade-badge.small { padding: 2px 8px; font-size: 11px; min-width: 22px; }
+  .grade-A { background: #3b8e5a; }
+  .grade-B { background: #7fb95a; }
+  .grade-C { background: #e3b341; color: #111; }
+  .grade-D { background: #ef7d3c; }
+  .grade-E { background: #d24343; }
+  .grade-NA { background: #555; }
+  .lang-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(255,255,255,0.08); font-size: 11px; color: var(--muted);
+  }
+  .card-title { font-size: 17px; font-weight: 600; flex: 1; }
+  .card.compact .card-title { font-size: 14px; }
+  .analysis-badge { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+                    color: #e3b341; background: rgba(227,179,65,0.1); border: 1px solid rgba(227,179,65,0.3); }
+  .extension-card .card-stats { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .card-note { color: var(--muted); font-size: 12px; line-height: 1.7; margin: 12px 0 0; word-break: keep-all; }
+  .additional-cases { border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; background: var(--panel); }
+  .additional-cases > summary { color: #cbd5e1; font-size: 16px; font-weight: 600; cursor: pointer; }
+  .additional-cases[open] > summary { margin-bottom: 14px; }
+  .additional-cases > summary:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .card-sub { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  .card-score { font-size: 28px; font-weight: 700; margin: 4px 0 12px 0; font-variant-numeric: tabular-nums; }
+  .card.compact .card-score { font-size: 20px; margin: 2px 0 8px 0; }
+  .card-score small { font-size: 13px; color: var(--muted); font-weight: 400; }
+  .card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
+  .card.compact .card-stats { grid-template-columns: 1fr; gap: 4px; font-size: 11px; }
+  .card-stat { display: flex; justify-content: space-between; padding: 5px 10px;
+               background: var(--panel2); border-radius: 4px; }
+  .card-stat-label { color: var(--muted); }
+  .card-stat-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .card-cta {
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
+    color: var(--accent); font-size: 13px;
+  }
+  .card.disabled .card-cta { color: var(--muted); }
+  .meta-table { width: 100%; border-collapse: collapse; }
+  .meta-table th, .meta-table td { padding: 8px 12px; border-bottom: 1px solid var(--border);
+                                    text-align: left; font-size: 13px; vertical-align: top; }
+  .meta-table th { color: var(--muted); font-weight: 600; width: 180px; }
+  .meta-table code { background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 12px; }
+  .meta-table a { color: var(--accent); }
+  footer { padding: 24px 32px; color: var(--muted); font-size: 12px; text-align: center; border-top: 1px solid var(--border); }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Game Code Spaghetti Analyzer</h1>
+  <div class="subtitle">
+    <strong>C# 및 C/C++ 게임 소스 코드</strong>의 복잡성과 의존 관계를 분석하고,<br>
+    검토가 필요한 부분을 점수와 그래프로 시각화합니다.
+  </div>
+  <div class="project-meta">성균관대학교 소프트웨어학과 · 졸업작품</div>
+  <div class="project-author">2018313439 · 안영진</div>
+</header>
+
+<main>
+
+<section>
+  <div class="intro project-intro">
+    <div class="intro-label">프로젝트 소개</div>
+    <h2>복잡한 게임 코드에서, 먼저 살펴볼 부분을 찾습니다.</h2>
+    <p>게임 코드는 기능이 늘어날수록 여러 클래스와 모듈이 서로 얽히기 쉽습니다. 이 도구는 코드의 복잡성, 의존 관계, 순환 참조, 전역 상태 접근, 게임 루프와의 연결을 함께 분석해 <strong>코드 검토의 우선순위를 살펴볼 수 있도록 돕습니다.</strong></p>
+    <p>아래는 <strong>OpenRA, Chocolate Doom, OpenRCT2, DOOM 3</strong>의 소스 코드를 실제로 분석한 결과입니다. 기존 세 게임 프로젝트에서는 지표 검증과 비교 실험을 진행했으며, DOOM 3는 컴파일 설정 기반 분석 기능을 적용한 <strong>추가 부분 분석 사례</strong>입니다. 각 결과는 선택한 소스 범위에 한정됩니다.</p>
+    <p>주요 분석 사례를 선택하면 검토 후보 목록, 의존성 그래프, 순환 참조 묶음을 확인할 수 있습니다. 관심 있는 후보의 원시 지표와 실제 소스를 함께 살펴보며 구조를 이해하는 데 활용하세요.</p>
+    <p class="intro-note">G-SI는 분석 대상 내부의 상대적인 검토 우선순위입니다. 높은 점수가 곧 결함을 뜻하지 않으며, 게임 간 절대 품질을 비교하는 기준도 아닙니다.</p>
+  </div>
+</section>
+
+<section id="main-cases">
+  <h2>주요 분석 사례</h2>
+  <div class="h-sub">정량 검증 · Lizard 비교 · 시계열 재분석을 수행한 4개 사례. 카드의 큰 숫자는 검증되지 않은 보조 Health입니다.</div>
+  <div class="cards">
+    <a class="card" href="openra-game/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-C">C</span>
+        <div class="card-title">OpenRA.Game</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">RTS 엔진 코어 (게임 루프 · 네트워크 · 그래픽)</div>
+      <div class="card-score">48.2<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">분석 클래스</span><span class="card-stat-value">668</span></div>
+        <div class="card-stat"><span class="card-stat-label">분석 메서드</span><span class="card-stat-value">2,793</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">52.9</span></div>
+        <div class="card-stat"><span class="card-stat-label">상대 D+E 비율</span><span class="card-stat-value">40.4%</span></div>
+        <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">5</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">1.78</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card" href="openra-mods-common/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-C">C</span>
+        <div class="card-title">OpenRA.Mods.Common</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">공용 게임 모드 코드 (Trait · 위젯 · 활동)</div>
+      <div class="card-score">46.7<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">분석 클래스</span><span class="card-stat-value">2,194</span></div>
+        <div class="card-stat"><span class="card-stat-label">분석 메서드</span><span class="card-stat-value">7,321</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">51.0</span></div>
+        <div class="card-stat"><span class="card-stat-label">상대 D+E 비율</span><span class="card-stat-value">40.0%</span></div>
+        <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">4</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">2.21</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card" href="chocolate-doom/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-C">C</span>
+        <div class="card-title">Chocolate Doom</div>
+        <span class="lang-tag">C</span>
+      </div>
+      <div class="card-sub">고전 Doom 의 충실 소스 포트</div>
+      <div class="card-score">50.6<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">분석 파일</span><span class="card-stat-value">296</span></div>
+        <div class="card-stat"><span class="card-stat-label">분석 함수</span><span class="card-stat-value">4,311</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">50.4</span></div>
+        <div class="card-stat"><span class="card-stat-label">상대 D+E 비율</span><span class="card-stat-value">40.2%</span></div>
+        <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">2</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">7.15</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card" href="openrct2/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-C">C</span>
+        <div class="card-title">OpenRCT2</div>
+        <span class="lang-tag">C++</span>
+      </div>
+      <div class="card-sub">RollerCoaster Tycoon 2 의 오픈소스 재구현</div>
+      <div class="card-score">54.9<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">분석 단위</span><span class="card-stat-value">636</span></div>
+        <div class="card-stat"><span class="card-stat-label">분석 함수</span><span class="card-stat-value">5,766</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 G-SI</span><span class="card-stat-value">50.4</span></div>
+        <div class="card-stat"><span class="card-stat-label">상대 D+E 비율</span><span class="card-stat-value">40.2%</span></div>
+        <div class="card-stat"><span class="card-stat-label">의존성 순환</span><span class="card-stat-value">2</span></div>
+        <div class="card-stat"><span class="card-stat-label">평균 결합도</span><span class="card-stat-value">18.77</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+  </div>
+</section>
+
+<section id="cpp-extension-cases">
+  <h2>컴파일 설정 기반 확장 사례</h2>
+  <div class="h-sub">헤더·매크로 설정을 함께 읽는 Clang 분석의 적용 결과입니다. 기존 4개 주요 사례와는 검증 범위가 다릅니다.</div>
+  <div class="cards">
+    <a class="card extension-card" href="doom3-gameplay-clang/index.html">
+      <div class="card-head">
+        <div class="card-title">DOOM 3</div>
+        <span class="analysis-badge">부분 분석</span>
+        <span class="lang-tag">C++</span>
+      </div>
+      <div class="card-sub">게임플레이 구현 파일 69개 대상 · 컴파일 설정 기반 분석</div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">대상 구현 파일</span><span class="card-stat-value" data-metric="registered_files">69</span></div>
+        <div class="card-stat"><span class="card-stat-label">추출 함수·메서드</span><span class="card-stat-value" data-metric="total_methods">4,375</span></div>
+        <div class="card-stat"><span class="card-stat-label">컴파일 오류 파일</span><span class="card-stat-value" data-metric="compiler_error_files">26</span></div>
+        <div class="card-stat"><span class="card-stat-label">컴파일 경고 파일</span><span class="card-stat-value" data-metric="compiler_warning_files">69</span></div>
+      </div>
+      <p class="card-note">등록된 69개 파일 모두에서 결과를 얻었지만, 컴파일 오류 진단이 있어 일부 정보가 불완전할 수 있습니다. 전체 엔진을 분석한 결과는 아닙니다.</p>
+      <div class="card-cta">분석 결과와 부분 분석 이유 보기 →</div>
+    </a>
+  </div>
+</section>
+
+<section id="additional-cases">
+  <details class="additional-cases">
+  <summary>추가 분석 사례 · OpenRA 내부 모듈</summary>
+  <div class="h-sub">별도 게임이 아니라 OpenRA의 모드·플랫폼·서버 코드를 나누어 분석한 결과입니다. 다양한 영역에 분석을 적용한 보조 사례이며, 모듈 사이의 전체 관계를 한 번에 분석한 결과는 아닙니다. 카드를 선택하면 개별 결과를 볼 수 있습니다.</div>
+  <div class="cards compact">
+    <a class="card compact" href="openra-mods-cnc/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-B small">B</span>
+        <div class="card-title">OpenRA.Mods.Cnc</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">Command &amp; Conquer 모드</div>
+      <div class="card-score">35.1<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">278</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">945</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card compact" href="openra-mods-d2k/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-B small">B</span>
+        <div class="card-title">OpenRA.Mods.D2k</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">Dune 2000 모드</div>
+      <div class="card-score">35.7<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">48</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">119</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card compact" href="openra-platforms-default/index.html">
+      <div class="card-head">
+        <span class="grade-badge grade-B small">B</span>
+        <div class="card-title">OpenRA.Platforms.Default</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">SDL2 platform 어댑터</div>
+      <div class="card-score">37.5<small> / 100</small></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">33</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">242</span></div>
+      </div>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+
+    <a class="card compact" href="openra-server/index.html" title="분석 결과는 열람할 수 있지만, 표본 부족으로 상관계수 평가는 불가능합니다">
+      <div class="card-head">
+        <span class="grade-badge grade-NA small">N/A</span>
+        <div class="card-title">OpenRA.Server</div>
+        <span class="lang-tag">C#</span>
+      </div>
+      <div class="card-sub">단일 진입점 프로그램 (표본 부족 사례)</div>
+      <div class="card-score">—</div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-label">클래스</span><span class="card-stat-value">1</span></div>
+        <div class="card-stat"><span class="card-stat-label">메서드</span><span class="card-stat-value">3</span></div>
+      </div>
+      <p class="card-note">통계적 평가 불가 (n &lt; 5) · 분석 결과는 열람할 수 있습니다.</p>
+      <div class="card-cta">상세 대시보드 보기 →</div>
+    </a>
+  </div>
+  </details>
+</section>
+
+<section id="analysis-targets">
+  <h2>분석 대상 정보</h2>
+  <div class="h-sub">각 케이스의 원본 게임 저장소 및 분석 시점</div>
+  <table class="meta-table">
+    <tbody>
+      <tr>
+        <th>OpenRA</th>
+        <td>
+          <a href="https://github.com/OpenRA/OpenRA">github.com/OpenRA/OpenRA</a> — Command &amp; Conquer · Red Alert · Dune 2000 의 오픈소스 재구현<br>
+          <code>C#</code> · GPL-3.0-or-later · commit <code>8f2138c71106aaffd8a288b56d1c9ef6013700ba</code>
+        </td>
+      </tr>
+      <tr>
+        <th>Chocolate Doom</th>
+        <td>
+          <a href="https://github.com/chocolate-doom/chocolate-doom">github.com/chocolate-doom/chocolate-doom</a> — 원작 Doom 의 충실한 소스 포트<br>
+          <code>C</code> · GPL-2.0 · commit <code>c62b634f394e64dd51dec7e6f890496f43a56ade</code>
+        </td>
+      </tr>
+      <tr>
+        <th>OpenRCT2</th>
+        <td>
+          <a href="https://github.com/OpenRCT2/OpenRCT2">github.com/OpenRCT2/OpenRCT2</a> — RollerCoaster Tycoon 2 의 오픈소스 재구현<br>
+          <code>C / C++</code> · GPL-3.0 · commit <code>7a2cddeed1304f284829ffb0c91f31557819c51e</code>
+        </td>
+      </tr>
+      <tr>
+        <th>DOOM 3</th>
+        <td>
+          <a href="https://github.com/id-Software/DOOM-3">github.com/id-Software/DOOM-3</a> — DOOM 3의 공개 소스 · 게임플레이 영역의 부분 분석<br>
+          <code>C++</code> · GPL-3.0 및 별도 조건 · commit <code>a9c49da5afb18201d31e3f0a429a037e56ce2b9a</code>
+        </td>
+      </tr>
+      <tr>
+        <th>분석 도구 버전</th>
+        <td><code>1.0.0rc1</code> · Roslyn SemanticModel + tree-sitter C/C++ + 선택형 Clang · 기본 3프로젝트 LOPO · AI 과거 실험 예시 · 튜닝은 선택 기능 (일반화 보장 아님)</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer>
+  Game Code Spaghetti Analyzer · 성균관대학교 SW학과 졸업작품 ·
+  <a href="https://github.com/user313439/game-code-spaghetti-analyzer">GitHub Repository</a>
+</footer>
+</body>
+</html>

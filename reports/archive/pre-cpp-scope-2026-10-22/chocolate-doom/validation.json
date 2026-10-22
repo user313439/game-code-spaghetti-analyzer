@@ -1,0 +1,5562 @@
+{
+  "schema_version": "validate-0.2",
+  "repo_path": "C:\\Users\\dudwl\\Desktop\\Projects\\졸업작품\\benchmarks\\chocolate-doom",
+  "subdir": "src",
+  "since": null,
+  "until": "2026-10-03",
+  "keywords": [
+    "fix",
+    "bug",
+    "crash",
+    "regression",
+    "hotfix",
+    "patch",
+    "defect"
+  ],
+  "total_commits": 3613,
+  "bugfix_commits": 840,
+  "classes_total": 296,
+  "classes_with_bugfix": 242,
+  "files_total": 296,
+  "files_with_bugfix": 242,
+  "unmatched_change_count": 450,
+  "class_correlations": [
+    {
+      "name": "si_vs_bugfix",
+      "n": 296,
+      "spearman_rho": 0.5851,
+      "p_value": 0.0
+    },
+    {
+      "name": "loc_vs_bugfix",
+      "n": 296,
+      "spearman_rho": 0.6158,
+      "p_value": 0.0
+    },
+    {
+      "name": "cc_vs_bugfix",
+      "n": 296,
+      "spearman_rho": 0.4676,
+      "p_value": 0.0
+    }
+  ],
+  "file_correlations": [
+    {
+      "name": "file_si_vs_bugfix",
+      "n": 296,
+      "spearman_rho": 0.5851,
+      "p_value": 0.0
+    },
+    {
+      "name": "file_loc_vs_bugfix",
+      "n": 296,
+      "spearman_rho": 0.6158,
+      "p_value": 0.0
+    },
+    {
+      "name": "file_cc_vs_bugfix",
+      "n": 296,
+      "spearman_rho": 0.4676,
+      "p_value": 0.0
+    }
+  ],
+  "top_bugfix_files": [
+    {
+      "path": "i_video.c",
+      "count": 60
+    },
+    {
+      "path": "strife/d_main.c",
+      "count": 29
+    },
+    {
+      "path": "strife/p_enemy.c",
+      "count": 28
+    },
+    {
+      "path": "d_iwad.c",
+      "count": 26
+    },
+    {
+      "path": "strife/p_inter.c",
+      "count": 24
+    },
+    {
+      "path": "i_sdlsound.c",
+      "count": 23
+    },
+    {
+      "path": "hexen/p_enemy.c",
+      "count": 22
+    },
+    {
+      "path": "i_sound.c",
+      "count": 22
+    },
+    {
+      "path": "i_oplmusic.c",
+      "count": 21
+    },
+    {
+      "path": "strife/p_dialog.c",
+      "count": 19
+    },
+    {
+      "path": "m_misc.c",
+      "count": 18
+    },
+    {
+      "path": "net_client.c",
+      "count": 18
+    },
+    {
+      "path": "doom/d_main.c",
+      "count": 17
+    },
+    {
+      "path": "net_server.c",
+      "count": 16
+    },
+    {
+      "path": "heretic/g_game.c",
+      "count": 16
+    },
+    {
+      "path": "i_sdlmusic.c",
+      "count": 15
+    },
+    {
+      "path": "hexen/g_game.c",
+      "count": 15
+    },
+    {
+      "path": "v_video.c",
+      "count": 15
+    },
+    {
+      "path": "strife/g_game.c",
+      "count": 15
+    },
+    {
+      "path": "strife/m_menu.c",
+      "count": 15
+    }
+  ],
+  "unmatched_paths_sample": [
+    {
+      "path": "Makefile.am",
+      "count": 21
+    },
+    {
+      "path": "d_main.c",
+      "count": 21
+    },
+    {
+      "path": "g_game.c",
+      "count": 20
+    },
+    {
+      "path": "m_menu.c",
+      "count": 13
+    },
+    {
+      "path": "d_net.c",
+      "count": 9
+    },
+    {
+      "path": "r_data.c",
+      "count": 8
+    },
+    {
+      "path": "wi_stuff.c",
+      "count": 8
+    },
+    {
+      "path": "CMakeLists.txt",
+      "count": 7
+    },
+    {
+      "path": "heretic/Makefile.am",
+      "count": 7
+    },
+    {
+      "path": "strife/d_englsh.h",
+      "count": 6
+    },
+    {
+      "path": "s_sound.c",
+      "count": 6
+    },
+    {
+      "path": "p_map.c",
+      "count": 6
+    },
+    {
+      "path": "doomdef.h",
+      "count": 6
+    },
+    {
+      "path": "heretic/doomdef.h",
+      "count": 5
+    },
+    {
+      "path": "net_defs.h",
+      "count": 5
+    },
+    {
+      "path": "hexen/h2def.h",
+      "count": 5
+    },
+    {
+      "path": "i_sound.h",
+      "count": 5
+    },
+    {
+      "path": "i_scale.c",
+      "count": 5
+    },
+    {
+      "path": "am_map.c",
+      "count": 5
+    },
+    {
+      "path": "p_spec.c",
+      "count": 5
+    }
+  ],
+  "rows": [
+    {
+      "fqn": "aes_prng",
+      "file_path": "aes_prng.c",
+      "si": 28.04,
+      "grade": "B",
+      "cc_max": 11.0,
+      "loc": 170,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "d_dedicated",
+      "file_path": "d_dedicated.c",
+      "si": 12.16,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 16,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "d_event",
+      "file_path": "d_event.c",
+      "si": 42.23,
+      "grade": "C",
+      "cc_max": 2.0,
+      "loc": 24,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "d_iwad",
+      "file_path": "d_iwad.c",
+      "si": 77.7,
+      "grade": "D",
+      "cc_max": 8.0,
+      "loc": 413,
+      "bugfix_count": 26
+    },
+    {
+      "fqn": "d_loop",
+      "file_path": "d_loop.c",
+      "si": 96.96,
+      "grade": "E",
+      "cc_max": 14.0,
+      "loc": 674,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "d_mode",
+      "file_path": "d_mode.c",
+      "si": 56.76,
+      "grade": "C",
+      "cc_max": 13.0,
+      "loc": 149,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "deh_io",
+      "file_path": "deh_io.c",
+      "si": 79.39,
+      "grade": "D",
+      "cc_max": 16.0,
+      "loc": 268,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "deh_main",
+      "file_path": "deh_main.c",
+      "si": 96.62,
+      "grade": "E",
+      "cc_max": 13.0,
+      "loc": 423,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "deh_mapping",
+      "file_path": "deh_mapping.c",
+      "si": 46.96,
+      "grade": "C",
+      "cc_max": 7.0,
+      "loc": 154,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "deh_str",
+      "file_path": "deh_str.c",
+      "si": 92.91,
+      "grade": "E",
+      "cc_max": 22.0,
+      "loc": 342,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "deh_text",
+      "file_path": "deh_text.c",
+      "si": 22.64,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 68,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.am_map",
+      "file_path": "doom/am_map.c",
+      "si": 83.45,
+      "grade": "E",
+      "cc_max": 27.3333,
+      "loc": 968,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "doom.d_items",
+      "file_path": "doom/d_items.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.d_main",
+      "file_path": "doom/d_main.c",
+      "si": 95.61,
+      "grade": "E",
+      "cc_max": 47.0,
+      "loc": 1654,
+      "bugfix_count": 17
+    },
+    {
+      "fqn": "doom.d_net",
+      "file_path": "doom/d_net.c",
+      "si": 37.5,
+      "grade": "B",
+      "cc_max": 7.0,
+      "loc": 220,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "doom.deh_ammo",
+      "file_path": "doom/deh_ammo.c",
+      "si": 16.89,
+      "grade": "A",
+      "cc_max": 5.0,
+      "loc": 62,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.deh_bexstr",
+      "file_path": "doom/deh_bexstr.c",
+      "si": 14.86,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 30,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.deh_cheat",
+      "file_path": "doom/deh_cheat.c",
+      "si": 26.69,
+      "grade": "B",
+      "cc_max": 10.0,
+      "loc": 78,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.deh_doom",
+      "file_path": "doom/deh_doom.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.deh_frame",
+      "file_path": "doom/deh_frame.c",
+      "si": 22.64,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 100,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.deh_misc",
+      "file_path": "doom/deh_misc.c",
+      "si": 24.32,
+      "grade": "B",
+      "cc_max": 7.0,
+      "loc": 61,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.deh_ptr",
+      "file_path": "doom/deh_ptr.c",
+      "si": 19.59,
+      "grade": "A",
+      "cc_max": 6.0,
+      "loc": 97,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.deh_sound",
+      "file_path": "doom/deh_sound.c",
+      "si": 16.89,
+      "grade": "A",
+      "cc_max": 5.0,
+      "loc": 52,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.deh_thing",
+      "file_path": "doom/deh_thing.c",
+      "si": 14.19,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 64,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.deh_weapon",
+      "file_path": "doom/deh_weapon.c",
+      "si": 14.19,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 50,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.doom_icon",
+      "file_path": "doom/doom_icon.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.doomdef",
+      "file_path": "doom/doomdef.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.doomstat",
+      "file_path": "doom/doomstat.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.dstrings",
+      "file_path": "doom/dstrings.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.f_finale",
+      "file_path": "doom/f_finale.c",
+      "si": 74.32,
+      "grade": "D",
+      "cc_max": 43.0,
+      "loc": 510,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "doom.f_wipe",
+      "file_path": "doom/f_wipe.c",
+      "si": 39.19,
+      "grade": "B",
+      "cc_max": 9.0,
+      "loc": 240,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.g_game",
+      "file_path": "doom/g_game.c",
+      "si": 95.95,
+      "grade": "E",
+      "cc_max": 57.6667,
+      "loc": 1969,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "doom.hu_lib",
+      "file_path": "doom/hu_lib.c",
+      "si": 21.62,
+      "grade": "B",
+      "cc_max": 8.5,
+      "loc": 285,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.hu_stuff",
+      "file_path": "doom/hu_stuff.c",
+      "si": 67.23,
+      "grade": "D",
+      "cc_max": 28.0,
+      "loc": 355,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "doom.info",
+      "file_path": "doom/info.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.m_menu",
+      "file_path": "doom/m_menu.c",
+      "si": 84.12,
+      "grade": "E",
+      "cc_max": 29.0,
+      "loc": 1369,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "doom.m_random",
+      "file_path": "doom/m_random.c",
+      "si": 9.12,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_ceilng",
+      "file_path": "doom/p_ceilng.c",
+      "si": 54.73,
+      "grade": "C",
+      "cc_max": 28.0,
+      "loc": 250,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.p_doors",
+      "file_path": "doom/p_doors.c",
+      "si": 65.88,
+      "grade": "D",
+      "cc_max": 42.0,
+      "loc": 485,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_enemy",
+      "file_path": "doom/p_enemy.c",
+      "si": 50.34,
+      "grade": "C",
+      "cc_max": 21.6667,
+      "loc": 1656,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "doom.p_floor",
+      "file_path": "doom/p_floor.c",
+      "si": 53.72,
+      "grade": "C",
+      "cc_max": 30.0,
+      "loc": 502,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_inter",
+      "file_path": "doom/p_inter.c",
+      "si": 89.86,
+      "grade": "E",
+      "cc_max": 101.0,
+      "loc": 808,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.p_lights",
+      "file_path": "doom/p_lights.c",
+      "si": 18.24,
+      "grade": "A",
+      "cc_max": 7.0,
+      "loc": 241,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.p_map",
+      "file_path": "doom/p_map.c",
+      "si": 70.95,
+      "grade": "D",
+      "cc_max": 21.0,
+      "loc": 1128,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "doom.p_maputl",
+      "file_path": "doom/p_maputl.c",
+      "si": 48.99,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 758,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.p_mobj",
+      "file_path": "doom/p_mobj.c",
+      "si": 62.84,
+      "grade": "D",
+      "cc_max": 37.0,
+      "loc": 908,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "doom.p_plats",
+      "file_path": "doom/p_plats.c",
+      "si": 43.92,
+      "grade": "C",
+      "cc_max": 19.0,
+      "loc": 248,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_pspr",
+      "file_path": "doom/p_pspr.c",
+      "si": 30.74,
+      "grade": "B",
+      "cc_max": 13.3333,
+      "loc": 652,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_saveg",
+      "file_path": "doom/p_saveg.c",
+      "si": 31.42,
+      "grade": "B",
+      "cc_max": 9.8,
+      "loc": 1618,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_setup",
+      "file_path": "doom/p_setup.c",
+      "si": 62.16,
+      "grade": "D",
+      "cc_max": 18.0,
+      "loc": 642,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "doom.p_sight",
+      "file_path": "doom/p_sight.c",
+      "si": 44.26,
+      "grade": "C",
+      "cc_max": 18.0,
+      "loc": 312,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.p_spec",
+      "file_path": "doom/p_spec.c",
+      "si": 78.38,
+      "grade": "D",
+      "cc_max": 59.5,
+      "loc": 1215,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.p_switch",
+      "file_path": "doom/p_switch.c",
+      "si": 93.24,
+      "grade": "E",
+      "cc_max": 119.0,
+      "loc": 517,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.p_telept",
+      "file_path": "doom/p_telept.c",
+      "si": 27.03,
+      "grade": "B",
+      "cc_max": 13.0,
+      "loc": 91,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.p_tick",
+      "file_path": "doom/p_tick.c",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 8.0,
+      "loc": 72,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.p_user",
+      "file_path": "doom/p_user.c",
+      "si": 60.47,
+      "grade": "D",
+      "cc_max": 37.0,
+      "loc": 297,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.r_bsp",
+      "file_path": "doom/r_bsp.c",
+      "si": 45.61,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 420,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.r_data",
+      "file_path": "doom/r_data.c",
+      "si": 59.12,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 620,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.r_draw",
+      "file_path": "doom/r_draw.c",
+      "si": 65.54,
+      "grade": "D",
+      "cc_max": 12.0,
+      "loc": 586,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.r_main",
+      "file_path": "doom/r_main.c",
+      "si": 82.09,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 657,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.r_plane",
+      "file_path": "doom/r_plane.c",
+      "si": 40.88,
+      "grade": "C",
+      "cc_max": 12.0,
+      "loc": 311,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.r_segs",
+      "file_path": "doom/r_segs.c",
+      "si": 85.47,
+      "grade": "E",
+      "cc_max": 57.0,
+      "loc": 624,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.r_sky",
+      "file_path": "doom/r_sky.c",
+      "si": 9.46,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 5,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "doom.r_things",
+      "file_path": "doom/r_things.c",
+      "si": 66.22,
+      "grade": "D",
+      "cc_max": 29.0,
+      "loc": 759,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.s_sound",
+      "file_path": "doom/s_sound.c",
+      "si": 57.09,
+      "grade": "C",
+      "cc_max": 18.0,
+      "loc": 561,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.sounds",
+      "file_path": "doom/sounds.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.st_lib",
+      "file_path": "doom/st_lib.c",
+      "si": 59.8,
+      "grade": "C",
+      "cc_max": 13.0,
+      "loc": 206,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "doom.st_stuff",
+      "file_path": "doom/st_stuff.c",
+      "si": 94.59,
+      "grade": "E",
+      "cc_max": 39.0,
+      "loc": 978,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "doom.statdump",
+      "file_path": "doom/statdump.c",
+      "si": 35.81,
+      "grade": "B",
+      "cc_max": 9.0,
+      "loc": 274,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "doom.wi_stuff",
+      "file_path": "doom/wi_stuff.c",
+      "si": 86.15,
+      "grade": "E",
+      "cc_max": 27.3333,
+      "loc": 1338,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "gusconf",
+      "file_path": "gusconf.c",
+      "si": 69.26,
+      "grade": "D",
+      "cc_max": 10.0,
+      "loc": 248,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.am_map",
+      "file_path": "heretic/am_map.c",
+      "si": 80.07,
+      "grade": "E",
+      "cc_max": 29.3333,
+      "loc": 1225,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "heretic.ct_chat",
+      "file_path": "heretic/ct_chat.c",
+      "si": 61.49,
+      "grade": "D",
+      "cc_max": 25.0,
+      "loc": 318,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "heretic.d_main",
+      "file_path": "heretic/d_main.c",
+      "si": 92.57,
+      "grade": "E",
+      "cc_max": 23.0,
+      "loc": 908,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "heretic.d_net",
+      "file_path": "heretic/d_net.c",
+      "si": 32.43,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 154,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "heretic.deh_ammo",
+      "file_path": "heretic/deh_ammo.c",
+      "si": 16.89,
+      "grade": "A",
+      "cc_max": 5.0,
+      "loc": 72,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "heretic.deh_frame",
+      "file_path": "heretic/deh_frame.c",
+      "si": 26.01,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 131,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "heretic.deh_htext",
+      "file_path": "heretic/deh_htext.c",
+      "si": 27.7,
+      "grade": "B",
+      "cc_max": 7.0,
+      "loc": 149,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.deh_htic",
+      "file_path": "heretic/deh_htic.c",
+      "si": 28.38,
+      "grade": "B",
+      "cc_max": 4.0,
+      "loc": 115,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "heretic.deh_sound",
+      "file_path": "heretic/deh_sound.c",
+      "si": 18.92,
+      "grade": "A",
+      "cc_max": 5.0,
+      "loc": 56,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "heretic.deh_thing",
+      "file_path": "heretic/deh_thing.c",
+      "si": 20.95,
+      "grade": "B",
+      "cc_max": 4.0,
+      "loc": 74,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.deh_weapon",
+      "file_path": "heretic/deh_weapon.c",
+      "si": 23.31,
+      "grade": "B",
+      "cc_max": 5.0,
+      "loc": 68,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "heretic.f_finale",
+      "file_path": "heretic/f_finale.c",
+      "si": 34.12,
+      "grade": "B",
+      "cc_max": 10.0,
+      "loc": 274,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "heretic.g_game",
+      "file_path": "heretic/g_game.c",
+      "si": 97.3,
+      "grade": "E",
+      "cc_max": 71.6667,
+      "loc": 1767,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "heretic.heretic_icon",
+      "file_path": "heretic/heretic_icon.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "heretic.in_lude",
+      "file_path": "heretic/in_lude.c",
+      "si": 63.18,
+      "grade": "D",
+      "cc_max": 17.5,
+      "loc": 799,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "heretic.info",
+      "file_path": "heretic/info.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.m_random",
+      "file_path": "heretic/m_random.c",
+      "si": 9.12,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.mn_menu",
+      "file_path": "heretic/mn_menu.c",
+      "si": 88.85,
+      "grade": "E",
+      "cc_max": 51.6667,
+      "loc": 1252,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "heretic.p_ceilng",
+      "file_path": "heretic/p_ceilng.c",
+      "si": 44.93,
+      "grade": "C",
+      "cc_max": 21.0,
+      "loc": 188,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.p_doors",
+      "file_path": "heretic/p_doors.c",
+      "si": 57.43,
+      "grade": "C",
+      "cc_max": 31.0,
+      "loc": 316,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "heretic.p_enemy",
+      "file_path": "heretic/p_enemy.c",
+      "si": 42.91,
+      "grade": "C",
+      "cc_max": 15.7778,
+      "loc": 1939,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "heretic.p_floor",
+      "file_path": "heretic/p_floor.c",
+      "si": 46.62,
+      "grade": "C",
+      "cc_max": 24.0,
+      "loc": 408,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.p_inter",
+      "file_path": "heretic/p_inter.c",
+      "si": 88.51,
+      "grade": "E",
+      "cc_max": 86.0,
+      "loc": 1187,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "heretic.p_lights",
+      "file_path": "heretic/p_lights.c",
+      "si": 18.24,
+      "grade": "A",
+      "cc_max": 7.0,
+      "loc": 188,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.p_map",
+      "file_path": "heretic/p_map.c",
+      "si": 75.34,
+      "grade": "D",
+      "cc_max": 30.5,
+      "loc": 1223,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "heretic.p_maputl",
+      "file_path": "heretic/p_maputl.c",
+      "si": 44.59,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 543,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.p_mobj",
+      "file_path": "heretic/p_mobj.c",
+      "si": 71.62,
+      "grade": "D",
+      "cc_max": 50.5,
+      "loc": 1305,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "heretic.p_plats",
+      "file_path": "heretic/p_plats.c",
+      "si": 43.92,
+      "grade": "C",
+      "cc_max": 19.0,
+      "loc": 216,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.p_pspr",
+      "file_path": "heretic/p_pspr.c",
+      "si": 36.82,
+      "grade": "B",
+      "cc_max": 12.6,
+      "loc": 1213,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "heretic.p_saveg",
+      "file_path": "heretic/p_saveg.c",
+      "si": 29.39,
+      "grade": "B",
+      "cc_max": 9.6,
+      "loc": 1631,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.p_setup",
+      "file_path": "heretic/p_setup.c",
+      "si": 55.74,
+      "grade": "C",
+      "cc_max": 14.0,
+      "loc": 511,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "heretic.p_sight",
+      "file_path": "heretic/p_sight.c",
+      "si": 41.55,
+      "grade": "C",
+      "cc_max": 21.0,
+      "loc": 262,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.p_spec",
+      "file_path": "heretic/p_spec.c",
+      "si": 77.03,
+      "grade": "D",
+      "cc_max": 55.0,
+      "loc": 903,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "heretic.p_switch",
+      "file_path": "heretic/p_switch.c",
+      "si": 87.84,
+      "grade": "E",
+      "cc_max": 82.0,
+      "loc": 284,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "heretic.p_telept",
+      "file_path": "heretic/p_telept.c",
+      "si": 31.76,
+      "grade": "B",
+      "cc_max": 15.0,
+      "loc": 128,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.p_tick",
+      "file_path": "heretic/p_tick.c",
+      "si": 22.97,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 68,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.p_user",
+      "file_path": "heretic/p_user.c",
+      "si": 72.64,
+      "grade": "D",
+      "cc_max": 54.0,
+      "loc": 860,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "heretic.r_bsp",
+      "file_path": "heretic/r_bsp.c",
+      "si": 45.95,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 334,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.r_data",
+      "file_path": "heretic/r_data.c",
+      "si": 49.66,
+      "grade": "C",
+      "cc_max": 15.0,
+      "loc": 505,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "heretic.r_draw",
+      "file_path": "heretic/r_draw.c",
+      "si": 51.69,
+      "grade": "C",
+      "cc_max": 8.0,
+      "loc": 352,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.r_main",
+      "file_path": "heretic/r_main.c",
+      "si": 81.08,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 584,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "heretic.r_plane",
+      "file_path": "heretic/r_plane.c",
+      "si": 67.91,
+      "grade": "D",
+      "cc_max": 39.0,
+      "loc": 340,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "heretic.r_segs",
+      "file_path": "heretic/r_segs.c",
+      "si": 83.11,
+      "grade": "E",
+      "cc_max": 57.0,
+      "loc": 557,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "heretic.r_things",
+      "file_path": "heretic/r_things.c",
+      "si": 64.86,
+      "grade": "D",
+      "cc_max": 29.0,
+      "loc": 759,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "heretic.s_sound",
+      "file_path": "heretic/s_sound.c",
+      "si": 69.93,
+      "grade": "D",
+      "cc_max": 32.0,
+      "loc": 533,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "heretic.sb_bar",
+      "file_path": "heretic/sb_bar.c",
+      "si": 69.59,
+      "grade": "D",
+      "cc_max": 20.0,
+      "loc": 931,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "heretic.sounds",
+      "file_path": "heretic/sounds.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.a_action",
+      "file_path": "hexen/a_action.c",
+      "si": 18.58,
+      "grade": "A",
+      "cc_max": 8.25,
+      "loc": 802,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "hexen.am_map",
+      "file_path": "hexen/am_map.c",
+      "si": 77.36,
+      "grade": "D",
+      "cc_max": 28.3333,
+      "loc": 1245,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.ct_chat",
+      "file_path": "hexen/ct_chat.c",
+      "si": 63.51,
+      "grade": "D",
+      "cc_max": 29.0,
+      "loc": 329,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.d_net",
+      "file_path": "hexen/d_net.c",
+      "si": 35.14,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 208,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "hexen.f_finale",
+      "file_path": "hexen/f_finale.c",
+      "si": 41.89,
+      "grade": "C",
+      "cc_max": 12.0,
+      "loc": 249,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.g_game",
+      "file_path": "hexen/g_game.c",
+      "si": 95.27,
+      "grade": "E",
+      "cc_max": 59.5,
+      "loc": 1844,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "hexen.h2_main",
+      "file_path": "hexen/h2_main.c",
+      "si": 64.53,
+      "grade": "D",
+      "cc_max": 13.5,
+      "loc": 928,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "hexen.hexen_icon",
+      "file_path": "hexen/hexen_icon.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "hexen.in_lude",
+      "file_path": "hexen/in_lude.c",
+      "si": 50.68,
+      "grade": "C",
+      "cc_max": 15.0,
+      "loc": 402,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.info",
+      "file_path": "hexen/info.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.m_random",
+      "file_path": "hexen/m_random.c",
+      "si": 9.12,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 19,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.mn_menu",
+      "file_path": "hexen/mn_menu.c",
+      "si": 86.49,
+      "grade": "E",
+      "cc_max": 42.0,
+      "loc": 1347,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "hexen.p_acs",
+      "file_path": "hexen/p_acs.c",
+      "si": 61.82,
+      "grade": "D",
+      "cc_max": 5.9231,
+      "loc": 1360,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "hexen.p_anim",
+      "file_path": "hexen/p_anim.c",
+      "si": 55.41,
+      "grade": "C",
+      "cc_max": 26.0,
+      "loc": 353,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_ceilng",
+      "file_path": "hexen/p_ceilng.c",
+      "si": 38.51,
+      "grade": "B",
+      "cc_max": 18.0,
+      "loc": 218,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_doors",
+      "file_path": "hexen/p_doors.c",
+      "si": 46.28,
+      "grade": "C",
+      "cc_max": 25.0,
+      "loc": 220,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.p_enemy",
+      "file_path": "hexen/p_enemy.c",
+      "si": 47.64,
+      "grade": "C",
+      "cc_max": 21.8824,
+      "loc": 4218,
+      "bugfix_count": 22
+    },
+    {
+      "fqn": "hexen.p_floor",
+      "file_path": "hexen/p_floor.c",
+      "si": 51.35,
+      "grade": "C",
+      "cc_max": 23.0,
+      "loc": 792,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_inter",
+      "file_path": "hexen/p_inter.c",
+      "si": 91.22,
+      "grade": "E",
+      "cc_max": 106.0,
+      "loc": 1847,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "hexen.p_lights",
+      "file_path": "hexen/p_lights.c",
+      "si": 33.45,
+      "grade": "B",
+      "cc_max": 17.0,
+      "loc": 303,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_map",
+      "file_path": "hexen/p_map.c",
+      "si": 92.23,
+      "grade": "E",
+      "cc_max": 60.0,
+      "loc": 1840,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "hexen.p_maputl",
+      "file_path": "hexen/p_maputl.c",
+      "si": 72.3,
+      "grade": "D",
+      "cc_max": 48.0,
+      "loc": 821,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.p_mobj",
+      "file_path": "hexen/p_mobj.c",
+      "si": 78.72,
+      "grade": "D",
+      "cc_max": 64.6667,
+      "loc": 2022,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "hexen.p_plats",
+      "file_path": "hexen/p_plats.c",
+      "si": 37.16,
+      "grade": "B",
+      "cc_max": 16.0,
+      "loc": 222,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_pspr",
+      "file_path": "hexen/p_pspr.c",
+      "si": 32.09,
+      "grade": "B",
+      "cc_max": 12.8333,
+      "loc": 1585,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "hexen.p_setup",
+      "file_path": "hexen/p_setup.c",
+      "si": 60.81,
+      "grade": "D",
+      "cc_max": 15.6667,
+      "loc": 816,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "hexen.p_sight",
+      "file_path": "hexen/p_sight.c",
+      "si": 41.55,
+      "grade": "C",
+      "cc_max": 21.0,
+      "loc": 307,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_spec",
+      "file_path": "hexen/p_spec.c",
+      "si": 90.2,
+      "grade": "E",
+      "cc_max": 100.0,
+      "loc": 876,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "hexen.p_switch",
+      "file_path": "hexen/p_switch.c",
+      "si": 27.36,
+      "grade": "B",
+      "cc_max": 8.0,
+      "loc": 95,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_telept",
+      "file_path": "hexen/p_telept.c",
+      "si": 37.84,
+      "grade": "B",
+      "cc_max": 18.0,
+      "loc": 134,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.p_things",
+      "file_path": "hexen/p_things.c",
+      "si": 43.24,
+      "grade": "C",
+      "cc_max": 23.0,
+      "loc": 308,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.p_tick",
+      "file_path": "hexen/p_tick.c",
+      "si": 15.2,
+      "grade": "A",
+      "cc_max": 6.0,
+      "loc": 66,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.p_user",
+      "file_path": "hexen/p_user.c",
+      "si": 81.42,
+      "grade": "E",
+      "cc_max": 71.0,
+      "loc": 1432,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.po_man",
+      "file_path": "hexen/po_man.c",
+      "si": 56.42,
+      "grade": "C",
+      "cc_max": 22.0,
+      "loc": 1279,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.r_bsp",
+      "file_path": "hexen/r_bsp.c",
+      "si": 48.31,
+      "grade": "C",
+      "cc_max": 17.0,
+      "loc": 354,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.r_data",
+      "file_path": "hexen/r_data.c",
+      "si": 48.65,
+      "grade": "C",
+      "cc_max": 15.0,
+      "loc": 467,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "hexen.r_draw",
+      "file_path": "hexen/r_draw.c",
+      "si": 55.07,
+      "grade": "C",
+      "cc_max": 8.0,
+      "loc": 372,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.r_main",
+      "file_path": "hexen/r_main.c",
+      "si": 80.41,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 584,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.r_plane",
+      "file_path": "hexen/r_plane.c",
+      "si": 71.28,
+      "grade": "D",
+      "cc_max": 46.0,
+      "loc": 425,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.r_segs",
+      "file_path": "hexen/r_segs.c",
+      "si": 82.43,
+      "grade": "E",
+      "cc_max": 55.0,
+      "loc": 558,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "hexen.r_things",
+      "file_path": "hexen/r_things.c",
+      "si": 63.85,
+      "grade": "D",
+      "cc_max": 29.0,
+      "loc": 787,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "hexen.s_sound",
+      "file_path": "hexen/s_sound.c",
+      "si": 68.92,
+      "grade": "D",
+      "cc_max": 24.5,
+      "loc": 768,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "hexen.sb_bar",
+      "file_path": "hexen/sb_bar.c",
+      "si": 75.0,
+      "grade": "D",
+      "cc_max": 18.2,
+      "loc": 1432,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "hexen.sc_man",
+      "file_path": "hexen/sc_man.c",
+      "si": 52.7,
+      "grade": "C",
+      "cc_max": 19.0,
+      "loc": 235,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "hexen.sn_sonix",
+      "file_path": "hexen/sn_sonix.c",
+      "si": 47.97,
+      "grade": "C",
+      "cc_max": 20.0,
+      "loc": 330,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.sounds",
+      "file_path": "hexen/sounds.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "hexen.st_start",
+      "file_path": "hexen/st_start.c",
+      "si": 23.65,
+      "grade": "B",
+      "cc_max": 5.0,
+      "loc": 127,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "hexen.sv_save",
+      "file_path": "hexen/sv_save.c",
+      "si": 40.2,
+      "grade": "C",
+      "cc_max": 12.5,
+      "loc": 2792,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "i_cdmus",
+      "file_path": "i_cdmus.c",
+      "si": 10.47,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 39,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "i_endoom",
+      "file_path": "i_endoom.c",
+      "si": 20.95,
+      "grade": "B",
+      "cc_max": 4.0,
+      "loc": 45,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "i_flmusic",
+      "file_path": "i_flmusic.c",
+      "si": 12.84,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "i_glob",
+      "file_path": "i_glob.c",
+      "si": 59.46,
+      "grade": "C",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "i_input",
+      "file_path": "i_input.c",
+      "si": 87.5,
+      "grade": "E",
+      "cc_max": 13.0,
+      "loc": 348,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "i_joystick",
+      "file_path": "i_joystick.c",
+      "si": 90.54,
+      "grade": "E",
+      "cc_max": 16.0,
+      "loc": 695,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "i_main",
+      "file_path": "i_main.c",
+      "si": 17.23,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 38,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "i_musicpack",
+      "file_path": "i_musicpack.c",
+      "si": 33.11,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "i_oplmusic",
+      "file_path": "i_oplmusic.c",
+      "si": 65.2,
+      "grade": "D",
+      "cc_max": 12.75,
+      "loc": 1395,
+      "bugfix_count": 21
+    },
+    {
+      "fqn": "i_pcsound",
+      "file_path": "i_pcsound.c",
+      "si": 34.8,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 235,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "i_sdlmusic",
+      "file_path": "i_sdlmusic.c",
+      "si": 39.53,
+      "grade": "B",
+      "cc_max": 3.0,
+      "loc": 62,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "i_sdlsound",
+      "file_path": "i_sdlsound.c",
+      "si": 20.27,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 23
+    },
+    {
+      "fqn": "i_sound",
+      "file_path": "i_sound.c",
+      "si": 82.77,
+      "grade": "E",
+      "cc_max": 8.0,
+      "loc": 392,
+      "bugfix_count": 22
+    },
+    {
+      "fqn": "i_system",
+      "file_path": "i_system.c",
+      "si": 100.0,
+      "grade": "E",
+      "cc_max": 12.0,
+      "loc": 316,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "i_timer",
+      "file_path": "i_timer.c",
+      "si": 80.74,
+      "grade": "E",
+      "cc_max": 2.0,
+      "loc": 40,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "i_video",
+      "file_path": "i_video.c",
+      "si": 98.99,
+      "grade": "E",
+      "cc_max": 19.3333,
+      "loc": 1248,
+      "bugfix_count": 60
+    },
+    {
+      "fqn": "i_videohr",
+      "file_path": "i_videohr.c",
+      "si": 29.05,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 209,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "i_winmusic",
+      "file_path": "i_winmusic.c",
+      "si": 20.27,
+      "grade": "B",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "m_argv",
+      "file_path": "m_argv.c",
+      "si": 98.31,
+      "grade": "E",
+      "cc_max": 25.0,
+      "loc": 259,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "m_bbox",
+      "file_path": "m_bbox.c",
+      "si": 66.55,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 20,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "m_cheat",
+      "file_path": "m_cheat.c",
+      "si": 31.08,
+      "grade": "B",
+      "cc_max": 8.0,
+      "loc": 53,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "m_config",
+      "file_path": "m_config.c",
+      "si": 89.19,
+      "grade": "E",
+      "cc_max": 13.5,
+      "loc": 625,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "m_controls",
+      "file_path": "m_controls.c",
+      "si": 73.65,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 214,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "m_fixed",
+      "file_path": "m_fixed.c",
+      "si": 79.05,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 22,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "m_misc",
+      "file_path": "m_misc.c",
+      "si": 99.66,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 703,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "memio",
+      "file_path": "memio.c",
+      "si": 30.41,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 141,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "midifallback",
+      "file_path": "midifallback.c",
+      "si": 10.14,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "midifile",
+      "file_path": "midifile.c",
+      "si": 36.49,
+      "grade": "B",
+      "cc_max": 12.0,
+      "loc": 585,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "mus2mid",
+      "file_path": "mus2mid.c",
+      "si": 73.31,
+      "grade": "D",
+      "cc_max": 45.0,
+      "loc": 558,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "net_client",
+      "file_path": "net_client.c",
+      "si": 93.92,
+      "grade": "E",
+      "cc_max": 13.6667,
+      "loc": 987,
+      "bugfix_count": 18
+    },
+    {
+      "fqn": "net_common",
+      "file_path": "net_common.c",
+      "si": 84.46,
+      "grade": "E",
+      "cc_max": 13.0,
+      "loc": 433,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "net_dedicated",
+      "file_path": "net_dedicated.c",
+      "si": 30.07,
+      "grade": "B",
+      "cc_max": 3.0,
+      "loc": 32,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "net_gui",
+      "file_path": "net_gui.c",
+      "si": 76.69,
+      "grade": "D",
+      "cc_max": 13.0,
+      "loc": 369,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "net_io",
+      "file_path": "net_io.c",
+      "si": 76.35,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 100,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "net_loop",
+      "file_path": "net_loop.c",
+      "si": 64.19,
+      "grade": "D",
+      "cc_max": 2.0,
+      "loc": 139,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "net_packet",
+      "file_path": "net_packet.c",
+      "si": 78.04,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 256,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "net_petname",
+      "file_path": "net_petname.c",
+      "si": 58.45,
+      "grade": "C",
+      "cc_max": 1.0,
+      "loc": 14,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "net_query",
+      "file_path": "net_query.c",
+      "si": 88.18,
+      "grade": "E",
+      "cc_max": 10.6667,
+      "loc": 827,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "net_sdl",
+      "file_path": "net_sdl.c",
+      "si": 68.24,
+      "grade": "D",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "net_server",
+      "file_path": "net_server.c",
+      "si": 94.26,
+      "grade": "E",
+      "cc_max": 18.5,
+      "loc": 1797,
+      "bugfix_count": 16
+    },
+    {
+      "fqn": "net_structrw",
+      "file_path": "net_structrw.c",
+      "si": 83.78,
+      "grade": "E",
+      "cc_max": 21.5,
+      "loc": 598,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "p_rejectpad",
+      "file_path": "p_rejectpad.c",
+      "si": 25.68,
+      "grade": "B",
+      "cc_max": 5.0,
+      "loc": 52,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "setup.compatibility",
+      "file_path": "setup/compatibility.c",
+      "si": 35.47,
+      "grade": "B",
+      "cc_max": 1.0,
+      "loc": 20,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "setup.display",
+      "file_path": "setup/display.c",
+      "si": 54.05,
+      "grade": "C",
+      "cc_max": 9.0,
+      "loc": 195,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "setup.execute",
+      "file_path": "setup/execute.c",
+      "si": 53.04,
+      "grade": "C",
+      "cc_max": 3.0,
+      "loc": 153,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "setup.joystick",
+      "file_path": "setup/joystick.c",
+      "si": 72.97,
+      "grade": "D",
+      "cc_max": 9.0,
+      "loc": 636,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "setup.keyboard",
+      "file_path": "setup/keyboard.c",
+      "si": 58.11,
+      "grade": "C",
+      "cc_max": 9.0,
+      "loc": 359,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "setup.mainmenu",
+      "file_path": "setup/mainmenu.c",
+      "si": 49.32,
+      "grade": "C",
+      "cc_max": 6.0,
+      "loc": 265,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "setup.mode",
+      "file_path": "setup/mode.c",
+      "si": 74.66,
+      "grade": "D",
+      "cc_max": 5.0,
+      "loc": 250,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "setup.mouse",
+      "file_path": "setup/mouse.c",
+      "si": 50.0,
+      "grade": "C",
+      "cc_max": 5.0,
+      "loc": 115,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "setup.multiplayer",
+      "file_path": "setup/multiplayer.c",
+      "si": 70.27,
+      "grade": "D",
+      "cc_max": 10.5,
+      "loc": 978,
+      "bugfix_count": 11
+    },
+    {
+      "fqn": "setup.setup_icon",
+      "file_path": "setup/setup_icon.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "setup.sound",
+      "file_path": "setup/sound.c",
+      "si": 58.78,
+      "grade": "C",
+      "cc_max": 8.0,
+      "loc": 228,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "setup.txt_joyaxis",
+      "file_path": "setup/txt_joyaxis.c",
+      "si": 51.01,
+      "grade": "C",
+      "cc_max": 9.5,
+      "loc": 571,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "setup.txt_joybinput",
+      "file_path": "setup/txt_joybinput.c",
+      "si": 53.38,
+      "grade": "C",
+      "cc_max": 9.5,
+      "loc": 462,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "setup.txt_keyinput",
+      "file_path": "setup/txt_keyinput.c",
+      "si": 14.53,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 135,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "setup.txt_mouseinput",
+      "file_path": "setup/txt_mouseinput.c",
+      "si": 21.28,
+      "grade": "B",
+      "cc_max": 7.0,
+      "loc": 133,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "sha1",
+      "file_path": "sha1.c",
+      "si": 76.01,
+      "grade": "D",
+      "cc_max": 10.0,
+      "loc": 258,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.am_map",
+      "file_path": "strife/am_map.c",
+      "si": 79.73,
+      "grade": "D",
+      "cc_max": 27.3333,
+      "loc": 976,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "strife.d_items",
+      "file_path": "strife/d_items.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "strife.d_main",
+      "file_path": "strife/d_main.c",
+      "si": 96.28,
+      "grade": "E",
+      "cc_max": 41.0,
+      "loc": 1711,
+      "bugfix_count": 29
+    },
+    {
+      "fqn": "strife.d_net",
+      "file_path": "strife/d_net.c",
+      "si": 38.85,
+      "grade": "B",
+      "cc_max": 9.0,
+      "loc": 223,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "strife.deh_ammo",
+      "file_path": "strife/deh_ammo.c",
+      "si": 16.89,
+      "grade": "A",
+      "cc_max": 5.0,
+      "loc": 62,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_cheat",
+      "file_path": "strife/deh_cheat.c",
+      "si": 26.69,
+      "grade": "B",
+      "cc_max": 10.0,
+      "loc": 78,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_frame",
+      "file_path": "strife/deh_frame.c",
+      "si": 22.64,
+      "grade": "B",
+      "cc_max": 6.0,
+      "loc": 100,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_misc",
+      "file_path": "strife/deh_misc.c",
+      "si": 24.32,
+      "grade": "B",
+      "cc_max": 7.0,
+      "loc": 61,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_ptr",
+      "file_path": "strife/deh_ptr.c",
+      "si": 19.59,
+      "grade": "A",
+      "cc_max": 6.0,
+      "loc": 97,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_sound",
+      "file_path": "strife/deh_sound.c",
+      "si": 16.89,
+      "grade": "A",
+      "cc_max": 5.0,
+      "loc": 52,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_strife",
+      "file_path": "strife/deh_strife.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_thing",
+      "file_path": "strife/deh_thing.c",
+      "si": 14.19,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 64,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.deh_weapon",
+      "file_path": "strife/deh_weapon.c",
+      "si": 14.19,
+      "grade": "A",
+      "cc_max": 4.0,
+      "loc": 50,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.doomdef",
+      "file_path": "strife/doomdef.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.doomstat",
+      "file_path": "strife/doomstat.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.dstrings",
+      "file_path": "strife/dstrings.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.f_finale",
+      "file_path": "strife/f_finale.c",
+      "si": 73.99,
+      "grade": "D",
+      "cc_max": 30.0,
+      "loc": 563,
+      "bugfix_count": 6
+    },
+    {
+      "fqn": "strife.f_wipe",
+      "file_path": "strife/f_wipe.c",
+      "si": 38.18,
+      "grade": "B",
+      "cc_max": 9.0,
+      "loc": 223,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.g_game",
+      "file_path": "strife/g_game.c",
+      "si": 94.93,
+      "grade": "E",
+      "cc_max": 55.25,
+      "loc": 1890,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "strife.hu_lib",
+      "file_path": "strife/hu_lib.c",
+      "si": 25.34,
+      "grade": "B",
+      "cc_max": 9.5,
+      "loc": 319,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "strife.hu_stuff",
+      "file_path": "strife/hu_stuff.c",
+      "si": 68.58,
+      "grade": "D",
+      "cc_max": 28.0,
+      "loc": 448,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "strife.info",
+      "file_path": "strife/info.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.m_menu",
+      "file_path": "strife/m_menu.c",
+      "si": 85.81,
+      "grade": "E",
+      "cc_max": 32.2,
+      "loc": 1494,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "strife.m_random",
+      "file_path": "strife/m_random.c",
+      "si": 9.12,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 15,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.m_saves",
+      "file_path": "strife/m_saves.c",
+      "si": 39.86,
+      "grade": "B",
+      "cc_max": 7.0,
+      "loc": 317,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "strife.p_ceilng",
+      "file_path": "strife/p_ceilng.c",
+      "si": 54.73,
+      "grade": "C",
+      "cc_max": 28.0,
+      "loc": 264,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.p_dialog",
+      "file_path": "strife/p_dialog.c",
+      "si": 93.58,
+      "grade": "E",
+      "cc_max": 88.0,
+      "loc": 924,
+      "bugfix_count": 19
+    },
+    {
+      "fqn": "strife.p_doors",
+      "file_path": "strife/p_doors.c",
+      "si": 87.16,
+      "grade": "E",
+      "cc_max": 79.0,
+      "loc": 1129,
+      "bugfix_count": 7
+    },
+    {
+      "fqn": "strife.p_enemy",
+      "file_path": "strife/p_enemy.c",
+      "si": 86.82,
+      "grade": "E",
+      "cc_max": 21.0,
+      "loc": 2421,
+      "bugfix_count": 28
+    },
+    {
+      "fqn": "strife.p_floor",
+      "file_path": "strife/p_floor.c",
+      "si": 52.36,
+      "grade": "C",
+      "cc_max": 29.0,
+      "loc": 530,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "strife.p_inter",
+      "file_path": "strife/p_inter.c",
+      "si": 91.89,
+      "grade": "E",
+      "cc_max": 100.0,
+      "loc": 1261,
+      "bugfix_count": 24
+    },
+    {
+      "fqn": "strife.p_lights",
+      "file_path": "strife/p_lights.c",
+      "si": 18.24,
+      "grade": "A",
+      "cc_max": 7.0,
+      "loc": 240,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.p_map",
+      "file_path": "strife/p_map.c",
+      "si": 71.96,
+      "grade": "D",
+      "cc_max": 21.5,
+      "loc": 1265,
+      "bugfix_count": 9
+    },
+    {
+      "fqn": "strife.p_maputl",
+      "file_path": "strife/p_maputl.c",
+      "si": 47.3,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 712,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "strife.p_mobj",
+      "file_path": "strife/p_mobj.c",
+      "si": 62.5,
+      "grade": "D",
+      "cc_max": 34.5,
+      "loc": 1132,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "strife.p_plats",
+      "file_path": "strife/p_plats.c",
+      "si": 52.03,
+      "grade": "C",
+      "cc_max": 25.0,
+      "loc": 290,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "strife.p_pspr",
+      "file_path": "strife/p_pspr.c",
+      "si": 32.77,
+      "grade": "B",
+      "cc_max": 15.0,
+      "loc": 740,
+      "bugfix_count": 10
+    },
+    {
+      "fqn": "strife.p_saveg",
+      "file_path": "strife/p_saveg.c",
+      "si": 33.78,
+      "grade": "B",
+      "cc_max": 11.4,
+      "loc": 1900,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.p_setup",
+      "file_path": "strife/p_setup.c",
+      "si": 60.14,
+      "grade": "D",
+      "cc_max": 16.0,
+      "loc": 620,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "strife.p_sight",
+      "file_path": "strife/p_sight.c",
+      "si": 42.57,
+      "grade": "C",
+      "cc_max": 18.0,
+      "loc": 272,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.p_spec",
+      "file_path": "strife/p_spec.c",
+      "si": 91.55,
+      "grade": "E",
+      "cc_max": 92.5,
+      "loc": 1625,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "strife.p_switch",
+      "file_path": "strife/p_switch.c",
+      "si": 99.32,
+      "grade": "E",
+      "cc_max": 212.0,
+      "loc": 914,
+      "bugfix_count": 12
+    },
+    {
+      "fqn": "strife.p_telept",
+      "file_path": "strife/p_telept.c",
+      "si": 29.73,
+      "grade": "B",
+      "cc_max": 15.0,
+      "loc": 106,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "strife.p_tick",
+      "file_path": "strife/p_tick.c",
+      "si": 25.0,
+      "grade": "B",
+      "cc_max": 8.0,
+      "loc": 74,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "strife.p_user",
+      "file_path": "strife/p_user.c",
+      "si": 75.68,
+      "grade": "D",
+      "cc_max": 57.0,
+      "loc": 775,
+      "bugfix_count": 13
+    },
+    {
+      "fqn": "strife.r_bsp",
+      "file_path": "strife/r_bsp.c",
+      "si": 45.61,
+      "grade": "C",
+      "cc_max": 16.0,
+      "loc": 420,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.r_data",
+      "file_path": "strife/r_data.c",
+      "si": 61.15,
+      "grade": "D",
+      "cc_max": 19.0,
+      "loc": 722,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "strife.r_draw",
+      "file_path": "strife/r_draw.c",
+      "si": 70.61,
+      "grade": "D",
+      "cc_max": 17.0,
+      "loc": 594,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.r_main",
+      "file_path": "strife/r_main.c",
+      "si": 81.76,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 702,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "strife.r_plane",
+      "file_path": "strife/r_plane.c",
+      "si": 40.54,
+      "grade": "C",
+      "cc_max": 12.0,
+      "loc": 308,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.r_segs",
+      "file_path": "strife/r_segs.c",
+      "si": 85.47,
+      "grade": "E",
+      "cc_max": 57.0,
+      "loc": 635,
+      "bugfix_count": 2
+    },
+    {
+      "fqn": "strife.r_sky",
+      "file_path": "strife/r_sky.c",
+      "si": 9.8,
+      "grade": "A",
+      "cc_max": 1.0,
+      "loc": 7,
+      "bugfix_count": 1
+    },
+    {
+      "fqn": "strife.r_things",
+      "file_path": "strife/r_things.c",
+      "si": 66.89,
+      "grade": "D",
+      "cc_max": 29.0,
+      "loc": 835,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "strife.s_sound",
+      "file_path": "strife/s_sound.c",
+      "si": 56.08,
+      "grade": "C",
+      "cc_max": 14.5,
+      "loc": 589,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "strife.sounds",
+      "file_path": "strife/sounds.c",
+      "si": 4.39,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.st_lib",
+      "file_path": "strife/st_lib.c",
+      "si": 34.46,
+      "grade": "B",
+      "cc_max": 11.0,
+      "loc": 108,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.st_stuff",
+      "file_path": "strife/st_stuff.c",
+      "si": 90.88,
+      "grade": "E",
+      "cc_max": 56.5,
+      "loc": 1157,
+      "bugfix_count": 14
+    },
+    {
+      "fqn": "strife.strife_icon",
+      "file_path": "strife/strife_icon.c",
+      "si": 7.77,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "strife.wi_stuff",
+      "file_path": "strife/wi_stuff.c",
+      "si": 12.84,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "tables",
+      "file_path": "tables.c",
+      "si": 11.49,
+      "grade": "A",
+      "cc_max": 3.0,
+      "loc": 22,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "v_diskicon",
+      "file_path": "v_diskicon.c",
+      "si": 84.8,
+      "grade": "E",
+      "cc_max": 3.0,
+      "loc": 104,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "v_video",
+      "file_path": "v_video.c",
+      "si": 97.64,
+      "grade": "E",
+      "cc_max": 10.0,
+      "loc": 673,
+      "bugfix_count": 15
+    },
+    {
+      "fqn": "w_checksum",
+      "file_path": "w_checksum.c",
+      "si": 67.57,
+      "grade": "D",
+      "cc_max": 3.0,
+      "loc": 54,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "w_file",
+      "file_path": "w_file.c",
+      "si": 36.15,
+      "grade": "B",
+      "cc_max": 4.0,
+      "loc": 42,
+      "bugfix_count": 4
+    },
+    {
+      "fqn": "w_file_posix",
+      "file_path": "w_file_posix.c",
+      "si": 10.81,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "w_file_stdc",
+      "file_path": "w_file_stdc.c",
+      "si": 11.82,
+      "grade": "A",
+      "cc_max": 2.0,
+      "loc": 50,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "w_file_win32",
+      "file_path": "w_file_win32.c",
+      "si": 11.15,
+      "grade": "A",
+      "cc_max": 0.0,
+      "loc": 0,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "w_main",
+      "file_path": "w_main.c",
+      "si": 57.77,
+      "grade": "C",
+      "cc_max": 19.0,
+      "loc": 218,
+      "bugfix_count": 0
+    },
+    {
+      "fqn": "w_merge",
+      "file_path": "w_merge.c",
+      "si": 89.53,
+      "grade": "E",
+      "cc_max": 26.0,
+      "loc": 597,
+      "bugfix_count": 3
+    },
+    {
+      "fqn": "w_wad",
+      "file_path": "w_wad.c",
+      "si": 97.97,
+      "grade": "E",
+      "cc_max": 13.0,
+      "loc": 394,
+      "bugfix_count": 8
+    },
+    {
+      "fqn": "z_native",
+      "file_path": "z_native.c",
+      "si": 28.72,
+      "grade": "B",
+      "cc_max": 10.0,
+      "loc": 353,
+      "bugfix_count": 5
+    },
+    {
+      "fqn": "z_zone",
+      "file_path": "z_zone.c",
+      "si": 98.65,
+      "grade": "E",
+      "cc_max": 11.0,
+      "loc": 415,
+      "bugfix_count": 3
+    }
+  ],
+  "file_rows": [
+    {
+      "file_path": "aes_prng.c",
+      "si_max": 28.04,
+      "si_mean": 28.04,
+      "loc_total": 170,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "d_dedicated.c",
+      "si_max": 12.16,
+      "si_mean": 12.16,
+      "loc_total": 16,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "d_event.c",
+      "si_max": 42.23,
+      "si_mean": 42.23,
+      "loc_total": 24,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "d_iwad.c",
+      "si_max": 77.7,
+      "si_mean": 77.7,
+      "loc_total": 413,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 26
+    },
+    {
+      "file_path": "d_loop.c",
+      "si_max": 96.96,
+      "si_mean": 96.96,
+      "loc_total": 674,
+      "cc_max": 14.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "d_mode.c",
+      "si_max": 56.76,
+      "si_mean": 56.76,
+      "loc_total": 149,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "deh_io.c",
+      "si_max": 79.39,
+      "si_mean": 79.39,
+      "loc_total": 268,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "deh_main.c",
+      "si_max": 96.62,
+      "si_mean": 96.62,
+      "loc_total": 423,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "deh_mapping.c",
+      "si_max": 46.96,
+      "si_mean": 46.96,
+      "loc_total": 154,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "deh_str.c",
+      "si_max": 92.91,
+      "si_mean": 92.91,
+      "loc_total": 342,
+      "cc_max": 22.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "deh_text.c",
+      "si_max": 22.64,
+      "si_mean": 22.64,
+      "loc_total": 68,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/am_map.c",
+      "si_max": 83.45,
+      "si_mean": 83.45,
+      "loc_total": 968,
+      "cc_max": 27.3333,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "doom/d_items.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/d_main.c",
+      "si_max": 95.61,
+      "si_mean": 95.61,
+      "loc_total": 1654,
+      "cc_max": 47.0,
+      "class_count": 1,
+      "bugfix_count": 17
+    },
+    {
+      "file_path": "doom/d_net.c",
+      "si_max": 37.5,
+      "si_mean": 37.5,
+      "loc_total": 220,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "doom/deh_ammo.c",
+      "si_max": 16.89,
+      "si_mean": 16.89,
+      "loc_total": 62,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/deh_bexstr.c",
+      "si_max": 14.86,
+      "si_mean": 14.86,
+      "loc_total": 30,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/deh_cheat.c",
+      "si_max": 26.69,
+      "si_mean": 26.69,
+      "loc_total": 78,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/deh_doom.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/deh_frame.c",
+      "si_max": 22.64,
+      "si_mean": 22.64,
+      "loc_total": 100,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/deh_misc.c",
+      "si_max": 24.32,
+      "si_mean": 24.32,
+      "loc_total": 61,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/deh_ptr.c",
+      "si_max": 19.59,
+      "si_mean": 19.59,
+      "loc_total": 97,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/deh_sound.c",
+      "si_max": 16.89,
+      "si_mean": 16.89,
+      "loc_total": 52,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/deh_thing.c",
+      "si_max": 14.19,
+      "si_mean": 14.19,
+      "loc_total": 64,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/deh_weapon.c",
+      "si_max": 14.19,
+      "si_mean": 14.19,
+      "loc_total": 50,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/doom_icon.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/doomdef.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/doomstat.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/dstrings.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/f_finale.c",
+      "si_max": 74.32,
+      "si_mean": 74.32,
+      "loc_total": 510,
+      "cc_max": 43.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "doom/f_wipe.c",
+      "si_max": 39.19,
+      "si_mean": 39.19,
+      "loc_total": 240,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/g_game.c",
+      "si_max": 95.95,
+      "si_mean": 95.95,
+      "loc_total": 1969,
+      "cc_max": 57.6667,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "doom/hu_lib.c",
+      "si_max": 21.62,
+      "si_mean": 21.62,
+      "loc_total": 285,
+      "cc_max": 8.5,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/hu_stuff.c",
+      "si_max": 67.23,
+      "si_mean": 67.23,
+      "loc_total": 355,
+      "cc_max": 28.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "doom/info.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/m_menu.c",
+      "si_max": 84.12,
+      "si_mean": 84.12,
+      "loc_total": 1369,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "doom/m_random.c",
+      "si_max": 9.12,
+      "si_mean": 9.12,
+      "loc_total": 19,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_ceilng.c",
+      "si_max": 54.73,
+      "si_mean": 54.73,
+      "loc_total": 250,
+      "cc_max": 28.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/p_doors.c",
+      "si_max": 65.88,
+      "si_mean": 65.88,
+      "loc_total": 485,
+      "cc_max": 42.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_enemy.c",
+      "si_max": 50.34,
+      "si_mean": 50.34,
+      "loc_total": 1656,
+      "cc_max": 21.6667,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "doom/p_floor.c",
+      "si_max": 53.72,
+      "si_mean": 53.72,
+      "loc_total": 502,
+      "cc_max": 30.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_inter.c",
+      "si_max": 89.86,
+      "si_mean": 89.86,
+      "loc_total": 808,
+      "cc_max": 101.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/p_lights.c",
+      "si_max": 18.24,
+      "si_mean": 18.24,
+      "loc_total": 241,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/p_map.c",
+      "si_max": 70.95,
+      "si_mean": 70.95,
+      "loc_total": 1128,
+      "cc_max": 21.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "doom/p_maputl.c",
+      "si_max": 48.99,
+      "si_mean": 48.99,
+      "loc_total": 758,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/p_mobj.c",
+      "si_max": 62.84,
+      "si_mean": 62.84,
+      "loc_total": 908,
+      "cc_max": 37.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "doom/p_plats.c",
+      "si_max": 43.92,
+      "si_mean": 43.92,
+      "loc_total": 248,
+      "cc_max": 19.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_pspr.c",
+      "si_max": 30.74,
+      "si_mean": 30.74,
+      "loc_total": 652,
+      "cc_max": 13.3333,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_saveg.c",
+      "si_max": 31.42,
+      "si_mean": 31.42,
+      "loc_total": 1618,
+      "cc_max": 9.8,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_setup.c",
+      "si_max": 62.16,
+      "si_mean": 62.16,
+      "loc_total": 642,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "doom/p_sight.c",
+      "si_max": 44.26,
+      "si_mean": 44.26,
+      "loc_total": 312,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/p_spec.c",
+      "si_max": 78.38,
+      "si_mean": 78.38,
+      "loc_total": 1215,
+      "cc_max": 59.5,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/p_switch.c",
+      "si_max": 93.24,
+      "si_mean": 93.24,
+      "loc_total": 517,
+      "cc_max": 119.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/p_telept.c",
+      "si_max": 27.03,
+      "si_mean": 27.03,
+      "loc_total": 91,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/p_tick.c",
+      "si_max": 25.0,
+      "si_mean": 25.0,
+      "loc_total": 72,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/p_user.c",
+      "si_max": 60.47,
+      "si_mean": 60.47,
+      "loc_total": 297,
+      "cc_max": 37.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/r_bsp.c",
+      "si_max": 45.61,
+      "si_mean": 45.61,
+      "loc_total": 420,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/r_data.c",
+      "si_max": 59.12,
+      "si_mean": 59.12,
+      "loc_total": 620,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/r_draw.c",
+      "si_max": 65.54,
+      "si_mean": 65.54,
+      "loc_total": 586,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/r_main.c",
+      "si_max": 82.09,
+      "si_mean": 82.09,
+      "loc_total": 657,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/r_plane.c",
+      "si_max": 40.88,
+      "si_mean": 40.88,
+      "loc_total": 311,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/r_segs.c",
+      "si_max": 85.47,
+      "si_mean": 85.47,
+      "loc_total": 624,
+      "cc_max": 57.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/r_sky.c",
+      "si_max": 9.46,
+      "si_mean": 9.46,
+      "loc_total": 5,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "doom/r_things.c",
+      "si_max": 66.22,
+      "si_mean": 66.22,
+      "loc_total": 759,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/s_sound.c",
+      "si_max": 57.09,
+      "si_mean": 57.09,
+      "loc_total": 561,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/sounds.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/st_lib.c",
+      "si_max": 59.8,
+      "si_mean": 59.8,
+      "loc_total": 206,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "doom/st_stuff.c",
+      "si_max": 94.59,
+      "si_mean": 94.59,
+      "loc_total": 978,
+      "cc_max": 39.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "doom/statdump.c",
+      "si_max": 35.81,
+      "si_mean": 35.81,
+      "loc_total": 274,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "doom/wi_stuff.c",
+      "si_max": 86.15,
+      "si_mean": 86.15,
+      "loc_total": 1338,
+      "cc_max": 27.3333,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "gusconf.c",
+      "si_max": 69.26,
+      "si_mean": 69.26,
+      "loc_total": 248,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/am_map.c",
+      "si_max": 80.07,
+      "si_mean": 80.07,
+      "loc_total": 1225,
+      "cc_max": 29.3333,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "heretic/ct_chat.c",
+      "si_max": 61.49,
+      "si_mean": 61.49,
+      "loc_total": 318,
+      "cc_max": 25.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "heretic/d_main.c",
+      "si_max": 92.57,
+      "si_mean": 92.57,
+      "loc_total": 908,
+      "cc_max": 23.0,
+      "class_count": 1,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "heretic/d_net.c",
+      "si_max": 32.43,
+      "si_mean": 32.43,
+      "loc_total": 154,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "heretic/deh_ammo.c",
+      "si_max": 16.89,
+      "si_mean": 16.89,
+      "loc_total": 72,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "heretic/deh_frame.c",
+      "si_max": 26.01,
+      "si_mean": 26.01,
+      "loc_total": 131,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "heretic/deh_htext.c",
+      "si_max": 27.7,
+      "si_mean": 27.7,
+      "loc_total": 149,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/deh_htic.c",
+      "si_max": 28.38,
+      "si_mean": 28.38,
+      "loc_total": 115,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "heretic/deh_sound.c",
+      "si_max": 18.92,
+      "si_mean": 18.92,
+      "loc_total": 56,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "heretic/deh_thing.c",
+      "si_max": 20.95,
+      "si_mean": 20.95,
+      "loc_total": 74,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/deh_weapon.c",
+      "si_max": 23.31,
+      "si_mean": 23.31,
+      "loc_total": 68,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "heretic/f_finale.c",
+      "si_max": 34.12,
+      "si_mean": 34.12,
+      "loc_total": 274,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "heretic/g_game.c",
+      "si_max": 97.3,
+      "si_mean": 97.3,
+      "loc_total": 1767,
+      "cc_max": 71.6667,
+      "class_count": 1,
+      "bugfix_count": 16
+    },
+    {
+      "file_path": "heretic/heretic_icon.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "heretic/in_lude.c",
+      "si_max": 63.18,
+      "si_mean": 63.18,
+      "loc_total": 799,
+      "cc_max": 17.5,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "heretic/info.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/m_random.c",
+      "si_max": 9.12,
+      "si_mean": 9.12,
+      "loc_total": 19,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/mn_menu.c",
+      "si_max": 88.85,
+      "si_mean": 88.85,
+      "loc_total": 1252,
+      "cc_max": 51.6667,
+      "class_count": 1,
+      "bugfix_count": 12
+    },
+    {
+      "file_path": "heretic/p_ceilng.c",
+      "si_max": 44.93,
+      "si_mean": 44.93,
+      "loc_total": 188,
+      "cc_max": 21.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/p_doors.c",
+      "si_max": 57.43,
+      "si_mean": 57.43,
+      "loc_total": 316,
+      "cc_max": 31.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "heretic/p_enemy.c",
+      "si_max": 42.91,
+      "si_mean": 42.91,
+      "loc_total": 1939,
+      "cc_max": 15.7778,
+      "class_count": 1,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "heretic/p_floor.c",
+      "si_max": 46.62,
+      "si_mean": 46.62,
+      "loc_total": 408,
+      "cc_max": 24.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/p_inter.c",
+      "si_max": 88.51,
+      "si_mean": 88.51,
+      "loc_total": 1187,
+      "cc_max": 86.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "heretic/p_lights.c",
+      "si_max": 18.24,
+      "si_mean": 18.24,
+      "loc_total": 188,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/p_map.c",
+      "si_max": 75.34,
+      "si_mean": 75.34,
+      "loc_total": 1223,
+      "cc_max": 30.5,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "heretic/p_maputl.c",
+      "si_max": 44.59,
+      "si_mean": 44.59,
+      "loc_total": 543,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/p_mobj.c",
+      "si_max": 71.62,
+      "si_mean": 71.62,
+      "loc_total": 1305,
+      "cc_max": 50.5,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "heretic/p_plats.c",
+      "si_max": 43.92,
+      "si_mean": 43.92,
+      "loc_total": 216,
+      "cc_max": 19.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/p_pspr.c",
+      "si_max": 36.82,
+      "si_mean": 36.82,
+      "loc_total": 1213,
+      "cc_max": 12.6,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "heretic/p_saveg.c",
+      "si_max": 29.39,
+      "si_mean": 29.39,
+      "loc_total": 1631,
+      "cc_max": 9.6,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/p_setup.c",
+      "si_max": 55.74,
+      "si_mean": 55.74,
+      "loc_total": 511,
+      "cc_max": 14.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "heretic/p_sight.c",
+      "si_max": 41.55,
+      "si_mean": 41.55,
+      "loc_total": 262,
+      "cc_max": 21.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/p_spec.c",
+      "si_max": 77.03,
+      "si_mean": 77.03,
+      "loc_total": 903,
+      "cc_max": 55.0,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "heretic/p_switch.c",
+      "si_max": 87.84,
+      "si_mean": 87.84,
+      "loc_total": 284,
+      "cc_max": 82.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "heretic/p_telept.c",
+      "si_max": 31.76,
+      "si_mean": 31.76,
+      "loc_total": 128,
+      "cc_max": 15.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/p_tick.c",
+      "si_max": 22.97,
+      "si_mean": 22.97,
+      "loc_total": 68,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/p_user.c",
+      "si_max": 72.64,
+      "si_mean": 72.64,
+      "loc_total": 860,
+      "cc_max": 54.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "heretic/r_bsp.c",
+      "si_max": 45.95,
+      "si_mean": 45.95,
+      "loc_total": 334,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/r_data.c",
+      "si_max": 49.66,
+      "si_mean": 49.66,
+      "loc_total": 505,
+      "cc_max": 15.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "heretic/r_draw.c",
+      "si_max": 51.69,
+      "si_mean": 51.69,
+      "loc_total": 352,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/r_main.c",
+      "si_max": 81.08,
+      "si_mean": 81.08,
+      "loc_total": 584,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "heretic/r_plane.c",
+      "si_max": 67.91,
+      "si_mean": 67.91,
+      "loc_total": 340,
+      "cc_max": 39.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "heretic/r_segs.c",
+      "si_max": 83.11,
+      "si_mean": 83.11,
+      "loc_total": 557,
+      "cc_max": 57.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "heretic/r_things.c",
+      "si_max": 64.86,
+      "si_mean": 64.86,
+      "loc_total": 759,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "heretic/s_sound.c",
+      "si_max": 69.93,
+      "si_mean": 69.93,
+      "loc_total": 533,
+      "cc_max": 32.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "heretic/sb_bar.c",
+      "si_max": 69.59,
+      "si_mean": 69.59,
+      "loc_total": 931,
+      "cc_max": 20.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "heretic/sounds.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/a_action.c",
+      "si_max": 18.58,
+      "si_mean": 18.58,
+      "loc_total": 802,
+      "cc_max": 8.25,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "hexen/am_map.c",
+      "si_max": 77.36,
+      "si_mean": 77.36,
+      "loc_total": 1245,
+      "cc_max": 28.3333,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/ct_chat.c",
+      "si_max": 63.51,
+      "si_mean": 63.51,
+      "loc_total": 329,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/d_net.c",
+      "si_max": 35.14,
+      "si_mean": 35.14,
+      "loc_total": 208,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "hexen/f_finale.c",
+      "si_max": 41.89,
+      "si_mean": 41.89,
+      "loc_total": 249,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/g_game.c",
+      "si_max": 95.27,
+      "si_mean": 95.27,
+      "loc_total": 1844,
+      "cc_max": 59.5,
+      "class_count": 1,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "hexen/h2_main.c",
+      "si_max": 64.53,
+      "si_mean": 64.53,
+      "loc_total": 928,
+      "cc_max": 13.5,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "hexen/hexen_icon.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "hexen/in_lude.c",
+      "si_max": 50.68,
+      "si_mean": 50.68,
+      "loc_total": 402,
+      "cc_max": 15.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/info.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/m_random.c",
+      "si_max": 9.12,
+      "si_mean": 9.12,
+      "loc_total": 19,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/mn_menu.c",
+      "si_max": 86.49,
+      "si_mean": 86.49,
+      "loc_total": 1347,
+      "cc_max": 42.0,
+      "class_count": 1,
+      "bugfix_count": 12
+    },
+    {
+      "file_path": "hexen/p_acs.c",
+      "si_max": 61.82,
+      "si_mean": 61.82,
+      "loc_total": 1360,
+      "cc_max": 5.9231,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "hexen/p_anim.c",
+      "si_max": 55.41,
+      "si_mean": 55.41,
+      "loc_total": 353,
+      "cc_max": 26.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_ceilng.c",
+      "si_max": 38.51,
+      "si_mean": 38.51,
+      "loc_total": 218,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_doors.c",
+      "si_max": 46.28,
+      "si_mean": 46.28,
+      "loc_total": 220,
+      "cc_max": 25.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/p_enemy.c",
+      "si_max": 47.64,
+      "si_mean": 47.64,
+      "loc_total": 4218,
+      "cc_max": 21.8824,
+      "class_count": 1,
+      "bugfix_count": 22
+    },
+    {
+      "file_path": "hexen/p_floor.c",
+      "si_max": 51.35,
+      "si_mean": 51.35,
+      "loc_total": 792,
+      "cc_max": 23.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_inter.c",
+      "si_max": 91.22,
+      "si_mean": 91.22,
+      "loc_total": 1847,
+      "cc_max": 106.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "hexen/p_lights.c",
+      "si_max": 33.45,
+      "si_mean": 33.45,
+      "loc_total": 303,
+      "cc_max": 17.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_map.c",
+      "si_max": 92.23,
+      "si_mean": 92.23,
+      "loc_total": 1840,
+      "cc_max": 60.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "hexen/p_maputl.c",
+      "si_max": 72.3,
+      "si_mean": 72.3,
+      "loc_total": 821,
+      "cc_max": 48.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/p_mobj.c",
+      "si_max": 78.72,
+      "si_mean": 78.72,
+      "loc_total": 2022,
+      "cc_max": 64.6667,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "hexen/p_plats.c",
+      "si_max": 37.16,
+      "si_mean": 37.16,
+      "loc_total": 222,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_pspr.c",
+      "si_max": 32.09,
+      "si_mean": 32.09,
+      "loc_total": 1585,
+      "cc_max": 12.8333,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "hexen/p_setup.c",
+      "si_max": 60.81,
+      "si_mean": 60.81,
+      "loc_total": 816,
+      "cc_max": 15.6667,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "hexen/p_sight.c",
+      "si_max": 41.55,
+      "si_mean": 41.55,
+      "loc_total": 307,
+      "cc_max": 21.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_spec.c",
+      "si_max": 90.2,
+      "si_mean": 90.2,
+      "loc_total": 876,
+      "cc_max": 100.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "hexen/p_switch.c",
+      "si_max": 27.36,
+      "si_mean": 27.36,
+      "loc_total": 95,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_telept.c",
+      "si_max": 37.84,
+      "si_mean": 37.84,
+      "loc_total": 134,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/p_things.c",
+      "si_max": 43.24,
+      "si_mean": 43.24,
+      "loc_total": 308,
+      "cc_max": 23.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/p_tick.c",
+      "si_max": 15.2,
+      "si_mean": 15.2,
+      "loc_total": 66,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/p_user.c",
+      "si_max": 81.42,
+      "si_mean": 81.42,
+      "loc_total": 1432,
+      "cc_max": 71.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/po_man.c",
+      "si_max": 56.42,
+      "si_mean": 56.42,
+      "loc_total": 1279,
+      "cc_max": 22.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/r_bsp.c",
+      "si_max": 48.31,
+      "si_mean": 48.31,
+      "loc_total": 354,
+      "cc_max": 17.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/r_data.c",
+      "si_max": 48.65,
+      "si_mean": 48.65,
+      "loc_total": 467,
+      "cc_max": 15.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "hexen/r_draw.c",
+      "si_max": 55.07,
+      "si_mean": 55.07,
+      "loc_total": 372,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/r_main.c",
+      "si_max": 80.41,
+      "si_mean": 80.41,
+      "loc_total": 584,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/r_plane.c",
+      "si_max": 71.28,
+      "si_mean": 71.28,
+      "loc_total": 425,
+      "cc_max": 46.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/r_segs.c",
+      "si_max": 82.43,
+      "si_mean": 82.43,
+      "loc_total": 558,
+      "cc_max": 55.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "hexen/r_things.c",
+      "si_max": 63.85,
+      "si_mean": 63.85,
+      "loc_total": 787,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "hexen/s_sound.c",
+      "si_max": 68.92,
+      "si_mean": 68.92,
+      "loc_total": 768,
+      "cc_max": 24.5,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "hexen/sb_bar.c",
+      "si_max": 75.0,
+      "si_mean": 75.0,
+      "loc_total": 1432,
+      "cc_max": 18.2,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "hexen/sc_man.c",
+      "si_max": 52.7,
+      "si_mean": 52.7,
+      "loc_total": 235,
+      "cc_max": 19.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "hexen/sn_sonix.c",
+      "si_max": 47.97,
+      "si_mean": 47.97,
+      "loc_total": 330,
+      "cc_max": 20.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/sounds.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "hexen/st_start.c",
+      "si_max": 23.65,
+      "si_mean": 23.65,
+      "loc_total": 127,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "hexen/sv_save.c",
+      "si_max": 40.2,
+      "si_mean": 40.2,
+      "loc_total": 2792,
+      "cc_max": 12.5,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "i_cdmus.c",
+      "si_max": 10.47,
+      "si_mean": 10.47,
+      "loc_total": 39,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "i_endoom.c",
+      "si_max": 20.95,
+      "si_mean": 20.95,
+      "loc_total": 45,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "i_flmusic.c",
+      "si_max": 12.84,
+      "si_mean": 12.84,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "i_glob.c",
+      "si_max": 59.46,
+      "si_mean": 59.46,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "i_input.c",
+      "si_max": 87.5,
+      "si_mean": 87.5,
+      "loc_total": 348,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "i_joystick.c",
+      "si_max": 90.54,
+      "si_mean": 90.54,
+      "loc_total": 695,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "i_main.c",
+      "si_max": 17.23,
+      "si_mean": 17.23,
+      "loc_total": 38,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 12
+    },
+    {
+      "file_path": "i_musicpack.c",
+      "si_max": 33.11,
+      "si_mean": 33.11,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "i_oplmusic.c",
+      "si_max": 65.2,
+      "si_mean": 65.2,
+      "loc_total": 1395,
+      "cc_max": 12.75,
+      "class_count": 1,
+      "bugfix_count": 21
+    },
+    {
+      "file_path": "i_pcsound.c",
+      "si_max": 34.8,
+      "si_mean": 34.8,
+      "loc_total": 235,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "i_sdlmusic.c",
+      "si_max": 39.53,
+      "si_mean": 39.53,
+      "loc_total": 62,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "i_sdlsound.c",
+      "si_max": 20.27,
+      "si_mean": 20.27,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 23
+    },
+    {
+      "file_path": "i_sound.c",
+      "si_max": 82.77,
+      "si_mean": 82.77,
+      "loc_total": 392,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 22
+    },
+    {
+      "file_path": "i_system.c",
+      "si_max": 100.0,
+      "si_mean": 100.0,
+      "loc_total": 316,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 10
+    },
+    {
+      "file_path": "i_timer.c",
+      "si_max": 80.74,
+      "si_mean": 80.74,
+      "loc_total": 40,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "i_video.c",
+      "si_max": 98.99,
+      "si_mean": 98.99,
+      "loc_total": 1248,
+      "cc_max": 19.3333,
+      "class_count": 1,
+      "bugfix_count": 60
+    },
+    {
+      "file_path": "i_videohr.c",
+      "si_max": 29.05,
+      "si_mean": 29.05,
+      "loc_total": 209,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "i_winmusic.c",
+      "si_max": 20.27,
+      "si_mean": 20.27,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 11
+    },
+    {
+      "file_path": "m_argv.c",
+      "si_max": 98.31,
+      "si_mean": 98.31,
+      "loc_total": 259,
+      "cc_max": 25.0,
+      "class_count": 1,
+      "bugfix_count": 10
+    },
+    {
+      "file_path": "m_bbox.c",
+      "si_max": 66.55,
+      "si_mean": 66.55,
+      "loc_total": 20,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "m_cheat.c",
+      "si_max": 31.08,
+      "si_mean": 31.08,
+      "loc_total": 53,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "m_config.c",
+      "si_max": 89.19,
+      "si_mean": 89.19,
+      "loc_total": 625,
+      "cc_max": 13.5,
+      "class_count": 1,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "m_controls.c",
+      "si_max": 73.65,
+      "si_mean": 73.65,
+      "loc_total": 214,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "m_fixed.c",
+      "si_max": 79.05,
+      "si_mean": 79.05,
+      "loc_total": 22,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "m_misc.c",
+      "si_max": 99.66,
+      "si_mean": 99.66,
+      "loc_total": 703,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 18
+    },
+    {
+      "file_path": "memio.c",
+      "si_max": 30.41,
+      "si_mean": 30.41,
+      "loc_total": 141,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "midifallback.c",
+      "si_max": 10.14,
+      "si_mean": 10.14,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "midifile.c",
+      "si_max": 36.49,
+      "si_mean": 36.49,
+      "loc_total": 585,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "mus2mid.c",
+      "si_max": 73.31,
+      "si_mean": 73.31,
+      "loc_total": 558,
+      "cc_max": 45.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "net_client.c",
+      "si_max": 93.92,
+      "si_mean": 93.92,
+      "loc_total": 987,
+      "cc_max": 13.6667,
+      "class_count": 1,
+      "bugfix_count": 18
+    },
+    {
+      "file_path": "net_common.c",
+      "si_max": 84.46,
+      "si_mean": 84.46,
+      "loc_total": 433,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "net_dedicated.c",
+      "si_max": 30.07,
+      "si_mean": 30.07,
+      "loc_total": 32,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "net_gui.c",
+      "si_max": 76.69,
+      "si_mean": 76.69,
+      "loc_total": 369,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "net_io.c",
+      "si_max": 76.35,
+      "si_mean": 76.35,
+      "loc_total": 100,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "net_loop.c",
+      "si_max": 64.19,
+      "si_mean": 64.19,
+      "loc_total": 139,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "net_packet.c",
+      "si_max": 78.04,
+      "si_mean": 78.04,
+      "loc_total": 256,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "net_petname.c",
+      "si_max": 58.45,
+      "si_mean": 58.45,
+      "loc_total": 14,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "net_query.c",
+      "si_max": 88.18,
+      "si_mean": 88.18,
+      "loc_total": 827,
+      "cc_max": 10.6667,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "net_sdl.c",
+      "si_max": 68.24,
+      "si_mean": 68.24,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "net_server.c",
+      "si_max": 94.26,
+      "si_mean": 94.26,
+      "loc_total": 1797,
+      "cc_max": 18.5,
+      "class_count": 1,
+      "bugfix_count": 16
+    },
+    {
+      "file_path": "net_structrw.c",
+      "si_max": 83.78,
+      "si_mean": 83.78,
+      "loc_total": 598,
+      "cc_max": 21.5,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "p_rejectpad.c",
+      "si_max": 25.68,
+      "si_mean": 25.68,
+      "loc_total": 52,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "setup/compatibility.c",
+      "si_max": 35.47,
+      "si_mean": 35.47,
+      "loc_total": 20,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "setup/display.c",
+      "si_max": 54.05,
+      "si_mean": 54.05,
+      "loc_total": 195,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "setup/execute.c",
+      "si_max": 53.04,
+      "si_mean": 53.04,
+      "loc_total": 153,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "setup/joystick.c",
+      "si_max": 72.97,
+      "si_mean": 72.97,
+      "loc_total": 636,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "setup/keyboard.c",
+      "si_max": 58.11,
+      "si_mean": 58.11,
+      "loc_total": 359,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "setup/mainmenu.c",
+      "si_max": 49.32,
+      "si_mean": 49.32,
+      "loc_total": 265,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "setup/mode.c",
+      "si_max": 74.66,
+      "si_mean": 74.66,
+      "loc_total": 250,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "setup/mouse.c",
+      "si_max": 50.0,
+      "si_mean": 50.0,
+      "loc_total": 115,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "setup/multiplayer.c",
+      "si_max": 70.27,
+      "si_mean": 70.27,
+      "loc_total": 978,
+      "cc_max": 10.5,
+      "class_count": 1,
+      "bugfix_count": 11
+    },
+    {
+      "file_path": "setup/setup_icon.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "setup/sound.c",
+      "si_max": 58.78,
+      "si_mean": 58.78,
+      "loc_total": 228,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "setup/txt_joyaxis.c",
+      "si_max": 51.01,
+      "si_mean": 51.01,
+      "loc_total": 571,
+      "cc_max": 9.5,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "setup/txt_joybinput.c",
+      "si_max": 53.38,
+      "si_mean": 53.38,
+      "loc_total": 462,
+      "cc_max": 9.5,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "setup/txt_keyinput.c",
+      "si_max": 14.53,
+      "si_mean": 14.53,
+      "loc_total": 135,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "setup/txt_mouseinput.c",
+      "si_max": 21.28,
+      "si_mean": 21.28,
+      "loc_total": 133,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "sha1.c",
+      "si_max": 76.01,
+      "si_mean": 76.01,
+      "loc_total": 258,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/am_map.c",
+      "si_max": 79.73,
+      "si_mean": 79.73,
+      "loc_total": 976,
+      "cc_max": 27.3333,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "strife/d_items.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "strife/d_main.c",
+      "si_max": 96.28,
+      "si_mean": 96.28,
+      "loc_total": 1711,
+      "cc_max": 41.0,
+      "class_count": 1,
+      "bugfix_count": 29
+    },
+    {
+      "file_path": "strife/d_net.c",
+      "si_max": 38.85,
+      "si_mean": 38.85,
+      "loc_total": 223,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "strife/deh_ammo.c",
+      "si_max": 16.89,
+      "si_mean": 16.89,
+      "loc_total": 62,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_cheat.c",
+      "si_max": 26.69,
+      "si_mean": 26.69,
+      "loc_total": 78,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_frame.c",
+      "si_max": 22.64,
+      "si_mean": 22.64,
+      "loc_total": 100,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_misc.c",
+      "si_max": 24.32,
+      "si_mean": 24.32,
+      "loc_total": 61,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_ptr.c",
+      "si_max": 19.59,
+      "si_mean": 19.59,
+      "loc_total": 97,
+      "cc_max": 6.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_sound.c",
+      "si_max": 16.89,
+      "si_mean": 16.89,
+      "loc_total": 52,
+      "cc_max": 5.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_strife.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_thing.c",
+      "si_max": 14.19,
+      "si_mean": 14.19,
+      "loc_total": 64,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/deh_weapon.c",
+      "si_max": 14.19,
+      "si_mean": 14.19,
+      "loc_total": 50,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/doomdef.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/doomstat.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/dstrings.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/f_finale.c",
+      "si_max": 73.99,
+      "si_mean": 73.99,
+      "loc_total": 563,
+      "cc_max": 30.0,
+      "class_count": 1,
+      "bugfix_count": 6
+    },
+    {
+      "file_path": "strife/f_wipe.c",
+      "si_max": 38.18,
+      "si_mean": 38.18,
+      "loc_total": 223,
+      "cc_max": 9.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/g_game.c",
+      "si_max": 94.93,
+      "si_mean": 94.93,
+      "loc_total": 1890,
+      "cc_max": 55.25,
+      "class_count": 1,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "strife/hu_lib.c",
+      "si_max": 25.34,
+      "si_mean": 25.34,
+      "loc_total": 319,
+      "cc_max": 9.5,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "strife/hu_stuff.c",
+      "si_max": 68.58,
+      "si_mean": 68.58,
+      "loc_total": 448,
+      "cc_max": 28.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "strife/info.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/m_menu.c",
+      "si_max": 85.81,
+      "si_mean": 85.81,
+      "loc_total": 1494,
+      "cc_max": 32.2,
+      "class_count": 1,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "strife/m_random.c",
+      "si_max": 9.12,
+      "si_mean": 9.12,
+      "loc_total": 15,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/m_saves.c",
+      "si_max": 39.86,
+      "si_mean": 39.86,
+      "loc_total": 317,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "strife/p_ceilng.c",
+      "si_max": 54.73,
+      "si_mean": 54.73,
+      "loc_total": 264,
+      "cc_max": 28.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/p_dialog.c",
+      "si_max": 93.58,
+      "si_mean": 93.58,
+      "loc_total": 924,
+      "cc_max": 88.0,
+      "class_count": 1,
+      "bugfix_count": 19
+    },
+    {
+      "file_path": "strife/p_doors.c",
+      "si_max": 87.16,
+      "si_mean": 87.16,
+      "loc_total": 1129,
+      "cc_max": 79.0,
+      "class_count": 1,
+      "bugfix_count": 7
+    },
+    {
+      "file_path": "strife/p_enemy.c",
+      "si_max": 86.82,
+      "si_mean": 86.82,
+      "loc_total": 2421,
+      "cc_max": 21.0,
+      "class_count": 1,
+      "bugfix_count": 28
+    },
+    {
+      "file_path": "strife/p_floor.c",
+      "si_max": 52.36,
+      "si_mean": 52.36,
+      "loc_total": 530,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "strife/p_inter.c",
+      "si_max": 91.89,
+      "si_mean": 91.89,
+      "loc_total": 1261,
+      "cc_max": 100.0,
+      "class_count": 1,
+      "bugfix_count": 24
+    },
+    {
+      "file_path": "strife/p_lights.c",
+      "si_max": 18.24,
+      "si_mean": 18.24,
+      "loc_total": 240,
+      "cc_max": 7.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/p_map.c",
+      "si_max": 71.96,
+      "si_mean": 71.96,
+      "loc_total": 1265,
+      "cc_max": 21.5,
+      "class_count": 1,
+      "bugfix_count": 9
+    },
+    {
+      "file_path": "strife/p_maputl.c",
+      "si_max": 47.3,
+      "si_mean": 47.3,
+      "loc_total": 712,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "strife/p_mobj.c",
+      "si_max": 62.5,
+      "si_mean": 62.5,
+      "loc_total": 1132,
+      "cc_max": 34.5,
+      "class_count": 1,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "strife/p_plats.c",
+      "si_max": 52.03,
+      "si_mean": 52.03,
+      "loc_total": 290,
+      "cc_max": 25.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "strife/p_pspr.c",
+      "si_max": 32.77,
+      "si_mean": 32.77,
+      "loc_total": 740,
+      "cc_max": 15.0,
+      "class_count": 1,
+      "bugfix_count": 10
+    },
+    {
+      "file_path": "strife/p_saveg.c",
+      "si_max": 33.78,
+      "si_mean": 33.78,
+      "loc_total": 1900,
+      "cc_max": 11.4,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/p_setup.c",
+      "si_max": 60.14,
+      "si_mean": 60.14,
+      "loc_total": 620,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "strife/p_sight.c",
+      "si_max": 42.57,
+      "si_mean": 42.57,
+      "loc_total": 272,
+      "cc_max": 18.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/p_spec.c",
+      "si_max": 91.55,
+      "si_mean": 91.55,
+      "loc_total": 1625,
+      "cc_max": 92.5,
+      "class_count": 1,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "strife/p_switch.c",
+      "si_max": 99.32,
+      "si_mean": 99.32,
+      "loc_total": 914,
+      "cc_max": 212.0,
+      "class_count": 1,
+      "bugfix_count": 12
+    },
+    {
+      "file_path": "strife/p_telept.c",
+      "si_max": 29.73,
+      "si_mean": 29.73,
+      "loc_total": 106,
+      "cc_max": 15.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "strife/p_tick.c",
+      "si_max": 25.0,
+      "si_mean": 25.0,
+      "loc_total": 74,
+      "cc_max": 8.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "strife/p_user.c",
+      "si_max": 75.68,
+      "si_mean": 75.68,
+      "loc_total": 775,
+      "cc_max": 57.0,
+      "class_count": 1,
+      "bugfix_count": 13
+    },
+    {
+      "file_path": "strife/r_bsp.c",
+      "si_max": 45.61,
+      "si_mean": 45.61,
+      "loc_total": 420,
+      "cc_max": 16.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/r_data.c",
+      "si_max": 61.15,
+      "si_mean": 61.15,
+      "loc_total": 722,
+      "cc_max": 19.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "strife/r_draw.c",
+      "si_max": 70.61,
+      "si_mean": 70.61,
+      "loc_total": 594,
+      "cc_max": 17.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/r_main.c",
+      "si_max": 81.76,
+      "si_mean": 81.76,
+      "loc_total": 702,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "strife/r_plane.c",
+      "si_max": 40.54,
+      "si_mean": 40.54,
+      "loc_total": 308,
+      "cc_max": 12.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/r_segs.c",
+      "si_max": 85.47,
+      "si_mean": 85.47,
+      "loc_total": 635,
+      "cc_max": 57.0,
+      "class_count": 1,
+      "bugfix_count": 2
+    },
+    {
+      "file_path": "strife/r_sky.c",
+      "si_max": 9.8,
+      "si_mean": 9.8,
+      "loc_total": 7,
+      "cc_max": 1.0,
+      "class_count": 1,
+      "bugfix_count": 1
+    },
+    {
+      "file_path": "strife/r_things.c",
+      "si_max": 66.89,
+      "si_mean": 66.89,
+      "loc_total": 835,
+      "cc_max": 29.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "strife/s_sound.c",
+      "si_max": 56.08,
+      "si_mean": 56.08,
+      "loc_total": 589,
+      "cc_max": 14.5,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "strife/sounds.c",
+      "si_max": 4.39,
+      "si_mean": 4.39,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/st_lib.c",
+      "si_max": 34.46,
+      "si_mean": 34.46,
+      "loc_total": 108,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/st_stuff.c",
+      "si_max": 90.88,
+      "si_mean": 90.88,
+      "loc_total": 1157,
+      "cc_max": 56.5,
+      "class_count": 1,
+      "bugfix_count": 14
+    },
+    {
+      "file_path": "strife/strife_icon.c",
+      "si_max": 7.77,
+      "si_mean": 7.77,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "strife/wi_stuff.c",
+      "si_max": 12.84,
+      "si_mean": 12.84,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "tables.c",
+      "si_max": 11.49,
+      "si_mean": 11.49,
+      "loc_total": 22,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "v_diskicon.c",
+      "si_max": 84.8,
+      "si_mean": 84.8,
+      "loc_total": 104,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "v_video.c",
+      "si_max": 97.64,
+      "si_mean": 97.64,
+      "loc_total": 673,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 15
+    },
+    {
+      "file_path": "w_checksum.c",
+      "si_max": 67.57,
+      "si_mean": 67.57,
+      "loc_total": 54,
+      "cc_max": 3.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "w_file.c",
+      "si_max": 36.15,
+      "si_mean": 36.15,
+      "loc_total": 42,
+      "cc_max": 4.0,
+      "class_count": 1,
+      "bugfix_count": 4
+    },
+    {
+      "file_path": "w_file_posix.c",
+      "si_max": 10.81,
+      "si_mean": 10.81,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "w_file_stdc.c",
+      "si_max": 11.82,
+      "si_mean": 11.82,
+      "loc_total": 50,
+      "cc_max": 2.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "w_file_win32.c",
+      "si_max": 11.15,
+      "si_mean": 11.15,
+      "loc_total": 0,
+      "cc_max": 0.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "w_main.c",
+      "si_max": 57.77,
+      "si_mean": 57.77,
+      "loc_total": 218,
+      "cc_max": 19.0,
+      "class_count": 1,
+      "bugfix_count": 0
+    },
+    {
+      "file_path": "w_merge.c",
+      "si_max": 89.53,
+      "si_mean": 89.53,
+      "loc_total": 597,
+      "cc_max": 26.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    },
+    {
+      "file_path": "w_wad.c",
+      "si_max": 97.97,
+      "si_mean": 97.97,
+      "loc_total": 394,
+      "cc_max": 13.0,
+      "class_count": 1,
+      "bugfix_count": 8
+    },
+    {
+      "file_path": "z_native.c",
+      "si_max": 28.72,
+      "si_mean": 28.72,
+      "loc_total": 353,
+      "cc_max": 10.0,
+      "class_count": 1,
+      "bugfix_count": 5
+    },
+    {
+      "file_path": "z_zone.c",
+      "si_max": 98.65,
+      "si_mean": 98.65,
+      "loc_total": 415,
+      "cc_max": 11.0,
+      "class_count": 1,
+      "bugfix_count": 3
+    }
+  ],
+  "notes": [
+    "bug-fix 변경 파일 중 450 회 touch 가 분석 대상 클래스 파일과 매칭되지 않았다 (.cs 외 자산·설정 등). 정상적인 noise 일 수 있음."
+  ]
+}
