@@ -46,9 +46,13 @@ def test_casual_demo_never_reuses_an_old_revision_verification(tmp_path):
     evidence = tmp_path/'02_modified'/('a'*32)
     evidence.mkdir(parents=True)
     (evidence/'verification.json').write_text(json.dumps({'summary':'OLD VERIFIED CLAIM'}))
-    assert 'OLD VERIFIED CLAIM' not in demo.get('casual')['verification_summary']
+    stale = demo.get('casual')
+    assert 'OLD VERIFIED CLAIM' not in stale['verification_summary'] and not stale.get('behavior_checked')
     assistant.revision = 'a'*32
-    assert demo.get('casual')['verification_summary'] == 'OLD VERIFIED CLAIM'
+    current = demo.get('casual')
+    assert current['verification_summary'] == 'OLD VERIFIED CLAIM' and current['behavior_checked'] is True
+    (evidence/'verification.json').unlink()
+    assert demo.get('casual')['behavior_checked'] is False
 
 
 def test_demo_prepare_returns_saved_progress_before_worker_runs(tmp_path, monkeypatch):

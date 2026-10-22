@@ -1,10 +1,39 @@
-import {elapsedText, subj} from "./core.js";
+import {changeText, elapsedText, functionChanges, resultHeadline, safetyBadges} from "./core.js";
 import {confirmDialog, fill, h, notice, progressBlock, toast} from "./ui.js";
 
 const APPLY_STAGES = ["사본 만들기", "다시 분석", "전후 비교", "정리"];
 const KEYS = [["cycle_units", "순환 고리에 묶인"], ["links", "사이 연결선"], ["complex_functions", "매우 복잡한 함수 (CC>20)"], ["excess_complexity", "초과 복잡도 Σ(CC−10)"]];
+const SHOWN_FUNCTIONS = 6;   // other changed functions listed before "더 보기"
 
 function value(round, key) { return round.components.find(c => c.key === key)?.after ?? 0; }
+
+// Before/after bars on one scale (max = the longest bar in the group).
+function pairBars(before, after, max, mini = false) {
+  const bar = (cls, v, key) => {
+    const fillBar = h("span"); fillBar.style.width = `${v ? Math.max(2, 100 * v / max) : 0}%`;
+    return h("div", {class: `pb ${cls}`}, mini ? null : h("span", {class: "pb-k"}, key), h("div", {class: "pb-t"}, fillBar));
+  };
+  return h("div", {class: `pbars ${mini ? "mini" : ""}`, "aria-hidden": "true"},
+    before === null ? null : bar("was", before, "전"),
+    after === null ? null : bar(after < (before ?? after) ? "now good" : after > (before ?? after) ? "now worse" : "now", after, "후"));
+}
+
+function delta(before, after, unit = "") {
+  return after === before ? h("span", {class: "delta same"}, "변화 없음")
+    : h("span", {class: `delta ${after < before ? "down" : "up"}`}, changeText(before, after, unit));
+}
+
+// One measure of the highlighted function (or of the links between units): big numbers, change, bars.
+function metric(title, before, after, unit = "") {
+  return h("div", {class: "fix-metric"}, h("span", {class: "fix-k"}, title),
+    h("div", {class: "fix-num"}, h("s", null, `${before.toLocaleString()} →`),
+      h("b", {class: after < before ? "good-text" : ""}, `${after.toLocaleString()}${unit}`), delta(before, after, unit)),
+    pairBars(before, after, Math.max(before, after, 1)));
+}
+
+const fmt = v => v.toLocaleString();
+
+function owner(row) { return row.name.length > row.short.length ? row.name.slice(0, row.name.length - row.short.length - 1) : ""; }
 
 export async function render(view, ctx, {jobId}) {
   const root = h("section", {class: "wrap wide"}, h("p", {class: "empty"}, "수정 결과를 불러오고 있습니다."));
@@ -56,21 +85,80 @@ export async function render(view, ctx, {jobId}) {
     const active = tangle.rounds.filter(r => r.active);
     const cur = tangle.rounds.find(r => r.round === n), prev = tangle.rounds.find(r => r.round === n - 1);
     const comp = round.comparison || {before: [], after: [], functions: []};
-    const fns = comp.functions || [];
-    const simpler = fns.filter(f => f.before && f.after && f.after.cc < f.before.cc);
+    const changes = functionChanges(comp.functions || []);
     const cycle = [value(prev, "cycle_units"), value(cur, "cycle_units")], links = [value(prev, "links"), value(cur, "links")];
     const checks = round.checks || {};
     const built = game.available && game.state === "complete" && game.revision === round.revision;
     // A play result can be recorded once the modified game exists: built here, or built by the user
     // in their own environment when no demo game is registered for this project.
     const canRecordPlay = !game.available || built;
-    const tail = checks.play?.ok ? " 게임도 그대로 잘 동작합니다." : built ? " 게임 빌드도 통과했습니다." : "";
-    const lead = cycle[1] < cycle[0] ? `순환 고리에 묶인 ${subj(label)} ${cycle[0]} → ${cycle[1]}개로 줄었습니다.`
-      : links[1] < links[0] ? `${label} 사이 연결이 ${links[0]} → ${links[1]}개로 줄었습니다.`
-      : simpler.length ? `함수 ${simpler.length}개가 단순해졌습니다.` : "코드를 정리했습니다.";
-    const subline = cycle[1] < cycle[0] || links[1] < links[0]
-      ? `${label} 사이의 연결이 끊어져, 한 곳을 고칠 때 영향이 퍼지는 범위가 좁아졌습니다.`
-      : `이번 수정은 ${label} 안을 정리한 것이라 ${label} 사이의 연결과 순환 고리는 그대로입니다.`;
+    const head = resultHeadline(changes, {label, cycle, links});
+
+    // 1. What changed where the code was fixed: the most reduced function large, the others as a list.
+    const top = changes.top, rest = changes.rows.filter(r => r !== top);
+    const scale = Math.max(1, ...changes.rows.flatMap(r => [r.before?.cc || 0, r.after?.cc || 0]));
+    const otherRow = r => {
+      const b = r.before, a = r.after;
+      const tag = r.kind === "new" ? h("span", {class: "tag new"}, "새로 만든 함수") : r.kind === "removed" ? h("span", {class: "tag keep"}, "삭제")
+        : r.kind === "worse" ? h("span", {class: "tag worse"}, "복잡도 늘어남") : null;
+      const numbers = b && a ? `복잡도 ${fmt(b.cc)} → ${fmt(a.cc)} · 길이 ${fmt(b.loc)} → ${fmt(a.loc)}줄` : `복잡도 ${fmt((a || b).cc)} · ${fmt((a || b).loc)}줄`;
+      return h("li", {class: `fix-row ${r.kind}`}, h("div", {class: "fix-row-name"}, h("b", {class: "mono", title: r.name}, r.short), tag),
+        pairBars(b ? b.cc : null, a ? a.cc : null, scale, true), h("span", {class: "fix-row-num"}, numbers),
+        b && a ? (r.kind === "shorter" ? delta(b.loc, a.loc, "줄") : delta(b.cc, a.cc)) : h("span", {class: "delta"}));
+    };
+    const structure = cycle[1] < cycle[0] || links[1] < links[0] || !changes.rows.length
+      ? h("div", {class: `fix-links ${top ? "secondary" : ""}`}, h("div", {class: "fix-sub"}, `${label} 사이 연결 구조 (${n > 1 ? `${n - 1}라운드` : "처음 상태"}와 비교)`),
+        h("div", {class: "fix-metrics"}, metric(`순환 고리에 묶인 ${label}`, cycle[0], cycle[1], "개"), metric(`${label} 사이 연결`, links[0], links[1], "개")))
+      : null;
+    const totals = changes.totals, totalChange = totals.cc[0] ? changeText(totals.cc[0], totals.cc[1]) : "";
+    const hero = h("section", {class: "card fix", "aria-label": "고친 곳의 변화"},
+      h("div", {class: "fix-head"}, h("div", {class: "eyebrow"}, "고친 곳의 변화"), h("span", {class: "help"}, "AI 설명이 아니라 수정본을 다시 분석해 측정한 값입니다.")),
+      top ? h("div", {class: "fix-top"},
+        h("div", {class: "fix-name"}, h("span", {class: "chip good"}, top.kind === "simpler" ? "복잡도가 가장 크게 줄어든 함수" : "길이가 가장 크게 줄어든 함수"),
+          h("b", {class: "mono"}, top.short), owner(top) ? h("span", {class: "help mono"}, owner(top)) : null),
+        h("div", {class: "fix-metrics"}, metric("복잡도 (CC, 분기 수)", top.before.cc, top.after.cc), metric("길이", top.before.loc, top.after.loc, "줄"))) : null,
+      rest.length ? h("div", {class: "fix-others"}, h("div", {class: "fix-sub"}, top ? `함께 바뀐 함수 ${rest.length}개` : `바뀐 함수 ${rest.length}개`),
+        h("ul", {class: "fix-list"}, ...rest.slice(0, SHOWN_FUNCTIONS).map(otherRow)),
+        rest.length > SHOWN_FUNCTIONS ? h("details", {class: "parts"}, h("summary", null, `함수 ${rest.length - SHOWN_FUNCTIONS}개 더 보기`),
+          h("ul", {class: "fix-list"}, ...rest.slice(SHOWN_FUNCTIONS).map(otherRow))) : null) : null,
+      changes.rows.length > 1 ? h("p", {class: "fix-total"}, h("b", null, `바뀐 함수 ${changes.rows.length}개를 모두 합치면`),
+        ` 복잡도 ${fmt(totals.cc[0])} → ${fmt(totals.cc[1])}${totalChange ? ` (${totalChange})` : ""}`,
+        ` · 길이 ${fmt(totals.loc[0])} → ${fmt(totals.loc[1])}줄`, changes.counts.new ? h("span", {class: "help"}, "새로 만든 함수로 옮겨 간 복잡도까지 더한 값입니다.") : null) : null,
+      structure);
+
+    // 2. Safety: short badges up here, the details folded.
+    const playButtons = canRecordPlay ? h("div", {class: "row-gap"},
+      h("button", {class: "btn ghost sm", type: "button", onclick: e => play(true, e)}, "직접 해 보니 정상입니다"),
+      h("button", {class: "btn ghost sm", type: "button", onclick: e => play(false, e)}, "문제가 있었습니다")) : null;
+    async function play(ok, event) {
+      event.currentTarget.parentElement.querySelectorAll("button").forEach(b => { b.disabled = true; });
+      try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/play`, {method: "POST", body: JSON.stringify({ok})}); toast(ok ? "직접 플레이 확인을 기록했습니다." : "문제가 있었다고 기록했습니다."); load(); }
+      catch (error) { toast(error.message); load(); }
+    }
+    const check = (ok, title, text, more) => h("div", {class: "check"}, h("span", {class: `ok ${ok ? "" : "todo"}`}, ok ? "✓" : "·"),
+      h("div", null, h("b", null, title), h("p", null, text), more ? h("details", null, h("summary", null, "자세히"), more) : null));
+    const re = checks.reanalyzed || {};
+    const checkList = h("div", {class: "checks"},
+      round.migrated ? h("p", {class: "help"}, "이 라운드는 라운드 기록을 남기기 전에 적용한 수정본이라 원본 보존·승인한 변경과 동일·다시 분석 확인 기록이 없습니다.") : null,
+      check(true, "검사 규칙 통과", "AI 변경안은 프로그램 검사를 통과해야 검토 화면에 나오고 적용할 수 있습니다.",
+        "설명한 범위만 바뀌었는지 검사하고, 함수 본문을 바꾸지 않는 연결 정리는 문법 트리로 다시 확인합니다. 통과하지 못한 응답은 적용할 수 없습니다."),
+      check(checks.original_preserved, "원본 보존", "원본 소스는 그대로 두고 사본에만 적용했습니다.", "적용 전후에 파일마다 지문(SHA-256)을 비교했습니다."),
+      check(checks.matches_preview, "승인한 변경과 동일", "적용된 파일이 검토 화면에서 본 변경안과 정확히 같습니다.", `대상·함께 수정·새 파일 ${round.files.length}개`),
+      check(["complete", "partial"].includes(re.state), "다시 분석", `수정본 파일 ${re.analyzed_files ?? "?"}개를 처음과 같은 기준으로 다시 분석했습니다.`,
+        re.syntax_files ? `일부 문법을 건너뛴 파일 ${re.syntax_files}개는 처음과 같은 방식으로 분석했습니다.` : null),
+      game.available ? check(built, "빌드", built ? "수정된 게임을 빌드했습니다." : "오른쪽 게임 카드에서 수정된 게임을 준비하면 빌드를 확인합니다.")
+        : check(false, "빌드", "이 프로젝트에는 등록된 빌드 절차가 없습니다. 개발 환경에서 직접 빌드해 확인해 주세요."),
+      game.available ? check(built && game.behavior_checked, "동작 비교", game.verification_summary || "게임을 준비한 뒤 원본과 수정본의 동작 비교 기록을 표시합니다.") : null,
+      check(checks.play?.ok, "직접 플레이", checks.play ? (checks.play.ok ? "수정된 게임을 직접 해 보고 정상이라고 확인했습니다." : "직접 해 보니 문제가 있었다고 기록했습니다.")
+          : canRecordPlay ? "수정된 게임을 직접 해 본 뒤 위 버튼으로 결과를 기록해 주세요." : "먼저 오른쪽에서 수정된 게임을 준비해 실행한 뒤 결과를 기록할 수 있습니다.",
+        checks.play?.at ? `${new Date(checks.play.at * 1000).toLocaleString("ko-KR")} 기록` : null));
+    const mark = {ok: ["✓", "완료"], todo: ["·", "아직"], bad: ["✕", "문제"]};
+    const safety = h("section", {class: "card safety", "aria-label": "안전 확인"},
+      h("div", {class: "safety-head"}, h("b", null, "안전 확인"), h("span", {class: "help"}, "검사 규칙을 통과하고 승인한 변경만, 원본이 아닌 사본에 적용했습니다.")),
+      h("ul", {class: "badges"}, ...safetyBadges(round, game).map(b => h("li", {class: `badge is-${b.state}`},
+        h("i", {"aria-hidden": "true"}, mark[b.state][0]), h("span", {class: "visually-hidden"}, `${mark[b.state][1]}: `), b.label, b.note ? h("small", null, ` ${b.note}`) : null))),
+      !checks.play && canRecordPlay ? h("div", {class: "play-ask"}, h("span", null, "수정된 게임을 직접 해 봤다면 결과를 남겨 주세요."), playButtons) : null,
+      h("details", {class: "parts safety-more"}, h("summary", null, "확인 내용 자세히 보기"), checkList));
 
     const stat = (key, title) => {
       const a = value(prev, key), b = value(cur, key), d = b - a;
@@ -84,12 +172,6 @@ export async function render(view, ctx, {jobId}) {
       return h("div", {class: `rbar ${r.round === n ? "on" : ""}`}, h("b", null, r.index.toFixed(r.index % 1 ? 2 : 0)), h("div", {class: "rcol"}, fillBar), h("span", null, r.round ? `${r.round}라운드` : "처음"));
     }));
 
-    const fnTable = h("table", {class: "tbl"}, h("thead", null, h("tr", null, ...["함수", "복잡도 (CC)", "길이", ""].map(t => h("th", null, t)))),
-      h("tbody", null, ...fns.map(f => h("tr", null, h("td", {class: "mono"}, f.name),
-        h("td", null, f.before ? `${f.before.cc} → ` : "", h("b", {class: f.before && f.after && f.after.cc < f.before.cc ? "good-text" : ""}, f.after ? f.after.cc : "삭제")),
-        h("td", null, f.before && f.after ? `${f.before.loc} → ${f.after.loc}줄` : f.after ? `${f.after.loc}줄` : ""),
-        h("td", null, !f.before ? h("span", {class: "tag new"}, "새로 만든 함수") : f.after && f.after.cc < f.before.cc ? h("b", {class: "good-text"}, `−${f.before.cc - f.after.cc}`) : "")))),
-      fns.length ? null : h("caption", null, "복잡도가 바뀐 함수가 없습니다."));
     // Keyed by unit (fqn): one C# file can hold several classes.
     const unitKey = c => c.fqn || c.file_path;
     const before = new Map((comp.before || []).map(c => [unitKey(c), c]));
@@ -100,51 +182,35 @@ export async function render(view, ctx, {jobId}) {
         h("td", null, `${b.raw.coupling} → `, h("b", {class: a.raw.coupling < b.raw.coupling ? "good-text" : ""}, a.raw.coupling)),
         h("td", null, `${b.raw.dependency_cycle} → `, h("b", {class: a.raw.dependency_cycle < b.raw.dependency_cycle ? "good-text" : ""}, a.raw.dependency_cycle))); })));
 
-    const check = (ok, title, text, more, action) => h("div", {class: "check"}, h("span", {class: `ok ${ok ? "" : "todo"}`}, ok ? "✓" : "·"),
-      h("div", null, h("b", null, title), h("p", null, text), more ? h("details", null, h("summary", null, "자세히"), more) : null, action || null));
-    const re = checks.reanalyzed || {};
-    const playButtons = canRecordPlay ? h("div", {class: "row-gap"},
-      h("button", {class: "btn ghost sm", type: "button", onclick: e => play(true, e)}, "직접 해 보니 정상입니다"),
-      h("button", {class: "btn ghost sm", type: "button", onclick: e => play(false, e)}, "문제가 있었습니다")) : null;
-    async function play(ok, event) {
-      event.currentTarget.parentElement.querySelectorAll("button").forEach(b => { b.disabled = true; });
-      try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/play`, {method: "POST", body: JSON.stringify({ok})}); toast(ok ? "직접 플레이 확인을 기록했습니다." : "문제가 있었다고 기록했습니다."); load(); }
-      catch (error) { toast(error.message); load(); }
-    }
-    const checkList = h("div", {class: "checks"},
-      check(checks.original_preserved, "원본 보존", "원본 소스는 그대로 두고 사본에만 적용했습니다.", "적용 전후에 파일마다 지문(SHA-256)을 비교했습니다."),
-      check(checks.matches_preview, "승인한 변경과 동일", "적용된 파일이 검토 화면에서 본 변경안과 정확히 같습니다.", `대상·함께 수정·새 파일 ${round.files.length}개`),
-      check(["complete", "partial"].includes(re.state), "다시 분석", `수정본 파일 ${re.analyzed_files ?? "?"}개를 처음과 같은 기준으로 다시 분석했습니다.`,
-        re.syntax_files ? `일부 문법을 건너뛴 파일 ${re.syntax_files}개는 처음과 같은 방식으로 분석했습니다.` : null),
-      game.available ? check(built, "빌드", built ? "수정된 게임을 빌드했습니다." : "오른쪽 게임 카드에서 수정된 게임을 준비하면 빌드를 확인합니다.")
-        : check(false, "빌드", "이 프로젝트에는 등록된 빌드 절차가 없습니다. 개발 환경에서 직접 빌드해 확인해 주세요."),
-      game.available && built && game.verification_summary ? check(true, "동작 비교", game.verification_summary) : null,
-      check(checks.play?.ok, "직접 플레이", checks.play ? (checks.play.ok ? "수정된 게임을 직접 해 보고 정상이라고 확인했습니다." : "직접 해 보니 문제가 있었다고 기록했습니다.")
-          : canRecordPlay ? "수정된 게임을 직접 해 본 뒤 결과를 기록해 주세요." : "먼저 오른쪽에서 수정된 게임을 준비해 실행한 뒤 결과를 기록할 수 있습니다.",
-        checks.play?.at ? `${new Date(checks.play.at * 1000).toLocaleString("ko-KR")} 기록` : null, checks.play ? null : playButtons));
-
     const parts = h("details", {class: "parts"}, h("summary", null, "엉킴 총량 구성 보기"),
       h("table", {class: "tbl"}, h("thead", null, h("tr", null, ...["항목", "처음", `${n}라운드`, ""].map(t => h("th", null, t)))),
         h("tbody", null, ...cur.components.map(c => h("tr", {class: c.included ? "" : "muted"}, h("td", null, c.label.replace("단위", label)),
           h("td", null, c.before.toLocaleString()), h("td", null, h("b", {class: c.after < c.before ? "good-text" : ""}, c.after.toLocaleString())),
           h("td", {class: "help"}, c.included ? "" : "처음 값이 0이라 계산에서 뺍니다"))))));
+    // 3. The whole game's tangle total: an auxiliary measure that barely moves in one round.
+    const whole = h("section", {class: "card sec aux", "aria-label": "게임 전체 기준 보조 지표"},
+      h("div", {class: "aux-head"}, h("div", {class: "h3"}, "게임 전체 기준 보조 지표"),
+        h("p", {class: "help"}, "게임 전체의 절대량이라 한 라운드에 보통 2% 미만 움직입니다. 고친 곳의 변화는 위 카드에서 봅니다.")),
+      h("div", {class: "tangle"}, h("div", null, h("div", {class: "eyebrow"}, "엉킴 총량 · 처음 상태 = 100"),
+        h("div", {class: "big-index"}, h("s", null, "100 →"), h("b", null, cur.index.toFixed(cur.index % 1 ? 2 : 0))),
+        h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 함수·초과 복잡도·전역 상태 접근을 처음 상태와 비교한 값입니다."),
+        cur.same_units ? null : h("p", {class: "chip warn"}, `⚠ 분석된 ${label} 구성이 처음과 달라(추가·삭제) 총량을 그대로 비교하기 어렵습니다`),
+        parts), chart),
+      // The total above compares with the first analysis; these four compare with the round before.
+      h("p", {class: "help sum-note"}, `아래 네 값은 ${n > 1 ? `${n - 1}라운드` : "처음 상태"}와 비교한 이번 ${n}라운드의 게임 전체 값입니다.`),
+      h("div", {class: "sum"}, ...KEYS.map(([key, title]) => stat(key, title))));
+
     fill(root,
       failedApply ? notice(`마지막 변경안을 적용하지 못했습니다. ${state.error || ""} 아래는 그 전까지 적용된 결과입니다.`) : null,
       h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `수정 결과·검증 · ${n}라운드`),
-        h("h1", {class: "h1"}, lead + tail), h("p", {class: "sub"}, subline))),
-      h("div", {class: "layout"},
+        h("h1", {class: "h1"}, head.title), h("p", {class: "sub"}, head.lines.join(" ")))),
+      h("div", {class: "layout result-layout"},
         h("div", null,
-          h("div", {class: "tangle card"}, h("div", null, h("div", {class: "eyebrow"}, "엉킴 총량 · 처음 상태 = 100"),
-            h("div", {class: "big-index"}, h("s", null, "100 →"), h("b", null, cur.index.toFixed(cur.index % 1 ? 2 : 0))),
-            h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 함수·초과 복잡도·전역 상태 접근을 처음 상태와 비교한 값입니다. G-SI 같은 순위가 아니라 실제 양이라 작은 개선도 드러납니다."),
-            cur.same_units ? null : h("p", {class: "chip warn"}, `⚠ 분석된 ${label} 구성이 처음과 달라(추가·삭제) 총량을 그대로 비교하기 어렵습니다`),
-            parts), chart),
-          // The total above compares with the first analysis; these four compare with the round before.
-          h("p", {class: "help sum-note"}, `아래 네 값은 ${n > 1 ? `${n - 1}라운드` : "처음 상태"}와 비교한 이번 ${n}라운드의 변화입니다.`),
-          h("div", {class: "sum"}, ...KEYS.map(([key, title]) => stat(key, title))),
-          h("div", {class: "card sec"}, h("div", {class: "h2"}, "함수별 변화"), h("p", {class: "help"}, "다시 분석해서 측정한 값입니다."), fnTable),
-          h("div", {class: "card sec"}, h("div", {class: "h2"}, `${label} 점수`), h("p", {class: "help"}, `G-SI는 프로젝트 안에서의 순위라서, 다른 ${label === "파일" ? "파일과" : "클래스와"} 비교한 위치가 같으면 그대로입니다.`), fileTable),
-          h("div", {class: "card sec"}, h("div", {class: "h2"}, "검증"), checkList),
+          hero,
+          safety,
+          h("div", {class: "card sec"}, h("div", {class: "h2"}, `${label} 점수`), h("p", {class: "help"}, `G-SI는 프로젝트 안에서의 순위라서, 다른 ${label === "파일" ? "파일과" : "클래스와"} 비교한 위치가 같으면 그대로입니다.`),
+            h("div", {class: "tbl-scroll"}, fileTable)),
+          whole,
           h("div", {class: "actions"},
             h("details", {class: "menu"}, h("summary", {class: "btn ghost", "aria-label": "더 보기", title: "더 보기"}, "…"), h("button", {class: "btn ghost sm", type: "button", onclick: undo}, "이 라운드 되돌리기")),
             h("a", {class: "btn ghost", href: `#/job/${jobId}/diagnosis`}, "진단 화면으로"),

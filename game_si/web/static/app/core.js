@@ -224,6 +224,102 @@ export function barTone(pct) {
   return pct >= 85 ? "hot" : pct >= 60 ? "warm" : "cool";
 }
 
+// --- result helpers ------------------------------------------------------
+// Function name without its owner ("game.menu.Default_MenuKey" → "Default_MenuKey", C# "A.B..ctor" → ".ctor").
+export function shortName(fqn) {
+  const name = String(fqn || "");
+  return name.match(/\.(\.?[^.]+)$/)?.[1] || name;
+}
+
+// Signed whole-percent change, or null when there is no base to compare with.
+export function changePct(before, after) {
+  return before > 0 ? Math.round(100 * (after - before) / before) : null;
+}
+
+export function pctText(pct) {
+  return pct === null ? "" : pct < 0 ? `−${-pct}%` : pct > 0 ? `+${pct}%` : "0%";
+}
+
+// "−61%", or the difference itself when it rounds to 0% (648 → 649줄 is "+1줄", not "0%").
+export function changeText(before, after, unit = "") {
+  const pct = changePct(before, after), diff = after - before;
+  return pct ? pctText(pct) : diff ? `${diff < 0 ? "−" : "+"}${Math.abs(diff).toLocaleString()}${unit}` : "";
+}
+
+// The round's changed functions, the most reduced first. kind: simpler (CC down), shorter (same CC,
+// fewer lines), new, worse (CC up), removed, other (same CC, not shorter).
+const KIND_ORDER = {simpler: 0, shorter: 1, new: 2, worse: 3, removed: 4, other: 5};
+export function functionChanges(functions = []) {
+  const rows = functions.map(f => {
+    const b = f.before, a = f.after;
+    const kind = !b ? "new" : !a ? "removed" : a.cc < b.cc ? "simpler" : a.cc > b.cc ? "worse" : a.loc < b.loc ? "shorter" : "other";
+    return {name: f.name, short: shortName(f.name), before: b, after: a, kind,
+      ccPct: b && a ? changePct(b.cc, a.cc) : null, locPct: b && a ? changePct(b.loc, a.loc) : null,
+      ccDrop: b && a ? b.cc - a.cc : 0, locDrop: b && a ? b.loc - a.loc : 0};
+  });
+  rows.sort((x, y) => KIND_ORDER[x.kind] - KIND_ORDER[y.kind] || y.ccDrop - x.ccDrop || y.locDrop - x.locDrop
+    || x.short.localeCompare(y.short));
+  const total = (side, key) => rows.reduce((sum, r) => sum + (r[side]?.[key] || 0), 0);
+  const counts = Object.fromEntries(Object.keys(KIND_ORDER).map(kind => [kind, rows.filter(r => r.kind === kind).length]));
+  return {rows, counts, top: ["simpler", "shorter"].includes(rows[0]?.kind) ? rows[0] : null,
+    totals: {cc: [total("before", "cc"), total("after", "cc")], loc: [total("before", "loc"), total("after", "loc")]}};
+}
+
+// Title and explanation for the result page: the fixed function first, then links between units.
+// cycle and links are [previous round, this round].
+export function resultHeadline(changes, {label, cycle, links}) {
+  const {top, counts} = changes;
+  const cut = cycle[1] < cycle[0], cutLinks = links[1] < links[0];
+  const lines = [];
+  let title;
+  if (top?.kind === "simpler") {
+    title = `${top.short} 복잡도 ${top.before.cc} → ${top.after.cc} (${changeText(top.before.cc, top.after.cc)})`;
+    lines.push(counts.simpler > 1 ? `이번 라운드에서 고친 함수 가운데 가장 크게 줄었고, 함수 ${counts.simpler - 1}개도 함께 단순해졌습니다.`
+      : "이번 라운드에서 고친 함수 가운데 복잡도가 가장 크게 줄었습니다.");
+  } else if (top) {
+    title = `${top.short} 길이 ${top.before.loc} → ${top.after.loc}줄 (${changeText(top.before.loc, top.after.loc, "줄")})`;
+    lines.push("분기 수(복잡도)는 그대로이고 함수 길이가 줄었습니다.");
+  } else if (cut || cutLinks) {
+    const [a, b] = cut ? cycle : links;
+    title = `${cut ? `순환 고리에 묶인 ${label}` : `${label} 사이 연결`} ${a} → ${b}개 (${changeText(a, b, "개")})`;
+    lines.push(`복잡도가 줄어든 함수는 없고, ${label} 사이의 연결을 정리한 수정입니다.`);
+  } else {
+    title = counts.worse ? "복잡도가 줄어든 함수가 없습니다" : "측정값이 줄어든 곳이 없습니다";
+    lines.push(counts.worse ? `함수 ${counts.worse}개는 오히려 복잡도가 늘었습니다. 아래에서 확인하고, 필요하면 이 라운드를 되돌려 주세요.`
+      : changes.rows.length ? `바뀐 함수는 있지만 복잡도나 길이가 줄지 않았고, ${label} 사이의 연결과 순환 고리도 그대로입니다.`
+      : `이번 수정으로 복잡도나 길이가 바뀐 함수가 없고, ${label} 사이의 연결과 순환 고리도 그대로입니다.`);
+  }
+  if (counts.worse && (top || cut || cutLinks)) lines.push(`함수 ${counts.worse}개는 복잡도가 늘었습니다. 아래에서 확인해 주세요.`);
+  if (top) {
+    lines.push(cut ? `순환 고리에 묶인 ${subj(label)} ${cycle[0]} → ${cycle[1]}개로 줄어, 한 곳을 고칠 때 영향이 퍼지는 범위도 좁아졌습니다.`
+      : cutLinks ? `${label} 사이 연결도 ${links[0]} → ${links[1]}개로 줄어, 한 곳을 고칠 때 영향이 퍼지는 범위가 좁아졌습니다.`
+      : `${label} 안을 정리한 수정이라 ${label} 사이의 연결과 순환 고리는 그대로입니다.`);
+  } else if (cut && cutLinks) {
+    lines.push(`${label} 사이 연결도 ${links[0]} → ${links[1]}개로 줄었습니다.`);
+  }
+  return {title, lines};
+}
+
+// One-line safety summary of a round. state: ok | todo | bad; note says what is still open.
+// Every applied change passed the change rules: a reply that fails them never becomes a change to approve.
+// A round saved before rounds were recorded (migrated) has no check records.
+export function safetyBadges(round = {}, game = {}) {
+  const checks = round.checks || {};
+  const built = Boolean(game.available && game.state === "complete" && game.revision === round.revision);
+  const done = (key, label, ok, note = "") => ({key, label, state: ok ? "ok" : "todo", note: ok ? "" : note});
+  const unknown = round.migrated ? "기록 없음" : "확인 안 됨";
+  const play = checks.play;
+  return [
+    done("rules", "검사 규칙 통과", true),
+    done("original", "원본 보존", checks.original_preserved, unknown),
+    done("preview", "승인한 변경과 동일", checks.matches_preview, unknown),
+    done("reanalyzed", "다시 분석", ["complete", "partial"].includes(checks.reanalyzed?.state), unknown),
+    done("build", "빌드", built, game.available ? "게임 준비 전" : "직접 확인 필요"),
+    game.available ? done("behavior", "동작 비교", built && game.behavior_checked, built ? "기록 없음" : "게임 준비 전") : null,
+    play && !play.ok ? {key: "play", label: "직접 플레이", state: "bad", note: "문제 있음"} : done("play", "직접 플레이", play?.ok, "기록 전"),
+  ].filter(Boolean);
+}
+
 // ---------------------------------------------------------------- AI connection
 export const AI_LABELS = {claude: "Claude", codex: "ChatGPT (Codex)", gemini: "Gemini", compatible: "다른 AI (주소로 연결)"};
 const PROGRAM_NAMES = {claude: "Claude Code", codex: "Codex", gemini: "Gemini CLI"};
