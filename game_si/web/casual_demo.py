@@ -48,6 +48,7 @@ class CasualDemo(DemoGame):
             state['verification_summary'] = '현재 수정본의 게임 준비와 동작 확인은 아직 완료되지 않았습니다. 이전 수정본의 검사 결과는 현재 수정본에 적용하지 않습니다.'
             return state
         verification = self.root / '02_modified' / state.get('revision', '-') / 'verification.json'
+        state['behavior_checked'] = verification.is_file()   # a recorded original/modified comparison, not just a build
         if verification.is_file():
             data = json.loads(verification.read_text('utf8'))
             state['verification_summary'] = data.get('summary', '')

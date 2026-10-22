@@ -193,3 +193,165 @@ assert.match(core.connectionProblem({service: "compatible", mode: "api", base_ur
 assert.equal(core.connectionProblem({service: "compatible", mode: "api", base_url: "http://localhost:11434/v1", model: "llama3.1"}), null);
 assert.equal(core.aiName("compatible", "llama3.1"), "llama3.1"); assert.equal(core.aiName("claude"), "Claude Code");
 ''')
+
+
+def test_result_function_changes_put_the_most_reduced_first():
+    run('''
+assert.equal(core.shortName("id-Software-Quake-2.client.menu.Default_MenuKey"), "Default_MenuKey");
+assert.equal(core.shortName("osu.Android.AndroidImportTask..ctor"), ".ctor");
+assert.equal(core.shortName("main"), "main");
+assert.equal(core.changePct(62, 24), -61); assert.equal(core.changePct(0, 3), null);
+assert.equal(core.pctText(-61), "−61%"); assert.equal(core.pctText(12), "+12%"); assert.equal(core.pctText(null), "");
+const changes = core.functionChanges([
+  {name: "g.menu.M_IsSelectButton", before: null, after: {cc: 2, loc: 4}},
+  {name: "g.menu.Small", before: {cc: 4, loc: 20}, after: {cc: 2, loc: 12}},
+  {name: "g.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}},
+  {name: "g.menu.Grown", before: {cc: 3, loc: 10}, after: {cc: 5, loc: 14}},
+  {name: "g.menu.Gone", before: {cc: 7, loc: 30}, after: null}]);
+assert.deepEqual(changes.rows.map(r => r.kind), ["simpler", "simpler", "new", "worse", "removed"]);
+assert.equal(changes.top.short, "Default_MenuKey"); assert.equal(changes.top.ccPct, -61); assert.equal(changes.top.locPct, -32);
+assert.deepEqual(changes.totals.cc, [76, 33]); assert.deepEqual(changes.totals.loc, [175, 108]);
+assert.equal(changes.counts.new, 1); assert.equal(changes.counts.worse, 1);
+// Same branches, fewer lines: the length is the headline.
+assert.equal(core.functionChanges([{name: "a.f", before: {cc: 5, loc: 40}, after: {cc: 5, loc: 30}}]).top.kind, "shorter");
+assert.equal(core.functionChanges([{name: "a.f", before: null, after: {cc: 1, loc: 3}}]).top, null);
+''')
+
+
+def test_result_headline_leads_with_the_fixed_function():
+    run('''
+const fixed = core.functionChanges([{name: "q.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}},
+  {name: "q.menu.M_IsSelectButton", before: null, after: {cc: 2, loc: 4}}]);
+let head = core.resultHeadline(fixed, {label: "파일", cycle: [0, 0], links: [11, 11]});
+assert.equal(head.title, "Default_MenuKey 복잡도 62 → 24 (−61%)");
+assert.match(head.lines.join(" "), /가장 크게 줄었습니다/); assert.match(head.lines.join(" "), /파일 사이의 연결과 순환 고리는 그대로/);
+head = core.resultHeadline(fixed, {label: "클래스", cycle: [12, 10], links: [40, 38]});
+assert.match(head.lines.join(" "), /순환 고리에 묶인 클래스가 12 → 10개로 줄어/);
+// No function changed, but links between units did: the links lead.
+head = core.resultHeadline(core.functionChanges([]), {label: "파일", cycle: [12, 10], links: [333, 320]});
+assert.equal(head.title, "순환 고리에 묶인 파일 12 → 10개 (−17%)");
+assert.match(head.lines.join(" "), /복잡도가 줄어든 함수는 없고/); assert.match(head.lines.join(" "), /연결도 333 → 320개/);
+head = core.resultHeadline(core.functionChanges([]), {label: "파일", cycle: [2, 2], links: [224, 220]});
+assert.equal(head.title, "파일 사이 연결 224 → 220개 (−2%)");
+head = core.resultHeadline(core.functionChanges([]), {label: "파일", cycle: [2, 2], links: [224, 224]});
+assert.equal(head.title, "측정값이 줄어든 곳이 없습니다"); assert.match(head.lines[0], /바뀐 함수가 없고/);
+head = core.resultHeadline(core.functionChanges([{name: "a.f", before: {cc: 3, loc: 9}, after: {cc: 6, loc: 20}}]), {label: "파일", cycle: [0, 0], links: [5, 5]});
+assert.equal(head.title, "복잡도가 줄어든 함수가 없습니다"); assert.match(head.lines[0], /오히려 복잡도가 늘었습니다/);
+''')
+
+
+def test_result_safety_badges_only_claim_what_was_checked():
+    run('''
+const checks = {original_preserved: true, matches_preview: true, reanalyzed: {state: "partial"}};
+const round = more => ({revision: "r1", checks: {...checks, ...more}});
+const states = list => Object.fromEntries(list.map(b => [b.key, b.state]));
+// No registered game: no behaviour comparison badge, the build is the user's to check.
+let badges = core.safetyBadges(round(), {available: false});
+assert.deepEqual(badges.map(b => b.label), ["검사 규칙 통과", "원본 보존", "승인한 변경과 동일", "다시 분석", "빌드", "직접 플레이"]);
+assert.deepEqual(states(badges), {rules: "ok", original: "ok", preview: "ok", reanalyzed: "ok", build: "todo", play: "todo"});
+assert.equal(badges.find(b => b.key === "build").note, "직접 확인 필요");
+// A build of another revision does not count; a build alone is not a behaviour comparison.
+badges = core.safetyBadges(round(), {available: true, state: "complete", revision: "old"});
+assert.equal(states(badges).build, "todo"); assert.equal(states(badges).behavior, "todo");
+badges = core.safetyBadges(round(), {available: true, state: "complete", revision: "r1"});
+assert.equal(states(badges).build, "ok"); assert.equal(states(badges).behavior, "todo");
+badges = core.safetyBadges(round({play: {ok: true}}), {available: true, state: "complete", revision: "r1", behavior_checked: true});
+assert.equal(states(badges).behavior, "ok"); assert.equal(states(badges).play, "ok");
+assert.equal(states(core.safetyBadges(round({play: {ok: false}}), {available: false})).play, "bad");
+assert.equal(core.safetyBadges({revision: "r1", checks: {}}, {available: false})[1].note, "확인 안 됨");
+// A round saved before rounds were recorded has no check records, which is not a failed check.
+const old = core.safetyBadges({revision: "r1", checks: {}, migrated: true}, {available: false});
+assert.equal(old[1].state, "todo"); assert.equal(old[1].note, "기록 없음");
+assert.equal(core.changeText(648, 649, "줄"), "+1줄"); assert.equal(core.changeText(62, 24), "−61%"); assert.equal(core.changeText(5, 5), "");
+''')
+
+
+# Just enough DOM for the page modules (ui.js h/fill, classList, querySelector by class or tag).
+DOM_SHIM = r'''
+class Node {}
+class Text extends Node { constructor(text) { super(); this.data = String(text); } get textContent() { return this.data; } }
+class Element extends Node {
+  constructor(tag) {
+    super(); this.tagName = tag.toUpperCase(); this.children = []; this.attributes = {}; this.style = {}; this.dataset = {}; this.parentElement = null;
+    const tokens = () => (this.attributes.class || "").split(/\s+/).filter(Boolean);
+    this.classList = {contains: c => tokens().includes(c),
+      toggle: (c, on) => { const t = tokens().filter(x => x !== c); if (on ?? !tokens().includes(c)) t.push(c); this.attributes.class = t.join(" "); }};
+  }
+  setAttribute(k, v) { this.attributes[k] = String(v); }
+  getAttribute(k) { return this.attributes[k] ?? null; }
+  addEventListener() {}
+  append(...nodes) { for (const n of nodes) { const c = n instanceof Node ? n : new Text(n); c.parentElement = this; this.children.push(c); } }
+  replaceChildren(...nodes) { this.children = []; this.append(...nodes); }
+  get elements() { return this.children.filter(c => c instanceof Element); }
+  get textContent() { return this.children.map(c => c.textContent).join(""); }
+  set textContent(v) { this.replaceChildren(String(v)); }
+  get isConnected() { return true; }
+  querySelectorAll(sel) {
+    const found = [], test = el => sel.startsWith(".") ? el.classList.contains(sel.slice(1)) : el.tagName === sel.toUpperCase();
+    const walk = el => { for (const c of el.elements) { if (test(c)) found.push(c); walk(c); } };
+    walk(this); return found;
+  }
+  querySelector(sel) { return this.querySelectorAll(sel)[0] || null; }
+}
+globalThis.Node = Node;
+globalThis.document = {createElement: t => new Element(t), createElementNS: (_, t) => new Element(t), createTextNode: t => new Text(t),
+  getElementById: () => null, body: new Element("body")};
+const page = await import(PAGE);
+const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_functions", 40], ["excess_complexity", 900], ["global_access", 500]]
+  .map(([key, after]) => ({key, label: key, before: after, after, included: true}));
+async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}}) {
+  const unit = (si, cc) => ({fqn: "q.client.menu", file_path: "q/client/menu.c", si, raw: {cc, coupling: 1, dependency_cycle: 0}});
+  const data = {
+    "": {name: "Quake-2"}, "/assistant": {state: "complete", action: "apply"}, "/demo": game, "/diagnosis": {summary: {unit_label: "파일"}},
+    "/rounds": {current: 1, rounds: [{round: 1, revision: "r1", files: ["q/client/menu.c"], checks: {original_preserved: true, matches_preview: true,
+      reanalyzed: {state: "partial", analyzed_files: 187, syntax_files: 33}}, comparison: {before: [unit(98.93, 17.5)], after: [unit(98.93, 16.9)], functions}}]},
+    "/tangle": {rounds: [{round: 0, active: true, index: 100, components: components(cycle[0], links[0]), same_units: true},
+      {round: 1, active: true, index: 99.78, components: components(cycle[1], links[1]), same_units: true}]}};
+  const view = document.createElement("main");
+  const ctx = {setSteps() {}, setCrumb() {}, api: async url => data[url.replace("/api/jobs/job", "")]};
+  await page.render(view, ctx, {jobId: "job"});
+  return view;
+}
+'''
+
+
+def run_page(script):
+    run(DOM_SHIM.replace('PAGE', json.dumps((APP / 'page-result.js').as_uri())) + script)
+
+
+def test_result_page_shows_the_fixed_function_before_the_whole_game_total():
+    run_page(r'''
+const view = await show({functions: [{name: "q.client.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}},
+  {name: "q.client.menu.M_IsSelectButton", before: null, after: {cc: 2, loc: 4}}]});
+assert.equal(view.querySelector("h1").textContent, "Default_MenuKey 복잡도 62 → 24 (−61%)");
+// Order: fixed place, safety, file scores, the whole game as an auxiliary measure, actions.
+const main = view.querySelector(".layout").elements[0].elements.map(el => el.getAttribute("class"));
+assert.deepEqual(main, ["card fix", "card safety", "card sec", "card sec aux", "actions"]);
+const hero = view.querySelector(".fix").textContent;
+assert.match(hero, /복잡도가 가장 크게 줄어든 함수/); assert.match(hero, /M_IsSelectButton/); assert.match(hero, /새로 만든 함수/);
+assert.match(hero, /복잡도 62 → 26 \(−58%\)/); assert.match(hero, /115 →78줄/);
+assert.ok(view.querySelectorAll(".pbars").length >= 3);
+const badges = view.querySelectorAll(".badge").map(b => b.textContent);
+assert.equal(badges[0], "✓완료: 검사 규칙 통과"); assert.ok(badges.some(t => t.includes("빌드") && t.includes("직접 확인 필요")));
+assert.ok(view.querySelector(".play-ask"), "play can be recorded when no demo game is registered");
+assert.ok(view.querySelector(".safety-more").textContent.includes("SHA-256"));
+const aux = view.querySelector(".aux").textContent;
+assert.match(aux, /보통 2% 미만/); assert.match(aux, /99\.78/); assert.match(aux, /엉킴 총량 구성 보기/);
+const text = view.textContent;
+for (const action of ["이 라운드 되돌리기", "진단 화면으로", "수정본 내려받기 (.zip)", "다음 처방 받기 →"]) assert.ok(text.includes(action), action);
+''')
+
+
+def test_result_page_without_function_changes_leads_with_links():
+    run_page(r'''
+let view = await show({functions: [], cycle: [12, 10], links: [333, 320]});
+assert.equal(view.querySelector("h1").textContent, "순환 고리에 묶인 파일 12 → 10개 (−17%)");
+assert.ok(view.querySelector(".fix-links")); assert.equal(view.querySelector(".fix-top"), null);
+view = await show({functions: [], cycle: [2, 2], links: [224, 224]});
+assert.equal(view.querySelector("h1").textContent, "측정값이 줄어든 곳이 없습니다");
+assert.match(view.querySelector(".fix-links").textContent, /변화 없음/);
+// A registered game that is not built yet: build and behaviour comparison wait, play cannot be recorded yet.
+view = await show({functions: [], game: {available: true, state: "idle"}});
+const open = view.querySelectorAll(".badge").filter(b => b.classList.contains("is-todo")).map(b => b.textContent);
+assert.ok(open.some(t => t.includes("동작 비교"))); assert.equal(view.querySelector(".play-ask"), null);
+''')
