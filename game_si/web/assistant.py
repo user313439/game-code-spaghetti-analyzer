@@ -130,7 +130,9 @@ goto 레이블을 가로지르는 블록, setjmp/longjmp, 흐름을 바꾸는 �
 새 보조 함수는 각 대상 함수 바로 앞에 static으로 추가하고, 대상 함수에서 직접 호출한다(보조 함수끼리 부르지 않는다). 이름을 change나 evidence에 적는다.
 보조 함수 이름은 그 블록이 하는 일 전체를 드러낸다: 상태를 바꾸거나 이동·충돌·보충까지 하면 draw/wait처럼 좁은 이름 대신 update…처럼 짓고, true/false 인수가 무엇을 고르는지 이름이나 인수 이름에 드러낸다.
 change_type은 functions, creates와 companions는 빈 배열이다. 편집 파일의 file_review는 decision=refactor, targets에는 실제로 바꾼 대상 함수 이름을 적는다.
-edits의 old는 원본에서 정확히 한 번 나타나는 구간으로 잡고, 바꾸는 대상 함수 본문 안이나 함수 바로 앞이어야 한다. 크게 나누기 어려운 함수는 할 수 있는 만큼만 하고 이유를 uncertainty에 적는다.'''
+edits의 old는 원본에서 정확히 한 번 나타나는 구간으로 잡고, 바꾸는 대상 함수 본문 안이나 함수 바로 앞이어야 한다. 크게 나누기 어려운 함수는 할 수 있는 만큼만 하고 이유를 uncertainty에 적는다.
+C# 파일(.cs)이면 'static 보조 함수' 대신 대상 메서드와 같은 클래스 안의 private 보조 메서드(접근 한정자를 생략해도 된다. static 클래스이거나 필드를 쓰지 않으면 private static)로 옮기고, 대상 메서드 바로 앞에 넣는다.
+public·protected·internal·virtual·override, 특성([...]), 지역 함수로 만들지 않는다. 대상 메서드에서 이름(또는 this.이름)으로 직접 호출하고, 바꾸는 지역 변수는 ref·out 인수로 넘긴다. yield return이 있는 블록은 옮기지 않는다.'''
 
 
 def digest(data: bytes) -> str:
