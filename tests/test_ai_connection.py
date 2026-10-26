@@ -11,6 +11,7 @@ def test_bundled_claude_code_is_found_newest_first(tmp_path, monkeypatch):
         (folder / 'claude.exe').write_bytes(b'')
     monkeypatch.setenv('APPDATA', str(tmp_path))
     monkeypatch.setenv('LOCALAPPDATA', str(tmp_path / 'local'))
+    monkeypatch.setenv('USERPROFILE', str(tmp_path / 'home'))
     monkeypatch.setattr(assistant.shutil, 'which', lambda name: None)
     assert assistant.executable('claude') == [str(tmp_path / 'Claude/claude-code/2.1.10/abc/claude.exe')]
     # The Store app's real location (works from any terminal) wins over the in-app view of the same version.
@@ -37,6 +38,41 @@ def test_login_state_comes_from_auth_status_without_an_ai_request(monkeypatch):
     monkeypatch.setattr(assistant.subprocess, 'run', lambda command, **kwargs: (_ for _ in ()).throw(OSError()))
     assistant._LOGIN.clear()
     assert assistant.claude_logged_in(['other.exe']) is None
+
+
+def test_codex_inside_the_desktop_app_is_found_newest_first(tmp_path, monkeypatch):
+    import os
+    app = tmp_path / 'local/OpenAI/Codex/bin'
+    for folder, stamp in [('', 100), ('old', 200), ('new', 300)]:
+        (app / folder).mkdir(parents=True, exist_ok=True)
+        (app / folder / 'codex.exe').write_bytes(b'')
+        os.utime(app / folder / 'codex.exe', (stamp, stamp))
+    monkeypatch.setenv('LOCALAPPDATA', str(tmp_path / 'local'))
+    monkeypatch.setenv('USERPROFILE', str(tmp_path / 'home'))
+    monkeypatch.setattr(assistant.shutil, 'which', lambda name: None)
+    assert assistant.executable('codex') == [str(app / 'new/codex.exe')]
+    extension = tmp_path / 'home/.vscode/extensions/openai.chatgpt-1.0/bin/windows-x86_64'
+    extension.mkdir(parents=True)
+    (extension / 'codex.exe').write_bytes(b'')
+    os.utime(extension / 'codex.exe', (400, 400))
+    assert assistant.executable('codex') == [str(extension / 'codex.exe')]
+    monkeypatch.setattr(assistant.shutil, 'which', lambda name: str(tmp_path / f'{name}.exe'))
+    assert assistant.executable('codex') == [str(tmp_path / 'codex.exe')]   # an installed CLI wins
+
+
+def test_codex_login_comes_from_login_status_without_an_ai_request(monkeypatch):
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0 if command[0] == 'codex.exe' else 1, 'Logged in using ChatGPT', '')
+    monkeypatch.setattr(assistant.subprocess, 'run', fake_run)
+    monkeypatch.setattr(assistant, 'executable', lambda service: ['codex.exe'] if service == 'codex' else [])
+    assistant._LOGIN.clear()
+    row = {r['id']: r for r in assistant.capabilities()}['codex']
+    assert row['installed'] and row['logged_in'] is True and row['login_command'] == 'codex.exe login'
+    assert calls == [['codex.exe', 'login', 'status']]
+    assert assistant.codex_logged_in(['other.exe']) is False
 
 
 # ---------------------------------------------------------------- any other AI (OpenAI-compatible address)
@@ -145,3 +181,14 @@ def test_web_api_lists_models_and_checks_the_connection(fake_ai, tmp_path):
         r = client.post('/api/assistant/models', headers=h, json={'base_url': 'http://example.com/v1'})
         assert r.status_code == 400 and 'https' in r.json()['detail']
         assert client.post('/api/assistant/models', json={'base_url': fake_ai}).status_code == 403   # token required
+
+
+def test_each_program_lists_the_models_it_accepts(tmp_path, monkeypatch):
+    monkeypatch.setattr(assistant.Path, 'home', lambda: tmp_path)
+    assert assistant.codex_models() == []   # no cache: nothing named
+    (tmp_path / '.codex').mkdir()
+    (tmp_path / '.codex' / 'models_cache.json').write_text(json.dumps({'models': [
+        {'slug': 'gpt-6-luna', 'visibility': 'list', 'priority': 5}, {'slug': 'gpt-6.1-sol', 'visibility': 'list', 'priority': 1},
+        {'slug': 'hidden-model', 'visibility': 'hide', 'priority': 0}, {'slug': 'bad name;', 'visibility': 'list', 'priority': 2}]}), encoding='utf8')
+    assert assistant.codex_models() == ['gpt-6.1-sol', 'gpt-6-luna']
+    assert assistant.CLI_MODELS['claude']() == ['opus', 'sonnet', 'haiku'] and 'flash' in assistant.CLI_MODELS['gemini']()

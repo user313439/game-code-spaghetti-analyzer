@@ -46,10 +46,35 @@ def _source_tree(path, text):
     return Parser(Language(grammar.language())).parse(text.encode('utf8')).root_node
 
 
-def _inserted_helpers(path, text):
+CONDITIONAL=re.compile(r'[ \t]*#[ \t]*(if|ifdef|ifndef|elif|else|endif)\b')
+
+
+def _without_conditionals(text):
+    """The text with its #if/#else/#endif lines blanked (line count kept), or None when they do not pair up.
+    Valid C such as '#ifdef A / if (a) / #else / if (b) / #endif {' only parses this way. Other directives
+    (#include, #define) stay and must parse."""
+    lines=text.split('\n');depth=0
+    for index,line in enumerate(lines):
+        found=CONDITIONAL.match(line)
+        if not found:continue
+        depth+=found.group(1).startswith('if');depth-=found.group(1)=='endif'
+        if depth<0:return None
+        lines[index]=''
+    return None if depth else '\n'.join(lines)
+
+
+def _readable(path, text):
+    """Parses as C/C++, read as it is or with its conditional lines left out."""
     root=_source_tree(path,text)
+    if root is None or not root.has_error:return root
+    text=_without_conditionals(text)
+    root=_source_tree(path,text) if text is not None else None
+    return None if root is None or root.has_error else root
+
+
+def _inserted_helpers(path, text):
+    root=_readable(path,text)
     if root is None:return []
-    if root.has_error:return []
     names=[]
     for node in root.named_children:
         if node.type=='comment':continue
@@ -82,7 +107,7 @@ def _ast_functions(path,text):
                 if function is not None and function.type in {'identifier','qualified_identifier'}:
                     calls.add(function.text.decode('utf8').rsplit('::',1)[-1])
         functions[identity]=dict(name=_function_name(node,source),calls=calls,
-            source=node.text,valid=not node.has_error,
+            source=node.text,valid=not node.has_error or _readable(path,node.text.decode('utf8')) is not None,
             static=any(child.type=='storage_class_specifier' and child.text==b'static' for child in node.children))
     return functions
 
@@ -93,6 +118,12 @@ def _new_ast_helpers(item, candidates, declared, explanation):
     targets={candidates[index].get('name') for index in declared}
     called=set().union(*(row['calls'] for identity,row in after.items()
         if row['name'] in targets and identity in before and row['source']!=before[identity]['source']))
+    # A later pass may move a helper's call into another new helper: reached through new helpers counts.
+    new=[row for identity,row in after.items() if identity not in before];grown=True
+    while grown:
+        grown=False
+        for row in new:
+            if row['name'] in called and not row['calls']<=called:called|=row['calls'];grown=True
     old_names={row['name'] for row in before.values()}
     helpers=[]
     for identity,row in after.items():
@@ -177,8 +208,24 @@ def validate_preview_targets(advice, methods, preview, companions=frozenset()):
         for tag,i1,i2,j1,j2 in difflib.SequenceMatcher(None,before,after,autojunk=False).get_opcodes():
             if tag=='equal':continue
             if tag=='insert':
-                current={index for index,(start,end) in enumerate(spans) if start-1<i1<end}
-                if not current:outside.append(''.join(after[j1:j2]));continue
+                added=after[j1:j2]
+                inside=lambda at:{index for index,(start,end) in enumerate(spans) if start-1<at<end}
+                # A diff may line up a new function's closing lines with the previous function's '}' and blank
+                # line, so the same insertion shows up inside that function. Slide it down over lines it equals
+                # (the result is identical) to the first place outside every function, if there is one.
+                at,slid=i1,added
+                while inside(at) and at<len(before) and slid and slid[0]==before[at]:
+                    slid=slid[1:]+[before[at]];at+=1
+                if not inside(at):i1,added=at,slid
+                # The function before may be a helper of an earlier pass (no measured lines) that gave its
+                # closing lines the same way: slide on while outside, to where the text reads as whole functions.
+                at,slid=i1,added
+                while (not inside(at) and at<len(before) and slid and slid[0]==before[at]
+                       and not _inserted_helpers(item['path'],''.join(slid))):
+                    slid=slid[1:]+[before[at]];at+=1
+                if not inside(at) and _inserted_helpers(item['path'],''.join(slid)):i1,added=at,slid
+                current=inside(i1)
+                if not current:outside.append(''.join(added));continue
             else:
                 current={index for index,(start,end) in enumerate(spans) if start<=i2 and end>i1}
                 if any(not any(start<=line<=end for start,end in spans) for line in range(i1+1,i2+1)):
@@ -194,7 +241,8 @@ def validate_preview_targets(advice, methods, preview, companions=frozenset()):
         for text in outside:
             names=_inserted_helpers(item['path'],text)
             if (not names or any(name in {m.get('name') for m in candidates}
-                    or name not in explanation or not re.search(r'\b'+re.escape(name)+r'\s*\(',''.join(changed_text)) for name in names)):
+                    or name not in explanation
+                    or name not in helpers and not re.search(r'\b'+re.escape(name)+r'\s*\(',''.join(changed_text)) for name in names)):
                 raise ValueError('대상 함수 밖의 추가 코드는 설명과 호출이 확인된 새 정적 보조 함수만 허용합니다.')
             helpers.extend(names)
         if helpers:item['added_helpers']=list(dict.fromkeys(helpers))
@@ -314,3 +362,142 @@ def build_prompt(stage, selected, sources, methods, advice=None, companions=None
             return prompt,context
         budget//=2
     raise ValueError('검토할 코드 문맥이 너무 큽니다. 선택 범위를 줄여 주세요.')
+
+
+# ---------------------------------------------------------------- one file, worked on in depth
+DEEP_FULL_LIMIT = 300_000     # a file and its headers go whole up to this size
+DEEP_PROMPT_LIMIT = 420_000   # serialized prompt of one deep call
+DEEP_TARGETS = 2              # the reply must fit DEEP_TIMEOUT; huge functions (1,000+ lines) take one reply each
+DEEP_HEADER_LIMIT = 40_000    # a paired header goes whole up to this size; otherwise its first part
+DEEP_OTHERS = 40              # other whole functions added around the targets when room is left
+DEEP_SCOPE = ('이 파일 하나를 깊게 정리합니다. focus_functions의 본문 전체가 제공됩니다. editable_paths의 파일만 고치고, '
+              '함께 보낸 헤더는 읽기 전용 문맥입니다.')
+
+
+def deep_targets(path, methods, hint=()):
+    """Functions one deep call works on: the prescription's picks first, then the most complex."""
+    rows=[m for m in methods if m.get('file_path','').replace('\\','/')==path]
+    named=[m for name in hint for m in rows if name in {m.get('name'),m.get('fqn')}]
+    ranked=[m for m in sorted(rows,key=lambda m:(-(m.get('cc') or 0),m.get('start_line') or 0)) if (m.get('cc') or 0)>=10]
+    chosen=[]
+    for m in named+ranked:
+        if m not in chosen:chosen.append(m)
+    return chosen[:DEEP_TARGETS]
+
+
+def _span(m):
+    start=int(m.get('start_line') or 1)
+    return start,max(start,int(m.get('end_line') or start))
+
+
+def _deep_main(path, text, targets, others, budget, other_budget):
+    """Whole functions only: the file head, every target that fits, then other functions within
+    other_budget. A target that cannot fit whole is left out (and reported), never cut. Lines are
+    split on '\\n' only, like the analyzer that numbered them."""
+    lines=_lines(text) or ['']
+    chunks,ranges,included,skipped=[],[],[],[]
+    used=other_used=0
+
+    def add(start,end,limit=None):
+        nonlocal used,other_used
+        end=min(end,len(lines))
+        if start>end:return False
+        chunk=f"/* 제공 범위: {path}:{start}-{end} */\n"+''.join(lines[start-1:end])
+        size=len(chunk.encode('utf8'))+1
+        if used+size>budget or (limit is not None and other_used+size>limit):return False
+        chunks.append((start,chunk));ranges.append(dict(start_line=start,end_line=end,partial=False));used+=size
+        if limit is not None:other_used+=size
+        return True
+
+    first=min([_span(m)[0] for m in targets+others] or [len(lines)+1])
+    head_end=size=0
+    for index in range(min(first-1,len(lines))):   # the declarations before the first function, up to 8KB
+        size+=len(lines[index].encode('utf8'))
+        if size>8_000:break
+        head_end=index+1
+    if head_end>=1:add(1,head_end)
+    for m in targets:
+        start,end=_span(m)
+        (included if add(start,end) else skipped).append(m.get('name'))
+    for m in others[:DEEP_OTHERS]:
+        start,end=_span(m)
+        if any(r['start_line']<=start and r['end_line']>=end for r in ranges):continue
+        add(start,end,other_budget)
+    order=sorted(range(len(chunks)),key=lambda i:chunks[i][0])
+    return '\n'.join(chunks[i][1] for i in order),[ranges[i] for i in order],included,skipped
+
+
+def measure_functions(path, text):
+    """Functions of a C/C++ text as the analysis lists them (name, lines, branch count). Used to aim the
+    next pass of a file after an earlier pass already changed it."""
+    root=_source_tree(path,text)
+    if root is None:return []
+    from ..cpp_analyzer import _cyclomatic_complexity,_function_name
+    source=text.encode('utf8');rows=[];pending=[root]
+    while pending:
+        node=pending.pop()
+        pending.extend(reversed(node.named_children))
+        body=node.child_by_field_name('body') if node.type=='function_definition' else None
+        name=_function_name(node,source) if body is not None else None
+        if name:
+            rows.append(dict(file_path=path,name=name,fqn=name,start_line=node.start_point[0]+1,end_line=node.end_point[0]+1,
+                             cc=_cyclomatic_complexity(body),loc=node.end_point[0]-node.start_point[0]+1))
+    return rows
+
+
+def build_deep_prompt(unit, path, sources, methods, advice=None, hint=(), continuation=None):
+    """Prompt for one file in depth. Returns (prompt, context); context names the targets sent whole
+    and those too large to send. `continuation` ({pass, helpers}) marks a later pass on the text an
+    earlier pass already changed."""
+    decoded={p:raw.decode('utf-8-sig') for p,raw in sources.items()}
+    total=sum(map(len,sources.values()))
+    targets=deep_targets(path,methods,hint)
+    names={m.get('name') for m in targets}
+    inventories={p:_file_methods(p,methods,names if p==path else set()) for p in decoded}
+    focus=[{k:m.get(k) for k in ['fqn','name','start_line','end_line','cc','loc']} for m in targets]
+    base=dict(stage='변경안 단계',mode='deep',candidates=[unit],previous_advice=_prior(advice),prompt_version=PROMPT_VERSION,
+              review_paths=sorted(decoded),editable_paths=[path],focus_functions=focus,scope=DEEP_SCOPE,companions_available=[])
+    if continuation:
+        base['continuation']=dict(continuation,note='이전 단계에서 이미 일부를 옮긴 코드입니다. 이미 만든 보조 함수(helpers)는 고치거나 다시 옮기지 말고, '
+                                                    '대상 함수에 남은 큰 블록을 이어서 옮깁니다. 새 보조 함수 이름은 기존 이름과 겹치지 않게 짓습니다.')
+
+    def item(p,content,complete,ranges):
+        inventory,count,_,_=inventories[p]
+        return dict(path=p,sha256=digest(sources[p]),content=content,complete=complete,ranges=ranges,methods=inventory,method_count=count)
+
+    def whole(p):
+        text=decoded[p]
+        return item(p,text,True,[dict(start_line=1,end_line=max(1,len(_lines(text))),partial=False)])
+
+    def serialize(items,mode,included,skipped):
+        context=dict(mode=mode,total_source_bytes=total,sent_source_bytes=sum(len(i['content'].encode('utf8')) for i in items),
+                     prompt_version=PROMPT_VERSION,targets=included,skipped_targets=skipped,
+                     files=[{key:i[key] for key in ['path','complete','ranges']} for i in items])
+        return json.dumps(dict(base,sources=items,context=context),ensure_ascii=False),context
+
+    if total<=DEEP_FULL_LIMIT:
+        prompt,context=serialize([whole(p) for p in sorted(decoded)],'full',[m.get('name') for m in targets],[])
+        if len(prompt.encode('utf8'))<=DEEP_PROMPT_LIMIT:
+            return prompt,context
+    headers=[]
+    for p in sorted(decoded):
+        if p==path:continue
+        if len(sources[p])<=DEEP_HEADER_LIMIT:headers.append(whole(p))
+        else:
+            header=_lines(decoded[p]) or ['']
+            content,where=_excerpt(header,1,len(header),DEEP_HEADER_LIMIT)
+            headers.append(item(p,content,False,[where]))
+    others=[m for m in sorted((m for m in methods if m.get('file_path','').replace('\\','/')==path),
+                              key=lambda m:-(m.get('cc') or 0)) if m not in targets]
+    budget=DEEP_PROMPT_LIMIT-len(json.dumps(dict(base,sources=headers),ensure_ascii=False).encode('utf8'))-20_000
+    other_budget=budget
+    for _ in range(40):
+        content,ranges,included,skipped=_deep_main(path,decoded[path],targets,others,max(budget,0),other_budget)
+        prompt,context=serialize(sorted(headers+[item(path,content,False,ranges)],key=lambda i:i['path']),'focused',included,skipped)
+        if len(prompt.encode('utf8'))<=DEEP_PROMPT_LIMIT:
+            return prompt,context
+        # JSON escaping and line lists add up. Give up the other functions first; only then the
+        # overall budget, so a target that no longer fits is left out and reported.
+        if other_budget>0:other_budget=other_budget//2 if other_budget>2_000 else 0
+        else:budget=int(budget*0.9)
+    raise ValueError('검토할 코드 문맥이 너무 큽니다. 다른 파일을 골라 주세요.')

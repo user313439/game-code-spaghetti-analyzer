@@ -2,23 +2,72 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import difflib
 import json
 import os
 from pathlib import Path
 import re
 import subprocess
+import tempfile
 import shutil
 import sys
 import threading
 import time
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from statistics import median
 
 from . import assistant, clang_presets, diagnosis
 from .inputs import target_path
-from .jobs import BusyError, REPO_ROOT
-from .assistant_context import build_prompt, validate_edit_context, validate_target_methods, validate_preview_targets
+from .jobs import BusyError, REPO_ROOT, write_json
+from .assistant_context import (_ast_functions, build_deep_prompt, build_prompt, measure_functions, validate_edit_context,
+                                validate_target_methods, validate_preview_targets)
 from .assistant_reviews import AssistantReviews
+
+DEEP_PARALLEL = 5            # files worked on at once (each is one AI program); five is the most a change takes
+DEEP_DEADLINE = 25 * 60      # files not started by then are skipped and can be retried
+DEEP_FINAL = {'done', 'no_changes', 'failed', 'skipped', 'cancelled'}
+DEEP_PASSES = 3              # one file may be handed to the AI up to this many times in a row
+DEEP_FILE_BUDGET = 15 * 60   # no further pass when the next one would end after this (seconds since the file started)
+DEEP_CONTINUE_CC = 40        # a further pass only while a target function still branches this much
+DEEP_MIN_GAIN = 5            # ... and only after a pass that took away at least this many branches (and 5%)
+
+
+def merge_deep_passes(data, step, path):
+    """The reply of a later pass added to what the earlier passes said: the file's targets, change and
+    evidence together (the whole change is checked against them), the summary lines one after another."""
+    merged = deepcopy(data)
+    row = next(r for r in merged['file_reviews'] if r['path'] == path)
+    new = next((r for r in step['file_reviews'] if r['path'] == path), None)
+    if new is not None:
+        row['targets'] = list(dict.fromkeys(row['targets'] + new['targets']))
+        row['change'] = row['change'] + '\n' + new['change']
+        row['evidence'] = row['evidence'] + new['evidence']
+    merged['overview']['change'] += '\n' + step['overview']['change']
+    merged['uncertainty'] = '\n'.join(filter(None, [merged.get('uncertainty', ''), step.get('uncertainty', '')]))
+    merged['edits'] = merged.get('edits', []) + step.get('edits', [])
+    return merged
+
+
+def merge_deep_advice(results, title, previous=None):
+    """One summary for files done separately: every line names its file. Built by the program (no
+    extra AI call); `previous` is the summary of an earlier pass that a retry adds to."""
+    previous = previous or {}
+    overview = {'title': title}
+    for key in ['problem', 'reason', 'change', 'expected_effect']:
+        parts = [previous['overview'][key]] if previous.get('overview', {}).get(key) else []
+        parts += [f"[{Path(o['unit']['file_path']).name}] {o['data']['overview'][key]}" for o in results]
+        overview[key] = '\n'.join(parts)
+    reviews, seen = [], set()
+    for row in list(previous.get('file_reviews', [])) + [r for o in results for r in o['data']['file_reviews']]:
+        if row['path'] not in seen:
+            seen.add(row['path'])
+            reviews.append(row)
+    pick = lambda key: list(previous.get(key, [])) + [x for o in results for x in o['data'].get(key, [])]
+    return {'overview': overview, 'file_reviews': reviews, 'relationships': pick('relationships'),
+            'reasons': pick('reasons'), 'suggestions': pick('suggestions'), 'tests': pick('tests'),
+            'uncertainty': '\n'.join(filter(None, [previous.get('uncertainty', '')] + [o['data'].get('uncertainty', '') for o in results])),
+            'edits': pick('edits'), 'companions': [], 'creates': [], 'mode': 'deep'}
 
 
 class AssistantJobs:
@@ -99,10 +148,7 @@ class AssistantJobs:
             raise ValueError('적용 후 수정본 소스가 바뀌어 빌드할 수 없습니다. 변경안을 다시 적용해 주세요.')
 
     def _save_rounds(self, ident, data):
-        path = self._rounds_path(ident)
-        temporary = path.with_suffix('.tmp')
-        temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf8')
-        temporary.replace(path)
+        write_json(self._rounds_path(ident), data)
 
     def current_revision(self, ident):
         data = self.rounds(ident)
@@ -142,6 +188,75 @@ class AssistantJobs:
             self._save_rounds(ident, data)
             return data
 
+    def round_changes(self, ident, number):
+        """The code of each function a round changed, before and after (new helper functions too), as
+        unified diffs. C/C++ functions are found with tree-sitter by their full declarator; their CC and
+        length come from each side's own analysis of that file. Other files are shown as a whole."""
+        data = self.rounds(ident)
+        if not 1 <= number <= len(data['rounds']):
+            raise KeyError('round')
+        item = data['rounds'][number - 1]
+        folder = self.folder(ident) / 'revisions'
+        before_root = folder / item['base'] / 'source' if item.get('base') else self.source(ident)
+        after_root = folder / item['revision'] / 'source'
+        before_result = folder / item['base'] / 'result' if item.get('base') else self.folder(ident) / 'result'
+
+        def measures(result):
+            # (file, function name) -> [{cc, loc}, …] in source order, from that analysis itself.
+            try:
+                methods = json.loads((result / 'metrics.json').read_text('utf8')).get('methods', [])
+            except (OSError, ValueError):
+                return {}
+            found = {}
+            for m in sorted(methods, key=lambda m: m.get('start_line') or 0):
+                found.setdefault((str(m.get('file_path', '')).replace('\\', '/'), m.get('name')), []).append(
+                    {'cc': m.get('cc') or 0, 'loc': m.get('loc') or 0})
+            return found
+        measured_before, measured_after = measures(before_result), measures(folder / item['revision'] / 'result')
+
+        def read(root, rel):
+            try:
+                return assistant.source_file(root, rel).read_bytes().decode('utf-8-sig', errors='replace')
+            except ValueError:
+                return ''
+
+        def unified(old, new, rel):
+            ends = lambda text: text if not text or text.endswith('\n') else text + '\n'   # function text has no final newline
+            return ''.join(difflib.unified_diff(ends(old).splitlines(True), ends(new).splitlines(True),
+                                                fromfile='원본/' + rel, tofile='수정본/' + rel, n=3))
+
+        def functions(rel, text, measured):
+            # Every definition by its full declarator (overloads stay apart), with its own measures.
+            rows, seen = {}, {}
+            for identity, row in _ast_functions(rel, text).items():
+                if not row['name']:
+                    continue
+                index = seen.get(row['name'], 0)
+                seen[row['name']] = index + 1
+                values = measured.get((rel, row['name']), [])
+                rows[identity] = {'name': row['name'], 'source': row['source'].decode('utf8', errors='replace'),
+                                  'measure': values[index] if index < len(values) else None}
+            return rows
+
+        rows = []
+        for rel in item.get('files', []):
+            before, after = read(before_root, rel), read(after_root, rel)
+            if Path(rel).suffix.lower() not in {'.c', '.h', '.cpp', '.cc', '.cxx', '.hpp'}:
+                if before != after:
+                    rows.append({'file': rel, 'name': None, 'diff': unified(before, after, rel)})
+                continue
+            old, new = functions(rel, before, measured_before), functions(rel, after, measured_after)
+            for identity in list(new) + [i for i in old if i not in new]:
+                o, n = old.get(identity), new.get(identity)
+                if o and n and o['source'] == n['source']:
+                    continue
+                rows.append({'file': rel, 'name': (n or o)['name'], 'before': o and o['measure'], 'after': n and n['measure'],
+                             'created': o is None, 'removed': n is None,
+                             'diff': unified(o['source'] if o else '', n['source'] if n else '', rel)})
+        drop = lambda r: (r.get('before') or {}).get('cc', 0) - (r.get('after') or {}).get('cc', 0) if r.get('before') and r.get('after') else -1
+        rows.sort(key=lambda r: (r.get('name') is None, r.get('created', False), -drop(r), r['file'], r.get('name') or ''))
+        return {'round': number, 'functions': rows}
+
     def candidates(self, ident):
         data = json.loads((self.current_result(ident) / 'scoring.json').read_text('utf8'))
         rows = sorted(data.get('class_scores', []), key=lambda r: (-float(r.get('si', 0)), r.get('fqn', '')))
@@ -156,10 +271,7 @@ class AssistantJobs:
         return output
 
     def _save(self, ident):
-        path = self.folder(ident) / 'assistant.json'
-        temporary = path.with_suffix('.tmp')
-        temporary.write_text(json.dumps(self.states[ident], ensure_ascii=False, indent=2), encoding='utf8')
-        temporary.replace(path)
+        write_json(self.folder(ident) / 'assistant.json', self.states[ident])
 
     def _mine(self, ident):
         # False once the task was cancelled or replaced: a late worker must not overwrite the state.
@@ -183,6 +295,9 @@ class AssistantJobs:
                 raise ValueError('취소할 AI 요청이 없습니다.')
             run = state.pop('run_id', None)   # the running worker is no longer the owner
             step = (state.get('progress') or {}).get('step', 0)
+            for row in state.get('workers', []):
+                if row['state'] not in DEEP_FINAL:
+                    row['state'] = 'cancelled'
             state.update(state='cancelled', error=None, finished_at=time.time(), message='AI 요청을 취소했습니다.',
                          progress=dict(stage='cancelled', label='취소했습니다.', step=step, total=4, indeterminate=False))
             self._save(ident)
@@ -235,14 +350,38 @@ class AssistantJobs:
             for c in selected:
                 for header in assistant.paired_headers(root, c['file_path']):
                     sources.setdefault(header, assistant.source_file(root, header).read_bytes())
-        companions = self._companions(ident, names, sources) if action == 'preview' else {}
+        # 'deep': each file goes to its own AI call with its functions whole (several at once);
+        # without it, one joint call for all files (also used for links between files).
+        deep = action == 'preview' and body.get('strategy') == 'deep'
+        retry = body.get('retry_of') if deep else None
+        companions = self._companions(ident, names, sources) if action == 'preview' and not deep else {}
         fingerprints = {path: assistant.digest(raw) for path, raw in sources.items()}
         first = selected[0]
+        keep = None
         with self.lock:
             previous = self.get(ident)
             prescriptions = getattr(self, 'prescriptions', None)
             if previous['state'] == 'running' or self.reviews.busy(ident) or (prescriptions and prescriptions.busy(ident)):
                 raise BusyError('진행 중인 AI 작업을 기다려 주세요.')
+            if retry:
+                # Redo some files of a deep change and add them to it: same round, same original code.
+                done = {f['path'] for f in (previous.get('preview') or {}).get('files', [])}
+                if (previous.get('preview_id') != retry or previous.get('state') != 'complete' or previous.get('mode_deep') is not True
+                        or previous.get('base_revision') != self.current_revision(ident)
+                        or any(c['file_path'] in done for c in selected)
+                        or any(previous.get('source_hashes', {}).get(p, h) != h for p, h in fingerprints.items())):
+                    raise ValueError('지난 변경안이 바뀌어 이 파일만 다시 만들 수 없습니다. 변경안을 처음부터 다시 만들어 주세요.')
+                # The files already in the change must still be exactly what their change was made from.
+                for path, fingerprint in previous.get('source_hashes', {}).items():
+                    try:
+                        current = assistant.digest(assistant.source_file(root, path).read_bytes())
+                    except ValueError:
+                        current = None
+                    if current != fingerprint:
+                        raise ValueError('지난 변경안을 만든 뒤 원본 코드가 바뀌어 이 파일만 다시 만들 수 없습니다. 변경안을 처음부터 다시 만들어 주세요.')
+                keep = {'preview': previous.get('preview') or {'files': []}, 'change_advice': previous.get('change_advice'),
+                        'workers': [w for w in previous.get('workers', []) if w['key'] not in names],
+                        'source_hashes': previous.get('source_hashes', {}), 'candidates': previous.get('candidates', [])}
             prior_names = previous.get('candidates') or [previous.get('candidate')]
             prior_hashes = previous.get('source_hashes') or {previous.get('file_path'): previous.get('source_sha256')}
             advice=None
@@ -261,6 +400,9 @@ class AssistantJobs:
             history = previous.get('timings', {})
             timing_key = f"{action}:{service}:{mode}:{body.get('model', '')}:{len(selected)}"
             samples = history.get(timing_key, [])
+            # A file asked again keeps count of its tries and the reason it was turned down last time
+            # (read before `state`, which is the same record, is cleared below).
+            earlier = {w['key']: w for w in previous.get('workers', [])} if previous.get('action') == 'preview' else {}
             state = previous if action == 'preview' else {'timings': history}
             if advice is not None:
                 state['advice']=advice
@@ -275,14 +417,26 @@ class AssistantJobs:
                          estimate_samples=len(samples),
                          progress=dict(stage='prepare', label='선택한 코드와 지표를 준비합니다.', step=0, total=4, indeterminate=False))
             for key in ['preview', 'preview_id', 'revision_url', 'download_url', 'revision',
-                        'comparison', 'message', 'change_advice', 'no_changes']:
+                        'comparison', 'message', 'change_advice', 'no_changes', 'workers', 'preview_failures', 'mode_deep']:
                 state.pop(key, None)
             state['base_revision'] = self.current_revision(ident)   # the round this change builds on
+            if deep:
+                state['mode_deep'] = True
+                state['workers'] = (keep or {}).get('workers', []) + [
+                    {'key': c['fqn'], 'path': c['file_path'], 'label': Path(c['file_path']).name, 'state': 'waiting',
+                     'attempt': earlier.get(c['fqn'], {}).get('attempt', 1) + 1 if c['fqn'] in earlier else 1,
+                     'last_error': earlier[c['fqn']].get('error') if earlier.get(c['fqn'], {}).get('state') in {'failed', 'skipped'} else None}
+                    for c in selected]
+                state['progress'] = dict(stage='ai', label=f'AI가 파일 {len(selected)}개를 나눠 정리하고 있습니다', step=1, total=4, indeterminate=True)
+            if keep:
+                state['candidates'] = sorted(set(keep['candidates']) | set(names))
+                state['source_hashes'] = {**keep['source_hashes'], **fingerprints}
             self.states[ident] = state
             self._save(ident)
         # Credentials remain only in this worker's memory; never in task records/logs.
-        worker = threading.Thread(target=self._generate,
-                                  args=(ident, dict(body), selected, sources, advice, companions, state['run_id']), daemon=True)
+        worker = threading.Thread(target=self._generate_deep if deep else self._generate,
+                                  args=(ident, dict(body), selected, sources, advice, keep if deep else companions, state['run_id']),
+                                  daemon=True)
         self.threads.append(worker)
         worker.start()
         return self.get(ident)
@@ -314,7 +468,8 @@ class AssistantJobs:
         return {'overview': {'title': result['headline'], 'problem': rows[0]['reason'], 'reason': result.get('benefit', ''),
                              'change': ' '.join(f['change_idea'] for f in rows), 'expected_effect': result.get('benefit', '')},
                 'file_reviews': [{'path': files.get(f['name'], f['name']), 'finding': f['reason'], 'change': f['change_idea'],
-                                  'expected_effect': f['expected'], 'decision': '연결 정리' if f['kind'] == 'link' else '파일 안 정리'} for f in rows],
+                                  'expected_effect': f['expected'], 'decision': '연결 정리' if f['kind'] == 'link' else '파일 안 정리',
+                                  'targets': f.get('targets', [])} for f in rows],
                 'suggestions': [f['change_idea'] for f in rows]}
 
     def _generate(self, ident, body, selected, sources, advice, companions=None, run=None):
@@ -370,6 +525,221 @@ class AssistantJobs:
             self._fail(ident, exc)
         finally:
             body.pop('api_key', None)
+
+    # --- one click, several files in depth: one AI call per file, a few at once ----------------
+    def _worker_update(self, ident, key, **fields):
+        with self.lock:
+            if not self._mine(ident):
+                return
+            for row in self.states[ident].get('workers', []):
+                if row['key'] == key:
+                    row.update(fields)
+            rows = self.states[ident].get('workers', [])
+            count = lambda *states: sum(row['state'] in states for row in rows)
+            finished, total = count(*DEEP_FINAL), len(rows)
+            parts = [f'완료 {count("done")}개'] + ([f'바꿀 곳 없음 {count("no_changes")}개'] if count('no_changes') else []) \
+                + ([f'거절 {count("failed", "skipped")}개'] if count('failed', 'skipped') else []) + [f'진행 중 {count("running", "checking")}개']
+            # The bar moves through the AI stage (1 of 4) as files finish, instead of standing still.
+            self.states[ident]['progress'] = dict(stage='ai', label=f'파일 {total}개 중 ' + ' · '.join(parts),
+                                                 step=1 + finished / max(total, 1), total=4, indeterminate=False)
+            self._save(ident)
+
+    @staticmethod
+    def _deep_rules(path, sources, data, prompt, methods):
+        assistant.validate_scope(data, list(sources), preview=True, companions=set())
+        if data.get('creates') or data.get('companions'):
+            raise ValueError('깊게 정리에서는 새 파일이나 함께 수정되는 파일을 만들 수 없습니다.')
+        if any(e.get('path') != path for e in data.get('edits', [])):
+            raise ValueError(f'{path} 밖의 파일을 바꾸는 변경은 적용할 수 없습니다.')
+        if any(r['decision'] == 'refactor' and r.get('change_type') != 'functions' for r in data['file_reviews']):
+            raise ValueError('깊게 정리에서는 함수 본문 변경만 할 수 있습니다.')
+        validate_target_methods(data, methods)
+        validate_edit_context(prompt, data.get('edits', []))
+
+    def _check_deep(self, ident, path, sources, data, prompt, methods):
+        """The usual checks for one file, plus: functions only, this file only, nothing new."""
+        self._deep_rules(path, sources, data, prompt, methods)
+        if not data.get('edits'):
+            return []
+        preview = assistant.preview_changes(self.base_source(ident), data['edits'], [])
+        validate_preview_targets(data, methods, preview, companions=set())
+        return preview['files']
+
+    def _ask_deep(self, ident, body, run, prompt):
+        with assistant.owned_by(('assistant', ident, run)):
+            return assistant.call_provider(body['service'], body['mode'], prompt, body.get('model', ''), body.get('api_key', ''),
+                                           guidance=assistant.GUIDANCE + assistant.DEEP_GUIDANCE, timeout=assistant.DEEP_TIMEOUT,
+                                           max_output=assistant.DEEP_OUTPUT_TOKENS, **assistant.connection_extras(body))
+
+    def _continue_deep(self, ident, key, body, run, unit, path, own, methods, advice, targets, files, data, started):
+        """Later passes on one file. Each asks the AI to go on from the text the last accepted pass left,
+        is checked on that text, and is kept only if the whole change from the original still passes the
+        usual checks. Stops when the targets are small, a pass helps little, time runs short or a pass is
+        rejected; the last accepted change stays. Returns (files, data, note), or Nones when cancelled."""
+        original, current = files[0]['before'], files[0]['after']
+        names = {m.get('name') for m in methods if m.get('file_path', '').replace('\\', '/') == path}
+        others = [m for m in methods if m.get('file_path', '').replace('\\', '/') != path]
+
+        def target_cc(text):
+            measured = {m['name']: m['cc'] for m in measure_functions(path, text)}
+            return [measured.get(t, 0) for t in targets]
+        before, after = sum(target_cc(original)), target_cc(current)
+        took, step, note = time.time() - started, 1, None
+        while step < DEEP_PASSES:
+            gained = before - sum(after)
+            if (max(after, default=0) < DEEP_CONTINUE_CC or gained < max(DEEP_MIN_GAIN, before * 0.05)
+                    or time.time() - started + took > DEEP_FILE_BUDGET or not self._mine(ident)):
+                break
+            step += 1
+            measured = [m for m in measure_functions(path, current) if m['name'] in names]
+            texts = {p: current.encode('utf8') if p == path else raw for p, raw in own.items()}
+            helpers = sorted({h for f in files for h in f.get('added_helpers', [])})
+            prompt, _ = build_deep_prompt(unit, path, texts, measured + others, advice, targets,
+                                          continuation={'pass': step, 'helpers': helpers})
+            self._worker_update(ident, key, state='running', step=step)
+            begun, reply = time.time(), None
+            try:
+                reply = self._ask_deep(ident, body, run, prompt)
+                if not self._mine(ident):
+                    return None, None, None
+                self._worker_update(ident, key, state='checking')
+                self._deep_rules(path, own, reply, prompt, measured + others)
+                if not reply.get('edits'):
+                    step -= 1
+                    break
+                with tempfile.TemporaryDirectory(prefix='game-si-pass-') as folder:
+                    root = Path(folder)
+                    target = root.joinpath(*path.split('/'))
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_text(current, encoding='utf8', newline='')
+                    step_preview = assistant.preview_changes(root, reply['edits'], [])
+                    validate_preview_targets(reply, measured + others, step_preview, companions=set())
+                merged = merge_deep_passes(data, reply, path)
+                whole = assistant.preview_changes(self.base_source(ident), [{'path': path, 'old': original, 'new': step_preview['files'][0]['after']}], [])
+                validate_preview_targets(merged, methods, whole, companions=set())
+            except Exception as exc:
+                reply = reply if reply is not None else getattr(exc, 'reply', None)
+                if reply is not None:
+                    try:
+                        (self.folder(ident) / f"assistant-rejected-{Path(path).name}-pass{step}.json").write_text(
+                            json.dumps({'error': str(exc), 'reply': reply}, ensure_ascii=False, indent=1), encoding='utf8')
+                    except (OSError, TypeError, ValueError):
+                        pass
+                if not self._mine(ident):
+                    return None, None, None
+                reason = str(exc) if isinstance(exc, ValueError) else '검사를 마치지 못했습니다.'
+                note = f'이어서 정리한 {step}단계는 검사에서 빠져 {step - 1}단계까지만 반영했습니다.'
+                self._worker_update(ident, key, note_detail=reason[:600])
+                step -= 1
+                break
+            files, data, current = whole['files'], merged, whole['files'][0]['after']
+            took, before, after = time.time() - begun, sum(after), target_cc(current)   # the next gain is this pass's own
+        if step > 1 and note is None:
+            note = f'AI를 {step}번 이어서 불러 단계적으로 정리했습니다.'
+        self._worker_update(ident, key, steps_done=step)
+        return files, data, note
+
+    def _generate_deep(self, ident, body, selected, sources, advice, keep=None, run=None):
+        self._worker.run = run
+        try:
+            methods = json.loads((self.current_result(ident) / 'metrics.json').read_text('utf8')).get('methods', [])
+            hints = {row.get('path'): row.get('targets', []) for row in (advice or {}).get('file_reviews', [])}
+            deadline = time.time() + DEEP_DEADLINE
+
+            def work(unit):
+                self._worker.run = run   # thread-local: every worker thread carries the task it belongs to
+                key, path = unit['fqn'], unit['file_path']
+                own = {p: raw for p, raw in sources.items() if p == path or p in assistant.paired_headers(self.base_source(ident), path)}
+                if not self._mine(ident):
+                    return None
+                if time.time() > deadline:
+                    self._worker_update(ident, key, state='skipped', error='전체 제한 시간이 지나 시작하지 않았습니다.')
+                    return None
+                started, data = time.time(), None
+                try:
+                    prompt, context = build_deep_prompt(unit, path, own, methods, advice, hints.get(path, ()))
+                    self._worker_update(ident, key, state='running', mode=context['mode'], started_at=started,
+                                        sent_kb=round(context['sent_source_bytes'] / 1024), file_kb=round(context['total_source_bytes'] / 1024),
+                                        targets=context['targets'], skipped_targets=context['skipped_targets'], step=1, steps=DEEP_PASSES)
+                    if not self._mine(ident):   # cancelled while the prompt was built: no AI request at all
+                        return None
+                    data = self._ask_deep(ident, body, run, prompt)
+                    if not self._mine(ident):
+                        return None
+                    self._worker_update(ident, key, state='checking')
+                    files = self._check_deep(ident, path, own, data, prompt, methods)
+                    note = None
+                    if files:
+                        files, data, note = self._continue_deep(ident, key, body, run, unit, path, own, methods, advice,
+                                                                context['targets'], files, data, started)
+                        if files is None:   # cancelled
+                            return None
+                    changed = sorted({t for r in data['file_reviews'] if r['decision'] == 'refactor' for t in r['targets']})
+                    helpers = sorted({h for f in files for h in f.get('added_helpers', [])})
+                    self._worker_update(ident, key, state='done' if files else 'no_changes', seconds=round(time.time() - started),
+                                        changed=changed, helpers=helpers, error=None if files else (data.get('uncertainty') or '')[:600],
+                                        note=note if files else None)
+                    return {'unit': unit, 'data': data, 'files': files, 'sent': context['sent_source_bytes']}
+                except Exception as exc:
+                    data = data if data is not None else getattr(exc, 'reply', None)
+                    if data is not None:
+                        try:
+                            (self.folder(ident) / f"assistant-rejected-{Path(path).name}.json").write_text(
+                                json.dumps({'error': str(exc), 'reply': data}, ensure_ascii=False, indent=1), encoding='utf8')
+                        except (OSError, TypeError, ValueError):
+                            pass
+                    message = str(exc) if isinstance(exc, ValueError) else '이 파일의 변경안을 만들지 못했습니다.'
+                    if isinstance(exc.__cause__, subprocess.TimeoutExpired):
+                        message = (f'AI가 {assistant.DEEP_TIMEOUT // 60}분 안에 답하지 못했습니다. 원본은 그대로이며, '
+                                   '이 파일만 다시 만들거나 빼고 진행할 수 있습니다.')
+                    self._worker_update(ident, key, state='failed', error=message, seconds=round(time.time() - started))
+                    return None
+
+            with ThreadPoolExecutor(max_workers=DEEP_PARALLEL) as pool:
+                outcomes = list(pool.map(work, selected))
+            if not self._mine(ident):
+                return
+            self._progress(ident, 'validate', 'AI 응답과 모든 원본 파일을 확인합니다.', 2)
+            for path, raw in sources.items():
+                if assistant.digest(assistant.source_file(self.base_source(ident), path).read_bytes()) != assistant.digest(raw):
+                    raise ValueError('AI 생성 중 원본 코드가 변경되었습니다. 다시 생성해 주세요.')
+            results = [o for o in outcomes if o]
+            changed = [o for o in results if o['files']]
+            files = list((keep or {}).get('preview', {}).get('files', [])) + [f for o in changed for f in o['files']]
+            if len({f['path'] for f in files}) != len(files):
+                raise ValueError('두 작업이 같은 파일을 바꾸었습니다. 다시 생성해 주세요.')
+            with self.lock:
+                if not self._mine(ident):
+                    return
+                state = self.states[ident]
+                failed = [{k: w.get(k) for k in ['key', 'path', 'label', 'state', 'error']} for w in state['workers']
+                          if w['state'] in {'failed', 'skipped'}]
+                state['sent_source_bytes'] = sum(o['sent'] for o in results)
+                state['context'] = {'mode': 'deep', 'sent_source_bytes': state['sent_source_bytes']}
+                if not files:
+                    if failed:
+                        raise ValueError(' / '.join(f"{w['label']}: {w['error']}" for w in failed)[:1500])
+                    state['no_changes'] = True
+                    state['change_advice'] = merge_deep_advice(results, self._deep_title(ident, state, len(results)), (keep or {}).get('change_advice'))
+                else:
+                    self._progress(ident, 'preview', '파일별 변경안을 하나로 묶어 비교를 준비합니다.', 3)
+                    state['preview'] = {'files': files}
+                    state['preview_id'] = uuid.uuid4().hex
+                    state['change_advice'] = merge_deep_advice(changed or results, self._deep_title(ident, state, len({f['path'] for f in files if not f.get('created')})),
+                                                               (keep or {}).get('change_advice'))
+                state['preview_failures'] = failed
+                self._finish(ident)
+        except Exception as exc:
+            self._fail(ident, exc)
+        finally:
+            body.pop('api_key', None)
+
+    def _deep_title(self, ident, state, count):
+        prescriptions = getattr(self, 'prescriptions', None)
+        result = (prescriptions.get(ident) if prescriptions else {}).get('result') or {}
+        if state.get('plan_source') == 'prescription' and result.get('headline'):
+            return result['headline']
+        return f'{count}개 파일의 복잡한 함수를 한 번에 정리합니다' if count else '바꿀 곳을 찾지 못했습니다'
 
     def _fail(self, ident, exc):
         with self.lock:

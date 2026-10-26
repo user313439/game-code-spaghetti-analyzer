@@ -24,6 +24,22 @@ class BusyError(ValueError):
     pass
 
 
+def write_json(path: Path, data) -> None:
+    """Write a state file whole (through a temporary file). On Windows the swap is refused while the
+    file is open elsewhere for a moment (a page reading the state), so it is tried again briefly."""
+    temporary = path.with_name(f'{path.name}.{uuid.uuid4().hex[:8]}.tmp')
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+    for attempt in range(40):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if attempt == 39:
+                temporary.unlink(missing_ok=True)
+                raise
+            time.sleep(0.05)
+
+
 class JobManager:
     def __init__(self, root: Path, timeout: float = 1800):
         self.root = root.resolve()
@@ -64,10 +80,7 @@ class JobManager:
         return self.root / ident
 
     def _save(self, record):
-        path = self.directory(record['id']) / 'job.json'
-        temporary = path.with_suffix('.tmp')
-        temporary.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding='utf-8')
-        temporary.replace(path)
+        write_json(self.directory(record['id']) / 'job.json', record)
 
     def update(self, ident, **values):
         with self.lock:

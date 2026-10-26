@@ -1,9 +1,45 @@
-import {aiName, elapsedText, obj} from "./core.js";
+import {aiName, codeTokens, elapsedText, obj, plainReason, proseParts} from "./core.js";
 import {diffView, lineCounts} from "./diff.js";
 import {connectionPicker} from "./prescription.js";
-import {fill, h, notice, progressBlock} from "./ui.js";
+import {codeText, fill, h, notice, progressBlock, prose} from "./ui.js";
 
 const STAGES = ["코드 준비", "AI가 변경안 작성", "변경 범위 검사", "비교 준비"];
+const WAY = "gsi-change-way";
+// One file's progress in a change made per file ('deep').
+const WORKER = {waiting: ["대기", ""], running: ["작성 중", "t-busy"], checking: ["검사 중", "t-busy"], done: ["완료", "t-ok"],
+  no_changes: ["바꿀 곳 없음", "t-muted"], failed: ["거절", "t-bad"], skipped: ["건너뜀", "t-bad"], cancelled: ["취소", "t-muted"]};
+
+// A reason in plain words; the program's own wording folds away under "자세한 이유".
+function reasonView(error, tone = "werr") {
+  const {text, detail} = plainReason(error);
+  return h("div", {class: tone}, ...codeText(codeTokens(text)),
+    detail ? h("details", {class: "reason-more"}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(detail)))) : null);
+}
+
+export function workerRows(workers) {
+  return h("ul", {class: "workers"}, ...workers.map(w => {
+    const [label, tone] = WORKER[w.state] || [w.state, ""];
+    const live = ["running", "checking"].includes(w.state) && w.started_at;
+    const seconds = live ? Date.now() / 1000 - w.started_at : w.seconds;
+    const sent = !w.mode ? "" : w.mode === "full" ? `통째로 보냄 · ${w.sent_kb}KB` : `큰 파일 · 대상 함수는 통째로 · ${w.sent_kb}KB / ${w.file_kb}KB`;
+    // A big function is handed to the AI again (up to `steps` times), each pass going on from the last.
+    const pass = live && w.step > 1 ? `이어서 정리 ${w.step}/${w.steps}단계` : "";
+    return h("li", {class: `worker ${tone}`},
+      h("div", {class: "wline"}, h("b", {class: "mono"}, w.label), h("span", {class: `wstate ${tone}`}, label),
+        w.attempt > 1 ? h("span", {class: "sub"}, `다시 만들기 ${w.attempt - 1}회째`) : null,
+        pass ? h("span", {class: "sub"}, pass) : null,
+        sent ? h("span", {class: "sub"}, sent) : null, seconds ? h("span", {class: "sub"}, elapsedText(seconds)) : null),
+      w.targets?.length ? h("div", {class: "wtargets"}, "대상 함수 ", ...w.targets.map(t => h("code", {class: "cname"}, t))) : null,
+      w.helpers?.length ? h("div", {class: "wtargets"}, "새로 만든 함수 ", ...w.helpers.map(t => h("code", {class: "cname"}, t))) : null,
+      w.skipped_targets?.length ? h("div", {class: "wwarn"}, `너무 커서 이번에 보내지 못한 함수: ${w.skipped_targets.join(", ")}`) : null,
+      w.note && w.state === "done" ? h("div", {class: "sub"}, w.note,
+        w.note_detail ? h("details", {class: "reason-more"}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(w.note_detail)))) : null) : null,
+      w.error && ["failed", "skipped"].includes(w.state) ? reasonView(w.error) : null,
+      w.error && w.state === "no_changes" ? h("div", {class: "sub"}, ...codeText(codeTokens(w.error))) : null,
+      w.last_error && w.attempt > 1 && ["waiting", "running", "checking"].includes(w.state)
+        ? h("div", {class: "sub"}, "지난번 거절 이유: ", plainReason(w.last_error).text) : null);
+  }));
+}
 
 export async function render(view, ctx, {jobId, query}) {
   const pick = new URLSearchParams(query || "").get("pick") === "1";
@@ -44,7 +80,23 @@ export async function render(view, ctx, {jobId, query}) {
     // After a cancelled or failed request the same files stay picked, ready to try again.
     const retry = ["cancelled", "failed"].includes(state.state) && state.action === "preview" ? state.candidates || [] : [];
     const chosen = new Set((retry.length ? retry : pick || !plan.length ? [] : plan.map(f => f.name)).filter(n => editable.has(n)));
-    const picker = connectionPicker(connections, ctx.api);
+    const picker = connectionPicker(connections, ctx.api, {step: "refactor"});
+    // How the change is made: each file in depth (default), or links between files in one joint call.
+    let saved = "deep";
+    try { saved = localStorage.getItem(WAY) === "link" ? "link" : "deep"; } catch (_) { /* storage blocked */ }
+    const way = h("select", {id: "change-way", "aria-label": "변경 방식"},
+      h("option", {value: "deep"}, "한 번에 깊게 — 파일마다 복잡한 함수를 크게 나눠 정리 (권장)"),
+      h("option", {value: "link"}, "파일 사이 연결 정리 — 헤더·#include 같은 선언을 함께 옮기기"));
+    way.value = saved;
+    const wayHelp = h("p", {class: "help"});
+    const syncWay = () => {
+      wayHelp.textContent = way.value === "deep"
+        ? "파일마다 AI를 따로 불러 동시에 처리하고, 큰 함수는 한 번에 다 바꾸지 않고 최대 3번 이어서 나눠 정리합니다. 단계마다 검사해 통과한 만큼만 남기며, 보통 10~15분 걸립니다. 한 파일이 거절돼도 나머지는 그대로 남고, 그 파일만 다시 만들 수 있습니다."
+        : "고른 파일을 한 번에 보내 공용 헤더를 나누거나 #include를 정리합니다. 정밀 분석(Clang)은 실제 호출·참조로 연결을 세므로 이 방식으로는 숫자가 거의 바뀌지 않을 수 있습니다.";
+      try { localStorage.setItem(WAY, way.value); } catch (_) { /* storage blocked */ }
+    };
+    way.addEventListener("change", syncWay);
+    syncWay();
     const go = h("button", {class: "btn primary", type: "button"}, "변경안 만들기 →");
     const count = h("span", {class: "sub"});
     const sync = () => { count.textContent = `${chosen.size}개 ${label} 선택 · 최대 5개`; go.disabled = !chosen.size; };
@@ -60,7 +112,7 @@ export async function render(view, ctx, {jobId, query}) {
       });
       return h("label", {class: `pickrow card ${can ? "" : "off"}`}, box, h("span", {class: `score sm g${u.grade}`}, Math.round(u.si)),
         h("div", null, h("b", null, u.file || u.name), extra || h("p", {class: "sub"}, u.sentence),
-          can ? null : h("p", {class: "help"}, "이 파일은 AI에게 보낼 수 없습니다(180KB 초과이거나 분석 폴더 밖의 파일).")));
+          can ? null : h("p", {class: "help"}, "이 파일은 AI에게 보낼 수 없습니다(분석 폴더 밖이거나 1MB를 넘는 파일).")));
     };
     const planned = plan.length && !pick ? h("div", null, h("h2", {class: "h2"}, "AI 처방대로 고칠 파일"),
       h("p", {class: "sub"}, `${presc.result.headline} 처방에서 고른 ${obj(label)} 그대로 사용합니다.`),
@@ -79,20 +131,27 @@ export async function render(view, ctx, {jobId, query}) {
         h("h1", {class: "h1"}, `어떤 ${obj(label)} 고칠까요?`),
         h("p", {class: "sub"}, `고른 ${label}의 실제 코드와, 그 ${obj(label)} 부르는 ${label}들의 #include 부분을 AI에게 보내 변경안을 받습니다. 원본은 바뀌지 않습니다.`))),
       slot,
-      state.state === "failed" ? notice(state.error || "변경안을 만들지 못했습니다.") : null,
+      state.state === "failed" ? notice((state.workers || []).length
+        ? `고른 파일 ${state.workers.length}개가 모두 변경안에 들어가지 못했습니다. 원본은 그대로입니다. 아래에서 파일별 이유를 보고 다시 만들 수 있습니다.`
+        : plainReason(state.error || "변경안을 만들지 못했습니다.").text) : null,
       state.state === "cancelled" ? notice("AI 요청을 취소했습니다. 고칠 파일을 확인하고 다시 만들 수 있습니다.", "info") : null,
       state.no_changes ? notice("AI가 안전하게 바꿀 수 있는 코드가 없다고 답했습니다. 다른 파일을 고르거나 다시 시도해 주세요.", "info") : null,
+      (state.workers || []).length && (state.no_changes || ["failed", "cancelled"].includes(state.state))
+        ? h("div", {class: "card fails"}, h("div", {class: "h3"}, "파일별 결과"), workerRows(state.workers),
+          state.state === "failed" ? h("div", {class: "actions"}, h("button", {class: "btn primary sm", type: "button", onclick: () => go.click()},
+            "같은 파일로 다시 만들기 →")) : null) : null,
       planned,
       h("details", {class: "archive", open: pick || !plan.length || extra.length > 0}, h("summary", null, plan.length && !pick ? `직접 다른 ${label} 고르기` : `G-SI 상위 ${label}`),
         h("div", {class: "picklist"}, ...others.map(u => option(u, rank(u) >= 0
           ? h("p", {class: "sub"}, h("span", {class: "rec"}, `AI 처방 ${rank(u) + 1}순위`), " ", u.sentence) : null)))),
+      h("div", {class: "card conn-card"}, h("label", {for: "change-way"}, "변경 방식"), way, wayHelp),
       h("div", {class: "card conn-card"}, h("b", null, "AI 연결"), picker.el));
     fill(bar, h("div", {class: "in"}, count, h("span", {class: "push"}), go));
     sync();
     go.addEventListener("click", async () => {
       const missing = picker.problem();
       if (missing) { say(missing); return; }
-      const body = {action: "preview", candidates: [...chosen], ...picker.value()};
+      const body = {action: "preview", candidates: [...chosen], ...picker.value(), ...(way.value === "deep" ? {strategy: "deep"} : {})};
       const fromPlan = plan.length && !pick && [...chosen].every(n => plan.some(f => f.name === n));
       body[fromPlan ? "use_prescription" : "direct"] = true;
       go.disabled = true;
@@ -116,25 +175,63 @@ export async function render(view, ctx, {jobId, query}) {
     const p = state.progress || {};
     const elapsed = state.started_at ? elapsedText(Date.now() / 1000 - state.started_at) : "";
     progress.update({step: Math.min(3, p.step || 0), total: 4, text: p.label || "", elapsed, indeterminate: p.indeterminate});
+    const deep = (state.workers || []).length > 0;
     if (shown !== "running") {   // build once; later polls only move the progress and the context line
       const names = (state.candidates || []).map(n => units.get(n)?.file || n).join(" · ");
       say("");
-      fill(root, slot, h("div", {class: "card running"}, h("div", {class: "eyebrow"}, "변경안 만드는 중"),
-        h("h2", {class: "h2"}, `AI가 ${names}의 실제 코드 변경안을 작성하고 있습니다`),
-        h("p", {class: "sub"}, "받은 변경안은 설명한 범위만 바뀌었는지 프로그램이 검사합니다. 함수 본문을 바꾸지 않는 연결 정리는 문법 트리로 다시 확인합니다."),
-        progress.el, h("p", {class: "help context"}),
+      fill(root, slot, h("div", {class: "card running"}, h("div", {class: "eyebrow"}, deep ? "변경안 만드는 중 · 한 번에 깊게" : "변경안 만드는 중"),
+        h("h2", {class: "h2"}, deep ? `AI가 파일 ${state.workers.length}개를 하나씩 맡아 깊게 정리하고 있습니다` : `AI가 ${names}의 실제 코드 변경안을 작성하고 있습니다`),
+        h("p", {class: "sub"}, deep
+          ? "파일마다 AI를 따로 불러 동시에 진행하고, 큰 함수는 최대 3번 이어서 나눠 정리합니다. 받은 변경안은 단계마다 설명한 함수만 바뀌었는지 프로그램이 검사하고, 통과한 것만 하나의 변경안으로 묶습니다."
+          : "받은 변경안은 설명한 범위만 바뀌었는지 프로그램이 검사합니다. 함수 본문을 바꾸지 않는 연결 정리는 문법 트리로 다시 확인합니다."),
+        progress.el, h("p", {class: "help context"}), h("div", {class: "workers-slot"}),
         h("div", {class: "actions"}, h("button", {class: "btn ghost", type: "button", onclick: cancel}, "요청 취소"))));
       shown = "running";
     } else say("");
-    root.querySelector(".context").textContent = state.context
-      ? `보낸 코드 ${(state.context.sent_source_bytes / 1024).toFixed(0)}KB · 함께 수정 후보 ${(state.companion_candidates || []).length}개` : "";
+    root.querySelector(".context").textContent = deep ? ""
+      : state.context ? `보낸 코드 ${(state.context.sent_source_bytes / 1024).toFixed(0)}KB · 함께 수정 후보 ${(state.companion_candidates || []).length}개` : "";
+    if (deep) fill(root.querySelector(".workers-slot"), workerRows(state.workers));
     poll();
   }
 
   // ------------------------------------------------------------ ready
+  const rich = text => prose(proseParts(text));
+  function deepSummary(workers) {
+    const count = k => workers.filter(w => w.state === k).length;
+    const parts = [`파일 ${workers.length}개를 하나씩 맡겨 정리했습니다 · 변경 ${count("done")}개`];
+    if (count("no_changes")) parts.push(`바꿀 곳 없음 ${count("no_changes")}개`);
+    if (count("failed") + count("skipped")) parts.push(`거절·건너뜀 ${count("failed") + count("skipped")}개`);
+    return parts.join(" · ");
+  }
+  // Files of a per-file change that were rejected or not started: their reasons, and a way to redo just them.
+  function failures(state) {
+    const rows = state.preview_failures || [];
+    if (!rows.length) return null;
+    const picker = connectionPicker(connections, ctx.api, {step: "refactor"});
+    const redo = async (event, keys) => {
+      const button = event.currentTarget;
+      const missing = picker.problem();
+      if (missing) { say(missing); return; }
+      button.disabled = true;
+      const body = {action: "preview", strategy: "deep", retry_of: state.preview_id, candidates: keys, ...picker.value(),
+        ...(state.plan_source === "prescription" ? {use_prescription: true} : {direct: true})};
+      try { draw(await ctx.api(`/api/jobs/${jobId}/assistant`, {method: "POST", body: JSON.stringify(body)})); }
+      catch (error) { say(error.message); button.disabled = false; }
+    };
+    return h("div", {class: "card fails"},
+      h("div", {class: "h3"}, `변경안에 들어가지 못한 파일 ${rows.length}개`),
+      h("p", {class: "help"}, "아래 파일은 검사에서 거절됐거나 시간이 부족해 시작하지 못했습니다. 나머지 파일의 변경안은 그대로이며, 이 파일만 다시 만들어 같은 변경안에 더할 수 있습니다."),
+      h("ul", {class: "workers"}, ...rows.map(w => h("li", {class: "worker t-bad"},
+        h("div", {class: "wline"}, h("b", {class: "mono"}, w.label), h("span", {class: "wstate t-bad"}, w.state === "skipped" ? "건너뜀" : "거절"),
+          h("button", {class: "btn ghost sm push", type: "button", onclick: e => redo(e, [w.key])}, "이 파일만 다시 만들기")),
+        w.error ? reasonView(w.error) : null))),
+      rows.length > 1 ? h("div", {class: "actions"}, h("button", {class: "btn ghost sm", type: "button", onclick: e => redo(e, rows.map(w => w.key))}, "모두 다시 만들기")) : null,
+      picker.el);
+  }
   function ready(state) {
     shown = "ready";
     const advice = state.change_advice || {};
+    const deep = (state.workers || []).length > 0;
     const files = state.preview.files.map(item => ({...item, ...lineCounts(item)}));
     const reviews = new Map((advice.file_reviews || []).map(r => [r.path, r]));
     const companions = new Map((advice.companions || []).map(c => [c.path, c.reason]));
@@ -162,7 +259,8 @@ export async function render(view, ctx, {jobId, query}) {
         partners.length ? h("details", {class: "group", open: partners.includes(selected)}, h("summary", null, `함께 수정되는 파일 ${partners.length}개`),
           h("p", {class: "help"}, "#include/using 줄만 바뀝니다."), ...partners.map(f => item(f, h("span", {class: "tag keep"}, "include")))) : null,
         created.length ? h("div", null, h("div", {class: "h3 gap"}, "새 파일"), ...created.map(f => item(f, h("span", {class: "tag new"}, "새 헤더")))) : null,
-        (advice.relationships || []).length ? h("div", {class: "rel"}, h("b", null, "파일 사이 관계"), ...advice.relationships.map(r => h("p", null, `· ${r}`))) : null);
+        (advice.relationships || []).length ? h("div", {class: "rel"}, h("b", null, "파일 사이 관계"),
+          h("ul", null, ...advice.relationships.map(r => h("li", null, ...codeText(codeTokens(r)))))) : null);
       for (const el of left.querySelectorAll(".fitem")) {
         const on = el.dataset.path === selected.path;
         el.classList.toggle("on", on);
@@ -176,10 +274,10 @@ export async function render(view, ctx, {jobId, query}) {
         const filled = (r?.finding || "").startsWith("AI가 이 파일을 따로 설명하지 않았습니다");
         fill(right, h("div", {class: "eyebrow"}, `AI 소견 · ${selected.path}`),
           filled || !r ? h("div", {class: "bubble"}, h("h4", null, "왜 함께 보냈나요?"), "고른 파일과 같은 이름의 헤더라서 문맥으로 함께 보냈습니다. AI는 이 파일을 바꾸지 않았습니다.")
-            : [h("div", {class: "bubble"}, h("h4", null, "이 파일은 어떤 역할인가요?"), r.role),
-              h("div", {class: "bubble"}, h("h4", null, "왜 그대로 두나요?"), r.reason),
-              h("div", {class: "bubble"}, h("h4", null, "AI가 본 내용"), r.finding),
-              r.change ? h("div", {class: "bubble"}, h("h4", null, "AI의 판단"), r.change) : null]);
+            : [h("div", {class: "bubble"}, h("h4", null, "이 파일은 어떤 역할인가요?"), rich(r.role)),
+              h("div", {class: "bubble"}, h("h4", null, "왜 그대로 두나요?"), rich(r.reason)),
+              h("div", {class: "bubble"}, h("h4", null, "AI가 본 내용"), rich(r.finding)),
+              r.change ? h("div", {class: "bubble"}, h("h4", null, "AI의 판단"), rich(r.change)) : null]);
         return;
       }
       fill(center, h("div", {class: "dhead"}, h("b", null, selected.path),
@@ -194,12 +292,13 @@ export async function render(view, ctx, {jobId, query}) {
           h("div", {class: "bubble"}, h("h4", null, "무엇이 들어가나요?"), "자료형·매크로 같은 선언만 담습니다. 함수 정의는 넣을 수 없습니다."));
       } else if (r) {
         fill(right, h("div", {class: "eyebrow"}, `AI 소견 · ${selected.path}`),
-          h("div", {class: "bubble"}, h("h4", null, "이 파일은 어떤 역할인가요?"), r.role),
-          h("div", {class: "bubble"}, h("h4", null, "무엇이 문제인가요?"), r.finding),
-          h("div", {class: "bubble"}, h("h4", null, "왜 이렇게 바꾸나요?"), r.reason),
-          h("div", {class: "bubble"}, h("h4", null, "무엇을 바꾸나요?"), r.change),
-          h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), r.expected_effect),
-          h("details", {class: "bubble"}, h("summary", null, `영향을 받는 곳과 확인할 동작 (${(r.checks || []).length})`), h("p", null, r.impact), h("ul", null, ...(r.checks || []).map(c => h("li", null, c)))));
+          h("div", {class: "bubble"}, h("h4", null, "이 파일은 어떤 역할인가요?"), rich(r.role)),
+          h("div", {class: "bubble"}, h("h4", null, "무엇이 문제인가요?"), rich(r.finding)),
+          h("div", {class: "bubble"}, h("h4", null, "왜 이렇게 바꾸나요?"), rich(r.reason)),
+          h("div", {class: "bubble"}, h("h4", null, "무엇을 바꾸나요?"), rich(r.change)),
+          h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), rich(r.expected_effect)),
+          h("details", {class: "bubble"}, h("summary", null, `영향을 받는 곳과 확인할 동작 (${(r.checks || []).length})`), rich(r.impact),
+            h("ul", null, ...(r.checks || []).map(c => h("li", null, ...codeText(codeTokens(c)))))));
       } else fill(right, h("p", {class: "sub"}, "이 파일에 대한 설명이 없습니다."));
     }
     const o = advice.overview || {};
@@ -208,8 +307,10 @@ export async function render(view, ctx, {jobId, query}) {
       slot,
       h("div", {class: "card overview"}, h("div", {class: "row-gap"}, h("div", {class: "h2"}, "전체 요약"),
         h("span", {class: "sub"}, `${aiName(state.service, state.model)} · ${state.finished_at && state.started_at ? Math.round(state.finished_at - state.started_at) + "초" : ""}`)),
+        deep ? h("p", {class: "help deep-sum"}, deepSummary(state.workers)) : null,
         h("div", {class: "ovgrid"}, ...[["무엇이 문제인가요?", o.problem], ["왜 바꿔야 하나요?", o.reason], ["어떻게 바꾸나요?", o.change], ["무엇이 좋아지나요?", o.expected_effect]]
-          .map(([q, a], i) => h("div", {class: "q"}, h("h4", null, h("i", null, i + 1), q), a || "")))),
+          .map(([q, a], i) => h("div", {class: "q"}, h("h4", null, h("i", null, i + 1), q), a ? rich(a) : "")))),
+      failures(state),
       h("div", {class: "bench"}, left, center, right));
     paint();
     const add = files.reduce((s, f) => s + f.add, 0), rem = files.reduce((s, f) => s + f.rem, 0);

@@ -1,6 +1,6 @@
 // AI prescription panel on the diagnosis page.
-import {AI_LABELS, aiName, connectionProblem, elapsedText, obj, pickConnection, subj} from "./core.js";
-import {bar, h, notice, progressBlock, fill} from "./ui.js";
+import {AI_LABELS, aiName, codeTokens, connectionProblem, elapsedText, obj, pickConnection, subj} from "./core.js";
+import {bar, codeText, h, notice, progressBlock, fill} from "./ui.js";
 
 const STORE = "gsi-ai-connection";
 
@@ -14,9 +14,39 @@ function remember(value) {
 // Connection picker shared by the AI steps. Any AI works: the official programs on this PC
 // (the user's own subscription), their API keys, or any service or local model server that speaks
 // the OpenAI-compatible API. Returns {el, value(), problem()}; the API key never leaves memory.
-export function connectionPicker(connections, api) {
+// `step` ("prescription" | "refactor") keeps a model per step and program and says which model suits it.
+// The prescription reads the whole structure and judges where to fix (a stronger model; its answer is
+// short), the change writes long code by set rules (a lighter model is enough and uses far less quota).
+// `pick` is the suggested model; `auto: false` only offers it instead of filling it in.
+export function stepAdvice(service, step, models = []) {
+  const find = re => models.find(m => re.test(m));
+  if (service === "claude") return step === "refactor"
+    ? {pick: "sonnet", text: "변경안은 Sonnet을 권합니다. 처방이 정한 함수를 규칙대로 나누는 일이라 Sonnet으로 충분하고, 코드를 길게 쓰는 단계라 Opus보다 사용 한도를 훨씬 적게 씁니다. 비워 두면 Opus(기본값)로 만듭니다."}
+    : {text: "처방은 비워 두면 기본 모델(Opus)로 받습니다. 구조 전체를 읽고 어디를 고칠지 판단하는 단계라 상위 모델이 안정적이고, 답이 짧아 사용 한도는 적게 씁니다."};
+  if (service === "gemini") return step === "refactor"
+    ? {pick: "flash", text: "변경안은 flash를 권합니다. 규칙대로 함수를 나누는 일이라 가벼운 모델로 충분하고 사용 한도를 덜 씁니다. 비워 두면 Gemini CLI가 모델을 자동으로 고릅니다."}
+    : {pick: "pro", text: "처방은 pro(상위 모델)를 권합니다. 구조 전체를 읽고 판단하는 단계이고 답이 짧습니다. 비워 두면 Gemini CLI가 모델을 자동으로 고릅니다."};
+  if (service === "codex") {
+    const base = models[0], top = find(/astra/), light = find(/luna/);
+    const named = base ? `(${base})` : "";
+    return step === "refactor"
+      ? {pick: light, auto: false, text: `Codex 기본 모델${named}은 이미 코딩용 주력 모델이라 비워 둬도 됩니다.${light ? ` 사용 한도를 더 아끼려면 ${light}를 고를 수 있지만, 큰 함수에서는 검사에 걸려 거절이 늘 수 있습니다.` : ""}`}
+      : {pick: top, auto: false, text: `처방은 비워 두면 Codex 기본 모델${named}로 받습니다.${top ? ` 더 깊게 검토하려면 ${top}(상위 모델, 사용 한도를 더 씀)을 고를 수 있습니다.` : ""}`};
+  }
+  return null;
+}
+
+export function connectionPicker(connections, api, {step} = {}) {
   const saved = remembered();
   const start = pickConnection(connections, saved);
+  const modelsOf = id => connections.find(c => c.id === id)?.models || [];
+  // The model shown for a program: the one last used for this step, else the suggested one, else empty.
+  const stepModel = (id, how) => {
+    const stored = saved.models?.[`${step}:${id}:${how}`];   // a program's alias (sonnet) is no API model id
+    if (stored !== undefined) return stored;
+    const advice = how === "cli" ? stepAdvice(id, step, modelsOf(id)) : null;
+    return advice?.pick && advice.auto !== false ? advice.pick : "";
+  };
   const labelled = (text, control) => h("label", {class: "conn-field"}, h("span", null, text), control);
   const ORDER = ["claude", "codex", "gemini", "compatible"];
   const ordered = [...connections].sort((a, b) => (ORDER.indexOf(a.id) + 1 || 99) - (ORDER.indexOf(b.id) + 1 || 99));
@@ -25,7 +55,8 @@ export function connectionPicker(connections, api) {
   const mode = h("select", {"aria-label": "연결 방법"}, h("option", {value: "cli"}, "이 PC의 프로그램 (내 구독 계정)"), h("option", {value: "api"}, "API 키"));
   mode.value = start.mode;
   // The model is optional for a program on this PC (its default is used) and required otherwise.
-  const model = h("input", {type: "text", value: saved.model || "", "aria-label": "모델 이름", spellcheck: "false", list: "conn-models", autocomplete: "off"});
+  const firstModel = step ? stepModel(start.service, start.mode) : saved.model || "";
+  const model = h("input", {type: "text", value: firstModel, "aria-label": "모델 이름", spellcheck: "false", list: "conn-models", autocomplete: "off"});
   const modelList = h("datalist", {id: "conn-models"});
   // new-password keeps the browser from offering to save the key; it only lives in this input.
   const key = h("input", {type: "password", autocomplete: "new-password", spellcheck: "false", "aria-label": "API 키"});
@@ -38,7 +69,8 @@ export function connectionPicker(connections, api) {
   const modeField = labelled("연결 방법", mode);
   const addressBox = h("div", {class: "conn-box"}, labelled("서비스", preset), labelled("주소", url));
   const keyField = labelled("API 키", key);
-  const modelField = h("div", {class: "conn-field"}, h("span", null, "모델"), h("div", {class: "conn-model"}, model, listButton), modelList);
+  const tip = h("p", {class: "help conn-tip"});
+  const modelField = h("div", {class: "conn-field"}, h("span", null, "모델"), h("div", {class: "conn-model"}, model, listButton), modelList, tip);
   const hint = h("div", {class: "conn-hint"});
   const say = (tone, ...parts) => fill(hint, h("p", {class: `conn-state conn-${tone}`}, ...parts));
   const sync = () => {
@@ -53,6 +85,11 @@ export function connectionPicker(connections, api) {
     key.placeholder = byAddress ? (local ? "이 PC의 AI 서버면 비워 두세요" : "서비스에서 받은 API 키 (저장하지 않습니다)") : "API 키 (저장하지 않습니다)";
     model.placeholder = byAddress ? "예: gpt-4.1, gemini-2.5-pro, llama3.1" : mode.value === "api" ? "모델 이름 (API 키로 연결할 때 필요)"
       : `비우면 프로그램 기본값${service.value === "claude" ? " (예: opus)" : ""}`;
+    if (!byAddress) fill(modelList, ...modelsOf(service.value).map(m => h("option", {value: m})));
+    const advice = step && mode.value === "cli" ? stepAdvice(service.value, step, modelsOf(service.value)) : null;
+    tip.hidden = !advice;
+    fill(tip, advice?.text || "", advice?.pick && model.value.trim() !== advice.pick
+      ? h("button", {class: "btn ghost sm", type: "button", onclick: () => { model.value = advice.pick; sync(); }}, `${advice.pick}로 바꾸기`) : null);
     if (byAddress) say("info", "OpenAI 호환 API를 쓰는 AI라면 무엇이든 연결됩니다. 서비스를 고르거나 주소를 직접 넣고, 모델을 고르면 됩니다.",
       local ? " 이 PC에서 돌아가는 AI라 사용료가 들지 않습니다." : " 사용료는 키 주인 계정에 청구되며, 키는 이번 요청에만 쓰고 저장하지 않습니다.");
     else if (mode.value === "api") say("info", chosen && !chosen.installed ? `이 PC에서 ${chosen.name} 프로그램을 찾지 못해 API 키로 연결합니다. ` : "",
@@ -73,12 +110,13 @@ export function connectionPicker(connections, api) {
   service.addEventListener("change", () => {
     const chosen = connections.find(c => c.id === service.value);
     if (chosen && service.value !== "compatible") mode.value = chosen.installed ? "cli" : "api";   // reach it somehow
+    if (step) model.value = stepModel(service.value, mode.value);   // a model name of one program means nothing to another
     sync();
   });
-  mode.addEventListener("change", sync);
+  mode.addEventListener("change", () => { if (step) model.value = stepModel(service.value, mode.value); sync(); });
   preset.addEventListener("change", () => { if (preset.value) url.value = preset.value; fill(modelList); sync(); });
   url.addEventListener("input", () => { preset.value = presets.some(p => p.url === url.value.trim()) ? url.value.trim() : ""; sync(); });
-  model.addEventListener("input", now);
+  model.addEventListener("input", sync);
   listButton.addEventListener("click", async () => {
     listButton.disabled = true;
     const label = listButton.textContent;
@@ -97,7 +135,7 @@ export function connectionPicker(connections, api) {
   function value(store = true) {
     const body = {service: service.value, mode: service.value === "compatible" ? "api" : mode.value, model: model.value.trim()};
     if (service.value === "compatible") body.base_url = url.value.trim();
-    if (store) remember(body);
+    if (store) remember(step ? {...body, model: saved.model || "", models: {...remembered().models, [`${step}:${body.service}:${body.mode}`]: body.model}} : body);
     if (body.mode === "api") body.api_key = key.value.trim();
     return body;
   }
@@ -151,7 +189,7 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
   }
   const requestButton = (text, cls = "btn primary block") => h("button", {class: cls, type: "button", onclick: request}, text);
   function intro() {
-    picker = connectionPicker(connections || [], ctx.api);
+    picker = connectionPicker(connections || [], ctx.api, {step: "prescription"});
     return [h("div", {class: "eyebrow"}, "AI 처방"),
       h("div", {class: "lead"}, "어디부터 고치면 엉킴이 가장 많이 풀릴까요?"),
       h("p", {class: "sub"}, `AI가 ${s.units}개 ${label}의 점수·연결·순환 고리를 함께 보고, 먼저 정리할 ${obj(label)} 최대 5개까지 순서대로 추천합니다. 점수 1위가 아니라 여러 ${obj(label)} 묶고 있는 중심 ${subj(label)} 추천될 수도 있습니다.`),
@@ -198,13 +236,14 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
       return h("div", {class: "pitem link", role: "button", tabindex: "0", title: `${unit?.file || f.name} 진단 보기`, onclick: open,
           onkeydown: e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}, h("span", {class: "n"}, i + 1),
         h("div", null, h("b", null, unit?.file || f.name), h("span", {class: `kind ${f.kind}`}, f.kind === "link" ? "연결 정리" : "파일 안 정리"),
-          h("p", null, f.reason), h("p", {class: "how"}, f.change_idea), effect));
+          h("p", null, ...codeText(codeTokens(f.reason))), h("p", {class: "how"}, ...codeText(codeTokens(f.change_idea))),
+          f.targets?.length ? h("p", {class: "targets"}, "먼저 정리할 함수 ", ...f.targets.map(t => h("code", {class: "cname"}, t))) : null, effect));
     });
     return [staleBox,
       h("div", {class: "eyebrow"}, `AI 처방 · ${r.files.length}개 ${label}`), h("div", {class: "lead"}, r.headline),
       cycleBox(r), ...items,
-      r.show_why_not_top ? h("div", {class: "bubble"}, h("h4", null, `왜 점수 1위 ‘${units.get(r.top_unit)?.name || r.top_unit}’부터 고치지 않나요?`), r.why_not_top) : null,
-      h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), r.benefit),
+      r.show_why_not_top ? h("div", {class: "bubble"}, h("h4", null, `왜 점수 1위 ‘${units.get(r.top_unit)?.name || r.top_unit}’부터 고치지 않나요?`), ...codeText(codeTokens(r.why_not_top))) : null,
+      h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), ...codeText(codeTokens(r.benefit))),
       state.stale ? null : h("div", {class: "actions"},
         h("a", {class: "btn ghost", href: `#/job/${jobId}/refactor?pick=1`}, "직접 고르기"),
         h("a", {class: "btn primary", href: `#/job/${jobId}/refactor`}, "추천대로 진행 →")),

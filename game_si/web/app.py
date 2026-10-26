@@ -155,6 +155,8 @@ class AssistantRequest(BaseModel):
     base_url: str = Field(default='', max_length=300)
     use_prescription: bool = False
     direct: bool = False
+    strategy: str = Field(default='', pattern='^(deep)?$')   # 'deep': one AI call per file, several at once
+    retry_of: str = Field(default='', pattern='^([a-f0-9]{32})?$')   # redo files of this deep change
 
 
 class PlayRequest(BaseModel):
@@ -378,6 +380,10 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
             path = manager.directory(ident) / 'revisions' / item['revision'] / 'comparison.json'
             item['comparison'] = json.loads(path.read_text('utf8')) if path.is_file() else None
         return data
+
+    @app.get('/api/jobs/{ident}/rounds/{number}/changes')
+    def round_changes(ident: str, number: int):
+        return assistant.round_changes(ident, number)
 
     @app.post('/api/jobs/{ident}/rounds/undo')
     def undo_round(ident: str):

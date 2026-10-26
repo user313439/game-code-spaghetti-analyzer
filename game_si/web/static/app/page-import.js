@@ -26,7 +26,6 @@ export async function render(view, ctx, params = {}) {
   const tabs = ["github", "files"].map(name => h("button", {type: "button", role: "tab", class: "tab", onclick: () => setKind(name)}, name === "github" ? "GitHub" : "내 파일"));
 
   const name = h("input", {id: "analysis-name", type: "text", maxlength: "100", placeholder: "비워 두면 저장소·폴더 이름을 사용합니다"});
-  const backend = h("select", {id: "analysis-backend"}, h("option", {value: "tree-sitter"}, "기본 분석 (tree-sitter)"), h("option", {value: "clang"}, "컴파일 설정 기반 (Clang)"));
   const clangInputs = {
     local_path: h("input", {id: "clang-local-path", type: "text", placeholder: "C:\\Projects\\MyGame", spellcheck: "false"}),
     local_subdir: h("input", {id: "clang-local-subdir", type: "text", value: ".", spellcheck: "false"}),
@@ -39,11 +38,10 @@ export async function render(view, ctx, params = {}) {
     h("label", {for: "clang-local-subdir"}, "원래 폴더 안의 분석 범위"), clangInputs.local_subdir,
     h("label", {for: "clang-compile-commands"}, "compile_commands.json 경로"), clangInputs.compile_commands,
     h("label", {for: "clang-library"}, "libclang 파일 경로 (자동 탐색 가능 시 생략)"), clangInputs.clang_library);
-  backend.addEventListener("change", () => { clangBox.hidden = backend.value !== "clang"; });
+  // The name is sent with the import, so this box only matters before a source is imported.
+  // How to analyse (basic / precise) is chosen once, on the scope step.
   const advanced = h("details", {class: "advanced"}, h("summary", null, "고급 설정 ", h("span", {class: "sub"}, "필요할 때만 조정하세요")),
-    h("div", {class: "grid2"}, h("div", null, h("label", {for: "analysis-name"}, "분석 이름 (선택)"), name),
-      h("div", null, h("label", {for: "analysis-backend"}, "C / C++ 분석 방식"), backend)),
-    h("p", {class: "help"}, "C#은 Roslyn으로 분석합니다. 기본 C/C++ 분석은 빌드 설정 없이 코드 구조를 살펴봅니다."), clangBox);
+    h("label", {for: "analysis-name"}, "분석 이름 (선택)"), name);
   const importButton = h("button", {class: "btn primary block", type: "submit"}, "소스 가져오기 →");
   const form = h("form", {class: "import-form", novalidate: true, onsubmit: importSource},
     h("div", {class: "tabs", role: "tablist", "aria-label": "소스 가져오기 방식"}, ...tabs), githubPanel, filesPanel, importButton);
@@ -55,25 +53,30 @@ export async function render(view, ctx, params = {}) {
     h("div", {class: "card-head"}, h("div", null, h("div", {class: "eyebrow"}, "새 분석"), h("h2", {class: "h2"}, "어떤 게임 코드를 살펴볼까요?"))),
     alert, form, scope, status, advanced);
 
-  view.append(h("section", {class: "wrap home"},
-    h("div", {class: "hero"}, h("div", {class: "eyebrow"}, "Game Code Spaghetti Analyzer"),
+  const hero = h("div", {class: "hero"}, h("div", {class: "eyebrow"}, "Game Code Spaghetti Analyzer"),
       h("h1", {class: "h1 big"}, "게임 코드의 엉킨 곳을 찾아 풀어 보세요."),
       h("p", {class: "sub"}, "소스를 가져오면 어디가 왜 엉켰는지 진단하고, AI와 함께 고친 뒤 게임이 잘 돌아가는지까지 확인합니다."),
-      h("div", {class: "chips"}, ...["C#", "C", "C++"].map(t => h("span", {class: "chip"}, t)), h("span", {class: "chip muted"}, "이 PC에서 정적 분석"))),
-    card,
-    h("div", {class: "flow"}, ...[
+      h("div", {class: "chips"}, ...["C#", "C", "C++"].map(t => h("span", {class: "chip"}, t)), h("span", {class: "chip muted"}, "이 PC에서 정적 분석")));
+  const flow = h("div", {class: "flow"}, ...[
       ["01", "엉킴 진단", "파일마다 점수와 이유, 서로 얽힌 모습을 지도로 봅니다."],
       ["02", "AI 처방·리팩토링", "어디부터 고칠지 처방받고, 실제 코드 변경을 비교해 적용합니다."],
       ["03", "결과·검증", "엉킴이 얼마나 줄었는지 확인하고 수정된 게임을 실행합니다."]]
-      .map(([n, t, d]) => h("div", {class: "card flow-item"}, h("span", {class: "num"}, n), h("b", null, t), h("p", {class: "sub"}, d))))));
+      .map(([n, t, d]) => h("div", {class: "card flow-item"}, h("span", {class: "num"}, n), h("b", null, t), h("p", {class: "sub"}, d))));
+  view.append(h("section", {class: "wrap home"}, hero, card, flow));
 
   // --- behaviour ---------------------------------------------------------
   function lock() {
     const busy = pending || (job && statusView(job).busy) || !ctx.ready;
-    for (const control of view.querySelectorAll(".import-form button, .import-form input, .scope button, .scope select, .advanced input, .advanced select")) control.disabled = Boolean(busy);
+    for (const control of view.querySelectorAll(".import-form button, .import-form input, .scope button, .scope select, .scope input, .advanced input")) control.disabled = Boolean(busy);
+    // Nothing to import until a ZIP/folder is picked (files tab) or an address is typed (GitHub tab).
+    const ready = kind === "github" ? Boolean(url.value.trim()) : Boolean(upload);
+    importButton.disabled = Boolean(busy) || !ready;
+    importButton.title = ready ? "" : kind === "github" ? "GitHub 저장소 주소를 먼저 입력해 주세요." : "ZIP 파일이나 소스 폴더를 먼저 선택해 주세요.";
   }
+  url.addEventListener("input", () => lock());
   function setKind(next) {
     kind = next;
+    lock();
     tabs.forEach((tab, i) => { const on = (i === 0) === (next === "github"); tab.classList.toggle("on", on); tab.setAttribute("aria-selected", String(on)); });
     githubPanel.hidden = next !== "github";
     filesPanel.hidden = next === "github";
@@ -89,6 +92,7 @@ export async function render(view, ctx, params = {}) {
       picked.textContent = `${label} · ${type === "zip" ? "ZIP 1개" : `소스·헤더 ${upload.files.length.toLocaleString()}개`} · ${size}${upload.skipped ? ` · 제외 ${upload.skipped.toLocaleString()}개` : ""}`;
       say("");
     } catch (error) { say(error.message); }
+    lock();
   }
   zipInput.addEventListener("change", e => { if (e.target.files.length) choose(e.target.files, "zip"); });
   folderInput.addEventListener("change", e => { if (e.target.files.length) choose(e.target.files, "folder"); });
@@ -142,20 +146,25 @@ export async function render(view, ctx, params = {}) {
     const source = job.source || {}, languages = job.scan?.languages || {};
     const folder = h("select", {id: "scope-folder"}, ...(job.scan?.folders?.length ? job.scan.folders : ["."]).map(p => h("option", {value: p}, p === "." ? "전체 폴더" : p)));
     const lang = h("select", {id: "scope-language"}, h("option", {value: "auto"}, "자동 감지"), ...Object.entries(LANGUAGE_LABELS).map(([v, t]) => h("option", {value: v}, t)));
-    // Precise (Clang) analysis is offered when this source is a game the app keeps build settings for.
+    // One place to choose how C/C++ is read: basic (no build settings), precise with the build
+    // settings this app keeps for known games, or precise with the user's own compile_commands.json.
     const presets = job.scan?.presets || [];
     const fits = f => presets.find(p => f === "." || p.folder === f || p.folder.startsWith(`${f}/`));
-    const mode = presets.length ? h("select", {id: "scope-mode"}, h("option", {value: "clang-auto"}, "정밀 분석 (Clang · 전체 분석)"),
-      h("option", {value: "tree-sitter"}, "기본 분석 (빠름 · 빌드 설정 없이)")) : null;
+    const hasNative = Number(languages.c) > 0 || Number(languages.cpp) > 0;
+    const mode = hasNative ? h("select", {id: "scope-mode"},
+      presets.length ? h("option", {value: "clang-auto"}, "정밀 분석 (Clang · 준비된 빌드 설정)") : null,
+      h("option", {value: "tree-sitter"}, "기본 분석 (빠름 · 빌드 설정 없이)"),
+      h("option", {value: "clang"}, "정밀 분석 (Clang · 내 빌드 설정 직접 지정)")) : null;
     const modeHelp = h("p", {class: "help"});
     const syncMode = () => {
       if (!mode) return;
-      const hit = fits(folder.value);
-      mode.querySelector('[value="clang-auto"]').disabled = !hit;
-      if (!hit) mode.value = "tree-sitter";
-      modeHelp.textContent = !hit ? "이 폴더에는 준비된 빌드 설정이 없어 기본 분석만 할 수 있습니다."
-        : mode.value === "clang-auto" ? `${hit.name} 원본과 같은 소스라, 이 앱에 준비된 빌드 설정으로 컴파일러처럼 모든 코드를 해석합니다 (약 1분).`
-        : "빌드 설정 없이 코드를 읽습니다. 매크로 때문에 일부 줄을 건너뛸 수 있습니다(부분 분석).";
+      const hit = fits(folder.value), auto = mode.querySelector('[value="clang-auto"]');
+      if (auto) auto.disabled = !hit;
+      if (!hit && mode.value === "clang-auto") mode.value = "tree-sitter";
+      clangBox.hidden = mode.value !== "clang";
+      modeHelp.textContent = mode.value === "clang-auto" ? `${hit.name} 원본과 같은 소스라, 이 앱에 준비된 빌드 설정으로 컴파일러처럼 모든 코드를 해석합니다 (약 1분).`
+        : mode.value === "clang" ? "직접 만든 compile_commands.json으로 컴파일러처럼 해석합니다. 빌드 환경이 있는 사람만 쓰는 방식입니다."
+        : `빌드 설정 없이 코드를 읽습니다. 매크로 때문에 일부 줄을 건너뛸 수 있습니다(부분 분석).${presets.length && !hit ? " 이 폴더에는 준비된 빌드 설정이 없습니다." : ""}`;
     };
     if (presets.length) folder.value = presets[0].folder;
     folder.addEventListener("change", syncMode);
@@ -168,8 +177,9 @@ export async function render(view, ctx, params = {}) {
         h("p", {class: "sub"}, job.name || "가져온 소스", source.repository ? ` · ${source.repository}` : "", source.commit ? ` · 커밋 ${String(source.commit).slice(0, 12)}` : ""))),
       h("div", {class: "chips"}, ...counts, h("span", {class: "chip"}, `전체 소스 ${total.toLocaleString()}개`)),
       h("div", {class: "grid2"}, h("div", null, h("label", {for: "scope-folder"}, "분석 대상 폴더"), folder), h("div", null, h("label", {for: "scope-language"}, "분석 언어"), lang)),
-      mode ? h("div", {class: "scope-mode"}, h("label", {for: "scope-mode"}, "분석 방식"), mode, modeHelp) : null,
-      h("p", {class: "help"}, "표시된 파일 수는 가져온 전체 소스 기준입니다. 선택한 폴더와 언어가 실제 분석 범위를 정합니다."),
+      mode ? h("div", {class: "scope-mode"}, h("label", {for: "scope-mode"}, "C / C++ 분석 방식"), mode, modeHelp, clangBox) : null,
+      h("p", {class: "help"}, "표시된 파일 수는 가져온 전체 소스 기준입니다. 선택한 폴더와 언어가 실제 분석 범위를 정합니다.",
+        Number(languages.csharp) > 0 ? " C# 파일은 Roslyn으로 분석합니다." : ""),
       h("div", {class: "actions"},
         h("button", {class: "btn ghost", type: "button", onclick: reset}, "소스 다시 선택"),
         h("button", {class: "btn primary", type: "button", onclick: () => start(folder.value, lang.value, mode?.value)}, "이 범위 분석하기 →")));
@@ -216,7 +226,9 @@ export async function render(view, ctx, params = {}) {
     form.hidden = Boolean(job);
     scope.hidden = !job || job.state !== "ready";
     status.hidden = !job || job.state === "ready";
-    advanced.hidden = Boolean(job) && !["ready", "importing"].includes(job.state);
+    advanced.hidden = Boolean(job);
+    hero.hidden = Boolean(job);   // the intro banner is tall; once a source is open the scope button must stay on screen
+    flow.hidden = Boolean(job);
     if (job?.state === "ready" && scope.dataset.job !== job.id) { scope.dataset.job = job.id; showScope(); }
     if (job && job.state !== "ready") showStatus();
     ctx.setSteps(job ? job.id : null, 0, {diagnosis: Boolean(job && statusView(job).result)});
@@ -237,10 +249,10 @@ export async function render(view, ctx, params = {}) {
   }
   async function start(subdir, lang, preferred) {
     if (pending) return;
-    const values = preferred === "clang-auto" ? {lang, subdir, backend: "clang-auto"}
-      : {lang, subdir, backend: backend.value, ...Object.fromEntries(Object.entries(clangInputs).map(([k, el]) => [k, el.value]))};
-    if (values.backend === "clang" && !["c", "cpp"].includes(lang)) { say("Clang 분석에서는 C 또는 C++ 언어를 선택해 주세요."); return; }
-    if (values.backend === "clang" && !values.compile_commands.trim()) { advanced.open = true; say("Clang 분석에 사용할 compile_commands.json 경로를 입력해 주세요."); return; }
+    const values = preferred === "clang" ? {lang, subdir, backend: "clang", ...Object.fromEntries(Object.entries(clangInputs).map(([k, el]) => [k, el.value]))}
+      : {lang, subdir, backend: preferred || "tree-sitter"};
+    if (values.backend === "clang" && !["c", "cpp"].includes(lang)) { say("직접 지정한 Clang 분석에서는 분석 언어를 C 또는 C++로 골라 주세요."); return; }
+    if (values.backend === "clang" && !values.compile_commands.trim()) { clangInputs.compile_commands.focus(); say("Clang 분석에 사용할 compile_commands.json 경로를 입력해 주세요."); return; }
     pending = true; lock(); say("");
     try { follow(await ctx.api(`/api/jobs/${job.id}/start`, {method: "POST", body: JSON.stringify(buildAnalysisOptions(values))})); }
     catch (error) { say(error.message); }

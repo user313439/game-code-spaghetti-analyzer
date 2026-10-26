@@ -46,8 +46,18 @@ const unit = {raw: {cc: 30, coupling: 3, dependency_cycle: 2, global_state: 0, g
   top: {cc: 25, coupling: 25, dependency_cycle: 75, global_state: 100, game_loop_centrality: 100},
   functions: [{name: "big", cc: 30}], calls: ["b"], called_by: ["c", "d"], in_cycle: true};
 const rows = core.whyRows(unit, {unit_label: "파일", cycle_size: 3});
-assert.equal(rows[0].text, "가장 복잡한 함수 big의 분기 30개"); assert.equal(rows[0].top, "상위 25%");
-assert.equal(rows[3].text, "전역 상태 접근 없음"); assert.equal(rows[3].top, "—");
+assert.equal(rows[0].text, "가장 복잡한 함수 big의 복잡도 30"); assert.equal(rows[0].top, "상위 25%");
+assert.equal(rows[3].text, "전역 변수 접근 없음"); assert.equal(rows[3].top, "—");
+// Rank among all units, with ties; a zero value has no place.
+const ranked = {...unit, rank: {cc: 2, coupling: 7, dependency_cycle: 1, global_state: 9, game_loop_centrality: 9}, tied: {cc: false, coupling: true}};
+assert.equal(core.whyRows(ranked, {unit_label: "파일", cycle_size: 3})[0].place, "2위");
+assert.equal(core.placeText(ranked, "coupling"), "공동 7위");
+assert.equal(core.placeText({...ranked, tie_count: {coupling: 6}}, "coupling"), "공동 7위 (6개)");
+assert.match(core.whyRows({...unit, cycle_size: 2}, {unit_label: "파일", cycle_size: 3})[2].text, /^2개 파일의 고리/);   // its own cycle assert.equal(core.placeText(ranked, "global_state"), null);
+assert.equal(core.placeText(unit, "cc"), null);   // diagnosis saved before ranks existed
+assert.deepEqual(core.barNote(unit, "cc"), {text: "상위 25%", hot: false});
+assert.deepEqual(core.barNote({...unit, top: {...unit.top, cc: 4}}, "cc"), {text: "상위 4%", hot: true});
+assert.deepEqual(core.barNote(unit, "global_state"), {text: "없음", hot: false});
 assert.equal(core.barTone(90), "hot"); assert.equal(core.barTone(70), "warm"); assert.equal(core.barTone(10), "cool");
 ''')
 
@@ -182,6 +192,9 @@ def test_ai_connection_defaults_and_missing_fields():
     run('''
 const rows = [{id: "codex", installed: false}, {id: "claude", installed: true, logged_in: true}, {id: "gemini", installed: true}, {id: "compatible", installed: false}];
 assert.deepEqual(core.pickConnection(rows), {service: "claude", mode: "cli"});
+// Codex found inside its desktop app and logged in: Claude Code is still the first choice, Codex next.
+assert.deepEqual(core.pickConnection([{id: "codex", installed: true, logged_in: true}, {id: "claude", installed: true, logged_in: true}]), {service: "claude", mode: "cli"});
+assert.deepEqual(core.pickConnection([{id: "codex", installed: true, logged_in: true}, {id: "claude", installed: true, logged_in: false}, {id: "gemini", installed: true}]), {service: "codex", mode: "cli"});
 // A program that is not on this PC is reached with an API key instead of being refused.
 assert.deepEqual(core.pickConnection(rows, {service: "codex", mode: "cli"}), {service: "codex", mode: "api"});
 assert.deepEqual(core.pickConnection(rows, {service: "compatible"}), {service: "compatible", mode: "api"});
@@ -192,6 +205,23 @@ assert.match(core.connectionProblem({service: "compatible", mode: "api", model: 
 assert.match(core.connectionProblem({service: "compatible", mode: "api", base_url: "http://localhost:11434/v1"}), /모델/);
 assert.equal(core.connectionProblem({service: "compatible", mode: "api", base_url: "http://localhost:11434/v1", model: "llama3.1"}), null);
 assert.equal(core.aiName("compatible", "llama3.1"), "llama3.1"); assert.equal(core.aiName("claude"), "Claude Code");
+''')
+
+
+def test_ai_prose_is_split_into_sentences_with_code_names_and_file_labels():
+    run('''
+const parts = core.proseParts("opentyr.h에는 COUNTOF·MIN 매크로가 있습니다.그래서 keyboard.h도 3.5배 엮입니다. API 키는 쓰지 않습니다.\\n[varz.c] JE_doSpecialShot와 redrawShieldArmorBars()를 나눕니다.");
+assert.equal(parts.length, 2);
+assert.equal(parts[0].label, null); assert.equal(parts[0].sentences.length, 3);
+assert.deepEqual(parts[0].sentences[0], [{code: "opentyr.h"}, {text: "에는 "}, {code: "COUNTOF"}, {text: "·"}, {code: "MIN"}, {text: " 매크로가 있습니다."}]);
+assert.ok(parts[0].sentences[1].some(t => t.code === "keyboard.h") && parts[0].sentences[1].some(t => t.text && t.text.includes("3.5배")));
+assert.ok(parts[0].sentences[2].every(t => !t.code));   // "API" is a plain word, not code
+assert.equal(parts[1].label, "varz.c");
+assert.deepEqual(parts[1].sentences[0].filter(t => t.code).map(t => t.code), ["JE_doSpecialShot", "redrawShieldArmorBars()"]);
+// Nothing is lost: joining the pieces gives the text back.
+const join = p => p.sentences.map(s => s.map(t => t.code || t.text).join("")).join(" ");
+assert.equal(join(parts[1]), "JE_doSpecialShot와 redrawShieldArmorBars()를 나눕니다.");
+assert.deepEqual(core.codeTokens("ESCPressed와 setupMenu, M_PI"), [{code: "ESCPressed"}, {text: "와 "}, {code: "setupMenu"}, {text: ", "}, {code: "M_PI"}]);
 ''')
 
 
@@ -215,6 +245,8 @@ assert.equal(changes.counts.new, 1); assert.equal(changes.counts.worse, 1);
 // Same branches, fewer lines: the length is the headline.
 assert.equal(core.functionChanges([{name: "a.f", before: {cc: 5, loc: 40}, after: {cc: 5, loc: 30}}]).top.kind, "shorter");
 assert.equal(core.functionChanges([{name: "a.f", before: null, after: {cc: 1, loc: 3}}]).top, null);
+assert.equal(core.unitDisplay("clang.file.video_scale_hqNx.c"), "video_scale_hqNx.c");
+assert.equal(core.unitDisplay("tree-sitter.file.a.c"), "a.c"); assert.equal(core.unitDisplay("Game.Menu"), "Game.Menu");
 ''')
 
 
@@ -225,6 +257,7 @@ const fixed = core.functionChanges([{name: "q.menu.Default_MenuKey", before: {cc
 let head = core.resultHeadline(fixed, {label: "파일", cycle: [0, 0], links: [11, 11]});
 assert.equal(head.title, "Default_MenuKey 복잡도 62 → 24 (−61%)");
 assert.match(head.lines.join(" "), /가장 크게 줄었습니다/); assert.match(head.lines.join(" "), /파일 사이의 연결과 순환 고리는 그대로/);
+assert.match(head.lines[0], /새로 만든 함수 1개에 있습니다[.]$/);   // the list below holds the new helper
 head = core.resultHeadline(fixed, {label: "클래스", cycle: [12, 10], links: [40, 38]});
 assert.match(head.lines.join(" "), /순환 고리에 묶인 클래스가 12 → 10개로 줄어/);
 // No function changed, but links between units did: the links lead.
@@ -305,6 +338,12 @@ async function show({functions, cycle = [0, 0], links = [11, 11], game = {availa
     "": {name: "Quake-2"}, "/assistant": {state: "complete", action: "apply"}, "/demo": game, "/diagnosis": {summary: {unit_label: "파일"}},
     "/rounds": {current: 1, rounds: [{round: 1, revision: "r1", files: ["q/client/menu.c"], checks: {original_preserved: true, matches_preview: true,
       reanalyzed: {state: "partial", analyzed_files: 187, syntax_files: 33}}, comparison: {before: [unit(98.93, 17.5)], after: [unit(98.93, 16.9)], functions}}]},
+    "/rounds/1/changes": {functions: [
+      {file: "q/client/menu.c", name: "Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}, created: false,
+       diff: ["--- 원본/q/client/menu.c", "+++ 수정본/q/client/menu.c", "@@ -1,2 +1,2 @@", " int Default_MenuKey(void)",
+              "-    if (old) return 1;", "+    return M_IsSelectButton();", ""].join(String.fromCharCode(10))},
+      {file: "q/client/menu.c", name: "M_IsSelectButton", created: true,
+       diff: ["--- a", "+++ b", "@@ -0,0 +1,2 @@", "+static int M_IsSelectButton(void)", "+{ return 1; }", ""].join(String.fromCharCode(10))}]},
     "/tangle": {rounds: [{round: 0, active: true, index: 100, components: components(cycle[0], links[0]), same_units: true},
       {round: 1, active: true, index: 99.78, components: components(cycle[1], links[1]), same_units: true}]}};
   const view = document.createElement("main");
@@ -339,7 +378,30 @@ const aux = view.querySelector(".aux").textContent;
 assert.match(aux, /보통 2% 미만/); assert.match(aux, /99\.78/); assert.match(aux, /엉킴 총량 구성 보기/);
 const text = view.textContent;
 for (const action of ["이 라운드 되돌리기", "진단 화면으로", "수정본 내려받기 (.zip)", "다음 처방 받기 →"]) assert.ok(text.includes(action), action);
+// The changed functions' code arrives after the page is drawn and shows inside the first card.
+await new Promise(resolve => setTimeout(resolve, 0));
+const code = view.querySelector(".fix").querySelector(".fix-code");
+assert.ok(code, "code view");
+assert.deepEqual(code.querySelector(".code-tabs").elements.map(b => b.textContent), ["Default_MenuKey · 62 → 24", "M_IsSelectButton · 새 함수"]);
+assert.match(code.textContent, /복잡도 62 → 24 · 길이 115 → 78줄/); assert.ok(code.textContent.includes("return M_IsSelectButton();"));
 ''')
+
+
+def test_per_file_progress_rows_show_state_size_and_reasons():
+    run(DOM_SHIM.replace('const page = await import(PAGE);', '').replace('PAGE', '""') + r'''
+const refactor = await import(REFACTOR);
+const rows = refactor.workerRows([
+  {label: "tyrian2.c", state: "running", mode: "full", sent_kb: 123, file_kb: 123, started_at: Date.now() / 1000 - 65, targets: ["JE_main"]},
+  {label: "mainint.c", state: "done", mode: "focused", sent_kb: 95, file_kb: 410, seconds: 200, targets: ["JE_playerMovement"], helpers: ["move_ship"], skipped_targets: ["JE_huge"]},
+  {label: "opentyr.c", state: "no_changes", seconds: 30, error: "setupMenu는 이미 표로 나뉘어 있습니다."},
+  {label: "varz.c", state: "failed", error: "varz.h 밖의 파일을 바꾸는 변경은 적용할 수 없습니다."}]).elements;
+assert.deepEqual(rows.map(r => r.getAttribute("class")), ["worker t-busy", "worker t-ok", "worker t-muted", "worker t-bad"]);   // never the global "ok"
+const text = rows.map(r => r.textContent);
+assert.match(text[0], /작성 중/); assert.match(text[0], /통째로 보냄 · 123KB/); assert.match(text[0], /1분 5초|1분 4초/); assert.match(text[0], /JE_main/);
+assert.match(text[1], /큰 파일 · 대상 함수는 통째로 · 95KB \/ 410KB/); assert.match(text[1], /move_ship/); assert.match(text[1], /보내지 못한 함수: JE_huge/);
+assert.match(text[2], /바꿀 곳 없음/); assert.match(text[2], /이미 표로/);
+assert.match(text[3], /거절/); assert.ok(rows[3].querySelector(".werr").querySelector("code"));
+'''.replace('REFACTOR', json.dumps((APP / 'page-refactor.js').as_uri())))
 
 
 def test_result_page_without_function_changes_leads_with_links():
@@ -355,3 +417,62 @@ view = await show({functions: [], game: {available: true, state: "idle"}});
 const open = view.querySelectorAll(".badge").filter(b => b.classList.contains("is-todo")).map(b => b.textContent);
 assert.ok(open.some(t => t.includes("동작 비교"))); assert.equal(view.querySelector(".play-ask"), null);
 ''')
+
+
+def test_each_step_suggests_a_model_that_fits_it():
+    # The prescription judges (a stronger model, short answer); the change writes long code by rules (a lighter one).
+    run(f'''
+const {{stepAdvice}} = await import({json.dumps((APP / "prescription.js").as_uri())});
+assert.equal(stepAdvice("claude", "refactor").pick, "sonnet");
+assert.equal(stepAdvice("claude", "prescription").pick, undefined);   // left empty: Opus
+assert.equal(stepAdvice("gemini", "refactor").pick, "flash");
+assert.equal(stepAdvice("gemini", "prescription").pick, "pro");
+const codex = ["gpt-6.1-sol", "gpt-6-astra", "gpt-6-luna"];
+const fix = stepAdvice("codex", "refactor", codex), plan = stepAdvice("codex", "prescription", codex);
+assert.equal(fix.pick, "gpt-6-luna"); assert.equal(fix.auto, false); assert.match(fix.text, /gpt-6.1-sol/);
+assert.equal(plan.pick, "gpt-6-astra"); assert.equal(plan.auto, false);
+assert.equal(stepAdvice("codex", "refactor", []).pick, undefined);   // unknown models: nothing named
+assert.equal(stepAdvice("compatible", "refactor"), null);
+''')
+
+
+def test_rejection_reasons_are_said_plainly_with_the_original_kept():
+    run('''
+const timeout = core.plainReason("AI가 15분 안에 답하지 못했습니다. 원본은 그대로이며, 이 파일만 다시 만들거나 빼고 진행할 수 있습니다.");
+assert.match(timeout.text, /제한 시간/); assert.match(timeout.detail, /15분/);
+assert.match(core.plainReason("실제 변경 함수와 파일별 수정 대상이 일치하지 않습니다.").text, /다른 곳까지/);
+assert.match(core.plainReason("선언한 대상 함수 밖의 기존 코드 변경은 승인할 수 없습니다.").text, /원본 보호/);
+assert.match(core.plainReason("새 보조 함수는 정적 함수이며 설명에 이름이 있고 변경된 대상 함수에서 실제 호출되어야 합니다.").text, /안전 규칙/);
+assert.match(core.plainReason("AI 안내의 필수 내용이 누락되었거나 너무 깁니다.").text, /형식/);
+const other = core.plainReason("처음 보는 이유");
+assert.equal(other.text, "처음 보는 이유"); assert.equal(other.detail, "");
+''')
+
+
+def test_backticked_code_from_the_ai_shows_as_code_without_backticks():
+    run('''
+const parts = core.codeTokens("앞부분 `if (i > 0)` 조건과 `w[2]` 값을 옮깁니다.");
+assert.deepEqual(parts.filter(p => p.code).map(p => p.code), ["if (i > 0)", "w[2]"]);
+assert.ok(!parts.some(p => (p.text || "").includes("`")));
+''')
+
+
+def test_grade_help_matches_the_scoring_thresholds():
+    from game_si.si import _grade
+    run('''
+const rules = core.GRADE_RULES.map(([g]) => g).join("");
+assert.equal(rules, "ABCDE");
+assert.ok(core.GRADE_HELP.includes("E 80 이상") && core.GRADE_HELP.includes("A 20 미만"));
+assert.ok(core.GSI_HELP.includes("0~100") && core.TOP_HELP.includes("상위"));
+''')
+    assert [_grade(s) for s in (19.9, 20, 40, 60, 80)] == list('ABCDE')
+
+
+def test_map_zoom_needs_ctrl_and_import_waits_for_a_source():
+    source = (APP / 'map.js').read_text(encoding='utf-8')
+    assert 'if (!e.ctrlKey && !e.metaKey) return;' in source
+    page = (APP / 'page-import.js').read_text(encoding='utf-8')
+    assert 'importButton.disabled = Boolean(busy) || !ready' in page
+    assert 'hero.hidden = Boolean(job)' in page
+    css = (APP / 'app.css').read_text(encoding='utf-8')
+    assert '.diffcard .diff { min-height:' in css

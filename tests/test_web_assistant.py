@@ -69,7 +69,7 @@ def test_patch_size_and_nested_destination_are_bounded(tmp_path):
     source.mkdir()
     (source / 'main.c').write_text('int x;', encoding='utf8')
     with pytest.raises(ValueError):
-        ai.preview_changes(source, [dict(path='main.c', old='int x;', new='x' * 200_000)])
+        ai.preview_changes(source, [dict(path='main.c', old='int x;', new='x' * (ai.MAX_FILE_BYTES + 1))])
     preview = ai.preview_changes(source, [dict(path='main.c', old='int x;', new='int y;')])
     with pytest.raises(ValueError):
         ai.apply_changes(source, source / 'nested', preview)
@@ -98,6 +98,18 @@ def test_explicit_api_key_transport_without_live_call(monkeypatch, service):
     assert 'unit-test-key' not in request.full_url
     assert 'unit-test-key' not in request.data.decode()
     assert any('unit-test-key' in value for _, value in request.header_items())
+    assert str(ai.API_OUTPUT_TOKENS) in request.data.decode()
+    # A model whose output limit is smaller refuses the long request once; it is asked again with 8,000.
+    captured.clear()
+
+    def refusing(request, timeout):
+        captured.append(request)
+        if len(captured) == 1:
+            raise ai.urllib.error.HTTPError(request.full_url, 400, 'max tokens', {}, None)
+        return Response()
+    monkeypatch.setattr(ai.urllib.request, 'urlopen', refusing)
+    assert ai.call_provider(service, 'api', 'selected public source', 'test-model', 'unit-test-key') == reply
+    assert len(captured) == 2 and str(ai.SMALL_OUTPUT_TOKENS) in captured[1].data.decode()
 
 
 def test_cli_timeout_stops_child_processes(tmp_path, monkeypatch):
