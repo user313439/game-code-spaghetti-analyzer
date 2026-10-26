@@ -1,4 +1,4 @@
-import {LANGUAGE_LABELS, METRIC_KEYS, METRIC_LABELS, barTone, obj, subj, whyRows} from "./core.js";
+import {GRADE_HELP, GSI_HELP, LANGUAGE_LABELS, METRIC_KEYS, TOP_HELP, METRIC_LABELS, barNote, barTone, obj, subj, whyRows} from "./core.js";
 import {bar, gradeBadge, h, notice, fill} from "./ui.js";
 import {createMap, MAP_LIMIT} from "./map.js";
 import {createPrescriptionPanel} from "./prescription.js";
@@ -43,13 +43,14 @@ export async function render(view, ctx, {jobId}) {
     const rank = plan.indexOf(u.fqn);
     const worst = u.functions[0];
     const maxcc = Math.max(1, worst ? worst.cc : 1);
-    const score = h("div", {class: `score g${u.grade}`}, Math.round(u.si));
+    const score = h("div", {class: `score g${u.grade}`, title: `G-SI ${Math.round(u.si)}점 · ${u.grade}등급. ${GRADE_HELP}`}, Math.round(u.si));
     const detail = h("div", {class: "detail"},
       h("div", null, h("h5", null, "왜 엉켰나요?"),
-        h("div", {class: "why"}, ...whyRows(u, s).flatMap(r => [h("b", null, r.label), h("span", null, r.text), h("span", {class: "p"}, r.top)]))),
+        h("div", {class: "why"}, ...whyRows(u, s).flatMap(r => [h("b", null, r.label), h("span", null, r.text),
+          h("span", {class: "p"}, r.place ? [h("b", null, r.place), h("small", null, `${s.units}개 중 · ${r.top}`)] : r.top)]))),
       h("div", null, h("h5", null, `복잡한 함수 ${u.functions.length} / ${u.function_count}개`),
         h("table", {class: "ftab"}, h("tbody", null, ...u.functions.map(f => h("tr", null,
-          h("td", {class: "mono"}, f.name), h("td", {class: "sub"}, `${f.line}행`), h("td", null, "CC ", h("b", null, f.cc)),
+          h("td", {class: "mono"}, f.name), h("td", {class: "sub"}, `${f.line}행부터`), h("td", null, "CC ", h("b", null, f.cc)),
           h("td", null, bar(100 * f.cc / maxcc, f.cc >= 50 ? "hot" : "cool")))))),
         h("h5", {class: "gap"}, `이 ${subj(label)} 부르는 ${label} ${u.calls.length}개`), chips(u.calls),
         h("h5", null, `이 ${obj(label)} 부르는 ${label} ${u.called_by.length}개`), chips(u.called_by)),
@@ -59,7 +60,8 @@ export async function render(view, ctx, {jobId}) {
       h("div", {class: "fmain"},
         h("div", {class: "fname"}, `${index + 1}. ${u.name}`, h("small", null, `${u.file} · ${u.loc.toLocaleString()}줄`), rank >= 0 ? h("span", {class: "rec"}, `AI 처방 ${rank + 1}순위`) : null),
         h("div", {class: "say"}, u.sentence),
-        h("div", {class: "mbars"}, ...METRIC_KEYS.map(k => h("div", null, METRIC_LABELS[k], bar(u.pct[k], barTone(u.pct[k])))))),
+        h("div", {class: "mbars"}, ...METRIC_KEYS.map(k => { const note = barNote(u, k);
+          return h("div", null, METRIC_LABELS[k], bar(u.pct[k], barTone(u.pct[k])), h("small", {class: `mnote ${note.hot ? "hot" : ""}`, title: TOP_HELP}, note.text)); }))),
       h("div", {class: "fn"}, "가장 복잡한 함수", h("br"), worst ? [h("b", null, worst.name), ` · CC ${worst.cc} · ${worst.loc}줄`] : "없음"),
       h("span", {class: "chev", "aria-hidden": "true"}, "▾"));
     const el = h("article", {class: `card fc ${rank >= 0 ? "recd" : ""}`, id: `fc-${u.fqn}`}, head, detail);
@@ -82,12 +84,21 @@ export async function render(view, ctx, {jobId}) {
       box.querySelectorAll("button").forEach(b => { const on = b === e.currentTarget; b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); }); onChange(value); }}, text)));
     return box;
   };
+  const filterSeg = seg([["all", "전체 연결"], ["cycle", "순환 고리만"], ["plan", "AI 처방 주변"]], v => map?.setFilter(v));
+  // 'AI 처방 주변' means nothing until a prescription names files: keep it off until then.
+  function syncPlanFilter() {
+    const [all, , near] = filterSeg.querySelectorAll("button");
+    near.disabled = !plan.length;
+    near.title = plan.length ? "" : "AI 처방을 받으면 선택할 수 있습니다";
+    if (!plan.length && near.classList.contains("on")) all.click();
+  }
+  syncPlanFilter();
   mapHost = h("div", {class: "map-host"});
   pickCard = h("div", {class: "card pick", hidden: true});
   const mapCard = h("section", {class: "card mapcard", hidden: true},
     h("div", {class: "mapbar"}, h("div", {class: "h2"}, "스파게티 지도"),
       seg([["force", "자유 배치"], ["circle", "원형 배치"]], v => map?.setLayout(v)),
-      seg([["all", "전체 연결"], ["cycle", "순환 고리만"], ["plan", "AI 처방 주변"]], v => map?.setFilter(v))),
+      filterSeg),
     mapHost,
     h("div", {class: "zoombox"}, h("button", {type: "button", "aria-label": "확대", onclick: () => map?.zoomBy(1.4)}, "+"),
       h("button", {type: "button", "aria-label": "축소", onclick: () => map?.zoomBy(1 / 1.4)}, "−"),
@@ -111,7 +122,7 @@ export async function render(view, ctx, {jobId}) {
       unit ? h("button", {class: "btn ghost sm block", type: "button", onclick: () => openCard(unit.fqn)}, "진단서에서 자세히 보기") : null);
   }
   const viewHelp = h("p", {class: "help"});
-  const helpText = which => which === "map" ? `점을 누르면 그 ${label}의 연결만 보입니다. 휠로 확대·축소합니다.` : `${obj(label)} 누르면 점수의 이유와 연결이 펼쳐집니다.`;
+  const helpText = which => which === "map" ? `점을 누르면 그 ${label}의 연결만 보입니다. Ctrl을 누른 채 휠을 돌리면 확대·축소합니다.` : `${obj(label)} 누르면 점수의 이유와 연결이 펼쳐집니다.`;
   viewHelp.textContent = helpText("cards");
   function setView(which) {
     viewHelp.textContent = helpText(which);
@@ -143,7 +154,7 @@ export async function render(view, ctx, {jobId}) {
   const worst = s.worst_function;
   const panel = createPrescriptionPanel(ctx, {jobId, data, onPlan: names => {
     if (names.join("|") === plan.join("|")) return;   // polling repeats the same plan; keep cards as they are
-    plan = names; drawCards(); map?.setPlan(plan);
+    plan = names; drawCards(); map?.setPlan(plan); syncPlanFilter();
   }, onFocus: id => {
     // Same view, that file: on the map it is picked and centred; in the report its card opens.
     if (!mapCard.hidden && map) { map.focusOn(id); mapCard.scrollIntoView({behavior: "smooth", block: "nearest"}); }
@@ -158,10 +169,14 @@ export async function render(view, ctx, {jobId}) {
     h("div", {class: "layout"},
       h("div", null,
         h("div", {class: "sum"},
-          h("div", {class: "card stat"}, h("b", {class: "hot-text"}, `${s.e_count} / ${s.units}`), h("span", null, `심하게 엉킨 ${label} (E등급)`)),
-          h("div", {class: "card stat"}, h("b", null, s.cycle_size > 1 ? `${s.cycle_size}개 ${label}` : "없음"), h("span", null, "서로 꼬리를 무는 순환 고리")),
+          h("div", {class: "card stat", title: `${GRADE_HELP} E등급은 G-SI 80 이상입니다.`}, h("b", {class: "hot-text"}, `${s.e_count} / ${s.units}`), h("span", null, `심하게 엉킨 ${label} (E등급)`)),
+          // Every unit in any cycle, the same count the result page compares round by round.
+          h("div", {class: "card stat"}, h("b", null, (s.cycle_units ?? s.cycle_size) > 1 ? `${s.cycle_units ?? s.cycle_size}개 ${label}` : "없음"),
+            h("span", null, s.cycles > 1 ? `순환 고리 ${s.cycles}개에 묶인 ${label}` : "서로 꼬리를 무는 순환 고리")),
           h("div", {class: "card stat"}, h("b", null, `${s.links.toLocaleString()}개`), h("span", null, `${label} 사이 연결선`)),
           h("div", {class: "card stat"}, h("b", null, worst ? `CC ${worst.cc}` : "—"), h("span", null, worst ? `가장 복잡한 함수 · ${worst.name}` : "함수 정보 없음"))),
+        h("details", {class: "gsi-guide"}, h("summary", null, "G-SI·등급·‘상위 %’는 무슨 뜻인가요?"),
+          h("p", null, GSI_HELP), h("p", null, GRADE_HELP), h("p", null, TOP_HELP)),
         // The tabs sit right above what they switch.
         h("div", {class: "viewbar"}, viewSeg, viewHelp),
         cards, mapCard,

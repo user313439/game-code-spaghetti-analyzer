@@ -1,4 +1,5 @@
-import {changeText, elapsedText, functionChanges, resultHeadline, safetyBadges} from "./core.js";
+import {changeText, elapsedText, functionChanges, resultHeadline, safetyBadges, unitDisplay} from "./core.js";
+import {diffView} from "./diff.js";
 import {confirmDialog, fill, h, notice, progressBlock, toast} from "./ui.js";
 
 const APPLY_STAGES = ["사본 만들기", "다시 분석", "전후 비교", "정리"];
@@ -32,8 +33,30 @@ function metric(title, before, after, unit = "") {
 }
 
 const fmt = v => v.toLocaleString();
+const fmtAvg = v => Number(v).toLocaleString(undefined, {maximumFractionDigits: 1});   // an average: one decimal at most
 
-function owner(row) { return row.name.length > row.short.length ? row.name.slice(0, row.name.length - row.short.length - 1) : ""; }
+// "코드가 이렇게 바뀌었습니다": each changed function's code before and after, the most reduced first.
+function codeView(list) {
+  if (!list?.length) return null;
+  const view = h("div", {class: "code-view"});
+  const tabs = h("div", {class: "code-tabs", role: "tablist", "aria-label": "바뀐 함수"});
+  const name = row => row.name || row.file.split("/").pop();
+  const label = row => row.created ? `${name(row)} · 새 함수` : row.removed ? `${name(row)} · 삭제`
+    : row.before && row.after ? `${name(row)} · ${row.before.cc} → ${row.after.cc}` : name(row);
+  const show = row => {
+    tabs.querySelectorAll("button").forEach((b, i) => { const on = list[i] === row; b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on)); });
+    fill(view, h("div", {class: "dhead"}, h("b", {class: "mono"}, name(row)), h("span", {class: "sub"}, row.file),
+      row.before && row.after ? h("span", {class: "push sub"}, `복잡도 ${row.before.cc} → ${row.after.cc} · 길이 ${row.before.loc} → ${row.after.loc}줄`) : null),
+      diffView({diff: row.diff}));
+  };
+  list.forEach(row => tabs.append(h("button", {type: "button", role: "tab", class: "chip", onclick: () => show(row)}, label(row))));
+  show(list[0]);
+  return h("div", {class: "fix-code"}, h("div", {class: "fix-sub"}, "코드가 이렇게 바뀌었습니다"),
+    h("p", {class: "help"}, "왼쪽은 원래 코드, 오른쪽은 고친 뒤입니다. 새로 만든 함수는 오른쪽에만 있습니다. 함수 이름을 누르면 바꿔 볼 수 있습니다."),
+    tabs, view);
+}
+
+function owner(row) { return unitDisplay(row.name.length > row.short.length ? row.name.slice(0, row.name.length - row.short.length - 1) : ""); }
 
 export async function render(view, ctx, {jobId}) {
   const root = h("section", {class: "wrap wide"}, h("p", {class: "empty"}, "수정 결과를 불러오고 있습니다."));
@@ -111,12 +134,15 @@ export async function render(view, ctx, {jobId}) {
         h("div", {class: "fix-metrics"}, metric(`순환 고리에 묶인 ${label}`, cycle[0], cycle[1], "개"), metric(`${label} 사이 연결`, links[0], links[1], "개")))
       : null;
     const totals = changes.totals, totalChange = totals.cc[0] ? changeText(totals.cc[0], totals.cc[1]) : "";
+    // The code of the changed functions arrives separately (it can be large) and fills in below.
+    const codeSlot = h("div");
+    ctx.api(`/api/jobs/${jobId}/rounds/${n}/changes`).then(data => { if (alive) fill(codeSlot, codeView(data?.functions)); }).catch(() => {});
     const hero = h("section", {class: "card fix", "aria-label": "고친 곳의 변화"},
       h("div", {class: "fix-head"}, h("div", {class: "eyebrow"}, "고친 곳의 변화"), h("span", {class: "help"}, "AI 설명이 아니라 수정본을 다시 분석해 측정한 값입니다.")),
       top ? h("div", {class: "fix-top"},
         h("div", {class: "fix-name"}, h("span", {class: "chip good"}, top.kind === "simpler" ? "복잡도가 가장 크게 줄어든 함수" : "길이가 가장 크게 줄어든 함수"),
           h("b", {class: "mono"}, top.short), owner(top) ? h("span", {class: "help mono"}, owner(top)) : null),
-        h("div", {class: "fix-metrics"}, metric("복잡도 (CC, 분기 수)", top.before.cc, top.after.cc), metric("길이", top.before.loc, top.after.loc, "줄"))) : null,
+        h("div", {class: "fix-metrics"}, metric("복잡도(CC)", top.before.cc, top.after.cc), metric("길이", top.before.loc, top.after.loc, "줄"))) : null,
       rest.length ? h("div", {class: "fix-others"}, h("div", {class: "fix-sub"}, top ? `함께 바뀐 함수 ${rest.length}개` : `바뀐 함수 ${rest.length}개`),
         h("ul", {class: "fix-list"}, ...rest.slice(0, SHOWN_FUNCTIONS).map(otherRow)),
         rest.length > SHOWN_FUNCTIONS ? h("details", {class: "parts"}, h("summary", null, `함수 ${rest.length - SHOWN_FUNCTIONS}개 더 보기`),
@@ -124,7 +150,7 @@ export async function render(view, ctx, {jobId}) {
       changes.rows.length > 1 ? h("p", {class: "fix-total"}, h("b", null, `바뀐 함수 ${changes.rows.length}개를 모두 합치면`),
         ` 복잡도 ${fmt(totals.cc[0])} → ${fmt(totals.cc[1])}${totalChange ? ` (${totalChange})` : ""}`,
         ` · 길이 ${fmt(totals.loc[0])} → ${fmt(totals.loc[1])}줄`, changes.counts.new ? h("span", {class: "help"}, "새로 만든 함수로 옮겨 간 복잡도까지 더한 값입니다.") : null) : null,
-      structure);
+      structure, codeSlot);
 
     // 2. Safety: short badges up here, the details folded.
     const playButtons = canRecordPlay ? h("div", {class: "row-gap"},
@@ -176,9 +202,9 @@ export async function render(view, ctx, {jobId}) {
     const unitKey = c => c.fqn || c.file_path;
     const before = new Map((comp.before || []).map(c => [unitKey(c), c]));
     const unitName = a => label === "파일" || !a.fqn ? h("b", null, a.file_path) : [h("b", null, a.fqn), h("br"), h("span", {class: "help"}, a.file_path)];
-    const fileTable = h("table", {class: "tbl"}, h("thead", null, h("tr", null, ...[label, "G-SI", "복잡도", "연결", "순환 고리 연결"].map(t => h("th", null, t)))),
+    const fileTable = h("table", {class: "tbl"}, h("thead", null, h("tr", null, ...[label, "G-SI", "복잡도(CC) · 복잡한 함수 상위 10% 평균", "연결", "순환 고리 연결"].map(t => h("th", null, t)))),
       h("tbody", null, ...(comp.after || []).map(a => { const b = before.get(unitKey(a)) || a; return h("tr", null, h("td", null, unitName(a)),
-        h("td", null, `${b.si} → ${a.si}`), h("td", null, `${b.raw.cc} → `, h("b", {class: a.raw.cc < b.raw.cc ? "good-text" : ""}, a.raw.cc)),
+        h("td", null, `${b.si} → ${a.si}`), h("td", null, `${fmtAvg(b.raw.cc)} → `, h("b", {class: a.raw.cc < b.raw.cc ? "good-text" : ""}, fmtAvg(a.raw.cc))),
         h("td", null, `${b.raw.coupling} → `, h("b", {class: a.raw.coupling < b.raw.coupling ? "good-text" : ""}, a.raw.coupling)),
         h("td", null, `${b.raw.dependency_cycle} → `, h("b", {class: a.raw.dependency_cycle < b.raw.dependency_cycle ? "good-text" : ""}, a.raw.dependency_cycle))); })));
 
@@ -193,7 +219,7 @@ export async function render(view, ctx, {jobId}) {
         h("p", {class: "help"}, "게임 전체의 절대량이라 한 라운드에 보통 2% 미만 움직입니다. 고친 곳의 변화는 위 카드에서 봅니다.")),
       h("div", {class: "tangle"}, h("div", null, h("div", {class: "eyebrow"}, "엉킴 총량 · 처음 상태 = 100"),
         h("div", {class: "big-index"}, h("s", null, "100 →"), h("b", null, cur.index.toFixed(cur.index % 1 ? 2 : 0))),
-        h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 함수·초과 복잡도·전역 상태 접근을 처음 상태와 비교한 값입니다."),
+        h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 함수·초과 복잡도·전역 변수 접근을 처음 상태와 비교한 값입니다."),
         cur.same_units ? null : h("p", {class: "chip warn"}, `⚠ 분석된 ${label} 구성이 처음과 달라(추가·삭제) 총량을 그대로 비교하기 어렵습니다`),
         parts), chart),
       // The total above compares with the first analysis; these four compare with the round before.

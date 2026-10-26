@@ -1,6 +1,6 @@
 // Spaghetti map without external libraries: force / circle layout, zoom & pan, hover focus, filters, plan halos.
 import {h, svg, fill} from "./ui.js";
-import {subj} from "./core.js";
+import {subj, unitDisplay} from "./core.js";
 
 export const MAP_LIMIT = 150;
 
@@ -177,7 +177,7 @@ export function createMap(host, {nodes, edges, unitLabel = "파일", onPick} = {
   function hover(v, event) {
     focus = v; paint();
     fill(tip, h("b", null, v.label || v.id), h("span", {class: `tip-grade g${v.grade}`}, `${v.grade} · ${Number(v.si).toFixed(1)}`),
-      v.label && v.label !== v.id ? h("div", {class: "tip-id"}, v.id) : null,
+      v.label && v.label !== unitDisplay(v.id) ? h("div", {class: "tip-id"}, unitDisplay(v.id)) : null,
       h("div", null, `${(v.loc || 0).toLocaleString()}줄 · 부르는 ${unitLabel} ${v.fout} · 불리는 ${unitLabel} ${v.fin}`),
       h("div", null, v.in_cycle ? "순환 고리 안" : "순환 고리 밖", v.top ? ` · 최고 복잡 함수 ${v.top.name} (CC ${v.top.cc})` : ""),
       v.leverage ? h("div", {class: "tip-em"}, `정리하면 고리에서 ${v.leverage}개 ${subj(unitLabel)} 빠질 수 있음`) : null);
@@ -225,7 +225,8 @@ export function createMap(host, {nodes, edges, unitLabel = "파일", onPick} = {
     const p = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
     return [p.x, p.y];
   }
-  canvas.addEventListener("wheel", e => { e.preventDefault(); const [x, y] = svgPoint(e); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, x, y); }, {passive: false});
+  // Plain wheel scrolls the page; only Ctrl/⌘ + wheel zooms the map.
+  canvas.addEventListener("wheel", e => { if (!e.ctrlKey && !e.metaKey) return; e.preventDefault(); const [x, y] = svgPoint(e); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, x, y); }, {passive: false});
   let drag = null, dragged = false;
   canvas.addEventListener("pointerdown", e => { if (e.target !== canvas && !e.target.classList.contains("edge")) return; drag = [...svgPoint(e), view.x, view.y]; dragged = false; canvas.setPointerCapture(e.pointerId); canvas.classList.add("grabbing"); });
   canvas.addEventListener("pointermove", e => { if (!drag) return; const [x, y] = svgPoint(e); if (Math.abs(x - drag[0]) + Math.abs(y - drag[1]) > 3) dragged = true; view = {...view, x: drag[2] + x - drag[0], y: drag[3] + y - drag[1]}; applyView(); });

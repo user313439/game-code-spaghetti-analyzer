@@ -5,7 +5,7 @@ import threading
 import time
 from . import assistant
 from .assistant_context import build_prompt, PROMPT_VERSION, validate_target_methods
-from .jobs import BusyError
+from .jobs import BusyError, write_json
 
 
 class AssistantReviews:
@@ -25,10 +25,7 @@ class AssistantReviews:
         return self.records[ident]
 
     def _save(self,ident):
-        path=self.owner.folder(ident)/'assistant_reviews.json'
-        temporary=path.with_suffix('.tmp')
-        temporary.write_text(json.dumps(self.records[ident],ensure_ascii=False,indent=2),encoding='utf8')
-        temporary.replace(path)
+        write_json(self.owner.folder(ident)/'assistant_reviews.json',self.records[ident])
 
     def _snapshot(self,ident):
         selected=[];seen=set()

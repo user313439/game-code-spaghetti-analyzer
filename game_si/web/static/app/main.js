@@ -29,9 +29,10 @@ function setTheme(value) {
   document.documentElement.dataset.theme = value;
   try { localStorage.setItem("gsi-theme", value); } catch (_) { /* storage may be blocked */ }
   const button = document.getElementById("theme");
-  button.textContent = value === "dark" ? "☀" : "☾";
-  button.setAttribute("aria-label", value === "dark" ? "라이트 모드" : "다크 모드");
-  button.title = button.getAttribute("aria-label");
+  const next = value === "dark" ? "라이트" : "다크";
+  button.replaceChildren(h("span", {class: "theme-icon", "aria-hidden": "true"}, value === "dark" ? "☀" : "☾"), h("span", {class: "theme-name"}, next));
+  button.setAttribute("aria-label", `${next} 모드로 바꾸기`);
+  button.title = `${next} 모드로 바꾸기`;
   window.dispatchEvent(new CustomEvent("gsi-theme", {detail: value}));
 }
 
@@ -48,6 +49,9 @@ ctx.setSteps = (jobId, active, available = {}) => {
       ? h("a", {class: `step ${done ? "done" : ""}`, href: `#/job/${jobId}${suffix}`}, ...content)
       : h("span", {class: `step ${done ? "done" : ""} ${on ? "on" : ""} ${open ? "" : "locked"}`, "aria-current": on ? "step" : null}, ...content);
   }));
+  // On a narrow screen the steps scroll sideways: bring the current one into view.
+  const current = nav.querySelector(".on");
+  if (current && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0, current.offsetLeft - (nav.clientWidth - current.offsetWidth) / 2);
 };
 ctx.setCrumb = text => { const el = document.getElementById("crumb"); el.textContent = text || ""; el.title = text || ""; };
 
@@ -58,7 +62,7 @@ function shell() {
       h("a", {href: "#/", dataset: {nav: "new"}}, "새 분석"),
       h("a", {href: "#/history", dataset: {nav: "history"}}, "분석 기록"),
       h("a", {href: "#/examples", dataset: {nav: "examples"}}, "예시 결과")),
-    h("button", {id: "theme", class: "icon-btn", type: "button", onclick: () => setTheme(theme() === "dark" ? "light" : "dark")}, "☾"));
+    h("button", {id: "theme", class: "icon-btn theme-btn", type: "button", onclick: () => setTheme(theme() === "dark" ? "light" : "dark")}));
   // Job pages: which code is open and where the user is in the four steps, under the main header.
   const jobbar = h("div", {id: "jobbar", class: "jobbar", hidden: true},
     h("div", {class: "jobbar-in"},

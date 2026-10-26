@@ -10,7 +10,7 @@ COMPONENTS = [
     ('links', '단위 사이 연결'),
     ('complex_functions', f'매우 복잡한 함수 (CC>{COMPLEX_CC})'),
     ('excess_complexity', f'초과 복잡도 Σ(CC−{BASE_CC})'),
-    ('global_access', '전역 상태 접근'),
+    ('global_access', '전역 변수 접근'),
 ]
 
 

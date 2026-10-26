@@ -47,6 +47,21 @@ export function bar(pct, tone = "cool") {
   return h("div", {class: `bar ${tone}`}, meter);
 }
 
+// Inline text with code names shown as code (wraps inside narrow boxes).
+export function codeText(tokens) {
+  return tokens.map(t => t.code ? h("code", {class: "cname"}, t.code) : t.text);
+}
+
+// AI prose, easier to read: one line per sentence, the first sentence of each paragraph in bold,
+// code names as code, "[file.c] …" paragraphs labelled by file. The text itself is unchanged.
+export function prose(parts, {list = true} = {}) {
+  return h("div", {class: "prose"}, ...parts.map(p => h("div", {class: "prose-p"},
+    p.label ? h("span", {class: "prose-file"}, p.label) : null,
+    list && p.sentences.length > 1
+      ? h("ul", null, ...p.sentences.map((s, i) => h("li", {class: i === 0 ? "lead" : ""}, ...codeText(s))))
+      : h("p", null, ...p.sentences.flatMap((s, i) => [i ? " " : null, ...codeText(s)])))));
+}
+
 export function gradeBadge(grade) {
   return h("span", {class: `grade g${grade}`}, grade);
 }
@@ -67,7 +82,8 @@ export function progressBlock(steps = []) {
   const time = h("span");
   const el = h("div", {class: "progress"}, steps.length ? chips : null, track, h("div", {class: "prog-meta"}, label, time));
   function update({step = 0, total = steps.length || 1, text = "", elapsed = "", indeterminate = false} = {}) {
-    fill(chips, ...steps.map((name, i) => h("div", {class: `stg ${i < step ? "done" : i === step ? "now" : ""}`}, i < step ? "✓ " : "", name)));
+    const stage = Math.floor(step);   // a fractional step moves the bar within the current stage
+    fill(chips, ...steps.map((name, i) => h("div", {class: `stg ${i < stage ? "done" : i === stage ? "now" : ""}`}, i < stage ? "✓ " : "", name)));
     track.classList.toggle("indeterminate", indeterminate);
     meter.style.width = indeterminate ? "" : `${Math.round(100 * Math.min(step, total) / total)}%`;
     label.textContent = text;

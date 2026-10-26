@@ -1,0 +1,99 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>F · 수정 결과·검증</title>
+<link rel="stylesheet" href="base.css">
+<script src="data.js"></script><script src="data2.js"></script><script src="shared.js"></script>
+<style>
+.wrap{max-width:1360px;margin:0 auto;padding:24px 28px 60px}
+.layout{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.st{padding:16px}.st .l{font-size:12px;color:var(--muted);font-weight:700}
+.st .v{display:flex;align-items:baseline;gap:8px;margin-top:6px}.st .v b{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.st .v s{color:var(--muted);text-decoration:none;font-size:15px}
+.st .d{font-size:12px;font-weight:700;margin-top:4px}.good{color:#1E7F4E}.same{color:var(--muted)}
+.st.dim{background:var(--surface-2)}
+.sec{padding:18px 20px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--muted)}
+td.mono{font-family:Consolas,monospace;font-weight:700}
+.arrow{display:flex;align-items:center;gap:8px}.arrow .bar{width:120px;height:7px;position:relative}
+.arrow .bar .b{position:absolute;left:0;top:0;bottom:0;background:#C7D3E6;border-radius:99px}.arrow .bar .a{position:absolute;left:0;top:0;bottom:0;background:var(--gA);border-radius:99px}
+.newtag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;background:#EEF6EA;color:#3F7A24}
+.check{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.ok{width:24px;height:24px;border-radius:50%;background:var(--gA);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800}
+.check b{font-size:14px}.check p{font-size:12.5px;color:var(--ink-2)}
+.check details{font-size:12px;color:var(--muted);margin-top:3px}.check summary{cursor:pointer}
+.game{padding:20px;position:sticky;top:80px}
+.gthumb{height:150px;border-radius:12px;background:linear-gradient(160deg,#0B1530,#1E3A7A 55%,#3B6FD8);position:relative;overflow:hidden;margin:12px 0 14px}
+.gthumb i{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;opacity:.8}
+.ship{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:30px solid #E8F0FD}
+.gbtn{display:flex;justify-content:flex-end;margin-top:16px}
+.prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:12px}.prog span{display:block;height:100%;background:var(--brand);transition:width .25s}
+.note{font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px}
+.next{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+.mock{border:1px dashed #F1D48A;background:#FFFBEF;border-radius:10px;padding:6px 10px;font-size:11.5px;color:#8A6100;display:inline-flex;gap:6px;align-items:center}
+</style></head><body>
+<div id="top"></div>
+<div class="wrap">
+  <div style="display:flex;align-items:flex-end;gap:16px"><div><div class="eyebrow">수정 결과·검증 · 수정본 4de33326</div>
+    <div class="h1" style="font-size:26px" id="lead"></div><p class="sub" id="leadsub" style="margin-top:4px"></p></div>
+    <div class="mock" style="margin-left:auto"><b>시안 확인용</b><button class="btn ghost" style="padding:4px 9px;font-size:11.5px" id="swap">연결이 줄어든 경우 보기</button></div></div>
+  <div class="stats" id="stats"></div>
+  <div class="layout">
+    <div>
+      <div class="card sec"><div class="h2">함수별 변화</div><p class="sub" style="font-size:12.5px;margin:2px 0 8px">AI가 실제로 바꾼 함수의 복잡도(CC)와 길이입니다. 다시 분석해서 측정한 값입니다.</p><table id="fn"></table></div>
+      <div class="card sec"><div class="h2">파일 점수</div><p class="sub" style="font-size:12.5px;margin:2px 0 8px">G-SI는 프로젝트 안에서의 순위라서, 다른 파일과 함께 비교한 위치가 같으면 그대로 유지됩니다.</p><table id="files"></table></div>
+      <div class="card sec"><div class="h2">검증</div><div id="checks" style="margin-top:6px"></div></div>
+      <div class="next"><button class="btn ghost">진단 화면으로</button><button class="btn ghost">수정본 내려받기 (.zip)</button><button class="btn primary">다음 처방 받기 →</button></div>
+    </div>
+    <aside class="card game"><div class="eyebrow">수정된 게임</div><div class="h2" style="font-size:20px;margin-top:4px">OpenTyrian</div>
+      <div class="sub" style="font-size:13px">우주선을 조종하며 적을 피하고 물리치는 비행 슈팅 게임입니다.</div>
+      <div class="gthumb" id="thumb"><div class="ship"></div></div>
+      <details style="font-size:12.5px;color:var(--ink-2)"><summary style="cursor:pointer;font-weight:700">조작 방법</summary><p style="margin-top:6px">방향키 이동 · Space 연속 발사 · Enter 선택 · Esc 메뉴 · P 일시 정지</p></details>
+      <div id="gstate"></div>
+      <div class="gbtn"><button class="btn primary" id="play">수정된 게임 실행 ▶</button></div></aside>
+  </div>
+</div>
+<div class="label-badge">시안 F · 수정 결과·검증 (실제 10/19 수정본 수치)</div>
+<script>
+document.getElementById('top').innerHTML = topbar(3);
+const F = window.FIX;
+const REAL = {cycle:[43,43], edges:[333,333], cc:[6009,6003], funcs:[561,562], E:[11,11]};
+const LINKED = {cycle:[43,22], edges:[333,309], cc:[6009,5991], funcs:[561,563], E:[11,10]};   // 가상의 '연결 정리' 사례 (시안 확인용)
+let cur = REAL;
+function stat(label, [a,b], unit, lowerIsBetter=true){
+  const d=b-a, same=d===0, good=lowerIsBetter?d<0:d>0;
+  return `<div class="card st ${same?'dim':''}"><div class="l">${label}</div><div class="v"><s>${a.toLocaleString()} →</s><b class="${same?'':good?'good':''}">${b.toLocaleString()}</b><span class="sub" style="font-size:12px">${unit}</span></div>
+   <div class="d ${same?'same':good?'good':''}">${same?'변화 없음':(d>0?'+':'')+d.toLocaleString()+unit}</div></div>`;}
+function render(){
+  const fns=F.files.flatMap(f=>f.functions.map(x=>({...x,file:f.path})));
+  const changed=fns.filter(x=>x.before&&x.after.cc<x.before.cc);
+  const linkDown=cur.cycle[1]<cur.cycle[0];
+  document.getElementById('lead').innerHTML = linkDown
+    ? `순환 고리가 ${cur.cycle[0]} → ${cur.cycle[1]}개 파일로 줄었고,<br>게임은 그대로 잘 동작합니다.`
+    : `함수 ${changed.length}개가 단순해졌고, 게임은 그대로 잘 동작합니다.`;
+  document.getElementById('leadsub').textContent = linkDown
+    ? '파일 사이의 연결이 끊어져, 한 곳을 고칠 때 영향이 퍼지는 범위가 좁아졌습니다.'
+    : '이번 수정은 파일 안의 중복을 정리한 것이라, 파일 사이의 연결과 순환 고리는 그대로입니다.';
+  document.getElementById('stats').innerHTML = stat('순환 고리에 묶인 파일',cur.cycle,'개')+stat('파일 사이 연결선',cur.edges,'개')+stat('전체 함수 복잡도 합 (CC)',cur.cc,'')+stat('심하게 엉킨 파일 (E등급)',cur.E,'개');
+  document.getElementById('fn').innerHTML = `<tr><th>파일</th><th>함수</th><th>복잡도 (CC)</th><th>길이</th><th></th></tr>`+fns.map(x=>{
+    if(!x.before) return `<tr><td>${x.file}</td><td class="mono">${x.name}</td><td>${x.after.cc}</td><td>${x.after.loc}줄</td><td><span class="newtag">새로 만든 보조 함수</span></td></tr>`;
+    const max=Math.max(x.before.cc,1);
+    return `<tr><td>${x.file}</td><td class="mono">${x.name}</td><td><div class="arrow"><span>${x.before.cc} → <b class="good">${x.after.cc}</b></span><div class="bar"><div class="b" style="width:100%"></div><div class="a" style="width:${x.after.cc/max*100}%"></div></div></div></td><td>${x.before.loc} → ${x.after.loc}줄</td><td class="good" style="font-weight:700">−${x.before.cc-x.after.cc}</td></tr>`}).join('');
+  document.getElementById('files').innerHTML = `<tr><th>파일</th><th>G-SI</th><th>파일 복잡도</th><th>연결</th><th>순환 고리 연결</th></tr>`+F.files.map(f=>`<tr><td><b>${f.path}</b></td><td>${f.before.si} → ${f.after.si}</td><td>${f.before.raw.cc} → <b class="${f.after.raw.cc<f.before.raw.cc?'good':''}">${f.after.raw.cc}</b></td><td>${f.before.raw.coupling} → ${f.after.raw.coupling}</td><td>${f.before.raw.dependency_cycle} → ${f.after.raw.dependency_cycle}</td></tr>`).join('');
+  const v=F.verification, c=v.calculation_checks;
+  const checks=[
+   ['원본 보존','원본 139개 파일은 그대로 두고, 사본에만 적용했습니다.','파일마다 지문(SHA-256)을 비교해 원본이 바뀌지 않았음을 확인했습니다.'],
+   ['승인한 변경과 동일','적용된 2개 파일이 검토 화면에서 본 변경안과 정확히 같습니다.','바이트 단위로 비교했고, 그 밖의 파일은 바뀌지 않았습니다.'],
+   ['다시 분석','수정본 52개 파일을 같은 기준으로 다시 분석했습니다.','일부 문법을 건너뛴 9개 파일은 수정 전과 같은 상태입니다.'],
+   ['빌드','원본과 수정본 모두 빌드에 성공했습니다.','Visual Studio Build Tools · Release x64 · SDL2 2.32.10'],
+   ['동작 비교',`적 생성 ${c.enemy_cases.toLocaleString()}가지 상황을 3번씩, 메뉴 밝기 ${c.brightness_checks}가지를 원본과 비교해 차이 ${c.mismatches}건이었습니다.`,'실제 게임 코드의 함수와 자료형으로 원본과 수정본을 실행해 매 단계 결과를 비교했습니다. 적을 만드는 함수 하나만 같은 결과를 주는 대역으로 고정했습니다.'],
+   ['직접 플레이','새 게임 시작 · 이동 · 발사 · 설정 메뉴가 정상입니다.','10월 19일 작성자가 수정된 게임을 직접 조작해 확인했습니다.']];
+  document.getElementById('checks').innerHTML = checks.map(([t,s,d])=>`<div class="check"><span class="ok">✓</span><div><b>${t}</b><p>${s}</p><details><summary>자세히</summary>${d}</details></div></div>`).join('');
+  document.getElementById('swap').textContent = cur===REAL?'연결이 줄어든 경우 보기':'실제 10/19 결과 보기';
+}
+document.getElementById('swap').onclick=()=>{cur=cur===REAL?LINKED:REAL;render();};
+const th=document.getElementById('thumb');for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';th.appendChild(s);}
+document.getElementById('play').onclick=()=>{let s=0;const g=document.getElementById('gstate');
+  const iv=setInterval(()=>{s++;const lab=s<6?'수정본 빌드 확인 중':s<10?'게임 준비 중':'게임 창을 열었습니다';g.innerHTML=`<div class="prog"><span style="width:${Math.min(100,s*10)}%"></span></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:5px"><span>${lab}</span><span>경과 ${s}초</span></div>`;if(s>=10)clearInterval(iv);},200);};
+render();
+</script></body></html>

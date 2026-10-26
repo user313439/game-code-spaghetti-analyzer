@@ -1,0 +1,113 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>E · AI 리팩토링</title>
+<link rel="stylesheet" href="base.css">
+<script src="data.js"></script><script src="data2.js"></script><script src="shared.js"></script>
+<style>
+.wrap{max-width:1500px;margin:0 auto;padding:22px 28px 110px}
+.head{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px}
+.overview{padding:18px 20px;margin-bottom:16px}
+.ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.q{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--ink-2)}
+.q h4{font-size:12.5px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.q h4 i{font-style:normal;width:18px;height:18px;border-radius:6px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:10.5px}
+.bench{display:grid;grid-template-columns:250px 1fr 360px;gap:14px;align-items:start}
+.files{padding:12px}
+.fitem{padding:12px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px;cursor:pointer}
+.fitem.on{border-color:var(--brand);background:var(--brand-soft)}
+.fitem b{font-size:14px}.fitem .tags{display:flex;gap:6px;margin:6px 0 4px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px}
+.t-chg{background:#E8F0FD;color:var(--brand-ink)}.t-keep{background:#EEF1F5;color:var(--muted)}
+.plus{color:#1E7F4E;font-weight:700}.minus{color:var(--gE);font-weight:700}
+.fitem .fns{font-size:11.5px;color:var(--muted);font-family:Consolas,monospace}
+.rel{font-size:12px;color:var(--ink-2);padding:10px 4px 2px;border-top:1px dashed var(--line);margin-top:6px}
+.rel b{display:block;font-size:11.5px;color:var(--muted);margin-bottom:4px}
+.diffcard{overflow:hidden}
+.dhead{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.dcols{display:grid;grid-template-columns:1fr 1fr;font-size:11.5px;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line)}
+.dcols div{padding:6px 12px}.dcols div+div{border-left:1px solid var(--line)}
+.diff{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;line-height:1.55;max-height:560px;overflow:auto}
+.dr{display:grid;grid-template-columns:44px 1fr 44px 1fr}
+.dr .n{color:#9AA7B8;text-align:right;padding:0 8px;user-select:none;background:var(--surface-2)}
+.dr .c{white-space:pre-wrap;word-break:break-all;padding:0 10px;tab-size:3}
+.dr .c.del{background:#FDECEC}.dr .c.add{background:#E7F6EC}.dr .n.del{background:#F9DADA}.dr .n.add{background:#D3EEDC}
+.dr .c.empty{background:repeating-linear-gradient(45deg,#F6F8FB,#F6F8FB 4px,#EEF2F7 4px,#EEF2F7 8px)}
+.dr.hunk div{background:#EEF4FF;color:var(--brand-ink);font-weight:700;padding:3px 10px}
+.dr.hunk{grid-template-columns:1fr}
+.ai{padding:18px;max-height:calc(100vh - 140px);overflow:auto;position:sticky;top:76px}
+.bubble{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface-2);margin-top:10px;font-size:13px;color:var(--ink-2)}
+.bubble h4{font-size:13px;color:var(--ink);margin-bottom:4px}
+.bubble ul{padding-left:18px}.bubble li{margin:3px 0}
+details.bubble summary{cursor:pointer;font-weight:700;color:var(--ink);font-size:13px}
+.bar-actions{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);backdrop-filter:blur(6px);z-index:6}
+.bar-actions .in{max-width:1500px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:14px}
+.prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden}.prog span{display:block;height:100%;background:var(--brand);transition:width .25s}
+.stages{display:flex;gap:8px;margin:14px 0 8px}
+.stg{flex:1;font-size:12px;color:var(--muted);padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.stg.done{color:#1E7F4E;border-color:#BFE3CB;background:#F1FAF4}.stg.now{color:var(--brand-ink);border-color:#C9DAF8;background:var(--brand-soft);font-weight:700}
+.mock{border:1px dashed #F1D48A;background:#FFFBEF;border-radius:10px;padding:6px 10px;font-size:11.5px;color:#8A6100;display:flex;gap:6px;align-items:center}
+</style></head><body>
+<div id="top"></div>
+<div class="wrap">
+  <div class="head"><div><div class="eyebrow">AI 리팩토링 · 처방받은 2개 파일</div><div class="h1" style="font-size:25px" id="title"></div></div>
+    <div class="mock" style="margin-left:auto"><b>시안 확인용</b><button class="btn ghost sm" style="padding:4px 9px;font-size:11.5px" onclick="gen()">만드는 중 화면 보기</button></div></div>
+  <div id="body"></div>
+</div>
+<div class="bar-actions"><div class="in" id="actions"></div></div>
+<div class="label-badge" style="bottom:84px">시안 E · AI 리팩토링 (실제 10/19 Codex 변경안)</div>
+<script>
+document.getElementById('top').innerHTML = topbar(2);
+const F = window.FIX; let sel = 0;
+document.getElementById('title').textContent = F.overview.title;
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function diffHTML(rows){
+  const texts=rows.filter(r=>r.t!=='hunk').flatMap(r=>[r.l,r.r]).filter(Boolean).map(x=>x[1].replace(/	/g,'   ')).filter(s=>s.trim());
+  const cut=Math.min(...texts.map(s=>s.match(/^ */)[0].length));
+  const tidy=x=>x?[x[0],x[1].replace(/	/g,'   ').slice(cut)]:x;
+  rows=rows.map(r=>r.t==='hunk'?r:{...r,l:tidy(r.l),r:tidy(r.r)});
+  return rows.map(r=>{
+  if(r.t==='hunk') return `<div class="dr hunk"><div>@@ 원본 ${r.l}행 · 수정본 ${r.r}행 부근</div></div>`;
+  const L=r.l,R=r.r,lc=r.t==='ctx'?'':r.t==='add'?'empty':'del',rc=r.t==='ctx'?'':r.t==='del'?'empty':'add';
+  return `<div class="dr"><div class="n ${L&&lc==='del'?'del':''}">${L?L[0]:''}</div><div class="c ${lc}">${L?esc(L[1]):''}</div><div class="n ${R&&rc==='add'?'add':''}">${R?R[0]:''}</div><div class="c ${rc}">${R?esc(R[1]):''}</div></div>`;}).join('');}
+function ready(){
+  const fns = F.files.flatMap(f=>f.functions), changed = fns.filter(f=>f.before).length, added = fns.filter(f=>!f.before).length;
+  const add = F.files.reduce((s,f)=>s+f.add,0), rem = F.files.reduce((s,f)=>s+f.rem,0);
+  document.getElementById('body').innerHTML = `
+  <div class="card overview"><div style="display:flex;align-items:center;gap:10px"><div class="h2">전체 요약</div><span class="sub" style="font-size:12px">선택한 파일을 함께 검토한 결과 · ${F.service==='codex'?'Codex':F.service} · ${F.seconds}초</span></div>
+   <div class="ovgrid">
+    <div class="q"><h4><i>1</i>무엇이 문제인가요?</h4>${F.overview.problem}</div>
+    <div class="q"><h4><i>2</i>왜 바꿔야 하나요?</h4>${F.overview.reason}</div>
+    <div class="q"><h4><i>3</i>어떻게 바꾸나요?</h4>${F.overview.change}</div>
+    <div class="q"><h4><i>4</i>무엇이 좋아지나요?</h4>${F.overview.expected_effect}</div></div></div>
+  <div class="bench">
+   <div class="card files"><div class="h2" style="font-size:15px;margin:2px 4px 10px">파일 ${F.files.length}개</div>
+    ${F.files.map((f,i)=>`<div class="fitem ${i===sel?'on':''}" onclick="sel=${i};ready()"><b>${f.path}</b>
+     <div class="tags"><span class="tag ${f.decision==='refactor'?'t-chg':'t-keep'}">${f.decision==='refactor'?'변경':'유지'}</span><span class="plus">+${f.add}</span><span class="minus">−${f.rem}</span></div>
+     <div class="fns">${f.functions.map(x=>x.name+(x.before?'':' (새 함수)')).join(' · ')}</div></div>`).join('')}
+    <div class="rel"><b>파일 사이 관계</b>${F.relationships.map(r=>`<div style="margin-bottom:6px">· ${r}</div>`).join('')}</div></div>
+   <div class="card diffcard"><div class="dhead"><b>${F.files[sel].path}</b>${F.files[sel].targets.map(t=>`<span class="chip mono" style="font-size:11.5px">${t}</span>`).join('')}<span class="sub" style="margin-left:auto;font-size:12px"><span class="plus">+${F.files[sel].add}</span> <span class="minus">−${F.files[sel].rem}</span></span></div>
+    <div class="dcols"><div>원본</div><div>수정본</div></div><div class="diff">${diffHTML(F.files[sel].rows)}</div></div>
+   <aside class="card ai"><div class="eyebrow">AI 소견 · ${F.files[sel].path}</div>
+    <div class="bubble"><h4>이 파일은 어떤 역할인가요?</h4>${F.files[sel].role}</div>
+    <div class="bubble"><h4>무엇이 문제인가요? <span class="tag t-chg">변경</span></h4>${F.files[sel].finding}</div>
+    <div class="bubble"><h4>왜 이렇게 바꾸나요?</h4>${F.files[sel].reason}</div>
+    <div class="bubble"><h4>무엇을 바꾸나요?</h4>${F.files[sel].change}</div>
+    <div class="bubble"><h4>무엇이 좋아지나요?</h4>${F.files[sel].effect}</div>
+    <details class="bubble"><summary>영향을 받는 곳과 확인할 동작 (${F.files[sel].checks.length})</summary><p style="margin-top:6px">${F.files[sel].impact}</p><ul>${F.files[sel].checks.map(c=>`<li>${c}</li>`).join('')}</ul></details></aside>
+  </div>`;
+  document.getElementById('actions').innerHTML = `<div><b>${F.files.length}개 파일 · 함수 ${changed}개 수정${added?` · 새 함수 ${added}개`:''}</b> <span class="sub">· <span class="plus">+${add}</span> <span class="minus">−${rem}</span>줄 · 원본은 그대로 두고 사본에 적용합니다</span></div>
+   <button class="btn ghost" style="margin-left:auto">변경안 다시 만들기</button><button class="btn primary">이 변경안 적용하기 →</button>`;
+}
+function gen(){
+  const st=['코드 준비','AI가 변경안 작성','변경 범위 검사','완료'];let s=0;
+  document.getElementById('body').innerHTML=`<div class="card" style="padding:26px;max-width:880px;margin:30px auto">
+   <div class="eyebrow">변경안 만드는 중</div><div class="h2" style="font-size:20px;margin:6px 0 4px">AI가 2개 파일의 실제 코드 변경안을 작성하고 있습니다</div>
+   <p class="sub" style="font-size:13px">처방 내용과 실제 코드를 함께 보내 변경안을 받습니다. 받은 변경안은 설명한 함수만 바뀌었는지 프로그램이 검사합니다.</p>
+   <div class="stages" id="stg"></div><div class="prog"><span id="pb" style="width:0"></span></div>
+   <div class="meta" style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--muted)"><span id="pl"></span><span id="pt">경과 0초</span></div></div>`;
+  document.getElementById('actions').innerHTML=`<span class="sub">변경안이 준비되면 코드를 비교한 뒤 적용할 수 있습니다</span><button class="btn ghost" style="margin-left:auto">취소</button>`;
+  const iv=setInterval(()=>{s++;const k=Math.min(3,Math.floor(s/4));
+    document.getElementById('stg').innerHTML=st.map((x,i)=>`<div class="stg ${i<k?'done':i===k?'now':''}">${i<k?'✓ ':''}${x}</div>`).join('');
+    document.getElementById('pb').style.width=Math.min(100,s*7)+'%';document.getElementById('pl').textContent=st[k]+(k<3?' 중…':'');document.getElementById('pt').textContent='경과 '+s+'초';
+    if(s>=15){clearInterval(iv);setTimeout(ready,400);}},220);
+}
+ready();
+</script></body></html>

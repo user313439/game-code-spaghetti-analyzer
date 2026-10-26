@@ -15,6 +15,10 @@ def test_units_have_percentiles_neighbors_cycle_and_functions():
     assert a['function_count'] == 2 and a['pct']['cc'] == 100 and a['top']['cc'] == 25
     assert a['pct']['global_state'] == 0 and a['pct']['game_loop_centrality'] == 0
     assert next(u for u in d['units'] if u['name'] == 'd')['in_cycle'] is False
+    # Rank per measure: 1 + units with a larger value; equal values share it.
+    assert a['rank']['cc'] == 1 and a['tied']['cc'] is False
+    zero = {u['rank']['global_state'] for u in d['units'] if not u['raw']['global_state']}
+    assert len(zero) <= 1 and all(u['tied']['global_state'] for u in d['units'] if not u['raw']['global_state']) == (len([u for u in d['units'] if not u['raw']['global_state']]) > 1)
 
 
 def test_leverage_is_cycle_reduction_when_unit_removed():
@@ -30,8 +34,22 @@ def test_summary_headline_and_sentence_are_program_generated():
     assert s['worst_function'] == {'unit': 'a', 'name': 'big', 'cc': 30, 'loc': 90}
     assert d['headline'] == '4개 파일 중 1개가 심하게 엉켜 있고, 3개 파일이 하나의 순환 고리로 묶여 있습니다.'
     a = next(u for u in d['units'] if u['name'] == 'a')
-    assert a['sentence'] == '가장 복잡한 함수 big의 분기가 30개입니다. 다른 파일 1곳을 부르고 2곳에서 불립니다.'
+    assert a['sentence'] == '가장 복잡한 함수 big의 복잡도(CC)가 30입니다. 다른 파일 1곳을 부르고 2곳에서 불립니다.'
     assert {n['id'] for n in d['graph']['nodes']} == set('abcd') and len(d['graph']['edges']) == 4
+
+
+def test_several_cycles_are_all_counted_like_the_result_page():
+    # Rehearsal 2026-10-26: three separate two-file cycles were told as "2 files in one cycle" while the
+    # result page counted the 6 files in any cycle.
+    m, s = sample(cut=True)
+    out = {'a': ['b'], 'b': ['a'], 'c': ['d'], 'd': ['c', 'a']}   # two separate two-file cycles: a<->b, c<->d
+    for cls in m['classes']:
+        cls['out_neighbors'] = out[cls['fqn']]
+    d = diagnosis.build(m, s)
+    assert d['summary']['cycles'] == 2 and d['summary']['cycle_units'] == 4 and d['summary']['cycle_size'] == 2
+    assert d['headline'].endswith('4개 파일이 순환 고리 2개로 묶여 있습니다.')
+    assert {u['name']: u['cycle_size'] for u in d['units']} == {'a': 2, 'b': 2, 'c': 2, 'd': 2}
+    assert d['units'][0]['tie_count']['dependency_cycle'] == 3   # a, b, c share the cycle measure in the sample
 
 
 def test_class_language_uses_class_label_and_no_cycle_headline():

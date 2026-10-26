@@ -5,7 +5,7 @@ const SOURCE_EXTENSION = /\.(cs|c|cc|cpp|cxx|h|hpp|hh|hxx|inl|inc)$/i;
 export const LANGUAGE_LABELS = {csharp: "C#", c: "C", cpp: "C++"};
 const STATE_LABELS = {importing: "소스 가져오는 중", ready: "범위 확인", running: "분석 중", complete: "분석 완료",
   partial: "부분 분석 완료", failed: "작업 실패", interrupted: "분석 중단"};
-export const METRIC_LABELS = {cc: "분기 복잡도", coupling: "연결된 파일", dependency_cycle: "순환 고리",
+export const METRIC_LABELS = {cc: "복잡도(CC)", coupling: "연결된 파일", dependency_cycle: "순환 고리",
   global_state: "전역 변수 접근", game_loop_centrality: "게임 루프 근접"};
 export const METRIC_KEYS = Object.keys(METRIC_LABELS);
 
@@ -199,8 +199,26 @@ export function createApi(token, fetcher = globalThis.fetch) {
 export function subj(label) { return label + (label === "파일" ? "이" : "가"); }
 export function obj(label) { return label + (label === "파일" ? "을" : "를"); }
 
+// What G-SI, its grades and "상위 N%" mean (grade limits mirror game_si/si.py `_grade`).
+export const GRADE_RULES = [["A", "20 미만"], ["B", "20~40"], ["C", "40~60"], ["D", "60~80"], ["E", "80 이상"]];
+export const GSI_HELP = "G-SI는 파일마다 매긴 엉킴 점수(0~100)입니다. 이 프로젝트 안에서의 순위라서, 높을수록 먼저 살펴볼 곳입니다.";
+export const GRADE_HELP = `등급은 G-SI로 나눕니다: ${GRADE_RULES.map(([g, r]) => `${g} ${r}`).join(" · ")}.`;
+export const TOP_HELP = "‘상위 N%’는 그 항목이 이 프로젝트의 전체 파일 중 높은 쪽 몇 %에 드는지입니다. 작을수록 더 심합니다.";
+
 export function topText(unit, key) {
   return unit.raw[key] ? `상위 ${unit.top[key]}%` : "—";
+}
+
+// Place among all units for one measure: "2위" or "공동 2위 (6개)" (null when the value is 0 or unknown).
+// The tie size says why a shared first place can still read "상위 12%".
+export function placeText(unit, key) {
+  const rank = unit.rank?.[key], ties = unit.tie_count?.[key];
+  return unit.raw[key] && rank ? `${unit.tied?.[key] ? "공동 " : ""}${rank}위${unit.tied?.[key] && ties > 1 ? ` (${ties}개)` : ""}` : null;
+}
+
+// Short note under a card bar before the card is opened.
+export function barNote(unit, key) {
+  return unit.raw[key] ? {text: `상위 ${unit.top[key]}%`, hot: unit.top[key] <= 10} : {text: "없음", hot: false};
 }
 
 export function whyRows(unit, summary) {
@@ -208,23 +226,72 @@ export function whyRows(unit, summary) {
   const f = unit.functions[0];
   const raw = unit.raw;
   return [
-    {key: "cc", label: METRIC_LABELS.cc, text: f ? `가장 복잡한 함수 ${f.name}의 분기 ${f.cc}개` : "함수 정보 없음"},
+    {key: "cc", label: METRIC_LABELS.cc, text: f ? `가장 복잡한 함수 ${f.name}의 복잡도 ${f.cc}` : "함수 정보 없음"},
     {key: "coupling", label: label === "파일" ? "연결된 파일" : "연결된 클래스",
      text: `부르는 ${label} ${unit.calls.length}개 · 불리는 ${label} ${unit.called_by.length}개`},
     {key: "dependency_cycle", label: METRIC_LABELS.dependency_cycle,
-     text: unit.in_cycle ? `${summary.cycle_size}개 ${label}의 고리 안에서 연결 ${raw.dependency_cycle}개` : "순환 고리 밖"},
+     text: unit.in_cycle ? `${unit.cycle_size || summary.cycle_size}개 ${label}의 고리 안에서 연결 ${raw.dependency_cycle}개` : "순환 고리 밖"},
     {key: "global_state", label: METRIC_LABELS.global_state,
-     text: raw.global_state ? `여러 곳이 함께 쓰는 변수를 ${raw.global_state}번 읽고 바꿈` : "전역 상태 접근 없음"},
+     text: raw.global_state ? `전역 변수를 ${raw.global_state}번 읽고 바꿈` : "전역 변수 접근 없음"},
     {key: "game_loop_centrality", label: METRIC_LABELS.game_loop_centrality,
-     text: raw.game_loop_centrality > 0 ? "매 프레임 실행 흐름과 가까움" : "게임 루프와 직접 닿지 않음"},
-  ].map(row => ({...row, top: topText(unit, row.key)}));
+     text: raw.game_loop_centrality > 0 ? "매 프레임 실행 흐름과 가까움" : "이름으로 찾은 게임 루프 시작점에서 닿지 않음"},
+  ].map(row => ({...row, top: topText(unit, row.key), place: placeText(unit, row.key)}));
 }
 
 export function barTone(pct) {
   return pct >= 85 ? "hot" : pct >= 60 ? "warm" : "cool";
 }
 
+// --- readable AI text ----------------------------------------------------
+// A sentence ends at . ! ? before a space, the end, or Hangul ("좋다.그래서") — not inside "3.5" or "opentyr.h".
+const SENTENCE_END = /(?<=[.!?])(?=\s|$|[가-힣])/;
+// Code names inside Korean prose: file names, names with "_", camelCase/PascalCase, MACROS, name().
+const CODE_NAME = /(\b[A-Za-z_]\w*\(\)|[\w./-]*\w\.(?:c|h|cpp|hpp|cc|cxx|cs)\b|\b[A-Za-z_]\w*_\w*\b|\b[a-z]+[A-Z]\w*\b|\b[A-Z][a-z0-9]+[A-Z]\w*\b|\b[A-Z]{2,}[a-z]\w*\b|\b[A-Z][A-Z0-9_]{2,}\b)/;
+
+const WHOLE_CODE_NAME = new RegExp(`^${CODE_NAME.source}$`);
+const PLAIN_WORDS = new Set(["API", "JSON", "HTML", "URL", "SDK", "ZIP", "LOC", "CPU", "GPU", "SHA", "UTF", "PDF", "CLI", "DLL", "EXE"]);
+
+export function codeTokens(text) {
+  // `code` written by the AI in Markdown is a code name as it stands; the backticks are not shown.
+  return String(text || "").split(/`([^`\n]{1,200})`/).flatMap((part, i) => i % 2 ? [{code: part}]
+    : part.split(CODE_NAME).filter(Boolean).map(p => WHOLE_CODE_NAME.test(p) && !PLAIN_WORDS.has(p) ? {code: p} : {text: p}));
+}
+
+// Why a file's change was turned down, in plain words, with what to do next. The program's own
+// wording stays available as `detail`. Unknown reasons are shown as they are.
+const PLAIN_REASONS = [
+  [/시간을 초과|분 안에 답하지/, "AI가 제한 시간 안에 답을 끝내지 못했습니다. 원본은 그대로입니다. 다시 만들어 보거나 이 파일은 빼고 진행하세요."],
+  [/수정 대상이 일치하지|대상 함수 밖|대상 함수의 실제 변경을 확인할 수 없|밖의 파일을 바꾸는|대상 .*함수를 실제 함수 목록에서/,
+    "AI가 고치겠다고 밝힌 함수 말고 다른 곳까지 바꾸려 해서 받지 않았습니다(원본 보호 규칙). 다시 만들면 대개 해결됩니다."],
+  [/새 보조 함수는/, "AI가 새로 만든 함수가 안전 규칙(이 파일 안에서만 쓰고, 고친 함수에서 직접 부르기)을 지키지 않아 받지 않았습니다."],
+  [/제공한 코드 범위 밖|여러 곳에 나타납니다|변경할 코드가 없거나/, "AI가 바꿀 코드 위치를 정확히 짚지 못해 받지 않았습니다. 다시 만들면 대개 해결됩니다."],
+  [/필수 내용이 누락|형식|해석하지 못했|요약을 확인하지/, "AI 답의 형식이 맞지 않아 받지 않았습니다. 다시 만들면 대개 해결됩니다."],
+  [/로그인|사용 한도|요청이 완료되지|요청에 실패/, "AI 프로그램이 답하지 못했습니다. 로그인과 사용 한도를 확인한 뒤 다시 만들어 주세요."],
+  [/전체 제한 시간이 지나/, "다른 파일을 처리하느라 정한 시간이 지나 시작하지 않았습니다. 이 파일만 다시 만들 수 있습니다."],
+];
+export function plainReason(error) {
+  const text = String(error || "");
+  const hit = PLAIN_REASONS.find(([pattern]) => pattern.test(text));
+  return hit ? {text: hit[1], detail: text} : {text, detail: ""};
+}
+
+// AI prose as paragraphs of sentences. A line "[file.c] …" (one file of a change made per file)
+// becomes its own paragraph with that file as the label. Nothing is dropped.
+export function proseParts(text) {
+  return String(text || "").split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => {
+    const tag = /^\[([^\]\n]{1,120})\]\s*/.exec(line);
+    const body = tag ? line.slice(tag[0].length) : line;
+    return {label: tag ? tag[1] : null,
+      sentences: body.split(SENTENCE_END).map(s => s.trim()).filter(Boolean).map(codeTokens)};
+  });
+}
+
 // --- result helpers ------------------------------------------------------
+// A unit as people know it: the analyser's internal prefix ("clang.file.a.c") left out ("a.c").
+export function unitDisplay(id) {
+  return String(id || "").replace(/^[a-z-]+\.file\./, "");
+}
+
 // Function name without its owner ("game.menu.Default_MenuKey" → "Default_MenuKey", C# "A.B..ctor" → ".ctor").
 export function shortName(fqn) {
   const name = String(fqn || "");
@@ -274,11 +341,14 @@ export function resultHeadline(changes, {label, cycle, links}) {
   let title;
   if (top?.kind === "simpler") {
     title = `${top.short} 복잡도 ${top.before.cc} → ${top.after.cc} (${changeText(top.before.cc, top.after.cc)})`;
-    lines.push(counts.simpler > 1 ? `이번 라운드에서 고친 함수 가운데 가장 크게 줄었고, 함수 ${counts.simpler - 1}개도 함께 단순해졌습니다.`
-      : "이번 라운드에서 고친 함수 가운데 복잡도가 가장 크게 줄었습니다.");
+    // Say what the list below holds: existing functions that got simpler and the new helper functions.
+    const simpler = counts.simpler - 1, moved = `옮겨 간 코드는 새로 만든 함수 ${counts.new}개에 있습니다.`;
+    const also = simpler > 0 && counts.new ? ` 기존 함수 ${simpler}개도 함께 단순해졌고, ${moved}`
+      : simpler > 0 ? ` 기존 함수 ${simpler}개도 함께 단순해졌습니다.` : counts.new ? ` ${moved}` : "";
+    lines.push(`이번 라운드에서 고친 함수 가운데 복잡도가 가장 크게 줄었습니다.${also}`);
   } else if (top) {
     title = `${top.short} 길이 ${top.before.loc} → ${top.after.loc}줄 (${changeText(top.before.loc, top.after.loc, "줄")})`;
-    lines.push("분기 수(복잡도)는 그대로이고 함수 길이가 줄었습니다.");
+    lines.push("복잡도(CC)는 그대로이고 함수 길이가 줄었습니다.");
   } else if (cut || cutLinks) {
     const [a, b] = cut ? cycle : links;
     title = `${cut ? `순환 고리에 묶인 ${label}` : `${label} 사이 연결`} ${a} → ${b}개 (${changeText(a, b, "개")})`;
@@ -335,9 +405,13 @@ export function aiName(service, model = "") {
 // with an API key instead, so the request can still go through.
 export function pickConnection(connections, saved = {}) {
   const ids = connections.map(c => c.id);
-  const programs = connections.filter(c => c.id !== "compatible");
+  // Claude Code first, then Codex, then Gemini CLI; a confirmed login beats an unknown one.
+  const prefer = ["claude", "codex", "gemini"];
+  const programs = connections.filter(c => c.id !== "compatible")
+    .sort((a, b) => (prefer.indexOf(a.id) + 1 || 99) - (prefer.indexOf(b.id) + 1 || 99));
   let service = ids.includes(saved.service) ? saved.service
-    : (programs.find(c => c.installed && c.logged_in !== false) || programs.find(c => c.installed))?.id
+    : (programs.find(c => c.installed && c.logged_in === true) || programs.find(c => c.installed && c.logged_in !== false)
+      || programs.find(c => c.installed))?.id
       || (ids.includes("compatible") ? "compatible" : ids[0] || "claude");
   const chosen = connections.find(c => c.id === service);
   let mode = saved.service === service && saved.mode === "api" ? "api" : "cli";
