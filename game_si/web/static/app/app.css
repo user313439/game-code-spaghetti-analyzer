@@ -144,6 +144,7 @@ details > summary { cursor: pointer; font-weight: 700; }
 .drop { border: 2px dashed var(--brand-line); border-radius: 14px; padding: 26px; display: grid; gap: 6px; justify-items: center; text-align: center; margin-top: 8px; }
 .drop.over { background: var(--brand-soft); }
 .picked { margin-top: 10px; font-weight: 700; color: var(--ink-2); }
+.picked-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; } .picked-row .picked { margin-top: 0; }
 .advanced { margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 12px; }
 .clang { margin-top: 8px; }
 .scope-head, .status-head { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }

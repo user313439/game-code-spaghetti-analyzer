@@ -168,7 +168,7 @@ class JobManager:
             return self.get(ident)
 
     def _resolve(self, ident, options):
-        # 'clang-auto': precise analysis with the build settings the app keeps for a recognised game.
+        # 'clang-auto': precise analysis with the build settings recognised for a known game.
         if options.get('backend') != 'clang-auto':
             return options
         local = options.get('local_path', '').strip()
@@ -177,7 +177,7 @@ class JobManager:
         selected = root if subdir == '.' else target_path(root, subdir)
         hit = clang_presets.match(selected) if selected.is_dir() else None
         if not hit:
-            raise ValueError('이 폴더에는 준비된 빌드 설정이 없습니다. 기본 분석을 선택해 주세요.')
+            raise ValueError('이 폴더는 자동 인식된 빌드 설정과 맞지 않습니다. 기본 분석을 선택해 주세요.')
         library = clang_presets.libclang()
         if library is None:
             raise ValueError('정밀 분석에 필요한 Clang 라이브러리를 찾지 못했습니다. 기본 분석을 선택해 주세요.')
