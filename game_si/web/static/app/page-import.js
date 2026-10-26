@@ -179,7 +179,7 @@ export async function render(view, ctx, params = {}) {
         : mode.value === "clang" ? "직접 만든 compile_commands.json으로 컴파일러처럼 해석합니다. 빌드 환경이 있는 사람만 쓰는 방식입니다."
         : `빌드 설정 없이 코드를 읽습니다. 매크로 때문에 일부 줄을 건너뛸 수 있습니다(부분 분석).${presets.length && !hit ? ` 자동 인식된 빌드 설정은 ${presets[0].folder} 폴더에 맞습니다.` : ""}`;
     };
-    if (presets.length) folder.value = presets[0].folder;
+    // The whole import stays the first choice, as for any game: recognised build settings also fit the folders above theirs.
     folder.addEventListener("change", syncMode);
     mode?.addEventListener("change", syncMode);
     syncMode();

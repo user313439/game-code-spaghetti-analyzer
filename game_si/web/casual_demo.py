@@ -19,16 +19,19 @@ class CasualDemo(DemoGame):
         self.prefixes = {}
 
     def _prefix(self, ident):
-        """'' or 'src/' when the job's analysed source equals the demo's original source; None otherwise."""
+        """Where the demo's original source sits inside the analysed folder ('' or e.g. 'OpenTyrian/src/'),
+        or None when it is not there. Any folder choice above it works (the whole import, OpenTyrian, src)."""
         if ident not in self.prefixes:
             prefix = None
             try:
-                baseline = source_tree(self.root / '01_original/source/src')
+                original = self.root / '01_original/source/src'
+                baseline = source_tree(original)
                 root = self.assistant.source(ident)
-                if source_tree(root) == baseline:
-                    prefix = ''
-                elif (root / 'src').is_dir() and source_tree(root / 'src') == baseline:
-                    prefix = 'src/'
+                # Only the analysed folder and folders named like the original's (a few levels down) are compared.
+                for folder in [root] + sorted(p for p in root.rglob(original.name) if p.is_dir() and len(p.relative_to(root).parts) <= 3):
+                    if source_tree(folder) == baseline:
+                        prefix = '' if folder == root else folder.relative_to(root).as_posix() + '/'
+                        break
             except (OSError, ValueError, KeyError, AttributeError):
                 return None   # e.g. analysis still running: decide again on the next request
             self.prefixes[ident] = prefix

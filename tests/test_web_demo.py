@@ -34,6 +34,26 @@ def test_casual_demo_has_distinct_metadata_and_requires_matching_source(tmp_path
     with pytest.raises(ValueError):demo.launch('casual','modified')
 
 
+@pytest.mark.parametrize('scope, prefix', [('OpenTyrian/src', ''), ('OpenTyrian', 'src/'), ('.', 'OpenTyrian/src/')])
+def test_casual_demo_finds_the_original_under_any_folder_choice(tmp_path, scope, prefix):
+    # The scope screen starts on the whole import; the game can still be built from it.
+    from game_si.web.casual_demo import CasualDemo
+    original = tmp_path / 'demo' / '01_original' / 'source' / 'src'
+    original.mkdir(parents=True)
+    (original / 'tyrian2.c').write_text('int main(void) { return 0; }\n', encoding='utf8')
+    imported = tmp_path / 'input' / 'OpenTyrian' / 'src'
+    imported.mkdir(parents=True)
+    (imported / 'tyrian2.c').write_text('int main(void) { return 0; }\n', encoding='utf8')
+    (tmp_path / 'input' / 'OpenTyrian' / 'README.txt').write_text('not source', encoding='utf8')
+
+    class Assistant:
+        def source(self, ident): return tmp_path / 'input' / scope
+    demo = CasualDemo(Assistant(), tmp_path / 'demo')
+    assert demo._prefix('job') == prefix and demo.registered('job')
+    (imported / 'tyrian2.c').write_text('int main(void) { return 1; }\n', encoding='utf8')
+    assert CasualDemo(Assistant(), tmp_path / 'demo')._prefix('job') is None   # a different source is not the demo
+
+
 def test_casual_demo_never_reuses_an_old_revision_verification(tmp_path):
     from game_si.web.casual_demo import CasualDemo
     class Assistant:
