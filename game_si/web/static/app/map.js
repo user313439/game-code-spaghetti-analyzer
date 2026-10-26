@@ -225,8 +225,8 @@ export function createMap(host, {nodes, edges, unitLabel = "파일", onPick} = {
     const p = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
     return [p.x, p.y];
   }
-  // Plain wheel scrolls the page; only Ctrl/⌘ + wheel zooms the map.
-  canvas.addEventListener("wheel", e => { if (!e.ctrlKey && !e.metaKey) return; e.preventDefault(); const [x, y] = svgPoint(e); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, x, y); }, {passive: false});
+  // The wheel zooms the map while the pointer is on it (the page scrolls elsewhere); the corner buttons do the same.
+  canvas.addEventListener("wheel", e => { e.preventDefault(); const [x, y] = svgPoint(e); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, x, y); }, {passive: false});
   let drag = null, dragged = false;
   canvas.addEventListener("pointerdown", e => { if (e.target !== canvas && !e.target.classList.contains("edge")) return; drag = [...svgPoint(e), view.x, view.y]; dragged = false; canvas.setPointerCapture(e.pointerId); canvas.classList.add("grabbing"); });
   canvas.addEventListener("pointermove", e => { if (!drag) return; const [x, y] = svgPoint(e); if (Math.abs(x - drag[0]) + Math.abs(y - drag[1]) > 3) dragged = true; view = {...view, x: drag[2] + x - drag[0], y: drag[3] + y - drag[1]}; applyView(); });

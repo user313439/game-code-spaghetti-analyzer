@@ -31,6 +31,21 @@ def wait(manager, ident):
     pytest.fail('Analysis did not finish')
 
 
+def test_precise_analysis_reports_files_read_so_far(tmp_path):
+    manager = module().JobManager(tmp_path)
+    try:
+        ident = prepared(manager)
+        manager.update(ident, state='running', started_at=time.time())
+        log = manager.directory(ident) / 'analysis.log'
+        log.write_text('[ast] language: c\n[ast] clang 1/52 · animlib.c\n[ast] clang 12/52 · game_menu.c\n', encoding='utf-8')
+        value = manager.get(ident)
+        assert value['progress'] == {'done': 12, 'total': 52} and value['stage'] == '코드 분석 · 파일 12/52'
+        log.write_text(log.read_text(encoding='utf-8') + '[metrics] implementation_files=52\n', encoding='utf-8')
+        assert 'progress' not in manager.get(ident) and manager.get(ident)['stage'] == '지표 계산'
+    finally:
+        manager.close()
+
+
 def test_actual_cli_result_and_restart_history(tmp_path):
     manager = module().JobManager(tmp_path)
     try:

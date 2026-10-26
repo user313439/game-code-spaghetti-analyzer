@@ -210,8 +210,10 @@ export async function render(view, ctx, params = {}) {
   let actionsKey = "";
   function showStatus() {
     const v = statusView(job);
-    const step = job.state === "importing" ? 0 : job.state === "running" ? 2 : v.result ? 4 : 2;
-    bar.update({step, total: 4, text: v.stage, elapsed: v.elapsed, indeterminate: v.busy && job.state === "running"});
+    // Precise analysis counts the files it has read: the bar fills within the analysis stage.
+    const counted = job.state === "running" && job.progress?.total ? job.progress.done / job.progress.total : null;
+    const step = job.state === "importing" ? 0 : job.state === "running" ? 2 + (counted ?? 0) * 0.9 : v.result ? 4 : 2;
+    bar.update({step, total: 4, text: v.stage, elapsed: v.elapsed, indeterminate: v.busy && job.state === "running" && counted === null});
     const message = job.error ? String(job.error)
       : job.state === "partial" ? "일부 파일은 문법을 끝까지 해석하지 못했지만 분석 결과를 볼 수 있습니다."
       : job.state === "complete" ? "분석이 끝났습니다. 어디가 왜 엉켰는지 진단을 확인하세요."

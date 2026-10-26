@@ -468,11 +468,29 @@ assert.ok(core.GSI_HELP.includes("0~100") && core.TOP_HELP.includes("상위"));
     assert [_grade(s) for s in (19.9, 20, 40, 60, 80)] == list('ABCDE')
 
 
-def test_map_zoom_needs_ctrl_and_import_waits_for_a_source():
+def test_map_zooms_with_the_wheel_and_import_waits_for_a_source():
     source = (APP / 'map.js').read_text(encoding='utf-8')
-    assert 'if (!e.ctrlKey && !e.metaKey) return;' in source
+    assert 'canvas.addEventListener("wheel", e => { e.preventDefault();' in source   # user's choice: plain wheel zooms
     page = (APP / 'page-import.js').read_text(encoding='utf-8')
     assert 'importButton.disabled = Boolean(busy) || !ready' in page
     assert 'hero.hidden = Boolean(job)' in page
     css = (APP / 'app.css').read_text(encoding='utf-8')
     assert '.diffcard .diff { min-height:' in css
+
+
+def test_a_page_opened_before_a_server_restart_takes_the_new_token_once():
+    run('''
+const sent = [];
+const reply = (status, body) => ({status, ok: status < 400, json: async () => body});
+const fetcher = async (url, options = {}) => {
+  sent.push([url, options.headers?.["X-Game-SI-Token"] || ""]);
+  if (url === "/api/session") return reply(200, {token: "new"});
+  return options.headers["X-Game-SI-Token"] === "new" ? reply(202, {id: "job"}) : reply(403, {detail: "refused"});
+};
+const api = core.createApi("old", fetcher);
+assert.deepEqual(await api("/api/jobs/x/start", {method: "POST", body: "{}"}), {id: "job"});
+assert.deepEqual(sent, [["/api/jobs/x/start", "old"], ["/api/session", ""], ["/api/jobs/x/start", "new"]]);
+// a refusal that a fresh token does not fix is shown, without asking again and again
+const stuck = core.createApi("new", async url => url === "/api/session" ? reply(200, {token: "new"}) : reply(403, {detail: "refused"}));
+await assert.rejects(stuck("/api/x", {method: "POST", body: "{}"}), /refused/);
+''')

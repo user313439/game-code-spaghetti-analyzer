@@ -445,10 +445,10 @@ def measure_functions(path, text):
     return rows
 
 
-def build_deep_prompt(unit, path, sources, methods, advice=None, hint=(), continuation=None):
+def build_deep_prompt(unit, path, sources, methods, advice=None, hint=(), continuation=None, retry=None):
     """Prompt for one file in depth. Returns (prompt, context); context names the targets sent whole
     and those too large to send. `continuation` ({pass, helpers}) marks a later pass on the text an
-    earlier pass already changed."""
+    earlier pass already changed; `retry` (the check's reason) asks again after a reply was turned down."""
     decoded={p:raw.decode('utf-8-sig') for p,raw in sources.items()}
     total=sum(map(len,sources.values()))
     targets=deep_targets(path,methods,hint)
@@ -460,6 +460,10 @@ def build_deep_prompt(unit, path, sources, methods, advice=None, hint=(), contin
     if continuation:
         base['continuation']=dict(continuation,note='이전 단계에서 이미 일부를 옮긴 코드입니다. 이미 만든 보조 함수(helpers)는 고치거나 다시 옮기지 말고, '
                                                     '대상 함수에 남은 큰 블록을 이어서 옮깁니다. 새 보조 함수 이름은 기존 이름과 겹치지 않게 짓습니다.')
+    if retry:
+        base['retry']=dict(reason=retry,note='이전 답이 프로그램 검사에서 이 이유로 거절되어 다시 요청합니다. 이번에는 첫 대상 함수 하나에만 집중하고 '
+                                             '보조 함수는 4개 이하로 줄입니다. 보조 함수를 넣으면 원래 블록을 그 호출로 바꾸는 편집도 반드시 함께 넣고, '
+                                             'targets에는 실제로 본문을 바꾼 함수만 적습니다.')
 
     def item(p,content,complete,ranges):
         inventory,count,_,_=inventories[p]

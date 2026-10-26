@@ -56,8 +56,12 @@ export function connectionPicker(connections, api, {step} = {}) {
   mode.value = start.mode;
   // The model is optional for a program on this PC (its default is used) and required otherwise.
   const firstModel = step ? stepModel(start.service, start.mode) : saved.model || "";
-  const model = h("input", {type: "text", value: firstModel, "aria-label": "모델 이름", spellcheck: "false", list: "conn-models", autocomplete: "off"});
-  const modelList = h("datalist", {id: "conn-models"});
+  const model = h("input", {type: "text", value: firstModel, "aria-label": "모델 이름", spellcheck: "false", autocomplete: "off"});
+  // Known models are offered in a select styled like the other fields (a datalist pops up in the
+  // browser's own colours); "직접 입력" opens the text box for any other name.
+  const CUSTOM = "--custom--";   // not a model name
+  const modelPick = h("select", {"aria-label": "모델 고르기"});
+  let listed = [], typing = false;   // models an address listed; whether the user chose to type a name
   // new-password keeps the browser from offering to save the key; it only lives in this input.
   const key = h("input", {type: "password", autocomplete: "new-password", spellcheck: "false", "aria-label": "API 키"});
   const compatible = connections.find(c => c.id === "compatible");
@@ -70,7 +74,17 @@ export function connectionPicker(connections, api, {step} = {}) {
   const addressBox = h("div", {class: "conn-box"}, labelled("서비스", preset), labelled("주소", url));
   const keyField = labelled("API 키", key);
   const tip = h("p", {class: "help conn-tip"});
-  const modelField = h("div", {class: "conn-field"}, h("span", null, "모델"), h("div", {class: "conn-model"}, model, listButton), modelList, tip);
+  const modelField = h("div", {class: "conn-field"}, h("span", null, "모델"), modelPick, h("div", {class: "conn-model"}, model, listButton), tip);
+  function fillModels(byAddress, cli) {
+    const names = byAddress ? listed : cli ? modelsOf(service.value) : [];   // program aliases are no API model ids
+    const current = model.value.trim();
+    if (current && !names.includes(current)) typing = true;
+    fill(modelPick, ...(cli ? [h("option", {value: ""}, "비워 두기 · 프로그램 기본값")] : [h("option", {value: "", disabled: true}, "모델을 고르세요")]),
+      ...names.map(m => h("option", {value: m}, m)), h("option", {value: CUSTOM}, "직접 입력…"));
+    modelPick.value = typing ? CUSTOM : current;
+    modelPick.hidden = !names.length;
+    model.hidden = Boolean(names.length) && !typing;
+  }
   const hint = h("div", {class: "conn-hint"});
   const say = (tone, ...parts) => fill(hint, h("p", {class: `conn-state conn-${tone}`}, ...parts));
   const sync = () => {
@@ -85,11 +99,11 @@ export function connectionPicker(connections, api, {step} = {}) {
     key.placeholder = byAddress ? (local ? "이 PC의 AI 서버면 비워 두세요" : "서비스에서 받은 API 키 (저장하지 않습니다)") : "API 키 (저장하지 않습니다)";
     model.placeholder = byAddress ? "예: gpt-4.1, gemini-2.5-pro, llama3.1" : mode.value === "api" ? "모델 이름 (API 키로 연결할 때 필요)"
       : `비우면 프로그램 기본값${service.value === "claude" ? " (예: opus)" : ""}`;
-    if (!byAddress) fill(modelList, ...modelsOf(service.value).map(m => h("option", {value: m})));
+    fillModels(byAddress, !byAddress && mode.value === "cli");
     const advice = step && mode.value === "cli" ? stepAdvice(service.value, step, modelsOf(service.value)) : null;
     tip.hidden = !advice;
     fill(tip, advice?.text || "", advice?.pick && model.value.trim() !== advice.pick
-      ? h("button", {class: "btn ghost sm", type: "button", onclick: () => { model.value = advice.pick; sync(); }}, `${advice.pick}로 바꾸기`) : null);
+      ? h("button", {class: "btn ghost sm", type: "button", onclick: () => { model.value = advice.pick; typing = false; sync(); }}, `${advice.pick}로 바꾸기`) : null);
     if (byAddress) say("info", "OpenAI 호환 API를 쓰는 AI라면 무엇이든 연결됩니다. 서비스를 고르거나 주소를 직접 넣고, 모델을 고르면 됩니다.",
       local ? " 이 PC에서 돌아가는 AI라 사용료가 들지 않습니다." : " 사용료는 키 주인 계정에 청구되며, 키는 이번 요청에만 쓰고 저장하지 않습니다.");
     else if (mode.value === "api") say("info", chosen && !chosen.installed ? `이 PC에서 ${chosen.name} 프로그램을 찾지 못해 API 키로 연결합니다. ` : "",
@@ -101,7 +115,8 @@ export function connectionPicker(connections, api, {step} = {}) {
     else say("ok", `✓ 이 PC의 ${chosen.name}에 로그인된 본인 계정으로 연결합니다.`);
     now();
   };
-  const el = h("details", {class: "conn"}, h("summary", null, "AI 연결 ", h("span", {class: "sub conn-now"})),
+  // Always open: choosing the AI is a step the user takes before the request, not an extra.
+  const el = h("div", {class: "conn"}, h("div", {class: "conn-head"}, h("b", null, "AI 연결 "), h("span", {class: "sub conn-now"})),
     labelled("사용할 AI", service), modeField, addressBox, keyField, modelField, hint);
   function now() {
     const how = service.value === "compatible" ? (presets.find(p => p.url === url.value.trim())?.name || "주소로 연결") : mode.value === "api" ? "API 키" : "내 계정";
@@ -111,10 +126,17 @@ export function connectionPicker(connections, api, {step} = {}) {
     const chosen = connections.find(c => c.id === service.value);
     if (chosen && service.value !== "compatible") mode.value = chosen.installed ? "cli" : "api";   // reach it somehow
     if (step) model.value = stepModel(service.value, mode.value);   // a model name of one program means nothing to another
+    typing = false;
     sync();
   });
-  mode.addEventListener("change", () => { if (step) model.value = stepModel(service.value, mode.value); sync(); });
-  preset.addEventListener("change", () => { if (preset.value) url.value = preset.value; fill(modelList); sync(); });
+  mode.addEventListener("change", () => { if (step) model.value = stepModel(service.value, mode.value); typing = false; sync(); });
+  modelPick.addEventListener("change", () => {
+    typing = modelPick.value === CUSTOM;
+    if (!typing) model.value = modelPick.value;
+    sync();
+    if (typing) model.focus();
+  });
+  preset.addEventListener("change", () => { if (preset.value) url.value = preset.value; listed = []; sync(); });
   url.addEventListener("input", () => { preset.value = presets.some(p => p.url === url.value.trim()) ? url.value.trim() : ""; sync(); });
   model.addEventListener("input", sync);
   listButton.addEventListener("click", async () => {
@@ -123,15 +145,15 @@ export function connectionPicker(connections, api, {step} = {}) {
     listButton.textContent = "불러오는 중…";
     try {
       const {models} = await api("/api/assistant/models", {method: "POST", body: JSON.stringify({base_url: url.value.trim(), api_key: key.value.trim()})});
-      fill(modelList, ...models.map(m => h("option", {value: m})));
-      say("ok", models.length ? `✓ 연결됐습니다. 모델 ${models.length}개를 찾았습니다. 모델 칸을 눌러 고르세요.` : "✓ 연결됐습니다. 모델 이름은 직접 입력해 주세요.");
-      if (models.length && !model.value.trim()) { model.value = models[0]; now(); }
-      model.focus();
+      listed = models;
+      if (models.length && !model.value.trim()) { model.value = models[0]; typing = false; }
+      sync();
+      say("ok", models.length ? `✓ 연결됐습니다. 모델 ${models.length}개를 찾았습니다. 모델 칸에서 고르세요.` : "✓ 연결됐습니다. 모델 이름은 직접 입력해 주세요.");
+      (models.length ? modelPick : model).focus();
     } catch (error) { say("warn", error.message); }
     finally { listButton.disabled = false; listButton.textContent = label; }
   });
   sync();
-  if (connectionProblem({...value(false), api_key: "x"})) el.open = true;   // needs something filled in before the first request
   function value(store = true) {
     const body = {service: service.value, mode: service.value === "compatible" ? "api" : mode.value, model: model.value.trim()};
     if (service.value === "compatible") body.base_url = url.value.trim();
@@ -144,9 +166,7 @@ export function connectionPicker(connections, api, {step} = {}) {
     value,
     problem() {
       const v = value(false);
-      const missing = connectionProblem(v);
-      if (missing) el.open = true;
-      return missing;
+      return connectionProblem(v);
     },
   };
 }

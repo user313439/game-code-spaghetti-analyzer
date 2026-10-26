@@ -238,7 +238,7 @@ details > summary { cursor: pointer; font-weight: 700; }
 .pick .sub { font-size: 12px; margin: 6px 0 10px; }
 
 /* AI panel */
-.ai-panel { position: sticky; top: 138px; padding: 20px; max-height: calc(100vh - 158px); overflow: auto; }
+.ai-panel { position: sticky; top: 138px; padding: 20px; max-height: calc(100vh - 158px); overflow: auto; scrollbar-gutter: stable; }   /* room kept for the scrollbar: text never shifts when it appears */
 .ai-panel .lead { font-size: 20px; font-weight: 800; letter-spacing: -.01em; line-height: 1.35; margin: 6px 0 10px; }
 .ai-panel .btn.block { margin-top: 14px; }
 .box { background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 12px 0; }
@@ -249,7 +249,7 @@ details > summary { cursor: pointer; font-weight: 700; }
 
 /* prescription */
 .conn { margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--surface-2); }
-.conn summary { font-size: 13px; } .conn .grid2 { margin-top: 10px; } .conn-api { display: grid; gap: 8px; margin-top: 8px; }
+.conn-head { font-size: 13px; } .conn .grid2 { margin-top: 10px; } .conn-api { display: grid; gap: 8px; margin-top: 8px; }
 .conn input[type=password] { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; }
 .cyc-row { display: grid; grid-template-columns: 130px minmax(0, 1fr) 32px; gap: 8px; align-items: center; font-size: 12px; margin: 6px 0; }
 .cyc-row .bar { height: 8px; } .cyc-row b { text-align: right; } .cyc-row.muted { color: var(--muted); }
@@ -268,6 +268,7 @@ details > summary { cursor: pointer; font-weight: 700; }
 .pickrow input { width: 18px; height: 18px; }
 .score.sm { width: 40px; height: 40px; border-radius: 11px; font-size: 14px; }
 .conn-card { padding: 16px; margin-top: 8px; }
+.conn-card .conn { margin-top: 0; border: 0; padding: 0; background: none; }   /* the card is the box */
 .bar-actions { position: fixed; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--line); z-index: 15; }
 .bar-actions .in { max-width: 1440px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .wrap.wide:has(+ .bar-actions:not([hidden])) { padding-bottom: 110px; }
@@ -387,7 +388,7 @@ details > summary { cursor: pointer; font-weight: 700; }
 .conn-field > span { font-size: 12px; font-weight: 700; color: var(--ink-2); }
 .conn-field select, .conn-field input[type=url], .conn-field input[type=text], .conn-field input[type=password] { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 9px 11px; }
 .conn-box { border-top: 1px dashed var(--line); margin-top: 10px; }
-.conn-model { display: flex; gap: 8px; } .conn-model input { flex: 1; min-width: 0; } .conn-model .btn { white-space: nowrap; }
+.conn-field > select + .conn-model { margin-top: 6px; } .conn-model { display: flex; gap: 8px; } .conn-model input { flex: 1; min-width: 0; } .conn-model .btn { white-space: nowrap; }
 .conn-state { font-size: 12.5px; margin-top: 10px; padding: 8px 10px; border-radius: 9px; line-height: 1.5; }
 .conn-state.conn-ok { background: var(--good-soft); color: var(--good); border: 1px solid var(--good-line); }
 .conn-state.conn-info { background: var(--surface); color: var(--ink-2); border: 1px solid var(--line); }

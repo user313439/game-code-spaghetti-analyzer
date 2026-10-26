@@ -140,6 +140,12 @@ class JobManager:
                                   ('[si]', '검토 순위 계산'), ('[html]', '결과 생성')]:
                 if marker in log:
                     result['stage'] = label
+            # Precise (Clang) analysis reads one file at a time and says how far it is.
+            counted = re.findall(r'\[ast\] clang (\d+)/(\d+)', log)
+            if counted and '[metrics]' not in log:
+                done, total = map(int, counted[-1])
+                result['stage'] = f'코드 분석 · 파일 {done}/{total}'
+                result['progress'] = {'done': done, 'total': total}
         started = result.get('started_at') or result['created_at']
         result['elapsed_seconds'] = max(0, int((result.get('finished_at') or time.time()) - started))
         result['log'] = log
@@ -258,6 +264,7 @@ class JobManager:
         try:
             env = os.environ.copy()
             env['PYTHONIOENCODING'] = 'utf-8'
+            env['PYTHONUNBUFFERED'] = '1'   # each line reaches the log (and the page) when it is printed
             dotnet = Path(r'C:\Program Files\dotnet')
             if (dotnet / 'dotnet.exe').is_file():
                 env['PATH'] = str(dotnet) + os.pathsep + env.get('PATH', '')

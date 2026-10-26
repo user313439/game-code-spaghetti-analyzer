@@ -10,10 +10,11 @@ const WORKER = {waiting: ["대기", ""], running: ["작성 중", "t-busy"], chec
   no_changes: ["바꿀 곳 없음", "t-muted"], failed: ["거절", "t-bad"], skipped: ["건너뜀", "t-bad"], cancelled: ["취소", "t-muted"]};
 
 // A reason in plain words; the program's own wording folds away under "자세한 이유".
-function reasonView(error, tone = "werr") {
+// `key` names the folded detail so it stays open while the rows are drawn again every second.
+function reasonView(error, tone = "werr", key = "") {
   const {text, detail} = plainReason(error);
   return h("div", {class: tone}, ...codeText(codeTokens(text)),
-    detail ? h("details", {class: "reason-more"}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(detail)))) : null);
+    detail ? h("details", {class: "reason-more", "data-key": key}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(detail)))) : null);
 }
 
 export function workerRows(workers) {
@@ -33,8 +34,11 @@ export function workerRows(workers) {
       w.helpers?.length ? h("div", {class: "wtargets"}, "새로 만든 함수 ", ...w.helpers.map(t => h("code", {class: "cname"}, t))) : null,
       w.skipped_targets?.length ? h("div", {class: "wwarn"}, `너무 커서 이번에 보내지 못한 함수: ${w.skipped_targets.join(", ")}`) : null,
       w.note && w.state === "done" ? h("div", {class: "sub"}, w.note,
-        w.note_detail ? h("details", {class: "reason-more"}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(w.note_detail)))) : null) : null,
-      w.error && ["failed", "skipped"].includes(w.state) ? reasonView(w.error) : null,
+        w.note_detail ? h("details", {class: "reason-more", "data-key": `${w.key}:note`}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(w.note_detail)))) : null) : null,
+      w.error && ["failed", "skipped"].includes(w.state) ? reasonView(w.error, "werr", `${w.key}:error`) : null,
+      // The program asks the AI once more by itself when a reply is turned down.
+      w.retried && live ? h("div", {class: "sub"}, "첫 답이 검사에 걸려 이유를 알려 주고 자동으로 다시 만드는 중입니다: ",
+        plainReason(w.retry_reason).text) : null,
       w.error && w.state === "no_changes" ? h("div", {class: "sub"}, ...codeText(codeTokens(w.error))) : null,
       w.last_error && w.attempt > 1 && ["waiting", "running", "checking"].includes(w.state)
         ? h("div", {class: "sub"}, "지난번 거절 이유: ", plainReason(w.last_error).text) : null);
@@ -145,7 +149,7 @@ export async function render(view, ctx, {jobId, query}) {
         h("div", {class: "picklist"}, ...others.map(u => option(u, rank(u) >= 0
           ? h("p", {class: "sub"}, h("span", {class: "rec"}, `AI 처방 ${rank(u) + 1}순위`), " ", u.sentence) : null)))),
       h("div", {class: "card conn-card"}, h("label", {for: "change-way"}, "변경 방식"), way, wayHelp),
-      h("div", {class: "card conn-card"}, h("b", null, "AI 연결"), picker.el));
+      h("div", {class: "card conn-card"}, picker.el));
     fill(bar, h("div", {class: "in"}, count, h("span", {class: "push"}), go));
     sync();
     go.addEventListener("click", async () => {
@@ -190,7 +194,12 @@ export async function render(view, ctx, {jobId, query}) {
     } else say("");
     root.querySelector(".context").textContent = deep ? ""
       : state.context ? `보낸 코드 ${(state.context.sent_source_bytes / 1024).toFixed(0)}KB · 함께 수정 후보 ${(state.companion_candidates || []).length}개` : "";
-    if (deep) fill(root.querySelector(".workers-slot"), workerRows(state.workers));
+    if (deep) {
+      const slot = root.querySelector(".workers-slot");
+      const opened = new Set([...slot.querySelectorAll("details[open]")].map(d => d.dataset.key));
+      fill(slot, workerRows(state.workers));
+      for (const more of slot.querySelectorAll("details[data-key]")) more.open = opened.has(more.dataset.key);
+    }
     poll();
   }
 
