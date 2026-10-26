@@ -94,7 +94,7 @@ class LocalOnlyMiddleware:
         if scope['method'] not in {'GET', 'HEAD'}:
             valid = valid and secrets.compare_digest(headers.get('x-game-si-token', ''), self.token)
         if not valid:
-            return await JSONResponse({'detail': '이 PC의 프로그램 화면에서 다시 시도해 주세요.'}, 403)(scope, receive, send)
+            return await JSONResponse({'detail': '이 요청은 이 PC에서 연 앱 화면에서만 받을 수 있습니다. 앱이 다시 시작됐다면 페이지를 새로 고친 뒤 다시 시도해 주세요.'}, 403)(scope, receive, send)
         limit = (64 * 1024 if headers.get('content-type', '').startswith('application/json')
                  else inputs.MAX_SOURCE_BYTES + 32 * 1024 * 1024)
         try:

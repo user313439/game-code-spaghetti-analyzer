@@ -20,8 +20,8 @@ from statistics import median
 from . import assistant, clang_presets, diagnosis
 from .inputs import target_path
 from .jobs import BusyError, REPO_ROOT, write_json
-from .assistant_context import (_ast_functions, build_deep_prompt, build_prompt, measure_functions, validate_edit_context,
-                                validate_target_methods, validate_preview_targets)
+from .assistant_context import (_ast_functions, _inserted_helpers, build_deep_prompt, build_prompt, measure_functions,
+                                validate_edit_context, validate_target_methods, validate_preview_targets)
 from .assistant_reviews import AssistantReviews
 
 DEEP_PARALLEL = 5            # files worked on at once (each is one AI program); five is the most a change takes
@@ -31,6 +31,7 @@ DEEP_PASSES = 3              # one file may be handed to the AI up to this many 
 DEEP_FILE_BUDGET = 15 * 60   # no further pass when the next one would end after this (seconds since the file started)
 DEEP_CONTINUE_CC = 40        # a further pass only while a target function still branches this much
 DEEP_MIN_GAIN = 5            # ... and only after a pass that took away at least this many branches (and 5%)
+DEEP_WORTH_CC = 15           # a file whose target functions all branch less than this is not sent at all
 
 
 def merge_deep_passes(data, step, path):
@@ -565,6 +566,59 @@ class AssistantJobs:
         validate_preview_targets(data, methods, preview, companions=set())
         return preview['files']
 
+    def _keep_rejected(self, ident, path, exc, data, suffix=''):
+        """The reply a check turned down, as it arrived, for looking into it later."""
+        if data is None:
+            return
+        try:
+            (self.folder(ident) / f"assistant-rejected-{Path(path).name}{suffix}.json").write_text(
+                json.dumps({'error': str(exc), 'reply': data}, ensure_ascii=False, indent=1), encoding='utf8')
+        except (OSError, TypeError, ValueError):
+            pass
+
+    def _salvage(self, ident, path, sources, data, prompt, methods):
+        """A reply the checks turned down may still hold a sound part (no AI call): leave out helpers that
+        nothing calls and target functions it did not really change, or one edit at a time, and check the
+        rest again. Returns (files, data, left-out names) or None."""
+        def inserted(edit):   # the helper names an edit puts in front of a function, or []
+            old, new = edit.get('old', ''), edit.get('new', '')
+            return _inserted_helpers(path, new[:-len(old)]) if old and new.endswith(old) and new != old else []
+
+        def prune(edits):   # drop insertions none of the other kept edits calls
+            while True:
+                unused = next((e for e in edits if inserted(e) and not any(
+                    re.search(r'\b' + re.escape(name) + r'\s*\(', other.get('new', ''))
+                    for name in inserted(e) for other in edits if other is not e)), None)
+                if unused is None:
+                    return edits
+                edits = [e for e in edits if e is not unused]
+
+        edits = data.get('edits', [])
+        review = next((r for r in data['file_reviews'] if r['path'] == path), None)
+        if not edits or review is None or not review.get('targets'):
+            return None
+        targets = list(review['targets'])
+        subsets = [[t for t in targets if t != left] for left in targets] if len(targets) > 1 else []
+        tries = [prune(edits)] + [prune([e for e in edits if e is not drop]) for drop in edits if not inserted(drop)]
+        attempts = 0
+        for kept in tries:
+            if not kept or attempts >= 12:
+                continue
+            for chosen in [targets] + subsets:
+                attempts += 1
+                trial = deepcopy(data)
+                trial['edits'] = kept
+                next(r for r in trial['file_reviews'] if r['path'] == path)['targets'] = chosen
+                try:
+                    files = self._check_deep(ident, path, sources, trial, prompt, methods)
+                except ValueError:
+                    continue
+                if files:
+                    left = [t for t in targets if t not in chosen] + sorted(
+                        {n for e in edits if e not in kept for n in inserted(e)})
+                    return files, trial, left
+        return None
+
     def _ask_deep(self, ident, body, run, prompt):
         with assistant.owned_by(('assistant', ident, run)):
             return assistant.call_provider(body['service'], body['mode'], prompt, body.get('model', ''), body.get('api_key', ''),
@@ -655,25 +709,57 @@ class AssistantJobs:
                 if time.time() > deadline:
                     self._worker_update(ident, key, state='skipped', error='전체 제한 시간이 지나 시작하지 않았습니다.')
                     return None
-                started, data = time.time(), None
+                started, data, first = time.time(), None, None   # first: why the first reply was turned down
                 try:
                     prompt, context = build_deep_prompt(unit, path, own, methods, advice, hints.get(path, ()))
+                    # Already simple enough: no AI request (and no quota) for this file.
+                    measured = {m.get('name'): m.get('cc') or 0 for m in methods if m.get('file_path', '').replace('\\', '/') == path}
+                    if max((measured.get(t, 0) for t in context['targets']), default=0) < DEEP_WORTH_CC:
+                        self._worker_update(ident, key, state='no_changes', targets=context['targets'], seconds=0,
+                                            error=f'고칠 만큼 복잡한 함수가 없어(복잡도 {DEEP_WORTH_CC} 미만) AI를 부르지 않았습니다.')
+                        return None
                     self._worker_update(ident, key, state='running', mode=context['mode'], started_at=started,
                                         sent_kb=round(context['sent_source_bytes'] / 1024), file_kb=round(context['total_source_bytes'] / 1024),
                                         targets=context['targets'], skipped_targets=context['skipped_targets'], step=1, steps=DEEP_PASSES)
                     if not self._mine(ident):   # cancelled while the prompt was built: no AI request at all
                         return None
-                    data = self._ask_deep(ident, body, run, prompt)
-                    if not self._mine(ident):
-                        return None
-                    self._worker_update(ident, key, state='checking')
-                    files = self._check_deep(ident, path, own, data, prompt, methods)
-                    note = None
+                    for attempt in (1, 2):
+                        data = None
+                        try:
+                            data = self._ask_deep(ident, body, run, prompt)
+                            if not self._mine(ident):
+                                return None
+                            self._worker_update(ident, key, state='checking')
+                            files, kept = self._check_deep(ident, path, own, data, prompt, methods), None
+                        except ValueError as exc:
+                            if not self._mine(ident) or isinstance(exc.__cause__, subprocess.TimeoutExpired):
+                                raise   # a timeout is not asked again: it would most likely run out again
+                            answered = data is not None   # a reply in the right form, turned down by the checks
+                            data = data if answered else getattr(exc, 'reply', None)
+                            self._keep_rejected(ident, path, exc, data, '' if attempt == 1 else '-retry')
+                            kept = self._salvage(ident, path, own, data, prompt, methods) if answered else None
+                            if kept is None and attempt == 1:
+                                # Asked once more by the program itself, told why: a smaller, complete change.
+                                first = str(exc)
+                                self._worker_update(ident, key, state='running', retried=True, retry_reason=first[:600])
+                                prompt, context = build_deep_prompt(unit, path, own, methods, advice, hints.get(path, ()), retry=first)
+                                continue
+                            if kept is None:
+                                raise
+                            files, data = kept[0], kept[1]
+                        break
+                    notes = []
+                    if first:
+                        notes.append('첫 답이 검사에 걸려, 이유를 알려 주고 한 번 더 만들었습니다.')
+                    if kept and kept[2]:
+                        notes.append(f"검사를 통과하지 못한 부분({', '.join(kept[2])})은 빼고 나머지를 반영했습니다.")
+                    note = ' '.join(notes) or None
                     if files:
-                        files, data, note = self._continue_deep(ident, key, body, run, unit, path, own, methods, advice,
-                                                                context['targets'], files, data, started)
+                        files, data, later = self._continue_deep(ident, key, body, run, unit, path, own, methods, advice,
+                                                                 context['targets'], files, data, started)
                         if files is None:   # cancelled
                             return None
+                        note = ' '.join(filter(None, [note, later])) or None
                     changed = sorted({t for r in data['file_reviews'] if r['decision'] == 'refactor' for t in r['targets']})
                     helpers = sorted({h for f in files for h in f.get('added_helpers', [])})
                     self._worker_update(ident, key, state='done' if files else 'no_changes', seconds=round(time.time() - started),
@@ -682,12 +768,7 @@ class AssistantJobs:
                     return {'unit': unit, 'data': data, 'files': files, 'sent': context['sent_source_bytes']}
                 except Exception as exc:
                     data = data if data is not None else getattr(exc, 'reply', None)
-                    if data is not None:
-                        try:
-                            (self.folder(ident) / f"assistant-rejected-{Path(path).name}.json").write_text(
-                                json.dumps({'error': str(exc), 'reply': data}, ensure_ascii=False, indent=1), encoding='utf8')
-                        except (OSError, TypeError, ValueError):
-                            pass
+                    self._keep_rejected(ident, path, exc, data, '-retry' if first else '')
                     message = str(exc) if isinstance(exc, ValueError) else '이 파일의 변경안을 만들지 못했습니다.'
                     if isinstance(exc.__cause__, subprocess.TimeoutExpired):
                         message = (f'AI가 {assistant.DEEP_TIMEOUT // 60}분 안에 답하지 못했습니다. 원본은 그대로이며, '

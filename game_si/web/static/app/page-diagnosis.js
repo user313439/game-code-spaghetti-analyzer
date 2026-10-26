@@ -122,7 +122,7 @@ export async function render(view, ctx, {jobId}) {
       unit ? h("button", {class: "btn ghost sm block", type: "button", onclick: () => openCard(unit.fqn)}, "진단서에서 자세히 보기") : null);
   }
   const viewHelp = h("p", {class: "help"});
-  const helpText = which => which === "map" ? `점을 누르면 그 ${label}의 연결만 보입니다. Ctrl을 누른 채 휠을 돌리면 확대·축소합니다.` : `${obj(label)} 누르면 점수의 이유와 연결이 펼쳐집니다.`;
+  const helpText = which => which === "map" ? `점을 누르면 그 ${label}의 연결만 보입니다. 휠이나 오른쪽 아래 버튼으로 확대·축소합니다.` : `${obj(label)} 누르면 점수의 이유와 연결이 펼쳐집니다.`;
   viewHelp.textContent = helpText("cards");
   function setView(which) {
     viewHelp.textContent = helpText(which);

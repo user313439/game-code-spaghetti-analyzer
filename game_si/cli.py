@@ -322,7 +322,7 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
         out_dir.mkdir(parents=True, exist_ok=True)
         output_json = out_dir / "ast.json"
 
-    print(f"[ast] language: {lang}")
+    print(f"[ast] language: {lang}", flush=True)
 
     # 1) 언어별 analyzer 실행 → AST JSON
     try:
@@ -330,7 +330,8 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
             from .clang_analyzer import analyze_clang
             native_result = analyze_clang(input_path, args.compile_commands, args.exclude,
                                           output_path=output_json, clang_library=args.clang_library,
-                                          timeout=args.clang_timeout if args.clang_timeout is not None else 60.0)
+                                          timeout=args.clang_timeout if args.clang_timeout is not None else 60.0,
+                                          progress=lambda done, total, name: print(f"[ast] clang {done}/{total} · {name}", flush=True))
             result_data, result_errors = native_result.data, native_result.errors
         elif lang == "csharp":
             result_data, result_errors = _run_csharp(input_path, output_json, args.exclude)

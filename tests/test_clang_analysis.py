@@ -223,7 +223,9 @@ def test_worker_failures_are_isolated_to_each_file(tmp_path, monkeypatch, failur
         return subprocess.CompletedProcess(command, 7 if failure == "crash" else 0,
                                            "invalid JSON", "worker crashed")
     monkeypatch.setattr(module.subprocess, "run", fake_run)
-    result = analyze(source, db)
+    reported = []
+    result = analyze(source, db, progress=lambda *step: reported.append(step))
+    assert reported == [(1, 1, source.name)]   # a file that failed still counts as read
     assert len(result.errors) == 1
     assert result.errors[0]["path"] == str(source.resolve())
     assert result.data["summary"]["total_files"] == 0

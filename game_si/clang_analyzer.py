@@ -92,11 +92,12 @@ def _validate_worker_result(result: dict, path: Path, relative: str) -> tuple[di
 
 def analyze_clang(input_path: Path, compile_commands: Path, excludes: Iterable[str] = (),
                   output_path: Path | None = None, clang_library: Path | str | None = None,
-                  timeout: float = 60.0) -> CppAnalysisResult:
+                  timeout: float = 60.0, progress=None) -> CppAnalysisResult:
     """Analyze registered implementation files; never silently switch backends.
 
     Calls use compile-time USRs. File relations approximate implementation-unit
     dependencies rather than claiming an exact semantic class graph.
+    `progress(done, total, relative_path)` is called after each file, so a long run can show how far it is.
     """
     started = time.perf_counter()
     if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or not math.isfinite(timeout) or timeout <= 0:
@@ -118,7 +119,8 @@ def analyze_clang(input_path: Path, compile_commands: Path, excludes: Iterable[s
     files = []
     errors = list(configuration.pop("collection_errors"))
     diagnostics = []
-    for entry in configuration["entries"]:
+    total = len(configuration["entries"])
+    for done, entry in enumerate(configuration["entries"], 1):
         path = Path(entry["path"])
         try:
             path.read_bytes()  # Report unreadable sources even if libclang would recover an empty TU.
@@ -132,6 +134,8 @@ def analyze_clang(input_path: Path, compile_commands: Path, excludes: Iterable[s
             message = (f"Clang worker timeout ({timeout:g}s)" if isinstance(exc, subprocess.TimeoutExpired)
                        else str(exc))
             errors.append({"path": str(path), "message": message, "kind": "worker"})
+        if progress:
+            progress(done, total, path.name)
     _map_file_relations(files)
     elapsed_ms = int((time.perf_counter() - started) * 1000)
     data = {

@@ -50,7 +50,7 @@ INSTRUCTIONS = '''아래 JSON은 게임 프로젝트의 정적 분석 요약이�
 - reason(왜 이 단위인가), change_idea(어떻게 고치는가), expected(무엇이 좋아지는가)는 각각 1~2문장, 존댓말(-니다)로 쓴다.
 - why_not_top: G-SI 1위 단위를 고르지 않았다면 그 이유를 1~2문장으로, 골랐다면 빈 문자열.
 - benefit: 처방 전체를 따랐을 때 유지보수에서 좋아지는 점 1~2문장.
-- 효과가 큰 처방이 없으면 done=true, files=[], benefit=""로 답한다.'''
+- 5개를 채우려 하지 않는다. 고쳤을 때 효과가 분명한 단위만 고른다. 대부분 잘 짜여 있으면 1~2개만 고르고, 효과가 큰 처방이 없으면 done=true, files=[], benefit=""로 답한다.'''
 
 # A sentence ends at . ! ? followed by space, the end, or Hangul ("좋다.그래서"), but not inside
 # "3.5" or a file name such as "opentyr.h".

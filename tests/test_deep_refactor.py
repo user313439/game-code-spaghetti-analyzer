@@ -51,7 +51,7 @@ def make_job(tmp_path):
     (result / 'scoring.json').write_text(json.dumps({'class_scores': units, 'analysis_status': {'state': 'complete', 'language': 'c'}}), encoding='utf8')
     (result / 'metrics.json').write_text(json.dumps({
         'classes': [{'fqn': u['fqn'], 'name': u['name'], 'file_path': u['file_path'], 'out_neighbors': [], 'in_neighbors': []} for u in units],
-        'methods': [dict(file_path=f'{c}.c', class_fqn=c, name=NAMES[f'{c}.c'][0], fqn=f'{c}.{NAMES[f"{c}.c"][0]}', start_line=3, end_line=13, cc=12, loc=11)
+        'methods': [dict(file_path=f'{c}.c', class_fqn=c, name=NAMES[f'{c}.c'][0], fqn=f'{c}.{NAMES[f"{c}.c"][0]}', start_line=3, end_line=13, cc=30, loc=11)
                     for c in ['a', 'b']]}), encoding='utf8')
     manager.update(ident, state='complete', options={'lang': 'c', 'subdir': '.'})
     return app, ident
@@ -192,6 +192,76 @@ def test_a_timeout_says_what_to_do_and_a_reply_failing_its_check_is_kept(tmp_pat
     assert '분 안에 답하지 못했습니다' in workers['a.c']['error'] and '원본은 그대로' in workers['a.c']['error']
     saved = json.loads((app.state.manager.directory(ident) / 'assistant-rejected-b.c.json').read_text('utf8'))
     assert saved['error'] == 'AI 변경 요약을 확인하지 못했습니다.' and saved['reply']['edits']
+
+
+def deep_run(tmp_path, monkeypatch, provider, candidates=('a',)):
+    monkeypatch.setattr(assistant, 'call_provider', provider)
+    app, ident = make_job(tmp_path)
+    with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+        h = {'X-Game-SI-Token': client.get('/api/session').json()['token']}
+        url = f'/api/jobs/{ident}/assistant'
+        client.post(url, headers=h, json=dict(action='preview', strategy='deep', service='claude', mode='cli',
+                                              candidates=list(candidates), direct=True))
+        return app, ident, wait(client, url)
+
+
+def test_the_sound_part_of_a_turned_down_reply_is_kept_without_asking_again(tmp_path, monkeypatch):
+    # Real case (rehearsal 2026-10-26, mainint.c): the AI put in a helper but never called it. The helper
+    # is left out and the rest is checked again; no second request.
+    asked = []
+
+    def provider(service, mode, prompt, *a, **kw):
+        asked.append(json.loads(prompt))
+        data = reply('a.c')
+        data['edits'].append(dict(path='a.c', old='int Alpha(int x)\n{', new='static void left_over(int x)\n{\n\ttotal = x;\n}\n\nint Alpha(int x)\n{'))
+        data['file_reviews'][0]['change'] += ' left_over도 만듭니다.'
+        return data
+    app, ident, state = deep_run(tmp_path, monkeypatch, provider)
+    worker = state['workers'][0]
+    assert state['state'] == 'complete' and worker['state'] == 'done' and len(asked) == 1
+    assert worker['helpers'] == ['add_alpha'] and 'left_over' in worker['note'] and '빼고' in worker['note']
+    assert 'left_over' not in state['preview']['files'][0]['after']
+    assert (app.state.manager.directory(ident) / 'assistant-rejected-a.c.json').is_file()   # kept for looking into
+
+
+def test_a_turned_down_reply_is_asked_once_more_with_the_reason(tmp_path, monkeypatch):
+    asked = []
+
+    def provider(service, mode, prompt, *a, **kw):
+        payload = json.loads(prompt)
+        asked.append(payload)
+        return reply('a.c') if payload.get('retry') else dict(reply('a.c'), edits=[dict(path='b.c', old='x', new='y')])
+    app, ident, state = deep_run(tmp_path, monkeypatch, provider)
+    worker = state['workers'][0]
+    assert state['state'] == 'complete' and worker['state'] == 'done' and len(asked) == 2
+    assert '밖의 변경안' in asked[1]['retry']['reason'] and '하나에만' in asked[1]['retry']['note']
+    assert '한 번 더' in worker['note'] and worker['retried'] is True
+
+
+def test_the_program_asks_again_only_once_and_never_after_a_timeout(tmp_path, monkeypatch):
+    import subprocess
+    asked = []
+
+    def provider(service, mode, prompt, *a, **kw):
+        path = json.loads(prompt)['editable_paths'][0]
+        asked.append(path)
+        if path == 'a.c':
+            raise ValueError('AI 응답 제한 시간을 초과했습니다.') from subprocess.TimeoutExpired('claude', 900)
+        return dict(reply(path), edits=[dict(path='a.c', old='x', new='y')])   # always out of bounds
+    app, ident, state = deep_run(tmp_path, monkeypatch, provider, candidates=('a', 'b'))
+    assert sorted(asked) == ['a.c', 'b.c', 'b.c'] and state['state'] == 'failed'
+    folder = app.state.manager.directory(ident)
+    assert (folder / 'assistant-rejected-b.c.json').is_file() and (folder / 'assistant-rejected-b.c-retry.json').is_file()
+
+
+def test_a_file_without_complex_functions_is_not_sent(tmp_path, monkeypatch):
+    from game_si.web import assistant_jobs
+    monkeypatch.setattr(assistant_jobs, 'DEEP_WORTH_CC', 31)   # the fixture's functions branch 30 times
+    asked = []
+    app, ident, state = deep_run(tmp_path, monkeypatch, lambda service, mode, prompt, *a, **kw: asked.append(prompt) or reply('a.c'))
+    worker = state['workers'][0]
+    assert asked == [] and worker['state'] == 'no_changes' and 'AI를 부르지 않았습니다' in worker['error']
+    assert state['state'] == 'complete' and state.get('no_changes') is True
 
 
 def pass_reply(block, helper, other_path=None):

@@ -169,15 +169,24 @@ export function parseGithubUrl(value) {
 }
 
 export function createApi(token, fetcher = globalThis.fetch) {
-  return async function api(url, options = {}) {
+  return async function api(url, options = {}, retried = false) {
     const headers = {...options.headers};
-    if (options.method && options.method.toUpperCase() === "POST") {
+    const post = Boolean(options.method && options.method.toUpperCase() === "POST");
+    if (post) {
       headers["X-Game-SI-Token"] = token;
       if (typeof options.body === "string") headers["Content-Type"] = "application/json";
     }
     let response;
     try { response = await fetcher(url, {...options, headers, credentials: "same-origin"}); }
     catch (_) { throw new Error("앱에 연결할 수 없습니다. 로컬 서버가 실행 중인지 확인하고 다시 시도해 주세요."); }
+    // The server makes a new token each time it starts: a page opened before a restart takes the new one
+    // and asks once more instead of showing the refusal.
+    if (response.status === 403 && post && !retried) {
+      try {
+        const fresh = await (await fetcher("/api/session", {credentials: "same-origin"})).json();
+        if (fresh.token && fresh.token !== token) { token = fresh.token; return api(url, options, true); }
+      } catch (_) { /* fall through to the refusal below */ }
+    }
     let data;
     try { data = await response.json(); }
     catch (_) { throw new Error("앱 응답을 읽을 수 없습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요."); }
@@ -261,11 +270,12 @@ export function codeTokens(text) {
 // wording stays available as `detail`. Unknown reasons are shown as they are.
 const PLAIN_REASONS = [
   [/시간을 초과|분 안에 답하지/, "AI가 제한 시간 안에 답을 끝내지 못했습니다. 원본은 그대로입니다. 다시 만들어 보거나 이 파일은 빼고 진행하세요."],
-  [/수정 대상이 일치하지|대상 함수 밖|대상 함수의 실제 변경을 확인할 수 없|밖의 파일을 바꾸는|대상 .*함수를 실제 함수 목록에서/,
-    "AI가 고치겠다고 밝힌 함수 말고 다른 곳까지 바꾸려 해서 받지 않았습니다(원본 보호 규칙). 다시 만들면 대개 해결됩니다."],
-  [/새 보조 함수는/, "AI가 새로 만든 함수가 안전 규칙(이 파일 안에서만 쓰고, 고친 함수에서 직접 부르기)을 지키지 않아 받지 않았습니다."],
-  [/제공한 코드 범위 밖|여러 곳에 나타납니다|변경할 코드가 없거나/, "AI가 바꿀 코드 위치를 정확히 짚지 못해 받지 않았습니다. 다시 만들면 대개 해결됩니다."],
-  [/필수 내용이 누락|형식|해석하지 못했|요약을 확인하지/, "AI 답의 형식이 맞지 않아 받지 않았습니다. 다시 만들면 대개 해결됩니다."],
+  [/대상 함수의 실제 변경을 확인할 수 없/, "AI가 고치겠다고 밝힌 함수를 실제로는 바꾸지 않았습니다(답이 중간에 끊겼거나 편집을 빠뜨림)."],
+  [/수정 대상이 일치하지|대상 함수 밖|밖의 파일을 바꾸는|대상 .*함수를 실제 함수 목록에서/,
+    "AI가 고치겠다고 밝힌 함수 말고 다른 곳까지 바꾸려 해서 받지 않았습니다(원본 보호 규칙)."],
+  [/새 보조 함수는/, "AI가 새로 만든 함수가 안전 규칙(이 파일 안에서만 쓰고, 고친 함수에서 부르기)을 지키지 않아 받지 않았습니다."],
+  [/제공한 코드 범위 밖|여러 곳에 나타납니다|변경할 코드가 없거나/, "AI가 바꿀 코드 위치를 정확히 짚지 못해 받지 않았습니다."],
+  [/필수 내용이 누락|형식|해석하지 못했|요약을 확인하지/, "AI 답의 형식이 맞지 않아 받지 않았습니다."],
   [/로그인|사용 한도|요청이 완료되지|요청에 실패/, "AI 프로그램이 답하지 못했습니다. 로그인과 사용 한도를 확인한 뒤 다시 만들어 주세요."],
   [/전체 제한 시간이 지나/, "다른 파일을 처리하느라 정한 시간이 지나 시작하지 않았습니다. 이 파일만 다시 만들 수 있습니다."],
 ];
