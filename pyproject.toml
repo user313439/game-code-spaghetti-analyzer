@@ -20,6 +20,7 @@ dependencies = [
     "tree-sitter>=0.23",    # C/C++ AST 파서 (W9+)
     "tree-sitter-c>=0.23",
     "tree-sitter-cpp>=0.23",
+    "tree-sitter-c-sharp>=0.23,<0.24",   # C# 변경안 검사 (깊게 정리)
     "lizard>=1.17",         # 외부 비교 도구 (Phase B, W13)
     "anthropic>=0.50",      # LLM Refactoring Advisor (Phase C, W13)
 ]

@@ -422,6 +422,127 @@ def test_a_helper_with_an_if_split_by_preprocessor_lines_is_accepted(tmp_path):
     assert assistant_context._inserted_helpers('a.c', '#ifdef NET\n' + helper + '\n#endif\n') == ['add_alpha']
 
 
+CS_TEXT = ('using System;\n\nnamespace Game\n{\n    public class Player\n    {\n        int total;\n\n'
+           '        public int Prev()\n        {\n            return total;\n        }\n\n'
+           '        public int Alpha(int x)\n        {\n'
+           '            if (x > 0)\n            {\n                total += x;\n            }\n'
+           '            if (x > 10)\n            {\n                total += 1;\n            }\n'
+           '            return total;\n        }\n    }\n}\n')
+CS_BLOCK = CS_TEXT[CS_TEXT.index('            if (x > 0)'):CS_TEXT.index('            return total;\n        }\n    }')]
+CS_HEAD = '        public int Alpha(int x)\n        {'
+CS_METHODS = [dict(file_path='Player.cs', name='Prev', fqn='Game.Player.Prev', start_line=9, end_line=12, cc=1, loc=4),
+              dict(file_path='Player.cs', name='Alpha', fqn='Game.Player.Alpha', start_line=14, end_line=25, cc=3, loc=12)]
+
+
+def cs_helper(name='AddAlpha', head='private void', body=None):
+    return f'        {head} {name}(int x)\n        {{\n{body or CS_BLOCK}        }}\n\n'
+
+
+def cs_reply(helper=None, call='AddAlpha(x);', extra=()):
+    data = reply('a.c')
+    data['file_reviews'][0].update(path='Player.cs', targets=['Alpha'], change='조건 블록을 같은 클래스의 private 보조 메서드 AddAlpha로 옮깁니다.',
+                                   evidence=['새 private 보조 메서드 AddAlpha'])
+    data['edits'] = [dict(path='Player.cs', old=CS_BLOCK, new=f'            {call}\n'),
+                     dict(path='Player.cs', old=CS_HEAD, new=(helper or cs_helper()) + CS_HEAD), *extra]
+    return data
+
+
+def cs_check(tmp_path, data):
+    (tmp_path / 'Player.cs').write_text(CS_TEXT, encoding='utf8', newline='')
+    preview = assistant.preview_changes(tmp_path, data['edits'])
+    assistant_context.validate_preview_targets(data, CS_METHODS, preview)
+    return preview['files'][0]
+
+
+def test_a_csharp_block_moved_to_a_private_method_of_the_same_class_is_accepted(tmp_path):
+    pytest.importorskip('tree_sitter_c_sharp')
+    assert cs_check(tmp_path, cs_reply())['added_helpers'] == ['AddAlpha']
+    assert cs_check(tmp_path, cs_reply(cs_helper(head='private static void'), call='this.AddAlpha(x);'))['added_helpers'] == ['AddAlpha']
+    assert cs_check(tmp_path, cs_reply(cs_helper(head='static void')))['added_helpers'] == ['AddAlpha']   # no access modifier: private
+    after_alpha = cs_reply()   # put after the target, at the end of the class: read as a member of that class
+    after_alpha['edits'][1] = dict(path='Player.cs', old='        }\n    }\n}\n', new='        }\n\n' + cs_helper().rstrip('\n') + '\n    }\n}\n')
+    assert cs_check(tmp_path, after_alpha)['added_helpers'] == ['AddAlpha']
+    # Measured like the C# analyzer: 1 + if/case/loops/catch/?:/&&/||/??; a local function counts in its method,
+    # a deconstructing foreach does not (another Roslyn node the analyzer does not visit).
+    measured = {m['name']: m for m in assistant_context.measure_functions('Player.cs', CS_TEXT)}
+    assert measured['Alpha']['cc'] == 3 and (measured['Alpha']['start_line'], measured['Alpha']['end_line']) == (14, 25)
+    tricky = ('class T\n{\n    T(int a) { }\n    int M(int x)\n    {\n        int Local(int y) => y > 1 ? y : 0;\n'
+              '        switch (x) { case 1: case 2: break; case 3 when x > 0: break; default: break; }\n'
+              '        var q = x switch { 1 => 2, _ => 3 };\n        try { } catch { }\n'
+              '        foreach (var a in new int[0]) { } foreach (var (k, v) in pairs) { } while (x < 0 && x > 1 || x == 2) { } do { } while (false);\n'
+              '        return q ?? 0;\n    }\n}\n')
+    assert [(m['name'], m['cc']) for m in assistant_context.measure_functions('T.cs', tricky)] == [('.ctor', 1), ('M', 14)]
+
+
+@pytest.mark.parametrize('case', ['outside the class', 'another class', 'another method', 'not called', 'broken', 'public', 'not named'])
+def test_a_csharp_helper_out_of_the_rules_is_refused(tmp_path, case):
+    pytest.importorskip('tree_sitter_c_sharp')
+    helper = cs_helper().replace('        ', '    ').replace('\n    ', '\n        ').replace('\n        }\n\n', '\n    }\n\n')
+    data = {'outside the class': lambda: cs_reply(extra=[dict(path='Player.cs', old='    }\n}\n', new='    }\n\n' + helper + '}\n')]),
+            'another class': lambda: cs_reply(extra=[dict(path='Player.cs', old='    }\n}\n', new='    }\n\n    class Other\n    {\n' + cs_helper() + '    }\n}\n')]),
+            'another method': lambda: cs_reply(extra=[dict(path='Player.cs', old='            return total;\n        }\n\n', new='            return total + 0;\n        }\n\n')]),
+            'not called': lambda: cs_reply(cs_helper() + cs_helper('AddMore'), extra=[]),
+            'broken': lambda: cs_reply(cs_helper(body=CS_BLOCK.replace('total += 1;', 'total += 1'))),
+            'public': lambda: cs_reply(cs_helper(head='public void')),
+            'not named': lambda: cs_reply(cs_helper('Unnamed'), call='Unnamed(x);')}[case]()
+    if case == 'not called':
+        data['file_reviews'][0]['change'] += ' AddMore도 둡니다.'
+    if case in {'outside the class', 'another class'}:
+        data['edits'] = [data['edits'][0], data['edits'][2]]
+    with pytest.raises(ValueError):
+        cs_check(tmp_path, data)
+
+
+def test_a_csharp_file_keeps_the_sound_part_and_is_handed_on_for_a_second_pass(tmp_path, monkeypatch):
+    pytest.importorskip('tree_sitter_c_sharp')
+    from game_si.web import assistant_jobs
+    monkeypatch.setattr(assistant_jobs, 'DEEP_PASSES', 2)
+    monkeypatch.setattr(assistant_jobs, 'DEEP_CONTINUE_CC', 1)
+    monkeypatch.setattr(assistant_jobs, 'DEEP_MIN_GAIN', 0)
+    first, second = CS_BLOCK[:CS_BLOCK.index('            if (x > 10)')], CS_BLOCK[CS_BLOCK.index('            if (x > 10)'):]
+    asked = []
+
+    def provider(service, mode, prompt, *a, **kw):
+        payload = json.loads(prompt)
+        asked.append(payload)
+        if payload.get('continuation'):
+            assert 'AddFirst(x);' in payload['sources'][0]['content'] and payload['continuation']['helpers'] == ['AddFirst']
+            data = cs_reply(cs_helper('AddSecond', body=second), call='AddSecond(x);')
+            data['edits'][0]['old'] = second
+            data['file_reviews'][0]['change'] = '남은 조건 블록을 private 보조 메서드 AddSecond로 옮깁니다.'
+            return data
+        data = cs_reply(cs_helper('AddFirst', body=first), call='AddFirst(x);')
+        data['edits'][0]['old'] = first
+        data['edits'].append(dict(path='Player.cs', old=CS_HEAD, new=cs_helper('LeftOver', body='            total = x;\n') + CS_HEAD))
+        data['file_reviews'][0]['change'] = '첫 조건 블록을 private 보조 메서드 AddFirst로 옮기고 LeftOver도 둡니다.'
+        return data   # LeftOver is never called: left out without asking again
+    monkeypatch.setattr(assistant, 'call_provider', provider)
+    app = create_app(tmp_path)
+    manager = app.state.manager
+    ident = manager.create('C# 깊게 정리', 'folder')['id']
+    (manager.directory(ident) / 'input' / 'Player.cs').write_text(CS_TEXT, encoding='utf8', newline='')
+    result = manager.directory(ident) / 'result'
+    result.mkdir()
+    raw = {'cc': 3, 'coupling': 0, 'dependency_cycle': 0, 'global_state': 0, 'game_loop_centrality': 0}
+    unit = {'fqn': 'Game.Player', 'name': 'Player', 'file_path': 'Player.cs', 'si': 100, 'grade': 'E', 'loc': 26, 'raw': raw}
+    (result / 'scoring.json').write_text(json.dumps({'class_scores': [unit], 'analysis_status': {'state': 'complete', 'language': 'csharp'}}), encoding='utf8')
+    (result / 'metrics.json').write_text(json.dumps({
+        'classes': [{'fqn': unit['fqn'], 'name': 'Player', 'file_path': 'Player.cs', 'out_neighbors': [], 'in_neighbors': []}],
+        'methods': [dict(m, class_fqn='Game.Player', cc=30 if m['name'] == 'Alpha' else 1) for m in CS_METHODS]}), encoding='utf8')
+    manager.update(ident, state='complete', options={'lang': 'csharp', 'subdir': '.'})
+    with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+        h = {'X-Game-SI-Token': client.get('/api/session').json()['token']}
+        url = f'/api/jobs/{ident}/assistant'
+        client.post(url, headers=h, json=dict(action='preview', strategy='deep', service='claude', mode='cli', candidates=['Game.Player'], direct=True))
+        state = wait(client, url)
+    worker = state['workers'][0]
+    assert state['state'] == 'complete', state.get('error')
+    assert worker['state'] == 'done' and worker['steps_done'] == 2 and len(asked) == 2 and 'LeftOver' in worker['note']
+    assert worker['helpers'] == ['AddFirst', 'AddSecond']
+    after = state['preview']['files'][0]['after']
+    assert '            AddFirst(x);\n            AddSecond(x);\n            return total;' in after and 'LeftOver' not in after
+
+
 def test_explanation_lists_are_tidied_not_rejected():
     data = reply('a.c')
     data.update(reasons=['근거입니다.'] * 12, suggestions=['', '  '], tests=[])
@@ -571,9 +692,9 @@ def test_round_changes_keep_overloads_apart_and_measure_each_file(tmp_path):
     ident = manager.create('함수 비교', 'folder')['id']
     folder = manager.directory(ident)
     before = {'a.cpp': 'int foo(int x) { return 1; }\nint foo(double x) { return 2; }\nint shared(void) { return 3; }\n',
-              'b.cpp': 'int shared(void) { return 4; }\n'}
+              'b.cpp': 'int shared(void) { return 4; }\n', 'c.cs': 'class C\n{\n    C() { }\n    int M() { return 1; }\n}\n'}
     after = {'a.cpp': 'int foo(int x) { return 9; }\nint foo(double x) { return 2; }\nint shared(void) { return 5; }\n',
-             'b.cpp': 'int shared(void) { return 6; }\n'}
+             'b.cpp': 'int shared(void) { return 6; }\n', 'c.cs': 'class C\n{\n    C() { }\n    int M() { return 2; }\n    private int N() { return 3; }\n}\n'}
     revision = 'f' * 32
     for root, files in [(folder / 'input', before), (folder / 'revisions' / revision / 'source', after)]:
         root.mkdir(parents=True, exist_ok=True)
@@ -584,15 +705,16 @@ def test_round_changes_keep_overloads_apart_and_measure_each_file(tmp_path):
         path.mkdir(parents=True, exist_ok=True)
         (path / 'metrics.json').write_text(json.dumps({'methods': [dict(file_path=f, name=n, start_line=s, cc=c, loc=1) for f, n, s, c in rows]}), encoding='utf8')
         (path / 'scoring.json').write_text(json.dumps({'class_scores': [], 'analysis_status': {'state': 'complete'}}), encoding='utf8')
-    metrics(folder / 'result', [('a.cpp', 'foo', 1, 1), ('a.cpp', 'foo', 2, 1), ('a.cpp', 'shared', 3, 10), ('b.cpp', 'shared', 1, 20)])
-    metrics(folder / 'revisions' / revision / 'result', [('a.cpp', 'foo', 1, 1), ('a.cpp', 'foo', 2, 1), ('a.cpp', 'shared', 3, 2), ('b.cpp', 'shared', 1, 3)])
-    (folder / 'rounds.json').write_text(json.dumps({'rounds': [{'round': 1, 'revision': revision, 'base': None, 'files': ['a.cpp', 'b.cpp'],
+    metrics(folder / 'result', [('a.cpp', 'foo', 1, 1), ('a.cpp', 'foo', 2, 1), ('a.cpp', 'shared', 3, 10), ('b.cpp', 'shared', 1, 20), ('c.cs', '.ctor', 3, 1), ('c.cs', 'M', 4, 4)])
+    metrics(folder / 'revisions' / revision / 'result', [('a.cpp', 'foo', 1, 1), ('a.cpp', 'foo', 2, 1), ('a.cpp', 'shared', 3, 2), ('b.cpp', 'shared', 1, 3), ('c.cs', '.ctor', 3, 1), ('c.cs', 'M', 4, 1), ('c.cs', 'N', 5, 1)])
+    (folder / 'rounds.json').write_text(json.dumps({'rounds': [{'round': 1, 'revision': revision, 'base': None, 'files': ['a.cpp', 'b.cpp', 'c.cs'],
                                                                'checks': {}}], 'current': 1}), encoding='utf8')
     manager.update(ident, state='complete', options={'lang': 'cpp', 'subdir': '.'})
     with TestClient(app, base_url='http://127.0.0.1:8765') as client:
         rows = client.get(f'/api/jobs/{ident}/rounds/1/changes').json()['functions']
     found = {(r['file'], r['name']): r for r in rows}
-    assert sorted(found) == [('a.cpp', 'foo'), ('a.cpp', 'shared'), ('b.cpp', 'shared')]   # foo(double) did not change
+    assert sorted(found) == [('a.cpp', 'foo'), ('a.cpp', 'shared'), ('b.cpp', 'shared'), ('c.cs', 'M'), ('c.cs', 'N')]   # foo(double) did not change
+    assert found[('c.cs', 'M')]['before']['cc'] == 4 and found[('c.cs', 'M')]['after']['cc'] == 1 and found[('c.cs', 'N')]['created']
     assert '+int foo(int x) { return 9; }' in found[('a.cpp', 'foo')]['diff']   # a one-line change keeps its new line
     assert found[('a.cpp', 'shared')]['before']['cc'] == 10 and found[('a.cpp', 'shared')]['after']['cc'] == 2
     assert found[('b.cpp', 'shared')]['before']['cc'] == 20 and found[('b.cpp', 'shared')]['after']['cc'] == 3

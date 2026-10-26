@@ -37,13 +37,75 @@ def validate_target_methods(advice, methods):
     return resolved
 
 
+def _csharp(path):
+    return Path(path).suffix.lower()=='.cs'
+
+
 def _source_tree(path, text):
-    if Path(path).suffix.lower() not in {'.c','.h','.cpp','.cc','.cxx','.hpp'}:return None
+    suffix=Path(path).suffix.lower()
+    if suffix not in {'.c','.h','.cpp','.cc','.cxx','.hpp','.cs'}:return None
     from tree_sitter import Language, Parser
-    import tree_sitter_c
-    import tree_sitter_cpp
-    grammar=tree_sitter_c if Path(path).suffix.lower() in {'.c','.h'} else tree_sitter_cpp
+    if suffix=='.cs':
+        import tree_sitter_c_sharp as grammar
+    elif suffix in {'.c','.h'}:
+        import tree_sitter_c as grammar
+    else:
+        import tree_sitter_cpp as grammar
     return Parser(Language(grammar.language())).parse(text.encode('utf8')).root_node
+
+
+# C# helpers go inside the target's class: private (optionally static) methods with a body, nothing more.
+CS_HELPER_MODIFIERS={'private','static','async','unsafe'}
+CS_WRAP='class __Wrap\n{\n'   # a piece of class members reads as members only inside a class
+CS_TYPES={'namespace_declaration','class_declaration','struct_declaration','record_declaration','interface_declaration'}
+CS_METHODS={'method_declaration','constructor_declaration'}   # what the C# analyzer lists; a local function is part of its method
+
+
+def _cs_helper_name(node):
+    """The method's name when it has a C# helper's form (private, a body, no attributes), else None.
+    No access modifier is private too, except in an interface."""
+    modifiers={m.text.decode('utf8') for m in node.children if m.type=='modifier'}
+    owner=node.parent.parent if node.parent is not None else None
+    if (node.type!='method_declaration' or node.child_by_field_name('name') is None or not modifiers<=CS_HELPER_MODIFIERS
+            or owner is None or owner.type=='interface_declaration'
+            or node.child_by_field_name('body') is None or any(child.type=='attribute_list' for child in node.children)):return None
+    return node.child_by_field_name('name').text.decode('utf8')
+
+
+def _cs_methods(root):
+    """(method node, names of the enclosing namespaces and types) in document order."""
+    found=[];pending=[(root,())]
+    while pending:
+        node,owner=pending.pop()
+        if node.type in CS_METHODS:
+            if node.child_by_field_name('name') is not None:found.append((node,owner))   # not a broken one
+            continue
+        if node.type in CS_TYPES and node.child_by_field_name('name') is not None:
+            owner=owner+(node.child_by_field_name('name').text.decode('utf8'),)
+        pending.extend((child,owner) for child in reversed(node.named_children))
+    return found
+
+
+def _cs_name(node):
+    return '.ctor' if node.type=='constructor_declaration' else node.child_by_field_name('name').text.decode('utf8')
+
+
+def _cs_complexity(body):
+    """1 + branches, by the C# analyzer's rules (CyclomaticComplexityWalker): if, loops, each case label, catch,
+    ?:, &&, ||, ?? and each switch expression arm. A deconstructing foreach ('foreach (var (a, b) in …)') is another
+    Roslyn node the analyzer does not count, so it is not counted here either."""
+    count=1;pending=[body]
+    while pending:
+        node=pending.pop();pending.extend(node.children)
+        if node.type=='foreach_statement':
+            count+=getattr(node.child_by_field_name('left'),'type',None) not in {'tuple_pattern','tuple_expression'}
+        elif node.type in {'if_statement','while_statement','for_statement','do_statement',
+                           'catch_clause','conditional_expression','switch_expression_arm'}:count+=1
+        elif node.type=='switch_section':count+=sum(child.type=='case' for child in node.children)
+        elif node.type=='binary_expression':
+            operator=node.child_by_field_name('operator')
+            count+=operator is not None and operator.type in {'&&','||','??'}
+    return count
 
 
 CONDITIONAL=re.compile(r'[ \t]*#[ \t]*(if|ifdef|ifndef|elif|else|endif)\b')
@@ -73,6 +135,15 @@ def _readable(path, text):
 
 
 def _inserted_helpers(path, text):
+    """Names of the helpers a piece of inserted text holds, or [] unless it is helpers only
+    (C/C++: static functions; C#: private methods, read as members of a class)."""
+    if _csharp(path):
+        root=_readable(path,CS_WRAP+text+'\n}\n')
+        tops=[node for node in root.named_children if node.type!='comment'] if root is not None else []
+        if len(tops)!=1 or tops[0].type!='class_declaration':return []
+        members=[node for node in tops[0].child_by_field_name('body').named_children if node.type!='comment']
+        names=[_cs_helper_name(node) for node in members]
+        return names if None not in names else []
     root=_readable(path,text)
     if root is None:return []
     names=[]
@@ -87,7 +158,31 @@ def _inserted_helpers(path, text):
     return names
 
 
+def _cs_functions(path, text):
+    """C# methods and constructors by owner, name and parameters (overloads stay apart), like _ast_functions."""
+    functions={}
+    for node,owner in _cs_methods(_source_tree(path,text)):
+        name=_cs_name(node)
+        signature=''.join((node.child_by_field_name(field).text.decode('utf8') if node.child_by_field_name(field) else '')
+                          for field in ['type_parameters','parameters'])
+        calls=set();body=node.child_by_field_name('body');children=[body] if body is not None else []
+        while children:
+            child=children.pop();children.extend(child.named_children)
+            if child.type!='invocation_expression':continue
+            function=child.child_by_field_name('function')
+            if (function is not None and function.type=='member_access_expression'
+                    and getattr(function.child_by_field_name('expression'),'type',None)=='this'):
+                function=function.child_by_field_name('name')   # this.Helper(...)
+            if function is not None and function.type=='generic_name':function=function.named_children[0]
+            if function is not None and function.type=='identifier':calls.add(function.text.decode('utf8'))
+        functions['.'.join(owner)+'::'+name+' '.join(signature.split())]=dict(name=name,calls=calls,source=node.text,owner=owner,
+            valid=not node.has_error or _readable(path,CS_WRAP+node.text.decode('utf8')+'\n}\n') is not None,
+            helper=_cs_helper_name(node) is not None)
+    return functions
+
+
 def _ast_functions(path,text):
+    if _csharp(path):return _cs_functions(path,text)
     root=_source_tree(path,text)
     if root is None:return {}
     from ..cpp_analyzer import _function_name
@@ -106,18 +201,25 @@ def _ast_functions(path,text):
                 function=child.child_by_field_name('function')
                 if function is not None and function.type in {'identifier','qualified_identifier'}:
                     calls.add(function.text.decode('utf8').rsplit('::',1)[-1])
-        functions[identity]=dict(name=_function_name(node,source),calls=calls,
+        functions[identity]=dict(name=_function_name(node,source),calls=calls,owner=None,
             source=node.text,valid=not node.has_error or _readable(path,node.text.decode('utf8')) is not None,
-            static=any(child.type=='storage_class_specifier' and child.text==b'static' for child in node.children))
+            helper=any(child.type=='storage_class_specifier' and child.text==b'static' for child in node.children))
     return functions
+
+
+def _helper_rule(path):
+    return ('새 보조 메서드는 대상 메서드와 같은 클래스의 private 메서드이며 설명에 이름이 있고 변경된 대상 메서드에서 실제 호출되어야 합니다.'
+            if _csharp(path) else '새 보조 함수는 정적 함수이며 설명에 이름이 있고 변경된 대상 함수에서 실제 호출되어야 합니다.')
 
 
 def _new_ast_helpers(item, candidates, declared, explanation):
     before=_ast_functions(item['path'],item['before'])
     after=_ast_functions(item['path'],item['after'])
     targets={candidates[index].get('name') for index in declared}
-    called=set().union(*(row['calls'] for identity,row in after.items()
-        if row['name'] in targets and identity in before and row['source']!=before[identity]['source']))
+    changed=[row for identity,row in after.items()
+             if row['name'] in targets and identity in before and row['source']!=before[identity]['source']]
+    called=set().union(*(row['calls'] for row in changed))
+    owners={row['owner'] for row in changed}   # C#: the classes of the changed targets (C/C++: None)
     # A later pass may move a helper's call into another new helper: reached through new helpers counts.
     new=[row for identity,row in after.items() if identity not in before];grown=True
     while grown:
@@ -129,9 +231,9 @@ def _new_ast_helpers(item, candidates, declared, explanation):
     for identity,row in after.items():
         if identity in before:continue
         name=row['name']
-        if (not name or not row['valid'] or not row['static'] or name in old_names
+        if (not name or not row['valid'] or not row['helper'] or name in old_names or row['owner'] not in owners
                 or not re.search(r'(?<![A-Za-z0-9_])'+re.escape(name)+r'(?![A-Za-z0-9_])',explanation) or name not in called):
-            raise ValueError('새 보조 함수는 정적 함수이며 설명에 이름이 있고 변경된 대상 함수에서 실제 호출되어야 합니다.')
+            raise ValueError(_helper_rule(item['path']))
         helpers.append(name)
     return helpers
 
@@ -238,12 +340,15 @@ def validate_preview_targets(advice, methods, preview, companions=frozenset()):
             raise ValueError('선언한 대상 함수의 실제 변경을 확인할 수 없습니다.')
         explanation=review['change']+'\n'+'\n'.join(review['evidence'])
         helpers=_new_ast_helpers(item,candidates,target_indexes,explanation)
+        csharp=_csharp(item['path'])
         for text in outside:
             names=_inserted_helpers(item['path'],text)
+            # C#: a method read from the whole file in the target's class (a piece alone reads in any class).
             if (not names or any(name in {m.get('name') for m in candidates}
                     or name not in explanation
-                    or name not in helpers and not re.search(r'\b'+re.escape(name)+r'\s*\(',''.join(changed_text)) for name in names)):
-                raise ValueError('대상 함수 밖의 추가 코드는 설명과 호출이 확인된 새 정적 보조 함수만 허용합니다.')
+                    or name not in helpers and (csharp or not re.search(r'\b'+re.escape(name)+r'\s*\(',''.join(changed_text))) for name in names)):
+                raise ValueError('대상 메서드 밖의 추가 코드는 같은 클래스에 넣은, 설명과 호출이 확인된 새 private 보조 메서드만 허용합니다.' if csharp
+                                 else '대상 함수 밖의 추가 코드는 설명과 호출이 확인된 새 정적 보조 함수만 허용합니다.')
             helpers.extend(names)
         if helpers:item['added_helpers']=list(dict.fromkeys(helpers))
     if moves:
@@ -428,10 +533,17 @@ def _deep_main(path, text, targets, others, budget, other_budget):
 
 
 def measure_functions(path, text):
-    """Functions of a C/C++ text as the analysis lists them (name, lines, branch count). Used to aim the
+    """Functions of a C/C++/C# text as the analysis lists them (name, lines, branch count). Used to aim the
     next pass of a file after an earlier pass already changed it."""
     root=_source_tree(path,text)
     if root is None:return []
+    if _csharp(path):
+        rows=[]
+        for node,_ in _cs_methods(root):
+            body=node.child_by_field_name('body');name=_cs_name(node)
+            rows.append(dict(file_path=path,name=name,fqn=name,start_line=node.start_point[0]+1,end_line=node.end_point[0]+1,
+                             cc=_cs_complexity(body) if body is not None else 1,loc=node.end_point[0]-node.start_point[0]+1))
+        return rows
     from ..cpp_analyzer import _cyclomatic_complexity,_function_name
     source=text.encode('utf8');rows=[];pending=[root]
     while pending:
