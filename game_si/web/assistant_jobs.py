@@ -242,7 +242,7 @@ class AssistantJobs:
         rows = []
         for rel in item.get('files', []):
             before, after = read(before_root, rel), read(after_root, rel)
-            if Path(rel).suffix.lower() not in {'.c', '.h', '.cpp', '.cc', '.cxx', '.hpp'}:
+            if Path(rel).suffix.lower() not in {'.c', '.h', '.cpp', '.cc', '.cxx', '.hpp', '.cs'}:
                 if before != after:
                     rows.append({'file': rel, 'name': None, 'diff': unified(before, after, rel)})
                 continue
