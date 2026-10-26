@@ -13,6 +13,9 @@ export async function render(view, ctx, params = {}) {
   const zipInput = h("input", {class: "visually-hidden", type: "file", accept: ".zip", tabindex: "-1", "aria-label": "ZIP 파일 선택"});
   const folderInput = h("input", {class: "visually-hidden", type: "file", webkitdirectory: true, multiple: true, tabindex: "-1", "aria-label": "소스 폴더 선택"});
   const picked = h("p", {class: "picked", "aria-live": "polite"}, "아직 선택한 파일이 없습니다.");
+  // One source per analysis: once a ZIP/folder is picked the drop area gives way to "clear", so a
+  // second pick cannot look like it is added to the first.
+  const clearButton = h("button", {class: "btn ghost sm", type: "button", hidden: true, onclick: () => { clearPick(); drop.focus(); }}, "선택 지우기");
   const limitText = h("p", {class: "help"});
   const drop = h("div", {class: "drop", tabindex: "0", role: "group", "aria-label": "ZIP 파일 또는 소스 폴더를 여기에 놓으세요"},
     h("b", null, "ZIP 파일이나 폴더를 여기에 놓으세요"), h("span", {class: "sub"}, "또는 직접 선택해 가져올 수 있습니다."),
@@ -21,7 +24,7 @@ export async function render(view, ctx, params = {}) {
       h("button", {class: "btn ghost sm", type: "button", onclick: () => folderInput.click()}, "폴더 선택")));
   const githubPanel = h("div", {class: "panel"}, h("label", {for: "github-url"}, "공개 GitHub 저장소 주소"), url,
     h("p", {class: "help"}, "코드 파일만 저장하고 그림·소리 같은 리소스는 저장하지 않습니다. 가져온 뒤 분석할 폴더와 언어를 고릅니다."));
-  const filesPanel = h("div", {class: "panel", hidden: true}, drop, zipInput, folderInput, picked, limitText,
+  const filesPanel = h("div", {class: "panel", hidden: true}, drop, zipInput, folderInput, h("div", {class: "picked-row"}, picked, clearButton), limitText,
     h("p", {class: "help"}, "소스·헤더만 가져오며 빌드 결과, 의존성 폴더, 환경 설정 파일은 제외합니다."));
   const tabs = ["github", "files"].map(name => h("button", {type: "button", role: "tab", class: "tab", onclick: () => setKind(name)}, name === "github" ? "GitHub" : "내 파일"));
 
@@ -92,6 +95,16 @@ export async function render(view, ctx, params = {}) {
       picked.textContent = `${label} · ${type === "zip" ? "ZIP 1개" : `소스·헤더 ${upload.files.length.toLocaleString()}개`} · ${size}${upload.skipped ? ` · 제외 ${upload.skipped.toLocaleString()}개` : ""}`;
       say("");
     } catch (error) { say(error.message); }
+    syncPick();
+    lock();
+  }
+  function syncPick() { drop.hidden = Boolean(upload); clearButton.hidden = !upload; }
+  function clearPick() {
+    upload = null;
+    zipInput.value = ""; folderInput.value = "";   // the same file can be picked again
+    picked.textContent = "아직 선택한 파일이 없습니다.";
+    say("");
+    syncPick();
     lock();
   }
   zipInput.addEventListener("change", e => { if (e.target.files.length) choose(e.target.files, "zip"); });
@@ -146,13 +159,13 @@ export async function render(view, ctx, params = {}) {
     const source = job.source || {}, languages = job.scan?.languages || {};
     const folder = h("select", {id: "scope-folder"}, ...(job.scan?.folders?.length ? job.scan.folders : ["."]).map(p => h("option", {value: p}, p === "." ? "전체 폴더" : p)));
     const lang = h("select", {id: "scope-language"}, h("option", {value: "auto"}, "자동 감지"), ...Object.entries(LANGUAGE_LABELS).map(([v, t]) => h("option", {value: v}, t)));
-    // One place to choose how C/C++ is read: basic (no build settings), precise with the build
-    // settings this app keeps for known games, or precise with the user's own compile_commands.json.
+    // One place to choose how C/C++ is read: basic (no build settings), precise with the build settings
+    // recognised for a known open-source game (its own project file's options), or the user's compile_commands.json.
     const presets = job.scan?.presets || [];
     const fits = f => presets.find(p => f === "." || p.folder === f || p.folder.startsWith(`${f}/`));
     const hasNative = Number(languages.c) > 0 || Number(languages.cpp) > 0;
     const mode = hasNative ? h("select", {id: "scope-mode"},
-      presets.length ? h("option", {value: "clang-auto"}, "정밀 분석 (Clang · 준비된 빌드 설정)") : null,
+      presets.length ? h("option", {value: "clang-auto"}, "정밀 분석 (Clang · 자동 인식된 빌드 설정)") : null,
       h("option", {value: "tree-sitter"}, "기본 분석 (빠름 · 빌드 설정 없이)"),
       h("option", {value: "clang"}, "정밀 분석 (Clang · 내 빌드 설정 직접 지정)")) : null;
     const modeHelp = h("p", {class: "help"});
@@ -162,9 +175,9 @@ export async function render(view, ctx, params = {}) {
       if (auto) auto.disabled = !hit;
       if (!hit && mode.value === "clang-auto") mode.value = "tree-sitter";
       clangBox.hidden = mode.value !== "clang";
-      modeHelp.textContent = mode.value === "clang-auto" ? `${hit.name} 원본과 같은 소스라, 이 앱에 준비된 빌드 설정으로 컴파일러처럼 모든 코드를 해석합니다 (약 1분).`
+      modeHelp.textContent = mode.value === "clang-auto" ? `이 소스를 ${hit.name} 원본으로 인식했습니다. 원본 프로젝트 파일에 적힌 컴파일 옵션(언어 표준·매크로·헤더 경로)으로 컴파일러처럼 모든 코드를 해석합니다 (약 1분). 처음 보는 게임은 기본 분석이나 직접 지정을 씁니다.`
         : mode.value === "clang" ? "직접 만든 compile_commands.json으로 컴파일러처럼 해석합니다. 빌드 환경이 있는 사람만 쓰는 방식입니다."
-        : `빌드 설정 없이 코드를 읽습니다. 매크로 때문에 일부 줄을 건너뛸 수 있습니다(부분 분석).${presets.length && !hit ? " 이 폴더에는 준비된 빌드 설정이 없습니다." : ""}`;
+        : `빌드 설정 없이 코드를 읽습니다. 매크로 때문에 일부 줄을 건너뛸 수 있습니다(부분 분석).${presets.length && !hit ? ` 자동 인식된 빌드 설정은 ${presets[0].folder} 폴더에 맞습니다.` : ""}`;
     };
     if (presets.length) folder.value = presets[0].folder;
     folder.addEventListener("change", syncMode);
@@ -269,6 +282,7 @@ export async function render(view, ctx, params = {}) {
     job = null; upload = null; scope.dataset.job = ""; actionsKey = "";
     zipInput.value = ""; folderInput.value = "";
     picked.textContent = "아직 선택한 파일이 없습니다.";
+    syncPick();
     if (location.hash !== "#/") history.replaceState(null, "", "#/");
     say(""); render();
   }
