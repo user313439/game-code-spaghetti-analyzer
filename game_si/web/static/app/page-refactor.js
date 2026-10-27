@@ -7,7 +7,30 @@ const STAGES = ["코드 준비", "AI가 변경안 작성", "변경 범위 검사
 const WAY = "gsi-change-way";
 // One file's progress in a change made per file ('deep').
 const WORKER = {waiting: ["대기", ""], running: ["작성 중", "t-busy"], checking: ["검사 중", "t-busy"], done: ["완료", "t-ok"],
-  no_changes: ["바꿀 곳 없음", "t-muted"], failed: ["거절", "t-bad"], skipped: ["건너뜀", "t-bad"], cancelled: ["취소", "t-muted"]};
+  no_changes: ["바꿀 곳 없음", "t-muted"], failed: ["거절", "t-bad"], skipped: ["건너뜀", "t-bad"], cancelled: ["취소됨", "t-muted"]};
+// How one pass of a file ended (the program hands a big function to the AI again, up to 3 times).
+const PASS = {kept: ["반영", "t-ok"], rejected: ["검사에서 빠짐", "t-bad"], limit: ["사용 한도로 멈춤", "t-bad"],
+  failed: ["AI가 답하지 못함", "t-bad"], empty: ["더 바꿀 곳 없다고 답함", "t-muted"], cancelled: ["취소로 멈춤", "t-muted"]};
+
+// Pass by pass: which blocks of which function went into which new helpers, and the complexity of
+// the target functions before and after that pass. A pass that was not kept says why.
+export function passView(w, open = false) {
+  const rows = w.passes || [];
+  if (!rows.length) return null;
+  return h("details", {class: "passes", "data-key": `${w.key}:passes`, open},
+    h("summary", null, `단계별로 무엇을 했는지 보기 · ${rows.length}단계`),
+    h("ol", null, ...rows.map(p => {
+      const [label, tone] = PASS[p.state] || [p.state, ""];
+      const kept = p.state === "kept";
+      return h("li", {class: "pass"},
+        h("div", {class: "wline"}, h("b", null, `${p.step}단계`), h("span", {class: `wstate ${tone}`}, label),
+          ...(p.cc || []).map(c => h("span", {class: "sub"}, h("code", {class: "cname"}, c.name), ` 복잡도 ${c.before} → ${c.after}`))),
+        p.helpers?.length ? h("div", {class: "wtargets"}, "새로 만든 함수 ", ...p.helpers.map(t => h("code", {class: "cname"}, t))) : null,
+        p.change ? h("p", null, kept ? null : h("i", null, "AI가 하려던 정리(반영하지 않음): "), ...codeText(codeTokens(p.change))) : null,
+        p.evidence?.length ? h("ul", null, ...p.evidence.map(e => h("li", null, ...codeText(codeTokens(e))))) : null,
+        p.reason ? h("div", {class: "sub"}, "이유: ", ...codeText(codeTokens(plainReason(p.reason).text))) : null);
+    })));
+}
 
 // A reason in plain words; the program's own wording folds away under "자세한 이유".
 // `key` names the folded detail so it stays open while the rows are drawn again every second.
@@ -17,9 +40,16 @@ function reasonView(error, tone = "werr", key = "") {
     detail ? h("details", {class: "reason-more", "data-key": key}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(detail)))) : null);
 }
 
+function openPasses(event) {
+  const more = event.currentTarget.closest(".worker")?.querySelector("details.passes");
+  if (more) more.open = !more.open;
+}
+
 export function workerRows(workers) {
   return h("ul", {class: "workers"}, ...workers.map(w => {
-    const [label, tone] = WORKER[w.state] || [w.state, ""];
+    const [named, tone] = WORKER[w.state] || [w.state, ""];
+    // Done, but a later pass did not get through: the passes before it are what the change holds.
+    const label = w.state === "done" && w.stopped_at ? `${named}(${w.stopped_at}단계까지)` : named;
     const live = ["running", "checking"].includes(w.state) && w.started_at;
     const seconds = live ? Date.now() / 1000 - w.started_at : w.seconds;
     const sent = !w.mode ? "" : w.mode === "full" ? `통째로 보냄 · ${w.sent_kb}KB` : `큰 파일 · 대상 함수는 통째로 · ${w.sent_kb}KB / ${w.file_kb}KB`;
@@ -28,14 +58,17 @@ export function workerRows(workers) {
     return h("li", {class: `worker ${tone}`},
       h("div", {class: "wline"}, h("b", {class: "mono"}, w.label), h("span", {class: `wstate ${tone}`}, label),
         w.attempt > 1 ? h("span", {class: "sub"}, `다시 만들기 ${w.attempt - 1}회째`) : null,
-        pass ? h("span", {class: "sub"}, pass) : null,
+        // Pressing the pass (or the target functions) opens what the earlier passes did.
+        pass ? h("span", {class: `sub${w.passes?.length ? " w-link" : ""}`, onclick: openPasses}, pass) : null,
         sent ? h("span", {class: "sub"}, sent) : null, seconds ? h("span", {class: "sub"}, elapsedText(seconds)) : null),
-      w.targets?.length ? h("div", {class: "wtargets"}, "대상 함수 ", ...w.targets.map(t => h("code", {class: "cname"}, t))) : null,
+      w.targets?.length ? h("div", {class: `wtargets${w.passes?.length ? " w-link" : ""}`, onclick: openPasses}, "대상 함수 ", ...w.targets.map(t => h("code", {class: "cname"}, t))) : null,
       w.helpers?.length ? h("div", {class: "wtargets"}, "새로 만든 함수 ", ...w.helpers.map(t => h("code", {class: "cname"}, t))) : null,
       w.skipped_targets?.length ? h("div", {class: "wwarn"}, `너무 커서 이번에 보내지 못한 함수: ${w.skipped_targets.join(", ")}`) : null,
       w.note && w.state === "done" ? h("div", {class: "sub"}, w.note,
         w.note_detail ? h("details", {class: "reason-more", "data-key": `${w.key}:note`}, h("summary", null, "자세한 이유"), h("p", null, ...codeText(codeTokens(w.note_detail)))) : null) : null,
       w.error && ["failed", "skipped"].includes(w.state) ? reasonView(w.error, "werr", `${w.key}:error`) : null,
+      w.error && w.state === "cancelled" ? h("div", {class: "sub"}, w.error) : null,
+      passView(w),
       // The program asks the AI once more by itself when a reply is turned down.
       w.retried && live ? h("div", {class: "sub"}, "첫 답이 검사에 걸려 이유를 알려 주고 자동으로 다시 만드는 중입니다: ",
         plainReason(w.retry_reason).text) : null,
@@ -305,6 +338,8 @@ export async function render(view, ctx, {jobId, query}) {
           h("div", {class: "bubble"}, h("h4", null, "무엇이 문제인가요?"), rich(r.finding)),
           h("div", {class: "bubble"}, h("h4", null, "왜 이렇게 바꾸나요?"), rich(r.reason)),
           h("div", {class: "bubble"}, h("h4", null, "무엇을 바꾸나요?"), rich(r.change)),
+          (worker => worker?.passes?.length > 1 ? h("div", {class: "bubble"}, h("h4", null, "단계별로 무엇을 했나요?"), passView(worker))
+            : null)((state.workers || []).find(w => w.path === selected.path)),
           h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), rich(r.expected_effect)),
           h("details", {class: "bubble"}, h("summary", null, `영향을 받는 곳과 확인할 동작 (${(r.checks || []).length})`), rich(r.impact),
             h("ul", null, ...(r.checks || []).map(c => h("li", null, ...codeText(codeTokens(c)))))));

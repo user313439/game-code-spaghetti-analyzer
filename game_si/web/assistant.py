@@ -49,6 +49,14 @@ PROCESS_LOCK = threading.RLock()
 OWNERS = {}                     # AI process -> the task key that started it (for cancelling one task)
 CANCELLED = set()               # task keys cancelled: their AI programs may not start any more
 _TASK = threading.local()
+# What an AI program prints when its plan's usage is used up (e.g. Claude Code "You've hit your session limit").
+LIMIT_WORDS = re.compile(r'(usage|session|weekly|rate)[ _-]?limit|hit your .{0,20}limit|quota|resource.?exhausted', re.I)
+
+
+class LimitReached(ValueError):
+    """The AI program's usage limit is used up: asking again now would only fail again."""
+
+
 FILE_REVIEW_FIELDS = ['path','role','finding','reason','change','expected_effect','impact','decision','change_type','targets','evidence','checks']
 FILE_REVIEW_SCHEMA = {'type':'object','additionalProperties':False,
     'properties':{**{key:{'type':'string'} for key in FILE_REVIEW_FIELDS if key not in {'decision','change_type','targets','evidence','checks'}},
@@ -736,6 +744,28 @@ def cancel_owner(key) -> int:
     return len(processes)
 
 
+def cli_failure(result):
+    """Why an AI program ended without an answer, when it can be told: the task was cancelled (its
+    program was stopped) or the usage limit is used up (real case 2026-10-27: Claude Code printed
+    "You've hit your session limit · resets 4:10am" and exited 1). None otherwise."""
+    owner = getattr(_TASK, 'key', None)
+    if owner is not None and owner in CANCELLED:
+        return ValueError('AI 요청을 취소했습니다.')
+    said = ''
+    try:
+        envelope = json.loads(result.stdout or '')
+        if isinstance(envelope, dict):
+            error = envelope.get('error')
+            said = str(envelope.get('result') or (error.get('message') if isinstance(error, dict) else error) or '')
+    except ValueError:
+        pass
+    text = ' '.join(filter(None, [said, result.stderr or '']))
+    if LIMIT_WORDS.search(text):
+        detail = ' '.join((said if LIMIT_WORDS.search(said) else result.stderr or '').split())[:160]
+        return LimitReached(f'AI 사용 한도에 도달했습니다({detail}). 한도가 풀린 뒤 다시 만들어 주세요.')
+    return None
+
+
 def run_cli(command, prompt, root, timeout=None, env=None):
     owner = getattr(_TASK, 'key', None)
     if owner is not None and owner in CANCELLED:
@@ -843,7 +873,7 @@ def call_provider(service, mode, prompt, model='', api_key='', *, base_url='', s
         except subprocess.TimeoutExpired as exc:
             raise ValueError('AI 응답 제한 시간을 초과했습니다. 후보 범위를 줄여 다시 시도해 주세요.') from exc
         if result.returncode:
-            raise ValueError('AI 요청이 완료되지 않았습니다. 공식 프로그램의 로그인·모델·사용 한도를 확인해 주세요.')
+            raise cli_failure(result) or ValueError('AI 요청이 완료되지 않았습니다. 공식 프로그램의 로그인·모델·사용 한도를 확인해 주세요.')
         if service == 'codex':
             if not output.is_file():
                 raise ValueError('AI가 응답 파일을 반환하지 않았습니다.')
@@ -851,7 +881,7 @@ def call_provider(service, mode, prompt, model='', api_key='', *, base_url='', s
         else:
             envelope = parse_json(result.stdout)
             if envelope.get('is_error') or envelope.get('error'):
-                raise ValueError('AI 요청에 실패했습니다. 로그인과 사용 한도를 확인해 주세요.')
+                raise cli_failure(result) or ValueError('AI 요청에 실패했습니다. 로그인과 사용 한도를 확인해 주세요.')
             data = envelope.get('structured_output') or parse_json(envelope.get('result') or envelope.get('response', ''))
         return validate(data)
 
