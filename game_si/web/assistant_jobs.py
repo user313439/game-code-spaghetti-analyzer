@@ -298,7 +298,10 @@ class AssistantJobs:
             step = (state.get('progress') or {}).get('step', 0)
             for row in state.get('workers', []):
                 if row['state'] not in DEEP_FINAL:
-                    row['state'] = 'cancelled'
+                    row.update(state='cancelled', error='요청을 취소해 멈췄습니다.')
+                    passes = row.get('passes') or []
+                    if row.get('step', 1) > 1 and len(passes) < row['step']:   # a later pass was under way
+                        row['passes'] = passes + [{'step': row['step'], 'state': 'cancelled'}]
             state.update(state='cancelled', error=None, finished_at=time.time(), message='AI 요청을 취소했습니다.',
                          progress=dict(stage='cancelled', label='취소했습니다.', step=step, total=4, indeterminate=False))
             self._save(ident)
@@ -637,8 +640,21 @@ class AssistantJobs:
         def target_cc(text):
             measured = {m['name']: m['cc'] for m in measure_functions(path, text)}
             return [measured.get(t, 0) for t in targets]
-        before, after = sum(target_cc(original)), target_cc(current)
+
+        # What each pass did, for the page: its own change and moved blocks in the AI's words, the
+        # helpers it added and the targets' complexity before and after it; or why it was not kept.
+        passes = []
+
+        def record(state, reply=None, helpers=(), cc=None, reason=None):
+            review = next((r for r in (reply or {}).get('file_reviews', []) if r.get('path') == path), {})
+            passes.append({'step': step, 'state': state, 'change': review.get('change', ''), 'evidence': review.get('evidence', []),
+                           'helpers': list(helpers), 'reason': reason,
+                           'cc': [{'name': t, 'before': b, 'after': a} for t, (b, a) in zip(targets, cc)] if cc else []})
+            self._worker_update(ident, key, passes=deepcopy(passes))
+        first_cc = target_cc(original)
+        before, after = sum(first_cc), target_cc(current)
         took, step, note = time.time() - started, 1, None
+        record('kept', data, files[0].get('added_helpers', []), list(zip(first_cc, after)))
         while step < DEEP_PASSES:
             gained = before - sum(after)
             if (max(after, default=0) < DEEP_CONTINUE_CC or gained < max(DEEP_MIN_GAIN, before * 0.05)
@@ -659,6 +675,7 @@ class AssistantJobs:
                 self._worker_update(ident, key, state='checking')
                 self._deep_rules(path, own, reply, prompt, measured + others)
                 if not reply.get('edits'):
+                    record('empty', reply)
                     step -= 1
                     break
                 with tempfile.TemporaryDirectory(prefix='game-si-pass-') as folder:
@@ -672,6 +689,7 @@ class AssistantJobs:
                 whole = assistant.preview_changes(self.base_source(ident), [{'path': path, 'old': original, 'new': step_preview['files'][0]['after']}], [])
                 validate_preview_targets(merged, methods, whole, companions=set())
             except Exception as exc:
+                answered = reply is not None or getattr(exc, 'reply', None) is not None   # else the request itself failed
                 reply = reply if reply is not None else getattr(exc, 'reply', None)
                 if reply is not None:
                     try:
@@ -682,12 +700,19 @@ class AssistantJobs:
                 if not self._mine(ident):
                     return None, None, None
                 reason = str(exc) if isinstance(exc, ValueError) else '검사를 마치지 못했습니다.'
-                note = f'이어서 정리한 {step}단계는 검사에서 빠져 {step - 1}단계까지만 반영했습니다.'
-                self._worker_update(ident, key, note_detail=reason[:600])
+                # Said as it was: turned down by the checks, or no answer at all (a used-up limit above all).
+                kind, why = (('limit', 'AI 사용 한도에 걸려') if isinstance(exc, assistant.LimitReached)
+                             else ('rejected', '검사에서 빠져') if answered else ('failed', 'AI가 답하지 못해'))
+                note = f'이어서 정리한 {step}단계는 {why} {step - 1}단계까지만 반영했습니다.'
+                record(kind, reply, reason=reason[:600])
+                self._worker_update(ident, key, note_detail=reason[:600], stopped_at=step - 1)
                 step -= 1
                 break
+            had = {h for f in files for h in f.get('added_helpers', [])}
+            new_helpers = [h for h in whole['files'][0].get('added_helpers', []) if h not in had]
             files, data, current = whole['files'], merged, whole['files'][0]['after']
-            took, before, after = time.time() - begun, sum(after), target_cc(current)   # the next gain is this pass's own
+            took, before, previous, after = time.time() - begun, sum(after), after, target_cc(current)   # the next gain is this pass's own
+            record('kept', reply, new_helpers, list(zip(previous, after)))
         if step > 1 and note is None:
             note = f'AI를 {step}번 이어서 불러 단계적으로 정리했습니다.'
         self._worker_update(ident, key, steps_done=step)
@@ -732,8 +757,9 @@ class AssistantJobs:
                             self._worker_update(ident, key, state='checking')
                             files, kept = self._check_deep(ident, path, own, data, prompt, methods), None
                         except ValueError as exc:
-                            if not self._mine(ident) or isinstance(exc.__cause__, subprocess.TimeoutExpired):
-                                raise   # a timeout is not asked again: it would most likely run out again
+                            if (not self._mine(ident) or isinstance(exc, assistant.LimitReached)
+                                    or isinstance(exc.__cause__, subprocess.TimeoutExpired)):
+                                raise   # a timeout or a used-up limit is not asked again: it would most likely fail again
                             answered = data is not None   # a reply in the right form, turned down by the checks
                             data = data if answered else getattr(exc, 'reply', None)
                             self._keep_rejected(ident, path, exc, data, '' if attempt == 1 else '-retry')

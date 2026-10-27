@@ -285,7 +285,7 @@ def run_passes(tmp_path, monkeypatch, second, passes=2):
         asked.append((payload.get('continuation'), kw.get('max_output')))
         if payload.get('continuation'):
             assert 'add_first(x);' in payload['sources'][0]['content']   # the text the first pass left
-            return second
+            return second() if callable(second) else second
         return pass_reply('\tif (x > 0) {\n\t\ttotal += x;\n\t}\n', 'add_first')
     monkeypatch.setattr(assistant, 'call_provider', provider)
     app, ident = make_job(tmp_path)
@@ -306,6 +306,12 @@ def test_a_file_is_handed_on_for_a_second_pass_and_checked_as_one_change(tmp_pat
         worker = state['workers'][0]
         assert worker['state'] == 'done' and worker['steps_done'] == 2 and '2번' in worker['note']
         assert worker['helpers'] == ['add_first', 'add_second']
+        # What each pass did, for the page: its own helpers, words and the targets' complexity before/after.
+        passes = worker['passes']
+        assert [(p['step'], p['state'], p['helpers']) for p in passes] == [(1, 'kept', ['add_first']), (2, 'kept', ['add_second'])]
+        assert 'add_second' in passes[1]['change'] and passes[1]['evidence'] == ['새 정적 보조 함수 add_second']
+        assert [c['name'] for c in passes[0]['cc']] == ['Alpha'] and passes[1]['cc'][0]['before'] == passes[0]['cc'][0]['after']
+        assert 'stopped_at' not in worker
         after = state['preview']['files'][0]['after'].replace('\r\n', '\n')
         assert '\tadd_first(x);\n\tadd_second(x);\n\treturn total;' in after and after.count('if (x >') == 2   # each block once, in its helper
         assert client.post(url + '/apply', headers=h, json={'preview_id': state['preview_id']}).status_code == 202
@@ -332,9 +338,52 @@ def test_a_rejected_later_pass_keeps_the_first_pass(tmp_path, monkeypatch):
         worker = state['workers'][0]
         assert state['state'] == 'complete' and worker['state'] == 'done' and worker['steps_done'] == 1
         assert '2단계' in worker['note'] and '밖의' in worker['note_detail'] and worker['helpers'] == ['add_first']
+        assert '검사에서 빠져' in worker['note'] and worker['stopped_at'] == 1
+        assert [p['state'] for p in worker['passes']] == ['kept', 'rejected'] and '밖의' in worker['passes'][1]['reason']
+        assert 'add_second' in worker['passes'][1]['change']   # what the AI tried, shown as not kept
         after = state['preview']['files'][0]['after']
         assert 'add_first(x);' in after and 'add_second' not in after
         assert (app.state.manager.directory(ident) / 'assistant-rejected-a.c-pass2.json').is_file()
+
+
+def test_a_later_pass_stopped_by_the_usage_limit_says_so(tmp_path, monkeypatch):
+    # Real case (rehearsal 2026-10-27, tyrian2.c): pass 3 hit the 5-hour limit and was shown as
+    # "검사에서 빠져" with a login/limit hint; it is said as it was.
+    def limited():
+        raise assistant.LimitReached("AI 사용 한도에 도달했습니다(You've hit your session limit · resets 4:10am). 한도가 풀린 뒤 다시 만들어 주세요.")
+    app, ident, client, h, url, state, asked = run_passes(tmp_path, monkeypatch, limited)
+    with client:
+        worker = state['workers'][0]
+        assert state['state'] == 'complete' and worker['state'] == 'done' and worker['stopped_at'] == 1
+        assert '사용 한도에 걸려 1단계까지만' in worker['note'] and '4:10am' in worker['note_detail']
+        assert [p['state'] for p in worker['passes']] == ['kept', 'limit']
+
+
+def test_the_usage_limit_is_not_asked_again(tmp_path, monkeypatch):
+    asked = []
+
+    def provider(service, mode, prompt, *a, **kw):
+        asked.append(prompt)
+        raise assistant.LimitReached('AI 사용 한도에 도달했습니다(session limit). 한도가 풀린 뒤 다시 만들어 주세요.')
+    app, ident, state = deep_run(tmp_path, monkeypatch, provider)
+    worker = state['workers'][0]
+    assert len(asked) == 1 and worker['state'] == 'failed' and '사용 한도에 도달' in worker['error']
+
+
+def test_a_cli_that_ended_on_its_limit_or_a_cancel_is_told_apart():
+    import subprocess
+    said = json.dumps({'type': 'result', 'is_error': True, 'result': "You've hit your session limit · resets 4:10am (Asia/Seoul)"})
+    limit = assistant.cli_failure(subprocess.CompletedProcess(['claude'], 1, said, ''))
+    assert isinstance(limit, assistant.LimitReached) and '4:10am' in str(limit)
+    assert assistant.cli_failure(subprocess.CompletedProcess(['claude'], 1, '', 'Error: not logged in')) is None
+    assistant._TASK.key = 'task-y'
+    assistant.CANCELLED.add('task-y')
+    try:
+        stopped = assistant.cli_failure(subprocess.CompletedProcess(['claude'], 1, said, ''))
+        assert '취소' in str(stopped) and not isinstance(stopped, assistant.LimitReached)
+    finally:
+        assistant._TASK.key = None
+        assistant.CANCELLED.discard('task-y')
 
 
 def test_a_helper_put_after_another_function_is_not_taken_for_a_change_to_it(tmp_path):
@@ -614,6 +663,7 @@ def test_cancel_stops_every_file(tmp_path, monkeypatch):
             time.sleep(0.05)
         cancelled = client.post(url + '/cancel', headers=h, json={}).json()
         assert cancelled['state'] == 'cancelled' and {w['state'] for w in cancelled['workers']} == {'cancelled'}
+        assert {w['error'] for w in cancelled['workers']} == {'요청을 취소해 멈췄습니다.'}
         release.set()
         time.sleep(0.5)
         later = client.get(url).json()
