@@ -1,63 +1,63 @@
 # HANDOFF — 지금 상태 (150줄 이하, 일이 끝날 때마다 덮어쓴다)
 
-마지막 갱신: 2026-10-26 저녁 / 작성: Claude Opus 5.5
+마지막 갱신: 2026-10-27 새벽 / 작성: Claude Opus 5.5
 
 ## 목표와 현재 단계
 
 - **최종 목표:** 졸업작품 'G-SI 게임 코드 스파게티 분석기'를 완성해 제출한다. 제출물은 소스 ZIP, 최종보고서(학교 양식), 교내 발표 PPT이고, 제출 뒤 시연 영상과 포스터를 만든다.
-- **지금 단계:** 코드 마무리. 10/25~26 변경을 커밋 `d9e90aa`로 main에 fast-forward 병합하고 push했다(origin/main과 같음). 전체 테스트 600 passed, 4 skipped.
-  - 메인 폴더의 중복 변경은 정리했다(커밋 안 된 건 `시연_리허설_순서표.md`·`최종 프롬프트.txt`뿐, 의도적으로 제외).
-  - 보고서는 코드를 동결한 뒤 최종판 한 번만 만든다(사용자 결정).
-- **기준 커밋:** `d9e90aa`(origin/main과 같음).
+- **지금 단계:** 코드 마무리 — 사용자가 직접 리허설하며 피드백을 주고, 받은 피드백을 고치는 중.
+- **커밋 위치:** 워크트리 브랜치 `claude/rehearsal-feedback-analysis-624049`(이 폴더 `.claude/worktrees/rehearsal-feedback-analysis-624049`).
+  - origin/main = `2be4f6f`(10/26 밤 push). 그 뒤 커밋 `0074362`·`a979398`·`da97217`(C#)·머지 `1e23db8`·HANDOFF 커밋은 **이 브랜치에만 있고 push 안 함**.
+  - 메인 폴더(`main` 브랜치, 8767 서버가 쓰는 코드)에는 이 브랜치의 최신 코드가 **복사만** 돼 있다(커밋 안 됨, 줄바꿈만 다름). main에 합칠 때는 지난번과 같이: 메인의 같은 파일을 `git restore`·새 파일 삭제 → `git merge --ff-only <브랜치>` → push(사용자 확인 뒤).
+  - 커밋하지 않는 것: `시연_리허설_순서표.md`, `최종 프롬프트.txt`, `docs/_*`, `.env`, `.claude/`, `tmp/`.
+- **테스트:** 618 passed, 4 skipped(머지 뒤).
+- 보고서는 코드를 동결한 뒤 최종판 한 번만 만든다(사용자 결정).
 
-## 이번에 한 일 (10/26 저녁) — 새 코드로 실제 AI 재검증
+## 바로 다음에 할 일 — 사용자 피드백 3건 (10/27 새벽, 아직 손대지 않음)
 
-**실측 (OpenTyrian 작업 `e1ba503f…`, 5개 파일, '한 번에 깊게', Claude Code `sonnet`)**
-- 5개 파일 모두 통과, **7분 48초**. AI 호출 13번(파일 5 + 이어서 정리 8), 입력 약 160만(캐시 생성 125만·캐시 읽기 35만)·출력 약 30만 토큰(`message.id` 중복 제거).
-- 5시간 한도 **10% → 46%**(+36%p, 이 대화 몫 약간 포함). Pro에서 한 번 돌리면 한도의 1/3 이상을 쓴다 → 시연에서는 미리 만든 변경안을 쓰는 편이 안전.
-- 이어서 정리: mainint·opentyr 3단계 모두 반영, game_menu·tyrian2는 3단계가 거절돼 2단계까지, video_scale_hqNx는 1단계(아래 측정 한계).
-- 복잡도(재분석, Clang): JE_itemScreen 371→178(−52%), JE_playerMovement 274→119(−57%), JE_playerCollide 80→24, setupMenu 122→63, JE_main 375→261, JE_eventSystem 255→207, JE_menuFunction 98→86. 새 보조 함수 52개, 바뀐 함수 전체 합은 2,021→2,064(+2%, 옮긴 만큼 그대로).
-- 적용(8단계) 정상: 원본 보존·변경안 일치·52개 파일 재분석 구문 오류 0. 결과 화면(9단계) 정상. 2라운드로 기록됨(`revisions/0393bc74…`).
-- **컴파일:** 바뀐 5개 파일 libclang(작업 폴더 `compile_commands.json` 플래그) 오류 0·경고 0, 일부러 넣은 오류는 잡힘.
-- **Codex 동작 검토:** 5개 모두 동작 변경 없음, 이대로 적용 가능, **9/10**. 감점: game_menu 조이스틱 설정에서 같은 테두리를 두 번 그림(화면 결과 같음, 낮음).
+리허설 작업 `d4acd118…`(전체 폴더로 분석한 OpenTyrian, 4개 파일 변경안)에서 나온 것. 화면은 `static/app/page-refactor.js`의 `workerRows`·`reasonView`, 상태는 `assistant_jobs.py`의 `_generate_deep`·`_continue_deep`·`_worker_update`.
+1. **이어서 정리가 무엇을 했는지 보기:** 진행/결과의 파일 행에서 '이어서 정리 2/3단계'나 대상 함수를 누르면 그 단계에서 어느 함수의 어떤 블록이 어떤 보조 함수로 옮겨졌는지(단계별 변경·복잡도 전→후) 볼 수 있게. 단계별 기록을 worker에 남겨야 함(지금은 `step`·`steps_done`·합쳐진 `helpers`만 있음).
+2. **사용자가 '요청 취소'를 눌러 멈춘 파일이 '거절'로 보이고 "AI 프로그램이 답하지 못했습니다. 로그인과 사용 한도를 확인…"이 뜸** → 취소로 멈춘 것은 '취소됨'으로, 문구도 "요청을 취소해 멈췄습니다"로. (취소 시 진행 중인 CLI가 끊겨 `AI 요청이 완료되지 않았습니다`가 나오고, 그게 `PLAIN_REASONS`의 로그인·한도 문구로 바뀜.)
+3. **취소로 3단계가 끊긴 파일이 '완료'로 표시되고 '자세한 이유'에 "AI 요청이 완료되지 않았습니다"** → 취소로 이어서 정리가 끊기면 note를 "취소해 n단계까지만 반영했습니다"처럼, 상태 표시도 사실대로(앞 단계까지는 유효한 결과라 '완료(취소로 n단계까지)' 정도).
 
-**고친 것 (실제 AI 결과에서 나온 검사 오판 3종 + Codex 검토 4건)**
-1. 3단계 거절 2건은 모두 **검사 오판**이었다(저장된 답을 같은 검사에 다시 넣어 확인, 고친 뒤 둘 다 통과).
-   - 앞 단계 보조 함수의 호출이 새 보조 함수 안으로 옮겨짐 → 대상 함수에서 새 보조 함수를 거쳐 닿으면 허용(`_new_ast_helpers`).
-   - `#ifdef / if (a) / #else / if (b) / #endif {`(올바른 C)를 tree-sitter가 오류로 읽음 → 짝이 맞는 `#if…#endif` 줄만 비우고 다시 읽기(`_readable`). `#include`·`#define`은 비우지 않음.
-   - 삽입 직전 함수가 앞 단계 보조 함수(측정 범위 없음)라 difflib가 그 닫는 `}`를 삽입에 붙임 → 함수 밖 삽입도 함수 단위로 읽힐 때까지 밀기(`validate_preview_targets`).
-2. Codex 커밋 전 검토(5건 중 4건 수정, 테스트 추가):
-   - 이어서 정리의 '효과가 작으면 멈춤'이 늘 원본과 비교하던 것 → 직전 단계 대비로(`_continue_deep`).
-   - 다시 만들기의 시도 횟수·지난 거절 이유가 늘 초기화되던 것 → 상태를 지우기 전에 읽음.
-   - 취소한 뒤 API 400 재시도를 보내던 것 → 재시도 전 취소 확인(`_stop_if_cancelled`, API·주소 연결 둘 다).
-   - 연결 방법을 'API 키'로 바꿔도 CLI 별칭 `sonnet`이 남던 것 → 방법별로 모델을 기억·추천(`prescription.js`).
-3. 800×600에서 변경안 비교 창이 창보다 커지던 것 → 화면 높이에 맞춤(300~620px).
-4. 화면 확인: 범위 확인 단계에서 소개 배너가 숨고 '이 범위 분석하기'가 800×600 첫 화면에 보임.
-5. `docs/ai-refactoring-guide.md`에 이어서 정리·모델 안내·실측 반영, RUNBOOK 1줄 추가.
-6. (사용자 피드백) 가져오기 화면: ZIP·폴더를 고르면 놓기 칸이 사라지고 '선택 지우기'만 남음(한 번에 소스 하나). 범위 확인의 첫 분석 방식을 '정밀 분석 (Clang · 자동 인식된 빌드 설정)'으로 사실대로 바꾸고 설명·오류 문구·순서표·웹 안내를 맞춤.
+## 이번 세션(10/26 오후~10/27 새벽)에 한 일
 
-**측정 한계(고치지 않음):** video_scale_hqNx는 매크로가 많아 tree-sitter가 `hq4x_32`를 함수로 못 읽어(복잡도 0으로 봄) 이어서 정리를 멈췄다. 안전한 쪽으로 멈추는 것이라 그대로 둠.
+**실측 (OpenTyrian `e1ba503f…`, 5개 파일, '한 번에 깊게', Claude Code `sonnet`)**: 5개 모두 통과, 7분 48초, AI 호출 13번, 입력 약 160만·출력 약 30만 토큰, 5시간 한도 10%→46%. 복잡도 JE_itemScreen 371→178, JE_playerMovement 274→119 등. libclang 컴파일 오류 0, Codex 동작 검토 '동작 변경 없음' 9/10.
+
+**고친 것 (모두 커밋됨)**
+1. 검사 오판 3종: 새 보조 함수끼리 거쳐 부르기 허용, `#if…#endif`로 갈라진 `if` 머리 읽기(`_readable`, 조건 지시문만·짝 맞을 때만), 앞 단계 보조 함수 뒤 삽입 정렬 보정.
+2. **거절을 프로그램이 스스로 처리:** ① 살리기(`_salvage`, AI 호출 없음: 부르지 않는 보조 함수·실제로 안 고친 대상 함수를 빼고 재검사, 실제 mainint 답에서 확인) ② 그래도 안 되면 이유를 알려 **한 번만 자동 재시도**(`build_deep_prompt(retry=…)`, 시간 초과는 재시도 안 함). 대상 함수가 모두 CC 15 미만이면 AI를 부르지 않음(`DEEP_WORTH_CC`). 처방 지침에 "5개를 채우려 하지 말 것"(그 뒤 처방은 video_scale을 빼고 4개를 고름).
+3. Codex 커밋 전 검토 4건: 이어서 정리 멈춤 기준, 재시도 횟수 초기화, 취소 뒤 API 재시도, API 모드의 CLI 별칭.
+4. **C# 지원**(세션 csharp-deep, 머지): '한 번에 깊게' 검사가 tree-sitter C#으로 메서드를 읽음. 보조 메서드는 같은 클래스의 private만. 이어서 정리용 복잡도는 Roslyn과 같은 규칙(OpenRA.Game 2,793개 메서드 일치). 실제 AI로는 미검증. **이전엔 C# 변경안이 검사 없이 통과하던 구멍**이었음.
+5. 화면: 가져오기 '선택 지우기'(소스 하나만), 정밀 분석 이름 '자동 인식된 빌드 설정', 범위 확인 기본 폴더 '전체 폴더'(시연 게임 판별을 하위 폴더까지 넓혀 게임 빌드도 됨), 정밀 분석 진행 기록이 파일마다 실시간(`[ast] clang N/52`)·막대가 파일 수만큼, 서버 재시작 뒤 보안 토큰 자동 갱신, 지도 휠 확대·축소 복원, AI 연결 항상 펼침, 모델은 앱 스타일 선택 상자, 처방 패널 자체 스크롤(밀림 없음), '자세한 이유'가 새로 그려도 열린 채 유지, 거절 이유 문구 바로잡음.
+6. 처음 보는 게임 확인(AI 없이, 웹 앱 흐름): Chocolate Doom(C 296개, 10초, 부분 분석 37개), OpenRCT2(C++ 679개, 35초, 부분 46개), OpenRA(C# 226개, 12초, 완전). 진단 화면 모두 정상. 확인용 작업 `check-*` 3개가 분석 기록에 남아 있음.
 
 ## 다음에 할 일 (우선순위 순) — 괄호 안은 추천 노력 수준
 
-1. ~~push·main 병합~~ 10/26 완료.
-2. **사용자 직접 리허설 (사용자)** — `시연_리허설_순서표.md` 1~11단계, 게임 빌드·플레이 포함. 피드백을 받으면 고친다(medium). 추가 채점자 리허설은 하지 않기로 함.
-3. 커밋 뒤 테스트 XML을 `docs/_verification/<날짜>-final/`에(low).
-4. **소스 ZIP (medium)**, 5. **보고서 v11 (high)**, 6. **교내 발표 PPT (high)** — 6차 검토 `docs/_final_report_phase/_work_v10/review_6_v10.md`, v10 34쪽에서 시작. 이번 실측(7분 48초, 5개 통과, Codex 9/10, 컴파일 0)을 반영.
-7. **사용자만 할 수 있는 것:** 소감 수정, 지도교수 서명, 포털 제출, 제출 뒤 시연 영상·포스터.
+1. **위의 사용자 피드백 3건 (medium)** → 테스트 → 메인 폴더 복사 → 8767 재시작(아래 '리허설 서버').
+2. **사용자 직접 리허설 계속 (사용자)** — 피드백을 받으면 고친다. 추가 채점자 리허설은 하지 않기로 함.
+3. **push·main 병합 (low, 사용자 확인 뒤)**.
+4. 테스트 XML을 `docs/_verification/<날짜>-final/`에(low).
+5. **소스 ZIP (medium)**, 6. **보고서 v11 (high)**, 7. **교내 발표 PPT (high)** — 6차 검토 `docs/_final_report_phase/_work_v10/review_6_v10.md`, v10 34쪽에서 시작.
+8. **사용자만 할 수 있는 것:** 소감 수정, 지도교수 서명, 포털 제출, 제출 뒤 시연 영상·포스터.
 
-## 열려 있는 문제·결정 대기
+## 보고서에 반영할 것 (코드 동결 뒤)
 
-- 검사 구멍(기존): tree-sitter가 아예 함수로 못 읽을 만큼 깨진 새 함수는 '새 보조 함수'로 잡히지 않아 이 검사를 빠져나갈 수 있다. 적용 뒤 재분석(Clang)의 구문 오류 수로는 드러난다. 시간이 있으면 '수정본의 구문 오류 노드가 원본보다 늘면 거절'을 검토.
-- Codex 지적 1건(낮음)은 AI 결과물의 중복 그리기라 앱 수정 대상 아님.
-- Fable(planner)은 이 계정에서 크레딧 부족으로 실패한다. 두 번째 의견은 Codex(`~/Desktop/AI_WORKFLOW/tools/codex.sh review|ask`).
+- 분석 범위를 정확히: **C#은 빌드 설정 없이 Roslyn으로 완전 분석.** C/C++은 기본이 빌드 설정 없는 '기본 분석'이라 매크로가 많은 파일은 일부 문법을 건너뛴 '부분 분석'(Chocolate Doom 296개 중 37개, OpenRCT2 679개 중 46개). 정밀 분석(Clang)은 그 게임의 `compile_commands.json`이 필요하며, 시연 게임 OpenTyrian은 원본 프로젝트 파일의 옵션을 옮겨 둬 자동 인식된다. 다른 게임의 웹 정밀 분석은 미검증.
+- AI 리팩토링 실측(위 숫자)과 한도 사용량, 거절 자동 처리(살리기·1회 재시도), C# 지원과 그 검증 범위(손으로 만든 변경·OpenRA 메서드 일치, 실제 AI 미검증).
+
+## 열려 있는 문제
+
+- 검사 구멍(기존): tree-sitter가 아예 함수로 못 읽을 만큼 깨진 새 함수는 '새 보조 함수'로 잡히지 않는다(적용 뒤 재분석 구문 오류 수로는 드러남).
+- video_scale_hqNx는 매크로 때문에 tree-sitter가 `hq4x_32`를 못 읽어 이어서 정리를 멈춘다(안전한 쪽).
+- 새 코드(살리기·자동 재시도·C#)는 실제 AI로 한 번도 끝까지 확인하지 않았다(OpenTyrian 리허설 작업 `d4acd118…`이 첫 실사용: 4개 파일 완료, 거절 없음).
+- Fable(planner)은 크레딧 부족으로 실패. 두 번째 의견은 Codex(`~/Desktop/AI_WORKFLOW/tools/codex.sh review|ask`).
 
 ## 참고
 
-- **사용자 규칙:** 설명은 한국어. 결과 판단은 Claude에게 맡기되 우려는 보고. 커밋·push는 요청 시에만. 실제 AI 요청 전 허락(사용량이 Pro 한도와 같이 쓰임). 단계마다 추천 노력 수준·새 세션 여부를 한 줄로.
-- **중요 파일:** 서버 `game_si/web/assistant_jobs.py`(`_generate_deep`·`_continue_deep`·`merge_deep_passes`), `assistant_context.py`(`build_deep_prompt`·`measure_functions`·`validate_preview_targets`·`_new_ast_helpers`·`_readable`), `assistant.py`(`DEEP_GUIDANCE`·`call_provider`·`_stop_if_cancelled`), `jobs.py`(`write_json`). 화면 `static/app/prescription.js`(`stepAdvice`·`stepModel`·`connectionPicker`)·`page-refactor.js`·`page-import.js`.
-- **리허설 서버:** 8767, 메인 폴더 코드. 서버 쪽 .py를 바꾸면 재시작(8767 프로세스를 끄고 `py -3.10 -m game_si.web --port 8767`을 메인 폴더에서 숨겨 켬, 로그는 `docs/_demo_phase_v3/server.log`). 정적 JS는 새로 고침으로 반영(캐시 때문에 `fetch(...,{cache:'reload'})` 뒤 새로 고침).
-- **실측 도구(이번 세션 스크래치, 필요하면 다시 만들 것):** 토큰 집계(`~/.claude/projects/*game-si-advice*/*.jsonl`을 시작 시각 이후만, `message.id` 중복 제거), 거절 답 재검사(`assistant-rejected-*-pass3.json`의 `reply`를 직전 단계 `after`에 `preview_changes`로 적용 → `validate_preview_targets`), libclang 컴파일 검사(`revisions/<id>/compile_commands.json`의 arguments에서 `-c`·`-o` 빼고 `index.parse`).
-- **채점자 리허설 요령:** 내장 브라우저는 다른 로컬 포트(8791) 접속을 막아 ZIP 선택을 못 함 → 2단계는 앱 API(`/api/import/files`, 파이썬으로 multipart; Git Bash curl은 한글 경로 파일을 못 읽음)로 가져온 뒤 3단계부터.
-- **테스트:** PowerShell에서 `$env:PATH="C:\Program Files\dotnet;"+$env:PATH`, `$env:GAME_SI_TEST_CLANG_LIBRARY="<저장소>\docs\_verification\2026-10-05-cpp-feasibility\clang20\Library\bin\libclang-13.dll"` 뒤 `py -3.10 -m pytest tests -q`(약 2분). 워크트리에서는 `csharp-analyzer`를 먼저 `dotnet build`, `docs/_demo_phase_v2`·`docs/_verification`은 메인으로 연결(junction)해 둠.
-- **함정:** `RUNBOOK.md`.
+- **사용자 규칙:** 설명은 한국어. 결과 판단은 Claude에게 맡기되 우려는 보고. 커밋·push는 요청 시에만. 실제 AI 요청·한도를 많이 쓰는 작업 전 허락. 단계마다 추천 노력 수준·새 세션 여부를 한 줄로. 자동 검토(채점자·Codex)가 사용 방식을 바꾸자고 하면 사용자에게 먼저 묻는다(지도 휠 건).
+- **리허설 서버:** 8767, 메인 폴더 코드. 재시작은 진행 중인 AI·분석 작업이 없을 때만: `cd "C:/Users/dudwl/Desktop/Projects/졸업작품" && py -3.10 tmp/restart_server.py --restart`. 정적 JS·CSS는 브라우저 Ctrl+F5.
+- **실측·재현 도구:** 거절 답 재검사·살리기 재현·토큰 집계 스크립트는 지난 세션 스크래치에만 있었다(필요하면 다시 만들 것). 토큰은 `~/.claude/projects/*game-si-advice*/*.jsonl`을 시작 시각 이후만, `message.id`로 중복 제거.
+- **처음 보는 게임 넣어 보기:** 앱 API `/api/import/files`(파이썬 multipart; Git Bash curl은 한글 경로 파일을 못 읽음) → `/api/jobs/<id>/start`. 벤치마크 소스는 메인 폴더 `benchmarks/`.
+- **테스트:** PowerShell에서 `$env:PATH="C:\Program Files\dotnet;"+$env:PATH`, `$env:GAME_SI_TEST_CLANG_LIBRARY="<메인>\docs\_verification\2026-10-05-cpp-feasibility\clang20\Library\bin\libclang-13.dll"` 뒤 `py -3.10 -m pytest tests -q`(약 2분). C# 검사는 `tree-sitter-c-sharp`(설치됨, `pyproject.toml`).
+- **함정:** `RUNBOOK.md`(특히 Git Bash heredoc 안 파이썬의 역슬래시 — 이번 세션에 두 번 더 겪음).
