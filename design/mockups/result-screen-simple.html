@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수정 결과 단순안</title>
+<link rel="stylesheet" href="../../game_si/web/static/app/app.css">
+<style>
+/* mockup-only switcher */
+.mk-bar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line); }
+.mk-bar-in { max-width: 920px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 8px 14px; align-items: center; flex-wrap: wrap; }
+.mk-bar b { font-size: 13px; }
+.mk-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.mk-seg button { border: 0; background: var(--surface); padding: 7px 12px; font-weight: 700; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.mk-seg button + button { border-left: 1px solid var(--line); }
+.mk-seg button.on { background: var(--brand); color: #fff; }
+
+/* the simple page: one column, read top to bottom */
+.s-wrap { max-width: 920px; margin: 0 auto; padding: 28px 16px 70px; }
+.s-head h1 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+.s-head h1 em { font-style: normal; color: var(--brand); }
+.s-head p { color: var(--ink-2); font-size: 15px; margin-top: 6px; }
+.s-card { margin-top: 16px; padding: 20px 22px; }
+.s-q { font-size: 13px; font-weight: 800; color: var(--brand); }
+.s-title { font-size: 19px; font-weight: 800; margin-top: 2px; }
+.s-lead { color: var(--ink-2); font-size: 14px; margin-top: 6px; }
+.s-effects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.s-effect { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--surface-2); }
+.s-effect .ic { font-size: 22px; line-height: 1; }
+.s-effect b { display: block; font-size: 15px; margin-top: 8px; }
+.s-effect p { font-size: 13px; color: var(--ink-2); margin-top: 4px; }
+.s-effect p strong { color: var(--ink); }
+.s-effect code { font-size: 12px; overflow-wrap: anywhere; }
+.s-small { margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+.s-checks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.s-check { border: 1px solid var(--line); border-radius: 12px; padding: 14px 12px; text-align: center; background: var(--surface-2); }
+.s-check i { font-style: normal; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 8px; font-weight: 800; font-size: 16px; background: var(--line); color: var(--muted); }
+.s-check.is-done { background: var(--good-soft); border-color: var(--good-line); }
+.s-check.is-done i { background: var(--gA); color: #fff; }
+.s-check.is-next { border-color: var(--brand-line); background: var(--brand-soft); }
+.s-check.is-next i { background: var(--brand); color: #fff; }
+.s-check b { display: block; font-size: 14px; }
+.s-check small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.s-check .btn { margin-top: 8px; white-space: normal; }
+.s-check .btn + .btn { margin-top: 6px; }
+.s-funcs { list-style: none; margin-top: 14px; display: grid; gap: 14px; }
+.s-func-top { display: flex; justify-content: space-between; gap: 4px 12px; align-items: baseline; flex-wrap: wrap; }
+.s-func-top b { font-size: 15px; }
+.s-func-top span { font-size: 13px; color: var(--ink-2); }
+.s-func-top span strong { color: var(--good); }
+.s-bar { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; align-items: center; margin-top: 6px; font-size: 12px; color: var(--muted); font-weight: 700; }
+.s-bar em { font-style: normal; }
+.s-bar div { height: 14px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.s-bar span { display: block; height: 100%; border-radius: 99px; background: #9DB0CC; }
+.s-bar.after span { background: var(--brand); }
+.s-more { margin-top: 10px; }
+.s-more summary { cursor: pointer; color: var(--brand-ink); font-weight: 700; font-size: 13px; }
+.s-ex { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); margin-top: 14px; align-items: stretch; }
+.s-ex-arrow { display: grid; place-items: center; font-size: 24px; font-weight: 800; color: var(--muted); }
+.s-box { border-radius: 14px; padding: 16px 18px; border: 1px solid var(--line); background: var(--surface-2); }
+.s-box.after { border-color: var(--good-line); background: var(--good-soft); }
+.s-box h3 { font-size: 13px; color: var(--muted); font-weight: 800; }
+.s-box .n { font-size: 34px; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 2px; }
+.s-box.after .n { color: var(--good); }
+.s-box p { font-size: 13.5px; color: var(--ink-2); }
+.s-box code { font-size: 12.5px; overflow-wrap: anywhere; }
+.s-pick { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.s-pick select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 8px; max-width: 100%; }
+
+/* details: for people who want to know how and how much */
+.s-detail { margin-top: 16px; padding: 16px 22px; }
+.s-detail > summary { cursor: pointer; font-weight: 800; font-size: 16px; }
+.s-detail > summary small { font-weight: 600; color: var(--muted); font-size: 13px; margin-left: 6px; }
+.s-sec { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+.s-sec h3 { font-size: 15px; font-weight: 800; }
+.s-sec h3 span { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-ink); font-size: 12px; margin-right: 6px; }
+.s-sec > p { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+.s-steps { list-style: none; counter-reset: st; display: grid; gap: 8px; margin-top: 10px; }
+.s-steps li { counter-increment: st; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; font-size: 13px; color: var(--ink-2); }
+.s-steps li::before { content: counter(st); width: 22px; height: 22px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); display: grid; place-items: center; font-weight: 800; font-size: 12px; color: var(--muted); }
+.s-steps b { color: var(--ink); }
+.s-file { margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 0 14px; background: var(--surface-2); }
+.s-file > summary { cursor: pointer; padding: 11px 0; font-size: 13.5px; }
+.s-file > summary b { font-family: "JetBrains Mono", Consolas, monospace; }
+.s-file > summary span { color: var(--muted); margin-left: 6px; }
+.s-file .tbl { margin: 0 0 12px; font-size: 12.5px; }
+.s-file .tbl td { padding: 7px 8px; vertical-align: top; }
+.s-file .tbl td.mono { overflow-wrap: anywhere; }
+.tbl td.r, .tbl th.r { text-align: right; white-space: nowrap; }
+.s-term { margin-top: 8px; font-size: 12.5px; color: var(--muted); background: var(--surface-2); border-radius: 10px; padding: 8px 12px; }
+.s-honest { list-style: none; display: grid; gap: 6px; margin-top: 10px; }
+.s-honest li { font-size: 13px; color: var(--ink-2); padding: 8px 12px; border-radius: 10px; background: var(--warn-soft); border: 1px solid var(--warn-line); }
+.s-honest li.plain { background: var(--surface-2); border-color: var(--line); }
+.s-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+@media (max-width: 700px) {
+  .s-head h1 { font-size: 23px; }
+  .s-effects { grid-template-columns: 1fr; }
+  .s-checks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .s-ex { grid-template-columns: 1fr; }
+  .s-ex-arrow { transform: rotate(90deg); height: 34px; }
+  .s-detail { padding: 14px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="mk-bar"><div class="mk-bar-in">
+  <b>단순안</b>
+  <div class="mk-seg" id="run"><button type="button" data-v="0" class="on">10/26 실측 · 5개 파일</button><button type="button" data-v="1">10/29 리허설 · 1개 파일</button></div>
+  <div class="mk-seg" id="stat"><button type="button" data-v="todo" class="on">빌드 전</button><button type="button" data-v="built">빌드 끝</button><button type="button" data-v="done">플레이까지 끝</button></div>
+  <div class="mk-seg" id="theme"><button type="button" data-v="light" class="on">밝게</button><button type="button" data-v="dark">어둡게</button></div>
+</div></div>
+<main class="s-wrap" id="root"></main>
+
+<script id="data" type="application/json">[{"id":"e1ba503f5b094e78803944ea27738786","round":2,"title":"10/26 실측 · Claude Sonnet · 5개 파일 · 이어서 정리 3단계","checks":{"original_preserved":true,"matches_preview":true,"reanalyzed":{"state":"complete","analyzed_files":52,"syntax_files":0}},"whole":{"index":95.37,"components":[{"key":"cycle_units","label":"순환 고리에 묶인 단위","before":6,"after":6},{"key":"links","label":"단위 사이 연결","before":224,"after":224},{"key":"complex_excess","label":"매우 복잡한 부분 Σ(CC−20)","before":3967,"after":3403},{"key":"excess_complexity","label":"초과 복잡도 Σ(CC−10)","before":4709,"after":4309},{"key":"global_access","label":"전역 변수 접근","before":10197,"after":10152}]},"service":"claude","model":"sonnet","files":[{"path":"game_menu.c","targets":[{"name":"JE_itemScreen","before":{"cc":371,"loc":1475},"after":{"cc":178,"loc":724},"line":958,"old_line":157,"helpers":["drawDataCubeListAndFace","drawJoystickConfigMenuChoices","drawKeyboardConfigMenuChoices","drawLoadSaveMenuChoices","handleEscapeKeyInMenu","handleMenuMouseClick","updateDataCubeReaderFrame","updateMenuOnLeftKey","updateMenuOnRightKey","updateUpgradeSubMenuSelectionAndDraw"]},{"name":"JE_menuFunction","before":{"cc":98,"loc":447},"after":{"cc":86,"loc":379},"line":2672,"old_line":2540,"helpers":["assignJoystickInputToSelectedSlot","showKeyCaptureCursorUntilInput"]}],"helpers":[{"name":"assignJoystickInputToSelectedSlot","cc":8,"loc":43,"line":2628,"parent":"JE_menuFunction","call_line":3017,"through":null,"old":[2916,2953,20],"comment":null},{"name":"drawDataCubeListAndFace","cc":9,"loc":68,"line":629,"parent":"JE_itemScreen","call_line":1217,"through":null,"old":[675,737,26],"comment":null},{"name":"drawJoystickConfigMenuChoices","cc":13,"loc":59,"line":240,"parent":"JE_itemScreen","call_line":1141,"through":null,"old":[413,468,20],"comment":null},{"name":"drawKeyboardConfigMenuChoices","cc":5,"loc":24,"line":215,"parent":"JE_itemScreen","call_line":1136,"through":null,"old":[388,408,7],"comment":null},{"name":"drawLoadSaveMenuChoices","cc":9,"loc":57,"line":157,"parent":"JE_itemScreen","call_line":1131,"through":null,"old":[332,382,21],"comment":null},{"name":"handleEscapeKeyInMenu","cc":7,"loc":30,"line":760,"parent":"JE_itemScreen","call_line":1476,"through":null,"old":[1217,1242,12],"comment":null},{"name":"handleMenuMouseClick","cc":58,"loc":166,"line":791,"parent":"JE_itemScreen","call_line":1449,"through":null,"old":[1028,1236,81],"comment":null},{"name":"showKeyCaptureCursorUntilInput","cc":7,"loc":37,"line":2590,"parent":"JE_menuFunction","call_line":2813,"through":null,"old":[2682,2712,12],"comment":null},{"name":"updateDataCubeReaderFrame","cc":12,"loc":61,"line":698,"parent":"JE_itemScreen","call_line":1292,"through":null,"old":[814,871,27],"comment":null},{"name":"updateMenuOnLeftKey","cc":31,"loc":98,"line":300,"parent":"JE_itemScreen","call_line":1581,"through":null,"old":[1355,1481,43],"comment":null},{"name":"updateMenuOnRightKey","cc":29,"loc":93,"line":399,"parent":"JE_itemScreen","call_line":1585,"through":null,"old":[1402,1518,44],"comment":null},{"name":"updateUpgradeSubMenuSelectionAndDraw","cc":30,"loc":135,"line":493,"parent":"JE_itemScreen","call_line":1146,"through":null,"old":[473,602,72],"comment":null}],"si":[98.08,98.08],"top10":[234.5,88.25],"before":{"functions":28,"over50":2,"over20":4,"max_cc":371,"longest":1475,"excess":494,"cc_sum":681},"after":{"functions":40,"over50":3,"over20":8,"max_cc":178,"longest":724,"excess":402,"cc_sum":694},"steps_done":2,"note":"이어서 정리한 3단계는 검사에서 빠져 2단계까지만 반영했습니다.","seconds":468},{"path":"mainint.c","targets":[{"name":"JE_playerCollide","before":{"cc":80,"loc":378},"after":{"cc":24,"loc":102},"line":4834,"old_line":4475,"helpers":["collectArcadePickup","collectScoreItem","destroyLinkedEnemies"]},{"name":"JE_playerMovement","before":{"cc":274,"loc":1134},"after":{"cc":119,"loc":524},"line":3945,"old_line":3270,"helpers":["drawPlayerShadow","readPlayerInputDevices","updateAndDrawPlayerShip","updateAndDrawSidekicks","updateDragonwingChargeShot","updateEndLevelWarpTrail","updateLeftSidekickPosition","updateLinkGunDirection","updateLinkedPlayerTurret","updatePlayerFrictionAndVelocity","updatePortConfigChange","updateRightSidekickPosition","updateSidekickFireAndAmmoRefill"]}],"helpers":[{"name":"collectArcadePickup","cc":32,"loc":186,"line":4540,"parent":"JE_playerCollide","call_line":4849,"through":null,"old":[4494,4734,129],"comment":null},{"name":"collectScoreItem","cc":16,"loc":73,"line":4760,"parent":"JE_playerCollide","call_line":4888,"through":null,"old":[4691,4776,46],"comment":null},{"name":"destroyLinkedEnemies","cc":11,"loc":32,"line":4727,"parent":"JE_playerCollide","call_line":4927,"through":null,"old":[4816,4840,15],"comment":"kill enemy"},{"name":"drawPlayerShadow","cc":8,"loc":35,"line":3441,"parent":"JE_playerMovement","call_line":4353,"through":null,"old":[3897,3939,15],"comment":null},{"name":"readPlayerInputDevices","cc":26,"loc":79,"line":3270,"parent":"JE_playerMovement","call_line":4127,"through":null,"old":[3452,3526,44],"comment":null},{"name":"updateAndDrawPlayerShip","cc":13,"loc":77,"line":3477,"parent":"JE_playerMovement","call_line":4355,"through":null,"old":[3910,4001,36],"comment":null},{"name":"updateAndDrawSidekicks","cc":9,"loc":35,"line":3909,"parent":"JE_playerMovement","call_line":4466,"through":null,"old":[4355,4399,18],"comment":null},{"name":"updateDragonwingChargeShot","cc":14,"loc":55,"line":3586,"parent":"JE_playerMovement","call_line":4427,"through":null,"old":[4103,4153,23],"comment":null},{"name":"updateEndLevelWarpTrail","cc":9,"loc":42,"line":3718,"parent":"JE_playerMovement","call_line":4277,"through":null,"old":[3699,3745,24],"comment":null},{"name":"updateLeftSidekickPosition","cc":10,"loc":24,"line":3884,"parent":"JE_playerMovement","call_line":4451,"through":null,"old":[4178,4206,16],"comment":"sidekicks"},{"name":"updateLinkGunDirection","cc":13,"loc":37,"line":3761,"parent":"JE_playerMovement","call_line":4260,"through":null,"old":[3655,3692,16],"comment":null},{"name":"updateLinkedPlayerTurret","cc":4,"loc":30,"line":3555,"parent":"JE_playerMovement","call_line":4307,"through":null,"old":[3825,3850,15],"comment":null},{"name":"updatePlayerFrictionAndVelocity","cc":16,"loc":51,"line":3799,"parent":"JE_playerMovement","call_line":4303,"through":null,"old":[3774,3820,26],"comment":null},{"name":"updatePortConfigChange","cc":7,"loc":32,"line":3851,"parent":"JE_playerMovement","call_line":4384,"through":null,"old":[4032,4058,16],"comment":"PLAYER SHOT Change"},{"name":"updateRightSidekickPosition","cc":21,"loc":90,"line":3350,"parent":"JE_playerMovement","call_line":4453,"through":null,"old":[4185,4284,49],"comment":null},{"name":"updateSidekickFireAndAmmoRefill","cc":18,"loc":75,"line":3642,"parent":"JE_playerMovement","call_line":4457,"through":null,"old":[4290,4372,37],"comment":null}],"si":[94.23,96.15],"top10":[144.3333,74.2],"before":{"functions":37,"over50":5,"over20":14,"max_cc":274,"longest":1134,"excess":739,"cc_sum":984},"after":{"functions":53,"over50":4,"over20":17,"max_cc":119,"longest":524,"excess":608,"cc_sum":1000},"steps_done":3,"note":"AI를 3번 이어서 불러 단계적으로 정리했습니다.","seconds":449},{"path":"opentyr.c","targets":[{"name":"setupMenu","before":{"cc":122,"loc":648},"after":{"cc":63,"loc":445},"line":352,"old_line":102,"helpers":["applyDisplayPickerSelection","applyScalerPickerSelection","changeVolumeFromKey","drawDisplayModeValue","drawPickerBox","drawVolumeBarValue","stepWrappedIndex","updateHoveredMenuItem","updatePickerFromKeyboard","updatePickerFromMouse","updateVolumeFromMouseX","waitForInputOrDisplayChange"]}],"helpers":[{"name":"applyDisplayPickerSelection","cc":2,"loc":5,"line":294,"parent":"setupMenu","call_line":775,"through":null,"old":[719,720,2],"comment":null},{"name":"applyScalerPickerSelection","cc":4,"loc":12,"line":300,"parent":"setupMenu","call_line":780,"through":null,"old":[725,731,5],"comment":null},{"name":"changeVolumeFromKey","cc":3,"loc":15,"line":336,"parent":"setupMenu","call_line":610,"through":null,"old":[673,684,2],"comment":null},{"name":"drawDisplayModeValue","cc":2,"loc":11,"line":267,"parent":"setupMenu","call_line":500,"through":null,"old":[250,254,3],"comment":null},{"name":"drawPickerBox","cc":4,"loc":25,"line":120,"parent":"setupMenu","call_line":534,"through":null,"old":[293,309,10],"comment":null},{"name":"drawVolumeBarValue","cc":2,"loc":5,"line":279,"parent":"setupMenu","call_line":512,"through":null,"old":[270,275,2],"comment":null},{"name":"stepWrappedIndex","cc":4,"loc":7,"line":286,"parent":"setupMenu","call_line":596,"through":null,"old":null,"comment":null},{"name":"updateHoveredMenuItem","cc":14,"loc":34,"line":146,"parent":"setupMenu","call_line":565,"through":null,"old":[353,391,9],"comment":null},{"name":"updatePickerFromKeyboard","cc":9,"loc":44,"line":222,"parent":"setupMenu","call_line":763,"through":null,"old":[662,701,10],"comment":null},{"name":"updatePickerFromMouse","cc":13,"loc":38,"line":182,"parent":"setupMenu","call_line":758,"through":null,"old":[636,684,7],"comment":null},{"name":"updateVolumeFromMouseX","cc":9,"loc":21,"line":313,"parent":"setupMenu","call_line":578,"through":null,"old":[391,406,6],"comment":null},{"name":"waitForInputOrDisplayChange","cc":4,"loc":17,"line":102,"parent":"setupMenu","call_line":550,"through":null,"old":[329,339,6],"comment":null}],"si":[96.15,92.31],"top10":[122.0,42.5],"before":{"functions":8,"over50":1,"over20":2,"max_cc":122,"longest":648,"excess":124,"cc_sum":151},"after":{"functions":20,"over50":1,"over20":2,"max_cc":63,"longest":445,"excess":72,"cc_sum":162},"steps_done":3,"note":"AI를 3번 이어서 불러 단계적으로 정리했습니다.","seconds":291},{"path":"tyrian2.c","targets":[{"name":"JE_eventSystem","before":{"cc":255,"loc":856},"after":{"cc":207,"loc":698},"line":4393,"old_line":4174,"helpers":["applyEnemyDeathSpawnEvent","applyEnemyGlobalAccelEvent","applyEnemyGlobalAnimateEvent","applyEnemyGlobalMoveEvent"]},{"name":"JE_main","before":{"cc":375,"loc":1712},"after":{"cc":261,"loc":1335},"line":988,"old_line":570,"helpers":["playQueuedSoundEffectsWhileNotGameOver","redrawChangedWeaponPowerBars","updateAndDrawEnemyShots","updateGameOverSequence","updateLevelTimer","updateLowArmorWarning","updateSequencedExplosionsAndDrawExplosions","updateShieldRegenAndGalagaLifeReward"]}],"helpers":[{"name":"applyEnemyDeathSpawnEvent","cc":16,"loc":29,"line":4328,"parent":"JE_eventSystem","call_line":4692,"through":null,"old":[4606,4629,14],"comment":null},{"name":"applyEnemyGlobalAccelEvent","cc":13,"loc":46,"line":4281,"parent":"JE_eventSystem","call_line":4588,"through":null,"old":[4413,4469,28],"comment":null},{"name":"applyEnemyGlobalAnimateEvent","cc":7,"loc":34,"line":4358,"parent":"JE_eventSystem","call_line":4606,"through":null,"old":[4490,4524,17],"comment":null},{"name":"applyEnemyGlobalMoveEvent","cc":16,"loc":65,"line":4215,"parent":"JE_eventSystem","call_line":4583,"through":null,"old":[4364,4438,28],"comment":null},{"name":"playQueuedSoundEffectsWhileNotGameOver","cc":6,"loc":24,"line":917,"parent":"JE_main","call_line":2063,"through":null,"old":[1939,1956,12],"comment":"================================="},{"name":"redrawChangedWeaponPowerBars","cc":9,"loc":23,"line":893,"parent":"JE_main","call_line":1451,"through":null,"old":[1090,1105,9],"comment":"Weapon Display"},{"name":"updateAndDrawEnemyShots","cc":29,"loc":93,"line":570,"parent":"JE_main","call_line":2003,"through":null,"old":[1650,1745,44],"comment":"Draw Enemy Shots"},{"name":"updateGameOverSequence","cc":15,"loc":45,"line":942,"parent":"JE_main","call_line":2116,"through":null,"old":[2034,2091,24],"comment":"GAME OVER"},{"name":"updateLevelTimer","cc":8,"loc":28,"line":802,"parent":"JE_main","call_line":2113,"through":null,"old":[2009,2030,14],"comment":"Level Timer"},{"name":"updateLowArmorWarning","cc":24,"loc":61,"line":740,"parent":"JE_main","call_line":2054,"through":null,"old":[1873,1927,29],"comment":"Warning"},{"name":"updateSequencedExplosionsAndDrawExplosions","cc":13,"loc":75,"line":664,"parent":"JE_main","call_line":2034,"through":null,"old":[1781,1850,34],"comment":"Sequenced Explosions and Draw Explosions"},{"name":"updateShieldRegenAndGalagaLifeReward","cc":18,"loc":61,"line":831,"parent":"JE_main","call_line":1448,"through":null,"old":[1030,1084,31],"comment":"Shield Gen"}],"si":[100.0,100.0],"top10":[315.0,204.3333],"before":{"functions":22,"over50":6,"over20":6,"max_cc":375,"longest":1712,"excess":969,"cc_sum":1116},"after":{"functions":34,"over50":6,"over20":8,"max_cc":261,"longest":1335,"excess":871,"cc_sum":1128},"steps_done":2,"note":"이어서 정리한 3단계는 검사에서 빠져 2단계까지만 반영했습니다.","seconds":421},{"path":"video_scale_hqNx.c","targets":[{"name":"hq4x_32","before":{"cc":446,"loc":5081},"after":{"cc":437,"loc":5033},"line":6817,"old_line":6817,"helpers":[]}],"helpers":[],"si":[92.31,94.23],"top10":[446.0,437.0],"before":{"functions":17,"over50":3,"over20":3,"max_cc":446,"longest":5081,"excess":1290,"cc_sum":1345},"after":{"functions":17,"over50":3,"over20":3,"max_cc":437,"longest":5033,"excess":1281,"cc_sum":1336},"steps_done":1,"note":null,"seconds":47}]},{"id":"5137ba22ab534343a3e5e876ce770336","round":1,"title":"10/29 리허설 · 1개 파일 · 한 단계","checks":{"original_preserved":true,"matches_preview":true,"reanalyzed":{"state":"complete","analyzed_files":52,"syntax_files":0}},"whole":{"index":99.89,"components":[{"key":"cycle_units","label":"순환 고리에 묶인 단위","before":6,"after":6},{"key":"links","label":"단위 사이 연결","before":224,"after":224},{"key":"complex_excess","label":"매우 복잡한 부분 Σ(CC−20)","before":3967,"after":3952},{"key":"excess_complexity","label":"초과 복잡도 Σ(CC−10)","before":4709,"after":4700},{"key":"global_access","label":"전역 변수 접근","before":10197,"after":10197}]},"service":"codex","model":"gpt-6-luna","files":[{"path":"OpenTyrian/src/game_menu.c","targets":[{"name":"JE_itemScreen","before":{"cc":371,"loc":1475},"after":{"cc":356,"loc":1389},"line":245,"old_line":157,"helpers":["JE_updateMenuAnimation"]}],"helpers":[{"name":"JE_updateMenuAnimation","cc":16,"loc":87,"line":157,"parent":"JE_itemScreen","call_line":964,"through":null,"old":[860,959,51],"comment":"current menu is not 8 (read data cube)"}],"si":[98.08,98.08],"top10":[234.5,227.0],"before":{"functions":28,"over50":2,"over20":4,"max_cc":371,"longest":1475,"excess":494,"cc_sum":681},"after":{"functions":29,"over50":2,"over20":4,"max_cc":356,"longest":1389,"excess":485,"cc_sum":682},"steps_done":1,"note":null,"seconds":40}]}]</script>
+<script>
+const RUNS = JSON.parse(document.getElementById("data").textContent);
+const MODELS = {sonnet: "Claude Sonnet", "gpt-6-luna": "Codex gpt-6-luna", "gpt-6.1-sol": "Codex gpt-6.1-sol"};
+const state = {run: 0, stat: "todo", pick: null};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const fmt = n => Number(n).toLocaleString("ko-KR");
+const base = p => p.split("/").pop();
+// Rough Korean reading of a function name, word by word (a small fixed table; unknown words stay out).
+const WORDS = {armor: "방어구", warning: "경고", low: "낮은", enemy: "적", shots: "총알", shot: "총알", explosions: "폭발", explosion: "폭발", level: "레벨",
+  timer: "타이머", menu: "메뉴", volume: "음량", sound: "소리", effects: "효과음", game: "게임", over: "오버", sequence: "장면", shield: "방어막", weapon: "무기",
+  power: "출력", bars: "막대", sidekick: "보조기", sidekicks: "보조기", player: "플레이어", ship: "기체", shadow: "그림자", input: "입력", devices: "장치",
+  mouse: "마우스", keyboard: "키보드", joystick: "조이스틱", key: "키", load: "불러오기", save: "저장", pickup: "아이템", score: "점수", item: "아이템",
+  picker: "선택 상자", display: "화면", mode: "모드", animation: "애니메이션", data: "데이터", cube: "큐브", event: "이벤트", escape: "Esc", click: "클릭",
+  move: "이동", accel: "가속", spawn: "등장", death: "격파", friction: "마찰", velocity: "속도", position: "위치", warp: "워프", trail: "궤적", gun: "총"};
+function korean(name) {
+  const parts = name.replace(/^JE_/, "").replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase().split(/[\s_]+/);
+  const known = [...new Set(parts.filter(w => WORDS[w]).map(w => WORDS[w]))];
+  return known.length >= 2 ? known.join(" ") : null;
+}
+const gloss = name => korean(name) || "—";
+
+function render() {
+  const run = RUNS[state.run];
+  document.documentElement.dataset.theme = state.theme || "light";
+  const targets = run.files.flatMap(f => f.targets.map(t => ({...t, file: f.path, helpers: f.helpers.filter(h => h.parent === t.name)})));
+  const helpers = targets.flatMap(t => t.helpers.map(h => ({...h, file: t.file, target: t})));
+  const split = targets.filter(t => t.helpers.length);
+  const longest = split.reduce((m, t) => t.before.loc > m.before.loc ? t : m, split[0]);
+  const avgLoc = Math.round(helpers.reduce((s, h) => s + h.loc, 0) / helpers.length);
+  const simple = helpers.filter(h => h.cc <= 20).length;
+  // examples from the longest function first: the pieces people know from playing (armor warning, level timer…)
+  const named = [...longest.helpers, ...helpers].filter((h, i, all) => korean(h.name) && all.findIndex(x => x.name === h.name) === i)
+    .sort((a, b) => /Armor/.test(b.name) - /Armor/.test(a.name) || korean(a.name).split(" ").length - korean(b.name).split(" ").length).slice(0, 3);
+  const model = MODELS[run.model] || run.model;
+
+  // 1. 무엇을 했나요?
+  const head = `<header class="s-head"><div class="eyebrow">수정 결과 · ${run.round}라운드</div>
+    <h1>큰 함수 <em>${targets.length}개</em>를 작은 함수 <em>${helpers.length}개</em>로 나눴습니다</h1>
+    <p>OpenTyrian ${run.files.length}개 파일. 게임이 하는 일은 그대로 두고, 한 함수에 몰려 있던 코드를 이름 붙은 작은 함수로 옮겼습니다.</p></header>`;
+
+  // 2. 이렇게 좋아졌습니다 — the effect of splitting, in plain words with this round's numbers
+  const effects = `<section class="card s-card"><div class="s-q">이렇게 좋아졌습니다</div>
+    <div class="s-title">한 함수가 혼자 하던 여러 일을, 일마다 따로 맡겼습니다</div>
+    <div class="s-effects">
+      <div class="s-effect"><div class="ic" aria-hidden="true">🔍</div><b>고칠 곳을 찾기 쉬워졌습니다</b>
+        <p>기능 하나를 고치려고 <strong>${fmt(longest.before.loc)}줄</strong>짜리 <code class="mono">${esc(longest.name)}</code>를 다 읽는 대신, 평균 <strong>${avgLoc}줄</strong>짜리 작은 함수 하나를 보면 됩니다.</p></div>
+      <div class="s-effect"><div class="ic" aria-hidden="true">🏷️</div><b>이름만 봐도 하는 일이 보입니다</b>
+        <p><strong>${helpers.length}가지 일</strong>에 각각 이름이 붙었습니다.${named.length ? ` 예: ${named.map(h => `‘${esc(korean(h.name))}’`).join(", ")}${named.length > 1 ? "처럼" : ""} 일마다 함수가 따로 있습니다.` : ""}</p></div>
+      <div class="s-effect"><div class="ic" aria-hidden="true">🧩</div><b>고친 뒤 확인할 범위가 좁아졌습니다</b>
+        <p>작은 함수 ${helpers.length}개 중 <strong>${simple}개</strong>는 갈림길(if·for·switch)이 20개 이하라 한눈에 읽힙니다. 한 기능을 고쳐도 그 함수 안만 확인하면 되니, 다른 기능을 실수로 건드릴 가능성이 줄어듭니다.</p></div>
+    </div>
+    <p class="s-small">게임 동작은 바꾸지 않았습니다. 버그를 고친 것이 아니라, 다음에 기능을 고치거나 더할 때의 출발점을 분명하게 만든 것입니다.</p></section>`;
+
+  // 3. 안전한가요? — 빌드 is the button; 직접 플레이 is recorded by the person after playing
+  const built = state.stat !== "todo", played = state.stat === "done";
+  const checks = [
+    ["규칙 검사", true, "AI가 고친 범위를 프로그램이 확인", ""],
+    ["원본 그대로", run.checks.original_preserved, "원본은 두고 사본에만 적용", ""],
+    ["빌드", built, built ? "성공" : "버튼을 누르면 자동으로 빌드하고 게임을 켭니다",
+      built ? `<button class="btn ghost sm" type="button">게임 다시 실행 ▶</button>` : `<button class="btn primary sm" type="button">게임 준비하고 실행 ▶</button>`],
+    ["직접 플레이", played, played ? "정상이라고 기록함" : built ? "해 본 뒤 결과를 눌러 주세요" : "빌드한 뒤 할 수 있습니다",
+      built && !played ? `<button class="btn primary sm" type="button">해 보니 정상입니다</button><button class="btn ghost sm" type="button">문제가 있었습니다</button>` : ""]];
+  const next = checks.findIndex(c => !c[1]);
+  const title = played ? "검사·빌드·플레이를 모두 마쳤습니다" : `검사는 통과했고, 다음은 ${checks[next][0]}입니다`;
+  const safe = `<section class="card s-card"><div class="s-q">안전한가요?</div><div class="s-title">${title}</div>
+    <div class="s-checks">${checks.map(([t, ok, sm, act], i) => `<div class="s-check ${ok ? "is-done" : i === next ? "is-next" : ""}"><i>${ok ? "✓" : i + 1}</i><b>${t}</b><small>${sm}</small>${act}</div>`).join("")}</div></section>`;
+
+  // 4. 원래 함수가 얼마나 짧아졌나요? — each function against its own size
+  const order = [...targets].sort((a, b) => (b.before.loc - b.after.loc) - (a.before.loc - a.after.loc));
+  const row = t => `<li><div class="s-func-top"><b class="mono">${esc(t.name)}</b><span>${fmt(t.before.loc)}줄 → <strong>${fmt(t.after.loc)}줄</strong>${t.helpers.length ? ` · 작은 함수 ${t.helpers.length}개로 나뉨` : ""}</span></div>
+    <div class="s-bar"><em>전</em><div><span style="width:100%"></span></div></div>
+    <div class="s-bar after"><em>후</em><div><span style="width:${100 * t.after.loc / t.before.loc}%"></span></div></div></li>`;
+  const shorter = `<section class="card s-card"><div class="s-q">원래 함수는 얼마나 짧아졌나요?</div><div class="s-title">한 번에 읽어야 하는 양이 줄었습니다</div>
+    <ul class="s-funcs">${order.slice(0, 3).map(row).join("")}</ul>
+    ${order.length > 3 ? `<details class="s-more"><summary>나머지 ${order.length - 3}개 함수 보기</summary><ul class="s-funcs">${order.slice(3).map(row).join("")}</ul></details>` : ""}</section>`;
+
+  // 5. 예를 들어 — one moved piece: where it was, where it is now
+  const pick = helpers.find(h => h.name === state.pick) || helpers.find(h => /Armor/.test(h.name)) || helpers[0];
+  const pt = pick.target, label = korean(pick.name);
+  const example = `<section class="card s-card"><div class="s-q">예를 들어</div>
+    <div class="s-title">${label ? `‘${esc(label)}’ 기능` : `<span class="mono">${esc(pick.name)}</span>`}을 고치고 싶다면</div>
+    <div class="s-ex"><div class="s-box"><h3>정리 전</h3><div class="n">${fmt(pt.before.loc)}줄</div>
+        <p><code class="mono">${esc(pt.name)}</code> 함수 전체를 읽으며 찾아야 했습니다.${pick.old ? ` (${esc(base(pick.file))} ${fmt(pick.old[0])}행 근처)` : ""}</p></div>
+      <div class="s-ex-arrow" aria-hidden="true">→</div>
+      <div class="s-box after"><h3>정리 후</h3><div class="n">${fmt(pick.loc)}줄</div>
+        <p><code class="mono">${esc(pick.name)}</code> 함수만 보면 됩니다. (${esc(base(pick.file))} ${fmt(pick.line)}행)</p></div></div>
+    <div class="s-pick"><label for="pick">다른 예 보기</label><select id="pick">${split.map(x => `<optgroup label="${esc(x.name)}">${x.helpers.map(h => `<option value="${esc(h.name)}" ${h.name === pick.name ? "selected" : ""}>${esc(korean(h.name) ? `${korean(h.name)} — ${h.name}` : h.name)}</option>`).join("")}</optgroup>`).join("")}</select></div></section>`;
+
+  // 6. 자세히 보기 — how it was changed, the effect in numbers, what is left
+  const steps = Math.max(...run.files.map(f => f.steps_done || 1));
+  const how = `<div class="s-sec"><h3><span>1</span>어떻게 고쳤나요?</h3><ol class="s-steps">
+    <li><div><b>AI가 변경안을 썼습니다.</b> ${esc(model)}에게 큰 함수 안에서 한 가지 일을 하는 덩어리를 골라 새 함수로 옮기고, 원래 자리는 그 함수를 부르는 한 줄로 바꾸게 했습니다.${steps > 1 ? ` 한 번에 다 옮기지 않고 ${steps}단계로 이어서 나눴습니다.` : ""}</div></li>
+    <li><div><b>프로그램이 규칙을 검사했습니다.</b> 옮긴 코드 말고는 바뀐 곳이 없는지, 새 함수가 같은 파일 안에만 있고 원래 함수에서 실제로 불리는지 확인했습니다. 통과하지 못한 답은 적용할 수 없습니다.</div></li>
+    <li><div><b>원본은 두고 사본에 적용했습니다.</b> 적용 전후에 파일마다 지문을 비교해, 원본이 그대로이고 승인한 변경과 똑같이 적용됐는지 확인했습니다.</div></li>
+    <li><div><b>처음과 같은 기준으로 다시 분석했습니다.</b> 아래 숫자는 AI의 설명이 아니라, 수정본을 다시 분석해 잰 값입니다.</div></li></ol></div>`;
+  const files = `<div class="s-sec"><h3><span>2</span>파일마다 무엇을 나눴나요?</h3><p>원래 함수 아래에 새로 생긴 작은 함수와 하는 일, 위치를 적었습니다. ‘하는 일’은 함수 이름을 풀어 쓴 것입니다.</p>
+    ${run.files.map(f => {
+      const hs = f.helpers.slice().sort((a, b) => a.line - b.line);
+      const rows = f.targets.map(t => {
+        const mine = hs.filter(h => h.parent === t.name);
+        if (!mine.length) return `<tr><td class="mono">${esc(t.name)}</td><td colspan="4" class="help" style="margin:0">새 함수 없이, 이미 있던 보조 함수를 부르도록 바꿨습니다.</td></tr>`;
+        return mine.map((h, i) => `<tr><td class="mono">${i ? "" : esc(t.name)}</td><td class="mono">${esc(h.name)}</td><td>${esc(gloss(h.name))}</td><td class="r">${h.loc}줄</td><td class="r mono-s">${h.line}행</td></tr>`).join("");
+      }).join("");
+      return `<details class="s-file"><summary><b>${esc(base(f.path))}</b><span>원래 함수 ${f.targets.length}개 → 작은 함수 ${hs.length}개</span></summary>
+        <div class="tbl-scroll"><table class="tbl"><thead><tr><th>원래 함수</th><th>새 작은 함수</th><th>하는 일</th><th class="r">길이</th><th class="r">위치</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+    }).join("")}</div>`;
+  const numbers = `<div class="s-sec"><h3><span>3</span>효과를 숫자로 보면</h3>
+    <div class="tbl-scroll"><table class="tbl"><thead><tr><th>원래 함수</th><th class="r">길이(줄)</th><th class="r">복잡도</th><th class="r">작은 함수</th></tr></thead><tbody>
+    ${order.map(t => `<tr><td class="mono">${esc(t.name)}<div class="help" style="margin:0">${esc(base(t.file))}</div></td>
+      <td class="r">${fmt(t.before.loc)} → <b class="good-text">${fmt(t.after.loc)}</b></td><td class="r">${fmt(t.before.cc)} → <b class="good-text">${fmt(t.after.cc)}</b></td><td class="r">${t.helpers.length}개</td></tr>`).join("")}</tbody></table></div>
+    <p class="s-term"><b>복잡도(CC)</b>는 함수 안의 갈림길(if·for·switch 등) 수입니다. 클수록 따져 봐야 할 경우가 많아 읽고 고치기 어렵습니다. 보통 10 이하를 단순, 20을 넘으면 복잡하다고 봅니다.</p>
+    <div class="tbl-scroll"><table class="tbl"><thead><tr><th>파일</th><th class="r">가장 긴 함수</th><th class="r">가장 복잡한 함수</th><th class="r">함수 수</th></tr></thead><tbody>
+    ${run.files.map(f => `<tr><td class="mono">${esc(base(f.path))}</td><td class="r">${fmt(f.before.longest)} → <b>${fmt(f.after.longest)}</b>줄</td><td class="r">${fmt(f.before.max_cc)} → <b>${fmt(f.after.max_cc)}</b></td><td class="r">${f.before.functions} → ${f.after.functions}</td></tr>`).join("")}</tbody></table></div></div>`;
+  const still = helpers.filter(h => h.cc > 20).sort((a, b) => b.cc - a.cc);
+  const biggest = targets.reduce((m, t) => t.after.loc > m.after.loc && t.helpers.length ? t : m, split[0]);
+  const partial = run.files.filter(f => f.note && f.note.includes("2단계까지"));
+  const nextButton = `<button class="btn primary" type="button">다음 처방 받기 →</button>`;
+  const left = `<div class="s-sec"><h3><span>4</span>아직 남은 것</h3><ul class="s-honest">
+    <li>가장 긴 원래 함수 <code class="mono">${esc(biggest.name)}</code>는 아직 ${fmt(biggest.after.loc)}줄입니다. 이 수정본을 다시 진단해 처방을 받으면 한 번 더 나눌 수 있습니다. 다만 <code>goto</code>가 걸친 곳이나 지역 변수를 많이 같이 쓰는 곳은 AI가 안전하게 옮기지 못해 남을 수 있습니다.</li>
+    ${still.length ? `<li>새 작은 함수 ${still.length}개는 아직 복잡도가 20을 넘습니다(가장 큰 것 <code class="mono">${esc(still[0].name)}</code> ${still[0].cc}).</li>` : ""}
+    ${partial.length ? `<li>${partial.map(f => esc(base(f.path))).join(", ")}는 3단계 변경이 검사를 통과하지 못해 2단계까지만 반영했습니다.</li>` : ""}
+    <li class="plain">게임 전체 엉킴 총량은 100 → ${run.whole.index}입니다. 게임 52개 파일 전체를 합친 값이라 몇 개 파일만 고치면 조금씩 움직입니다.</li></ul>
+    <div class="s-links">${nextButton}<span class="help" style="margin:0">이 수정본을 기준으로 다시 진단하고 처방을 받습니다.</span></div></div>`;
+  const code = `<div class="s-sec"><h3><span>5</span>코드를 직접 보려면</h3><p>함수마다 원래 코드와 고친 코드를 나란히 볼 수 있고, 수정본 전체를 내려받을 수 있습니다.</p>
+    <div class="s-links"><button class="btn ghost sm" type="button">바뀐 코드 전후 비교 보기</button><button class="btn ghost sm" type="button">수정본 내려받기 (.zip)</button></div></div>`;
+  const detail = `<details class="card s-detail"><summary>자세히 보기 <small>어떻게 고쳤고, 효과가 얼마나인지</small></summary>${how}${files}${numbers}${left}${code}</details>`;
+
+  const keep = document.querySelector(".s-detail")?.open;
+  const actions = `<div class="actions"><button class="btn ghost" type="button">진단 화면으로</button>${nextButton}</div>`;
+  document.getElementById("root").innerHTML = head + effects + safe + shorter + example + detail + actions;
+  if (keep) document.querySelector(".s-detail").open = true;
+  document.getElementById("pick").addEventListener("change", e => { state.pick = e.target.value; render(); });
+}
+for (const id of ["run", "stat", "theme"]) document.querySelectorAll(`#${id} button`).forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle("on", x === b));
+  state[id] = id === "run" ? Number(b.dataset.v) : b.dataset.v;
+  if (id === "run") state.pick = null;
+  render();
+}));
+render();
+</script>
+</body>
+</html>

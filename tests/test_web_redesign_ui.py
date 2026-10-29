@@ -330,7 +330,7 @@ globalThis.Node = Node;
 globalThis.document = {createElement: t => new Element(t), createElementNS: (_, t) => new Element(t), createTextNode: t => new Text(t),
   getElementById: () => null, body: new Element("body")};
 const page = await import(PAGE);
-const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_functions", 40], ["excess_complexity", 900], ["global_access", 500]]
+const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_excess", 40], ["excess_complexity", 900], ["global_access", 500]]
   .map(([key, after]) => ({key, label: key, before: after, after, included: true}));
 async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}}) {
   const unit = (si, cc) => ({fqn: "q.client.menu", file_path: "q/client/menu.c", si, raw: {cc, coupling: 1, dependency_cycle: 0}});
@@ -425,8 +425,8 @@ def test_each_step_suggests_a_model_that_fits_it():
 const {{stepAdvice}} = await import({json.dumps((APP / "prescription.js").as_uri())});
 assert.equal(stepAdvice("claude", "refactor").pick, "sonnet");
 assert.equal(stepAdvice("claude", "prescription").pick, undefined);   // left empty: Opus
-assert.equal(stepAdvice("gemini", "refactor").pick, "flash");
-assert.equal(stepAdvice("gemini", "prescription").pick, "pro");
+assert.match(stepAdvice("claude", "refactor").text, /Haiku는 .*조금만/);
+assert.equal(stepAdvice("gemini", "refactor"), null);   // Gemini is reached by address now
 const codex = ["gpt-6.1-sol", "gpt-6-astra", "gpt-6-luna"];
 const fix = stepAdvice("codex", "refactor", codex), plan = stepAdvice("codex", "prescription", codex);
 assert.equal(fix.pick, "gpt-6.1-sol"); assert.notEqual(fix.auto, false); assert.match(fix.text, /gpt-6-luna는 .*권하지 않습니다/);

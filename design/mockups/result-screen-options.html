@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수정 결과 화면 목업</title>
+<link rel="stylesheet" href="../../game_si/web/static/app/app.css">
+<style>
+/* mockup-only: switcher bar */
+.mk-bar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line); }
+.mk-bar-in { max-width: 1440px; margin: 0 auto; padding: 10px 28px; display: flex; gap: 10px 18px; align-items: center; flex-wrap: wrap; }
+.mk-bar b { font-size: 13px; }
+.mk-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.mk-seg button { border: 0; background: var(--surface); padding: 7px 12px; font-weight: 700; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.mk-seg button + button { border-left: 1px solid var(--line); }
+.mk-seg button.on { background: var(--brand); color: #fff; }
+.mk-note { max-width: 1440px; margin: 14px auto 0; padding: 0 28px; }
+.mk-note p { background: var(--brand-soft); border: 1px solid var(--brand-line); color: var(--brand-ink); border-radius: 12px; padding: 10px 14px; font-size: 13px; }
+.mk-note p b { margin-right: 6px; }
+
+/* shared pieces */
+.sum-h1 { font-size: 28px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+.sum-h1 em { font-style: normal; color: var(--brand); }
+.cav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.cav .chip { margin: 0; }
+.st-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge.is-todo { background: var(--surface-2); border-color: var(--line); color: var(--ink-2); }
+.find { display: flex; gap: 8px; align-items: center; margin: 12px 0 4px; flex-wrap: wrap; }
+.find input { flex: 1; min-width: 220px; border: 1px solid var(--line); background: var(--surface-2); border-radius: 10px; padding: 9px 12px; }
+.find input:focus { outline: 3px solid var(--brand-line); border-color: var(--brand); }
+.hl { background: var(--warn-soft); outline: 1px solid var(--warn-line); border-radius: 4px; }
+.num-s { color: var(--muted); }
+.mono-s { font-family: "JetBrains Mono", Consolas, monospace; font-size: 12px; color: var(--ink-2); }
+.dim-row { opacity: .35; }
+.tbl td.r, .tbl th.r { text-align: right; white-space: nowrap; }
+.tbl tfoot td { font-weight: 800; border-bottom: 0; }
+
+/* A: guide accordion */
+.ga-item { border-top: 1px solid var(--line); }
+.ga-item > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(150px, 1.4fr) minmax(120px, 1fr) auto auto; gap: 6px 16px; align-items: center; padding: 12px 2px; }
+.ga-item > summary::-webkit-details-marker { display: none; }
+.ga-item > summary::before { content: "▸"; position: absolute; margin-left: -16px; color: var(--muted); }
+.ga-item[open] > summary::before { content: "▾"; }
+.ga-list { padding-left: 16px; }
+.ga-name b { font-size: 15px; } .ga-name .mono-s { display: block; }
+.ga-body { padding: 0 0 14px; }
+.ga-body .tbl { margin-top: 0; font-size: 12.5px; }
+.ga-body .tbl td { padding: 7px 8px; }
+.ga-body .tbl b.mono { overflow-wrap: anywhere; }
+.cc-pill { display: inline-block; min-width: 34px; text-align: center; font-weight: 800; font-size: 12px; padding: 1px 7px; border-radius: 999px; background: var(--good-soft); color: var(--good); border: 1px solid var(--good-line); }
+.cc-pill.mid { background: var(--warn-soft); color: var(--warn); border-color: var(--warn-line); }
+.cc-pill.big { background: var(--bad-soft); color: var(--gE); border-color: var(--del-n); }
+.hint { font-size: 12px; color: var(--muted); }
+
+/* B: KPI tiles, pipeline, bead map */
+.b-hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; padding: 22px; margin-bottom: 14px; align-items: center; }
+.b-hero .sum-h1 { font-size: 24px; }
+.kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.kpi { background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.kpi span { font-size: 12px; font-weight: 700; color: var(--muted); display: block; }
+.kpi b { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+.kpi b small { font-size: 14px; color: var(--muted); font-weight: 700; margin-left: 4px; }
+.kpi s { color: var(--muted); text-decoration: none; font-size: 16px; font-weight: 700; margin-right: 4px; }
+.pipe { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; padding: 16px 18px; margin-bottom: 14px; }
+.pipe-step { position: relative; padding: 0 10px; text-align: center; }
+.pipe-step + .pipe-step::before { content: ""; position: absolute; left: -50%; right: 50%; top: 15px; height: 2px; background: var(--line); z-index: 0; margin: 0 18px; }
+.pipe-step.is-ok + .pipe-step::before { background: var(--gA); }
+.pipe-step i { position: relative; z-index: 1; font-style: normal; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 6px; background: var(--line); color: var(--muted); font-weight: 800; }
+.pipe-step.is-ok i { background: var(--gA); color: #fff; }
+.pipe-step.is-next i { background: var(--brand); color: #fff; box-shadow: 0 0 0 4px var(--brand-soft); }
+.pipe-step b { display: block; font-size: 13px; }
+.pipe-step small { display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.pipe-step .btn { margin-top: 8px; }
+.bead-file { padding: 12px 0 4px; border-top: 1px solid var(--line); }
+.bead-file > .mono-s { font-weight: 700; }
+.bead-row { display: grid; grid-template-columns: 170px minmax(0, 1fr) 120px; gap: 12px; align-items: center; margin-top: 8px; }
+.bead-row .nm b { font-size: 13px; overflow-wrap: anywhere; } .bead-row .nm small { display: block; color: var(--muted); font-size: 11.5px; }
+.bead-track { position: relative; height: 22px; }
+.bead-ghost { position: absolute; left: 0; top: 0; height: 22px; border-radius: 6px; border: 1.5px dashed var(--edge); opacity: .6; }
+.bead-line { position: absolute; left: 0; top: 0; height: 22px; display: flex; gap: 2px; }
+.bead-main { height: 22px; border-radius: 6px; background: var(--brand); }
+.bead { height: 22px; border-radius: 4px; background: var(--gA); cursor: pointer; border: 0; padding: 0; }
+.bead.mid { background: var(--gC); }
+.bead.big { background: var(--gD); }
+.bead:hover, .bead.on { outline: 2px solid var(--ink); outline-offset: 1px; }
+.bead-num { font-size: 12px; color: var(--ink-2); text-align: right; white-space: nowrap; }
+.mk-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.mk-legend i { display: inline-block; width: 14px; height: 10px; border-radius: 3px; vertical-align: -1px; margin-right: 4px; }
+.mk-detail { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; }
+.mk-detail b.mono { font-size: 15px; }
+.mult { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 8px; }
+.mult .kpi b { font-size: 18px; }
+.aux-row { display: flex; gap: 10px 22px; align-items: baseline; flex-wrap: wrap; }
+.aux-row .big-index b { font-size: 26px; color: var(--ink-2); }
+
+/* C: follow one feature */
+.c-top { display: flex; gap: 10px 20px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 14px; }
+.c-top > div:first-child { flex: 1; min-width: 300px; }
+.c-hero { padding: 20px 22px; margin-bottom: 14px; }
+.c-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.c-chips .grp { font-size: 11.5px; font-weight: 800; color: var(--muted); align-self: center; margin: 0 2px 0 8px; }
+.c-chips .grp:first-child { margin-left: 0; }
+.c-chips .chip { cursor: pointer; margin: 0; font-family: "JetBrains Mono", Consolas, monospace; font-size: 11.5px; }
+.c-chips .chip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.vs { display: grid; grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr); gap: 0; margin-top: 16px; align-items: stretch; }
+.vs-arrow { display: grid; place-items: center; color: var(--muted); font-size: 22px; font-weight: 800; }
+.vs-side { border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: var(--surface-2); display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 14px; }
+.vs-side.after { border-color: var(--good-line); background: var(--good-soft); }
+.vs-side h4 { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: .04em; }
+.vs-big { font-size: 20px; font-weight: 800; overflow-wrap: anywhere; line-height: 1.3; margin: 4px 0; }
+.vs-side p { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+.vs-side p b { color: var(--ink); }
+.strip { position: relative; width: 30px; margin: 0 auto; border-radius: 6px; background: var(--line); }
+.strip span { position: absolute; left: -4px; right: -4px; border-radius: 4px; background: var(--gD); min-height: 4px; }
+.vs-side.after .strip span { background: var(--gA); left: 0; right: 0; top: 0; bottom: 0; }
+.strip-cap { font-size: 11px; color: var(--muted); text-align: center; margin-top: 4px; }
+.c-foot { margin-top: 14px; padding: 12px 14px; border-radius: 12px; border: 1px dashed var(--brand-line); background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; font-size: 14px; }
+.c-foot small { display: block; font-weight: 600; color: var(--ink-2); font-size: 12px; margin-top: 2px; }
+.c-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-top: 8px; }
+.c-list li { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--surface-2); font-size: 12.5px; }
+.c-list li b { font-size: 13.5px; }
+
+@media (max-width: 900px) {
+  .b-hero { grid-template-columns: 1fr; }
+  .pipe { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 14px; }
+  .pipe-step:nth-child(4)::before { display: none; }
+  .bead-row { grid-template-columns: 1fr; gap: 4px; }
+  .bead-num { text-align: left; }
+  .vs { grid-template-columns: 1fr; }
+  .vs-arrow { transform: rotate(90deg); height: 34px; }
+  .ga-item > summary { grid-template-columns: 1fr auto; }
+  .ga-item > summary .pbars { display: none; }
+  .sum-h1 { font-size: 22px; }
+  .mk-bar-in, .mk-note { padding-left: 16px; padding-right: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="mk-bar"><div class="mk-bar-in">
+  <b>결과 화면 목업</b>
+  <div class="mk-seg" id="opt" role="tablist" aria-label="목업 안">
+    <button type="button" data-v="A" class="on">A안 · 보고서형</button>
+    <button type="button" data-v="B">B안 · 지도형</button>
+    <button type="button" data-v="C">C안 · 기능 따라가기형</button>
+  </div>
+  <div class="mk-seg" id="run" aria-label="실제 데이터">
+    <button type="button" data-v="0" class="on">10/26 실측 · 5개 파일</button>
+    <button type="button" data-v="1">10/29 리허설 · 1개 파일</button>
+  </div>
+  <div class="mk-seg" id="stat" aria-label="빌드 상태">
+    <button type="button" data-v="todo" class="on">빌드 전</button>
+    <button type="button" data-v="done">빌드·플레이 끝</button>
+  </div>
+  <div class="mk-seg" id="theme" aria-label="테마">
+    <button type="button" data-v="light" class="on">밝게</button>
+    <button type="button" data-v="dark">어둡게</button>
+  </div>
+</div></div>
+<div class="mk-note"><p id="optNote"></p></div>
+<main class="wrap wide" id="root"></main>
+
+<script id="data" type="application/json">[{"id":"e1ba503f5b094e78803944ea27738786","round":2,"title":"10/26 실측 · Claude Sonnet · 5개 파일 · 이어서 정리 3단계","checks":{"original_preserved":true,"matches_preview":true,"reanalyzed":{"state":"complete","analyzed_files":52,"syntax_files":0}},"whole":{"index":95.37,"components":[{"key":"cycle_units","label":"순환 고리에 묶인 단위","before":6,"after":6},{"key":"links","label":"단위 사이 연결","before":224,"after":224},{"key":"complex_excess","label":"매우 복잡한 부분 Σ(CC−20)","before":3967,"after":3403},{"key":"excess_complexity","label":"초과 복잡도 Σ(CC−10)","before":4709,"after":4309},{"key":"global_access","label":"전역 변수 접근","before":10197,"after":10152}]},"service":"claude","model":"sonnet","files":[{"path":"game_menu.c","targets":[{"name":"JE_itemScreen","before":{"cc":371,"loc":1475},"after":{"cc":178,"loc":724},"line":958,"old_line":157,"helpers":["drawDataCubeListAndFace","drawJoystickConfigMenuChoices","drawKeyboardConfigMenuChoices","drawLoadSaveMenuChoices","handleEscapeKeyInMenu","handleMenuMouseClick","updateDataCubeReaderFrame","updateMenuOnLeftKey","updateMenuOnRightKey","updateUpgradeSubMenuSelectionAndDraw"]},{"name":"JE_menuFunction","before":{"cc":98,"loc":447},"after":{"cc":86,"loc":379},"line":2672,"old_line":2540,"helpers":["assignJoystickInputToSelectedSlot","showKeyCaptureCursorUntilInput"]}],"helpers":[{"name":"assignJoystickInputToSelectedSlot","cc":8,"loc":43,"line":2628,"parent":"JE_menuFunction","call_line":3017,"through":null,"old":[2916,2953,20],"comment":null},{"name":"drawDataCubeListAndFace","cc":9,"loc":68,"line":629,"parent":"JE_itemScreen","call_line":1217,"through":null,"old":[675,737,26],"comment":null},{"name":"drawJoystickConfigMenuChoices","cc":13,"loc":59,"line":240,"parent":"JE_itemScreen","call_line":1141,"through":null,"old":[413,468,20],"comment":null},{"name":"drawKeyboardConfigMenuChoices","cc":5,"loc":24,"line":215,"parent":"JE_itemScreen","call_line":1136,"through":null,"old":[388,408,7],"comment":null},{"name":"drawLoadSaveMenuChoices","cc":9,"loc":57,"line":157,"parent":"JE_itemScreen","call_line":1131,"through":null,"old":[332,382,21],"comment":null},{"name":"handleEscapeKeyInMenu","cc":7,"loc":30,"line":760,"parent":"JE_itemScreen","call_line":1476,"through":null,"old":[1217,1242,12],"comment":null},{"name":"handleMenuMouseClick","cc":58,"loc":166,"line":791,"parent":"JE_itemScreen","call_line":1449,"through":null,"old":[1028,1236,81],"comment":null},{"name":"showKeyCaptureCursorUntilInput","cc":7,"loc":37,"line":2590,"parent":"JE_menuFunction","call_line":2813,"through":null,"old":[2682,2712,12],"comment":null},{"name":"updateDataCubeReaderFrame","cc":12,"loc":61,"line":698,"parent":"JE_itemScreen","call_line":1292,"through":null,"old":[814,871,27],"comment":null},{"name":"updateMenuOnLeftKey","cc":31,"loc":98,"line":300,"parent":"JE_itemScreen","call_line":1581,"through":null,"old":[1355,1481,43],"comment":null},{"name":"updateMenuOnRightKey","cc":29,"loc":93,"line":399,"parent":"JE_itemScreen","call_line":1585,"through":null,"old":[1402,1518,44],"comment":null},{"name":"updateUpgradeSubMenuSelectionAndDraw","cc":30,"loc":135,"line":493,"parent":"JE_itemScreen","call_line":1146,"through":null,"old":[473,602,72],"comment":null}],"si":[98.08,98.08],"top10":[234.5,88.25],"before":{"functions":28,"over50":2,"over20":4,"max_cc":371,"longest":1475,"excess":494,"cc_sum":681},"after":{"functions":40,"over50":3,"over20":8,"max_cc":178,"longest":724,"excess":402,"cc_sum":694},"steps_done":2,"note":"이어서 정리한 3단계는 검사에서 빠져 2단계까지만 반영했습니다.","seconds":468},{"path":"mainint.c","targets":[{"name":"JE_playerCollide","before":{"cc":80,"loc":378},"after":{"cc":24,"loc":102},"line":4834,"old_line":4475,"helpers":["collectArcadePickup","collectScoreItem","destroyLinkedEnemies"]},{"name":"JE_playerMovement","before":{"cc":274,"loc":1134},"after":{"cc":119,"loc":524},"line":3945,"old_line":3270,"helpers":["drawPlayerShadow","readPlayerInputDevices","updateAndDrawPlayerShip","updateAndDrawSidekicks","updateDragonwingChargeShot","updateEndLevelWarpTrail","updateLeftSidekickPosition","updateLinkGunDirection","updateLinkedPlayerTurret","updatePlayerFrictionAndVelocity","updatePortConfigChange","updateRightSidekickPosition","updateSidekickFireAndAmmoRefill"]}],"helpers":[{"name":"collectArcadePickup","cc":32,"loc":186,"line":4540,"parent":"JE_playerCollide","call_line":4849,"through":null,"old":[4494,4734,129],"comment":null},{"name":"collectScoreItem","cc":16,"loc":73,"line":4760,"parent":"JE_playerCollide","call_line":4888,"through":null,"old":[4691,4776,46],"comment":null},{"name":"destroyLinkedEnemies","cc":11,"loc":32,"line":4727,"parent":"JE_playerCollide","call_line":4927,"through":null,"old":[4816,4840,15],"comment":"kill enemy"},{"name":"drawPlayerShadow","cc":8,"loc":35,"line":3441,"parent":"JE_playerMovement","call_line":4353,"through":null,"old":[3897,3939,15],"comment":null},{"name":"readPlayerInputDevices","cc":26,"loc":79,"line":3270,"parent":"JE_playerMovement","call_line":4127,"through":null,"old":[3452,3526,44],"comment":null},{"name":"updateAndDrawPlayerShip","cc":13,"loc":77,"line":3477,"parent":"JE_playerMovement","call_line":4355,"through":null,"old":[3910,4001,36],"comment":null},{"name":"updateAndDrawSidekicks","cc":9,"loc":35,"line":3909,"parent":"JE_playerMovement","call_line":4466,"through":null,"old":[4355,4399,18],"comment":null},{"name":"updateDragonwingChargeShot","cc":14,"loc":55,"line":3586,"parent":"JE_playerMovement","call_line":4427,"through":null,"old":[4103,4153,23],"comment":null},{"name":"updateEndLevelWarpTrail","cc":9,"loc":42,"line":3718,"parent":"JE_playerMovement","call_line":4277,"through":null,"old":[3699,3745,24],"comment":null},{"name":"updateLeftSidekickPosition","cc":10,"loc":24,"line":3884,"parent":"JE_playerMovement","call_line":4451,"through":null,"old":[4178,4206,16],"comment":"sidekicks"},{"name":"updateLinkGunDirection","cc":13,"loc":37,"line":3761,"parent":"JE_playerMovement","call_line":4260,"through":null,"old":[3655,3692,16],"comment":null},{"name":"updateLinkedPlayerTurret","cc":4,"loc":30,"line":3555,"parent":"JE_playerMovement","call_line":4307,"through":null,"old":[3825,3850,15],"comment":null},{"name":"updatePlayerFrictionAndVelocity","cc":16,"loc":51,"line":3799,"parent":"JE_playerMovement","call_line":4303,"through":null,"old":[3774,3820,26],"comment":null},{"name":"updatePortConfigChange","cc":7,"loc":32,"line":3851,"parent":"JE_playerMovement","call_line":4384,"through":null,"old":[4032,4058,16],"comment":"PLAYER SHOT Change"},{"name":"updateRightSidekickPosition","cc":21,"loc":90,"line":3350,"parent":"JE_playerMovement","call_line":4453,"through":null,"old":[4185,4284,49],"comment":null},{"name":"updateSidekickFireAndAmmoRefill","cc":18,"loc":75,"line":3642,"parent":"JE_playerMovement","call_line":4457,"through":null,"old":[4290,4372,37],"comment":null}],"si":[94.23,96.15],"top10":[144.3333,74.2],"before":{"functions":37,"over50":5,"over20":14,"max_cc":274,"longest":1134,"excess":739,"cc_sum":984},"after":{"functions":53,"over50":4,"over20":17,"max_cc":119,"longest":524,"excess":608,"cc_sum":1000},"steps_done":3,"note":"AI를 3번 이어서 불러 단계적으로 정리했습니다.","seconds":449},{"path":"opentyr.c","targets":[{"name":"setupMenu","before":{"cc":122,"loc":648},"after":{"cc":63,"loc":445},"line":352,"old_line":102,"helpers":["applyDisplayPickerSelection","applyScalerPickerSelection","changeVolumeFromKey","drawDisplayModeValue","drawPickerBox","drawVolumeBarValue","stepWrappedIndex","updateHoveredMenuItem","updatePickerFromKeyboard","updatePickerFromMouse","updateVolumeFromMouseX","waitForInputOrDisplayChange"]}],"helpers":[{"name":"applyDisplayPickerSelection","cc":2,"loc":5,"line":294,"parent":"setupMenu","call_line":775,"through":null,"old":[719,720,2],"comment":null},{"name":"applyScalerPickerSelection","cc":4,"loc":12,"line":300,"parent":"setupMenu","call_line":780,"through":null,"old":[725,731,5],"comment":null},{"name":"changeVolumeFromKey","cc":3,"loc":15,"line":336,"parent":"setupMenu","call_line":610,"through":null,"old":[673,684,2],"comment":null},{"name":"drawDisplayModeValue","cc":2,"loc":11,"line":267,"parent":"setupMenu","call_line":500,"through":null,"old":[250,254,3],"comment":null},{"name":"drawPickerBox","cc":4,"loc":25,"line":120,"parent":"setupMenu","call_line":534,"through":null,"old":[293,309,10],"comment":null},{"name":"drawVolumeBarValue","cc":2,"loc":5,"line":279,"parent":"setupMenu","call_line":512,"through":null,"old":[270,275,2],"comment":null},{"name":"stepWrappedIndex","cc":4,"loc":7,"line":286,"parent":"setupMenu","call_line":596,"through":null,"old":null,"comment":null},{"name":"updateHoveredMenuItem","cc":14,"loc":34,"line":146,"parent":"setupMenu","call_line":565,"through":null,"old":[353,391,9],"comment":null},{"name":"updatePickerFromKeyboard","cc":9,"loc":44,"line":222,"parent":"setupMenu","call_line":763,"through":null,"old":[662,701,10],"comment":null},{"name":"updatePickerFromMouse","cc":13,"loc":38,"line":182,"parent":"setupMenu","call_line":758,"through":null,"old":[636,684,7],"comment":null},{"name":"updateVolumeFromMouseX","cc":9,"loc":21,"line":313,"parent":"setupMenu","call_line":578,"through":null,"old":[391,406,6],"comment":null},{"name":"waitForInputOrDisplayChange","cc":4,"loc":17,"line":102,"parent":"setupMenu","call_line":550,"through":null,"old":[329,339,6],"comment":null}],"si":[96.15,92.31],"top10":[122.0,42.5],"before":{"functions":8,"over50":1,"over20":2,"max_cc":122,"longest":648,"excess":124,"cc_sum":151},"after":{"functions":20,"over50":1,"over20":2,"max_cc":63,"longest":445,"excess":72,"cc_sum":162},"steps_done":3,"note":"AI를 3번 이어서 불러 단계적으로 정리했습니다.","seconds":291},{"path":"tyrian2.c","targets":[{"name":"JE_eventSystem","before":{"cc":255,"loc":856},"after":{"cc":207,"loc":698},"line":4393,"old_line":4174,"helpers":["applyEnemyDeathSpawnEvent","applyEnemyGlobalAccelEvent","applyEnemyGlobalAnimateEvent","applyEnemyGlobalMoveEvent"]},{"name":"JE_main","before":{"cc":375,"loc":1712},"after":{"cc":261,"loc":1335},"line":988,"old_line":570,"helpers":["playQueuedSoundEffectsWhileNotGameOver","redrawChangedWeaponPowerBars","updateAndDrawEnemyShots","updateGameOverSequence","updateLevelTimer","updateLowArmorWarning","updateSequencedExplosionsAndDrawExplosions","updateShieldRegenAndGalagaLifeReward"]}],"helpers":[{"name":"applyEnemyDeathSpawnEvent","cc":16,"loc":29,"line":4328,"parent":"JE_eventSystem","call_line":4692,"through":null,"old":[4606,4629,14],"comment":null},{"name":"applyEnemyGlobalAccelEvent","cc":13,"loc":46,"line":4281,"parent":"JE_eventSystem","call_line":4588,"through":null,"old":[4413,4469,28],"comment":null},{"name":"applyEnemyGlobalAnimateEvent","cc":7,"loc":34,"line":4358,"parent":"JE_eventSystem","call_line":4606,"through":null,"old":[4490,4524,17],"comment":null},{"name":"applyEnemyGlobalMoveEvent","cc":16,"loc":65,"line":4215,"parent":"JE_eventSystem","call_line":4583,"through":null,"old":[4364,4438,28],"comment":null},{"name":"playQueuedSoundEffectsWhileNotGameOver","cc":6,"loc":24,"line":917,"parent":"JE_main","call_line":2063,"through":null,"old":[1939,1956,12],"comment":"================================="},{"name":"redrawChangedWeaponPowerBars","cc":9,"loc":23,"line":893,"parent":"JE_main","call_line":1451,"through":null,"old":[1090,1105,9],"comment":"Weapon Display"},{"name":"updateAndDrawEnemyShots","cc":29,"loc":93,"line":570,"parent":"JE_main","call_line":2003,"through":null,"old":[1650,1745,44],"comment":"Draw Enemy Shots"},{"name":"updateGameOverSequence","cc":15,"loc":45,"line":942,"parent":"JE_main","call_line":2116,"through":null,"old":[2034,2091,24],"comment":"GAME OVER"},{"name":"updateLevelTimer","cc":8,"loc":28,"line":802,"parent":"JE_main","call_line":2113,"through":null,"old":[2009,2030,14],"comment":"Level Timer"},{"name":"updateLowArmorWarning","cc":24,"loc":61,"line":740,"parent":"JE_main","call_line":2054,"through":null,"old":[1873,1927,29],"comment":"Warning"},{"name":"updateSequencedExplosionsAndDrawExplosions","cc":13,"loc":75,"line":664,"parent":"JE_main","call_line":2034,"through":null,"old":[1781,1850,34],"comment":"Sequenced Explosions and Draw Explosions"},{"name":"updateShieldRegenAndGalagaLifeReward","cc":18,"loc":61,"line":831,"parent":"JE_main","call_line":1448,"through":null,"old":[1030,1084,31],"comment":"Shield Gen"}],"si":[100.0,100.0],"top10":[315.0,204.3333],"before":{"functions":22,"over50":6,"over20":6,"max_cc":375,"longest":1712,"excess":969,"cc_sum":1116},"after":{"functions":34,"over50":6,"over20":8,"max_cc":261,"longest":1335,"excess":871,"cc_sum":1128},"steps_done":2,"note":"이어서 정리한 3단계는 검사에서 빠져 2단계까지만 반영했습니다.","seconds":421},{"path":"video_scale_hqNx.c","targets":[{"name":"hq4x_32","before":{"cc":446,"loc":5081},"after":{"cc":437,"loc":5033},"line":6817,"old_line":6817,"helpers":[]}],"helpers":[],"si":[92.31,94.23],"top10":[446.0,437.0],"before":{"functions":17,"over50":3,"over20":3,"max_cc":446,"longest":5081,"excess":1290,"cc_sum":1345},"after":{"functions":17,"over50":3,"over20":3,"max_cc":437,"longest":5033,"excess":1281,"cc_sum":1336},"steps_done":1,"note":null,"seconds":47}]},{"id":"5137ba22ab534343a3e5e876ce770336","round":1,"title":"10/29 리허설 · 1개 파일 · 한 단계","checks":{"original_preserved":true,"matches_preview":true,"reanalyzed":{"state":"complete","analyzed_files":52,"syntax_files":0}},"whole":{"index":99.89,"components":[{"key":"cycle_units","label":"순환 고리에 묶인 단위","before":6,"after":6},{"key":"links","label":"단위 사이 연결","before":224,"after":224},{"key":"complex_excess","label":"매우 복잡한 부분 Σ(CC−20)","before":3967,"after":3952},{"key":"excess_complexity","label":"초과 복잡도 Σ(CC−10)","before":4709,"after":4700},{"key":"global_access","label":"전역 변수 접근","before":10197,"after":10197}]},"service":"codex","model":"gpt-6-luna","files":[{"path":"OpenTyrian/src/game_menu.c","targets":[{"name":"JE_itemScreen","before":{"cc":371,"loc":1475},"after":{"cc":356,"loc":1389},"line":245,"old_line":157,"helpers":["JE_updateMenuAnimation"]}],"helpers":[{"name":"JE_updateMenuAnimation","cc":16,"loc":87,"line":157,"parent":"JE_itemScreen","call_line":964,"through":null,"old":[860,959,51],"comment":"current menu is not 8 (read data cube)"}],"si":[98.08,98.08],"top10":[234.5,227.0],"before":{"functions":28,"over50":2,"over20":4,"max_cc":371,"longest":1475,"excess":494,"cc_sum":681},"after":{"functions":29,"over50":2,"over20":4,"max_cc":356,"longest":1389,"excess":485,"cc_sum":682},"steps_done":1,"note":null,"seconds":40}]}]</script>
+<script>
+const RUNS = JSON.parse(document.getElementById("data").textContent);
+const NOTES = {
+  A: ["A안 · 보고서형", "지금 화면의 2단 구성을 그대로 두고 순서와 내용만 바꿉니다. 맨 위 요약과 상태 → 원래 함수별로 펼치는 보조 함수 표(길잡이) → 고친 파일 전후 표 → 게임 전체 지표는 맨 아래 작게. 구현이 가장 작습니다."],
+  B: ["B안 · 지도형", "숫자 타일과 6단계 진행 막대로 한눈에 보이게 합니다. 원래 함수의 복잡도 막대가 줄고 떨어져 나간 부분이 보조 함수 '구슬'로 이어져, 복잡도가 사라진 게 아니라 이름 있는 조각으로 나뉜 것을 그림으로 보여 줍니다. 구슬을 누르면 위치가 나옵니다."],
+  C: ["C안 · 기능 따라가기형", "기능 하나를 골라 '정리 전에는 1,712줄 함수 속 어디, 정리 후에는 61줄짜리 이 함수'를 나란히 보여 줍니다. 발표의 '같은 기능 추가' 시연과 바로 이어집니다. 전체 요약은 위에 짧게, 나머지 표는 아래로."]
+};
+// Korean search words → words in the code's function names (a small fixed table).
+const KO = {"방어구": "armor", "장갑": "armor", "아머": "armor", "경고": "warning", "음량": "volume", "볼륨": "volume", "소리": "sound", "효과음": "sound",
+  "적": "enemy", "탄": "shot", "총알": "shot", "폭발": "explosion", "메뉴": "menu", "저장": "save", "불러오기": "load", "조이스틱": "joystick", "키보드": "keyboard",
+  "키": "key", "마우스": "mouse", "사이드킥": "sidekick", "아이템": "pickup", "획득": "collect", "점수": "score", "타이머": "timer", "시간": "timer", "게임오버": "gameover",
+  "실드": "shield", "방패": "shield", "무기": "weapon", "그림자": "shadow", "화면": "display", "입력": "input", "이동": "velocity", "이벤트": "event", "데이터 큐브": "datacube", "큐브": "datacube"};
+
+const state = {opt: "A", run: 0, stat: "todo", pick: null, q: ""};
+const $ = (sel, el = document) => el.querySelector(sel);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const fmt = n => Number(n).toLocaleString("ko-KR");
+const fmt1 = n => Number(n).toLocaleString("ko-KR", {maximumFractionDigits: 1});
+const pct = (a, b) => a ? `${b < a ? "−" : "+"}${Math.round(Math.abs(100 * (b - a) / a))}%` : "";
+const words = name => name.replace(/^JE_/, "").replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/_/g, " ");
+const base = p => p.split("/").pop();
+const ccCls = cc => cc > 50 ? "big" : cc > 20 ? "mid" : "";
+const delta = (a, b, unit = "") => b === a ? `<span class="delta same">변화 없음</span>` : `<span class="delta ${b < a ? "down" : "up"}">${pct(a, b)}${unit && !pct(a, b) ? unit : ""}</span>`;
+
+function derive(run) {
+  const files = run.files;
+  const targets = files.flatMap(f => f.targets.map(t => ({...t, file: f.path})));
+  const helpers = files.flatMap(f => f.helpers.map(h => ({...h, file: f.path})));
+  const sum = (list, side, key) => list.reduce((s, x) => s + (x[side]?.[key] ?? 0), 0);
+  return {files, targets, helpers,
+    worse: targets.filter(t => t.after.cc > t.before.cc),
+    still: helpers.filter(h => h.cc > 20).sort((a, b) => b.cc - a.cc),
+    partial: files.filter(f => f.note && f.note.includes("2단계까지")),
+    tcc: [sum(targets, "before", "cc"), sum(targets, "after", "cc")],
+    hcc: helpers.reduce((s, h) => s + h.cc, 0), hloc: helpers.reduce((s, h) => s + h.loc, 0),
+    fx: [files.reduce((s, f) => s + f.before.excess, 0), files.reduce((s, f) => s + f.after.excess, 0)]};
+}
+
+function matches(h, q) {
+  if (!q) return true;
+  const hay = `${h.name} ${h.parent} ${h.comment || ""} ${base(h.file)}`.toLowerCase();
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean).map(t => KO[t] || Object.entries(KO).find(([k]) => t.includes(k))?.[1] || t);
+  return terms.every(t => hay.includes(t));
+}
+
+function badges(run) {
+  const done = state.stat === "done";
+  const re = run.checks.reanalyzed || {};
+  const list = [["검사 규칙 통과", true, ""], ["원본 보존", run.checks.original_preserved, ""], ["승인한 변경과 동일", run.checks.matches_preview, ""],
+    [`다시 분석 (${re.analyzed_files}개 파일)`, re.state === "complete", ""], ["빌드", done, "게임 준비 전"], ["동작 비교", done, "게임 준비 전"], ["직접 플레이", done, "기록 전"]];
+  return list.map(([label, ok, note]) => ({label, ok, note: ok ? "" : note}));
+}
+const badgeHtml = run => `<ul class="badges">${badges(run).map(b => `<li class="badge ${b.ok ? "is-ok" : "is-todo"}"><i aria-hidden="true">${b.ok ? "✓" : "·"}</i>${esc(b.label)}${b.note ? ` <small>${esc(b.note)}</small>` : ""}</li>`).join("")}</ul>`;
+
+function headline(run, d) {
+  const n = d.files.length, m = d.targets.length, k = d.helpers.length;
+  return {title: `${n}개 파일의 큰 함수 <em>${m}개</em>를 나눴습니다 · 보조 함수 <em>${k}개</em>`,
+    sub: `옮긴 코드는 새 보조 함수 ${k}개에 있습니다. 복잡도가 늘어난 기존 함수는 ${d.worse.length ? `${d.worse.length}개입니다` : "없습니다"}. ${run.title}.`};
+}
+function caveats(d) {
+  const out = [];
+  if (d.still.length) out.push(`<span class="chip warn">새 보조 함수 ${d.still.length}개는 아직 복잡도 20 초과 (가장 큰 것 ${esc(d.still[0].name)} ${d.still[0].cc})</span>`);
+  if (d.partial.length) out.push(`<span class="chip muted">${d.partial.map(f => esc(base(f.path))).join("·")}는 3단계가 검사에서 빠져 2단계까지 반영</span>`);
+  return out.length ? `<div class="cav">${out.join("")}</div>` : "";
+}
+
+// ---- 고친 파일 전후 (used by all three)
+function fileTable(d) {
+  const rows = d.files.map(f => {
+    const b = f.before, a = f.after;
+    const cell = (x, y, good = y < x) => `<td class="r"><span class="num-s">${fmt(x)} →</span> <b class="${good ? "good-text" : ""}">${fmt(y)}</b></td>`;
+    return `<tr><td class="mono">${esc(base(f.path))}</td>${cell(b.max_cc, a.max_cc)}${cell(b.longest, a.longest)}
+      <td class="r"><span class="num-s">${fmt1(f.top10[0])} →</span> <b class="${f.top10[1] < f.top10[0] ? "good-text" : ""}">${fmt1(f.top10[1])}</b></td>
+      ${cell(b.excess, a.excess)}<td class="r"><span class="num-s">${b.functions} →</span> ${a.functions}</td></tr>`;
+  }).join("");
+  const foot = d.files.length > 1 ? `<tfoot><tr><td>고친 ${d.files.length}개 파일</td><td></td><td></td><td></td><td class="r"><span class="num-s">${fmt(d.fx[0])} →</span> <b class="good-text">${fmt(d.fx[1])}</b> ${delta(d.fx[0], d.fx[1])}</td><td></td></tr></tfoot>` : "";
+  return `<div class="tbl-scroll"><table class="tbl"><thead><tr><th>파일</th><th class="r">가장 복잡한 함수 CC</th><th class="r">가장 긴 함수(줄)</th><th class="r">상위 10% 평균 CC</th><th class="r">초과 복잡도 Σ(CC−10)</th><th class="r">함수 수</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>`;
+}
+
+// ---- 게임 전체 보조 지표 (used by all three, small)
+function wholeCard(run) {
+  const c = Object.fromEntries(run.whole.components.map(x => [x.key, x]));
+  const up = run.whole.index > 100;
+  const cf = c.complex_functions, ex = c.excess_complexity;
+  const why = up ? `새 보조 함수 가운데 복잡도 20 초과가 ‘매우 복잡한 함수’ 수(${cf.before} → ${cf.after})에 더해져 총량이 오히려 올라갔습니다. 초과 복잡도 Σ는 ${fmt(ex.before)} → ${fmt(ex.after)}(${pct(ex.before, ex.after)})로 줄었습니다.`
+    : `게임 전체의 절대량이라 파일 한두 개를 고치면 거의 움직이지 않습니다(초과 복잡도 Σ ${fmt(ex.before)} → ${fmt(ex.after)}).`;
+  return `<section class="card sec aux"><div class="aux-row"><div class="h3">게임 전체 보조 지표</div>
+    <div class="big-index"><s>엉킴 총량 100 →</s><b>${run.whole.index}</b></div><span class="help" style="margin:0">처음 분석 = 100 · 게임 전체 52개 파일 기준</span></div>
+    <p class="help">${why}</p>
+    <details class="parts"><summary>엉킴 총량 구성 보기</summary><table class="tbl"><thead><tr><th>항목</th><th class="r">처음</th><th class="r">지금</th></tr></thead><tbody>
+    ${run.whole.components.map(x => `<tr><td>${esc(x.label.replace("단위", "파일"))}</td><td class="r">${fmt(x.before)}</td><td class="r"><b>${fmt(x.after)}</b></td></tr>`).join("")}</tbody></table></details></section>`;
+}
+
+function gameCard() {
+  const done = state.stat === "done";
+  return `<aside class="card game"><div class="eyebrow">수정된 게임</div><div class="h2">OpenTyrian</div>
+    <p class="sub">수정본을 빌드해 원본과 나란히 실행합니다.</p><div class="gthumb" aria-hidden="true"><i class="ship"></i></div>
+    ${done ? `<p class="help">빌드 성공 · 동작 비교 기록 있음 · 직접 플레이 정상</p>` : `<p class="help">아직 준비하지 않았습니다.</p>`}
+    <div class="game-actions"><button class="btn primary" type="button">${done ? "수정된 게임 실행 ▶" : "수정된 게임 준비하고 실행 ▶"}</button></div></aside>`;
+}
+
+// ================= A안
+function viewA(run, d) {
+  const h = headline(run, d);
+  const order = [...d.targets].sort((a, b) => (b.before.cc - b.after.cc) - (a.before.cc - a.after.cc));
+  const scale = Math.max(...d.targets.map(t => t.before.cc));
+  const bars = (b, a) => `<div class="pbars mini" aria-hidden="true"><div class="pb was"><div class="pb-t"><span style="width:${100 * b / scale}%"></span></div></div><div class="pb now good"><div class="pb-t"><span style="width:${100 * a / scale}%"></span></div></div></div>`;
+  const items = order.map((t, i) => {
+    const hs = d.helpers.filter(x => x.parent === t.name && x.file === t.file).sort((a, b) => a.line - b.line);
+    const shown = hs.filter(x => matches(x, state.q));
+    if (state.q && !shown.length) return "";
+    const rows = shown.map(x => `<tr><td><b class="mono">${esc(x.name)}</b><div class="hint">${esc(words(x.name))}${x.comment ? ` · 코드 주석 “${esc(x.comment)}”` : ""}</div></td>
+      <td class="mono-s">${esc(base(x.file))}:${x.line}</td><td class="r"><span class="cc-pill ${ccCls(x.cc)}">${x.cc}</span></td><td class="r">${x.loc}줄</td><td class="mono-s">${esc(t.name)} ${x.call_line}행</td></tr>`).join("");
+    const body = hs.length ? `<div class="tbl-scroll"><table class="tbl"><thead><tr><th>이 기능을 고칠 땐 여기부터</th><th>위치</th><th class="r">CC</th><th class="r">길이</th><th>부르는 곳</th></tr></thead><tbody>${rows}</tbody></table></div>`
+      : `<p class="help">새 보조 함수 없이 이미 있던 보조 함수를 부르도록 바꿨습니다.</p>`;
+    return `<details class="ga-item" ${i === 0 || state.q ? "open" : ""}><summary>
+      <div class="ga-name"><b class="mono">${esc(t.name)}</b><span class="mono-s">${esc(base(t.file))}:${t.line}</span></div>
+      ${bars(t.before.cc, t.after.cc)}
+      <span class="fix-row-num">CC ${fmt(t.before.cc)} → <b>${fmt(t.after.cc)}</b> · ${fmt(t.before.loc)} → ${fmt(t.after.loc)}줄</span>
+      <span>${delta(t.before.cc, t.after.cc)} <span class="tag new">보조 함수 ${hs.length}</span></span></summary><div class="ga-body">${body}</div></details>`;
+  }).join("");
+  return `<div class="page-head"><div><div class="eyebrow">수정 결과·검증 · ${run.round}라운드</div><h1 class="sum-h1">${h.title}</h1><p class="sub">${esc(h.sub)}</p>${caveats(d)}</div></div>
+  <div class="layout result-layout"><div>
+    <section class="card safety"><div class="safety-head"><b>검사·빌드·플레이</b><span class="help">AI 설명이 아니라 프로그램이 확인한 결과입니다.</span></div>${badgeHtml(run)}</section>
+    <section class="card fix"><div class="fix-head"><div class="eyebrow">원래 함수 → 새 보조 함수</div><span class="help">수정본을 다시 분석해 잰 값 · 위치는 수정본 기준</span></div>
+      <div class="find"><input id="q" type="search" placeholder="고칠 기능 찾기 (예: 방어구, volume, 메뉴)" value="${esc(state.q)}" aria-label="고칠 기능 찾기"></div>
+      <div class="ga-list">${items || `<p class="help">‘${esc(state.q)}’와 맞는 보조 함수가 없습니다.</p>`}</div></section>
+    <section class="card sec"><div class="h2">고친 파일 전후 비교</div><p class="help">이번 라운드에서 고친 ${d.files.length}개 파일만 묶었습니다. 복잡도는 사라지지 않고 이름 있는 함수로 나뉘므로, ‘가장 큰 덩어리’와 ‘가장 긴 함수’가 얼마나 줄었는지 봅니다.</p>${fileTable(d)}</section>
+    <details class="card sec"><summary class="h3" style="cursor:pointer">코드가 이렇게 바뀌었습니다 (지금 화면의 전후 코드 비교 그대로)</summary><p class="help">함수 이름 탭 + 왼쪽 원래 코드 / 오른쪽 고친 뒤.</p></details>
+    ${wholeCard(run)}
+  </div>${gameCard()}</div>`;
+}
+
+// ================= B안
+function viewB(run, d) {
+  const h = headline(run, d);
+  const done = state.stat === "done";
+  const re = run.checks.reanalyzed || {};
+  const steps = [["검사 규칙", true, "AI 답을 규칙으로 검사"], ["원본 보존", run.checks.original_preserved, "사본에만 적용"], ["다시 분석", re.state === "complete", `${re.analyzed_files}개 파일`],
+    ["빌드", done, done ? "성공" : ""], ["동작 비교", done, done ? "원본과 같음" : ""], ["직접 플레이", done, done ? "정상" : ""]];
+  const next = steps.findIndex(s => !s[1]);
+  const pipe = steps.map(([t, ok, sm], i) => `<div class="pipe-step ${ok ? "is-ok" : i === next ? "is-next" : ""}"><i>${ok ? "✓" : i + 1}</i><b>${t}</b><small>${esc(sm || (i === next ? "다음 단계" : "기다리는 중"))}</small>
+    ${i === next && t === "빌드" ? `<button class="btn primary sm" type="button">게임 준비하고 실행 ▶</button>` : ""}</div>`).join("");
+  const big = d.targets.reduce((m, t) => t.before.cc > m.before.cc ? t : m, d.targets[0]);
+  const kpis = `<div class="kpis">
+    <div class="kpi"><span>고친 파일</span><b>${d.files.length}<small>개</small></b></div>
+    <div class="kpi"><span>나눈 큰 함수</span><b>${d.targets.length}<small>개</small></b></div>
+    <div class="kpi"><span>새 보조 함수 (평균 CC · 길이)</span><b>${d.helpers.length}<small>개 · ${d.helpers.length ? `${fmt1(d.hcc / d.helpers.length)} · ${Math.round(d.hloc / d.helpers.length)}줄` : "-"}</small></b></div>
+    <div class="kpi"><span>큰 함수 ${d.targets.length}개 복잡도 합</span><b><s>${fmt(d.tcc[0])} →</s>${fmt(d.tcc[1])}<small>${pct(d.tcc[0], d.tcc[1])}</small></b></div></div>`;
+  // bead map: width ∝ CC on one scale for every row
+  const W = Math.max(...d.targets.map(t => t.before.cc));
+  const px = cc => `${(100 * cc / W).toFixed(2)}%`;
+  const fileBlocks = d.files.map(f => {
+    const rows = f.targets.map(t => {
+      const hs = f.helpers.filter(x => x.parent === t.name).sort((a, b) => b.cc - a.cc);
+      const beads = hs.map(x => `<button type="button" class="bead ${ccCls(x.cc)} ${state.pick === x.name ? "on" : ""}" data-pick="${esc(x.name)}" title="${esc(x.name)} · CC ${x.cc} · ${x.loc}줄" style="width:calc(${px(x.cc)} - 2px);min-width:4px"></button>`).join("");
+      return `<div class="bead-row"><div class="nm"><b class="mono">${esc(t.name)}</b><small>${fmt(t.before.loc)} → ${fmt(t.after.loc)}줄 · 보조 함수 ${hs.length}개</small></div>
+        <div class="bead-track"><div class="bead-ghost" style="width:${px(t.before.cc)}"></div><div class="bead-line" style="width:100%"><div class="bead-main" style="width:${px(t.after.cc)}"></div>${beads}</div></div>
+        <div class="bead-num">CC ${fmt(t.before.cc)} → <b>${fmt(t.after.cc)}</b> ${delta(t.before.cc, t.after.cc)}</div></div>`;
+    }).join("");
+    return `<div class="bead-file"><span class="mono-s">${esc(f.path)}</span>${rows}</div>`;
+  }).join("");
+  const pick = d.helpers.find(x => x.name === state.pick) || d.helpers.find(x => /Armor/.test(x.name)) || d.helpers[0];
+  const tp = pick && d.targets.find(t => t.name === pick.parent && t.file === pick.file);
+  const detail = pick ? `<div class="mk-detail"><span class="eyebrow">이 기능을 고칠 땐 여기부터</span><div><b class="mono">${esc(pick.name)}</b> <span class="cc-pill ${ccCls(pick.cc)}">CC ${pick.cc}</span> · ${pick.loc}줄 · <span class="mono-s">${esc(base(pick.file))}:${pick.line}</span></div>
+    <p class="help">${esc(tp.name)}(지금 ${fmt(tp.after.loc)}줄)의 ${pick.call_line}행에서 부릅니다.${pick.old ? ` 정리 전에는 ${esc(tp.name)}(${fmt(tp.before.loc)}줄) 안 ${pick.old[0]}행 근처에 있던 코드입니다.` : ""}</p></div>` : "";
+  const mult = d.files.map(f => `<div class="kpi"><span class="mono-s">${esc(base(f.path))}</span><b><s>${fmt(f.before.max_cc)} →</s>${fmt(f.after.max_cc)}<small>가장 복잡한 함수 CC</small></b>
+    <div class="help" style="margin-top:2px">가장 긴 함수 ${fmt(f.before.longest)} → ${fmt(f.after.longest)}줄 · Σ(CC−10) ${fmt(f.before.excess)} → ${fmt(f.after.excess)}</div></div>`).join("");
+  return `<section class="card b-hero"><div><div class="eyebrow">수정 결과·검증 · ${run.round}라운드</div><h1 class="sum-h1">${h.title}</h1><p class="sub">${esc(h.sub)}</p>${caveats(d)}</div>${kpis}</section>
+    <section class="card pipe" aria-label="검사·빌드·플레이">${pipe}</section>
+    <section class="card sec"><div class="h2">복잡도가 어디로 나뉘었나</div>
+      <p class="help">파란 막대는 원래 함수에 남은 복잡도, 점선은 정리 전 크기, 이어진 구슬은 새 보조 함수입니다(폭 = CC, 모든 줄이 같은 눈금). 구슬을 누르면 위치가 나옵니다.</p>
+      <div class="mk-legend"><span><i style="background:var(--brand)"></i>원래 함수(정리 후)</span><span><i style="border:1.5px dashed var(--edge)"></i>정리 전</span><span><i style="background:var(--gA)"></i>보조 함수 CC 20 이하</span><span><i style="background:var(--gC)"></i>21~50</span><span><i style="background:var(--gD)"></i>50 초과</span></div>
+      ${fileBlocks}${detail}</section>
+    <section class="card sec"><div class="h2">고친 파일 전후</div><div class="mult">${mult}</div>
+      <details class="parts"><summary>표로 보기</summary>${fileTable(d)}</details></section>
+    ${wholeCard(run)}`;
+}
+
+// ================= C안
+function viewC(run, d) {
+  const h = headline(run, d);
+  const pool = d.helpers.filter(x => matches(x, state.q));
+  const pick = pool.find(x => x.name === state.pick) || pool.find(x => /Armor/.test(x.name)) || pool[0];
+  const groups = d.targets.map(t => {
+    const hs = pool.filter(x => x.parent === t.name && x.file === t.file);
+    return hs.length ? `<span class="grp">${esc(t.name)}</span>${hs.map(x => `<button type="button" class="chip ${pick && x.name === pick.name ? "on" : ""}" data-pick="${esc(x.name)}">${esc(words(x.name))}</button>`).join("")}` : "";
+  }).join("");
+  let vs = `<p class="help">‘${esc(state.q)}’와 맞는 보조 함수가 없습니다.</p>`;
+  if (pick) {
+    const t = d.targets.find(x => x.name === pick.parent && x.file === pick.file);
+    const H = 230, start = t.old_line, len = t.before.loc;
+    const top = pick.old ? (H * (pick.old[0] - start) / len) : H * .45, hh = pick.old ? Math.max(4, H * (pick.old[1] - pick.old[0] + 1) / len) : 6;
+    const smallH = Math.max(14, H * pick.loc / len);
+    vs = `<div class="vs">
+      <div class="vs-side"><div><div class="strip" style="height:${H}px"><span style="top:${top}px;height:${hh}px"></span></div><div class="strip-cap">${fmt(len)}줄</div></div>
+        <div><h4>정리 전</h4><div class="vs-big mono">${esc(t.name)} 안</div><p><b>${esc(base(pick.file))}</b> · 함수 전체 <b>${fmt(len)}줄</b> · 복잡도 <b>${fmt(t.before.cc)}</b></p>
+        <p>${pick.old ? `이 기능 코드는 ${start}행에서 시작하는 함수의 <b>${pick.old[0]}행 근처</b>(시작에서 ${fmt(pick.old[0] - start)}줄 아래)에 섞여 있습니다.` : "이 기능 코드가 함수 안 어딘가에 섞여 있습니다."}</p>
+        <p class="hint">기능을 고치려면 이 함수의 분기와 지역 변수를 함께 읽어야 합니다.</p></div></div>
+      <div class="vs-arrow" aria-hidden="true">→</div>
+      <div class="vs-side after"><div><div class="strip" style="height:${smallH}px"><span></span></div><div class="strip-cap">${pick.loc}줄</div></div>
+        <div><h4>정리 후</h4><div class="vs-big mono">${esc(pick.name)}</div><p><b>${esc(base(pick.file))}:${pick.line}</b> · <b>${pick.loc}줄</b> · 복잡도 <b>${pick.cc}</b></p>
+        <p>${esc(t.name)}의 ${pick.call_line}행에서 한 줄로 부릅니다: <span class="mono-s">${esc(pick.name)}(…);</span></p>
+        <p class="hint">${esc(words(pick.name))}${pick.comment ? ` · 코드 주석 “${esc(pick.comment)}”` : ""}</p></div></div></div>
+      <div class="c-foot">이 기능을 고칠 땐 ${esc(base(pick.file))} ${pick.line}행부터 · 읽을 함수 ${fmt(len)}줄 → ${pick.loc}줄
+        <small>리팩토링은 동작을 바꾸지 않습니다. 버그를 고친 것이 아니라 다음 변경의 출발점을 분명하게 만든 것입니다.</small></div>`;
+  }
+  const list = d.targets.map(t => {
+    const n = d.helpers.filter(x => x.parent === t.name && x.file === t.file).length;
+    return `<li><b class="mono">${esc(t.name)}</b> <span class="mono-s">${esc(base(t.file))}</span><div>CC ${fmt(t.before.cc)} → <b>${fmt(t.after.cc)}</b> · ${fmt(t.before.loc)} → ${fmt(t.after.loc)}줄 ${delta(t.before.cc, t.after.cc)}</div><div class="hint">보조 함수 ${n}개</div></li>`;
+  }).join("");
+  return `<div class="c-top"><div><div class="eyebrow">수정 결과·검증 · ${run.round}라운드</div><h1 class="sum-h1">${h.title}</h1><p class="sub">${esc(h.sub)}</p>${caveats(d)}</div>
+    <button class="btn primary" type="button">${state.stat === "done" ? "수정된 게임 실행 ▶" : "수정된 게임 준비하고 실행 ▶"}</button></div>
+    <section class="card safety">${badgeHtml(run)}</section>
+    <section class="card c-hero"><div class="eyebrow">이 기능을 고칠 땐 여기부터</div><div class="h2" style="margin-top:4px">어떤 기능을 고치시겠어요?</div>
+      <div class="find"><input id="q" type="search" placeholder="기능 찾기 (예: 방어구, 음량, menu)" value="${esc(state.q)}" aria-label="기능 찾기"></div>
+      <div class="c-chips">${groups}</div>${vs}</section>
+    <section class="card sec"><div class="h2">고친 함수 ${d.targets.length}개</div><ul class="c-list">${list}</ul></section>
+    <section class="card sec"><div class="h2">고친 파일 전후 비교</div>${fileTable(d)}</section>
+    ${wholeCard(run)}`;
+}
+
+function render() {
+  const run = RUNS[state.run], d = derive(run);
+  document.documentElement.dataset.theme = state.theme || "light";
+  $("#optNote").innerHTML = `<b>${NOTES[state.opt][0]}</b>${esc(NOTES[state.opt][1])}`;
+  const focus = document.activeElement?.id === "q";
+  $("#root").innerHTML = {A: viewA, B: viewB, C: viewC}[state.opt](run, d);
+  const q = $("#q");
+  if (q) { q.addEventListener("input", e => { state.q = e.target.value; render(); }); if (focus) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
+  document.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => { state.pick = b.dataset.pick; render(); }));
+}
+for (const [id, key] of [["opt", "opt"], ["run", "run"], ["stat", "stat"], ["theme", "theme"]]) {
+  document.querySelectorAll(`#${id} button`).forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle("on", x === b));
+    state[key] = key === "run" ? Number(b.dataset.v) : b.dataset.v;
+    if (key === "run") { state.pick = null; state.q = ""; }
+    render();
+  }));
+}
+render();
+</script>
+</body>
+</html>

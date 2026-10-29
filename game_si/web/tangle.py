@@ -8,7 +8,10 @@ BASE_CC = 10
 COMPONENTS = [
     ('cycle_units', '순환 고리에 묶인 단위'),
     ('links', '단위 사이 연결'),
-    ('complex_functions', f'매우 복잡한 함수 (CC>{COMPLEX_CC})'),
+    # How far the complex functions go past CC 20, not how many there are: a count treats CC 375 and CC 21
+    # alike, so splitting one huge function into several CC 21–60 pieces raised it (OpenTyrian 2026-10-26: 56 → 65
+    # while the total past 20 fell 3,967 → 3,403). Changed 2026-10-29 after the rehearsal.
+    ('complex_excess', f'매우 복잡한 부분 Σ(CC−{COMPLEX_CC})'),
     ('excess_complexity', f'초과 복잡도 Σ(CC−{BASE_CC})'),
     ('global_access', '전역 변수 접근'),
 ]
@@ -31,7 +34,7 @@ def measure(metrics: dict, scoring: dict | None = None) -> dict:
     values = {
         'cycle_units': sum(len(s) for s in nx.strongly_connected_components(g) if len(s) > 1),
         'links': g.number_of_edges(),
-        'complex_functions': sum(1 for cc in ccs if cc > COMPLEX_CC),
+        'complex_excess': sum(max(0, cc - COMPLEX_CC) for cc in ccs),
         'excess_complexity': sum(max(0, cc - BASE_CC) for cc in ccs),
         'global_access': int(sum(c.get('global_state') or 0 for c in metrics.get('classes', []))),
     }

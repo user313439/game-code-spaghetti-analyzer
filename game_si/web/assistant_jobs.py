@@ -905,6 +905,12 @@ class AssistantJobs:
             command = [sys.executable, '-u', '-m', 'game_si', 'analyze', str(source),
                        '--lang', options.get('lang', 'auto'), '--out', str(output),
                        '--project-name', self.manager.get(ident)['name'] + ' · AI 수정본']
+            # Game-loop entries stay those of the first analysis, so a new helper's name cannot move the scores.
+            first = json.loads((self.folder(ident) / 'result' / 'metrics.json').read_text('utf8'))
+            entries = folder / 'loop_entries.json'
+            entries.write_text(json.dumps(sorted([m['file_path'], m['name']] for m in first.get('methods', [])
+                                                 if m.get('is_game_loop_entry'))), encoding='utf8')
+            command += ['--loop-entries', str(entries)]
             # Precise (Clang) analysis: the same compile settings, with paths moved to this copy.
             if options.get('backend') == 'clang':
                 try:
