@@ -625,7 +625,7 @@ class AssistantJobs:
     def _ask_deep(self, ident, body, run, prompt):
         with assistant.owned_by(('assistant', ident, run)):
             return assistant.call_provider(body['service'], body['mode'], prompt, body.get('model', ''), body.get('api_key', ''),
-                                           guidance=assistant.GUIDANCE + assistant.DEEP_GUIDANCE, timeout=assistant.DEEP_TIMEOUT,
+                                           schema=assistant.DEEP_SCHEMA, guidance=assistant.GUIDANCE + assistant.DEEP_GUIDANCE, timeout=assistant.DEEP_TIMEOUT,
                                            max_output=assistant.DEEP_OUTPUT_TOKENS, **assistant.connection_extras(body))
 
     def _continue_deep(self, ident, key, body, run, unit, path, own, methods, advice, targets, files, data, started):
