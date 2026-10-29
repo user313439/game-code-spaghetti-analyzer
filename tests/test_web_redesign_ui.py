@@ -429,7 +429,7 @@ assert.equal(stepAdvice("gemini", "refactor").pick, "flash");
 assert.equal(stepAdvice("gemini", "prescription").pick, "pro");
 const codex = ["gpt-6.1-sol", "gpt-6-astra", "gpt-6-luna"];
 const fix = stepAdvice("codex", "refactor", codex), plan = stepAdvice("codex", "prescription", codex);
-assert.equal(fix.pick, "gpt-6-luna"); assert.equal(fix.auto, false); assert.match(fix.text, /gpt-6.1-sol/);
+assert.equal(fix.pick, "gpt-6.1-sol"); assert.notEqual(fix.auto, false); assert.match(fix.text, /gpt-6-luna는 .*권하지 않습니다/);
 assert.equal(plan.pick, "gpt-6-astra"); assert.equal(plan.auto, false);
 assert.equal(stepAdvice("codex", "refactor", []).pick, undefined);   // unknown models: nothing named
 assert.equal(stepAdvice("compatible", "refactor"), null);

@@ -238,6 +238,21 @@ def test_a_turned_down_reply_is_asked_once_more_with_the_reason(tmp_path, monkey
     assert '한 번 더' in worker['note'] and worker['retried'] is True
 
 
+def test_a_change_explained_without_edits_is_asked_again_for_the_code_written_first(tmp_path, monkeypatch):
+    # Real case 2026-10-29 (Codex gpt-6-luna): decision=refactor with the change described, and edits=[].
+    asked, schemas = [], []
+
+    def provider(service, mode, prompt, *a, **kw):
+        payload = json.loads(prompt)
+        asked.append(payload)
+        schemas.append(list(kw['schema']['properties']))
+        return reply('a.c') if payload.get('retry') else dict(reply('a.c'), edits=[])
+    app, ident, state = deep_run(tmp_path, monkeypatch, provider)
+    assert state['workers'][0]['state'] == 'done' and len(asked) == 2
+    assert '실제 코드 편집(edits)을 보내지 않았' in asked[1]['retry']['reason']
+    assert schemas[0][0] == 'edits'   # the code first, then the explanation of it
+
+
 def test_the_program_asks_again_only_once_and_never_after_a_timeout(tmp_path, monkeypatch):
     import subprocess
     asked = []
@@ -447,6 +462,132 @@ def test_a_helper_called_through_another_new_helper_is_accepted(tmp_path):
     data['file_reviews'][0]['change'] += ' unused_helper도 둡니다.'
     with pytest.raises(ValueError):   # a helper nothing reaches is still refused
         assistant_context.validate_preview_targets(data, methods, assistant.preview_changes(tmp_path, data['edits']))
+
+
+SWITCH = ('        switch (kind)\n        {\n            case 1:\n                return 10;\n            case 2:\n                return 20;\n'
+          '            case 3:\n                return 30;\n            default:\n                return -1;\n        }\n')
+MANAGER = ('#include <cstdio>\n\nclass Manager\n{\npublic:\n    int Open(int kind)\n    {\n' + SWITCH + '    }\n\n'
+           '    int Close(int kind)\n    {\n        return kind;\n    }\n};\n')
+MANAGER_METHODS = [dict(file_path='m.cpp', name='Open', fqn='Manager.Open', start_line=6, end_line=19, cc=4, loc=14),
+                   dict(file_path='m.cpp', name='Close', fqn='Manager.Close', start_line=21, end_line=24, cc=1, loc=4)]
+
+
+def whole_body_moved(tmp_path, helper='    static int OpenByKind(int kind)\n    {\n' + SWITCH + '    }\n\n'):
+    (tmp_path / 'm.cpp').write_text(MANAGER, encoding='utf8', newline='')
+    data = reply('a.c')
+    data['file_reviews'][0].update(path='m.cpp', targets=['Open'], change='switch 전체를 정적 보조 함수 OpenByKind로 옮깁니다.',
+                                   evidence=['새 보조 함수 OpenByKind'])
+    data['edits'] = [dict(path='m.cpp', old=SWITCH, new='        return OpenByKind(kind);\n'),
+                     dict(path='m.cpp', old='    int Open(int kind)\n    {', new=helper + '    int Open(int kind)\n    {')]
+    return data
+
+
+def test_a_whole_body_moved_to_a_helper_is_read_as_whole_functions(tmp_path):
+    # Real case 2026-10-29 (Codex, OpenRCT2 WindowManager.cpp): the whole switch of OpenWindow moved into a
+    # helper. The line diff paired the switch with the helper, so the target's new head read as code put
+    # outside every function; compared as whole functions the change holds.
+    data = whole_body_moved(tmp_path)
+    preview = assistant.preview_changes(tmp_path, data['edits'])
+    candidates, groups = assistant_context.validate_target_methods(data, MANAGER_METHODS)['m.cpp']
+    with pytest.raises(ValueError, match='대상 함수 밖의 추가 코드'):   # what the line diff alone says
+        assistant_context._check_by_lines(dict(preview['files'][0]), candidates, groups, {0}, data['file_reviews'][0]['change'])
+    assistant_context.validate_preview_targets(data, MANAGER_METHODS, preview)
+    assert preview['files'][0]['added_helpers'] == ['OpenByKind']
+
+
+@pytest.mark.parametrize('case', ['outside', 'other_function', 'not_static', 'moved_function', 'head'])
+def test_whole_functions_still_refuse_what_the_rules_forbid(tmp_path, case):
+    changed = {'helper': '    int OpenByKind(int kind)\n    {\n' + SWITCH + '    }\n\n'} if case == 'not_static' else {}
+    data = whole_body_moved(tmp_path, **changed)
+    if case == 'moved_function':   # an untouched function put somewhere else
+        close = '    int Close(int kind)\n    {\n        return kind;\n    }\n'
+        data['edits'] += [dict(path='m.cpp', old='\n' + close, new=''), dict(path='m.cpp', old='public:\n', new='public:\n' + close + '\n')]
+    if case == 'outside':   # anything else changed outside the functions
+        data['edits'].append(dict(path='m.cpp', old='#include <cstdio>\n', new='#include <cstdlib>\n'))
+    if case == 'other_function':   # a function that is not a declared target
+        data['edits'].append(dict(path='m.cpp', old='        return kind;\n', new='        return kind + 1;\n'))
+    if case == 'head':   # the target's return type, not only its body
+        data['edits'].append(dict(path='m.cpp', old='    int Open(int kind)\n    {\n        return', new='    long Open(int kind)\n    {\n        return'))
+    with pytest.raises(ValueError):
+        assistant_context.validate_preview_targets(data, MANAGER_METHODS, assistant.preview_changes(tmp_path, data['edits']))
+
+
+def tree_verdict(tmp_path, name, text, edits, methods, targets, change='블록을 정적 보조 함수 H로 옮깁니다.'):
+    (tmp_path / name).write_text(text, encoding='utf8', newline='')
+    data = reply('a.c')
+    data['file_reviews'][0].update(path=name, targets=targets, change=change, evidence=['보조 함수 H'])
+    data['edits'] = edits
+    preview = assistant.preview_changes(tmp_path, edits)
+    candidates, groups = assistant_context.validate_target_methods(data, methods)[name]
+    verdict = assistant_context._check_by_tree(dict(preview['files'][0]), candidates, groups, set().union(*groups), change)
+    return verdict, data, preview
+
+
+# Found by Codex's review 2026-10-29: changes the whole-function reading let through before it was tightened.
+SPLIT_IF = '#if A\n\tif (x)\n#else\n\tif (!x)\n#endif\n\t{\n\t\treturn 1;\n\t}\n'
+CASES = {
+    'if_line_in_other_function': (   # the #if lines were lost when the text was read with them blanked
+        'c.c', 'int Other(void)\n{\n#if OLD\n\treturn 10;\n#else\n\treturn 20;\n#endif\n}\n\nint T(int x)\n{\n' + SPLIT_IF + '\treturn 0;\n}\n',
+        [('#if OLD', '#if NEW'), ('\treturn 0;\n}', '\treturn 2;\n}')], [('Other', 1, 8), ('T', 10, 21)], ['T']),
+    'function_out_of_its_if': (
+        'c.c', '#ifdef A\nint T(void)\n{\n\treturn 1;\n}\n#endif\nint O(void)\n{\n\treturn 0;\n}\n',
+        [('int T(void)\n{\n\treturn 1;\n}\n#endif\n', '#endif\nint T(void)\n{\n\treturn 2;\n}\n')], [('T', 2, 5), ('O', 7, 10)], ['T']),
+    'method_to_another_access_section': (
+        'k.cpp', 'class K\n{\npublic:\n\tint O(void)\n\t{\n\t\treturn 0;\n\t}\nprivate:\n\tint T(void)\n\t{\n\t\treturn 1;\n\t}\n};\n',
+        [('public:\n\tint O(void)\n\t{\n\t\treturn 0;\n\t}\nprivate:\n', 'public:\nprivate:\n\tint O(void)\n\t{\n\t\treturn 0;\n\t}\n'),
+         ('return 1;', 'return 2;')], [('O', 4, 7), ('T', 9, 12)], ['T']),
+    'comment_outside_changed': (
+        'c.c', 'static int total;\n// old contract\nint T(int x)\n{\n\ttotal += x;\n\treturn total;\n}\n',
+        [('// old contract', '// new contract'), ('\treturn total;', '\treturn total + 1;')], [('T', 3, 7)], ['T']),
+}
+
+
+@pytest.mark.parametrize('case', CASES)
+def test_whole_functions_refuse_what_the_review_found(tmp_path, case):
+    name, text, edits, methods, targets = CASES[case]
+    edits = [dict(path=name, old=old, new=new) for old, new in edits]
+    methods = [dict(file_path=name, name=n, fqn=n, start_line=s, end_line=e, cc=2, loc=e - s + 1) for n, s, e in methods]
+    verdict, data, preview = tree_verdict(tmp_path, name, text, edits, methods, targets)
+    assert verdict is None
+    with pytest.raises(ValueError):
+        assistant_context.validate_preview_targets(data, methods, preview)
+
+
+@pytest.mark.parametrize('owner', ['A', 'B'])
+def test_a_csharp_helper_must_be_called_from_its_own_class(tmp_path, owner):
+    text = ('class A\n{\n    int T(int x)\n    {\n        if (x > 0) { return 1; }\n        return 0;\n    }\n}\n'
+            'class B\n{\n    int U(int y)\n    {\n        if (y > 0) { return 2; }\n        return 0;\n    }\n}\n')
+    helper = '    private int H(int x)\n    {\n        if (x > 0) { return 1; }\n        return 0;\n    }\n\n'
+    head = '    int T(int x)\n    {' if owner == 'A' else '    int U(int y)\n    {'
+    edits = [dict(path='x.cs', old='        if (x > 0) { return 1; }\n        return 0;\n', new='        return H(x);\n'),
+             dict(path='x.cs', old='if (y > 0)', new='if (y > 1)'), dict(path='x.cs', old=head, new=helper + head)]
+    methods = [dict(file_path='x.cs', name='T', fqn='A.T', start_line=3, end_line=7, cc=2, loc=5),
+               dict(file_path='x.cs', name='U', fqn='B.U', start_line=11, end_line=15, cc=2, loc=5)]
+    verdict, data, preview = tree_verdict(tmp_path, 'x.cs', text, edits, methods, ['T', 'U'])
+    if owner == 'A':   # called by A.T and put in A: a helper
+        assistant_context.validate_preview_targets(data, methods, preview)
+        assert preview['files'][0]['added_helpers'] == ['H']
+    else:              # put in B, where nothing calls it
+        with pytest.raises(ValueError):
+            assistant_context.validate_preview_targets(data, methods, preview)
+
+
+def test_a_target_renamed_by_a_macro_is_known_by_its_lines(tmp_path):
+    # Real case 2026-10-27 (OpenTyrian opentyr.c): '#define main SDL_main', so the analysis lists SDL_main while
+    # the text reads main, and helpers called from main were taken for helpers nothing calls.
+    text = ('#define main SDL_main\nstatic int total;\n\nint main(int argc, char *argv[])\n{\n\tif (argc > 1) {\n\t\ttotal += 1;\n\t}\n'
+            '\tif (argc > 2) {\n\t\ttotal += 2;\n\t}\n\treturn total;\n}\n')
+    (tmp_path / 'o.c').write_text(text, encoding='utf8', newline='')
+    block = text[text.index('\tif ('):text.index('\treturn')]
+    data = reply('a.c')
+    data['file_reviews'][0].update(path='o.c', targets=['SDL_main'], change='인수 검사를 정적 보조 함수 add_args로 옮깁니다.')
+    data['edits'] = [dict(path='o.c', old=block, new='\tadd_args(argc);\n'),
+                     dict(path='o.c', old='int main(int argc, char *argv[])\n{',
+                          new='static void add_args(int argc)\n{\n' + block + '}\n\nint main(int argc, char *argv[])\n{')]
+    methods = [dict(file_path='o.c', name='SDL_main', fqn='o.SDL_main', start_line=4, end_line=13, cc=3, loc=10)]
+    preview = assistant.preview_changes(tmp_path, data['edits'])
+    assistant_context.validate_preview_targets(data, methods, preview)
+    assert preview['files'][0]['added_helpers'] == ['add_args']
 
 
 def test_a_helper_with_an_if_split_by_preprocessor_lines_is_accepted(tmp_path):

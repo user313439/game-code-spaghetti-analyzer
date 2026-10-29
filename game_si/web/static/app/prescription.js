@@ -27,10 +27,12 @@ export function stepAdvice(service, step, models = []) {
     ? {pick: "flash", text: "변경안은 flash를 권합니다. 규칙대로 함수를 나누는 일이라 가벼운 모델로 충분하고 사용 한도를 덜 씁니다. 비워 두면 Gemini CLI가 모델을 자동으로 고릅니다."}
     : {pick: "pro", text: "처방은 pro(상위 모델)를 권합니다. 구조 전체를 읽고 판단하는 단계이고 답이 짧습니다. 비워 두면 Gemini CLI가 모델을 자동으로 고릅니다."};
   if (service === "codex") {
-    const base = models[0], top = find(/astra/), light = find(/luna/);
+    const base = models[0], top = find(/astra/), light = find(/luna/), work = find(/sol/) || base;
     const named = base ? `(${base})` : "";
+    // Measured 2026-10-29 on OpenTyrian (4 files, one pass): sol changed all 4 (90–150 lines moved each),
+    // luna left 2 unchanged and moved about 60 lines in the others, with no fewer tokens.
     return step === "refactor"
-      ? {pick: light, auto: false, text: `Codex 기본 모델${named}은 이미 코딩용 주력 모델이라 비워 둬도 됩니다.${light ? ` 사용 한도를 더 아끼려면 ${light}를 고를 수 있지만, 큰 함수에서는 검사에 걸려 거절이 늘 수 있습니다.` : ""}`}
+      ? {pick: work, text: `변경안은 ${work || "Codex 기본 모델"}을 권합니다. 코딩용 주력 모델이라 큰 함수도 검사를 통과하게 나눕니다.${light ? ` ${light}는 사용 한도를 아끼려고 골라도 큰 함수는 고치지 않고 끝나거나 조금만 옮기는 경우가 많아 권하지 않습니다.` : ""}`}
       : {pick: top, auto: false, text: `처방은 비워 두면 Codex 기본 모델${named}로 받습니다.${top ? ` 더 깊게 검토하려면 ${top}(상위 모델, 사용 한도를 더 씀)을 고를 수 있습니다.` : ""}`};
   }
   return null;

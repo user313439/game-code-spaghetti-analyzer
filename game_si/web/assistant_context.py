@@ -176,6 +176,7 @@ def _cs_functions(path, text):
             if function is not None and function.type=='generic_name':function=function.named_children[0]
             if function is not None and function.type=='identifier':calls.add(function.text.decode('utf8'))
         functions['.'.join(owner)+'::'+name+' '.join(signature.split())]=dict(name=name,calls=calls,source=node.text,owner=owner,
+            lines=(node.start_point[0]+1,node.end_point[0]+1),
             valid=not node.has_error or _readable(path,CS_WRAP+node.text.decode('utf8')+'\n}\n') is not None,
             helper=_cs_helper_name(node) is not None)
     return functions
@@ -201,7 +202,7 @@ def _ast_functions(path,text):
                 function=child.child_by_field_name('function')
                 if function is not None and function.type in {'identifier','qualified_identifier'}:
                     calls.add(function.text.decode('utf8').rsplit('::',1)[-1])
-        functions[identity]=dict(name=_function_name(node,source),calls=calls,owner=None,
+        functions[identity]=dict(name=_function_name(node,source),calls=calls,owner=None,lines=(node.start_point[0]+1,node.end_point[0]+1),
             source=node.text,valid=not node.has_error or _readable(path,node.text.decode('utf8')) is not None,
             helper=any(child.type=='storage_class_specifier' and child.text==b'static' for child in node.children))
     return functions
@@ -216,23 +217,30 @@ def _new_ast_helpers(item, candidates, declared, explanation):
     before=_ast_functions(item['path'],item['before'])
     after=_ast_functions(item['path'],item['after'])
     targets={candidates[index].get('name') for index in declared}
+    # A target is known by its name or by its lines: a macro may rename it (OpenTyrian's '#define main SDL_main':
+    # the analysis lists SDL_main, the text reads main).
+    spans=[(int(candidates[index].get('start_line') or 0),int(candidates[index].get('end_line') or 0)) for index in declared]
+    on_target=lambda row:row['name'] in targets or any(start<=row['lines'][1] and end>=row['lines'][0] for start,end in spans)
     changed=[row for identity,row in after.items()
-             if row['name'] in targets and identity in before and row['source']!=before[identity]['source']]
-    called=set().union(*(row['calls'] for row in changed))
-    owners={row['owner'] for row in changed}   # C#: the classes of the changed targets (C/C++: None)
+             if identity in before and row['source']!=before[identity]['source'] and on_target(before[identity])]
+    # What the changed targets call, by class (C#: a helper must be called from its own class; C/C++: one owner, None).
+    called={}
+    for row in changed:called.setdefault(row['owner'],set()).update(row['calls'])
     # A later pass may move a helper's call into another new helper: reached through new helpers counts.
     new=[row for identity,row in after.items() if identity not in before];grown=True
     while grown:
         grown=False
         for row in new:
-            if row['name'] in called and not row['calls']<=called:called|=row['calls'];grown=True
+            reached=called.get(row['owner'],set())
+            if row['name'] in reached and not row['calls']<=reached:reached|=row['calls'];grown=True
     old_names={row['name'] for row in before.values()}
     helpers=[]
     for identity,row in after.items():
         if identity in before:continue
         name=row['name']
-        if (not name or not row['valid'] or not row['helper'] or name in old_names or row['owner'] not in owners
-                or not re.search(r'(?<![A-Za-z0-9_])'+re.escape(name)+r'(?![A-Za-z0-9_])',explanation) or name not in called):
+        if (not name or not row['valid'] or not row['helper'] or name in old_names
+                or not re.search(r'(?<![A-Za-z0-9_])'+re.escape(name)+r'(?![A-Za-z0-9_])',explanation)
+                or name not in called.get(row['owner'],set())):
             raise ValueError(_helper_rule(item['path']))
         helpers.append(name)
     return helpers
@@ -266,6 +274,182 @@ def _function_sources(path, text):
 def _lines(text):
     """Lines split on '\\n' only (with ends), the way the analyzer numbers them."""
     return re.findall(r'[^\n]*\n|[^\n]+$',text)
+
+
+def _check_by_lines(item, candidates, groups, target_indexes, explanation):
+    """A target file's change read as a line diff: every changed line inside a declared target, every
+    insertion outside functions a new helper the targets call. Returns the helpers added."""
+    before=_lines(item['before'])
+    after=_lines(item['after'])
+    spans=[(int(m.get('start_line') or 0),int(m.get('end_line') or 0)) for m in candidates]
+    touched=set();outside=[];changed_text=[]
+    for tag,i1,i2,j1,j2 in difflib.SequenceMatcher(None,before,after,autojunk=False).get_opcodes():
+        if tag=='equal':continue
+        if tag=='insert':
+            added=after[j1:j2]
+            inside=lambda at:{index for index,(start,end) in enumerate(spans) if start-1<at<end}
+            # A diff may line up a new function's closing lines with the previous function's '}' and blank
+            # line, so the same insertion shows up inside that function. Slide it down over lines it equals
+            # (the result is identical) to the first place outside every function, if there is one.
+            at,slid=i1,added
+            while inside(at) and at<len(before) and slid and slid[0]==before[at]:
+                slid=slid[1:]+[before[at]];at+=1
+            if not inside(at):i1,added=at,slid
+            # The function before may be a helper of an earlier pass (no measured lines) that gave its
+            # closing lines the same way: slide on while outside, to where the text reads as whole functions.
+            at,slid=i1,added
+            while (not inside(at) and at<len(before) and slid and slid[0]==before[at]
+                   and not _inserted_helpers(item['path'],''.join(slid))):
+                slid=slid[1:]+[before[at]];at+=1
+            if not inside(at) and _inserted_helpers(item['path'],''.join(slid)):i1,added=at,slid
+            current=inside(i1)
+            if not current:outside.append(''.join(added));continue
+        else:
+            current={index for index,(start,end) in enumerate(spans) if start<=i2 and end>i1}
+            if any(not any(start<=line<=end for start,end in spans) for line in range(i1+1,i2+1)):
+                raise ValueError('선언한 대상 함수 밖의 기존 코드 변경은 승인할 수 없습니다.')
+        if current-target_indexes:
+            raise ValueError('실제 변경 함수와 파일별 수정 대상이 일치하지 않습니다.')
+        touched.update(current)
+        changed_text.append(''.join(after[j1:j2]))
+    if not touched or any(not group.intersection(touched) for group in groups):
+        raise ValueError('선언한 대상 함수의 실제 변경을 확인할 수 없습니다.')
+    helpers=_new_ast_helpers(item,candidates,target_indexes,explanation)
+    csharp=_csharp(item['path'])
+    for text in outside:
+        names=_inserted_helpers(item['path'],text)
+        # C#: a method read from the whole file in the target's class (a piece alone reads in any class).
+        if (not names or any(name in {m.get('name') for m in candidates}
+                or name not in explanation
+                or name not in helpers and (csharp or not re.search(r'\b'+re.escape(name)+r'\s*\(',''.join(changed_text))) for name in names)):
+            raise ValueError('대상 메서드 밖의 추가 코드는 같은 클래스에 넣은, 설명과 호출이 확인된 새 private 보조 메서드만 허용합니다.' if csharp
+                             else '대상 함수 밖의 추가 코드는 설명과 호출이 확인된 새 정적 보조 함수만 허용합니다.')
+        helpers.extend(names)
+    return helpers
+
+
+def _definitions(path, root):
+    """(node, identity) of every function definition (C/C++, outermost) or method (C#) in document order;
+    the identity is the one _ast_functions keys them by."""
+    if _csharp(path):
+        found=[]
+        for node,owner in _cs_methods(root):
+            signature=''.join((node.child_by_field_name(field).text.decode('utf8') if node.child_by_field_name(field) else '')
+                              for field in ['type_parameters','parameters'])
+            found.append((node,'.'.join(owner)+'::'+_cs_name(node)+' '.join(signature.split())))
+        return found
+    found=[];pending=[root]
+    while pending:
+        node=pending.pop()
+        if node.type=='function_definition' and node.child_by_field_name('declarator') is not None:
+            found.append((node,' '.join(node.child_by_field_name('declarator').text.decode('utf8').split())));continue
+        pending.extend(reversed(node.named_children))
+    return found
+
+
+SCOPES={'class_specifier','struct_specifier','union_specifier','namespace_definition'}|CS_TYPES
+
+
+def _point_text(lines, start, end):
+    """The original text between two tree-sitter points (row, byte column) of '\\n'-split UTF-8 lines. Read
+    from the text itself, not the node: a tree read with its #if lines blanked has lost them."""
+    (r1,c1),(r2,c2)=start,end
+    return lines[r1][c1:c2] if r1==r2 else b'\n'.join([lines[r1][c1:]]+lines[r1+1:r2]+[lines[r2][:c2]])
+
+
+def _conditionals_at(lines, row):
+    """The #if branches in force at a row, outermost first (each as its #if line and later #elif/#else lines)."""
+    stack=[]
+    for line in lines[:row]:
+        found=CONDITIONAL.match(line.decode('utf8','replace'))
+        if not found:continue
+        if found.group(1).startswith('if'):stack.append((line.strip(),))
+        elif found.group(1)=='endif':stack=stack[:-1]
+        elif stack:stack[-1]+=(line.strip(),)
+    return tuple(stack)
+
+
+def _scope(node, lines):
+    """Where a function sits: its enclosing classes and namespaces, the access section it is under (C++)
+    and the #if branches in force."""
+    owners=[];parent=node.parent
+    while parent is not None:
+        if parent.type in SCOPES:
+            name=parent.child_by_field_name('name');owners.append(name.text if name is not None else b'')
+        parent=parent.parent
+    access=node.prev_named_sibling
+    while access is not None and access.type!='access_specifier':access=access.prev_named_sibling
+    return tuple(reversed(owners)),access.text if access is not None else b'',_conditionals_at(lines,node.start_point[0])
+
+
+def _layout(path, text):
+    """A text in order as code lines outside functions and comments (trailing spaces dropped), comments and a
+    mark per function; and its functions by identity (original text, the head before the body and the part
+    after it, lines, where it sits). None when it does not read cleanly or two functions read alike (#if/#else)."""
+    root=_readable(path,text)
+    if root is None:return None
+    lines=[line.encode('utf8') for line in text.split('\n')]
+    definitions=_definitions(path,root)
+    skip={(node.start_byte,node.end_byte) for node,_ in definitions}
+    comments=[];pending=[root]
+    while pending:
+        node=pending.pop()
+        if (node.start_byte,node.end_byte) in skip:continue
+        if node.type=='comment':comments.append(node)
+        pending.extend(node.children)
+    blank=list(lines)
+    for node in [node for node,_ in definitions]+comments:   # spaces of the same length: later columns stay right
+        (r1,c1),(r2,c2)=node.start_point,node.end_point
+        for row in range(r1,r2+1):
+            start,end=c1 if row==r1 else 0,c2 if row==r2 else len(blank[row])
+            blank[row]=blank[row][:start]+b' '*(end-start)+blank[row][end:]
+    entries=[((row,len(line)-len(line.lstrip())),('code',line.rstrip())) for row,line in enumerate(blank) if line.strip()]
+    entries+=[(node.start_point,('comment',_point_text(lines,node.start_point,node.end_point))) for node in comments]
+    entries+=[(node.start_point,('function',identity)) for node,identity in definitions]
+    functions={}
+    for node,identity in definitions:
+        body=node.child_by_field_name('body')
+        if body is None or identity in functions:return None
+        functions[identity]=dict(text=_point_text(lines,node.start_point,node.end_point),
+                                 head=_point_text(lines,node.start_point,body.start_point),
+                                 tail=_point_text(lines,body.end_point,node.end_point),
+                                 lines=(node.start_point[0]+1,node.end_point[0]+1),scope=_scope(node,lines))
+    return [entry for _,entry in sorted(entries,key=lambda e:e[0])],functions
+
+
+def _check_by_tree(item, candidates, groups, target_indexes, explanation):
+    """The same rules read from whole functions instead of a line diff. Outside functions everything stays,
+    every function keeps its place among it (and in its class, access section and #if branch), and comments
+    may only be added. A changed function is a declared target whose head (return type, name, parameters,
+    modifiers) stays; every declared target changed; new functions sit with a changed target and are helpers
+    it calls. Returns the helpers added, or None when the change does not hold this way."""
+    path=item['path']
+    before,after=_layout(path,item['before']),_layout(path,item['after'])
+    if before is None or after is None:return None
+    old,new=before[1],after[1]
+    added=[identity for identity in new if identity not in old]
+    kept=[entry for entry in after[0] if entry[0]!='function' or entry[1] not in added]
+    index=0
+    for entry in kept:   # the old layout in order; only new comments in between
+        if index<len(before[0]) and entry==before[0][index]:index+=1
+        elif entry[0]!='comment':return None
+    if index<len(before[0]):return None
+    spans=[(int(m.get('start_line') or 0),int(m.get('end_line') or 0)) for m in candidates]
+    touched=set();scopes=set()
+    for identity,was in old.items():
+        now=new[identity]
+        if now['text']==was['text']:continue
+        if now['head']!=was['head'] or now['tail']!=was['tail'] or now['scope']!=was['scope']:return None
+        current={index for index,(start,end) in enumerate(spans) if start<=was['lines'][1] and end>=was['lines'][0]}
+        if not current or current-target_indexes:return None
+        touched|=current;scopes.add(now['scope'])
+    if not touched or any(not group.intersection(touched) for group in groups):return None
+    if any(new[identity]['scope'] not in scopes for identity in added):
+        return None   # a helper in another class or #if branch than every changed target
+    try:
+        return _new_ast_helpers(item,candidates,target_indexes,explanation)
+    except ValueError:
+        return None
 
 
 def validate_preview_targets(advice, methods, preview, companions=frozenset()):
@@ -303,53 +487,15 @@ def validate_preview_targets(advice, methods, preview, companions=frozenset()):
             continue
         candidates,groups=resolved[item['path']]
         target_indexes=set().union(*groups) if groups else set()
-        before=_lines(item['before'])
-        after=_lines(item['after'])
-        spans=[(int(m.get('start_line') or 0),int(m.get('end_line') or 0)) for m in candidates]
-        touched=set();outside=[];changed_text=[]
-        for tag,i1,i2,j1,j2 in difflib.SequenceMatcher(None,before,after,autojunk=False).get_opcodes():
-            if tag=='equal':continue
-            if tag=='insert':
-                added=after[j1:j2]
-                inside=lambda at:{index for index,(start,end) in enumerate(spans) if start-1<at<end}
-                # A diff may line up a new function's closing lines with the previous function's '}' and blank
-                # line, so the same insertion shows up inside that function. Slide it down over lines it equals
-                # (the result is identical) to the first place outside every function, if there is one.
-                at,slid=i1,added
-                while inside(at) and at<len(before) and slid and slid[0]==before[at]:
-                    slid=slid[1:]+[before[at]];at+=1
-                if not inside(at):i1,added=at,slid
-                # The function before may be a helper of an earlier pass (no measured lines) that gave its
-                # closing lines the same way: slide on while outside, to where the text reads as whole functions.
-                at,slid=i1,added
-                while (not inside(at) and at<len(before) and slid and slid[0]==before[at]
-                       and not _inserted_helpers(item['path'],''.join(slid))):
-                    slid=slid[1:]+[before[at]];at+=1
-                if not inside(at) and _inserted_helpers(item['path'],''.join(slid)):i1,added=at,slid
-                current=inside(i1)
-                if not current:outside.append(''.join(added));continue
-            else:
-                current={index for index,(start,end) in enumerate(spans) if start<=i2 and end>i1}
-                if any(not any(start<=line<=end for start,end in spans) for line in range(i1+1,i2+1)):
-                    raise ValueError('선언한 대상 함수 밖의 기존 코드 변경은 승인할 수 없습니다.')
-            if current-target_indexes:
-                raise ValueError('실제 변경 함수와 파일별 수정 대상이 일치하지 않습니다.')
-            touched.update(current)
-            changed_text.append(''.join(after[j1:j2]))
-        if not touched or any(not group.intersection(touched) for group in groups):
-            raise ValueError('선언한 대상 함수의 실제 변경을 확인할 수 없습니다.')
         explanation=review['change']+'\n'+'\n'.join(review['evidence'])
-        helpers=_new_ast_helpers(item,candidates,target_indexes,explanation)
-        csharp=_csharp(item['path'])
-        for text in outside:
-            names=_inserted_helpers(item['path'],text)
-            # C#: a method read from the whole file in the target's class (a piece alone reads in any class).
-            if (not names or any(name in {m.get('name') for m in candidates}
-                    or name not in explanation
-                    or name not in helpers and (csharp or not re.search(r'\b'+re.escape(name)+r'\s*\(',''.join(changed_text))) for name in names)):
-                raise ValueError('대상 메서드 밖의 추가 코드는 같은 클래스에 넣은, 설명과 호출이 확인된 새 private 보조 메서드만 허용합니다.' if csharp
-                                 else '대상 함수 밖의 추가 코드는 설명과 호출이 확인된 새 정적 보조 함수만 허용합니다.')
-            helpers.extend(names)
+        try:
+            helpers=_check_by_lines(item,candidates,groups,target_indexes,explanation)
+        except ValueError:
+            # The line diff can pair a moved block with the new helper instead of the function it left (real
+            # case 2026-10-29: a whole switch moved out of OpenRCT2's OpenWindow read as code put outside it).
+            # Compared as whole functions, the same change may hold; otherwise the line diff's reason stands.
+            helpers=_check_by_tree(item,candidates,groups,target_indexes,explanation)
+            if helpers is None:raise
         if helpers:item['added_helpers']=list(dict.fromkeys(helpers))
     if moves:
         error=rules.declaration_moves(moves)
