@@ -3,6 +3,10 @@ import {AI_LABELS, aiName, codeTokens, connectionProblem, elapsedText, obj, pick
 import {bar, codeText, h, notice, progressBlock, fill} from "./ui.js";
 
 const STORE = "gsi-ai-connection";
+// The two ways a stage can change the code, in the words the prescription panel uses.
+export const METHODS = {
+  internal: {name: "함수 나누기", what: "큰 함수 안에서 한 가지 일을 하는 덩어리를 이름 붙은 작은 함수로 옮깁니다. 게임 동작은 바꾸지 않습니다."},
+  link: {name: "선언 옮기기", what: "여러 파일이 함께 쓰는 자료형·선언을 새 헤더로 옮겨, 파일끼리 서로 포함하는 고리를 끊습니다. 함수 본문은 바꾸지 않습니다."}};
 
 function remembered() {
   try { return JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (_) { return {}; }
@@ -179,7 +183,7 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
   const body = h("div");
   const live = h("p", {class: "visually-hidden", "aria-live": "polite"});  // short status for screen readers
   const el = h("aside", {class: "card ai-panel", "aria-label": "AI 처방"}, slot, body, live);
-  let timer = null, alive = true, picker = null, connections = null, shown = "", lastPlan = null;
+  let timer = null, alive = true, picker = null, connections = null, shown = "", lastPlan = null, chosen = null;
   const progress = progressBlock(["구조 요약 준비", "AI가 살펴보는 중", "효과 계산"]);
   const say = (message, tone) => fill(slot, message ? notice(message, tone) : null);
   const announce = text => { if (live.textContent !== text) live.textContent = text; };
@@ -242,13 +246,32 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
     const staleBox = state.stale ? h("div", {class: "box warn-box"}, h("b", null, "이전 분석 기준 처방입니다"),
       h("p", {class: "sub"}, "그 뒤로 코드가 바뀌어 이 처방의 파일과 숫자가 지금과 다를 수 있습니다. 현재 코드 기준으로 다시 받아 주세요."),
       h("button", {class: "btn primary block", type: "button", onclick: askAgain}, "현재 코드로 다시 받기")) : null;
+    const stage = r.stage || 1;
     if (r.done || !r.files.length) {
-      return [staleBox, h("div", {class: "eyebrow"}, "AI 처방"), h("div", {class: "lead"}, r.headline),
-        h("p", {class: "sub"}, "이 분석 기준으로는 더 정리할 만한 큰 매듭이 없다는 답을 받았습니다."), meta];
+      return [staleBox, h("div", {class: "eyebrow"}, stage > 1 ? `AI 처방 · ${stage}단계` : "AI 처방"), h("div", {class: "lead"}, stage > 1 ? "더 정리할 곳이 없습니다" : r.headline),
+        h("p", {class: "sub"}, stage > 1 ? "앞 단계 결과를 다시 보고, 더 나눠도 효과가 작다는 답을 받았습니다. 이제 빌드하고 직접 플레이해 확인해 주세요."
+          : "이 분석 기준으로는 더 정리할 만한 큰 매듭이 없다는 답을 받았습니다."),
+        stage > 1 && !state.stale ? h("div", {class: "actions"}, h("a", {class: "btn primary", href: `#/job/${jobId}/finish`}, "빌드하고 플레이해 보기 →")) : null, meta];
     }
+    // Both ways offered: the AI's pick comes first and the files below follow the way chosen.
+    const kinds = [...new Set(r.files.map(f => f.kind))];
+    const way = kinds.length > 1 ? chosen || r.first || "internal" : kinds[0];
+    const choose = kind => () => { chosen = kind; fill(body, ...resultView(state)); };
+    const methodBox = kinds.length > 1
+      ? h("div", null, h("div", {class: "pick-q"}, "어느 것부터 할까요?"), h("div", {class: "choices"},
+          ...kinds.sort((a, b) => (b === (r.first || "internal")) - (a === (r.first || "internal"))).map(kind => h("button", {type: "button",
+            class: `choice ${way === kind ? "is-on" : ""}`, "aria-pressed": String(way === kind), onclick: choose(kind)},
+            h("div", {class: "choice-top"}, h("i", {class: "radio", "aria-hidden": "true"}), h("b", null, METHODS[kind].name),
+              kind === (r.first || "internal") ? h("span", {class: "ai-pick"}, "AI 추천") : null),
+            h("p", null, METHODS[kind].what),
+            kind === (r.first || "internal") && r.first_reason ? h("p", null, h("b", null, "먼저 하면 좋은 이유 "), ...codeText(codeTokens(r.first_reason))) : null))),
+          h("p", {class: "help"}, "고르지 않은 방법은 다음 단계에서 이어서 제안합니다."))
+      : h("div", {class: "method"}, h("b", null, `방법: ${METHODS[way].name}`), h("p", null, METHODS[way].what),
+          h("p", {class: "help"}, `${stage}단계 · 단계가 끝나면 결과를 보여 드리고, 더 좋아질 곳이 있으면 다음 단계를 제안합니다(최대 3단계).`));
+    const offered = r.files.filter(f => f.kind === way);
     let prev = r.effects.base;
-    const items = r.files.map((f, i) => {
-      const st = r.effects.steps[i], unit = units.get(f.name);
+    const items = offered.map((f, i) => {
+      const st = r.effects.steps[r.files.indexOf(f)], unit = units.get(f.name);
       let effect = null;
       if (st.after !== null && st.reduced) { effect = h("div", {class: "effect"}, `고리 ${prev} → ${st.after}개 ${label}`); prev = st.after; }
       else if (st.after !== null) effect = h("div", {class: "effect warn"}, `⚠ 이 ${label}만으로는 고리가 거의 줄지 않습니다 (계산 결과 ${prev} → ${st.after}개)`);
@@ -261,13 +284,14 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
           f.targets?.length ? h("p", {class: "targets"}, "먼저 정리할 함수 ", ...f.targets.map(t => h("code", {class: "cname"}, t))) : null, effect));
     });
     return [staleBox,
-      h("div", {class: "eyebrow"}, `AI 처방 · ${r.files.length}개 ${label}`), h("div", {class: "lead"}, r.headline),
-      cycleBox(r), ...items,
+      h("div", {class: "eyebrow"}, `AI 처방${stage > 1 ? ` · ${stage}단계` : ""} · ${offered.length}개 ${label}`), h("div", {class: "lead"}, r.headline),
+      methodBox, cycleBox({...r, files: offered, effects: {...r.effects, steps: r.effects.steps.filter((_, i) => offered.includes(r.files[i]))}}), ...items,
       r.show_why_not_top ? h("div", {class: "bubble"}, h("h4", null, `왜 점수 1위 ‘${units.get(r.top_unit)?.name || r.top_unit}’부터 고치지 않나요?`), ...codeText(codeTokens(r.why_not_top))) : null,
       h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), ...codeText(codeTokens(r.benefit))),
       state.stale ? null : h("div", {class: "actions"},
         h("a", {class: "btn ghost", href: `#/job/${jobId}/refactor?pick=1`}, "직접 고르기"),
-        h("a", {class: "btn primary", href: `#/job/${jobId}/refactor`}, "추천대로 진행 →")),
+        h("a", {class: "btn primary", href: `#/job/${jobId}/refactor${kinds.length > 1 ? `?way=${way}` : ""}`},
+          kinds.length > 1 ? `${METHODS[way].name}로 진행 →` : "추천대로 진행 →")),
       meta];
   }
   function plan(names) {
@@ -286,7 +310,8 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
       progress.update({step: p.step || 0, total: 3, text: p.label || "", elapsed: elapsedText(state.elapsed_seconds), indeterminate: p.indeterminate});
       if (shown !== "running") {   // build once, then only the progress and the context line change
         say("");
-        fill(body, h("div", {class: "eyebrow"}, "AI 처방"), h("div", {class: "lead"}, "전체 구조를 살펴보고 있습니다"), progress.el, h("p", {class: "help context"}),
+        fill(body, h("div", {class: "eyebrow"}, state.auto ? "AI 처방 · 다음 단계" : "AI 처방"),
+          h("div", {class: "lead"}, state.auto ? "앞 단계 결과를 보고 다음 단계를 정하고 있습니다" : "전체 구조를 살펴보고 있습니다"), progress.el, h("p", {class: "help context"}),
           h("div", {class: "actions"}, h("button", {class: "btn ghost sm", type: "button", onclick: cancel}, "요청 취소")));
         shown = "running";
       }

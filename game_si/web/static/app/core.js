@@ -443,3 +443,62 @@ export function connectionProblem(value) {
   if (value.mode === "api" && (!value.api_key || !value.model)) return "API 키와 모델 이름을 입력해 주세요.";
   return null;
 }
+
+// ------------------------------------------------------------ guided stages (result and finishing pages)
+// The code a diff leaves after the change (context and added lines).
+function afterCode(diff = "") {
+  return diff.split("\n").filter(l => !/^(---|\+\+\+|@@)/.test(l) && !l.startsWith("-")).map(l => l.slice(1)).join("\n");
+}
+
+// A round that split functions, from its changed functions' code: each original function with the new
+// helpers it now calls (directly, or through another new helper), and the numbers the page shows.
+export function splitSummary(functions = []) {
+  const created = functions.filter(f => f.created && f.after);
+  const kept = functions.filter(f => !f.created && f.before && f.after);
+  const code = new Map(functions.map(f => [f, afterCode(f.diff)]));
+  const calls = (f, name) => new RegExp(`\\b${name.replace(/[^A-Za-z0-9_]/g, "")}\\s*\\(`).test(code.get(f));
+  const parentOf = (helper, seen = new Set()) => {
+    const direct = kept.find(f => f.file === helper.file && calls(f, helper.name));
+    if (direct) return direct;
+    seen.add(helper);
+    for (const via of created.filter(f => f.file === helper.file && !seen.has(f) && calls(f, helper.name))) {
+      const found = parentOf(via, seen);
+      if (found) return found;
+    }
+    return null;
+  };
+  const targets = kept.map(f => ({...f, helpers: []}));
+  const helpers = created.map(f => {
+    const parent = parentOf(f);
+    const row = {...f, parent: parent?.name || null};
+    targets.find(t => t.file === parent?.file && t.name === parent?.name)?.helpers.push(row);
+    return row;
+  });
+  const split = targets.filter(t => t.helpers.length).sort((a, b) => (b.before.loc - b.after.loc) - (a.before.loc - a.after.loc));
+  const longest = split.reduce((m, t) => !m || t.before.loc > m.before.loc ? t : m, null);
+  const avgLoc = helpers.length ? Math.round(helpers.reduce((s, h) => s + h.after.loc, 0) / helpers.length) : 0;
+  // The example: a helper of the longest function, about the size of an average one.
+  const example = longest ? [...longest.helpers].sort((a, b) => Math.abs(a.after.loc - avgLoc) - Math.abs(b.after.loc - avgLoc))[0] : null;
+  return {targets: split, helpers, longest, avgLoc, simple: helpers.filter(h => h.after.cc <= 20).length, example};
+}
+
+// What to try in the game after the change, grouped by where in the game (checks without a place
+// are grouped by file). Same action from two rounds is listed once.
+export function playGroups(rounds = []) {
+  const groups = new Map(), seen = new Set();
+  for (const round of rounds) {
+    for (const c of round.play_checks || []) {
+      if (!c.action || seen.has(c.action)) continue;
+      seen.add(c.action);
+      const key = c.where || c.file.split("/").pop();
+      if (!groups.has(key)) groups.set(key, {where: key, placed: Boolean(c.where), items: []});
+      groups.get(key).items.push({key: `${key}: ${c.action}`, action: c.action, file: c.file, targets: c.targets || []});
+    }
+  }
+  // Named places first (in the order the AI met them), then files.
+  return [...groups.values()].sort((a, b) => b.placed - a.placed);
+}
+
+// Places any game has: offered in a problem report after this change's own checklist.
+export const COMMON_PLACES = ["게임이 켜질 때", "처음 메뉴·설정", "게임 플레이 중", "저장·불러오기", "게임을 끌 때", "잘 모르겠어요"];
+export const REPORT_KINDS = ["화면이 이상해요", "조작이 안 돼요", "멈추거나 꺼져요", "소리가 달라요", "기타"];

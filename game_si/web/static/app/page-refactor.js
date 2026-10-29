@@ -79,7 +79,10 @@ export function workerRows(workers) {
 }
 
 export async function render(view, ctx, {jobId, query}) {
-  const pick = new URLSearchParams(query || "").get("pick") === "1";
+  const params = new URLSearchParams(query || "");
+  const pick = params.get("pick") === "1";
+  // A prescription offering both ways sends the one picked: only its files, and the matching change.
+  const pickedWay = ["internal", "link"].includes(params.get("way")) ? params.get("way") : null;
   const root = h("section", {class: "wrap wide"}, h("p", {class: "empty"}, "변경안 정보를 불러오고 있습니다."));
   const bar = h("div", {class: "bar-actions", hidden: true});
   view.append(root, bar);
@@ -95,7 +98,10 @@ export async function render(view, ctx, {jobId, query}) {
   ctx.setSteps(jobId, 2, {refactor: true, result: Boolean(diag.round)});
   const label = diag.summary.unit_label;
   const units = new Map(diag.units.map(u => [u.fqn, u]));
-  const plan = presc.result && !presc.result.done && !presc.stale ? presc.result.files : [];
+  const offered = presc.result && !presc.result.done && !presc.stale ? presc.result.files : [];
+  const kinds = [...new Set(offered.map(f => f.kind))];
+  const planWay = kinds.length > 1 ? pickedWay || presc.result.first || "internal" : kinds[0] || null;
+  const plan = offered.filter(f => f.kind === planWay);
   // Units the server can hand to the AI (source file inside the analysed folder, at most 180KB).
   const editable = new Set(candidates.map(c => c.fqn));
 
@@ -121,6 +127,7 @@ export async function render(view, ctx, {jobId, query}) {
     // How the change is made: each file in depth (default), or links between files in one joint call.
     let saved = "deep";
     try { saved = localStorage.getItem(WAY) === "link" ? "link" : "deep"; } catch (_) { /* storage blocked */ }
+    if (plan.length && !pick) saved = planWay === "link" ? "link" : "deep";   // the way the prescription chose
     const way = h("select", {id: "change-way", "aria-label": "변경 방식"},
       h("option", {value: "deep"}, "한 번에 깊게 — 파일마다 복잡한 함수를 크게 나눠 정리 (권장)"),
       h("option", {value: "link"}, "파일 사이 연결 정리 — 헤더·#include 같은 선언을 함께 옮기기"));
