@@ -21,6 +21,8 @@ export async function render(view, ctx, {jobId}) {
   ctx.setSteps(jobId, 4, {refactor: true, result: true, finish: true});
   let alive = true, timer = null, data = null, retry = false, closeReport = null;   // closes an open problem report
   const checked = new Set();
+  // What was ticked, kept as a record: each item cut short so 3 stages of checks fit one request.
+  const ticked = () => [...checked].map(k => k.slice(0, 200));
 
   async function load() {
     try {
@@ -128,7 +130,7 @@ export async function render(view, ctx, {jobId}) {
     const ok = h("button", {class: "btn primary", type: "button"}, "정상입니다");
     ok.addEventListener("click", async () => {
       ok.disabled = true;
-      try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/play`, {method: "POST", body: JSON.stringify({ok: true, checked: [...checked]})}); retry = false; load(); }
+      try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/play`, {method: "POST", body: JSON.stringify({ok: true, checked: ticked()})}); retry = false; load(); }
       catch (error) { toast(error.message); ok.disabled = false; }
     });
     sync();
@@ -162,14 +164,15 @@ export async function render(view, ctx, {jobId}) {
     drop.addEventListener("drop", e => { e.preventDefault(); takeImage(e.dataTransfer.files[0]); });
     const onPaste = e => { const img = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith("image/")); if (img) takeImage(img.getAsFile()); };
     document.addEventListener("paste", onPaste);
-    const close = () => { document.removeEventListener("paste", onPaste); overlay.remove(); closeReport = null; };
+    // Closing twice is harmless; a late reply from an older window never forgets the open one.
+    const close = () => { document.removeEventListener("paste", onPaste); overlay.remove(); if (closeReport === close) closeReport = null; };
     closeReport = close;
     const send = h("button", {class: "btn primary", type: "button"}, "기록하기");
     send.addEventListener("click", async () => {
       send.disabled = true;
       const form = new FormData();
       form.append("kind", kind); form.append("where", where.value); form.append("note", note.value.trim());
-      form.append("checked", JSON.stringify([...checked]));
+      form.append("checked", JSON.stringify(ticked()));
       if (shot) form.append("screenshot", shot, "screenshot");
       try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/report`, {method: "POST", body: form}); close(); retry = false; load(); }
       catch (error) { toast(error.message); send.disabled = false; }
@@ -191,6 +194,9 @@ export async function render(view, ctx, {jobId}) {
     // The functions behind the place the problem was seen (the checklist item names its file and targets).
     const items = active.flatMap(r => r.play_checks || []);
     const hit = items.find(c => play.where === `${c.where || c.file.split("/").pop()} · ${c.action}`);
+    // The result page shows the last stage: a check from an earlier stage says which one changed it.
+    const stage = hit && active.findIndex(r => (r.play_checks || []).includes(hit)) + 1;
+    const earlier = stage && stage < active.length;
     const undo = async () => {
       if (!await confirmDialog({title: "이 단계를 되돌릴까요?", body: "수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다.", ok: "되돌리기"})) return;
       try { await ctx.api(`/api/jobs/${jobId}/rounds/undo`, {method: "POST", body: "{}"}); toast("이 단계 전으로 되돌렸습니다."); location.hash = `#/job/${jobId}/result`; }
@@ -199,8 +205,10 @@ export async function render(view, ctx, {jobId}) {
     return h("section", {class: "card s-card f-report"}, h("div", {class: "s-q warn-text"}, "문제를 기록했습니다"), h("div", {class: "s-title"}, "어떻게 할까요?"),
       h("dl", null, h("dt", null, "문제"), h("dd", null, play.kind), h("dt", null, "어디서"), h("dd", null, play.where || "—"),
         play.note ? [h("dt", null, "메모"), h("dd", null, play.note)] : null, play.screenshot ? [h("dt", null, "스크린샷"), h("dd", null, "1장 첨부")] : null),
-      hit ? h("p", {class: "help"}, `이 동작과 관련해 바뀐 곳: ${hit.file}`, ...(hit.targets || []).map(t => [" ", h("code", {class: "cname"}, t)])) : null,
-      h("div", {class: "s-links"}, h("a", {class: "btn primary", href: `#/job/${jobId}/result`}, "바뀐 코드 전후 비교 보기"),
+      hit ? h("p", {class: "help"}, `이 동작과 관련해 ${earlier ? `${stage}단계에서 ` : ""}바뀐 곳: ${hit.file}`, ...(hit.targets || []).map(t => [" ", h("code", {class: "cname"}, t)]),
+        earlier ? ` (단계 결과 화면은 마지막 ${active.length}단계만 보여 줍니다. 이 단계를 되돌리고 확인하거나 수정본을 내려받아 비교해 주세요.)` : null) : null,
+      h("div", {class: "s-links"}, earlier ? h("a", {class: "btn primary", href: `/revisions/${jobId}/${active[active.length - 1].revision}/modified-source.zip`}, "수정본 내려받기 (.zip)")
+        : h("a", {class: "btn primary", href: `#/job/${jobId}/result`}, "바뀐 코드 전후 비교 보기"),
         h("button", {class: "btn ghost", type: "button", onclick: undo}, "이 단계 되돌리기"),
         h("button", {class: "btn ghost", type: "button", onclick: () => { retry = true; draw(); }}, "다시 해 보기")),
       h("p", {class: "help"}, "되돌리면 수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다."));
@@ -211,7 +219,13 @@ export async function render(view, ctx, {jobId}) {
     const cur = tangle.rounds.find(r => r.round === active.length);
     const excess = cur?.components.find(c => c.key === "complex_excess");
     const pct = excess && excess.before ? Math.round(100 * (excess.before - excess.after) / excess.before) : 0;
-    const functions = active.flatMap(r => r.comparison?.functions || []);
+    // Each function from its first measure to its last, across the stages (100 → 60 → 30 shows 100 → 30).
+    const across = new Map();
+    for (const f of active.flatMap(r => r.comparison?.functions || [])) {
+      const seen = across.get(f.name);
+      across.set(f.name, {name: f.name, before: seen ? seen.before : f.before, after: f.after});
+    }
+    const functions = [...across.values()];
     // The function that got shortest by the most lines (the longest one may barely have moved).
     const longest = functions.filter(f => f.before && f.after && f.after.loc < f.before.loc).sort((a, b) => (b.before.loc - b.after.loc) - (a.before.loc - a.after.loc))[0];
     const when = new Date((active[active.length - 1].applied_at || Date.now() / 1000) * 1000).toLocaleDateString("ko-KR", {month: "long", day: "numeric"});

@@ -159,11 +159,15 @@ class AssistantRequest(BaseModel):
     retry_of: str = Field(default='', pattern='^([a-f0-9]{32})?$')   # redo files of this deep change
 
 
+CHECKED_ITEMS, CHECK_TEXT = 80, 3400
+
+
 class PlayRequest(BaseModel):
     model_config = ConfigDict(extra='forbid')
     ok: bool
     note: str = Field(default='', max_length=300)
-    checked: list[Annotated[str, Field(max_length=300)]] = Field(default_factory=list, max_length=40)
+    # Items ticked on the play checklist: up to 24 per stage over 3 stages, each a place and an AI check.
+    checked: list[Annotated[str, Field(max_length=CHECK_TEXT)]] = Field(default_factory=list, max_length=CHECKED_ITEMS)
 
 
 REPORT_KINDS = {'화면이 이상해요', '조작이 안 돼요', '멈추거나 꺼져요', '소리가 달라요', '기타'}
@@ -410,13 +414,20 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
     @app.post('/api/jobs/{ident}/rounds/{number}/report')
     async def report_problem(ident: str, number: int, request: Request):
         # A problem found while playing: what kind, where, the user's words and an optional screenshot.
-        # Kept in this job's folder only, next to the round it is about.
+        # Kept in this job's folder only, next to the round it is about. The size is checked before
+        # reading: the form parser bounds text fields only, not an uploaded file.
+        try:
+            length = int(request.headers.get('content-length', '0'))
+        except ValueError:
+            length = -1
+        if not 0 <= length <= SCREENSHOT_BYTES + 512 * 1024:
+            raise ValueError('스크린샷은 6MB까지 붙일 수 있습니다.')
         async with request.form(max_files=1, max_fields=8, max_part_size=SCREENSHOT_BYTES) as form:
             kind, where, note = (str(form.get(k, '')).strip() for k in ('kind', 'where', 'note'))
             checked = json.loads(str(form.get('checked', '[]')) or '[]')
-            if kind not in REPORT_KINDS or len(where) > 300 or len(note) > 2000:
+            if kind not in REPORT_KINDS or len(where) > CHECK_TEXT or len(note) > 2000:
                 raise ValueError('문제 종류와 내용을 확인해 주세요.')
-            if not isinstance(checked, list) or len(checked) > 40 or not all(isinstance(c, str) and len(c) <= 300 for c in checked):
+            if not isinstance(checked, list) or len(checked) > CHECKED_ITEMS or not all(isinstance(c, str) and len(c) <= CHECK_TEXT for c in checked):
                 raise ValueError('확인한 항목 형식이 올바르지 않습니다.')
             upload = form.get('screenshot')
             data = await upload.read(SCREENSHOT_BYTES + 1) if hasattr(upload, 'read') else b''

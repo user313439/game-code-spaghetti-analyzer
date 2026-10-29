@@ -332,10 +332,10 @@ globalThis.document = {createElement: t => new Element(t), createElementNS: (_, 
 const page = await import(PAGE);
 const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_excess", 40], ["excess_complexity", 900], ["global_access", 500]]
   .map(([key, after]) => ({key, label: key, before: after, after, included: true}));
-async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}, presc = {state: "idle"}}) {
+async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}, presc = {state: "idle"}, state = {state: "complete", action: "apply"}}) {
   const unit = (si, cc) => ({fqn: "q.client.menu", file_path: "q/client/menu.c", si, raw: {cc, coupling: 1, dependency_cycle: 0}});
   const data = {
-    "": {name: "Quake-2"}, "/assistant": {state: "complete", action: "apply"}, "/demo": game, "/prescription": presc, "/diagnosis": {summary: {unit_label: "파일"}},
+    "": {name: "Quake-2"}, "/assistant": state, "/demo": game, "/prescription": presc, "/diagnosis": {summary: {unit_label: "파일"}},
     "/rounds": {current: 1, rounds: [{round: 1, revision: "r1", files: ["q/client/menu.c"], checks: {original_preserved: true, matches_preview: true,
       reanalyzed: {state: "partial", analyzed_files: 187, syntax_files: 33}}, comparison: {before: [unit(98.93, 17.5)], after: [unit(98.93, 16.9)], functions}}]},
     "/rounds/1/changes": !functions.length ? {functions: []} : {functions: [
@@ -555,7 +555,43 @@ assert.match(report, /조작이 안 돼요/); assert.match(report, /1장 첨부/
 view = await open({ok: true, checked: ["설정 화면: 음량 막대를 끌어 조절하기"]});
 assert.equal(view.querySelector("h1").textContent, "정리를 마쳤습니다");
 const record = view.querySelector(".f-record").textContent;
-assert.match(record, /648 → 445줄/); assert.match(record, /−14%/); assert.match(record, /직접 플레이 1가지 확인/);
+assert.match(record, /648 → 445줄/);
+const two = {round: 2, revision: "r2", files: ["src/opentyr.c"], method: "functions", play_checks: [],
+  comparison: {functions: [{name: "setupMenu", before: {cc: 63, loc: 445}, after: {cc: 30, loc: 200}}]}, checks: {play: {ok: true}}};
+const ctx2 = {setSteps() {}, setCrumb() {}, api: async url => ({"": {name: "OpenTyrian"}, "/rounds": {current: 2, rounds: [round(), two]}, "/demo": {available: false},
+  "/tangle": {rounds: [{round: 2, components: []}]}})[url.replace("/api/jobs/job", "")]};
+const both = document.createElement("main");
+(await page.render(both, ctx2, {jobId: "job"}))?.();
+assert.match(both.querySelector(".f-record").textContent, /648 → 200줄/); assert.match(record, /−14%/); assert.match(record, /직접 플레이 1가지 확인/);
 assert.deepEqual(view.querySelector(".f-next").elements.map(e => e.querySelector("b").textContent), ["수정본 내려받기", "바뀐 코드 보기", "정리 기록 저장"]);
 assert.equal(view.querySelector(".f-next").elements[0].getAttribute("href"), "/revisions/job/r1/modified-source.zip");
+''')
+
+
+def test_review_fixes_for_the_guided_flow_helpers():
+    run(r'''
+// A generic helper call (C# Helper<int>(…)) still finds the function that calls it.
+const diff = ["--- a", "+++ b", "@@ -1 +1 @@", " void Big() {", "+  Helper<int>(1);", " }"].join(String.fromCharCode(10));
+const s = core.splitSummary([{file: "A.cs", name: "Big", before: {cc: 40, loc: 90}, after: {cc: 9, loc: 30}, diff},
+  {file: "A.cs", name: "Helper", created: true, after: {cc: 3, loc: 12}, diff: "+private void Helper<T>(T x) {}"}]);
+assert.deepEqual(s.targets.map(t => [t.name, t.helpers.map(h => h.name)]), [["Big", ["Helper"]]]);
+// A helper nothing changed calls is no reason to break the page: no targets, no longest.
+const lone = core.splitSummary([{file: "a.c", name: "lone", created: true, after: {cc: 2, loc: 5}, diff: "+void lone(void){}"}]);
+assert.equal(lone.targets.length, 0); assert.equal(lone.longest, null);
+// The same action in two places stays twice; the same place and action from two stages once.
+const groups = core.playGroups([{play_checks: [{where: "상점", action: "방향키 누르기", file: "a.c"}, {where: "게임 중", action: "방향키 누르기", file: "b.c"}]},
+  {play_checks: [{where: "상점", action: "방향키 누르기", file: "a.c"}]}]);
+assert.deepEqual(groups.map(g => [g.where, g.items.length]), [["상점", 1], ["게임 중", 1]]);
+''')
+
+
+def test_result_page_waits_for_the_next_stage_and_survives_lone_helpers():
+    run_page(r'''
+const functions = [{name: "q.client.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}}];
+// Applied, and the next prescription not started yet: the page says it is coming (and asks again).
+let view = await show({functions, state: {state: "complete", action: "apply", next_pending: true}, presc: {state: "complete", stale: true, result: {stage: 1, files: []}}});
+assert.match(view.querySelector(".g-next").textContent, /다음 단계를 정하고 있습니다/);
+// The prescription could not be read: the user decides, nothing waits forever on screen.
+view = await show({functions, presc: {state: "unknown"}});
+assert.match(view.querySelector(".g-next").textContent, /다음 단계가 필요한지/);
 ''')
