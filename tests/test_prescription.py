@@ -164,3 +164,52 @@ def test_prescription_api_requires_token_and_runs(tmp_path, monkeypatch):
             time.sleep(0.05)
         assert state['state'] == 'complete' and state['result']['files'][0]['name'] == 'b'
         assert 'api_key' not in json.dumps(state)
+
+
+def test_validate_keeps_which_way_first_only_when_both_kinds_are_offered():
+    names = {'a', 'b', 'c', 'd'}
+    both = prescription.validate(good(first='link', first_reason='고리를 먼저 풀면 나머지가 쉬워집니다.'), names)
+    assert both['first'] == 'link' and both['first_reason'].startswith('고리')
+    assert prescription.validate(good(), names)['first'] == 'internal'          # no pick: split functions first
+    one = prescription.validate(good(files=[good()['files'][1]], first='link', first_reason='이유입니다.'), names)
+    assert one['first'] == '' and one['first_reason'] == ''
+    with pytest.raises(ValueError):
+        prescription.validate(good(first='internal', first_reason='먼저 한다.'), names)
+
+
+def test_precise_analysis_never_offers_moving_declarations():
+    data = prescription.validate(good(), {'a', 'b'})
+    assert prescription.drop_unmeasurable(data, 'tree-sitter') is data
+    kept = prescription.drop_unmeasurable(data, 'clang')
+    assert [f['name'] for f in kept['files']] == ['a'] and kept['dropped_links'] == 1 and kept['done'] is False
+    only = prescription.drop_unmeasurable(prescription.validate(good(files=[good()['files'][0]]), {'a', 'b'}), 'clang')
+    assert only['done'] is True and only['files'] == [] and only['benefit'] == ''
+
+
+class RoundJobs(FakeJobs):
+    current = 0
+
+    def rounds(self, ident):
+        return {'rounds': [{'round': n + 1, 'files': ['a.c']} for n in range(self.current)], 'current': self.current}
+
+
+def test_stages_stop_at_three_and_the_next_one_is_asked_for_by_itself(tmp_path, monkeypatch):
+    prompts = []
+    monkeypatch.setattr(prescription.assistant, 'call_provider', lambda s, m, prompt, *a, **k: prompts.append(prompt) or good())
+    jobs = RoundJobs(tmp_path)
+    service = prescription.Prescriptions(jobs)
+    ident = 'c' * 32
+    assert service.auto_next(ident) is None                         # nothing asked before: no connection to reuse
+    service.start(ident, {'service': 'codex', 'mode': 'cli', 'model': 'gpt-6.1-sol'})
+    assert wait(service, ident)['result']['stage'] == 1
+    jobs.current = 1
+    assert service.auto_next(ident)['auto'] is True
+    state = wait(service, ident)
+    assert state['result']['stage'] == 2 and state['model'] == 'gpt-6.1-sol' and '"stage": 2' in prompts[-1]
+    jobs.current = 3
+    assert service.auto_next(ident) is None
+    with pytest.raises(ValueError, match='최대 3단계'):
+        service.start(ident, {'service': 'codex', 'mode': 'cli'})
+    service.states[ident]['mode'] = 'api'                          # a key is never kept, so no automatic request
+    jobs.current = 1
+    assert service.auto_next(ident) is None

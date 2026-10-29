@@ -16,7 +16,7 @@ def provider(service, mode, prompt, model='', api_key='', **kw):
     return dict(reasons=['근거입니다.'], suggestions=['방향입니다.'], tests=['확인합니다.'], uncertainty='', relationships=[],
                 file_reviews=[dict(path='main.c', role='역할입니다.', finding='문제입니다.', reason='이유입니다.', change='바꿉니다.',
                                    expected_effect='좋아집니다.', impact='영향입니다.', decision='refactor', change_type='functions',
-                                   targets=['Tick'], evidence=['Tick 함수'], checks=['반환값 확인'])],
+                                   targets=['Tick'], evidence=['Tick 함수'], checks=['설정 화면 | 음량 막대 조절하기', '반환값 확인'])],
                 companions=[], creates=[], edits=[dict(path='main.c', old=old, new=new)])
 
 
@@ -73,6 +73,21 @@ def test_rounds_stack_undo_and_play_confirmation(tmp_path, monkeypatch):
         played = client.post(f'/api/jobs/{ident}/rounds/2/play', headers=h, json={'ok': True, 'note': '이동·발사 정상'}).json()
         assert played['rounds'][1]['checks']['play']['ok'] is True
         assert client.post(f'/api/jobs/{ident}/rounds/9/play', headers=h, json={'ok': True}).status_code == 404
+        # Each round keeps how it changed the code and what to try in the game, place first.
+        assert rounds['rounds'][1]['method'] == 'functions'
+        assert rounds['rounds'][1]['play_checks'] == [
+            {'where': '설정 화면', 'action': '음량 막대 조절하기', 'file': 'main.c', 'targets': ['Tick']},
+            {'where': '', 'action': '반환값 확인', 'file': 'main.c', 'targets': ['Tick']}]
+        # A problem report with a screenshot is kept next to its round; only real images are accepted.
+        png = b'\x89PNG\r\n\x1a\n' + b'0' * 20
+        form = {'kind': '조작이 안 돼요', 'where': '설정 화면 · 음량 막대 조절하기', 'note': '두 칸씩 움직여요', 'checked': json.dumps(['설정 화면: 음량 막대 조절하기'])}
+        report = f'/api/jobs/{ident}/rounds/2/report'
+        assert client.post(report, headers=h, data=dict(form, kind='모름')).status_code == 400
+        assert client.post(report, headers=h, data=form, files={'screenshot': ('a.png', b'GIF89a', 'image/png')}).status_code == 400
+        reported = client.post(report, headers=h, data=form, files={'screenshot': ('a.png', png, 'image/png')}).json()
+        play = reported['rounds'][1]['checks']['play']
+        assert play['ok'] is False and play['kind'] == '조작이 안 돼요' and play['note'] == '두 칸씩 움직여요'
+        assert (manager.directory(ident) / 'revisions' / second['revision'] / 'reports' / play['screenshot']).read_bytes() == png
         undone = client.post(f'/api/jobs/{ident}/rounds/undo', headers=h).json()
         assert undone['current'] == 1
         assert client.get(f'/api/jobs/{ident}/diagnosis').json()['revision'] == first['revision']

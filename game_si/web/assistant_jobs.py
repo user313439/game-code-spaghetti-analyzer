@@ -965,6 +965,7 @@ class AssistantJobs:
                 kept.append({'round': len(kept) + 1, 'revision': revision, 'base': base_revision, 'applied_at': time.time(),
                              'files': [f['path'] for f in preview['files']], 'plan_source': self.states[ident].get('plan_source', 'review'),
                              'candidates': self.states[ident].get('candidates', []),
+                             **round_notes(self.states[ident].get('change_advice') or {}, changed),
                              'checks': {'original_preserved': True, 'matches_preview': True,
                                         'reanalyzed': {'state': status.get('state'), 'analyzed_files': status.get('analyzed_files'),
                                                        'syntax_files': status.get('syntax_files')}}})
@@ -977,9 +978,36 @@ class AssistantJobs:
                 self._finish(ident)
         except Exception as exc:
             self._fail(ident, exc)
+            return
+        prescriptions = getattr(self, 'prescriptions', None)
+        if prescriptions is not None:
+            prescriptions.auto_next(ident)
 
     def close(self):
         assistant.close_providers()
         self.reviews.close()
         for worker in self.threads:
             worker.join(timeout=1)
+
+
+def split_check(text):
+    """'설정 화면 | 음량 막대 조절하기' -> ('설정 화면', '음량 막대 조절하기'); older checks have no place."""
+    place, bar, action = text.partition('|')
+    return (place.strip(), action.strip()) if bar and place.strip() and action.strip() else ('', text.strip())
+
+
+def round_notes(advice, changed):
+    """What a round keeps for the result and finishing pages: how it changed the code (functions split,
+    or declarations moved) and the behaviour to try in the game, from the AI's checks per changed file."""
+    reviews = [r for r in advice.get('file_reviews') or [] if isinstance(r, dict) and r.get('path') in changed]
+    edited = [r for r in reviews if r.get('decision') == 'refactor'] or reviews
+    method = 'declarations' if edited and all(r.get('change_type') == 'declarations' for r in edited) else 'functions'
+    checks, seen = [], set()
+    for row in edited:
+        for text in row.get('checks') or []:
+            if not isinstance(text, str) or not text.strip() or text.strip() in seen:
+                continue
+            seen.add(text.strip())
+            where, action = split_check(text)
+            checks.append({'where': where, 'action': action, 'file': row['path'], 'targets': list(row.get('targets') or [])[:4]})
+    return {'method': method, 'play_checks': checks[:24]}
