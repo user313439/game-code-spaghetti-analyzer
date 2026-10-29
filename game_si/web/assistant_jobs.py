@@ -20,6 +20,7 @@ from statistics import median
 from . import assistant, clang_presets, diagnosis
 from .inputs import target_path
 from .jobs import BusyError, REPO_ROOT, write_json
+from .prescription import MAX_STAGES
 from .assistant_context import (_ast_functions, _inserted_helpers, build_deep_prompt, build_prompt, measure_functions,
                                 validate_edit_context, validate_target_methods, validate_preview_targets)
 from .assistant_reviews import AssistantReviews
@@ -336,6 +337,8 @@ class AssistantJobs:
             return self.reviews.start(ident,body)
         if action not in {'advice', 'preview'}:
             raise ValueError('AI 요청 종류를 확인해 주세요.')
+        if action == 'preview' and not body.get('retry_of') and self.rounds(ident)['current'] >= MAX_STAGES:
+            raise ValueError(f'최대 {MAX_STAGES}단계까지 정리했습니다. 단계를 더 하면 원래 동작과 달라질 위험이 커집니다. 마무리에서 빌드하고 직접 플레이해 확인해 주세요.')
         names = body.get('candidates') or ([body['candidate']] if body.get('candidate') else [])
         if (not isinstance(names, list) or not 1 <= len(names) <= 5
                 or any(not isinstance(n, str) for n in names) or len(set(names)) != len(names)):
@@ -975,13 +978,21 @@ class AssistantJobs:
                     download_url=f'/revisions/{ident}/{revision}/modified-source.zip',
                     comparison=comparison, finished_at=time.time(),
                     message='별도 수정본 생성과 재분석이 완료되었습니다.')
+                # Shown as done before the next stage's prescription starts: the result page waits for it.
+                prescriptions = getattr(self, 'prescriptions', None)
+                if prescriptions is not None:
+                    self.states[ident]['next_pending'] = True
                 self._finish(ident)
         except Exception as exc:
             self._fail(ident, exc)
             return
-        prescriptions = getattr(self, 'prescriptions', None)
         if prescriptions is not None:
-            prescriptions.auto_next(ident)
+            try:
+                prescriptions.auto_next(ident)
+            finally:
+                with self.lock:
+                    self.states[ident].pop('next_pending', None)
+                    self._save(ident)
 
     def close(self):
         assistant.close_providers()

@@ -72,7 +72,7 @@ export async function render(view, ctx, {jobId}) {
     try {
       const [job, state, rounds, tangle, game, diag, presc] = await Promise.all([ctx.api(`/api/jobs/${jobId}`), ctx.api(`/api/jobs/${jobId}/assistant`),
         ctx.api(`/api/jobs/${jobId}/rounds`), ctx.api(`/api/jobs/${jobId}/tangle`), ctx.api(`/api/jobs/${jobId}/demo`), ctx.api(`/api/jobs/${jobId}/diagnosis`),
-        ctx.api(`/api/jobs/${jobId}/prescription`).catch(() => ({state: "idle"}))]);
+        ctx.api(`/api/jobs/${jobId}/prescription`).catch(() => ({state: "unknown"}))]);
       ctx.setCrumb(job.name);
       // The changed functions' code: which new helpers each original function now calls.
       const changes = rounds.current ? await ctx.api(`/api/jobs/${jobId}/rounds/${rounds.current}/changes`).catch(() => ({functions: []})) : {functions: []};
@@ -229,16 +229,20 @@ export async function render(view, ctx, {jobId}) {
       h("button", {class: "btn ghost sm", type: "button", onclick: undo}, "이 단계 되돌리기"));
     const detail = h("details", {class: "card s-detail"}, h("summary", null, "자세히 보기 ", h("small", null, "고친 함수의 코드와 측정값, 안전 확인")),
       split.helpers.length ? hero : null, safety, scores, whole, tools);
-    const body = split.helpers.length ? [splitHead(split, n, round), effectsCard(split), shorterCard(split), exampleCard(split), detail]
+    // Only helpers found under an original function make the plain-words page (one that is never called
+    // from a changed function, e.g. a call the search did not recognise, is left to the details).
+    const body = split.targets.length ? [splitHead(split, n, round), effectsCard(split), shorterCard(split), exampleCard(split), detail]
       : [h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `수정 결과 · ${n}단계 · ${METHODS[lastWay].name}`),
           h("h1", {class: "h1"}, head.title), h("p", {class: "sub"}, head.lines.join(" ")), safeChips(round))), hero, detail];
     fill(root,
       failedApply ? notice(`마지막 변경안을 적용하지 못했습니다. ${state.error || ""} 아래는 그 전까지 적용된 결과입니다.`) : null,
-      h("div", {class: "s-wrap"}, ...body, nextCard(n, presc)));
+      h("div", {class: "s-wrap"}, ...body, nextCard(n, presc, Boolean(state.next_pending) || presc.state === "running")));
     // The next stage's prescription is asked for by itself after applying: show it when it arrives.
-    if (presc.state === "running") { clearTimeout(timer); timer = setTimeout(() => alive && load(), 2000); }
+    // The next stage's prescription is about to start, running, or could not be read: look again shortly.
+    if (waiting(state, presc)) { clearTimeout(timer); timer = setTimeout(() => alive && load(), 2000); }
   }
 
+  const waiting = (state, presc) => Boolean(state.next_pending) || ["running", "unknown"].includes(presc.state);
   const fmtN = v => Number(v).toLocaleString("ko-KR");
   const base = p => String(p).split("/").pop();
   function safeChips(round) {
@@ -285,14 +289,14 @@ export async function render(view, ctx, {jobId}) {
           h("p", null, h("code", {class: "mono"}, x.name), ` 함수만 보면 됩니다. (${base(x.file)})`))));
   }
   // The last card: the next stage the AI proposes, or the way to building and playing.
-  function nextCard(n, presc) {
+  function nextCard(n, presc, pending) {
     const finish = text => h("a", {class: "btn primary", href: `#/job/${jobId}/finish`}, text);
     const end = (title, text) => h("section", {class: "card g-next is-end", "aria-label": "다음 단계"}, h("div", {class: "s-q"}, "정리는 여기까지입니다"),
       h("div", {class: "s-title"}, title), h("p", null, text), h("div", {class: "g-btns"}, finish("빌드하고 플레이해 보기 →")));
     if (n >= MAX_STAGES) return end("이제 게임을 빌드하고 직접 해 볼 차례입니다", `최대 ${MAX_STAGES}단계까지 정리했습니다. 단계를 더 하면 원래 동작과 달라질 위험이 커집니다.`);
     const r = presc.result, fresh = r && !presc.stale && (r.stage || 0) === n + 1;
     const card = (...children) => h("section", {class: "card g-next", "aria-label": "다음 단계"}, h("div", {class: "s-q"}, "다음 단계"), ...children);
-    if (presc.state === "running") return card(h("div", {class: "s-title"}, "AI가 이번 결과를 보고 다음 단계를 정하고 있습니다"),
+    if (pending) return card(h("div", {class: "s-title"}, "AI가 이번 결과를 보고 다음 단계를 정하고 있습니다"),
       h("p", null, "잠시 뒤 더 정리할 곳이 있는지 여기에 알려 드립니다. 지금 마무리해도 됩니다."),
       h("div", {class: "g-btns"}, h("a", {class: "btn ghost", href: `#/job/${jobId}/finish`}, "여기서 마무리")));
     if (fresh && (r.done || !r.files.length)) return end("이제 게임을 빌드하고 직접 해 볼 차례입니다",

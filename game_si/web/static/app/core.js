@@ -456,7 +456,8 @@ export function splitSummary(functions = []) {
   const created = functions.filter(f => f.created && f.after);
   const kept = functions.filter(f => !f.created && f.before && f.after);
   const code = new Map(functions.map(f => [f, afterCode(f.diff)]));
-  const calls = (f, name) => new RegExp(`\\b${name.replace(/[^A-Za-z0-9_]/g, "")}\\s*\\(`).test(code.get(f));
+  // A call, with type arguments too (C# Helper<int>(…), C++ helper<T>(…)).
+  const calls = (f, name) => new RegExp(`\\b${name.replace(/[^A-Za-z0-9_]/g, "")}\\s*(<[^<>();]*>)?\\s*\\(`).test(code.get(f));
   const parentOf = (helper, seen = new Set()) => {
     const direct = kept.find(f => f.file === helper.file && calls(f, helper.name));
     if (direct) return direct;
@@ -488,8 +489,9 @@ export function playGroups(rounds = []) {
   const groups = new Map(), seen = new Set();
   for (const round of rounds) {
     for (const c of round.play_checks || []) {
-      if (!c.action || seen.has(c.action)) continue;
-      seen.add(c.action);
+      // The same action in two places is two checks; the same place and action from two stages is one.
+      if (!c.action || seen.has(`${c.where}|${c.action}`)) continue;
+      seen.add(`${c.where}|${c.action}`);
       const key = c.where || c.file.split("/").pop();
       if (!groups.has(key)) groups.set(key, {where: key, placed: Boolean(c.where), items: []});
       groups.get(key).items.push({key: `${key}: ${c.action}`, action: c.action, file: c.file, targets: c.targets || []});

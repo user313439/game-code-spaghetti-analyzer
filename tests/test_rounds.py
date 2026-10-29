@@ -94,3 +94,19 @@ def test_rounds_stack_undo_and_play_confirmation(tmp_path, monkeypatch):
         third = change()   # replaces the undone second round
         rounds = client.get(f'/api/jobs/{ident}/rounds').json()
         assert rounds['current'] == 2 and rounds['rounds'][1]['revision'] == third['revision'] and len(rounds['rounds']) == 2
+        assert 'next_pending' not in client.get(url).json()          # cleared once the next prescription was asked for (or not)
+        # Up to 3 stages × 24 checks can be ticked (the page sends each cut to 200 characters).
+        many = [f'화면 {i}: ' + '가' * 190 for i in range(72)]
+        assert client.post(f'/api/jobs/{ident}/rounds/2/play', headers=h, json={'ok': True, 'checked': many}).status_code == 200
+        # A screenshot larger than allowed is refused before the form is read.
+        big = {'screenshot': ('a.png', b'0' * (7 * 1024 * 1024), 'image/png')}
+        assert client.post(f'/api/jobs/{ident}/rounds/2/report', headers=h, data={'kind': '기타'}, files=big).status_code == 400
+        # No fourth stage, whichever page the change is asked from.
+        path = manager.directory(ident) / 'rounds.json'
+        data = json.loads(path.read_text('utf8'))
+        data['rounds'].append(dict(data['rounds'][1], round=3))
+        data['current'] = 3
+        path.write_text(json.dumps(data), encoding='utf8')
+        candidate = client.get(url + '/candidates').json()[0]['fqn']
+        refused = client.post(url, headers=h, json=dict(action='preview', service='codex', mode='cli', candidates=[candidate], direct=True))
+        assert refused.status_code == 400 and '최대 3단계' in refused.json()['detail']

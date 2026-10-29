@@ -120,8 +120,9 @@ export async function render(view, ctx, {jobId, query}) {
   function selection(state) {
     shown = "selection";
     bar.hidden = false;
-    // After a cancelled or failed request the same files stay picked, ready to try again.
-    const retry = ["cancelled", "failed"].includes(state.state) && state.action === "preview" ? state.candidates || [] : [];
+    // After a cancelled or failed request the same files stay picked, ready to try again; a way just
+    // picked in the prescription brings its own files instead.
+    const retry = !pickedWay && ["cancelled", "failed"].includes(state.state) && state.action === "preview" ? state.candidates || [] : [];
     const chosen = new Set((retry.length ? retry : pick || !plan.length ? [] : plan.map(f => f.name)).filter(n => editable.has(n)));
     const picker = connectionPicker(connections, ctx.api, {step: "refactor"});
     // How the change is made: each file in depth (default), or links between files in one joint call.
