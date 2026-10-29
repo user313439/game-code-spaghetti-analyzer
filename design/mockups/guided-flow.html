@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단계별 진행 흐름</title>
+<link rel="stylesheet" href="../../game_si/web/static/app/app.css">
+<style>
+/* mockup-only switcher */
+.mk-bar { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line); }
+.mk-bar-in { max-width: 1180px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 8px 14px; align-items: center; flex-wrap: wrap; }
+.mk-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; flex-wrap: wrap; }
+.mk-seg button { border: 0; background: var(--surface); padding: 7px 12px; font-weight: 700; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.mk-seg button + button { border-left: 1px solid var(--line); }
+.mk-seg button.on { background: var(--brand); color: #fff; }
+.mk-seg.main button.on { background: var(--ink); color: var(--bg); }
+.mk-note { max-width: 1180px; margin: 0 auto; padding: 0 16px 10px; font-size: 12px; color: var(--muted); }
+.mk-note b { color: var(--ink-2); }
+.mk-fake { font-size: 11px; font-weight: 800; color: var(--warn); background: var(--warn-soft); border: 1px solid var(--warn-line); border-radius: 6px; padding: 1px 6px; margin-left: 4px; white-space: nowrap; }
+
+/* prescription panel additions (the rest is the panel as it is today) */
+.g-method { margin: 12px 0; border: 1px solid var(--brand-line); background: var(--brand-soft); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--ink-2); }
+.g-method b.m { color: var(--brand-ink); font-size: 14px; }
+.g-method p { margin-top: 4px; }
+.g-method .help { margin-top: 6px; }
+.g-pick-q { font-size: 14px; font-weight: 800; margin-top: 14px; }
+.g-choices { display: grid; gap: 8px; margin-top: 8px; }
+.g-choice { text-align: left; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--surface); cursor: pointer; color: var(--ink); font: inherit; }
+.g-choice:hover { border-color: var(--brand-line); }
+.g-choice.is-on { border-color: var(--brand); background: var(--brand-soft); }
+.g-choice .g-ct { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.g-choice .g-ct b { font-size: 14px; }
+.g-choice .g-radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); flex: none; }
+.g-choice.is-on .g-radio { border: 5px solid var(--brand); }
+.g-choice p { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; }
+.g-choice p span { font-weight: 800; color: var(--ink); }
+.g-ai { font-size: 11px; font-weight: 800; padding: 1px 7px; border-radius: 6px; background: var(--brand); color: #fff; }
+.g-last { display: grid; gap: 4px; margin-top: 6px; }
+.g-last div { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--ink-2); }
+.g-last div b { white-space: nowrap; }
+.g-diag { padding: 18px 20px; margin-top: 14px; }
+.g-diag .g-row { height: 64px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); margin-top: 10px; }
+.g-diag p { font-size: 13px; color: var(--muted); }
+
+/* result page: one column, read top to bottom (as in the simple mockup) */
+.s-wrap { max-width: 920px; margin: 0 auto; padding: 28px 16px 70px; }
+.s-head h1 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+.s-head h1 em { font-style: normal; color: var(--brand); }
+.s-head p { color: var(--ink-2); font-size: 15px; margin-top: 6px; }
+.s-card { margin-top: 16px; padding: 20px 22px; }
+.s-q { font-size: 13px; font-weight: 800; color: var(--brand); }
+.s-title { font-size: 19px; font-weight: 800; margin-top: 2px; }
+.s-lead { color: var(--ink-2); font-size: 14px; margin-top: 6px; }
+.s-effects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.s-effect { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--surface-2); }
+.s-effect .ic { font-size: 22px; line-height: 1; }
+.s-effect b { display: block; font-size: 15px; margin-top: 8px; }
+.s-effect p { font-size: 13px; color: var(--ink-2); margin-top: 4px; }
+.s-effect p strong { color: var(--ink); }
+.s-effect code { font-size: 12px; overflow-wrap: anywhere; }
+.s-small { margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+.s-funcs { list-style: none; margin-top: 14px; display: grid; gap: 14px; }
+.s-func-top { display: flex; justify-content: space-between; gap: 4px 12px; align-items: baseline; flex-wrap: wrap; }
+.s-func-top b { font-size: 15px; }
+.s-func-top span { font-size: 13px; color: var(--ink-2); }
+.s-func-top span strong { color: var(--good); }
+.s-bar { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; align-items: center; margin-top: 6px; font-size: 12px; color: var(--muted); font-weight: 700; }
+.s-bar em { font-style: normal; }
+.s-bar div { height: 14px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.s-bar span { display: block; height: 100%; border-radius: 99px; background: #9DB0CC; }
+.s-bar.after span { background: var(--brand); }
+.s-more { margin-top: 10px; }
+.s-more summary { cursor: pointer; color: var(--brand-ink); font-weight: 700; font-size: 13px; }
+.s-ex { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); margin-top: 14px; align-items: stretch; }
+.s-ex-arrow { display: grid; place-items: center; font-size: 24px; font-weight: 800; color: var(--muted); }
+.s-box { border-radius: 14px; padding: 16px 18px; border: 1px solid var(--line); background: var(--surface-2); }
+.s-box.after { border-color: var(--good-line); background: var(--good-soft); }
+.s-box h3 { font-size: 13px; color: var(--muted); font-weight: 800; }
+.s-box .n { font-size: 34px; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 2px; }
+.s-box.after .n { color: var(--good); }
+.s-box p { font-size: 13.5px; color: var(--ink-2); }
+.s-box code { font-size: 12.5px; overflow-wrap: anywhere; }
+.s-detail { margin-top: 16px; padding: 16px 22px; }
+.s-detail > summary { cursor: pointer; font-weight: 800; font-size: 16px; }
+.s-detail > summary small { font-weight: 600; color: var(--muted); font-size: 13px; margin-left: 6px; }
+.s-sec { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+.s-sec h3 { font-size: 15px; font-weight: 800; }
+.s-sec h3 span { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-ink); font-size: 12px; margin-right: 6px; }
+.s-sec > p { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+.s-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+.g-safe { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.g-safe span { font-size: 12.5px; font-weight: 700; color: var(--good); background: var(--good-soft); border: 1px solid var(--good-line); border-radius: 99px; padding: 3px 10px; }
+.g-next { margin-top: 20px; padding: 20px 22px; border-color: var(--brand-line); background: var(--brand-soft); }
+.g-next.is-end { border-color: var(--good-line); background: var(--good-soft); }
+.g-next p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+.g-next .g-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; justify-content: flex-end; }
+.f-sum { margin-top: 14px; padding: 12px 16px; display: flex; gap: 6px 12px; align-items: center; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-2); }
+.f-sum > i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--gA); color: #fff; font-size: 12px; font-weight: 800; }
+.f-sum b { color: var(--ink); }
+.f-sum .push { margin-left: auto; }
+.g-shot .btn { margin-top: 8px; }
+
+/* finishing page: build → play → done */
+.f-wrap { max-width: 820px; margin: 0 auto; padding: 28px 16px 70px; }
+.f-done-list { list-style: none; display: grid; gap: 6px; margin-top: 10px; }
+.f-done-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; font-size: 13.5px; color: var(--ink-2); }
+.f-done-list li > i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--gA); color: #fff; font-size: 12px; font-weight: 800; }
+.f-done-list b { color: var(--ink); }
+.f-steps { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 18px; }
+.f-steps li { display: flex; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--surface); font-weight: 700; font-size: 13.5px; color: var(--muted); }
+.f-steps li > i { font-style: normal; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 800; background: var(--line); color: var(--muted); flex: none; }
+.f-steps li.is-done { color: var(--good); border-color: var(--good-line); background: var(--good-soft); }
+.f-steps li.is-done > i { background: var(--gA); color: #fff; }
+.f-steps li.is-now { color: var(--ink); border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft); }
+.f-steps li.is-now > i { background: var(--brand); color: #fff; }
+.f-steps li.is-bad { color: var(--warn); border-color: var(--warn-line); background: var(--warn-soft); }
+.f-steps li.is-bad > i { background: var(--warn); color: #fff; }
+.f-build { text-align: center; padding: 30px 22px; }
+.f-build .btn { margin-top: 16px; font-size: 15px; padding: 13px 22px; }
+.f-built { display: flex; gap: 8px 12px; align-items: center; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-2); }
+.f-built .tick { font-style: normal; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--gA); color: #fff; font-size: 12px; font-weight: 800; }
+.f-built .push { margin-left: auto; }
+.f-count { font-size: 13px; color: var(--muted); font-weight: 700; margin-top: 12px; }
+.f-prog { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 6px; }
+.f-prog span { display: block; height: 100%; background: var(--gA); border-radius: 99px; transition: width .2s; }
+.f-group { margin-top: 14px; }
+.f-group h4 { font-size: 13.5px; font-weight: 800; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.f-group h4 small { font-weight: 600; color: var(--muted); font-size: 12px; }
+.f-items { list-style: none; display: grid; gap: 6px; margin-top: 6px; }
+.f-items label { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: start; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; background: var(--surface-2); cursor: pointer; font-size: 13.5px; }
+.f-items label:hover { border-color: var(--brand-line); }
+.f-items input { width: 17px; height: 17px; margin-top: 2px; accent-color: var(--gA); }
+.f-items label.is-checked { background: var(--good-soft); border-color: var(--good-line); }
+.f-items small { display: block; color: var(--muted); font-size: 11.5px; margin-top: 1px; }
+.f-verdict { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+.f-verdict .help { margin: 0; flex: 1 1 220px; }
+.f-report { border-color: var(--warn-line); }
+.f-report dl { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 6px 10px; margin-top: 10px; font-size: 13.5px; }
+.f-report dt { color: var(--muted); font-weight: 700; }
+.f-report dd { color: var(--ink-2); }
+.f-hero { text-align: center; padding: 34px 22px 26px; }
+.f-hero .big { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto; display: grid; place-items: center; background: var(--gA); color: #fff; font-size: 32px; font-weight: 800; box-shadow: 0 0 0 8px var(--good-soft); }
+.f-hero h1 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; margin-top: 18px; }
+.f-hero > p { color: var(--ink-2); font-size: 15px; margin-top: 6px; }
+.f-record { margin-top: 18px; text-align: left; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); overflow: hidden; }
+.f-record-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+.f-record-head b { color: var(--ink); font-size: 14px; }
+.f-record-body { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+.f-record-body > div { padding: 14px 16px; }
+.f-record-body > div + div { border-left: 1px solid var(--line); }
+.f-record h4 { font-size: 12px; font-weight: 800; color: var(--muted); }
+.f-num { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font-size: 13.5px; color: var(--ink-2); }
+.f-num b { color: var(--good); white-space: nowrap; }
+.f-ok-list { list-style: none; display: grid; gap: 6px; margin-top: 8px; font-size: 13.5px; color: var(--ink-2); }
+.f-ok-list li::before { content: "✓"; color: var(--good); font-weight: 800; margin-right: 6px; }
+.f-next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.f-next button { text-align: left; border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--surface); cursor: pointer; font: inherit; color: var(--ink); }
+.f-next button:hover { border-color: var(--brand-line); }
+.f-next button.main { border-color: var(--brand); background: var(--brand-soft); }
+.f-next b { display: block; font-size: 14px; }
+.f-next small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+
+/* problem report: a small window over the page (like a feedback form) */
+.g-modal { position: fixed; inset: 0; z-index: 50; background: rgba(15, 27, 45, .45); display: grid; place-items: center; padding: 16px; }
+.g-modal-box { width: min(520px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; box-shadow: 0 20px 50px rgba(0, 0, 0, .25); }
+.g-modal-box h2 { font-size: 19px; font-weight: 800; }
+.g-modal-box > p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.g-field { display: block; margin-top: 14px; }
+.g-field > span { display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px; }
+.g-field > span small { font-weight: 600; color: var(--muted); }
+.g-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.g-tags button { border: 1px solid var(--line); background: var(--surface-2); border-radius: 99px; padding: 6px 12px; font-size: 13px; font-weight: 700; color: var(--ink-2); cursor: pointer; }
+.g-tags button.is-on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-ink); }
+.g-field textarea { width: 100%; min-height: 84px; border: 1px solid var(--line); background: var(--surface-2); border-radius: 10px; padding: 10px 12px; font: inherit; color: var(--ink); resize: vertical; }
+.g-shot { border: 2px dashed var(--line); border-radius: 12px; padding: 14px; text-align: center; font-size: 13px; color: var(--muted); }
+.g-modal-foot { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+.g-modal-foot .help { margin: 0 auto 0 0; align-self: center; flex: 1 1 200px; }
+
+@media (max-width: 700px) {
+  .s-head h1, .f-hero h1 { font-size: 23px; }
+  .s-effects, .f-next { grid-template-columns: 1fr; }
+  .s-ex { grid-template-columns: 1fr; }
+  .s-ex-arrow { transform: rotate(90deg); height: 34px; }
+  .s-detail { padding: 14px 16px; }
+  .f-steps { grid-template-columns: 1fr; }
+  .f-record-body { grid-template-columns: 1fr; }
+  .f-record-body > div + div { border-left: 0; border-top: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+<div class="mk-bar"><div class="mk-bar-in">
+  <div class="mk-seg main" id="screen"><button type="button" data-v="plan" class="on">① 처방</button><button type="button" data-v="result">② 단계 결과</button><button type="button" data-v="finish">③ 마무리</button></div>
+  <div class="mk-seg" id="variant"></div>
+  <div class="mk-seg" id="theme"><button type="button" data-v="light" class="on">밝게</button><button type="button" data-v="dark">어둡게</button></div>
+</div><p class="mk-note" id="note"></p></div>
+<div id="root"></div>
+
+<script id="data" type="application/json">{"id":"e1ba503f5b094e78803944ea27738786","round":2,"title":"10/26 실측 · Claude Sonnet · 5개 파일 · 이어서 정리 3단계","checks":{"original_preserved":true,"matches_preview":true,"reanalyzed":{"state":"complete","analyzed_files":52,"syntax_files":0}},"whole":{"index":95.37,"components":[{"key":"cycle_units","label":"순환 고리에 묶인 단위","before":6,"after":6},{"key":"links","label":"단위 사이 연결","before":224,"after":224},{"key":"complex_excess","label":"매우 복잡한 부분 Σ(CC−20)","before":3967,"after":3403},{"key":"excess_complexity","label":"초과 복잡도 Σ(CC−10)","before":4709,"after":4309},{"key":"global_access","label":"전역 변수 접근","before":10197,"after":10152}]},"service":"claude","model":"sonnet","files":[{"path":"game_menu.c","targets":[{"name":"JE_itemScreen","before":{"cc":371,"loc":1475},"after":{"cc":178,"loc":724},"line":958,"old_line":157,"helpers":["drawDataCubeListAndFace","drawJoystickConfigMenuChoices","drawKeyboardConfigMenuChoices","drawLoadSaveMenuChoices","handleEscapeKeyInMenu","handleMenuMouseClick","updateDataCubeReaderFrame","updateMenuOnLeftKey","updateMenuOnRightKey","updateUpgradeSubMenuSelectionAndDraw"]},{"name":"JE_menuFunction","before":{"cc":98,"loc":447},"after":{"cc":86,"loc":379},"line":2672,"old_line":2540,"helpers":["assignJoystickInputToSelectedSlot","showKeyCaptureCursorUntilInput"]}],"helpers":[{"name":"assignJoystickInputToSelectedSlot","cc":8,"loc":43,"line":2628,"parent":"JE_menuFunction","call_line":3017,"through":null,"old":[2916,2953,20],"comment":null},{"name":"drawDataCubeListAndFace","cc":9,"loc":68,"line":629,"parent":"JE_itemScreen","call_line":1217,"through":null,"old":[675,737,26],"comment":null},{"name":"drawJoystickConfigMenuChoices","cc":13,"loc":59,"line":240,"parent":"JE_itemScreen","call_line":1141,"through":null,"old":[413,468,20],"comment":null},{"name":"drawKeyboardConfigMenuChoices","cc":5,"loc":24,"line":215,"parent":"JE_itemScreen","call_line":1136,"through":null,"old":[388,408,7],"comment":null},{"name":"drawLoadSaveMenuChoices","cc":9,"loc":57,"line":157,"parent":"JE_itemScreen","call_line":1131,"through":null,"old":[332,382,21],"comment":null},{"name":"handleEscapeKeyInMenu","cc":7,"loc":30,"line":760,"parent":"JE_itemScreen","call_line":1476,"through":null,"old":[1217,1242,12],"comment":null},{"name":"handleMenuMouseClick","cc":58,"loc":166,"line":791,"parent":"JE_itemScreen","call_line":1449,"through":null,"old":[1028,1236,81],"comment":null},{"name":"showKeyCaptureCursorUntilInput","cc":7,"loc":37,"line":2590,"parent":"JE_menuFunction","call_line":2813,"through":null,"old":[2682,2712,12],"comment":null},{"name":"updateDataCubeReaderFrame","cc":12,"loc":61,"line":698,"parent":"JE_itemScreen","call_line":1292,"through":null,"old":[814,871,27],"comment":null},{"name":"updateMenuOnLeftKey","cc":31,"loc":98,"line":300,"parent":"JE_itemScreen","call_line":1581,"through":null,"old":[1355,1481,43],"comment":null},{"name":"updateMenuOnRightKey","cc":29,"loc":93,"line":399,"parent":"JE_itemScreen","call_line":1585,"through":null,"old":[1402,1518,44],"comment":null},{"name":"updateUpgradeSubMenuSelectionAndDraw","cc":30,"loc":135,"line":493,"parent":"JE_itemScreen","call_line":1146,"through":null,"old":[473,602,72],"comment":null}],"si":[98.08,98.08],"top10":[234.5,88.25],"before":{"functions":28,"over50":2,"over20":4,"max_cc":371,"longest":1475,"excess":494,"cc_sum":681},"after":{"functions":40,"over50":3,"over20":8,"max_cc":178,"longest":724,"excess":402,"cc_sum":694},"steps_done":2,"note":"이어서 정리한 3단계는 검사에서 빠져 2단계까지만 반영했습니다.","seconds":468},{"path":"mainint.c","targets":[{"name":"JE_playerCollide","before":{"cc":80,"loc":378},"after":{"cc":24,"loc":102},"line":4834,"old_line":4475,"helpers":["collectArcadePickup","collectScoreItem","destroyLinkedEnemies"]},{"name":"JE_playerMovement","before":{"cc":274,"loc":1134},"after":{"cc":119,"loc":524},"line":3945,"old_line":3270,"helpers":["drawPlayerShadow","readPlayerInputDevices","updateAndDrawPlayerShip","updateAndDrawSidekicks","updateDragonwingChargeShot","updateEndLevelWarpTrail","updateLeftSidekickPosition","updateLinkGunDirection","updateLinkedPlayerTurret","updatePlayerFrictionAndVelocity","updatePortConfigChange","updateRightSidekickPosition","updateSidekickFireAndAmmoRefill"]}],"helpers":[{"name":"collectArcadePickup","cc":32,"loc":186,"line":4540,"parent":"JE_playerCollide","call_line":4849,"through":null,"old":[4494,4734,129],"comment":null},{"name":"collectScoreItem","cc":16,"loc":73,"line":4760,"parent":"JE_playerCollide","call_line":4888,"through":null,"old":[4691,4776,46],"comment":null},{"name":"destroyLinkedEnemies","cc":11,"loc":32,"line":4727,"parent":"JE_playerCollide","call_line":4927,"through":null,"old":[4816,4840,15],"comment":"kill enemy"},{"name":"drawPlayerShadow","cc":8,"loc":35,"line":3441,"parent":"JE_playerMovement","call_line":4353,"through":null,"old":[3897,3939,15],"comment":null},{"name":"readPlayerInputDevices","cc":26,"loc":79,"line":3270,"parent":"JE_playerMovement","call_line":4127,"through":null,"old":[3452,3526,44],"comment":null},{"name":"updateAndDrawPlayerShip","cc":13,"loc":77,"line":3477,"parent":"JE_playerMovement","call_line":4355,"through":null,"old":[3910,4001,36],"comment":null},{"name":"updateAndDrawSidekicks","cc":9,"loc":35,"line":3909,"parent":"JE_playerMovement","call_line":4466,"through":null,"old":[4355,4399,18],"comment":null},{"name":"updateDragonwingChargeShot","cc":14,"loc":55,"line":3586,"parent":"JE_playerMovement","call_line":4427,"through":null,"old":[4103,4153,23],"comment":null},{"name":"updateEndLevelWarpTrail","cc":9,"loc":42,"line":3718,"parent":"JE_playerMovement","call_line":4277,"through":null,"old":[3699,3745,24],"comment":null},{"name":"updateLeftSidekickPosition","cc":10,"loc":24,"line":3884,"parent":"JE_playerMovement","call_line":4451,"through":null,"old":[4178,4206,16],"comment":"sidekicks"},{"name":"updateLinkGunDirection","cc":13,"loc":37,"line":3761,"parent":"JE_playerMovement","call_line":4260,"through":null,"old":[3655,3692,16],"comment":null},{"name":"updateLinkedPlayerTurret","cc":4,"loc":30,"line":3555,"parent":"JE_playerMovement","call_line":4307,"through":null,"old":[3825,3850,15],"comment":null},{"name":"updatePlayerFrictionAndVelocity","cc":16,"loc":51,"line":3799,"parent":"JE_playerMovement","call_line":4303,"through":null,"old":[3774,3820,26],"comment":null},{"name":"updatePortConfigChange","cc":7,"loc":32,"line":3851,"parent":"JE_playerMovement","call_line":4384,"through":null,"old":[4032,4058,16],"comment":"PLAYER SHOT Change"},{"name":"updateRightSidekickPosition","cc":21,"loc":90,"line":3350,"parent":"JE_playerMovement","call_line":4453,"through":null,"old":[4185,4284,49],"comment":null},{"name":"updateSidekickFireAndAmmoRefill","cc":18,"loc":75,"line":3642,"parent":"JE_playerMovement","call_line":4457,"through":null,"old":[4290,4372,37],"comment":null}],"si":[94.23,96.15],"top10":[144.3333,74.2],"before":{"functions":37,"over50":5,"over20":14,"max_cc":274,"longest":1134,"excess":739,"cc_sum":984},"after":{"functions":53,"over50":4,"over20":17,"max_cc":119,"longest":524,"excess":608,"cc_sum":1000},"steps_done":3,"note":"AI를 3번 이어서 불러 단계적으로 정리했습니다.","seconds":449},{"path":"opentyr.c","targets":[{"name":"setupMenu","before":{"cc":122,"loc":648},"after":{"cc":63,"loc":445},"line":352,"old_line":102,"helpers":["applyDisplayPickerSelection","applyScalerPickerSelection","changeVolumeFromKey","drawDisplayModeValue","drawPickerBox","drawVolumeBarValue","stepWrappedIndex","updateHoveredMenuItem","updatePickerFromKeyboard","updatePickerFromMouse","updateVolumeFromMouseX","waitForInputOrDisplayChange"]}],"helpers":[{"name":"applyDisplayPickerSelection","cc":2,"loc":5,"line":294,"parent":"setupMenu","call_line":775,"through":null,"old":[719,720,2],"comment":null},{"name":"applyScalerPickerSelection","cc":4,"loc":12,"line":300,"parent":"setupMenu","call_line":780,"through":null,"old":[725,731,5],"comment":null},{"name":"changeVolumeFromKey","cc":3,"loc":15,"line":336,"parent":"setupMenu","call_line":610,"through":null,"old":[673,684,2],"comment":null},{"name":"drawDisplayModeValue","cc":2,"loc":11,"line":267,"parent":"setupMenu","call_line":500,"through":null,"old":[250,254,3],"comment":null},{"name":"drawPickerBox","cc":4,"loc":25,"line":120,"parent":"setupMenu","call_line":534,"through":null,"old":[293,309,10],"comment":null},{"name":"drawVolumeBarValue","cc":2,"loc":5,"line":279,"parent":"setupMenu","call_line":512,"through":null,"old":[270,275,2],"comment":null},{"name":"stepWrappedIndex","cc":4,"loc":7,"line":286,"parent":"setupMenu","call_line":596,"through":null,"old":null,"comment":null},{"name":"updateHoveredMenuItem","cc":14,"loc":34,"line":146,"parent":"setupMenu","call_line":565,"through":null,"old":[353,391,9],"comment":null},{"name":"updatePickerFromKeyboard","cc":9,"loc":44,"line":222,"parent":"setupMenu","call_line":763,"through":null,"old":[662,701,10],"comment":null},{"name":"updatePickerFromMouse","cc":13,"loc":38,"line":182,"parent":"setupMenu","call_line":758,"through":null,"old":[636,684,7],"comment":null},{"name":"updateVolumeFromMouseX","cc":9,"loc":21,"line":313,"parent":"setupMenu","call_line":578,"through":null,"old":[391,406,6],"comment":null},{"name":"waitForInputOrDisplayChange","cc":4,"loc":17,"line":102,"parent":"setupMenu","call_line":550,"through":null,"old":[329,339,6],"comment":null}],"si":[96.15,92.31],"top10":[122.0,42.5],"before":{"functions":8,"over50":1,"over20":2,"max_cc":122,"longest":648,"excess":124,"cc_sum":151},"after":{"functions":20,"over50":1,"over20":2,"max_cc":63,"longest":445,"excess":72,"cc_sum":162},"steps_done":3,"note":"AI를 3번 이어서 불러 단계적으로 정리했습니다.","seconds":291},{"path":"tyrian2.c","targets":[{"name":"JE_eventSystem","before":{"cc":255,"loc":856},"after":{"cc":207,"loc":698},"line":4393,"old_line":4174,"helpers":["applyEnemyDeathSpawnEvent","applyEnemyGlobalAccelEvent","applyEnemyGlobalAnimateEvent","applyEnemyGlobalMoveEvent"]},{"name":"JE_main","before":{"cc":375,"loc":1712},"after":{"cc":261,"loc":1335},"line":988,"old_line":570,"helpers":["playQueuedSoundEffectsWhileNotGameOver","redrawChangedWeaponPowerBars","updateAndDrawEnemyShots","updateGameOverSequence","updateLevelTimer","updateLowArmorWarning","updateSequencedExplosionsAndDrawExplosions","updateShieldRegenAndGalagaLifeReward"]}],"helpers":[{"name":"applyEnemyDeathSpawnEvent","cc":16,"loc":29,"line":4328,"parent":"JE_eventSystem","call_line":4692,"through":null,"old":[4606,4629,14],"comment":null},{"name":"applyEnemyGlobalAccelEvent","cc":13,"loc":46,"line":4281,"parent":"JE_eventSystem","call_line":4588,"through":null,"old":[4413,4469,28],"comment":null},{"name":"applyEnemyGlobalAnimateEvent","cc":7,"loc":34,"line":4358,"parent":"JE_eventSystem","call_line":4606,"through":null,"old":[4490,4524,17],"comment":null},{"name":"applyEnemyGlobalMoveEvent","cc":16,"loc":65,"line":4215,"parent":"JE_eventSystem","call_line":4583,"through":null,"old":[4364,4438,28],"comment":null},{"name":"playQueuedSoundEffectsWhileNotGameOver","cc":6,"loc":24,"line":917,"parent":"JE_main","call_line":2063,"through":null,"old":[1939,1956,12],"comment":"================================="},{"name":"redrawChangedWeaponPowerBars","cc":9,"loc":23,"line":893,"parent":"JE_main","call_line":1451,"through":null,"old":[1090,1105,9],"comment":"Weapon Display"},{"name":"updateAndDrawEnemyShots","cc":29,"loc":93,"line":570,"parent":"JE_main","call_line":2003,"through":null,"old":[1650,1745,44],"comment":"Draw Enemy Shots"},{"name":"updateGameOverSequence","cc":15,"loc":45,"line":942,"parent":"JE_main","call_line":2116,"through":null,"old":[2034,2091,24],"comment":"GAME OVER"},{"name":"updateLevelTimer","cc":8,"loc":28,"line":802,"parent":"JE_main","call_line":2113,"through":null,"old":[2009,2030,14],"comment":"Level Timer"},{"name":"updateLowArmorWarning","cc":24,"loc":61,"line":740,"parent":"JE_main","call_line":2054,"through":null,"old":[1873,1927,29],"comment":"Warning"},{"name":"updateSequencedExplosionsAndDrawExplosions","cc":13,"loc":75,"line":664,"parent":"JE_main","call_line":2034,"through":null,"old":[1781,1850,34],"comment":"Sequenced Explosions and Draw Explosions"},{"name":"updateShieldRegenAndGalagaLifeReward","cc":18,"loc":61,"line":831,"parent":"JE_main","call_line":1448,"through":null,"old":[1030,1084,31],"comment":"Shield Gen"}],"si":[100.0,100.0],"top10":[315.0,204.3333],"before":{"functions":22,"over50":6,"over20":6,"max_cc":375,"longest":1712,"excess":969,"cc_sum":1116},"after":{"functions":34,"over50":6,"over20":8,"max_cc":261,"longest":1335,"excess":871,"cc_sum":1128},"steps_done":2,"note":"이어서 정리한 3단계는 검사에서 빠져 2단계까지만 반영했습니다.","seconds":421},{"path":"video_scale_hqNx.c","targets":[{"name":"hq4x_32","before":{"cc":446,"loc":5081},"after":{"cc":437,"loc":5033},"line":6817,"old_line":6817,"helpers":[]}],"helpers":[],"si":[92.31,94.23],"top10":[446.0,437.0],"before":{"functions":17,"over50":3,"over20":3,"max_cc":446,"longest":5081,"excess":1290,"cc_sum":1345},"after":{"functions":17,"over50":3,"over20":3,"max_cc":437,"longest":5033,"excess":1281,"cc_sum":1336},"steps_done":1,"note":null,"seconds":47}]}</script>
+<script>
+const RUN = JSON.parse(document.getElementById("data").textContent);
+const VARIANTS = {
+  plan: [["functions", "함수 나누기만 필요"], ["both", "둘 다 필요 · 고르기"], ["second", "2단계 처방"]],
+  result: [["next", "다음 단계 제안 있음"], ["end", "더 정리할 곳 없음"]],
+  finish: [["build", "빌드 전"], ["play", "플레이 확인"], ["report", "문제 신고"], ["done", "완료"]]};
+const NOTES = {
+  plan: "<b>처방(진단 페이지 오른쪽 패널) — 지금 처방 형식 그대로, ‘방법’ 안내만 더함.</b> 필요한 방법만 보여 줍니다. 둘 다 필요할 때만 두 방법을 나란히 두고 ‘AI 추천’을 표시합니다(이 경우의 고리 수치는 예시). ‘2단계 처방’은 단계 결과 화면에서 [2단계 진행]을 누르면 보이는 화면입니다.",
+  result: "<b>단계 결과 — 그 단계에서 바뀐 것만 보여 줌(10/26 실측).</b> 다시 분석이 끝나면 다음 처방을 자동으로 받아(짧은 AI 호출 1번) 맨 아래 카드에 ‘다음 단계’ 또는 ‘여기까지’를 보여 줍니다. 효과가 작을 단계는 처음부터 제안하지 않습니다.",
+  finish: "<b>마무리 — 빌드 → 직접 플레이 → 완료.</b> 플레이 확인 항목은 10/26 변경안에서 AI가 파일마다 적은 ‘확인할 동작’(모든 변경안의 필수 칸)을 플레이어 말로 다듬어 게임 화면별로 묶은 것입니다. 구현 때는 AI가 처음부터 플레이어 말과 ‘게임의 어느 화면’을 함께 쓰게 합니다. 문제 신고의 ‘그 밖’ 항목은 어느 게임이든 같은 보편 목록입니다."};
+const state = {screen: "plan", variant: {plan: "functions", result: "next", finish: "build"}, method: "functions", theme: "light", checked: new Set(), tag: "조작이 안 돼요", reported: false};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const fmt = n => Number(n).toLocaleString("ko-KR");
+const base = p => p.split("/").pop();
+
+// ---------------------------------------------------------------- stage 1 numbers (10/26 measured)
+const targets = RUN.files.flatMap(f => f.targets.map(t => ({...t, file: f.path, helpers: f.helpers.filter(h => h.parent === t.name)})));
+const helpers = targets.flatMap(t => t.helpers.map(h => ({...h, file: t.file, target: t})));
+const split = targets.filter(t => t.helpers.length);
+const longest = split.reduce((m, t) => t.before.loc > m.before.loc ? t : m, split[0]);
+const avgLoc = Math.round(helpers.reduce((s, h) => s + h.loc, 0) / helpers.length);
+const simple = helpers.filter(h => h.cc <= 20).length;
+const order = [...targets].sort((a, b) => (b.before.loc - b.after.loc) - (a.before.loc - a.after.loc));
+const excess = RUN.whole.components.find(c => c.key === "complex_excess");
+const pct = Math.round(100 * (excess.before - excess.after) / excess.before);
+const remain = split.slice().sort((a, b) => b.after.loc - a.after.loc);
+const armor = helpers.find(h => /Armor/.test(h.name));
+
+// ================================================================= ① prescription
+const FILES1 = [
+  ["tyrian2.c", "JE_main 1,712줄(CC 375)과 JE_eventSystem 856줄(CC 255)이 게임 진행 전체를 혼자 맡고 있습니다.", "경고·타이머·폭발처럼 한 가지 일을 하는 덩어리를 이름 붙은 함수로 옮깁니다.", ["JE_main", "JE_eventSystem"]],
+  ["game_menu.c", "JE_itemScreen 1,475줄(CC 371)이 상점·설정·불러오기 메뉴를 모두 처리합니다.", "메뉴마다 그리기·입력 처리를 따로 떼어 냅니다.", ["JE_itemScreen", "JE_menuFunction"]],
+  ["mainint.c", "JE_playerMovement 1,134줄(CC 274)에 입력·이동·보조기·그리기가 섞여 있습니다.", "입력 읽기, 보조기 위치, 기체 그리기를 따로 맡깁니다.", ["JE_playerMovement", "JE_playerCollide"]],
+  ["opentyr.c", "setupMenu 648줄(CC 122)이 설정 화면의 그리기와 입력을 함께 합니다.", "선택 상자·음량 막대 처리를 따로 옮깁니다.", ["setupMenu"]],
+  ["video_scale_hqNx.c", "hq4x_32 5,081줄(CC 446)은 가장 크지만 대부분 같은 모양의 확대 규칙 반복입니다.", "반복 규칙이 매크로로 쓰여 있어 많이 나누지 못할 수 있습니다.", ["hq4x_32"]]];
+const FILES_DECL = [
+  ["opentyr.h", "게임 시작 파일의 헤더에 공용 자료형(JE_byte·JE_boolean)과 매크로(COUNTOF·MIN)가 함께 들어 있습니다.", "자료형·매크로 줄을 그대로 새 헤더 je_types.h로 옮깁니다.", []],
+  ["keyboard.h", "자료형 하나 때문에 게임 시작 파일의 헤더 opentyr.h를 포함합니다.", "opentyr.h 대신 je_types.h만 포함합니다.", []],
+  ["keyboard.c", "COUNTOF·MIN 때문에 opentyr.h를 포함합니다.", "opentyr.h 대신 je_types.h만 포함합니다. 함수 본문은 그대로입니다.", []]];
+const FILES2 = [
+  ["tyrian2.c", "JE_main이 1단계 뒤에도 1,335줄(CC 261), JE_eventSystem이 698줄(CC 207)입니다.", "1단계에서 남긴 큰 덩어리(적 이동·충돌 처리)를 한 번 더 나눕니다.", ["JE_main", "JE_eventSystem"]],
+  ["game_menu.c", "JE_itemScreen이 아직 724줄(CC 178)입니다.", "상점 구매 처리와 화면 그리기를 나눕니다.", ["JE_itemScreen"]],
+  ["mainint.c", "JE_playerMovement가 아직 524줄(CC 119)입니다.", "무기 발사와 충전 처리를 나눕니다.", ["JE_playerMovement"]]];
+function fileItems(list, kind) {
+  return list.map(([file, why, how, fns], i) => `<div class="pitem link"><span class="n">${i + 1}</span><div>
+    <b>${esc(file)}</b><span class="kind ${kind}">${kind === "link" ? "연결 정리" : "파일 안 정리"}</span>
+    <p>${esc(why)}</p><p class="how">${esc(how)}</p>
+    ${fns.length ? `<p class="targets">먼저 정리할 함수 ${fns.map(f => `<code class="cname">${f}</code>`).join("")}</p>` : ""}</div></div>`).join("");
+}
+const funcBox = rows => `<div class="box"><b>먼저 정리할 함수</b>${rows.map(([n, cc, loc]) => `<div class="cyc-row two"><span class="mono">${n}</span><b>CC ${cc} · ${fmt(loc)}줄</b></div>`).join("")}
+  <p class="help">파일 사이의 연결은 그대로 두고 함수 안을 정리하는 처방입니다.</p></div>`;
+const FUNC1 = [["tyrian2.c · JE_main", 375, 1712], ["game_menu.c · JE_itemScreen", 371, 1475], ["mainint.c · JE_playerMovement", 274, 1134], ["opentyr.c · setupMenu", 122, 648], ["video_scale_hqNx.c · hq4x_32", 446, 5081]];
+const FUNC2 = [["tyrian2.c · JE_main", 261, 1335], ["game_menu.c · JE_itemScreen", 178, 724], ["mainint.c · JE_playerMovement", 119, 524]];
+const cycleBox = `<div class="box"><b>순환 고리에 묶인 파일 수</b><p class="help">위에서부터 차례로 정리했을 때 · 프로그램이 구조로 계산 <span class="mk-fake">예시 수치</span></p>
+  <div class="cyc-row"><span>지금 상태</span><div class="bar hot"><span style="width:100%"></span></div><b>6</b></div>
+  <div class="cyc-row"><span>opentyr.h 정리 후</span><div class="bar warm"><span style="width:67%"></span></div><b>4</b></div>
+  <div class="cyc-row"><span>+ keyboard 정리 후</span><div class="bar good"><span style="width:33%"></span></div><b>2</b></div></div>`;
+const meta = `<div class="meta"><span>10월 30일 받은 처방 · Codex gpt-6.1-sol</span><button class="linkish" type="button">다시 받기</button></div>`;
+const methodBox = (name, what, more) => `<div class="g-method"><b class="m">방법: ${name}</b><p>${what}</p>${more ? `<p class="help">${more}</p>` : ""}</div>`;
+const STEP_NOTE = "이번 단계가 끝나면 결과를 보여 드리고, 더 좋아질 곳이 있으면 다음 단계를 제안합니다(최대 3단계).";
+const WHAT_FUNC = "큰 함수 안에서 한 가지 일을 하는 덩어리를 이름 붙은 작은 함수로 옮깁니다. 게임 동작은 바꾸지 않습니다.";
+
+function renderPlan() {
+  const v = state.variant.plan;
+  const left = `<section><div class="eyebrow">진단${v === "second" ? " · 1단계 적용 뒤 다시 분석" : ""}</div>
+    <h1 class="h1">OpenTyrian · 파일 52개</h1>
+    <div class="card g-diag"><p>왼쪽 진단 카드·스파게티 지도는 지금 화면 그대로입니다(목업에서는 자리만 표시).</p><div class="g-row"></div><div class="g-row"></div><div class="g-row"></div></div></section>`;
+  let panel;
+  if (v === "functions") {
+    panel = `<div class="eyebrow">AI 처방 · 5개 파일</div>
+      <div class="lead">거대 함수가 가장 큰 문제입니다. 큰 함수부터 작은 함수로 나누겠습니다</div>
+      ${methodBox("함수 나누기", WHAT_FUNC, STEP_NOTE)}
+      ${funcBox(FUNC1)}${fileItems(FILES1, "internal")}
+      <div class="bubble"><h4>무엇이 좋아지나요?</h4>기능 하나를 고치려고 1,000줄 넘는 함수를 다 읽는 대신, 그 일을 맡은 작은 함수 하나만 보면 됩니다.</div>
+      <div class="actions"><a class="btn ghost" href="#" data-go="none">직접 고르기</a><button class="btn primary" type="button" data-go="result:next">추천대로 진행 →</button></div>${meta}`;
+  } else if (v === "both") {
+    const m = state.method;
+    const choice = (key, name, ai, what, effect, why) => `<button type="button" class="g-choice ${m === key ? "is-on" : ""}" data-method="${key}" aria-pressed="${m === key}">
+      <div class="g-ct"><i class="g-radio" aria-hidden="true"></i><b>${name}</b>${ai ? `<span class="g-ai">AI 추천</span>` : ""}</div>
+      <p>${what}</p><p><span>기대 효과</span> ${effect}</p>${why ? `<p><span>먼저 하면 좋은 이유</span> ${why}</p>` : ""}</button>`;
+    panel = `<div class="eyebrow">AI 처방 · 고칠 방법 2가지</div>
+      <div class="lead">거대 함수와 파일 사이 순환 고리가 모두 문제입니다</div>
+      <p class="sub">두 방법 모두 효과가 있어 어느 것부터 할지 고를 수 있습니다. 고르지 않은 방법은 다음 단계에서 이어서 제안합니다.</p>
+      <div class="g-pick-q">어느 것부터 할까요?</div>
+      <div class="g-choices">
+        ${choice("functions", "함수 나누기", true, "큰 함수 8개를 작은 함수로 나눕니다.", "매우 복잡한 부분이 가장 많이 줄어듭니다.", "파일 안에서 끝나 다른 파일에 영향이 적고, 기능을 고칠 곳을 바로 찾기 쉬워집니다.")}
+        ${choice("declarations", "선언 옮기기", false, "여러 파일이 함께 쓰는 자료형을 새 헤더로 옮겨, 파일끼리 서로 포함하는 고리를 끊습니다.", "순환 고리에 묶인 파일 6 → 2개(프로그램 계산).", "")}
+      </div>
+      ${m === "functions" ? `${funcBox(FUNC1)}${fileItems(FILES1, "internal")}` : `${cycleBox}${fileItems(FILES_DECL, "link")}`}
+      <div class="actions"><a class="btn ghost" href="#" data-go="none">직접 고르기</a><button class="btn primary" type="button" data-go="result:next">${m === "functions" ? "함수 나누기" : "선언 옮기기"}로 진행 →</button></div>${meta}`;
+  } else {
+    panel = `<div class="eyebrow">AI 처방 · 2단계 · 3개 파일</div>
+      <div class="box"><b>1단계(함수 나누기)에서 바뀐 것</b><div class="g-last">
+        <div><span>큰 함수 → 작은 함수</span><b>${targets.length}개 → ${helpers.length}개</b></div>
+        <div><span>매우 복잡한 부분</span><b class="good-text">−${pct}%</b></div></div></div>
+      <div class="lead">아직 큰 함수가 남아 있어 한 번 더 나누겠습니다</div>
+      ${methodBox("함수 나누기 (한 번 더)", "1단계에서 만든 작은 함수는 그대로 두고, 아직 큰 원래 함수 안의 덩어리를 더 옮깁니다.", "2단계 · 최대 3단계")}
+      ${funcBox(FUNC2)}${fileItems(FILES2, "internal")}
+      <div class="actions"><a class="btn ghost" href="#" data-go="none">직접 고르기</a><button class="btn primary" type="button" data-go="none">추천대로 진행 →</button></div>${meta}`;
+  }
+  return `<div class="wrap"><div class="layout">${left}<aside class="card ai-panel" aria-label="AI 처방">${panel}</aside></div></div>`;
+}
+
+// ================================================================= ② one stage's result
+function renderResult() {
+  const v = state.variant.result;
+  const head = `<header class="s-head"><div class="eyebrow">수정 결과 · 1단계 · 함수 나누기</div>
+    <h1>큰 함수 <em>${targets.length}개</em>를 작은 함수 <em>${helpers.length}개</em>로 나눴습니다</h1>
+    <p>OpenTyrian ${RUN.files.length}개 파일. 게임이 하는 일은 그대로 두고, 한 함수에 몰려 있던 코드를 이름 붙은 작은 함수로 옮겼습니다.</p>
+    <div class="g-safe"><span>✓ 규칙 검사 통과</span><span>✓ 원본은 그대로</span><span>✓ 같은 기준으로 다시 분석</span></div></header>`;
+  const effects = `<section class="card s-card"><div class="s-q">이번 단계로 이렇게 좋아졌습니다</div>
+    <div class="s-title">한 함수가 혼자 하던 여러 일을, 일마다 따로 맡겼습니다</div>
+    <div class="s-effects">
+      <div class="s-effect"><div class="ic" aria-hidden="true">🔍</div><b>고칠 곳을 찾기 쉬워졌습니다</b>
+        <p>기능 하나를 고치려고 <strong>${fmt(longest.before.loc)}줄</strong>짜리 <code class="mono">${esc(longest.name)}</code>를 다 읽는 대신, 평균 <strong>${avgLoc}줄</strong>짜리 작은 함수 하나를 보면 됩니다.</p></div>
+      <div class="s-effect"><div class="ic" aria-hidden="true">🏷️</div><b>함수 이름으로 찾아갈 수 있습니다</b>
+        <p>나눈 일 <strong>${helpers.length}가지</strong>에 각각 이름을 붙였습니다. 예를 들어 방어구 경고를 고치려면 <code class="mono">${esc(armor.name)}</code> 함수를 찾으면 됩니다.</p></div>
+      <div class="s-effect"><div class="ic" aria-hidden="true">🧩</div><b>고친 뒤 확인할 범위가 좁아졌습니다</b>
+        <p>작은 함수 ${helpers.length}개 중 <strong>${simple}개</strong>는 갈림길(if·for·switch)이 20개 이하라 한눈에 읽힙니다.</p></div>
+    </div>
+    <p class="s-small">게임 동작은 바꾸지 않았습니다. 버그를 고친 것이 아니라, 다음에 기능을 고치거나 더할 때의 출발점을 분명하게 만든 것입니다.</p></section>`;
+  const row = t => `<li><div class="s-func-top"><b class="mono">${esc(t.name)}</b><span>${fmt(t.before.loc)}줄 → <strong>${fmt(t.after.loc)}줄</strong>${t.helpers.length ? ` · 작은 함수 ${t.helpers.length}개로 나뉨` : ""}</span></div>
+    <div class="s-bar"><em>전</em><div><span style="width:100%"></span></div></div>
+    <div class="s-bar after"><em>후</em><div><span style="width:${100 * t.after.loc / t.before.loc}%"></span></div></div></li>`;
+  const shorter = `<section class="card s-card"><div class="s-q">원래 함수는 얼마나 짧아졌나요?</div><div class="s-title">한 번에 읽어야 하는 양이 줄었습니다</div>
+    <ul class="s-funcs">${order.slice(0, 3).map(row).join("")}</ul>
+    <details class="s-more"><summary>나머지 ${order.length - 3}개 함수 보기</summary><ul class="s-funcs">${order.slice(3).map(row).join("")}</ul></details></section>`;
+  const pt = armor.target;
+  const example = `<section class="card s-card"><div class="s-q">예를 들어</div>
+    <div class="s-title">‘방어구 경고’ 기능을 고치고 싶다면</div>
+    <div class="s-ex"><div class="s-box"><h3>정리 전</h3><div class="n">${fmt(pt.before.loc)}줄</div>
+        <p><code class="mono">${esc(pt.name)}</code> 함수 전체를 읽으며 찾아야 했습니다. (${esc(base(armor.file))} ${fmt(armor.old[0])}행 근처)</p></div>
+      <div class="s-ex-arrow" aria-hidden="true">→</div>
+      <div class="s-box after"><h3>정리 후</h3><div class="n">${fmt(armor.loc)}줄</div>
+        <p><code class="mono">${esc(armor.name)}</code> 함수만 보면 됩니다. (${esc(base(armor.file))} ${fmt(armor.line)}행)</p></div></div></section>`;
+  const detail = `<details class="card s-detail"><summary>자세히 보기 <small>어떻게 고쳤고, 효과가 얼마나인지</small></summary>
+    <div class="s-sec"><h3><span>1</span>어떻게 고쳤나요?</h3><p>(단순안과 같음)</p></div>
+    <div class="s-sec"><h3><span>2</span>파일마다 무엇을 나눴나요?</h3><p>(단순안과 같음)</p></div>
+    <div class="s-sec"><h3><span>3</span>효과를 숫자로 보면</h3><p>(단순안과 같음) 매우 복잡한 부분 Σ(CC−20) ${fmt(excess.before)} → ${fmt(excess.after)}</p></div>
+    <div class="s-sec"><h3><span>4</span>코드를 직접 보려면</h3>
+      <div class="s-links"><button class="btn ghost sm" type="button">바뀐 코드 전후 비교 보기</button><button class="btn ghost sm" type="button">수정본 내려받기 (.zip)</button></div></div></details>`;
+  const last = v === "next"
+    ? `<section class="card g-next" aria-label="다음 단계"><div class="s-q">다음 단계</div>
+        <div class="s-title">함수 나누기를 한 번 더 하면 더 좋아질 수 있습니다</div>
+        <p><code class="cname">${remain[0].name}</code>(${fmt(remain[0].after.loc)}줄), <code class="cname">${remain[1].name}</code>(${fmt(remain[1].after.loc)}줄), <code class="cname">${remain[3].name}</code>(${fmt(remain[3].after.loc)}줄)이 아직 큽니다. AI가 이번 결과를 다시 보고, 이 함수들 안에 더 옮길 덩어리가 있다고 판단했습니다.</p>
+        <p class="help">[2단계 진행]은 처방 화면으로 돌아가 2단계를 시작합니다. [여기서 마무리]는 정리를 끝내고 빌드·직접 플레이로 넘어갑니다.</p>
+        <div class="g-btns"><button class="btn ghost" type="button" data-go="finish:build">여기서 마무리</button><button class="btn primary" type="button" data-go="plan:second">2단계 진행 →</button></div></section>`
+    : `<section class="card g-next is-end" aria-label="다음 단계"><div class="s-q">정리는 여기까지입니다</div>
+        <div class="s-title">이제 게임을 빌드하고 직접 해 볼 차례입니다</div>
+        <p>AI가 이번 결과를 다시 보고, 남은 큰 함수는 goto와 함께 쓰는 지역 변수가 많아 동작을 바꾸지 않고 더 나누기 어렵다고 판단했습니다.</p>
+        <div class="g-btns"><button class="btn primary" type="button" data-go="finish:build">빌드하고 플레이해 보기 →</button></div></section>`;
+  return `<main class="s-wrap">${head}${effects}${shorter}${example}${detail}${last}</main>`;
+}
+
+// ================================================================= ③ finishing: build → play → done
+// Grouped from the 'checks' the AI wrote per file in the 10/26 change, in the order a player meets them.
+const PLAY = [
+  ["설정 화면", "처음 메뉴 → 설정", "opentyr.c · setupMenu", [
+    "위·아래 키로 항목을 고르고, Enter로 열고 Esc로 닫기",
+    "마우스를 올리면 커서 소리가 나고 선택이 따라오는지",
+    "음량 막대를 마우스로 끌어 조절하기",
+    "전체 화면 단축키를 누른 뒤 메뉴가 다시 그려지는지"]],
+  ["메뉴·상점", "게임 중 메뉴, 레벨 사이 상점", "game_menu.c · JE_itemScreen, JE_menuFunction", [
+    "불러오기·저장 화면에서 칸 고르기",
+    "키 설정에서 키를 바꿀 때 커서가 깜빡이고, 키를 누르면 끝나는지",
+    "업그레이드 메뉴와 조이스틱 설정에서 좌우 키"]],
+  ["전투", "레벨 하나를 끝까지", "mainint.c · JE_playerMovement, tyrian2.c · JE_main", [
+    "키보드(또는 조이스틱)로 움직이고 쏘기",
+    "보조기(사이드킥)를 쏘고 회수하기",
+    "아이템을 먹었을 때 점수·효과",
+    "적 총알에 맞았을 때 폭발과 밀려남",
+    "방어구가 낮을 때 경고 표시와 경고음, 레벨 타이머"]],
+  ["화면 확대", "설정 → 화면 크기", "video_scale_hqNx.c · hq4x_32", [
+    "hq4x 확대를 골랐을 때 화면이 예전과 같은지"]]];
+const TOTAL = PLAY.reduce((s, g) => s + g[3].length, 0);
+// Places any game has; offered after this change's own checklist.
+const COMMON = ["게임이 켜질 때", "처음 메뉴·설정", "게임 플레이 중", "저장·불러오기", "게임을 끌 때", "잘 모르겠어요"];
+
+function finishSteps(at, bad) {
+  const names = ["빌드", "직접 플레이", "완료"];
+  return `<ol class="f-steps" aria-label="마무리 순서">${names.map((n, i) => {
+    const cls = i < at ? "is-done" : i === at ? (bad ? "is-bad" : "is-now") : "";
+    return `<li class="${cls}"><i>${i < at ? "✓" : i === at && bad ? "!" : i + 1}</i>${n}${i === at && bad ? " · 문제 있음" : ""}</li>`;
+  }).join("")}</ol>`;
+}
+// What was changed, one line per stage, right under the title.
+const summaryCard = () => `<div class="card f-sum" aria-label="이번에 정리한 것"><i>✓</i><span><b>1단계 함수 나누기</b> · 큰 함수 ${targets.length}개 → 작은 함수 ${helpers.length}개 · 가장 긴 함수 ${fmt(longest.before.loc)} → ${fmt(longest.after.loc)}줄</span>
+  <button class="btn ghost sm push" type="button" data-go="result:end">단계 결과 다시 보기</button></div>`;
+
+function renderFinish() {
+  const v = state.variant.finish;
+  if (v === "done") return renderDone();
+  const head = `<header class="s-head"><div class="eyebrow">마무리</div>
+    <h1>게임이 예전처럼 움직이는지 확인합니다</h1>
+    <p>정리한 코드를 빌드해 게임을 켜고, 바뀐 곳과 관련된 동작을 직접 해 봅니다.</p>
+    ${summaryCard()}${finishSteps(v === "build" ? 0 : 1, v === "report")}</header>`;
+  let main;
+  if (v === "build") {
+    main = `<section class="card s-card f-build"><div class="s-q">1. 빌드</div><div class="s-title">버튼 하나로 빌드하고 게임을 켭니다</div>
+      <p class="s-lead">수정본을 컴파일해 실행 파일을 만들고 바로 실행합니다. 보통 1~2분 걸립니다.</p>
+      <button class="btn primary" type="button" data-go="finish:play">게임 빌드하고 실행 ▶</button></section>`;
+  } else {
+    const built = `<div class="card s-card f-built"><i class="tick">✓</i><span><b>빌드 성공</b> · 48초 · 게임이 켜졌습니다</span><button class="btn ghost sm push" type="button">게임 다시 실행 ▶</button></div>`;
+    if (v === "report" && state.reported) {
+      main = built + `<section class="card s-card f-report"><div class="s-q" style="color:var(--warn)">문제를 기록했습니다</div>
+        <div class="s-title">어떻게 할까요?</div>
+        <dl><dt>문제</dt><dd>${esc(state.tag)}</dd><dt>어디서</dt><dd>메뉴·상점 — 업그레이드 메뉴와 조이스틱 설정에서 좌우 키</dd><dt>메모</dt><dd>업그레이드 메뉴에서 오른쪽 키를 누르면 선택이 두 칸씩 움직여요.</dd></dl>
+        <p class="help">이 동작과 관련해 바뀐 함수: <code class="cname">updateMenuOnRightKey</code> <code class="cname">updateMenuOnLeftKey</code> (game_menu.c)</p>
+        <div class="s-links"><button class="btn primary" type="button">관련 함수 전후 비교 보기</button><button class="btn ghost" type="button">이 단계 되돌리기</button><button class="btn ghost" type="button" data-go="finish:play">다시 해 보기</button></div>
+        <p class="help">되돌리면 수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다.</p></section>`;
+    } else {
+      const done = state.checked.size;
+      const groups = PLAY.map(([g, where, fn, items]) => `<div class="f-group"><h4>${g}<small>${where}</small></h4><ul class="f-items">${items.map(t => {
+        const key = `${g}: ${t}`, on = state.checked.has(key);
+        return `<li><label class="${on ? "is-checked" : ""}"><input type="checkbox" data-check="${esc(key)}" ${on ? "checked" : ""}><span>${esc(t)}<small>바뀐 곳: ${esc(fn)}</small></span></label></li>`;
+      }).join("")}</ul></div>`).join("");
+      main = built + `<section class="card s-card"><div class="s-q">2. 직접 플레이</div><div class="s-title">바뀐 곳과 관련된 동작을 해 보세요</div>
+        <p class="s-lead">AI가 변경안을 만들면서 파일마다 적은 ‘확인할 동작’을 게임 화면 순서로 묶었습니다. 해 본 것에 체크하세요. 모두 체크하지 않아도 됩니다.</p>
+        <div class="f-count">${done} / ${TOTAL} 확인</div><div class="f-prog"><span style="width:${100 * done / TOTAL}%"></span></div>
+        ${groups}
+        <div class="f-verdict"><button class="btn primary" type="button" data-go="finish:done">정상입니다</button><button class="btn ghost" type="button" data-report="1">문제가 있었습니다</button>
+          <p class="help">‘정상입니다’를 누르면 정리를 마칩니다.</p></div></section>`;
+    }
+  }
+  const modal = v === "report" && !state.reported ? reportModal() : "";
+  return `<main class="f-wrap">${head}${main}</main>${modal}`;
+}
+
+function reportModal() {
+  const tags = ["화면이 이상해요", "조작이 안 돼요", "멈추거나 꺼져요", "소리가 달라요", "기타"];
+  return `<div class="g-modal" role="dialog" aria-modal="true" aria-labelledby="rep-title"><div class="g-modal-box">
+    <h2 id="rep-title">어떤 문제가 있었나요?</h2><p>적어 주신 내용으로 관련 코드를 찾아 드립니다.</p>
+    <div class="g-field"><span>어떤 문제인가요?</span><div class="g-tags">${tags.map(t => `<button type="button" data-tag="${t}" class="${state.tag === t ? "is-on" : ""}">${t}</button>`).join("")}</div></div>
+    <label class="g-field"><span>어디서 생겼나요?</span><select>${PLAY.map(([g, , , items]) => `<optgroup label="확인 목록 · ${g}">${items.map(t => `<option ${/좌우 키/.test(t) ? "selected" : ""}>${esc(t)}</option>`).join("")}</optgroup>`).join("")}
+      <optgroup label="그 밖 (어느 게임이든 같은 항목)">${COMMON.map(t => `<option>${t}</option>`).join("")}</optgroup></select></label>
+    <label class="g-field"><span>자세히 적어 주세요 <small>(선택)</small></span><textarea placeholder="예: 업그레이드 메뉴에서 오른쪽 키를 누르면 선택이 두 칸씩 움직여요">업그레이드 메뉴에서 오른쪽 키를 누르면 선택이 두 칸씩 움직여요.</textarea></label>
+    <div class="g-field"><span>스크린샷 <small>(선택)</small></span><div class="g-shot">Ctrl+V로 붙여 넣거나 파일을 끌어 놓으세요<br><button class="btn ghost sm" type="button">이미지 고르기</button></div></div>
+    <div class="g-modal-foot"><p class="help">기록은 이 작업 폴더에만 저장되고, 밖으로 보내지 않습니다.</p>
+      <button class="btn ghost" type="button" data-go="finish:play">취소</button><button class="btn primary" type="button" data-submit="1">기록하기</button></div></div></div>`;
+}
+
+function renderDone() {
+  return `<main class="f-wrap">
+    <section class="card f-hero"><div class="big" aria-hidden="true">✓</div>
+      <h1>정리를 마쳤습니다</h1><p>OpenTyrian의 동작은 그대로 두고 코드를 읽기 쉽게 나눴고, 빌드와 직접 플레이로 확인했습니다.</p>
+      <div class="f-record" aria-label="정리 기록">
+        <div class="f-record-head"><b>정리 기록 · OpenTyrian</b><span>10월 30일 · Claude Sonnet · 1단계(함수 나누기)</span></div>
+        <div class="f-record-body">
+          <div><h4>무엇이 좋아졌나</h4>
+            <div class="f-num"><span>큰 함수 → 작은 함수</span><b>${targets.length}개 → ${helpers.length}개</b></div>
+            <div class="f-num"><span>가장 긴 함수</span><b>${fmt(longest.before.loc)} → ${fmt(longest.after.loc)}줄</b></div>
+            <div class="f-num"><span>매우 복잡한 부분</span><b>−${pct}%</b></div>
+            <div class="f-num"><span>방어구 경고 기능</span><b>${fmt(armor.target.before.loc)}줄 함수 속 → ${armor.loc}줄 함수</b></div></div>
+          <div><h4>어떻게 확인했나</h4><ul class="f-ok-list"><li>규칙 검사 통과</li><li>원본은 그대로, 사본에 적용</li><li>빌드 성공</li><li>직접 플레이 ${state.checked.size || TOTAL}가지 확인 · 정상</li></ul></div>
+        </div></div></section>
+    <section class="card s-card"><div class="s-q">이제 무엇을 할까요?</div>
+      <div class="f-next">
+        <button type="button" class="main"><b>수정본 내려받기</b><small>정리한 코드 전체(.zip)</small></button>
+        <button type="button"><b>바뀐 코드 보기</b><small>함수마다 전후 비교</small></button>
+        <button type="button"><b>정리 기록 저장</b><small>위 기록 카드를 이미지로 · 보고서·발표용</small></button>
+      </div>
+      <div class="s-links"><button class="btn ghost sm" type="button" data-go="result:end">단계 결과 다시 보기</button><button class="btn ghost sm" type="button">다른 게임 분석하기</button></div></section>
+  </main>`;
+}
+
+// ---------------------------------------------------------------- switcher
+function render() {
+  document.documentElement.dataset.theme = state.theme;
+  for (const b of document.querySelectorAll("#screen button")) b.classList.toggle("on", b.dataset.v === state.screen);
+  document.getElementById("variant").innerHTML = VARIANTS[state.screen].map(([v, t]) => `<button type="button" data-v="${v}" class="${v === state.variant[state.screen] ? "on" : ""}">${t}</button>`).join("");
+  document.getElementById("note").innerHTML = NOTES[state.screen];
+  document.getElementById("root").innerHTML = state.screen === "plan" ? renderPlan() : state.screen === "result" ? renderResult() : renderFinish();
+}
+function go(screen, variant) {
+  state.screen = screen;
+  if (variant) state.variant[screen] = variant;
+  if (screen === "finish" && state.variant.finish === "report") state.reported = false;
+  render();
+  window.scrollTo(0, 0);
+}
+document.getElementById("screen").addEventListener("click", e => { const b = e.target.closest("button"); if (b) go(b.dataset.v); });
+document.getElementById("variant").addEventListener("click", e => { const b = e.target.closest("button"); if (b) go(state.screen, b.dataset.v); });
+document.getElementById("theme").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  document.querySelectorAll("#theme button").forEach(x => x.classList.toggle("on", x === b));
+  state.theme = b.dataset.v; render();
+});
+// Buttons in the page walk the flow.
+document.getElementById("root").addEventListener("click", e => {
+  const t = e.target.closest("[data-method],[data-tag],[data-report],[data-submit],[data-go]");
+  if (!t) return;
+  if (t.dataset.method) { state.method = t.dataset.method; render(); return; }
+  if (t.dataset.tag) { state.tag = t.dataset.tag; render(); return; }
+  if (t.dataset.report) { go("finish", "report"); return; }
+  if (t.dataset.submit) { state.reported = true; render(); window.scrollTo(0, 0); return; }
+  e.preventDefault();
+  const [screen, variant] = t.dataset.go.split(":");
+  if (screen !== "none") go(screen, variant);
+});
+document.getElementById("root").addEventListener("change", e => {
+  const key = e.target.dataset.check;
+  if (!key) return;
+  e.target.checked ? state.checked.add(key) : state.checked.delete(key);
+  const y = window.scrollY; render(); window.scrollTo(0, y);
+});
+render();
+</script>
+</body>
+</html>
