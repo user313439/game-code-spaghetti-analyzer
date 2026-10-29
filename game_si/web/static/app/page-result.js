@@ -3,7 +3,7 @@ import {diffView} from "./diff.js";
 import {confirmDialog, fill, h, notice, progressBlock, toast} from "./ui.js";
 
 const APPLY_STAGES = ["사본 만들기", "다시 분석", "전후 비교", "정리"];
-const KEYS = [["cycle_units", "순환 고리에 묶인"], ["links", "사이 연결선"], ["complex_functions", "매우 복잡한 함수 (CC>20)"], ["excess_complexity", "초과 복잡도 Σ(CC−10)"]];
+const KEYS = [["cycle_units", "순환 고리에 묶인"], ["links", "사이 연결선"], ["complex_excess", "매우 복잡한 부분 Σ(CC−20)"], ["excess_complexity", "초과 복잡도 Σ(CC−10)"]];
 const SHOWN_FUNCTIONS = 6;   // other changed functions listed before "더 보기"
 
 function value(round, key) { return round.components.find(c => c.key === key)?.after ?? 0; }
@@ -219,7 +219,7 @@ export async function render(view, ctx, {jobId}) {
         h("p", {class: "help"}, "게임 전체의 절대량이라 한 라운드에 보통 2% 미만 움직입니다. 고친 곳의 변화는 위 카드에서 봅니다.")),
       h("div", {class: "tangle"}, h("div", null, h("div", {class: "eyebrow"}, "엉킴 총량 · 처음 상태 = 100"),
         h("div", {class: "big-index"}, h("s", null, "100 →"), h("b", null, cur.index.toFixed(cur.index % 1 ? 2 : 0))),
-        h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 함수·초과 복잡도·전역 변수 접근을 처음 상태와 비교한 값입니다."),
+        h("p", {class: "help"}, "순환 고리·연결·매우 복잡한 부분·초과 복잡도·전역 변수 접근을 처음 상태와 비교한 값입니다."),
         cur.same_units ? null : h("p", {class: "chip warn"}, `⚠ 분석된 ${label} 구성이 처음과 달라(추가·삭제) 총량을 그대로 비교하기 어렵습니다`),
         parts), chart),
       // The total above compares with the first analysis; these four compare with the round before.

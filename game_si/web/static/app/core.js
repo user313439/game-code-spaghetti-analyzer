@@ -404,7 +404,8 @@ export function safetyBadges(round = {}, game = {}) {
 }
 
 // ---------------------------------------------------------------- AI connection
-export const AI_LABELS = {claude: "Claude", codex: "ChatGPT (Codex)", gemini: "Gemini", compatible: "다른 AI (주소로 연결)"};
+// Gemini is one of the addresses under the other AIs (an API key); "gemini" stays only to name old records.
+export const AI_LABELS = {claude: "Claude", codex: "ChatGPT (Codex)", compatible: "기타 AI (Gemini 등 · 주소로 연결)"};
 const PROGRAM_NAMES = {claude: "Claude Code", codex: "Codex", gemini: "Gemini CLI"};
 
 // Name shown next to a result: the program, or the model for an address-based connection.
@@ -418,8 +419,8 @@ export function aiName(service, model = "") {
 // with an API key instead, so the request can still go through.
 export function pickConnection(connections, saved = {}) {
   const ids = connections.map(c => c.id);
-  // Claude Code first, then Codex, then Gemini CLI; a confirmed login beats an unknown one.
-  const prefer = ["claude", "codex", "gemini"];
+  // Claude Code first, then Codex; a confirmed login beats an unknown one.
+  const prefer = ["claude", "codex"];
   const programs = connections.filter(c => c.id !== "compatible")
     .sort((a, b) => (prefer.indexOf(a.id) + 1 || 99) - (prefer.indexOf(b.id) + 1 || 99));
   let service = ids.includes(saved.service) ? saved.service

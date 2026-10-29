@@ -21,11 +21,10 @@ function remember(value) {
 export function stepAdvice(service, step, models = []) {
   const find = re => models.find(m => re.test(m));
   if (service === "claude") return step === "refactor"
-    ? {pick: "sonnet", text: "변경안은 Sonnet을 권합니다. 처방이 정한 함수를 규칙대로 나누는 일이라 Sonnet으로 충분하고, 코드를 길게 쓰는 단계라 Opus보다 사용 한도를 훨씬 적게 씁니다. 비워 두면 Opus(기본값)로 만듭니다."}
+    // Measured 2026-10-29 on OpenTyrian (5 files, one pass): haiku passed every check but moved little
+    // (JE_main CC 388 → 381, against 388 → 337 with Codex sol).
+    ? {pick: "sonnet", text: "변경안은 Sonnet을 권합니다. 처방이 정한 함수를 규칙대로 나누는 일이라 Sonnet으로 충분하고, 코드를 길게 쓰는 단계라 Opus보다 사용 한도를 훨씬 적게 씁니다. Haiku는 검사는 통과하지만 한 번에 조금만 나눕니다. 비워 두면 Opus(기본값)로 만듭니다."}
     : {text: "처방은 비워 두면 기본 모델(Opus)로 받습니다. 구조 전체를 읽고 어디를 고칠지 판단하는 단계라 상위 모델이 안정적이고, 답이 짧아 사용 한도는 적게 씁니다."};
-  if (service === "gemini") return step === "refactor"
-    ? {pick: "flash", text: "변경안은 flash를 권합니다. 규칙대로 함수를 나누는 일이라 가벼운 모델로 충분하고 사용 한도를 덜 씁니다. 비워 두면 Gemini CLI가 모델을 자동으로 고릅니다."}
-    : {pick: "pro", text: "처방은 pro(상위 모델)를 권합니다. 구조 전체를 읽고 판단하는 단계이고 답이 짧습니다. 비워 두면 Gemini CLI가 모델을 자동으로 고릅니다."};
   if (service === "codex") {
     const base = models[0], top = find(/astra/), light = find(/luna/), work = find(/sol/) || base;
     const named = base ? `(${base})` : "";
@@ -50,7 +49,7 @@ export function connectionPicker(connections, api, {step} = {}) {
     return advice?.pick && advice.auto !== false ? advice.pick : "";
   };
   const labelled = (text, control) => h("label", {class: "conn-field"}, h("span", null, text), control);
-  const ORDER = ["claude", "codex", "gemini", "compatible"];
+  const ORDER = ["claude", "codex", "compatible"];
   const ordered = [...connections].sort((a, b) => (ORDER.indexOf(a.id) + 1 || 99) - (ORDER.indexOf(b.id) + 1 || 99));
   const service = h("select", {"aria-label": "사용할 AI"}, ...ordered.map(c => h("option", {value: c.id}, AI_LABELS[c.id] || c.name)));
   service.value = start.service;

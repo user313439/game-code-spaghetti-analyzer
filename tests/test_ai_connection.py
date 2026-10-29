@@ -109,7 +109,7 @@ def test_connection_rules_for_every_kind():
 def test_capabilities_offer_any_ai_without_an_install_flag(monkeypatch):
     monkeypatch.setattr(assistant, 'executable', lambda service: [])
     rows = {r['id']: r for r in assistant.capabilities()}
-    assert set(rows) == {'codex', 'claude', 'gemini', 'compatible'}
+    assert set(rows) == {'codex', 'claude', 'compatible'}   # Gemini: an address under the other AIs
     assert any(p['url'] == 'http://localhost:11434/v1' and p.get('local') for p in rows['compatible']['presets'])
 
 
@@ -191,4 +191,4 @@ def test_each_program_lists_the_models_it_accepts(tmp_path, monkeypatch):
         {'slug': 'gpt-6-luna', 'visibility': 'list', 'priority': 5}, {'slug': 'gpt-6.1-sol', 'visibility': 'list', 'priority': 1},
         {'slug': 'hidden-model', 'visibility': 'hide', 'priority': 0}, {'slug': 'bad name;', 'visibility': 'list', 'priority': 2}]}), encoding='utf8')
     assert assistant.codex_models() == ['gpt-6.1-sol', 'gpt-6-luna']
-    assert assistant.CLI_MODELS['claude']() == ['opus', 'sonnet', 'haiku'] and 'flash' in assistant.CLI_MODELS['gemini']()
+    assert assistant.CLI_MODELS['claude']() == ['opus', 'sonnet', 'haiku'] and set(assistant.CLI_MODELS) == {'claude', 'codex'}

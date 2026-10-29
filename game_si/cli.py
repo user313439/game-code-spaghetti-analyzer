@@ -79,6 +79,12 @@ def _build_parser() -> argparse.ArgumentParser:
         help="결과 디렉토리. JSON과 (후속 단계에서 추가될) HTML이 저장된다.",
     )
     p_analyze.add_argument(
+        "--loop-entries",
+        type=Path,
+        help="게임 루프 진입점 목록 JSON([[파일, 함수 이름], ...]). 주면 이름 규칙 대신 이 목록만 진입점으로 본다 "
+             "(AI 수정본을 처음 분석과 같은 기준으로 다시 잴 때: 새 보조 함수 이름이 진입점으로 잡히지 않게).",
+    )
+    p_analyze.add_argument(
         "--top",
         type=int,
         default=0,
@@ -289,6 +295,17 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _fix_loop_entries(ast_data: dict, path: Path) -> None:
+    """Mark as game-loop entries exactly the (file, function) pairs listed in path, nothing found by name.
+    A revision keeps the first analysis's entries: a new helper named like updateMenuFrame is no entry."""
+    entries = {tuple(pair) for pair in json.loads(Path(path).read_text(encoding='utf-8'))}
+    for f in ast_data.get("files", []):
+        file_path = f.get("relative_path") or f.get("path", "")
+        for c in f.get("classes", []):
+            for m in c.get("methods", []):
+                m["is_game_loop_entry"] = (file_path, m["name"]) in entries
+
+
 def _cmd_analyze(args: argparse.Namespace) -> int:
     input_path = Path(args.input)
     if not input_path.exists():
@@ -376,6 +393,8 @@ def _cmd_analyze(args: argparse.Namespace) -> int:
 
     # 2) Metric Engine
     from .metrics import compute_metrics, metrics_to_dict
+    if getattr(args, 'loop_entries', None):
+        _fix_loop_entries(result.data, args.loop_entries)
     metrics = compute_metrics(result.data)
     print(
         f"[metrics] {unit_label}={len(metrics.classes)} {method_label}={len(metrics.methods)} "

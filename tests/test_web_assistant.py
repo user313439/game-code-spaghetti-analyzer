@@ -76,14 +76,13 @@ def test_patch_size_and_nested_destination_are_bounded(tmp_path):
     assert not (source / 'nested').exists()
 
 
-@pytest.mark.parametrize('service', ['codex', 'claude', 'gemini'])
+@pytest.mark.parametrize('service', ['codex', 'claude'])
 def test_explicit_api_key_transport_without_live_call(monkeypatch, service):
     ai = module()
     reply = dict(reasons=['구조'], suggestions=['분리'], tests=['비교'], uncertainty='정적 검토', edits=[])
     payload = json.dumps(reply, ensure_ascii=False)
     envelopes = {'codex': {'output': [{'content': [{'type': 'output_text', 'text': payload}]}]},
-                 'claude': {'content': [{'type': 'text', 'text': payload}]},
-                 'gemini': {'candidates': [{'content': {'parts': [{'text': payload}]}}]}}
+                 'claude': {'content': [{'type': 'text', 'text': payload}]}}
     captured = []
     class Response:
         def __enter__(self): return self

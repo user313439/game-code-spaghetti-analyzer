@@ -20,8 +20,10 @@ import urllib.request
 
 from .change_rules import C_FAMILY, includes, resolves_to, unsafe_text
 
-SERVICES = {'codex': 'Codex', 'claude': 'Claude Code', 'gemini': 'Gemini CLI'}
+SERVICES = {'codex': 'Codex', 'claude': 'Claude Code'}
 # Any other AI: most services and local model servers speak the OpenAI chat-completions API.
+# Gemini is reached here too (its OpenAI-compatible address and the user's API key): Google no longer
+# serves Gemini CLI to personal Google logins (IneligibleTierError, checked 2026-10-29).
 COMPATIBLE = 'compatible'
 CONNECTIONS = {**SERVICES, COMPATIBLE: '다른 AI'}
 PRESETS = [
@@ -407,7 +409,7 @@ def _bundled_codex():
 
 
 def executable(service):
-    command = shutil.which({'codex': 'codex', 'claude': 'claude', 'gemini': 'gemini'}[service])
+    command = shutil.which({'codex': 'codex', 'claude': 'claude'}[service])
     if not command and service in {'claude', 'codex'}:
         bundled = _bundled_claude() if service == 'claude' else _bundled_codex()
         return [str(bundled)] if bundled else []
@@ -415,8 +417,7 @@ def executable(service):
         return []
     # Invoke npm entrypoints directly, avoiding shell interpolation on Windows.
     if Path(command).suffix.lower() in {'.cmd', '.ps1'}:
-        package = {'codex': '@openai/codex', 'gemini': '@google/gemini-cli',
-                   'claude': '@anthropic-ai/claude-code'}.get(service)
+        package = {'codex': '@openai/codex', 'claude': '@anthropic-ai/claude-code'}.get(service)
         node = shutil.which('node')
         folder = Path(command).parent / 'node_modules' / (package or '')
         try:
@@ -480,8 +481,8 @@ def codex_models():
         return []
 
 
-# Model names each program accepts on this PC, for the model field: Claude Code and Gemini CLI aliases.
-CLI_MODELS = {'claude': lambda: ['opus', 'sonnet', 'haiku'], 'codex': codex_models, 'gemini': lambda: ['pro', 'flash', 'flash-lite']}
+# Model names each program accepts on this PC, for the model field: Claude Code aliases, Codex's own list.
+CLI_MODELS = {'claude': lambda: ['opus', 'sonnet', 'haiku'], 'codex': codex_models}
 
 
 def capabilities():
@@ -822,7 +823,7 @@ def _stop_if_cancelled():
 
 
 def call_provider(service, mode, prompt, model='', api_key='', *, base_url='', schema=None, guidance=None, validate=None,
-                  gemini_hint='JSON 형식의 개선 제안만 반환하세요. 도구를 사용하지 마세요.', timeout=None, max_output=None):
+                  timeout=None, max_output=None):
     schema = schema or ADVICE_SCHEMA
     guidance = guidance or GUIDANCE
     validate = _keeping_reply(validate or validate_advice)
@@ -855,21 +856,10 @@ def call_provider(service, mode, prompt, model='', api_key='', *, base_url='', s
             command += ['exec', '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check',
                         '--sandbox', 'read-only', '--ephemeral', '-c', 'forced_login_method="chatgpt"',
                         '-c', 'features.shell_tool=false', '--output-schema', str(schema_file), '-o', str(output)]
-        elif service == 'claude':
+        else:
             command += ['-p', '--tools', '', '--setting-sources', '', '--strict-mcp-config',
                         '--mcp-config', '{"mcpServers":{}}', '--output-format', 'json',
                         '--json-schema', json.dumps(schema)]
-        else:
-            settings = root / '.gemini'
-            settings.mkdir()
-            (settings / 'settings.json').write_text(json.dumps({'tools': {'core': []},
-                'security': {'auth': {'selectedType': 'oauth-personal'}}, 'mcp': {'allowed': []},
-                'hooksConfig': {'enabled': False}, 'telemetry': {'enabled': False}}), encoding='utf8')
-            policy = root / 'no-tools.toml'
-            policy.write_text('[[rule]]\ntoolName = "*"\ndecision = "deny"\npriority = 999\n', encoding='utf8')
-            command += ['-p', gemini_hint,
-                        '--approval-mode', 'plan', '--output-format', 'json', '--extensions', '',
-                        '--allowed-mcp-server-names', '', '--policy', str(policy)]
         if model:
             command += ['--model', model]
         if service == 'codex':
@@ -890,7 +880,7 @@ def call_provider(service, mode, prompt, model='', api_key='', *, base_url='', s
             envelope = parse_json(result.stdout)
             if envelope.get('is_error') or envelope.get('error'):
                 raise cli_failure(result) or ValueError('AI 요청에 실패했습니다. 로그인과 사용 한도를 확인해 주세요.')
-            data = envelope.get('structured_output') or parse_json(envelope.get('result') or envelope.get('response', ''))
+            data = envelope.get('structured_output') or parse_json(envelope.get('result') or '')
         return validate(data)
 
 
@@ -905,15 +895,10 @@ def _api(service, prompt, model, key, schema=None, guidance=None, validate=None,
         headers['Authorization'] = 'Bearer ' + key
         make = lambda limit: {'model': model, 'input': instruction, 'max_output_tokens': limit,
                               'text': {'format': {'type': 'json_schema', 'name': 'refactoring', 'strict': True, 'schema': schema}}}
-    elif service == 'claude':
+    else:
         url = 'https://api.anthropic.com/v1/messages'
         headers.update({'x-api-key': key, 'anthropic-version': '2023-06-01'})
         make = lambda limit: {'model': model, 'max_tokens': limit, 'messages': [{'role': 'user', 'content': instruction}]}
-    else:
-        url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent'
-        headers['x-goog-api-key'] = key
-        make = lambda limit: {'contents': [{'parts': [{'text': instruction}]}],
-                              'generationConfig': {'responseMimeType': 'application/json', 'maxOutputTokens': limit}}
 
     def send(limit):
         request = urllib.request.Request(url, data=json.dumps(make(limit)).encode('utf8'), headers=headers, method='POST')
@@ -932,8 +917,6 @@ def _api(service, prompt, model, key, schema=None, guidance=None, validate=None,
         raise ValueError('API 요청에 실패했습니다. 키·모델·잔액·연결을 확인해 주세요. 자동 재결제나 다른 연결 전환은 하지 않습니다.') from exc
     if service == 'codex':
         text = ''.join(c.get('text', '') for item in data.get('output', []) for c in item.get('content', []) if c.get('type') == 'output_text')
-    elif service == 'claude':
-        text = ''.join(c.get('text', '') for c in data.get('content', []) if c.get('type') == 'text')
     else:
-        text = ''.join(p.get('text', '') for p in data.get('candidates', [{}])[0].get('content', {}).get('parts', []))
+        text = ''.join(c.get('text', '') for c in data.get('content', []) if c.get('type') == 'text')
     return validate(parse_json(text))

@@ -321,8 +321,7 @@ class Prescriptions:
                 try:
                     with assistant.owned_by(('prescription', ident, run)):
                         reply = assistant.call_provider(body['service'], body['mode'], ask, body.get('model', ''), body.get('api_key', ''),
-                                                        **assistant.connection_extras(body), schema=SCHEMA, guidance=GUIDANCE, validate=lambda d: d,
-                                                        gemini_hint='JSON 형식의 구조 처방만 반환하세요. 도구를 사용하지 마세요.')
+                                                        **assistant.connection_extras(body), schema=SCHEMA, guidance=GUIDANCE, validate=lambda d: d)
                 except json.JSONDecodeError:   # a reply that is not JSON is a format error worth one retry
                     reply = None
                 try:
