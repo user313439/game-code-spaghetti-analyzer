@@ -163,6 +163,20 @@ class PlayRequest(BaseModel):
     model_config = ConfigDict(extra='forbid')
     ok: bool
     note: str = Field(default='', max_length=300)
+    checked: list[Annotated[str, Field(max_length=300)]] = Field(default_factory=list, max_length=40)
+
+
+REPORT_KINDS = {'화면이 이상해요', '조작이 안 돼요', '멈추거나 꺼져요', '소리가 달라요', '기타'}
+SCREENSHOT_BYTES = 6 * 1024 * 1024
+SCREENSHOT_TYPES = {b'\x89PNG\r\n\x1a\n': 'png', b'\xff\xd8\xff': 'jpg', b'RIFF': 'webp'}
+
+
+def screenshot_suffix(data: bytes) -> str:
+    # Only real images are kept: the first bytes decide, not the name or the browser's type.
+    for magic, suffix in SCREENSHOT_TYPES.items():
+        if data.startswith(magic) and (suffix != 'webp' or data[8:12] == b'WEBP'):
+            return suffix
+    raise ValueError('스크린샷은 PNG·JPG·WEBP 이미지만 붙일 수 있습니다.')
 
 
 class PrescriptionRequest(BaseModel):
@@ -391,7 +405,34 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
 
     @app.post('/api/jobs/{ident}/rounds/{number}/play')
     def confirm_play(ident: str, number: int, body: PlayRequest):
-        return assistant.record_check(ident, number, 'play', {'ok': body.ok, 'note': body.note, 'at': time.time()})
+        return assistant.record_check(ident, number, 'play', {'ok': body.ok, 'note': body.note, 'checked': body.checked, 'at': time.time()})
+
+    @app.post('/api/jobs/{ident}/rounds/{number}/report')
+    async def report_problem(ident: str, number: int, request: Request):
+        # A problem found while playing: what kind, where, the user's words and an optional screenshot.
+        # Kept in this job's folder only, next to the round it is about.
+        async with request.form(max_files=1, max_fields=8, max_part_size=SCREENSHOT_BYTES) as form:
+            kind, where, note = (str(form.get(k, '')).strip() for k in ('kind', 'where', 'note'))
+            checked = json.loads(str(form.get('checked', '[]')) or '[]')
+            if kind not in REPORT_KINDS or len(where) > 300 or len(note) > 2000:
+                raise ValueError('문제 종류와 내용을 확인해 주세요.')
+            if not isinstance(checked, list) or len(checked) > 40 or not all(isinstance(c, str) and len(c) <= 300 for c in checked):
+                raise ValueError('확인한 항목 형식이 올바르지 않습니다.')
+            upload = form.get('screenshot')
+            data = await upload.read(SCREENSHOT_BYTES + 1) if hasattr(upload, 'read') else b''
+        if len(data) > SCREENSHOT_BYTES:
+            raise ValueError('스크린샷은 6MB까지 붙일 수 있습니다.')
+        rounds = assistant.rounds(ident)
+        if not 1 <= number <= len(rounds['rounds']):
+            raise KeyError('round')
+        shot = None
+        if data:
+            folder = manager.directory(ident) / 'revisions' / rounds['rounds'][number - 1]['revision'] / 'reports'
+            folder.mkdir(parents=True, exist_ok=True)
+            shot = f'{int(time.time() * 1000)}.{screenshot_suffix(data)}'
+            (folder / shot).write_bytes(data)
+        return assistant.record_check(ident, number, 'play', {'ok': False, 'kind': kind, 'where': where, 'note': note,
+                                                              'checked': checked, 'screenshot': shot, 'at': time.time()})
 
     @app.get('/api/jobs/{ident}')
     def job(ident: str):
