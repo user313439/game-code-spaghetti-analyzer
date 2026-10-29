@@ -1,6 +1,9 @@
-import {changeText, elapsedText, functionChanges, resultHeadline, safetyBadges, unitDisplay} from "./core.js";
+import {changeText, elapsedText, functionChanges, resultHeadline, safetyBadges, splitSummary, unitDisplay} from "./core.js";
 import {diffView} from "./diff.js";
+import {METHODS} from "./prescription.js";
 import {confirmDialog, fill, h, notice, progressBlock, toast} from "./ui.js";
+
+const MAX_STAGES = 3;
 
 const APPLY_STAGES = ["사본 만들기", "다시 분석", "전후 비교", "정리"];
 const KEYS = [["cycle_units", "순환 고리에 묶인"], ["links", "사이 연결선"], ["complex_excess", "매우 복잡한 부분 Σ(CC−20)"], ["excess_complexity", "초과 복잡도 Σ(CC−10)"]];
@@ -62,15 +65,18 @@ export async function render(view, ctx, {jobId}) {
   const root = h("section", {class: "wrap wide"}, h("p", {class: "empty"}, "수정 결과를 불러오고 있습니다."));
   view.append(root);
   ctx.setSteps(jobId, 3, {refactor: true, result: true});
-  let alive = true, timer = null, gameTimer = null, watcher = 0, shown = "";
+  let alive = true, timer = null, shown = "";
   const progress = progressBlock(APPLY_STAGES);
 
   async function load() {
     try {
-      const [job, state, rounds, tangle, game, diag] = await Promise.all([ctx.api(`/api/jobs/${jobId}`), ctx.api(`/api/jobs/${jobId}/assistant`),
-        ctx.api(`/api/jobs/${jobId}/rounds`), ctx.api(`/api/jobs/${jobId}/tangle`), ctx.api(`/api/jobs/${jobId}/demo`), ctx.api(`/api/jobs/${jobId}/diagnosis`)]);
+      const [job, state, rounds, tangle, game, diag, presc] = await Promise.all([ctx.api(`/api/jobs/${jobId}`), ctx.api(`/api/jobs/${jobId}/assistant`),
+        ctx.api(`/api/jobs/${jobId}/rounds`), ctx.api(`/api/jobs/${jobId}/tangle`), ctx.api(`/api/jobs/${jobId}/demo`), ctx.api(`/api/jobs/${jobId}/diagnosis`),
+        ctx.api(`/api/jobs/${jobId}/prescription`).catch(() => ({state: "idle"}))]);
       ctx.setCrumb(job.name);
-      draw({state, rounds, tangle, game, label: diag.summary.unit_label});
+      // The changed functions' code: which new helpers each original function now calls.
+      const changes = rounds.current ? await ctx.api(`/api/jobs/${jobId}/rounds/${rounds.current}/changes`).catch(() => ({functions: []})) : {functions: []};
+      draw({state, rounds, tangle, game, label: diag.summary.unit_label, presc, code: changes?.functions || []});
     } catch (error) {
       if (!alive) return;
       // While applying, a missed poll is retried; otherwise offer a manual retry.
@@ -91,7 +97,7 @@ export async function render(view, ctx, {jobId}) {
     clearTimeout(timer); timer = setTimeout(() => alive && load(), 1000);
   }
 
-  function draw({state, rounds, tangle, game, label}) {
+  function draw({state, rounds, tangle, game, label, presc = {state: "idle"}, code = []}) {
     if (!alive) return;
     if (state.state === "running" && state.action === "apply") { applying(state); return; }
     shown = "result";
@@ -112,9 +118,6 @@ export async function render(view, ctx, {jobId}) {
     const cycle = [value(prev, "cycle_units"), value(cur, "cycle_units")], links = [value(prev, "links"), value(cur, "links")];
     const checks = round.checks || {};
     const built = game.available && game.state === "complete" && game.revision === round.revision;
-    // A play result can be recorded once the modified game exists: built here, or built by the user
-    // in their own environment when no demo game is registered for this project.
-    const canRecordPlay = !game.available || built;
     const head = resultHeadline(changes, {label, cycle, links});
 
     // 1. What changed where the code was fixed: the most reduced function large, the others as a list.
@@ -135,8 +138,7 @@ export async function render(view, ctx, {jobId}) {
       : null;
     const totals = changes.totals, totalChange = totals.cc[0] ? changeText(totals.cc[0], totals.cc[1]) : "";
     // The code of the changed functions arrives separately (it can be large) and fills in below.
-    const codeSlot = h("div");
-    ctx.api(`/api/jobs/${jobId}/rounds/${n}/changes`).then(data => { if (alive) fill(codeSlot, codeView(data?.functions)); }).catch(() => {});
+    const codeSlot = h("div", null, codeView(code));
     const hero = h("section", {class: "card fix", "aria-label": "고친 곳의 변화"},
       h("div", {class: "fix-head"}, h("div", {class: "eyebrow"}, "고친 곳의 변화"), h("span", {class: "help"}, "AI 설명이 아니라 수정본을 다시 분석해 측정한 값입니다.")),
       top ? h("div", {class: "fix-top"},
@@ -152,15 +154,7 @@ export async function render(view, ctx, {jobId}) {
         ` · 길이 ${fmt(totals.loc[0])} → ${fmt(totals.loc[1])}줄`, changes.counts.new ? h("span", {class: "help"}, "새로 만든 함수로 옮겨 간 복잡도까지 더한 값입니다.") : null) : null,
       structure, codeSlot);
 
-    // 2. Safety: short badges up here, the details folded.
-    const playButtons = canRecordPlay ? h("div", {class: "row-gap"},
-      h("button", {class: "btn ghost sm", type: "button", onclick: e => play(true, e)}, "직접 해 보니 정상입니다"),
-      h("button", {class: "btn ghost sm", type: "button", onclick: e => play(false, e)}, "문제가 있었습니다")) : null;
-    async function play(ok, event) {
-      event.currentTarget.parentElement.querySelectorAll("button").forEach(b => { b.disabled = true; });
-      try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/play`, {method: "POST", body: JSON.stringify({ok})}); toast(ok ? "직접 플레이 확인을 기록했습니다." : "문제가 있었다고 기록했습니다."); load(); }
-      catch (error) { toast(error.message); load(); }
-    }
+    // 2. Safety: short badges up here, the details folded. Building and playing happen on the finishing page.
     const check = (ok, title, text, more) => h("div", {class: "check"}, h("span", {class: `ok ${ok ? "" : "todo"}`}, ok ? "✓" : "·"),
       h("div", null, h("b", null, title), h("p", null, text), more ? h("details", null, h("summary", null, "자세히"), more) : null));
     const re = checks.reanalyzed || {};
@@ -176,14 +170,13 @@ export async function render(view, ctx, {jobId}) {
         : check(false, "빌드", "이 프로젝트에는 등록된 빌드 절차가 없습니다. 개발 환경에서 직접 빌드해 확인해 주세요."),
       game.available ? check(built && game.behavior_checked, "동작 비교", game.verification_summary || "게임을 준비한 뒤 원본과 수정본의 동작 비교 기록을 표시합니다.") : null,
       check(checks.play?.ok, "직접 플레이", checks.play ? (checks.play.ok ? "수정된 게임을 직접 해 보고 정상이라고 확인했습니다." : "직접 해 보니 문제가 있었다고 기록했습니다.")
-          : canRecordPlay ? "수정된 게임을 직접 해 본 뒤 위 버튼으로 결과를 기록해 주세요." : "먼저 오른쪽에서 수정된 게임을 준비해 실행한 뒤 결과를 기록할 수 있습니다.",
+          : "정리를 마무리할 때 빌드한 게임을 직접 해 보고 기록합니다.",
         checks.play?.at ? `${new Date(checks.play.at * 1000).toLocaleString("ko-KR")} 기록` : null));
     const mark = {ok: ["✓", "완료"], todo: ["·", "아직"], bad: ["✕", "문제"]};
     const safety = h("section", {class: "card safety", "aria-label": "안전 확인"},
       h("div", {class: "safety-head"}, h("b", null, "안전 확인"), h("span", {class: "help"}, "검사 규칙을 통과하고 승인한 변경만, 원본이 아닌 사본에 적용했습니다.")),
       h("ul", {class: "badges"}, ...safetyBadges(round, game).map(b => h("li", {class: `badge is-${b.state}`},
         h("i", {"aria-hidden": "true"}, mark[b.state][0]), h("span", {class: "visually-hidden"}, `${mark[b.state][1]}: `), b.label, b.note ? h("small", null, ` ${b.note}`) : null))),
-      !checks.play && canRecordPlay ? h("div", {class: "play-ask"}, h("span", null, "수정된 게임을 직접 해 봤다면 결과를 남겨 주세요."), playButtons) : null,
       h("details", {class: "parts safety-more"}, h("summary", null, "확인 내용 자세히 보기"), checkList));
 
     const stat = (key, title) => {
@@ -226,76 +219,108 @@ export async function render(view, ctx, {jobId}) {
       h("p", {class: "help sum-note"}, `아래 네 값은 ${n > 1 ? `${n - 1}라운드` : "처음 상태"}와 비교한 이번 ${n}라운드의 게임 전체 값입니다.`),
       h("div", {class: "sum"}, ...KEYS.map(([key, title]) => stat(key, title))));
 
+    // A round that split functions reads top to bottom in plain words; the measured details fold below.
+    const split = splitSummary(code);
+    lastWay = (round.method || (split.helpers.length ? "functions" : "declarations")) === "declarations" ? "link" : "internal";
+    const scores = h("div", {class: "card sec"}, h("div", {class: "h2"}, `${label} 점수`), h("p", {class: "help"}, `G-SI는 프로젝트 안에서의 순위라서, 다른 ${label === "파일" ? "파일과" : "클래스와"} 비교한 위치가 같으면 그대로입니다.`),
+      h("div", {class: "tbl-scroll"}, fileTable));
+    const tools = h("div", {class: "s-links"},
+      h("a", {class: "btn ghost sm", href: `/revisions/${jobId}/${round.revision}/modified-source.zip`}, "수정본 내려받기 (.zip)"),
+      h("button", {class: "btn ghost sm", type: "button", onclick: undo}, "이 단계 되돌리기"));
+    const detail = h("details", {class: "card s-detail"}, h("summary", null, "자세히 보기 ", h("small", null, "고친 함수의 코드와 측정값, 안전 확인")),
+      split.helpers.length ? hero : null, safety, scores, whole, tools);
+    const body = split.helpers.length ? [splitHead(split, n, round), effectsCard(split), shorterCard(split), exampleCard(split), detail]
+      : [h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `수정 결과 · ${n}단계 · ${METHODS[lastWay].name}`),
+          h("h1", {class: "h1"}, head.title), h("p", {class: "sub"}, head.lines.join(" ")), safeChips(round))), hero, detail];
     fill(root,
       failedApply ? notice(`마지막 변경안을 적용하지 못했습니다. ${state.error || ""} 아래는 그 전까지 적용된 결과입니다.`) : null,
-      h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `수정 결과·검증 · ${n}라운드`),
-        h("h1", {class: "h1"}, head.title), h("p", {class: "sub"}, head.lines.join(" ")))),
-      h("div", {class: "layout result-layout"},
-        h("div", null,
-          hero,
-          safety,
-          h("div", {class: "card sec"}, h("div", {class: "h2"}, `${label} 점수`), h("p", {class: "help"}, `G-SI는 프로젝트 안에서의 순위라서, 다른 ${label === "파일" ? "파일과" : "클래스와"} 비교한 위치가 같으면 그대로입니다.`),
-            h("div", {class: "tbl-scroll"}, fileTable)),
-          whole,
-          h("div", {class: "actions"},
-            h("details", {class: "menu"}, h("summary", {class: "btn ghost", "aria-label": "더 보기", title: "더 보기"}, "…"), h("button", {class: "btn ghost sm", type: "button", onclick: undo}, "이 라운드 되돌리기")),
-            h("a", {class: "btn ghost", href: `#/job/${jobId}/diagnosis`}, "진단 화면으로"),
-            h("a", {class: "btn ghost", href: `/revisions/${jobId}/${round.revision}/modified-source.zip`}, "수정본 내려받기 (.zip)"),
-            h("a", {class: "btn primary", href: `#/job/${jobId}/diagnosis`, onclick: () => toast(`${n}라운드 수정본 기준으로 다시 진단합니다.`)}, "다음 처방 받기 →"))),
-        game.available ? gameCard(game, round) : h("aside", {class: "card game"}, h("div", {class: "eyebrow"}, "게임 실행"),
-          h("p", {class: "sub"}, "이 프로젝트에는 등록된 시연 게임이 없습니다. 수정본을 내려받아 개발 환경에서 실행해 확인해 주세요."))));
+      h("div", {class: "s-wrap"}, ...body, nextCard(n, presc)));
+    // The next stage's prescription is asked for by itself after applying: show it when it arrives.
+    if (presc.state === "running") { clearTimeout(timer); timer = setTimeout(() => alive && load(), 2000); }
   }
 
+  const fmtN = v => Number(v).toLocaleString("ko-KR");
+  const base = p => String(p).split("/").pop();
+  function safeChips(round) {
+    const re = (round.checks || {}).reanalyzed || {};
+    return h("div", {class: "g-safe"}, h("span", null, "✓ 규칙 검사 통과"), round.checks?.original_preserved ? h("span", null, "✓ 원본은 그대로") : null,
+      ["complete", "partial"].includes(re.state) ? h("span", null, "✓ 같은 기준으로 다시 분석") : null);
+  }
+  function splitHead(s, n, round) {
+    const files = new Set(s.targets.map(t => t.file)).size;
+    return h("header", {class: "s-head"}, h("div", {class: "eyebrow"}, `수정 결과 · ${n}단계 · 함수 나누기`),
+      h("h1", null, "큰 함수 ", h("em", null, `${s.targets.length}개`), "를 작은 함수 ", h("em", null, `${s.helpers.length}개`), "로 나눴습니다"),
+      h("p", null, `파일 ${files}개. 게임이 하는 일은 그대로 두고, 한 함수에 몰려 있던 코드를 이름 붙은 작은 함수로 옮겼습니다.`), safeChips(round));
+  }
+  function effectsCard(s) {
+    const effect = (icon, title, ...text) => h("div", {class: "s-effect"}, h("div", {class: "ic", "aria-hidden": "true"}, icon), h("b", null, title), h("p", null, ...text));
+    return h("section", {class: "card s-card"}, h("div", {class: "s-q"}, "이번 단계로 이렇게 좋아졌습니다"),
+      h("div", {class: "s-title"}, "한 함수가 혼자 하던 여러 일을, 일마다 따로 맡겼습니다"),
+      h("div", {class: "s-effects"},
+        effect("🔍", "고칠 곳을 찾기 쉬워졌습니다", "기능 하나를 고치려고 ", h("strong", null, `${fmtN(s.longest.before.loc)}줄`), "짜리 ", h("code", {class: "mono"}, s.longest.name),
+          "를 다 읽는 대신, 평균 ", h("strong", null, `${s.avgLoc}줄`), "짜리 작은 함수 하나를 보면 됩니다."),
+        effect("🏷️", "함수 이름으로 찾아갈 수 있습니다", "나눈 일 ", h("strong", null, `${s.helpers.length}가지`), "에 각각 이름을 붙였습니다.",
+          s.example ? [" 예를 들어 이 일을 고치려면 ", h("code", {class: "mono"}, s.example.name), " 함수를 찾으면 됩니다."] : null),
+        effect("🧩", "고친 뒤 확인할 범위가 좁아졌습니다", `작은 함수 ${s.helpers.length}개 중 `, h("strong", null, `${s.simple}개`), "는 갈림길(if·for·switch)이 20개 이하라 한눈에 읽힙니다.")),
+      h("p", {class: "s-small"}, "게임 동작은 바꾸지 않았습니다. 버그를 고친 것이 아니라, 다음에 기능을 고치거나 더할 때의 출발점을 분명하게 만든 것입니다."));
+  }
+  function shorterCard(s) {
+    const bar = (cls, width, key) => { const span = h("span"); span.style.width = `${width}%`; return h("div", {class: `s-bar ${cls}`}, h("em", null, key), h("div", null, span)); };
+    const row = t => h("li", null, h("div", {class: "s-func-top"}, h("b", {class: "mono"}, t.name),
+        h("span", null, `${fmtN(t.before.loc)}줄 → `, h("strong", null, `${fmtN(t.after.loc)}줄`), ` · 작은 함수 ${t.helpers.length}개로 나뉨`)),
+      bar("", 100, "전"), bar("after", 100 * t.after.loc / Math.max(1, t.before.loc), "후"));
+    return h("section", {class: "card s-card"}, h("div", {class: "s-q"}, "원래 함수는 얼마나 짧아졌나요?"), h("div", {class: "s-title"}, "한 번에 읽어야 하는 양이 줄었습니다"),
+      h("ul", {class: "s-funcs"}, ...s.targets.slice(0, 3).map(row)),
+      s.targets.length > 3 ? h("details", {class: "s-more"}, h("summary", null, `나머지 ${s.targets.length - 3}개 함수 보기`), h("ul", {class: "s-funcs"}, ...s.targets.slice(3).map(row))) : null);
+  }
+  function exampleCard(s) {
+    const x = s.example;
+    if (!x) return null;
+    return h("section", {class: "card s-card"}, h("div", {class: "s-q"}, "예를 들어"), h("div", {class: "s-title"}, h("span", {class: "mono"}, x.name), " 함수가 맡은 일을 고치고 싶다면"),
+      h("div", {class: "s-ex"},
+        h("div", {class: "s-box"}, h("h3", null, "정리 전"), h("div", {class: "n"}, `${fmtN(s.longest.before.loc)}줄`),
+          h("p", null, h("code", {class: "mono"}, s.longest.name), " 함수 전체를 읽으며 찾아야 했습니다.")),
+        h("div", {class: "s-ex-arrow", "aria-hidden": "true"}, "→"),
+        h("div", {class: "s-box after"}, h("h3", null, "정리 후"), h("div", {class: "n"}, `${fmtN(x.after.loc)}줄`),
+          h("p", null, h("code", {class: "mono"}, x.name), ` 함수만 보면 됩니다. (${base(x.file)})`))));
+  }
+  // The last card: the next stage the AI proposes, or the way to building and playing.
+  function nextCard(n, presc) {
+    const finish = text => h("a", {class: "btn primary", href: `#/job/${jobId}/finish`}, text);
+    const end = (title, text) => h("section", {class: "card g-next is-end", "aria-label": "다음 단계"}, h("div", {class: "s-q"}, "정리는 여기까지입니다"),
+      h("div", {class: "s-title"}, title), h("p", null, text), h("div", {class: "g-btns"}, finish("빌드하고 플레이해 보기 →")));
+    if (n >= MAX_STAGES) return end("이제 게임을 빌드하고 직접 해 볼 차례입니다", `최대 ${MAX_STAGES}단계까지 정리했습니다. 단계를 더 하면 원래 동작과 달라질 위험이 커집니다.`);
+    const r = presc.result, fresh = r && !presc.stale && (r.stage || 0) === n + 1;
+    const card = (...children) => h("section", {class: "card g-next", "aria-label": "다음 단계"}, h("div", {class: "s-q"}, "다음 단계"), ...children);
+    if (presc.state === "running") return card(h("div", {class: "s-title"}, "AI가 이번 결과를 보고 다음 단계를 정하고 있습니다"),
+      h("p", null, "잠시 뒤 더 정리할 곳이 있는지 여기에 알려 드립니다. 지금 마무리해도 됩니다."),
+      h("div", {class: "g-btns"}, h("a", {class: "btn ghost", href: `#/job/${jobId}/finish`}, "여기서 마무리")));
+    if (fresh && (r.done || !r.files.length)) return end("이제 게임을 빌드하고 직접 해 볼 차례입니다",
+      "AI가 이번 결과를 다시 보고, 더 나눠도 효과가 작다고 판단했습니다.");
+    if (fresh) {
+      const kinds = [...new Set(r.files.map(f => f.kind))], way = kinds.length > 1 ? r.first || "internal" : kinds[0];
+      const files = r.files.filter(f => f.kind === way);
+      const names = files.flatMap(f => f.targets?.length ? f.targets : [f.name]).slice(0, 4);
+      return card(h("div", {class: "s-title"}, `${METHODS[way].name}를 ${way === lastWay ? "한 번 더 " : ""}하면 더 좋아질 수 있습니다`),
+        h("p", null, ...names.flatMap((t, i) => [i ? ", " : "", h("code", {class: "cname"}, t)]), ` 등 ${files.length}개 파일을 더 정리할 수 있다고 AI가 판단했습니다.`),
+        h("p", {class: "help"}, `[${n + 1}단계 진행]은 처방 화면으로 돌아가 다음 단계를 시작합니다. [여기서 마무리]는 정리를 끝내고 빌드·직접 플레이로 넘어갑니다.`),
+        h("div", {class: "g-btns"}, h("a", {class: "btn ghost", href: `#/job/${jobId}/finish`}, "여기서 마무리"),
+          h("a", {class: "btn primary", href: `#/job/${jobId}/diagnosis`}, `${n + 1}단계 진행 →`)));
+    }
+    // No judgement yet (an API key is never kept, or the request failed): the user decides.
+    return card(h("div", {class: "s-title"}, "다음 단계가 필요한지 AI에게 물어볼 수 있습니다"),
+      h("p", null, presc.state === "failed" ? `다음 단계 판단을 받지 못했습니다. ${presc.error || ""}` : "처방 화면에서 이번 결과를 기준으로 다음 처방을 받을 수 있습니다."),
+      h("div", {class: "g-btns"}, h("a", {class: "btn ghost", href: `#/job/${jobId}/finish`}, "여기서 마무리"),
+        h("a", {class: "btn primary", href: `#/job/${jobId}/diagnosis`}, "다음 처방 받기 →")));
+  }
+  let lastWay = "internal";   // how the shown round changed the code: the next stage may do the same once more
+
   async function undo() {
-    if (!await confirmDialog({title: "이 라운드를 되돌릴까요?", body: "현재 수정본이 이전 라운드로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다.", ok: "되돌리기"})) return;
-    try { await ctx.api(`/api/jobs/${jobId}/rounds/undo`, {method: "POST", body: "{}"}); toast("이전 라운드로 되돌렸습니다."); load(); }
+    if (!await confirmDialog({title: "이 단계를 되돌릴까요?", body: "현재 수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다.", ok: "되돌리기"})) return;
+    try { await ctx.api(`/api/jobs/${jobId}/rounds/undo`, {method: "POST", body: "{}"}); toast("이 단계 전으로 되돌렸습니다."); load(); }
     catch (error) { toast(error.message); }
   }
 
-  function gameCard(game, round) {
-    const prepared = game.state === "complete" && game.revision === round.revision;
-    const status = h("div", {class: "game-status"});
-    // One watcher per page: a redraw builds a new card, and the old card's watcher stops.
-    const token = ++watcher;
-    clearTimeout(gameTimer);
-    const button = h("button", {class: "btn primary", type: "button"}, prepared ? "수정된 게임 실행 ▶" : "수정된 게임 준비하고 실행 ▶");
-    const gp = progressBlock();
-    function showProgress(state) {
-      const p = state.progress || {};
-      gp.update({step: p.step || 0, total: p.total || 4, text: p.label || "", indeterminate: p.indeterminate,
-        elapsed: state.started_at ? elapsedText((Date.now() - new Date(state.started_at).getTime()) / 1000) : ""});
-      fill(status, gp.el);
-    }
-    async function launch() {
-      try { const r = await ctx.api(`/api/jobs/${jobId}/demo/launch`, {method: "POST", body: JSON.stringify({version: "modified"})}); fill(status, h("p", {class: "help"}, r.message)); }
-      catch (error) { fill(status, notice(error.message)); }
-      button.disabled = false;
-    }
-    const again = () => { clearTimeout(gameTimer); gameTimer = setTimeout(() => alive && token === watcher && watch(), 1000); };
-    async function watch() {
-      let state;
-      try { state = await ctx.api(`/api/jobs/${jobId}/demo`); }
-      catch (_) { if (alive && token === watcher) again(); return; }
-      if (!alive || token !== watcher) return;
-      if (state.state === "running") { showProgress(state); again(); return; }
-      if (state.state === "complete" && state.revision === round.revision) { button.textContent = "수정된 게임 실행 ▶"; await launch(); load(); return; }
-      fill(status, notice(state.error || "게임을 준비하지 못했습니다.")); button.disabled = false;
-    }
-    button.addEventListener("click", async () => {
-      button.disabled = true;
-      if (game.state === "complete" && game.revision === round.revision) { await launch(); return; }
-      try { showProgress(await ctx.api(`/api/jobs/${jobId}/demo/prepare`, {method: "POST", body: "{}"})); watch(); }
-      catch (error) { fill(status, notice(error.message)); button.disabled = false; }
-    });
-    if (game.state === "running") { button.disabled = true; showProgress(game); again(); }
-    else if (game.state === "failed") fill(status, notice(`지난번 게임 준비에 실패했습니다. ${game.error || ""}`));
-    return h("aside", {class: "card game"}, h("div", {class: "eyebrow"}, "수정된 게임"),
-      h("div", {class: "h2"}, game.game_title || "시연 게임"), h("p", {class: "sub"}, game.description || ""),
-      h("div", {class: "gthumb", "aria-hidden": "true"}, h("i", {class: "ship"})),
-      h("details", {class: "controls"}, h("summary", null, "조작 방법"), h("p", null, game.controls || "")),
-      status, h("div", {class: "game-actions"}, button));
-  }
-
   await load();
-  return () => { alive = false; clearTimeout(timer); clearTimeout(gameTimer); };
+  return () => { alive = false; clearTimeout(timer); };
 }

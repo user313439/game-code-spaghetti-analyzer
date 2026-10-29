@@ -6,6 +6,7 @@ import * as examplesPage from "./page-examples.js";
 import * as diagnosisPage from "./page-diagnosis.js";
 import * as refactorPage from "./page-refactor.js";
 import * as resultPage from "./page-result.js";
+import * as finishPage from "./page-finish.js";
 
 const ID = "([a-f0-9]{32})";
 const ROUTES = [
@@ -16,8 +17,9 @@ const ROUTES = [
   {pattern: new RegExp(`^#/job/${ID}/diagnosis$`), page: diagnosisPage, params: m => ({jobId: m[1]})},
   {pattern: new RegExp(`^#/job/${ID}/refactor(?:\\?(.*))?$`), page: refactorPage, params: m => ({jobId: m[1], query: m[2] || ""})},
   {pattern: new RegExp(`^#/job/${ID}/result$`), page: resultPage, params: m => ({jobId: m[1]})},
+  {pattern: new RegExp(`^#/job/${ID}/finish$`), page: finishPage, params: m => ({jobId: m[1]})},
 ];
-const STEPS = [["소스 가져오기", ""], ["엉킴 진단", "/diagnosis"], ["AI 리팩토링", "/refactor"], ["수정 결과·검증", "/result"]];
+const STEPS = [["소스 가져오기", ""], ["엉킴 진단", "/diagnosis"], ["AI 리팩토링", "/refactor"], ["단계 결과", "/result"], ["마무리", "/finish"]];
 
 const ctx = {api: createApi(""), limits: DEFAULT_LIMITS, ready: false, session: null};
 let cleanup = null, generation = 0;
@@ -43,7 +45,7 @@ ctx.setSteps = (jobId, active, available = {}) => {
   bar.hidden = false;
   fill(nav, ...STEPS.map(([name, suffix], i) => {
     const done = i < active, on = i === active;
-    const open = i === 0 || (i === 1 && available.diagnosis !== false) || (i === 2 && available.refactor) || (i === 3 && available.result);
+    const open = i === 0 || (i === 1 && available.diagnosis !== false) || (i === 2 && available.refactor) || (i === 3 && available.result) || (i === 4 && available.result);
     const content = [h("i", null, done ? "✓" : String(i + 1)), name];
     return open && !on
       ? h("a", {class: `step ${done ? "done" : ""}`, href: `#/job/${jobId}${suffix}`}, ...content)

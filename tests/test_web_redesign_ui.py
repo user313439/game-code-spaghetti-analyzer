@@ -332,23 +332,23 @@ globalThis.document = {createElement: t => new Element(t), createElementNS: (_, 
 const page = await import(PAGE);
 const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_excess", 40], ["excess_complexity", 900], ["global_access", 500]]
   .map(([key, after]) => ({key, label: key, before: after, after, included: true}));
-async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}}) {
+async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}, presc = {state: "idle"}}) {
   const unit = (si, cc) => ({fqn: "q.client.menu", file_path: "q/client/menu.c", si, raw: {cc, coupling: 1, dependency_cycle: 0}});
   const data = {
-    "": {name: "Quake-2"}, "/assistant": {state: "complete", action: "apply"}, "/demo": game, "/diagnosis": {summary: {unit_label: "파일"}},
+    "": {name: "Quake-2"}, "/assistant": {state: "complete", action: "apply"}, "/demo": game, "/prescription": presc, "/diagnosis": {summary: {unit_label: "파일"}},
     "/rounds": {current: 1, rounds: [{round: 1, revision: "r1", files: ["q/client/menu.c"], checks: {original_preserved: true, matches_preview: true,
       reanalyzed: {state: "partial", analyzed_files: 187, syntax_files: 33}}, comparison: {before: [unit(98.93, 17.5)], after: [unit(98.93, 16.9)], functions}}]},
-    "/rounds/1/changes": {functions: [
+    "/rounds/1/changes": !functions.length ? {functions: []} : {functions: [
       {file: "q/client/menu.c", name: "Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}, created: false,
        diff: ["--- 원본/q/client/menu.c", "+++ 수정본/q/client/menu.c", "@@ -1,2 +1,2 @@", " int Default_MenuKey(void)",
               "-    if (old) return 1;", "+    return M_IsSelectButton();", ""].join(String.fromCharCode(10))},
-      {file: "q/client/menu.c", name: "M_IsSelectButton", created: true,
+      {file: "q/client/menu.c", name: "M_IsSelectButton", created: true, after: {cc: 2, loc: 4},
        diff: ["--- a", "+++ b", "@@ -0,0 +1,2 @@", "+static int M_IsSelectButton(void)", "+{ return 1; }", ""].join(String.fromCharCode(10))}]},
     "/tangle": {rounds: [{round: 0, active: true, index: 100, components: components(cycle[0], links[0]), same_units: true},
       {round: 1, active: true, index: 99.78, components: components(cycle[1], links[1]), same_units: true}]}};
   const view = document.createElement("main");
   const ctx = {setSteps() {}, setCrumb() {}, api: async url => data[url.replace("/api/jobs/job", "")]};
-  await page.render(view, ctx, {jobId: "job"});
+  (await page.render(view, ctx, {jobId: "job"}))?.();   // stop polling: the drawn page stays
   return view;
 }
 '''
@@ -362,28 +362,52 @@ def test_result_page_shows_the_fixed_function_before_the_whole_game_total():
     run_page(r'''
 const view = await show({functions: [{name: "q.client.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}},
   {name: "q.client.menu.M_IsSelectButton", before: null, after: {cc: 2, loc: 4}}]});
-assert.equal(view.querySelector("h1").textContent, "Default_MenuKey 복잡도 62 → 24 (−61%)");
-// Order: fixed place, safety, file scores, the whole game as an auxiliary measure, actions.
-const main = view.querySelector(".layout").elements[0].elements.map(el => el.getAttribute("class"));
-assert.deepEqual(main, ["card fix", "card safety", "card sec", "card sec aux", "actions"]);
-const hero = view.querySelector(".fix").textContent;
-assert.match(hero, /복잡도가 가장 크게 줄어든 함수/); assert.match(hero, /M_IsSelectButton/); assert.match(hero, /새로 만든 함수/);
-assert.match(hero, /복잡도 62 → 26 \(−58%\)/); assert.match(hero, /115 →78줄/);
-assert.ok(view.querySelectorAll(".pbars").length >= 3);
-const badges = view.querySelectorAll(".badge").map(b => b.textContent);
+// A stage that split functions reads top to bottom in plain words; the measured details fold below.
+assert.equal(view.querySelector("h1").textContent, "큰 함수 1개를 작은 함수 1개로 나눴습니다");
+const parts = view.querySelector(".s-wrap").elements.map(el => el.getAttribute("class"));
+assert.deepEqual(parts, ["s-head", "card s-card", "card s-card", "card s-card", "card s-detail", "card g-next"]);
+const effects = view.querySelectorAll(".s-effect").map(e => e.textContent);
+assert.match(effects[0], /115줄/); assert.match(effects[0], /Default_MenuKey/); assert.match(effects[1], /함수 이름으로 찾아갈 수 있습니다/);
+assert.match(effects[1], /M_IsSelectButton/);
+assert.match(view.querySelector(".s-funcs").textContent, /115줄 → 78줄 · 작은 함수 1개로 나뉨/);
+assert.ok(view.querySelector(".g-safe").textContent.includes("원본은 그대로"));
+// Inside 자세히 보기: the measured card with the code, safety, scores and the whole game.
+const detail = view.querySelector(".s-detail");
+const hero = detail.querySelector(".fix").textContent;
+assert.match(hero, /복잡도가 가장 크게 줄어든 함수/); assert.match(hero, /새로 만든 함수/); assert.match(hero, /복잡도 62 → 26 \(−58%\)/);
+const badges = detail.querySelectorAll(".badge").map(b => b.textContent);
 assert.equal(badges[0], "✓완료: 검사 규칙 통과"); assert.ok(badges.some(t => t.includes("빌드") && t.includes("직접 확인 필요")));
-assert.ok(view.querySelector(".play-ask"), "play can be recorded when no demo game is registered");
-assert.ok(view.querySelector(".safety-more").textContent.includes("SHA-256"));
-const aux = view.querySelector(".aux").textContent;
-assert.match(aux, /보통 2% 미만/); assert.match(aux, /99\.78/); assert.match(aux, /엉킴 총량 구성 보기/);
-const text = view.textContent;
-for (const action of ["이 라운드 되돌리기", "진단 화면으로", "수정본 내려받기 (.zip)", "다음 처방 받기 →"]) assert.ok(text.includes(action), action);
-// The changed functions' code arrives after the page is drawn and shows inside the first card.
-await new Promise(resolve => setTimeout(resolve, 0));
-const code = view.querySelector(".fix").querySelector(".fix-code");
-assert.ok(code, "code view");
+assert.equal(view.querySelector(".play-ask"), null, "playing is recorded on the finishing page");
+assert.match(detail.querySelector(".aux").textContent, /99\.78/);
+for (const action of ["이 단계 되돌리기", "수정본 내려받기 (.zip)"]) assert.ok(detail.textContent.includes(action), action);
+const code = detail.querySelector(".fix-code");
 assert.deepEqual(code.querySelector(".code-tabs").elements.map(b => b.textContent), ["Default_MenuKey · 62 → 24", "M_IsSelectButton · 새 함수"]);
-assert.match(code.textContent, /복잡도 62 → 24 · 길이 115 → 78줄/); assert.ok(code.textContent.includes("return M_IsSelectButton();"));
+assert.ok(code.textContent.includes("return M_IsSelectButton();"));
+// No judgement of the next stage yet (no program on this PC to ask): the user decides, buttons on the right.
+const next = view.querySelector(".g-next");
+assert.match(next.textContent, /다음 단계가 필요한지/);
+assert.deepEqual(next.querySelector(".g-btns").elements.map(b => [b.textContent, b.getAttribute("href")]),
+  [["여기서 마무리", "#/job/job/finish"], ["다음 처방 받기 →", "#/job/job/diagnosis"]]);
+''')
+
+
+def test_the_last_card_follows_the_next_stage_prescription():
+    run_page(r'''
+const functions = [{name: "q.client.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}}];
+const result = (stage, files, done = false) => ({state: "complete", stale: false, result: {stage, done, first: "", files}});
+let view = await show({functions, presc: {state: "running", auto: true}});
+assert.match(view.querySelector(".g-next").textContent, /다음 단계를 정하고 있습니다/);
+view = await show({functions, presc: result(2, [{name: "q.client.menu", kind: "internal", targets: ["Default_MenuKey"]}])});
+let next = view.querySelector(".g-next");
+assert.match(next.querySelector(".s-title").textContent, /함수 나누기를 한 번 더 하면/);
+assert.deepEqual(next.querySelector(".g-btns").elements.map(b => b.textContent), ["여기서 마무리", "2단계 진행 →"]);
+view = await show({functions, presc: result(2, [], true)});
+next = view.querySelector(".g-next");
+assert.ok(next.classList.contains("is-end")); assert.match(next.textContent, /정리는 여기까지입니다/);
+assert.deepEqual(next.querySelector(".g-btns").elements.map(b => b.textContent), ["빌드하고 플레이해 보기 →"]);
+// A prescription for another stage is not this one's answer.
+view = await show({functions, presc: result(1, [{name: "q.client.menu", kind: "internal", targets: []}])});
+assert.match(view.querySelector(".g-next").textContent, /다음 단계가 필요한지/);
 ''')
 
 
@@ -409,13 +433,14 @@ def test_result_page_without_function_changes_leads_with_links():
 let view = await show({functions: [], cycle: [12, 10], links: [333, 320]});
 assert.equal(view.querySelector("h1").textContent, "순환 고리에 묶인 파일 12 → 10개 (−17%)");
 assert.ok(view.querySelector(".fix-links")); assert.equal(view.querySelector(".fix-top"), null);
+assert.deepEqual(view.querySelector(".s-wrap").elements.map(el => el.getAttribute("class")), ["page-head", "card fix", "card s-detail", "card g-next"]);
 view = await show({functions: [], cycle: [2, 2], links: [224, 224]});
 assert.equal(view.querySelector("h1").textContent, "측정값이 줄어든 곳이 없습니다");
 assert.match(view.querySelector(".fix-links").textContent, /변화 없음/);
 // A registered game that is not built yet: build and behaviour comparison wait, play cannot be recorded yet.
 view = await show({functions: [], game: {available: true, state: "idle"}});
 const open = view.querySelectorAll(".badge").filter(b => b.classList.contains("is-todo")).map(b => b.textContent);
-assert.ok(open.some(t => t.includes("동작 비교"))); assert.equal(view.querySelector(".play-ask"), null);
+assert.ok(open.some(t => t.includes("동작 비교")));
 ''')
 
 
@@ -493,4 +518,44 @@ assert.deepEqual(sent, [["/api/jobs/x/start", "old"], ["/api/session", ""], ["/a
 // a refusal that a fresh token does not fix is shown, without asking again and again
 const stuck = core.createApi("new", async url => url === "/api/session" ? reply(200, {token: "new"}) : reply(403, {detail: "refused"}));
 await assert.rejects(stuck("/api/x", {method: "POST", body: "{}"}), /refused/);
+''')
+
+
+def test_finishing_page_walks_build_play_and_done():
+    run(DOM_SHIM.replace('PAGE', json.dumps((APP / 'page-finish.js').as_uri())) + r'''
+const checks = [{where: "설정 화면", action: "음량 막대를 끌어 조절하기", file: "src/opentyr.c", targets: ["setupMenu"]},
+  {where: "", action: "hq4x 화면이 같은지", file: "src/video_scale.c", targets: []}];
+const round = play => ({round: 1, revision: "r1", files: ["src/opentyr.c"], method: "functions", play_checks: checks, applied_at: 1793300000,
+  comparison: {functions: [{name: "setupMenu", before: {cc: 122, loc: 648}, after: {cc: 63, loc: 445}}, {name: "drawPickerBox", before: null, after: {cc: 4, loc: 25}}]},
+  checks: {original_preserved: true, ...(play ? {play} : {})}});
+const posted = [];
+async function open(play, game = {available: false}) {
+  const data = {"": {name: "OpenTyrian"}, "/rounds": {current: 1, rounds: [round(play)]}, "/demo": game,
+    "/tangle": {rounds: [{round: 1, components: [{key: "complex_excess", before: 100, after: 86}]}]}};
+  const ctx = {setSteps() {}, setCrumb() {}, api: async (url, options) => { if (options?.method) posted.push(url); return data[url.replace("/api/jobs/job", "")]; }};
+  const view = document.createElement("main");
+  (await page.render(view, ctx, {jobId: "job"}))?.();
+  return view;
+}
+assert.deepEqual(page.stageLine(round()), {title: "1단계 함수 나누기", what: "큰 함수 1개 → 작은 함수 1개"});
+// No registered build: the user builds it; the checklist is grouped by place, files last.
+let view = await open(null);
+assert.match(view.querySelector(".f-sum").textContent, /1단계 함수 나누기/);
+assert.deepEqual(view.querySelectorAll(".f-group").map(g => g.querySelector("h4").textContent), ["설정 화면", "video_scale.c파일"]);
+assert.match(view.querySelector(".f-count").textContent, /0 \/ 2 확인/);
+assert.ok(view.textContent.includes("정상입니다") && view.textContent.includes("문제가 있었습니다"));
+// A registered game not built yet: the build comes first.
+view = await open(null, {available: true, state: "idle"});
+assert.ok(view.querySelector(".f-build")); assert.equal(view.querySelector(".f-items"), null);
+// A problem was reported: what was written and the way back.
+view = await open({ok: false, kind: "조작이 안 돼요", where: "설정 화면 · 음량 막대를 끌어 조절하기", note: "두 칸씩", screenshot: "1.png"});
+const report = view.querySelector(".f-report").textContent;
+assert.match(report, /조작이 안 돼요/); assert.match(report, /1장 첨부/); assert.match(report, /setupMenu/); assert.match(report, /이 단계 되돌리기/);
+// Played and fine: the done record and what to do next.
+view = await open({ok: true, checked: ["설정 화면: 음량 막대를 끌어 조절하기"]});
+assert.equal(view.querySelector("h1").textContent, "정리를 마쳤습니다");
+const record = view.querySelector(".f-record").textContent;
+assert.match(record, /648 → 445줄/); assert.match(record, /−14%/); assert.match(record, /직접 플레이 1가지 확인/);
+assert.deepEqual(view.querySelector(".f-next").elements.map(e => e.querySelector("b").textContent), ["수정본 내려받기", "바뀐 코드 보기", "정리 기록 저장"]);
+assert.equal(view.querySelector(".f-next").elements[0].getAttribute("href"), "/revisions/job/r1/modified-source.zip");
 ''')
