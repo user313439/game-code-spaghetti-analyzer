@@ -300,19 +300,31 @@ assert.equal(core.changeText(648, 649, "줄"), "+1줄"); assert.equal(core.chang
 
 
 # Just enough DOM for the page modules (ui.js h/fill, classList, querySelector by class or tag).
+# Events run: click() and dispatch() call the listeners and bubble up to the document; timers wait
+# until runTimers() so a test decides when a page polls again.
 DOM_SHIM = r'''
 class Node {}
 class Text extends Node { constructor(text) { super(); this.data = String(text); } get textContent() { return this.data; } }
 class Element extends Node {
   constructor(tag) {
-    super(); this.tagName = tag.toUpperCase(); this.children = []; this.attributes = {}; this.style = {}; this.dataset = {}; this.parentElement = null;
+    super(); this.tagName = tag.toUpperCase(); this.children = []; this.attributes = {}; this.style = {}; this.dataset = {}; this.parentElement = null; this.listeners = {};
     const tokens = () => (this.attributes.class || "").split(/\s+/).filter(Boolean);
     this.classList = {contains: c => tokens().includes(c),
-      toggle: (c, on) => { const t = tokens().filter(x => x !== c); if (on ?? !tokens().includes(c)) t.push(c); this.attributes.class = t.join(" "); }};
+      toggle: (c, on) => { const t = tokens().filter(x => x !== c); if (on ?? !tokens().includes(c)) t.push(c); this.attributes.class = t.join(" "); },
+      add: c => this.classList.toggle(c, true), remove: c => this.classList.toggle(c, false)};
   }
   setAttribute(k, v) { this.attributes[k] = String(v); }
   getAttribute(k) { return this.attributes[k] ?? null; }
-  addEventListener() {}
+  addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); }
+  removeEventListener(type, fn) { this.listeners[type] = (this.listeners[type] || []).filter(f => f !== fn); }
+  dispatch(type, extra = {}) {
+    const event = {type, target: this, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; }, ...extra};
+    for (let el = this; el; el = el.parentElement) for (const fn of [...(el.listeners[type] || [])]) { event.currentTarget = el; fn.call(el, event); }
+    return event;
+  }
+  click() { if (!this.disabled) this.dispatch("click"); }
+  focus() { document.activeElement = this; }
+  remove() { const p = this.parentElement; if (p) { p.children = p.children.filter(c => c !== this); this.parentElement = null; } }
   append(...nodes) { for (const n of nodes) { const c = n instanceof Node ? n : new Text(n); c.parentElement = this; this.children.push(c); } }
   replaceChildren(...nodes) { this.children = []; this.append(...nodes); }
   get elements() { return this.children.filter(c => c instanceof Element); }
@@ -327,12 +339,22 @@ class Element extends Node {
   querySelector(sel) { return this.querySelectorAll(sel)[0] || null; }
 }
 globalThis.Node = Node;
-globalThis.document = {createElement: t => new Element(t), createElementNS: (_, t) => new Element(t), createTextNode: t => new Text(t),
-  getElementById: () => null, body: new Element("body")};
+const toastEl = new Element("div");
+globalThis.document = Object.assign(new Element("#document"), {createElement: t => new Element(t), createElementNS: (_, t) => new Element(t),
+  createTextNode: t => new Text(t), getElementById: id => id === "toast" ? toastEl : null, activeElement: null});
+document.body = new Element("body"); document.body.parentElement = document;
+const timers = new Map();
+let timerId = 0;
+globalThis.setTimeout = fn => { timers.set(++timerId, fn); return timerId; };
+globalThis.clearTimeout = id => { timers.delete(id); };
+const settle = async () => { for (let i = 0; i < 10; i++) await new Promise(r => setImmediate(r)); };
+// Runs the timers set so far (not the ones they set), then lets the replies arrive.
+async function runTimers() { const due = [...timers.values()]; timers.clear(); for (const fn of due) fn(); await settle(); }
+const button = (root, text) => root.querySelectorAll("button").find(b => b.textContent === text) || null;
 const page = await import(PAGE);
 const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_excess", 40], ["excess_complexity", 900], ["global_access", 500]]
   .map(([key, after]) => ({key, label: key, before: after, after, included: true}));
-async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}, presc = {state: "idle"}, state = {state: "complete", action: "apply"}}) {
+async function show({functions, cycle = [0, 0], links = [11, 11], game = {available: false}, presc = {state: "idle"}, state = {state: "complete", action: "apply"}, live = false}) {
   const unit = (si, cc) => ({fqn: "q.client.menu", file_path: "q/client/menu.c", si, raw: {cc, coupling: 1, dependency_cycle: 0}});
   const data = {
     "": {name: "Quake-2"}, "/assistant": state, "/demo": game, "/prescription": presc, "/diagnosis": {summary: {unit_label: "파일"}},
@@ -348,7 +370,9 @@ async function show({functions, cycle = [0, 0], links = [11, 11], game = {availa
       {round: 1, active: true, index: 99.78, components: components(cycle[1], links[1]), same_units: true}]}};
   const view = document.createElement("main");
   const ctx = {setSteps() {}, setCrumb() {}, api: async url => data[url.replace("/api/jobs/job", "")]};
-  (await page.render(view, ctx, {jobId: "job"}))?.();   // stop polling: the drawn page stays
+  const stop = await page.render(view, ctx, {jobId: "job"});
+  if (live) return {view, data, stop};   // the test changes the replies and runs the page's timers
+  stop?.();   // stop polling: the drawn page stays
   return view;
 }
 '''
@@ -594,4 +618,141 @@ assert.match(view.querySelector(".g-next").textContent, /다음 단계를 정하
 // The prescription could not be read: the user decides, nothing waits forever on screen.
 view = await show({functions, presc: {state: "unknown"}});
 assert.match(view.querySelector(".g-next").textContent, /다음 단계가 필요한지/);
+''')
+
+
+def test_problem_report_window_closes_reopens_and_takes_a_pasted_screenshot():
+    run(DOM_SHIM.replace('PAGE', json.dumps((APP / 'page-finish.js').as_uri())) + r'''
+const checks = [{where: "설정 화면", action: "음량 막대를 끌어 조절하기", file: "src/opentyr.c", targets: ["setupMenu"]}];
+const round = {round: 1, revision: "r1", files: ["src/opentyr.c"], method: "functions", play_checks: checks,
+  comparison: {functions: [{name: "setupMenu", before: {cc: 122, loc: 648}, after: {cc: 63, loc: 445}}]}, checks: {original_preserved: true}};
+const data = {"": {name: "OpenTyrian"}, "/rounds": {current: 1, rounds: [round]}, "/demo": {available: false}, "/tangle": {rounds: []}};
+const sent = [];
+const ctx = {setSteps() {}, setCrumb() {}, api: async (url, options) => {
+  if (!options?.method) return data[url.replace("/api/jobs/job", "")];
+  sent.push([url, options.body]);
+  const form = options.body;   // the server keeps the report; the page reads it back
+  round.checks.play = {ok: false, kind: form.get("kind"), where: form.get("where"), note: form.get("note"), screenshot: form.get("screenshot") ? "1.png" : ""};
+  return {};
+}};
+const view = document.createElement("main");
+const stop = await page.render(view, ctx, {jobId: "job"});
+const modal = () => document.body.querySelector(".g-modal");
+const pastes = () => (document.listeners.paste || []).length;
+// Esc from inside the window (the focused kind button) closes it and stops taking pastes.
+button(view, "문제가 있었습니다").click();
+assert.ok(modal()); assert.equal(pastes(), 1);
+assert.equal(document.activeElement.textContent, "화면이 이상해요");
+document.activeElement.dispatch("keydown", {key: "a"});
+assert.ok(modal(), "only Esc closes");
+document.activeElement.dispatch("keydown", {key: "Escape"});
+assert.equal(modal(), null); assert.equal(pastes(), 0);
+// 취소 closes as well; opening again gives one window and one paste listener.
+button(view, "문제가 있었습니다").click(); button(modal(), "취소").click();
+assert.equal(modal(), null); assert.equal(pastes(), 0);
+button(view, "문제가 있었습니다").click();
+assert.equal(document.body.querySelectorAll(".g-modal").length, 1); assert.equal(pastes(), 1);
+// Pasted text is ignored, a GIF is refused, a PNG is kept.
+const item = type => ({type, getAsFile: () => new Blob(["x".repeat(2048)], {type})});
+const shot = () => modal().querySelector(".g-shot").textContent;
+document.dispatch("paste", {clipboardData: {items: [item("text/plain")]}});
+assert.doesNotMatch(shot(), /이미지 1장/);
+document.dispatch("paste", {clipboardData: {items: [item("image/gif")]}});
+assert.match(toastEl.textContent, /PNG·JPG·WEBP/); assert.doesNotMatch(shot(), /이미지 1장/);
+document.dispatch("paste", {clipboardData: {items: [item("text/plain"), item("image/png")]}});
+assert.match(shot(), /✓ 이미지 1장 \(2KB\)/);
+// The kind picked, the place and the words go with the screenshot; the window closes after.
+button(modal(), "멈추거나 꺼져요").click();
+assert.equal(button(modal(), "멈추거나 꺼져요").getAttribute("aria-pressed"), "true");
+assert.equal(button(modal(), "조작이 안 돼요").getAttribute("aria-pressed"), "false");
+modal().querySelector("select").value = "설정 화면 · 음량 막대를 끌어 조절하기";
+modal().querySelector("textarea").value = "  두 칸씩 움직여요  ";
+button(modal(), "기록하기").click();
+await settle();
+const [url, form] = sent.at(-1);
+assert.equal(url, "/api/jobs/job/rounds/1/report");
+assert.equal(form.get("kind"), "멈추거나 꺼져요"); assert.equal(form.get("note"), "두 칸씩 움직여요");
+assert.ok(form.get("screenshot") instanceof Blob);
+assert.equal(modal(), null); assert.equal(pastes(), 0);
+// The page now shows the report; trying again and leaving the page with the window open closes it.
+assert.match(view.querySelector(".f-report").textContent, /멈추거나 꺼져요/);
+assert.match(view.querySelector(".f-report").textContent, /setupMenu/);
+button(view, "다시 해 보기").click();
+button(view, "문제가 있었습니다").click();
+assert.ok(modal());
+stop();
+assert.equal(modal(), null); assert.equal(pastes(), 0);
+''')
+
+
+def test_switching_the_method_changes_the_files_and_the_way_forward():
+    run(DOM_SHIM.replace('const page = await import(PAGE);', '').replace('PAGE', '""') + r'''
+const {createPrescriptionPanel} = await import(PRESCRIPTION);
+const data = {summary: {unit_label: "파일", units: 3}, units: [
+  {fqn: "a", file: "src/a.c", name: "a.c", functions: [{name: "bigA", cc: 80, loc: 300}]},
+  {fqn: "b", file: "src/b.h", name: "b.h", functions: []},
+  {fqn: "c", file: "src/c.c", name: "c.c", functions: [{name: "bigC", cc: 50, loc: 200}]}]};
+const file = (name, kind, targets) => ({name, kind, reason: `${name} 이유`, change_idea: "나눕니다", targets});
+const result = {stage: 2, headline: "두 가지가 남았습니다", benefit: "찾기 쉬워집니다", first: "internal", first_reason: "`bigA`가 가장 큽니다",
+  files: [file("a", "internal", ["bigA"]), file("b", "link", []), file("c", "internal", ["bigC"])],
+  effects: {base: 6, steps: [{name: "a", after: null}, {name: "b", after: 2, reduced: true}, {name: "c", after: null}]},
+  created_at: 1793300000, service: "codex", model: "gpt-6.1-sol"};
+// The next stage's prescription is still being written when the page opens, and arrives a poll later.
+let reply = {state: "running", auto: true, progress: {step: 1}};
+const plans = [];
+const ctx = {api: async url => url === "/api/assistant/connections" ? [] : reply};
+const panel = createPrescriptionPanel(ctx, {jobId: "job", data, onPlan: names => plans.push(names)});
+await settle();
+assert.match(panel.el.textContent, /앞 단계 결과를 보고 다음 단계를 정하고 있습니다/);
+await runTimers();
+assert.match(panel.el.textContent, /다음 단계를 정하고 있습니다/, "still running: still waiting");
+reply = {state: "complete", stale: false, result};
+await runTimers();
+assert.equal(timers.size, 0, "a prescription in hand stops asking");
+assert.deepEqual(plans, [[], ["a", "b", "c"]]);   // nothing marked while it is written
+const view = () => {
+  const go = panel.el.querySelectorAll("a").find(a => a.classList.contains("primary"));
+  return {on: panel.el.querySelectorAll(".choice").filter(c => c.classList.contains("is-on")).map(c => c.querySelector("b").textContent),
+    files: panel.el.querySelectorAll(".pitem").map(p => p.querySelector("b").textContent), go: [go.textContent, go.getAttribute("href")]};
+};
+// The AI's pick comes first and is chosen; its files only.
+assert.deepEqual(panel.el.querySelectorAll(".choice").map(c => c.querySelector("b").textContent), ["함수 나누기", "선언 옮기기"]);
+assert.ok(panel.el.querySelectorAll(".choice")[0].textContent.includes("AI 추천"));
+assert.deepEqual(view(), {on: ["함수 나누기"], files: ["src/a.c", "src/c.c"], go: ["함수 나누기로 진행 →", "#/job/job/refactor?way=internal"]});
+assert.match(panel.el.textContent, /2단계/);
+// Picking the other way swaps the files and where 진행 goes; picking back restores them.
+panel.el.querySelectorAll(".choice")[1].click();
+assert.deepEqual(view(), {on: ["선언 옮기기"], files: ["src/b.h"], go: ["선언 옮기기로 진행 →", "#/job/job/refactor?way=link"]});
+assert.match(panel.el.textContent, /고리 6 → 2개/);
+panel.el.querySelectorAll(".choice")[0].click();
+assert.deepEqual(view().files, ["src/a.c", "src/c.c"]);
+panel.destroy();
+assert.equal(timers.size, 0);
+'''.replace('PRESCRIPTION', json.dumps((APP / 'prescription.js').as_uri())))
+
+
+def test_result_page_keeps_asking_until_a_late_next_prescription_arrives():
+    run_page(r'''
+const functions = [{name: "q.client.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}}];
+const {view, data, stop} = await show({functions, live: true, state: {state: "complete", action: "apply", next_pending: true}});
+const next = () => view.querySelector(".g-next");
+assert.match(next().textContent, /다음 단계를 정하고 있습니다/);
+// Started but slow: the page asks again and keeps waiting.
+data["/assistant"] = {state: "complete", action: "apply"};
+data["/prescription"] = {state: "running", auto: true};
+await runTimers();
+assert.match(next().textContent, /다음 단계를 정하고 있습니다/); assert.equal(timers.size, 1);
+await runTimers();
+assert.equal(timers.size, 1);
+// It arrives: the card offers the next stage and the page stops asking.
+data["/prescription"] = {state: "complete", stale: false, result: {stage: 2, done: false, first: "", files: [{name: "q.client.menu", kind: "internal", targets: ["Default_MenuKey"]}]}};
+await runTimers();
+assert.deepEqual(next().querySelector(".g-btns").elements.map(b => b.textContent), ["여기서 마무리", "2단계 진행 →"]);
+assert.equal(timers.size, 0);
+stop();
+// Leaving while still waiting stops the polling too.
+const again = await show({functions, live: true, presc: {state: "running", auto: true}});
+assert.equal(timers.size, 1);
+again.stop();
+assert.equal(timers.size, 0);
 ''')
