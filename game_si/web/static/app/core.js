@@ -504,3 +504,10 @@ export function playGroups(rounds = []) {
 // Places any game has: offered in a problem report after this change's own checklist.
 export const COMMON_PLACES = ["게임이 켜질 때", "처음 메뉴·설정", "게임 플레이 중", "저장·불러오기", "게임을 끌 때", "잘 모르겠어요"];
 export const REPORT_KINDS = ["화면이 이상해요", "조작이 안 돼요", "멈추거나 꺼져요", "소리가 달라요", "기타"];
+
+// The job steps already done (가져오기, 진단, AI 리팩토링, 단계 결과, 마무리), whichever page is open:
+// a finished job keeps its checks when an earlier step is looked at again.
+export function stepsReached(job, rounds) {
+  const analysed = ["complete", "partial"].includes(job?.state), n = rounds?.current || 0;
+  return [analysed, analysed, n > 0, n > 0, Boolean(n && rounds.rounds?.[n - 1]?.checks?.play?.ok)];
+}

@@ -516,6 +516,19 @@ assert.ok(!parts.some(p => (p.text || "").includes("`")));
 ''')
 
 
+def test_the_step_bar_keeps_the_checks_of_steps_already_done():
+    # Rehearsal 2026-10-30: opening AI 리팩토링 of a finished job took the ✓ off 단계 결과 and 마무리.
+    run('''
+const done = {state: "complete"};
+const stage = play => ({checks: play ? {play} : {}});
+assert.deepEqual(core.stepsReached(done, {current: 0, rounds: []}), [true, true, false, false, false]);
+assert.deepEqual(core.stepsReached(done, {current: 3, rounds: [stage(), stage(), stage()]}), [true, true, true, true, false]);
+assert.deepEqual(core.stepsReached(done, {current: 2, rounds: [stage(), stage({ok: true})]}), [true, true, true, true, true]);
+assert.deepEqual(core.stepsReached(done, {current: 1, rounds: [stage({ok: false})]}), [true, true, true, true, false]);   // a problem is not done
+assert.deepEqual(core.stepsReached({state: "running"}, null), [false, false, false, false, false]);
+''')
+
+
 def test_grade_help_matches_the_scoring_thresholds():
     from game_si.si import _grade
     run('''
