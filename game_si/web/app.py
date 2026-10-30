@@ -249,16 +249,14 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
 
     @app.get('/')
     def home():
-        return FileResponse(APP_UI / 'index.html', media_type='text/html; charset=utf-8', headers={'Cache-Control': 'no-cache'})
+        return FileResponse(APP_UI / 'index.html', media_type='text/html; charset=utf-8')
 
     @app.get('/ui/{filename}')
     def ui_asset(filename: str):
         if not re.fullmatch(r'[a-z0-9-]+\.(js|css)', filename) or not (APP_UI / filename).is_file():
             raise KeyError(filename)
         media = 'text/javascript' if filename.endswith('.js') else 'text/css'
-        # Checked again on every load (unchanged files come back as 304): a page left open across an
-        # update otherwise kept old modules even after a hard reload (rehearsal 2026-10-30).
-        return FileResponse(APP_UI / filename, media_type=f'{media}; charset=utf-8', headers={'Cache-Control': 'no-cache'})
+        return FileResponse(APP_UI / filename, media_type=f'{media}; charset=utf-8')
 
     @app.get('/api/session')
     def session():
@@ -336,7 +334,22 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
 
     @app.get('/api/jobs')
     def history(include_deleted: bool = False):
-        return manager.list(include_deleted=include_deleted)
+        jobs = manager.list(include_deleted=include_deleted)
+        for job in jobs:
+            if job.get('state') in {'complete', 'partial'} and not job.get('deleted_at'):
+                job['progress'] = job_progress(job['id'])
+        return jobs
+
+    def job_progress(ident):
+        """How far the guided refactoring went, for the history list: stages applied, the play record."""
+        try:
+            rounds = assistant.rounds(ident)
+            prescribed = bool(prescriptions.get(ident).get('result'))
+        except Exception:   # an older or unreadable job still lists, without its progress
+            return None
+        n = rounds.get('current') or 0
+        play = (rounds['rounds'][n - 1].get('checks') or {}).get('play') if n else None
+        return {'stages': n, 'prescribed': prescribed, 'play': None if not play else 'ok' if play.get('ok') else 'problem'}
 
     def result_folder(ident, revision=None):
         record = manager.get(ident)

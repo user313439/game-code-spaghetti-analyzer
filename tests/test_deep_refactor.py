@@ -956,6 +956,19 @@ def test_a_state_file_swap_refused_for_a_moment_is_tried_again(tmp_path, monkeyp
     assert [p.name for p in tmp_path.iterdir()] == ['state.json']   # no temporary file left behind
 
 
+def test_the_history_says_how_far_the_tidying_went(tmp_path):
+    # Rehearsal 2026-10-30: every finished job read "분석 완료", whether it stopped at stage 3 or was never tidied.
+    app, ident = make_job(tmp_path)
+    client = TestClient(app, base_url='http://127.0.0.1:8765')
+    progress = lambda: next(j for j in client.get('/api/jobs').json() if j['id'] == ident)['progress']
+    assert progress() == {'stages': 0, 'prescribed': False, 'play': None}
+    stage = lambda n, play=None: {'round': n, 'revision': f'{n:032x}', 'files': [], 'checks': {'play': play} if play else {}}
+    app.state.assistant._save_rounds(ident, {'current': 3, 'rounds': [stage(1), stage(2), stage(3)]})
+    assert progress() == {'stages': 3, 'prescribed': False, 'play': None}
+    app.state.assistant._save_rounds(ident, {'current': 2, 'rounds': [stage(1), stage(2, {'ok': True})]})
+    assert progress()['play'] == 'ok' and progress()['stages'] == 2
+
+
 def test_a_change_that_calls_a_helper_it_never_defines_is_refused():
     # Real case (rehearsal 2026-10-30, tyrian2.c): a salvaged reply kept the calls and lost the edit with
     # the helpers; it passed every check and did not build (C4013 'update_and_draw_armor_warning').
