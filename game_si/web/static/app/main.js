@@ -1,4 +1,4 @@
-import {createApi, DEFAULT_LIMITS} from "./core.js";
+import {createApi, DEFAULT_LIMITS, stepsReached} from "./core.js";
 import {h, clear, logo, fill} from "./ui.js";
 import * as importPage from "./page-import.js";
 import * as historyPage from "./page-history.js";
@@ -38,14 +38,29 @@ function setTheme(value) {
   window.dispatchEvent(new CustomEvent("gsi-theme", {detail: value}));
 }
 
+// Steps a job has already been through, by job: going back to an earlier page keeps the later checks
+// (rehearsal 2026-10-30: opening AI 리팩토링 of a finished job took the ✓ off 단계 결과 and 마무리).
+const reached = new Map();
+let shownSteps = null;   // the last setSteps call, drawn again when the job's progress arrives
+
 // Header steps for job pages. available: which later steps can be opened.
 ctx.setSteps = (jobId, active, available = {}) => {
   const nav = document.getElementById("steps"), bar = document.getElementById("jobbar");
+  shownSteps = jobId ? [jobId, active, available] : null;
   if (!jobId) { bar.hidden = true; nav.replaceChildren(); return; }
   bar.hidden = false;
+  // Drawn at once with what was known, then again if the job has moved on (a stage applied, play recorded).
+  const been = reached.get(jobId) || [];
+  if (!available.refresh) {
+    Promise.all([ctx.api(`/api/jobs/${jobId}`), ctx.api(`/api/jobs/${jobId}/rounds`).catch(() => null)]).then(([job, rounds]) => {
+      const now = stepsReached(job, rounds);
+      reached.set(jobId, now);
+      if (shownSteps?.[0] === jobId && now.join() !== been.join()) ctx.setSteps(shownSteps[0], shownSteps[1], {...shownSteps[2], refresh: true});
+    }).catch(() => {});
+  }
   fill(nav, ...STEPS.map(([name, suffix], i) => {
-    const done = i < active, on = i === active;
-    const open = i === 0 || (i === 1 && available.diagnosis !== false) || (i === 2 && available.refactor) || (i === 3 && available.result) || (i === 4 && available.result);
+    const on = i === active, done = !on && (i < active || Boolean(been[i]));
+    const open = i === 0 || (i === 1 && available.diagnosis !== false) || (i === 2 && (available.refactor || been[2])) || (i >= 3 && (available.result || been[3]));
     const content = [h("i", null, done ? "✓" : String(i + 1)), name];
     return open && !on
       ? h("a", {class: `step ${done ? "done" : ""}`, href: `#/job/${jobId}${suffix}`}, ...content)
