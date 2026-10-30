@@ -117,7 +117,8 @@ export async function render(view, ctx, {jobId}) {
     const unit = data.units.find(u => u.fqn === v.id);
     pickCard.hidden = false;
     fill(pickCard, 
-      h("div", {class: "row-gap"}, gradeBadge(v.grade), h("b", {title: v.id}, v.label || v.id), h("span", {class: "push"}, Number(v.si).toFixed(1))),
+      h("div", {class: "row-gap"}, gradeBadge(v.grade), h("b", {title: v.id}, v.label || v.id), h("span", {class: "push"}, Number(v.si).toFixed(1)),
+        h("button", {class: "pick-close", type: "button", "aria-label": "선택 해제하고 전체 지도 보기", title: "선택 해제 · 전체 지도 보기", onclick: () => map?.clearFocus()}, "×")),
       h("p", {class: "sub"}, `부르는 ${label} ${v.fout} · 불리는 ${label} ${v.fin} · ${v.in_cycle ? "순환 고리 안" : "순환 고리 밖"}`),
       unit ? h("button", {class: "btn ghost sm block", type: "button", onclick: () => openCard(unit.fqn)}, "진단서에서 자세히 보기") : null);
   }

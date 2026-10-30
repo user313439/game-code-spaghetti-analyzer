@@ -452,6 +452,33 @@ def _check_by_tree(item, candidates, groups, target_indexes, explanation):
         return None
 
 
+def _called_but_missing(before, after, explanation):
+    """Names the AI's own words give that the changed code now calls, that were nowhere in the file before
+    and are not defined in it after. Real case 2026-10-30 (OpenTyrian tyrian2.c, video_scale_hqNx.c): a
+    rejected reply was salvaged without the edit that held its helpers, and the calls alone passed every
+    check but did not build. Only names the AI mentions are looked at, so calls to existing functions
+    and macros from headers are never in question."""
+    missing=[]
+    # ASCII names only: in the AI's Korean, a particle follows the name directly ("…warning로").
+    for name in dict.fromkeys(re.findall(r'(?<![A-Za-z0-9_])[A-Za-z_][A-Za-z0-9_]*',explanation)):
+        if name.upper()==name or re.search(r'\b'+name+r'\b',before):continue   # MIN, PIXEL20_1M: macros from headers
+        if not re.search(r'(?<![\w.>:])'+name+r'\s*\(',after):continue
+        macro=re.search(r'#\s*define\s+'+name+r'\b',after)
+        if not macro and not _defines(after,name):missing.append(name)
+    return missing
+
+
+def _defines(text, name):
+    """Whether the text has `name(...) {`: a definition, its parameters read with nested parentheses
+    (function pointers), and only qualifiers between them and the body."""
+    for found in re.finditer(r'\b'+name+r'\s*\(',text):
+        depth,index=1,found.end()
+        while index<len(text) and depth:
+            depth+={'(':1,')':-1}.get(text[index],0);index+=1
+        if re.match(r'\s*(?:const\s*|override\s*|noexcept\s*)*\{',text[index:index+200]):return True
+    return False
+
+
 def validate_preview_targets(advice, methods, preview, companions=frozenset()):
     resolved=validate_target_methods(advice,methods)
     reviews={row['path']:row for row in advice['file_reviews']}
@@ -497,6 +524,9 @@ def validate_preview_targets(advice, methods, preview, companions=frozenset()):
             helpers=_check_by_tree(item,candidates,groups,target_indexes,explanation)
             if helpers is None:raise
         if helpers:item['added_helpers']=list(dict.fromkeys(helpers))
+        missing=_called_but_missing(item['before'],item['after'],explanation)
+        if missing:
+            raise ValueError(f"새로 부르는 함수 {', '.join(missing)}의 정의가 수정본에 없습니다(빌드할 수 없는 변경).")
     if moves:
         error=rules.declaration_moves(moves)
         if error:

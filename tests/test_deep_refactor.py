@@ -405,6 +405,12 @@ def test_a_cli_that_ended_on_its_limit_or_a_cancel_is_told_apart():
     limit = assistant.cli_failure(subprocess.CompletedProcess(['claude'], 1, said, ''))
     assert isinstance(limit, assistant.LimitReached) and '4:10am' in str(limit)
     assert assistant.cli_failure(subprocess.CompletedProcess(['claude'], 1, '', 'Error: not logged in')) is None
+    # Codex prints a coloured banner before the error; only the limit line is kept (rehearsal 2026-10-30).
+    esc = chr(27)
+    banner = '\n'.join(['OpenAI Codex v0.165.0', '--------', f'{esc}[1mworkdir:{esc}[0m C:/tmp/x', f'{esc}[1mmodel:{esc}[0m gpt-6.1-sol',
+                        f"{esc}[31mERROR:{esc}[0m You've hit your usage limit. Try again at 3:05 PM.", ''])
+    codex = str(assistant.cli_failure(subprocess.CompletedProcess(['codex'], 1, '', banner)))
+    assert "You've hit your usage limit. Try again at 3:05 PM." in codex and 'workdir' not in codex and esc not in codex
     assistant._TASK.key = 'task-y'
     assistant.CANCELLED.add('task-y')
     try:
@@ -948,3 +954,18 @@ def test_a_state_file_swap_refused_for_a_moment_is_tried_again(tmp_path, monkeyp
     write_json(tmp_path / 'state.json', {'state': 'done'})
     assert len(refused) == 2 and json.loads((tmp_path / 'state.json').read_text('utf8')) == {'state': 'done'}
     assert [p.name for p in tmp_path.iterdir()] == ['state.json']   # no temporary file left behind
+
+
+def test_a_change_that_calls_a_helper_it_never_defines_is_refused():
+    # Real case (rehearsal 2026-10-30, tyrian2.c): a salvaged reply kept the calls and lost the edit with
+    # the helpers; it passed every check and did not build (C4013 'update_and_draw_armor_warning').
+    from game_si.web.assistant_context import _called_but_missing
+    before = 'void JE_main(void)\n{\n\tif (armor < 5) beep();\n}\n'
+    lost = 'void JE_main(void)\n{\n\tupdate_and_draw_armor_warning();\n}\n'
+    words = '보조 함수 update_and_draw_armor_warning로 옮깁니다. JE_main은 MIN(a, b)을 씁니다.'
+    assert _called_but_missing(before, lost, words) == ['update_and_draw_armor_warning']
+    kept = 'static void update_and_draw_armor_warning(void)\n{\n\tif (armor < 5) beep();\n}\n\n' + lost
+    assert _called_but_missing(before, kept, words) == []
+    # Parameters with function pointers (opentyr.c handleSetupPickerInput), a macro, a member call: no complaint.
+    pointer = 'static bool pick(size_t (*count)(void), bool *done)\n{\n\treturn true;\n}\nvoid f(void)\n{\n\tpick(n, &d);\n\tMIN(a, b);\n\tx.Run();\n}\n'
+    assert _called_but_missing('void f(void)\n{\n}\n', pointer, 'pick 함수와 MIN 매크로, Run을 씁니다.') == []

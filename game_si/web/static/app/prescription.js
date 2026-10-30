@@ -250,7 +250,7 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
     if (r.done || !r.files.length) {
       return [staleBox, h("div", {class: "eyebrow"}, stage > 1 ? `AI 처방 · ${stage}단계` : "AI 처방"), h("div", {class: "lead"}, stage > 1 ? "더 정리할 곳이 없습니다" : r.headline),
         h("p", {class: "sub"}, stage > 1 ? "앞 단계 결과를 다시 보고, 더 나눠도 효과가 작다는 답을 받았습니다. 이제 빌드하고 직접 플레이해 확인해 주세요."
-          : "이 분석 기준으로는 더 정리할 만한 큰 매듭이 없다는 답을 받았습니다."),
+          : "이 분석 기준으로는 더 정리할 만한 큰 매듭이 없다는 답을 받았습니다."), droppedBox(r),
         stage > 1 && !state.stale ? h("div", {class: "actions"}, h("a", {class: "btn primary", href: `#/job/${jobId}/finish`}, "빌드하고 플레이해 보기 →")) : null, meta];
     }
     // Both ways offered: the AI's pick comes first and the files below follow the way chosen.
@@ -279,13 +279,14 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
       const open = () => onFocus?.(f.name);
       return h("div", {class: "pitem link", role: "button", tabindex: "0", title: `${unit?.file || f.name} 진단 보기`, onclick: open,
           onkeydown: e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}, h("span", {class: "n"}, i + 1),
-        h("div", null, h("b", null, unit?.file || f.name), h("span", {class: `kind ${f.kind}`}, f.kind === "link" ? "연결 정리" : "파일 안 정리"),
+        h("div", null, h("b", null, (unit?.file || f.name).split("/").pop()), h("span", {class: `kind ${f.kind}`}, f.kind === "link" ? "연결 정리" : "파일 안 정리"),
           h("p", null, ...codeText(codeTokens(f.reason))), h("p", {class: "how"}, ...codeText(codeTokens(f.change_idea))),
           f.targets?.length ? h("p", {class: "targets"}, "먼저 정리할 함수 ", ...f.targets.map(t => h("code", {class: "cname"}, t))) : null, effect));
     });
     return [staleBox,
       h("div", {class: "eyebrow"}, `AI 처방${stage > 1 ? ` · ${stage}단계` : ""} · ${offered.length}개 ${label}`), h("div", {class: "lead"}, r.headline),
       methodBox, cycleBox({...r, files: offered, effects: {...r.effects, steps: r.effects.steps.filter((_, i) => offered.includes(r.files[i]))}}), ...items,
+      droppedBox(r),
       r.show_why_not_top ? h("div", {class: "bubble"}, h("h4", null, `왜 점수 1위 ‘${units.get(r.top_unit)?.name || r.top_unit}’부터 고치지 않나요?`), ...codeText(codeTokens(r.why_not_top))) : null,
       h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), ...codeText(codeTokens(r.benefit))),
       state.stale ? null : h("div", {class: "actions"},
@@ -293,6 +294,15 @@ export function createPrescriptionPanel(ctx, {jobId, data, onPlan, onFocus}) {
         h("a", {class: "btn primary", href: `#/job/${jobId}/refactor${kinds.length > 1 ? `?way=${way}` : ""}`},
           kinds.length > 1 ? `${METHODS[way].name}로 진행 →` : "추천대로 진행 →")),
       meta];
+  }
+  // The AI named these, but the program could not read their functions the way the analysis measured
+  // them (functions built by macros), so a change there could not be checked and they are not offered.
+  function droppedBox(r) {
+    const names = (r.dropped_unreadable || []).map(n => (units.get(n)?.file || n).split("/").pop());
+    if (!names.length) return null;
+    return h("div", {class: "box"}, h("b", null, `처방에서 뺀 ${label}: ${names.join(", ")}`),
+      h("p", {class: "sub"}, "AI가 추천했지만, 이 파일의 함수 일부가 매크로로 만들어져 있어 프로그램이 함수의 시작과 끝을 정확히 읽지 못합니다. " +
+        "고친 뒤 안전 검사를 할 수 없어 이번 처방에서 뺐습니다. 원본은 그대로입니다."));
   }
   function plan(names) {
     const key = names.join("|");

@@ -1,6 +1,6 @@
 import {changeText, elapsedText, functionChanges, resultHeadline, safetyBadges, splitSummary, unitDisplay} from "./core.js";
 import {diffView} from "./diff.js";
-import {METHODS} from "./prescription.js";
+import {METHODS, connectionPicker} from "./prescription.js";
 import {confirmDialog, fill, h, notice, progressBlock, toast} from "./ui.js";
 
 const MAX_STAGES = 3;
@@ -65,7 +65,7 @@ export async function render(view, ctx, {jobId}) {
   const root = h("section", {class: "wrap wide"}, h("p", {class: "empty"}, "수정 결과를 불러오고 있습니다."));
   view.append(root);
   ctx.setSteps(jobId, 3, {refactor: true, result: true});
-  let alive = true, timer = null, shown = "";
+  let alive = true, timer = null, shown = "", viewing = 0;   // the stage shown (0: the last one)
   const progress = progressBlock(APPLY_STAGES);
 
   async function load() {
@@ -74,8 +74,10 @@ export async function render(view, ctx, {jobId}) {
         ctx.api(`/api/jobs/${jobId}/rounds`), ctx.api(`/api/jobs/${jobId}/tangle`), ctx.api(`/api/jobs/${jobId}/demo`), ctx.api(`/api/jobs/${jobId}/diagnosis`),
         ctx.api(`/api/jobs/${jobId}/prescription`).catch(() => ({state: "unknown"}))]);
       ctx.setCrumb(job.name);
+      if (viewing > rounds.current) viewing = 0;   // a stage undone since
       // The changed functions' code: which new helpers each original function now calls.
-      const changes = rounds.current ? await ctx.api(`/api/jobs/${jobId}/rounds/${rounds.current}/changes`).catch(() => ({functions: []})) : {functions: []};
+      const n = viewing || rounds.current;
+      const changes = n ? await ctx.api(`/api/jobs/${jobId}/rounds/${n}/changes`).catch(() => ({functions: []})) : {functions: []};
       draw({state, rounds, tangle, game, label: diag.summary.unit_label, presc, code: changes?.functions || []});
     } catch (error) {
       if (!alive) return;
@@ -110,7 +112,7 @@ export async function render(view, ctx, {jobId}) {
         h("div", {class: "actions"}, h("a", {class: "btn primary", href: `#/job/${jobId}/diagnosis`}, "엉킴 진단으로 →"))));
       return;
     }
-    const n = rounds.current, round = rounds.rounds[n - 1];
+    const n = viewing || rounds.current, round = rounds.rounds[n - 1], last = n === rounds.current;
     const active = tangle.rounds.filter(r => r.active);
     const cur = tangle.rounds.find(r => r.round === n), prev = tangle.rounds.find(r => r.round === n - 1);
     const comp = round.comparison || {before: [], after: [], functions: []};
@@ -226,7 +228,7 @@ export async function render(view, ctx, {jobId}) {
       h("div", {class: "tbl-scroll"}, fileTable));
     const tools = h("div", {class: "s-links"},
       h("a", {class: "btn ghost sm", href: `/revisions/${jobId}/${round.revision}/modified-source.zip`}, "수정본 내려받기 (.zip)"),
-      h("button", {class: "btn ghost sm", type: "button", onclick: undo}, "이 단계 되돌리기"));
+      last ? h("button", {class: "btn ghost sm", type: "button", onclick: undo}, "이 단계 되돌리기") : null);
     const detail = h("details", {class: "card s-detail"}, h("summary", null, "자세히 보기 ", h("small", null, "고친 함수의 코드와 측정값, 안전 확인")),
       split.helpers.length ? hero : null, safety, scores, whole, tools);
     // Only helpers found under an original function make the plain-words page (one that is never called
@@ -234,9 +236,11 @@ export async function render(view, ctx, {jobId}) {
     const body = split.targets.length ? [splitHead(split, n, round), effectsCard(split), shorterCard(split), exampleCard(split), detail]
       : [h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `수정 결과 · ${n}단계 · ${METHODS[lastWay].name}`),
           h("h1", {class: "h1"}, head.title), h("p", {class: "sub"}, head.lines.join(" ")), safeChips(round))), hero, detail];
+    const pending = Boolean(state.next_pending) || presc.state === "running";
     fill(root,
       failedApply ? notice(`마지막 변경안을 적용하지 못했습니다. ${state.error || ""} 아래는 그 전까지 적용된 결과입니다.`) : null,
-      h("div", {class: "s-wrap"}, ...body, nextCard(n, presc, Boolean(state.next_pending) || presc.state === "running")));
+      h("div", {class: "s-wrap"}, stageTabs(n, rounds.current), last ? nextBanner(n, presc, pending) : earlierNote(n, rounds.current),
+        ...body, last ? nextCard(n, presc, pending) : null));
     // The next stage's prescription is asked for by itself after applying: show it when it arrives.
     // The next stage's prescription is about to start, running, or could not be read: look again shortly.
     if (waiting(state, presc)) { clearTimeout(timer); timer = setTimeout(() => alive && load(), 2000); }
@@ -313,11 +317,57 @@ export async function render(view, ctx, {jobId}) {
     }
     // No judgement yet (an API key is never kept, or the request failed): the user decides.
     return card(h("div", {class: "s-title"}, "다음 단계가 필요한지 AI에게 물어볼 수 있습니다"),
-      h("p", null, presc.state === "failed" ? `다음 단계 판단을 받지 못했습니다. ${presc.error || ""}` : "처방 화면에서 이번 결과를 기준으로 다음 처방을 받을 수 있습니다."),
+      h("p", null, presc.state === "failed" ? "다음 단계 판단을 받지 못했습니다. 맨 위에서 다른 AI를 골라 다시 받을 수 있습니다."
+        : "처방 화면에서 이번 결과를 기준으로 다음 처방을 받을 수 있습니다."),
       h("div", {class: "g-btns"}, h("a", {class: "btn ghost", href: `#/job/${jobId}/finish`}, "여기서 마무리"),
         h("a", {class: "btn primary", href: `#/job/${jobId}/diagnosis`}, "다음 처방 받기 →")));
   }
   let lastWay = "internal";   // how the shown round changed the code: the next stage may do the same once more
+
+  // One tab per applied stage: each stage's own result stays readable after the next one.
+  function stageTabs(n, current) {
+    if (current < 2) return null;
+    return h("div", {class: "g-stages", role: "tablist", "aria-label": "단계별 결과"},
+      ...Array.from({length: current}, (_, i) => i + 1).map(k => h("button", {type: "button", role: "tab", class: k === n ? "is-on" : "",
+        "aria-selected": String(k === n), onclick: () => { if (k === n) return; viewing = k === current ? 0 : k; load(); }}, `${k}단계 결과`)));
+  }
+  function earlierNote(n, current) {
+    return h("div", {class: "g-banner"}, h("span", null, `${n}단계에서 바뀐 것만 보여 드립니다. 그 뒤 ${current}단계까지 진행했습니다.`),
+      h("button", {class: "btn ghost sm", type: "button", onclick: () => { viewing = 0; load(); }}, `${current}단계 결과 보기`));
+  }
+  // At the top, so a stage never reads as the whole job: the next stage is being decided, waits, or is the end.
+  function nextBanner(n, presc, pending) {
+    if (n >= MAX_STAGES) return h("div", {class: "g-banner is-end"}, h("span", null, h("b", null, "정리는 여기까지입니다"), ` · 최대 ${MAX_STAGES}단계까지 정리했습니다.`),
+      h("a", {class: "btn primary sm", href: `#/job/${jobId}/finish`}, "빌드하고 플레이해 보기 →"));
+    const r = presc.result, fresh = r && !presc.stale && (r.stage || 0) === n + 1;
+    if (pending) return h("div", {class: "g-banner is-busy", role: "status"}, h("i", {class: "g-spin", "aria-hidden": "true"}),
+      h("span", null, h("b", null, "AI가 이번 결과를 보고 다음 단계를 정하고 있습니다"),
+        ` · ${presc.elapsed_seconds ? elapsedText(presc.elapsed_seconds) : "시작하는 중"} · 그동안 아래 ${n}단계 결과를 보셔도 됩니다.`));
+    if (fresh && (r.done || !r.files.length)) return h("div", {class: "g-banner is-end"}, h("span", null, h("b", null, "정리는 여기까지입니다"), " · AI가 더 나눠도 효과가 작다고 판단했습니다."),
+      h("a", {class: "btn primary sm", href: `#/job/${jobId}/finish`}, "빌드하고 플레이해 보기 →"));
+    if (fresh) return h("div", {class: "g-banner"}, h("span", null, h("b", null, `${n + 1}단계가 남았습니다`), ` · AI가 ${r.files.length}개 파일을 더 정리할 수 있다고 판단했습니다. 아래 결과를 본 뒤 진행하세요.`),
+      h("a", {class: "btn primary sm", href: `#/job/${jobId}/diagnosis`}, `${n + 1}단계 진행 →`));
+    if (presc.state !== "failed") return null;
+    return h("div", {class: "g-banner is-warn"}, h("div", null, h("b", null, "다음 단계 판단을 받지 못했습니다"), h("p", {class: "help"}, presc.error || "")), retryWithAnotherAi());
+  }
+  // The AI used for the next stage hit its limit (or failed): pick another one here and ask again.
+  function retryWithAnotherAi() {
+    const box = h("div", {class: "g-retry"}, h("p", {class: "help"}, "다른 AI를 골라 이 자리에서 다음 처방을 다시 받을 수 있습니다."));
+    ctx.api("/api/assistant/connections").then(connections => {
+      if (!alive || !box.isConnected) return;
+      const picker = connectionPicker(connections || [], ctx.api, {step: "prescription"});
+      const go = h("button", {class: "btn primary sm", type: "button"}, "이 AI로 다음 처방 받기");
+      go.addEventListener("click", async () => {
+        const missing = picker.problem();
+        if (missing) { toast(missing); return; }
+        go.disabled = true;
+        try { await ctx.api(`/api/jobs/${jobId}/prescription`, {method: "POST", body: JSON.stringify(picker.value())}); load(); }
+        catch (error) { toast(error.message); go.disabled = false; }
+      });
+      box.append(picker.el, h("div", {class: "g-btns"}, go));
+    }).catch(error => box.append(notice(error.message)));
+    return box;
+  }
 
   async function undo() {
     if (!await confirmDialog({title: "이 단계를 되돌릴까요?", body: "현재 수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다.", ok: "되돌리기"})) return;

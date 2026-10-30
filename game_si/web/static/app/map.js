@@ -255,6 +255,8 @@ export function createMap(host, {nodes, edges, unitLabel = "파일", onPick} = {
     setFilter(next) { filter = next; paint(); },
     zoomBy(factor) { zoomAt(factor); },
     fit() { fitNow(); },
+    // Back to the whole map: nothing pinned, everything in view.
+    clearFocus() { pinned = null; paint(); onPick?.(null); fitNow(); },
     focusOn(id) {
       const v = byId.get(id); if (!v) return false;
       pinned = v; paint(); onPick?.(v);

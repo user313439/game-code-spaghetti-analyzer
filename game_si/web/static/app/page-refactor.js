@@ -278,6 +278,25 @@ export async function render(view, ctx, {jobId, query}) {
       rows.length > 1 ? h("div", {class: "actions"}, h("button", {class: "btn ghost sm", type: "button", onclick: e => redo(e, rows.map(w => w.key))}, "모두 다시 만들기")) : null,
       picker.el);
   }
+  // The whole change in a few words: per file, which big functions were split into how many new ones.
+  // The reasons and effects in the AI's words are on the right of each file's code.
+  function overview(state, targets, reviews, deep) {
+    const took = state.finished_at && state.started_at ? ` · ${Math.round(state.finished_at - state.started_at)}초` : "";
+    const helpers = targets.reduce((n, f) => n + (f.added_helpers || []).length, 0);
+    const line = (f => {
+      const names = reviews.get(f.path)?.targets || [];
+      const made = (f.added_helpers || []).length;
+      return h("li", null, h("b", null, f.path.split("/").pop()), " ",
+        names.length ? [...names.map(t => [h("code", {class: "cname"}, t), " "])] : null,
+        made ? `→ 작은 함수 ${made}개` : reviews.get(f.path)?.change_type === "declarations" ? "→ 선언 정리" : "→ 변경");
+    });
+    return h("div", {class: "card overview"}, h("div", {class: "row-gap"}, h("div", {class: "h2"}, "한눈에 보기"),
+        h("span", {class: "sub"}, `${aiName(state.service, state.model)}${took}`)),
+      h("p", {class: "sub"}, helpers ? `파일 ${targets.length}개에서 큰 함수를 작은 함수 ${helpers}개로 나눴습니다. 파일을 누르면 아래에서 바뀐 코드와 AI 설명을 볼 수 있습니다.`
+        : `파일 ${targets.length}개를 바꿉니다. 파일을 누르면 아래에서 바뀐 코드와 AI 설명을 볼 수 있습니다.`),
+      h("ul", {class: "ov-files"}, ...targets.map(line)),
+      deep ? h("p", {class: "help deep-sum"}, deepSummary(state.workers)) : null);
+  }
   function ready(state) {
     shown = "ready";
     const advice = state.change_advice || {};
@@ -346,22 +365,21 @@ export async function render(view, ctx, {jobId, query}) {
           h("div", {class: "bubble"}, h("h4", null, "무엇이 문제인가요?"), rich(r.finding)),
           h("div", {class: "bubble"}, h("h4", null, "왜 이렇게 바꾸나요?"), rich(r.reason)),
           h("div", {class: "bubble"}, h("h4", null, "무엇을 바꾸나요?"), rich(r.change)),
+          h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), rich(r.expected_effect)),
           (worker => worker?.passes?.length > 1 ? h("div", {class: "bubble"}, h("h4", null, "단계별로 무엇을 했나요?"), passView(worker))
             : null)((state.workers || []).find(w => w.path === selected.path)),
-          h("div", {class: "bubble"}, h("h4", null, "무엇이 좋아지나요?"), rich(r.expected_effect)),
           h("details", {class: "bubble"}, h("summary", null, `영향을 받는 곳과 확인할 동작 (${(r.checks || []).length})`), rich(r.impact),
             h("ul", null, ...(r.checks || []).map(c => h("li", null, ...codeText(codeTokens(c)))))));
       } else fill(right, h("p", {class: "sub"}, "이 파일에 대한 설명이 없습니다."));
     }
     const o = advice.overview || {};
+    // The title says what this change does (the AI's title may be the prescription's, about more files).
+    const split = targets.reduce((n, f) => n + (reviews.get(f.path)?.targets || []).length, 0), made = targets.reduce((n, f) => n + (f.added_helpers || []).length, 0);
+    const title = made && split ? `큰 함수 ${split}개를 작은 함수 ${made}개로 나눕니다` : o.title || "변경안";
     fill(root,
-      h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `AI 리팩토링 · ${targets.length}개 ${label} 변경안`), h("h1", {class: "h1"}, o.title || "변경안"))),
+      h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `AI 리팩토링 · ${targets.length}개 ${label} 변경안`), h("h1", {class: "h1"}, title))),
       slot,
-      h("div", {class: "card overview"}, h("div", {class: "row-gap"}, h("div", {class: "h2"}, "전체 요약"),
-        h("span", {class: "sub"}, `${aiName(state.service, state.model)} · ${state.finished_at && state.started_at ? Math.round(state.finished_at - state.started_at) + "초" : ""}`)),
-        deep ? h("p", {class: "help deep-sum"}, deepSummary(state.workers)) : null,
-        h("div", {class: "ovgrid"}, ...[["무엇이 문제인가요?", o.problem], ["왜 바꿔야 하나요?", o.reason], ["어떻게 바꾸나요?", o.change], ["무엇이 좋아지나요?", o.expected_effect]]
-          .map(([q, a], i) => h("div", {class: "q"}, h("h4", null, h("i", null, i + 1), q), a ? rich(a) : "")))),
+      overview(state, targets, reviews, deep),
       failures(state),
       h("div", {class: "bench"}, left, center, right));
     paint();

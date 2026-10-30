@@ -314,6 +314,8 @@ class Element extends Node {
       add: c => this.classList.toggle(c, true), remove: c => this.classList.toggle(c, false)};
   }
   setAttribute(k, v) { this.attributes[k] = String(v); }
+  get value() { return this._value ?? this.attributes.value ?? ""; }   // like a browser: the attribute until set
+  set value(v) { this._value = String(v); }
   getAttribute(k) { return this.attributes[k] ?? null; }
   addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); }
   removeEventListener(type, fn) { this.listeners[type] = (this.listeners[type] || []).filter(f => f !== fn); }
@@ -351,6 +353,7 @@ const settle = async () => { for (let i = 0; i < 10; i++) await new Promise(r =>
 // Runs the timers set so far (not the ones they set), then lets the replies arrive.
 async function runTimers() { const due = [...timers.values()]; timers.clear(); for (const fn of due) fn(); await settle(); }
 const button = (root, text) => root.querySelectorAll("button").find(b => b.textContent === text) || null;
+const posts = [];   // what a page sent (url, body)
 const page = await import(PAGE);
 const components = (cycle, links) => [["cycle_units", cycle], ["links", links], ["complex_excess", 40], ["excess_complexity", 900], ["global_access", 500]]
   .map(([key, after]) => ({key, label: key, before: after, after, included: true}));
@@ -369,7 +372,8 @@ async function show({functions, cycle = [0, 0], links = [11, 11], game = {availa
     "/tangle": {rounds: [{round: 0, active: true, index: 100, components: components(cycle[0], links[0]), same_units: true},
       {round: 1, active: true, index: 99.78, components: components(cycle[1], links[1]), same_units: true}]}};
   const view = document.createElement("main");
-  const ctx = {setSteps() {}, setCrumb() {}, api: async url => data[url.replace("/api/jobs/job", "")]};
+  data["/api/assistant/connections"] = [{id: "claude", name: "Claude", installed: true, logged_in: true, models: []}, {id: "codex", name: "Codex", installed: true, logged_in: true, models: []}];
+  const ctx = {setSteps() {}, setCrumb() {}, api: async (url, options) => { if (options?.method) posts.push([url, options.body]); return data[url.replace("/api/jobs/job", "")]; }};
   const stop = await page.render(view, ctx, {jobId: "job"});
   if (live) return {view, data, stop};   // the test changes the replies and runs the page's timers
   stop?.();   // stop polling: the drawn page stays
@@ -665,18 +669,22 @@ assert.match(shot(), /✓ 이미지 1장 \(2KB\)/);
 button(modal(), "멈추거나 꺼져요").click();
 assert.equal(button(modal(), "멈추거나 꺼져요").getAttribute("aria-pressed"), "true");
 assert.equal(button(modal(), "조작이 안 돼요").getAttribute("aria-pressed"), "false");
-modal().querySelector("select").value = "설정 화면 · 음량 막대를 끌어 조절하기";
+// Where: short place names in a small list (no long select over the screen), the checklist's places first.
+const places = modal().querySelector(".g-places").elements.map(b => b.textContent);
+assert.deepEqual(places.slice(0, 2), ["설정 화면", "게임이 켜질 때"]); assert.ok(!places.some(p => p.includes("확인 목록")));
+button(modal(), "게임 플레이 중").click(); button(modal(), "설정 화면").click();
+assert.equal(button(modal(), "설정 화면").getAttribute("aria-checked"), "true");
 modal().querySelector("textarea").value = "  두 칸씩 움직여요  ";
 button(modal(), "기록하기").click();
 await settle();
 const [url, form] = sent.at(-1);
 assert.equal(url, "/api/jobs/job/rounds/1/report");
-assert.equal(form.get("kind"), "멈추거나 꺼져요"); assert.equal(form.get("note"), "두 칸씩 움직여요");
+assert.equal(form.get("kind"), "멈추거나 꺼져요"); assert.equal(form.get("note"), "두 칸씩 움직여요"); assert.equal(form.get("where"), "설정 화면");
 assert.ok(form.get("screenshot") instanceof Blob);
 assert.equal(modal(), null); assert.equal(pastes(), 0);
 // The page now shows the report; trying again and leaving the page with the window open closes it.
 assert.match(view.querySelector(".f-report").textContent, /멈추거나 꺼져요/);
-assert.match(view.querySelector(".f-report").textContent, /setupMenu/);
+assert.match(view.querySelector(".f-report").textContent, /이곳과 관련해 바뀐 곳opentyr\.c setupMenu/);
 button(view, "다시 해 보기").click();
 button(view, "문제가 있었습니다").click();
 assert.ok(modal());
@@ -696,7 +704,7 @@ const file = (name, kind, targets) => ({name, kind, reason: `${name} 이유`, ch
 const result = {stage: 2, headline: "두 가지가 남았습니다", benefit: "찾기 쉬워집니다", first: "internal", first_reason: "`bigA`가 가장 큽니다",
   files: [file("a", "internal", ["bigA"]), file("b", "link", []), file("c", "internal", ["bigC"])],
   effects: {base: 6, steps: [{name: "a", after: null}, {name: "b", after: 2, reduced: true}, {name: "c", after: null}]},
-  created_at: 1793300000, service: "codex", model: "gpt-6.1-sol"};
+  created_at: 1793300000, service: "codex", model: "gpt-6.1-sol", dropped_unreadable: ["c"]};
 // The next stage's prescription is still being written when the page opens, and arrives a poll later.
 let reply = {state: "running", auto: true, progress: {step: 1}};
 const plans = [];
@@ -718,14 +726,16 @@ const view = () => {
 // The AI's pick comes first and is chosen; its files only.
 assert.deepEqual(panel.el.querySelectorAll(".choice").map(c => c.querySelector("b").textContent), ["함수 나누기", "선언 옮기기"]);
 assert.ok(panel.el.querySelectorAll(".choice")[0].textContent.includes("AI 추천"));
-assert.deepEqual(view(), {on: ["함수 나누기"], files: ["src/a.c", "src/c.c"], go: ["함수 나누기로 진행 →", "#/job/job/refactor?way=internal"]});
+assert.deepEqual(view(), {on: ["함수 나누기"], files: ["a.c", "c.c"], go: ["함수 나누기로 진행 →", "#/job/job/refactor?way=internal"]});   // file names only
 assert.match(panel.el.textContent, /2단계/);
+// A file the program left out says so, and why, in plain words.
+assert.match(panel.el.textContent, /처방에서 뺀 파일: c\.c/); assert.match(panel.el.textContent, /매크로로 만들어져/);
 // Picking the other way swaps the files and where 진행 goes; picking back restores them.
 panel.el.querySelectorAll(".choice")[1].click();
-assert.deepEqual(view(), {on: ["선언 옮기기"], files: ["src/b.h"], go: ["선언 옮기기로 진행 →", "#/job/job/refactor?way=link"]});
+assert.deepEqual(view(), {on: ["선언 옮기기"], files: ["b.h"], go: ["선언 옮기기로 진행 →", "#/job/job/refactor?way=link"]});
 assert.match(panel.el.textContent, /고리 6 → 2개/);
 panel.el.querySelectorAll(".choice")[0].click();
-assert.deepEqual(view().files, ["src/a.c", "src/c.c"]);
+assert.deepEqual(view().files, ["a.c", "c.c"]);
 panel.destroy();
 assert.equal(timers.size, 0);
 '''.replace('PRESCRIPTION', json.dumps((APP / 'prescription.js').as_uri())))
@@ -755,4 +765,85 @@ const again = await show({functions, live: true, presc: {state: "running", auto:
 assert.equal(timers.size, 1);
 again.stop();
 assert.equal(timers.size, 0);
+''')
+
+
+def test_result_page_tells_the_next_stage_at_the_top_and_keeps_each_stage():
+    run_page(r'''
+const functions = [{name: "q.client.menu.Default_MenuKey", before: {cc: 62, loc: 115}, after: {cc: 24, loc: 78}}];
+// While the next stage is decided, the top of the page says so (it moves and counts), not only the last card.
+const {view, data, stop} = await show({functions, live: true, presc: {state: "running", auto: true, elapsed_seconds: 12}});
+let top = view.querySelector(".s-wrap").elements[0];
+assert.ok(top.classList.contains("is-busy")); assert.ok(top.querySelector(".g-spin"));
+assert.match(top.textContent, /다음 단계를 정하고 있습니다 · 12초/);
+// A second stage applied: one tab per stage; the first stage's result is still there.
+const one = data["/rounds"].rounds[0];
+data["/rounds"] = {current: 2, rounds: [one, {...one, round: 2, revision: "r2"}]};
+data["/rounds/2/changes"] = data["/rounds/1/changes"];
+data["/tangle"].rounds.push({...data["/tangle"].rounds[1], round: 2});
+data["/prescription"] = {state: "complete", stale: false, result: {stage: 3, done: false, first: "", files: [{name: "q.client.menu", kind: "internal", targets: ["X"]}]}};
+await runTimers();
+const tabs = () => view.querySelector(".g-stages").elements.map(b => [b.textContent, b.getAttribute("aria-selected")]);
+assert.deepEqual(tabs(), [["1단계 결과", "false"], ["2단계 결과", "true"]]);
+top = view.querySelector(".s-wrap").elements[1];
+assert.match(top.textContent, /3단계가 남았습니다/); assert.equal(top.querySelector("a").getAttribute("href"), "#/job/job/diagnosis");
+button(view, "1단계 결과").click();
+await settle();
+assert.deepEqual(tabs(), [["1단계 결과", "true"], ["2단계 결과", "false"]]);
+assert.match(view.querySelector(".s-wrap").elements[1].textContent, /1단계에서 바뀐 것만 보여 드립니다/);
+assert.equal(view.querySelector(".g-next"), null, "the next step belongs to the last stage");
+assert.ok(!view.textContent.includes("이 단계 되돌리기"), "only the last stage can be undone");
+button(view, "2단계 결과 보기").click();
+await settle();
+assert.ok(view.querySelector(".g-next")); assert.ok(view.textContent.includes("이 단계 되돌리기"));
+stop();
+// The AI for the next stage hit its limit: another AI is picked right there and asked again.
+const failed = await show({functions, live: true, presc: {state: "failed", auto: true, error: "AI 사용 한도에 도달했습니다(You've hit your usage limit)."}});
+await settle();
+const warn = failed.view.querySelector(".g-banner");
+assert.ok(warn.classList.contains("is-warn")); assert.match(warn.textContent, /usage limit/);
+assert.ok(warn.querySelector("select"), "the AI picker is in the banner");
+button(warn, "이 AI로 다음 처방 받기").click();
+await settle();
+assert.equal(posts.at(-1)[0], "/api/jobs/job/prescription"); assert.ok(JSON.parse(posts.at(-1)[1]).service);
+failed.stop();
+''')
+
+
+def test_finishing_page_goes_back_a_step_and_never_marks_a_build_it_did_not_do():
+    run(DOM_SHIM.replace('PAGE', json.dumps((APP / 'page-finish.js').as_uri())) + r'''
+const round = play => ({round: 1, revision: "r1", files: ["src/a.c"], method: "functions", applied_at: 1793300000,
+  play_checks: [{where: "설정 화면", action: "음량 조절", file: "src/a.c", targets: ["setupMenu"]}],
+  comparison: {functions: [{name: "setupMenu", before: {cc: 122, loc: 648}, after: {cc: 63, loc: 445}}]}, checks: {original_preserved: true, ...(play ? {play} : {})}});
+async function open(play, game) {
+  const data = {"": {name: "OpenTyrian"}, "/rounds": {current: 1, rounds: [round(play)]}, "/demo": game, "/tangle": {rounds: [{round: 1, components: []}]}};
+  const view = document.createElement("main");
+  await page.render(view, {setSteps() {}, setCrumb() {}, api: async url => data[url.replace("/api/jobs/job", "")]}, {jobId: "job"});
+  return view;
+}
+const step = view => view.querySelector(".f-steps").elements.map(li => [li.getAttribute("class"), li.textContent]);
+// No registered build: the first step is the user's own build, not a done one.
+let view = await open(null, {available: false});
+assert.deepEqual(step(view)[0], ["is-own", "–직접 빌드"]);
+assert.equal(button(view, "← 빌드 단계로 돌아가기"), null);
+// Built: the play step can go back to the build step (build and run again) and forward again.
+view = await open(null, {available: true, state: "complete", revision: "r1"});
+assert.equal(step(view)[0][0], "is-done");
+button(view, "← 빌드 단계로 돌아가기").click();
+assert.ok(view.querySelector(".f-build")); assert.ok(button(view, "다시 빌드하고 실행 ▶"));
+button(view, "← 직접 플레이로 돌아가기").click();
+assert.equal(view.querySelector(".f-build"), null); assert.ok(button(view, "정상입니다"));
+// A failed build never traps the page, and is never shown as a success.
+view = await open(null, {available: true, state: "failed", error: "C4013", revision: "r1"});
+button(view, "빌드하지 않고 확인 목록 보기").click();
+assert.deepEqual(step(view)[0], ["is-bad", "!빌드 실패"]); assert.ok(button(view, "정상입니다"));
+assert.match(view.textContent, /빌드 실패 · 빌드 없이 확인 목록을 보고 있습니다/);
+assert.ok(!view.textContent.includes("빌드 성공"));
+button(view, "다시 빌드하기").click();
+assert.ok(view.querySelector(".f-build"));
+// Done: back to the checklist to look again.
+view = await open({ok: true, checked: []}, {available: false});
+assert.equal(view.querySelector("h1").textContent, "정리를 마쳤습니다");
+button(view, "← 직접 플레이로 돌아가기").click();
+assert.ok(button(view, "정상입니다")); assert.equal(view.querySelector(".f-hero"), null);
 ''')

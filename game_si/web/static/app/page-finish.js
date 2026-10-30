@@ -20,6 +20,10 @@ export async function render(view, ctx, {jobId}) {
   view.append(root);
   ctx.setSteps(jobId, 4, {refactor: true, result: true, finish: true});
   let alive = true, timer = null, data = null, retry = false, closeReport = null;   // closes an open problem report
+  let rebuild = false;   // back on the build step after the game was built (build and run again)
+  let skipBuild = false;   // the build failed and the user goes on to the checklist anyway
+  // Going back a step within the finishing page: the earlier step is shown again, nothing is undone.
+  const back = (text, to) => h("button", {class: "btn ghost sm f-back", type: "button", onclick: to}, `← ${text}`);
   const checked = new Set();
   // What was ticked, kept as a record: each item cut short so 3 stages of checks fit one request.
   const ticked = () => [...checked].map(k => k.slice(0, 200));
@@ -48,34 +52,42 @@ export async function render(view, ctx, {jobId}) {
     }
     const active = rounds.rounds.slice(0, n), round = active[n - 1];
     const play = round.checks?.play;
-    if (play?.ok && !retry) { fill(root, ...done(job, active, tangle, play)); return; }
+    if (play?.ok && !retry) {
+      fill(root, back("직접 플레이로 돌아가기", () => { retry = true; draw(); }), ...done(job, active, tangle, play));
+      return;
+    }
     const built = game.available && game.state === "complete" && game.revision === round.revision;
     const reported = play && !play.ok && !retry;
-    const at = reported ? 1 : built || !game.available ? 1 : 0;
+    const building = game.available && (!built || rebuild) && !skipBuild;
+    const skipped = game.available && !built && skipBuild;   // looking at the checklist without a build
+    const at = building ? 0 : 1;
     const summary = h("div", {class: "card f-sum", "aria-label": "이번에 정리한 것"},
       h("i", {"aria-hidden": "true"}, "✓"), h("span", null, ...active.flatMap((r, i) => { const s = stageLine(r); return [i ? " · " : "", h("b", null, s.title), ` ${s.what}`]; })),
       h("a", {class: "btn ghost sm push", href: `#/job/${jobId}/result`}, "단계 결과 다시 보기"));
-    const names = ["빌드", "직접 플레이", "완료"];
+    // Without a registered build the user builds it: that step is theirs, never shown as done here.
+    const names = [game.available ? "빌드" : "직접 빌드", "직접 플레이", "완료"];
     const steps = h("ol", {class: "f-steps", "aria-label": "마무리 순서"}, ...names.map((name, i) => {
-      const bad = reported && i === 1;
-      const cls = i < at ? "is-done" : i === at ? (bad ? "is-bad" : "is-now") : "";
-      return h("li", {class: cls}, h("i", null, i < at ? "✓" : bad ? "!" : String(i + 1)), name, bad ? " · 문제 있음" : "");
+      const bad = reported && i === 1, own = i === 0 && !game.available, failed = i === 0 && skipped;
+      const cls = own ? "is-own" : failed ? "is-bad" : i < at ? "is-done" : i === at ? (bad ? "is-bad" : "is-now") : "";
+      return h("li", {class: cls}, h("i", null, own ? "–" : failed ? "!" : i < at ? "✓" : bad ? "!" : String(i + 1)), failed ? "빌드 실패" : name, bad ? " · 문제 있음" : "");
     }));
     const head = h("header", {class: "s-head"}, h("div", {class: "eyebrow"}, "마무리"),
       h("h1", null, "게임이 예전처럼 움직이는지 확인합니다"),
       h("p", null, "정리한 코드를 빌드해 게임을 켜고, 바뀐 곳과 관련된 동작을 직접 해 봅니다."), summary, steps);
     let main;
-    if (game.available && !built) main = [buildCard(game, round)];
+    if (building) main = [buildCard(game, round, built)];
     else if (reported) main = [builtRow(game, round), reportedCard(play, active)];
     else main = [builtRow(game, round), playCard(active, n)];
-    fill(root, head, ...main);
+    const backTo = building && built ? back("직접 플레이로 돌아가기", () => { rebuild = false; draw(); })
+      : !building && game.available ? back("빌드 단계로 돌아가기", () => { rebuild = true; skipBuild = false; draw(); }) : null;
+    fill(root, backTo, head, ...main);
   }
 
   // ------------------------------------------------------------ build
-  function buildCard(game, round) {
+  function buildCard(game, round, again = false) {
     const status = h("div", {class: "game-status"});
     const gp = progressBlock();
-    const button = h("button", {class: "btn primary", type: "button"}, "게임 빌드하고 실행 ▶");
+    const button = h("button", {class: "btn primary", type: "button"}, again ? "다시 빌드하고 실행 ▶" : "게임 빌드하고 실행 ▶");
     const showProgress = state => {
       const p = state.progress || {};
       gp.update({step: p.step || 0, total: p.total || 4, text: p.label || "", indeterminate: p.indeterminate,
@@ -88,7 +100,7 @@ export async function render(view, ctx, {jobId}) {
       catch (_) { if (alive) timer = setTimeout(watch, 1000); return; }
       if (!alive) return;
       if (state.state === "running") { showProgress(state); timer = setTimeout(watch, 1000); return; }
-      if (state.state === "complete" && state.revision === round.revision) { await launch(); load(); return; }
+      if (state.state === "complete" && state.revision === round.revision) { rebuild = false; await launch(); load(); return; }
       fill(status, notice(state.error || "게임을 빌드하지 못했습니다.")); button.disabled = false;
     }
     button.addEventListener("click", async () => {
@@ -97,15 +109,24 @@ export async function render(view, ctx, {jobId}) {
       catch (error) { fill(status, notice(error.message)); button.disabled = false; }
     });
     if (game.state === "running") { button.disabled = true; showProgress(game); timer = setTimeout(watch, 1000); }
-    else if (game.state === "failed") fill(status, notice(`지난번 빌드에 실패했습니다. ${game.error || ""}`));
+    // One build status is kept for the demo game: another job's or stage's failure is not this one's.
+    const failedHere = game.state === "failed" && game.revision === round.revision;
+    if (game.state !== "running" && failedHere) fill(status, notice(`지난번 빌드에 실패했습니다. ${game.error || ""}`));
     return h("section", {class: "card s-card f-build"}, h("div", {class: "s-q"}, "1. 빌드"), h("div", {class: "s-title"}, "버튼 하나로 빌드하고 게임을 켭니다"),
-      h("p", {class: "s-lead"}, "수정본을 컴파일해 실행 파일을 만들고 바로 실행합니다. 보통 1~2분 걸립니다."), button, status);
+      h("p", {class: "s-lead"}, "수정본을 컴파일해 실행 파일을 만들고 바로 실행합니다. 보통 1~2분 걸립니다."), button, status,
+      // A failed build never traps the page: the checklist and the problem report stay reachable.
+      failedHere ? h("p", {class: "help"}, h("button", {class: "linkish", type: "button", onclick: () => { skipBuild = true; rebuild = false; draw(); }},
+        "빌드하지 않고 확인 목록 보기"), " · 문제가 있었다면 그곳에서 기록할 수 있습니다.") : null);
   }
   async function launch() {
     try { const r = await ctx.api(`/api/jobs/${jobId}/demo/launch`, {method: "POST", body: JSON.stringify({version: "modified"})}); toast(r.message || "게임을 켰습니다."); }
     catch (error) { toast(error.message); }
   }
   function builtRow(game, round) {
+    if (game.available && !(game.state === "complete" && game.revision === round.revision)) {
+      return h("div", {class: "card f-sum"}, h("i", {"aria-hidden": "true"}, "!"), h("span", null, h("b", null, "빌드 실패"), " · 빌드 없이 확인 목록을 보고 있습니다."),
+        h("button", {class: "btn ghost sm push", type: "button", onclick: () => { skipBuild = false; rebuild = true; draw(); }}, "다시 빌드하기"));
+    }
     if (!game.available) {   // no build steps are registered for this project: the user builds it
       return h("div", {class: "card f-sum"}, h("span", null, h("b", null, "직접 빌드"), " · 이 프로젝트에는 등록된 빌드 절차가 없습니다. 수정본을 내려받아 평소처럼 빌드한 뒤 해 보세요."),
         h("a", {class: "btn ghost sm push", href: `/revisions/${jobId}/${round.revision}/modified-source.zip`}, "수정본 내려받기 (.zip)"));
@@ -150,9 +171,14 @@ export async function render(view, ctx, {jobId}) {
     const drawTags = () => fill(tags, ...REPORT_KINDS.map(k => h("button", {type: "button", class: k === kind ? "is-on" : "", "aria-pressed": String(k === kind),
       onclick: () => { kind = k; drawTags(); }}, k)));
     drawTags();
-    const where = h("select", null,
-      ...groups.map(g => h("optgroup", {label: `확인 목록 · ${g.where}`}, ...g.items.map(it => h("option", {value: `${g.where} · ${it.action}`}, it.action)))),
-      h("optgroup", {label: "그 밖 (어느 게임이든 같은 항목)"}, ...COMMON_PLACES.map(p => h("option", {value: p}, p))));
+    // Where, in a few words: the places of this checklist, then the ones every game has. A short list
+    // in the window (a long select filled the screen), one choice.
+    let place = groups[0]?.where || COMMON_PLACES[0];
+    const where = h("div", {class: "g-places", role: "radiogroup", "aria-label": "어디서 생겼나요?"});
+    const drawPlaces = () => fill(where, ...[...groups.map(g => g.where), ...COMMON_PLACES.filter(p => !groups.some(g => g.where === p))]
+      .map(p => h("button", {type: "button", role: "radio", class: p === place ? "is-on" : "", "aria-checked": String(p === place),
+        onclick: () => { place = p; drawPlaces(); }}, p)));
+    drawPlaces();
     const note = h("textarea", {placeholder: "예: 상점에서 오른쪽 키를 누르면 선택이 두 칸씩 움직여요", maxlength: "2000"});
     const shotName = h("span");
     const file = h("input", {type: "file", accept: "image/png,image/jpeg,image/webp", hidden: true});
@@ -171,7 +197,7 @@ export async function render(view, ctx, {jobId}) {
     send.addEventListener("click", async () => {
       send.disabled = true;
       const form = new FormData();
-      form.append("kind", kind); form.append("where", where.value); form.append("note", note.value.trim());
+      form.append("kind", kind); form.append("where", place); form.append("note", note.value.trim());
       form.append("checked", JSON.stringify(ticked()));
       if (shot) form.append("screenshot", shot, "screenshot");
       try { await ctx.api(`/api/jobs/${jobId}/rounds/${n}/report`, {method: "POST", body: form}); close(); retry = false; load(); }
@@ -180,7 +206,7 @@ export async function render(view, ctx, {jobId}) {
     const overlay = h("div", {class: "g-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "report-title"},
       h("div", {class: "g-modal-box"}, h("h2", {id: "report-title"}, "어떤 문제가 있었나요?"), h("p", null, "적어 주신 내용으로 관련 코드를 찾아 드립니다."),
         h("div", {class: "g-field"}, h("span", null, "어떤 문제인가요?"), tags),
-        h("label", {class: "g-field"}, h("span", null, "어디서 생겼나요?"), where),
+        h("div", {class: "g-field"}, h("span", null, "어디서 생겼나요?"), where),
         h("label", {class: "g-field"}, h("span", null, "자세히 적어 주세요 ", h("small", null, "(선택)")), note),
         h("div", {class: "g-field"}, h("span", null, "스크린샷 ", h("small", null, "(선택)")), drop),
         h("div", {class: "g-modal-foot"}, h("p", {class: "help"}, "기록은 이 작업 폴더에만 저장되고, 밖으로 보내지 않습니다."),
@@ -192,11 +218,19 @@ export async function render(view, ctx, {jobId}) {
 
   function reportedCard(play, active) {
     // The functions behind the place the problem was seen (the checklist item names its file and targets).
-    const items = active.flatMap(r => r.play_checks || []);
-    const hit = items.find(c => play.where === `${c.where || c.file.split("/").pop()} · ${c.action}`);
-    // The result page shows the last stage: a check from an earlier stage says which one changed it.
-    const stage = hit && active.findIndex(r => (r.play_checks || []).includes(hit)) + 1;
-    const earlier = stage && stage < active.length;
+    // A place picked in the window (or, in older records, a place and an action): every check made there,
+    // by stage, so the result page's stage tabs show the code behind it.
+    const placeOf = c => c.where || c.file.split("/").pop();
+    const related = new Map();
+    active.forEach((r, i) => (r.play_checks || []).forEach(c => {
+      if (play.where !== placeOf(c) && play.where !== `${placeOf(c)} · ${c.action}`) return;
+      const key = `${i + 1}|${c.file}`;
+      const row = related.get(key) || {stage: i + 1, file: c.file, targets: new Set()};
+      (c.targets || []).forEach(t => row.targets.add(t));
+      related.set(key, row);
+    }));
+    const changedHere = [...related.values()];
+    const several = active.length > 1;
     const undo = async () => {
       if (!await confirmDialog({title: "이 단계를 되돌릴까요?", body: "수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다.", ok: "되돌리기"})) return;
       try { await ctx.api(`/api/jobs/${jobId}/rounds/undo`, {method: "POST", body: "{}"}); toast("이 단계 전으로 되돌렸습니다."); location.hash = `#/job/${jobId}/result`; }
@@ -205,10 +239,11 @@ export async function render(view, ctx, {jobId}) {
     return h("section", {class: "card s-card f-report"}, h("div", {class: "s-q warn-text"}, "문제를 기록했습니다"), h("div", {class: "s-title"}, "어떻게 할까요?"),
       h("dl", null, h("dt", null, "문제"), h("dd", null, play.kind), h("dt", null, "어디서"), h("dd", null, play.where || "—"),
         play.note ? [h("dt", null, "메모"), h("dd", null, play.note)] : null, play.screenshot ? [h("dt", null, "스크린샷"), h("dd", null, "1장 첨부")] : null),
-      hit ? h("p", {class: "help"}, `이 동작과 관련해 ${earlier ? `${stage}단계에서 ` : ""}바뀐 곳: ${hit.file}`, ...(hit.targets || []).map(t => [" ", h("code", {class: "cname"}, t)]),
-        earlier ? ` (단계 결과 화면은 마지막 ${active.length}단계만 보여 줍니다. 이 단계를 되돌리고 확인하거나 수정본을 내려받아 비교해 주세요.)` : null) : null,
-      h("div", {class: "s-links"}, earlier ? h("a", {class: "btn primary", href: `/revisions/${jobId}/${active[active.length - 1].revision}/modified-source.zip`}, "수정본 내려받기 (.zip)")
-        : h("a", {class: "btn primary", href: `#/job/${jobId}/result`}, "바뀐 코드 전후 비교 보기"),
+      changedHere.length ? h("div", {class: "help"}, h("b", null, "이곳과 관련해 바뀐 곳"),
+        h("ul", {class: "f-related"}, ...changedHere.map(c => h("li", null, several ? `${c.stage}단계 · ` : "", c.file.split("/").pop(),
+          ...[...c.targets].map(t => [" ", h("code", {class: "cname"}, t)])))),
+        several ? h("p", null, "단계 결과 화면 위의 단계 탭에서 그 단계의 전후 코드를 볼 수 있습니다.") : null) : null,
+      h("div", {class: "s-links"}, h("a", {class: "btn primary", href: `#/job/${jobId}/result`}, "바뀐 코드 전후 비교 보기"),
         h("button", {class: "btn ghost", type: "button", onclick: undo}, "이 단계 되돌리기"),
         h("button", {class: "btn ghost", type: "button", onclick: () => { retry = true; draw(); }}, "다시 해 보기")),
       h("p", {class: "help"}, "되돌리면 수정본이 이 단계 전으로 돌아갑니다. 기록과 파일은 지우지 않고 보관합니다."));
@@ -232,7 +267,8 @@ export async function render(view, ctx, {jobId}) {
     const numbers = [...active.map(r => { const s = stageLine(r); return [s.title, s.what]; }),
       longest ? [`가장 많이 줄어든 함수 ${longest.name.split(".").pop()}`, `${fmt(longest.before.loc)} → ${fmt(longest.after.loc)}줄`] : null,
       pct > 0 ? ["매우 복잡한 부분", `−${pct}%`] : null].filter(Boolean);
-    const okList = ["규칙 검사 통과", "원본은 그대로, 사본에 적용", data.game.available ? "빌드 성공" : "직접 빌드",
+    const g = data.game, builtOk = g.available && g.state === "complete" && g.revision === active[active.length - 1].revision;
+    const okList = ["규칙 검사 통과", "원본은 그대로, 사본에 적용", builtOk ? "빌드 성공" : g.available ? "빌드 없이 확인" : "직접 빌드",
       play.checked?.length ? `직접 플레이 ${play.checked.length}가지 확인 · 정상` : "직접 플레이 · 정상"];
     const record = h("div", {class: "f-record", "aria-label": "정리 기록"},
       h("div", {class: "f-record-head"}, h("b", null, `정리 기록 · ${job.name}`), h("span", null, `${when} · ${active.length}단계`)),
