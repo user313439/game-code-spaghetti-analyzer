@@ -237,10 +237,14 @@ export async function render(view, ctx, {jobId}) {
       : [h("div", {class: "page-head"}, h("div", null, h("div", {class: "eyebrow"}, `수정 결과 · ${n}단계 · ${METHODS[lastWay].name}`),
           h("h1", {class: "h1"}, head.title), h("p", {class: "sub"}, head.lines.join(" ")), safeChips(round))), hero, detail];
     const pending = Boolean(state.next_pending) || presc.state === "running";
+    // The page is drawn again every 2 seconds while the next stage is decided: what the user opened
+    // (자세히 보기, 나머지 함수 보기) stays open (rehearsal 2026-10-30: it kept folding by itself).
+    const opened = new Set([...root.querySelectorAll("details")].filter(d => d.open).map(d => d.querySelector("summary")?.textContent));
     fill(root,
       failedApply ? notice(`마지막 변경안을 적용하지 못했습니다. ${state.error || ""} 아래는 그 전까지 적용된 결과입니다.`) : null,
       h("div", {class: "s-wrap"}, stageTabs(n, rounds.current), last ? nextBanner(n, presc, pending) : earlierNote(n, rounds.current),
         ...body, last ? nextCard(n, presc, pending) : null));
+    for (const d of root.querySelectorAll("details")) if (opened.has(d.querySelector("summary")?.textContent)) d.open = true;
     // The next stage's prescription is asked for by itself after applying: show it when it arrives.
     // The next stage's prescription is about to start, running, or could not be read: look again shortly.
     if (waiting(state, presc)) { clearTimeout(timer); timer = setTimeout(() => alive && load(), 2000); }
@@ -258,18 +262,18 @@ export async function render(view, ctx, {jobId}) {
     const files = new Set(s.targets.map(t => t.file)).size;
     return h("header", {class: "s-head"}, h("div", {class: "eyebrow"}, `수정 결과 · ${n}단계 · 함수 나누기`),
       h("h1", null, "큰 함수 ", h("em", null, `${s.targets.length}개`), "를 작은 함수 ", h("em", null, `${s.helpers.length}개`), "로 나눴습니다"),
-      h("p", null, `파일 ${files}개. 게임이 하는 일은 그대로 두고, 한 함수에 몰려 있던 코드를 이름 붙은 작은 함수로 옮겼습니다.`), safeChips(round));
+      h("p", null, `파일 ${files}개에서, 게임이 하는 일은 그대로 두고 한 함수에 몰려 있던 코드를 이름 붙은 작은 함수로 옮겼습니다.`), safeChips(round));
   }
   function effectsCard(s) {
     const effect = (icon, title, ...text) => h("div", {class: "s-effect"}, h("div", {class: "ic", "aria-hidden": "true"}, icon), h("b", null, title), h("p", null, ...text));
     return h("section", {class: "card s-card"}, h("div", {class: "s-q"}, "이번 단계로 이렇게 좋아졌습니다"),
-      h("div", {class: "s-title"}, "한 함수가 혼자 하던 여러 일을, 일마다 따로 맡겼습니다"),
+      h("div", {class: "s-title"}, "한 함수가 혼자 하던 여러 일을 작은 함수들에 나눠 맡겼습니다"),
       h("div", {class: "s-effects"},
         effect("🔍", "고칠 곳을 찾기 쉬워졌습니다", "기능 하나를 고치려고 ", h("strong", null, `${fmtN(s.longest.before.loc)}줄`), "짜리 ", h("code", {class: "mono"}, s.longest.name),
           " 함수를 다 읽는 대신, 평균 ", h("strong", null, `${s.avgLoc}줄`), "짜리 작은 함수 하나를 보면 됩니다."),
         effect("🏷️", "함수 이름으로 찾아갈 수 있습니다", "나눈 일 ", h("strong", null, `${s.helpers.length}가지`), "에 각각 이름을 붙였습니다.",
-          s.example ? [" 예를 들어 이 일을 고치려면 ", h("code", {class: "mono"}, s.example.name), " 함수를 찾으면 됩니다."] : null),
-        effect("🧩", "고친 뒤 확인할 범위가 좁아졌습니다", `작은 함수 ${s.helpers.length}개 중 `, h("strong", null, `${s.simple}개`), "는 갈림길(if·for·switch)이 20개 이하라 한눈에 읽힙니다.")),
+          s.example ? [" 예를 들어 ", h("code", {class: "mono"}, s.example.name), "가 맡은 일을 고칠 때는 이름으로 그 함수를 바로 찾아가면 됩니다."] : null),
+        effect("🧩", "고친 뒤 확인할 범위가 좁아졌습니다", `작은 함수 ${s.helpers.length}개 중 `, h("strong", null, `${s.simple}개`), "는 갈림길(if·for·switch 등)이 20개 이하라 읽기 쉽습니다.")),
       h("p", {class: "s-small"}, "게임 동작은 바꾸지 않았습니다. 버그를 고친 것이 아니라, 다음에 기능을 고치거나 더할 때의 출발점을 분명하게 만든 것입니다."));
   }
   function shorterCard(s) {
@@ -310,7 +314,7 @@ export async function render(view, ctx, {jobId}) {
       const files = r.files.filter(f => f.kind === way);
       const names = files.flatMap(f => f.targets?.length ? f.targets : [f.name]).slice(0, 4);
       return card(h("div", {class: "s-title"}, `${METHODS[way].name}를 ${way === lastWay ? "한 번 더 " : ""}하면 더 좋아질 수 있습니다`),
-        h("p", null, ...names.flatMap((t, i) => [i ? ", " : "", h("code", {class: "cname"}, t)]), ` 등 ${files.length}개 파일을 더 정리할 수 있다고 AI가 판단했습니다.`),
+        h("p", null, `AI가 파일 ${files.length}개를 더 정리할 수 있다고 판단했습니다. 먼저 나눌 함수: `, ...names.flatMap((t, i) => [i ? ", " : "", h("code", {class: "cname"}, t)]), names.length < files.flatMap(f => f.targets?.length ? f.targets : [f.name]).length ? " 등" : ""),
         h("p", {class: "help"}, `[${n + 1}단계 진행]은 처방 화면으로 돌아가 다음 단계를 시작합니다. [여기서 마무리]는 정리를 끝내고 빌드·직접 플레이로 넘어갑니다.`),
         h("div", {class: "g-btns"}, h("a", {class: "btn ghost", href: `#/job/${jobId}/finish`}, "여기서 마무리"),
           h("a", {class: "btn primary", href: `#/job/${jobId}/diagnosis`}, `${n + 1}단계 진행 →`)));
