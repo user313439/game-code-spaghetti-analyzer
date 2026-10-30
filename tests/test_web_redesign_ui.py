@@ -847,3 +847,21 @@ assert.equal(view.querySelector("h1").textContent, "정리를 마쳤습니다");
 button(view, "← 직접 플레이로 돌아가기").click();
 assert.ok(button(view, "정상입니다")); assert.equal(view.querySelector(".f-hero"), null);
 ''')
+
+
+def test_history_opens_a_job_where_it_was_left_and_says_how_far_it_went():
+    run(DOM_SHIM.replace('PAGE', json.dumps((APP / 'page-history.js').as_uri())) + r'''
+const job = (id, progress) => ({id, name: id, state: "complete", created_at: 1793300000, scan: {source_bytes: 1000}, can_delete: true, progress});
+const jobs = [job("plain", {stages: 0, prescribed: false, play: null}), job("asked", {stages: 0, prescribed: true, play: null}),
+  job("three", {stages: 3, prescribed: true, play: null}), job("done", {stages: 2, prescribed: true, play: "ok"}), job("bad", {stages: 1, prescribed: true, play: "problem"})];
+const view = document.createElement("main");
+await page.render(view, {ready: true, api: async () => jobs});
+const rows = view.querySelectorAll(".item").map(r => ({chip: r.querySelector(".h-progress").textContent,
+  links: r.querySelectorAll("a").map(a => [a.textContent, a.getAttribute("href").split("/").pop()])}));
+assert.deepEqual(rows.map(r => r.chip), ["진단만", "AI 처방만 받음", "AI 정리 3단계까지 · 마무리 전", "정리 완료 · 2단계", "1단계 · 플레이 중 문제 기록"]);
+// Not tidied yet: the diagnosis. Tidied: the last stage's result, or the finishing record; the diagnosis stays one click away.
+assert.deepEqual(rows[0].links, [["진단 보기 →", "diagnosis"]]);
+assert.deepEqual(rows[2].links, [["진단 보기", "diagnosis"], ["3단계 결과 보기 →", "result"]]);
+assert.deepEqual(rows[3].links, [["진단 보기", "diagnosis"], ["정리 기록 보기 →", "finish"]]);
+assert.deepEqual(rows[4].links, [["진단 보기", "diagnosis"], ["문제 기록 보기 →", "finish"]]);
+''')

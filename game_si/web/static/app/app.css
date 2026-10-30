@@ -708,3 +708,10 @@ code.cname { font-family: "JetBrains Mono", Consolas, monospace; font-size: .92e
 .g-places button { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; text-align: left; }
 .g-places button.is-on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; }
 .f-related { margin: 6px 0 4px 18px; }
+
+/* history: how far the guided tidying went */
+.h-progress { display: inline-block; margin-left: 8px; vertical-align: middle; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 99px;
+  border: 1px solid var(--line); color: var(--muted); background: var(--surface-2); }
+.h-progress.is-now { color: var(--brand-ink); border-color: var(--brand-line); background: var(--brand-soft); }
+.h-progress.is-ok { color: var(--good); border-color: var(--good-line); background: var(--good-soft); }
+.h-progress.is-bad { color: var(--warn); border-color: var(--warn-line); background: var(--warn-soft); }
