@@ -13,6 +13,7 @@ from statistics import median
 import networkx as nx
 
 from . import assistant, diagnosis
+from .assistant_context import measure_functions
 from .jobs import BusyError, write_json
 
 MAX_FILES = 5
@@ -183,6 +184,41 @@ def drop_unmeasurable(data: dict, backend: str | None) -> dict:
     files = [f for f in data['files'] if f['kind'] != 'link']
     return dict(data, files=files, done=not files, first='', first_reason='', dropped_links=len(data['files']) - len(files),
                 benefit=data['benefit'] if files else '')
+
+
+def drop_unreadable(data: dict, units: dict, methods: list[dict], source_root: Path | None) -> dict:
+    """A C/C++ file whose target functions the change checks cannot read as the analysis measured them
+    (a function built by macros, such as hq4x_32, is read short or not at all) cannot be changed and
+    checked: it is not offered. A target the analysis does not know is left to the change to find."""
+    if source_root is None:
+        return data
+    files, dropped = [], []
+    for item in data['files']:
+        unit = units.get(item['name']) or {}
+        rel = (unit.get('file') or '').replace('\\', '/')
+        if item['kind'] != 'internal' or not item['targets'] or not rel or rel.lower().endswith('.cs'):
+            files.append(item)
+            continue
+        try:
+            text = assistant.source_file(source_root, rel).read_bytes().decode('utf8', errors='replace')
+        except (OSError, ValueError):
+            files.append(item)
+            continue
+        read = {(m['start_line'], m['end_line']) for m in measure_functions(rel, text)}
+        spans = {}
+        for m in methods:
+            if (m.get('file_path') or '').replace('\\', '/') == rel:
+                spans.setdefault(m.get('name'), set()).add((m.get('start_line'), m.get('end_line')))
+        if all(t not in spans or spans[t] & read for t in item['targets']):
+            files.append(item)
+        else:
+            dropped.append(item['name'])
+    if not dropped:
+        return data
+    kinds = {f['kind'] for f in files}
+    first = data['first'] if data['first'] in kinds and len(kinds) > 1 else ''
+    return dict(data, files=files, done=not files, first=first, first_reason=data['first_reason'] if first else '',
+                dropped_unreadable=dropped, benefit=data['benefit'] if files else '')
 
 
 def _cycle(g):
@@ -370,6 +406,8 @@ class Prescriptions:
                 raise ValueError(f'AI 처방을 받지 못했습니다: {error}')
             self._progress(ident, 'compute', '처방 효과를 계산하고 있습니다.', 2)
             data = drop_unmeasurable(data, diag['summary'].get('backend'))
+            methods = json.loads((folder / 'metrics.json').read_text('utf8')).get('methods', [])
+            data = drop_unreadable(data, {u['fqn']: u for u in diag['units']}, methods, source)
             eff = effects(data['files'], diag['graph'])
             label = diag['summary']['unit_label']
             top = diag['units'][0]['fqn'] if diag['units'] else None

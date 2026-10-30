@@ -391,7 +391,7 @@ assert.equal(view.querySelector("h1").textContent, "큰 함수 1개를 작은 �
 const parts = view.querySelector(".s-wrap").elements.map(el => el.getAttribute("class"));
 assert.deepEqual(parts, ["s-head", "card s-card", "card s-card", "card s-card", "card s-detail", "card g-next"]);
 const effects = view.querySelectorAll(".s-effect").map(e => e.textContent);
-assert.match(effects[0], /115줄/); assert.match(effects[0], /Default_MenuKey/); assert.match(effects[1], /함수 이름으로 찾아갈 수 있습니다/);
+assert.match(effects[0], /115줄짜리 Default_MenuKey 함수를 다 읽는 대신/);   // the particle follows 함수, not the name assert.match(effects[1], /함수 이름으로 찾아갈 수 있습니다/);
 assert.match(effects[1], /M_IsSelectButton/);
 assert.match(view.querySelector(".s-funcs").textContent, /115줄 → 78줄 · 작은 함수 1개로 나뉨/);
 assert.ok(view.querySelector(".g-safe").textContent.includes("원본은 그대로"));

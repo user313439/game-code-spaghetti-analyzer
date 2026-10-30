@@ -262,7 +262,7 @@ export async function render(view, ctx, {jobId}) {
       h("div", {class: "s-title"}, "한 함수가 혼자 하던 여러 일을, 일마다 따로 맡겼습니다"),
       h("div", {class: "s-effects"},
         effect("🔍", "고칠 곳을 찾기 쉬워졌습니다", "기능 하나를 고치려고 ", h("strong", null, `${fmtN(s.longest.before.loc)}줄`), "짜리 ", h("code", {class: "mono"}, s.longest.name),
-          "를 다 읽는 대신, 평균 ", h("strong", null, `${s.avgLoc}줄`), "짜리 작은 함수 하나를 보면 됩니다."),
+          " 함수를 다 읽는 대신, 평균 ", h("strong", null, `${s.avgLoc}줄`), "짜리 작은 함수 하나를 보면 됩니다."),
         effect("🏷️", "함수 이름으로 찾아갈 수 있습니다", "나눈 일 ", h("strong", null, `${s.helpers.length}가지`), "에 각각 이름을 붙였습니다.",
           s.example ? [" 예를 들어 이 일을 고치려면 ", h("code", {class: "mono"}, s.example.name), " 함수를 찾으면 됩니다."] : null),
         effect("🧩", "고친 뒤 확인할 범위가 좁아졌습니다", `작은 함수 ${s.helpers.length}개 중 `, h("strong", null, `${s.simple}개`), "는 갈림길(if·for·switch)이 20개 이하라 한눈에 읽힙니다.")),

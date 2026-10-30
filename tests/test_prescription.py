@@ -186,6 +186,31 @@ def test_precise_analysis_never_offers_moving_declarations():
     assert only['done'] is True and only['files'] == [] and only['benefit'] == ''
 
 
+def test_files_whose_targets_cannot_be_read_as_measured_are_not_offered(tmp_path):
+    # video_scale_hqNx.c: the analysis measures hq4x_32 over thousands of lines; the change checks read it
+    # short or not at all (macros), so a change there could never be checked.
+    src = tmp_path / 'src'
+    src.mkdir()
+    (src / 'game.c').write_text('static int small(int x)\n{\n    if (x) return 1;\n    return 0;\n}\n', encoding='utf8')
+    (src / 'scale.c').write_text('void hq2x(int x)\n{\n    if (x) x++;\n}\n', encoding='utf8')
+    (src / 'Menu.cs').write_text('class Menu { void Draw() { } }\n', encoding='utf8')
+    units = {'g': {'file': 'src/game.c'}, 's': {'file': 'src/scale.c'}, 'm': {'file': 'src/Menu.cs'}}
+    methods = [{'file_path': 'src/game.c', 'name': 'small', 'start_line': 1, 'end_line': 5},
+               {'file_path': 'src/scale.c', 'name': 'hq2x', 'start_line': 1, 'end_line': 900},   # read short
+               {'file_path': 'src/scale.c', 'name': 'hq4x', 'start_line': 950, 'end_line': 3000}]   # not read at all
+    item = lambda name, targets, kind='internal': {'name': name, 'kind': kind, 'reason': '이유', 'change_idea': '나눕니다',
+                                                   'expected': '', 'targets': targets}
+    data = {'done': False, 'why_not_top': '', 'benefit': '찾기 쉬워집니다.', 'first': '', 'first_reason': '',
+            'files': [item('g', ['small', 'unknown']), item('s', ['hq2x']), item('m', ['Draw'])]}
+    kept = prescription.drop_unreadable(data, units, methods, tmp_path)
+    assert [f['name'] for f in kept['files']] == ['g', 'm'] and kept['dropped_unreadable'] == ['s'] and kept['done'] is False
+    assert prescription.drop_unreadable(dict(data, files=[item('s', ['hq4x'])]), units, methods, tmp_path)['done'] is True
+    # Moving declarations and a file the analysis read the same way stay; nothing to drop leaves the answer as it was.
+    same = dict(data, files=[item('g', ['small']), item('s', [], 'link')])
+    assert prescription.drop_unreadable(same, units, methods, tmp_path) is same
+    assert prescription.drop_unreadable(data, units, methods, None) is data
+
+
 class RoundJobs(FakeJobs):
     current = 0
 

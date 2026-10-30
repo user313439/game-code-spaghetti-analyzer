@@ -361,6 +361,20 @@ def test_a_rejected_later_pass_keeps_the_first_pass(tmp_path, monkeypatch):
         assert (app.state.manager.directory(ident) / 'assistant-rejected-a.c-pass2.json').is_file()
 
 
+def test_a_later_pass_the_ai_held_back_ends_as_nothing_left(tmp_path, monkeypatch):
+    # Real case (2026-10-30, tyrian2.c pass 2): "이번 편집은 적용을 보류합니다", decision keep, no tests,
+    # with half-made edits. It was shown as a format error; the AI stopped by itself.
+    second = pass_reply('\tif (x > 10) {\n\t\ttotal += 1;\n\t}\n', 'add_second')
+    second['file_reviews'][0].update(decision='keep', change='이번 편집은 적용을 보류합니다.')
+    second['tests'] = []
+    app, ident, client, h, url, state, asked = run_passes(tmp_path, monkeypatch, second, passes=3)
+    with client:
+        worker = state['workers'][0]
+        assert state['state'] == 'complete' and worker['state'] == 'done' and worker['steps_done'] == 1
+        assert [p['state'] for p in worker['passes']] == ['kept', 'empty'] and len(asked) == 2
+        assert 'stopped_at' not in worker and 'add_second' not in state['preview']['files'][0]['after']
+
+
 def test_a_later_pass_stopped_by_the_usage_limit_says_so(tmp_path, monkeypatch):
     # Real case (rehearsal 2026-10-27, tyrian2.c): pass 3 hit the 5-hour limit and was shown as
     # "검사에서 빠져" with a login/limit hint; it is said as it was.
