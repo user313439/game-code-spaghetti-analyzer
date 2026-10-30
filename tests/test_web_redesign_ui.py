@@ -397,6 +397,9 @@ assert.deepEqual(parts, ["s-head", "card s-card", "card s-card", "card s-card", 
 const effects = view.querySelectorAll(".s-effect").map(e => e.textContent);
 assert.match(effects[0], /115줄짜리 Default_MenuKey 함수를 다 읽는 대신/);   // the particle follows 함수, not the name assert.match(effects[1], /함수 이름으로 찾아갈 수 있습니다/);
 assert.match(effects[1], /M_IsSelectButton/);
+// Whole sentences (rehearsal: "파일 1개." alone, and "이 일을" pointing at nothing).
+assert.match(view.querySelector(".s-head").textContent, /파일 1개에서, 게임이 하는 일은 그대로 두고/);
+assert.match(effects[1], /예를 들어 M_IsSelectButton가 맡은 일을 고칠 때는 이름으로 그 함수를 바로 찾아가면 됩니다/);
 assert.match(view.querySelector(".s-funcs").textContent, /115줄 → 78줄 · 작은 함수 1개로 나뉨/);
 assert.ok(view.querySelector(".g-safe").textContent.includes("원본은 그대로"));
 // Inside 자세히 보기: the measured card with the code, safety, scores and the whole game.
@@ -428,6 +431,9 @@ assert.match(view.querySelector(".g-next").textContent, /다음 단계를 정하
 view = await show({functions, presc: result(2, [{name: "q.client.menu", kind: "internal", targets: ["Default_MenuKey"]}])});
 let next = view.querySelector(".g-next");
 assert.match(next.querySelector(".s-title").textContent, /함수 나누기를 한 번 더 하면/);
+// Files are counted as files, the functions named after them (not "함수 이름들 등 N개 파일").
+const said = next.querySelectorAll("p").map(p => p.textContent).find(t => t.startsWith("AI가 파일"));
+assert.equal(said, "AI가 파일 1개를 더 정리할 수 있다고 판단했습니다. 먼저 나눌 함수: Default_MenuKey");   // all named: no "등"
 assert.deepEqual(next.querySelector(".g-btns").elements.map(b => b.textContent), ["여기서 마무리", "2단계 진행 →"]);
 view = await show({functions, presc: result(2, [], true)});
 next = view.querySelector(".g-next");
@@ -752,8 +758,12 @@ data["/assistant"] = {state: "complete", action: "apply"};
 data["/prescription"] = {state: "running", auto: true};
 await runTimers();
 assert.match(next().textContent, /다음 단계를 정하고 있습니다/); assert.equal(timers.size, 1);
+// What the user opened stays open while the page is drawn again (rehearsal: it kept folding by itself).
+view.querySelector("details").open = true;
 await runTimers();
 assert.equal(timers.size, 1);
+assert.equal(view.querySelector("details").open, true, "opened details stay open across redraws");
+assert.ok(view.querySelectorAll("details").slice(1).every(d => !d.open), "only what was opened");
 // It arrives: the card offers the next stage and the page stops asking.
 data["/prescription"] = {state: "complete", stale: false, result: {stage: 2, done: false, first: "", files: [{name: "q.client.menu", kind: "internal", targets: ["Default_MenuKey"]}]}};
 await runTimers();
