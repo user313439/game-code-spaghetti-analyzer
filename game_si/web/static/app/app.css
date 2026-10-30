@@ -236,6 +236,9 @@ details > summary { cursor: pointer; font-weight: 700; }
 :root[data-theme="dark"] .tip-em { color: var(--brand); }
 .pick { position: absolute; right: 62px; bottom: 16px; width: 280px; padding: 14px; z-index: 2; }
 .pick .sub { font-size: 12px; margin: 6px 0 10px; }
+.pick-close { width: 26px; height: 26px; margin: -4px -4px 0 4px; border: 1px solid var(--line); border-radius: 8px; background: transparent;
+  color: var(--muted); font-size: 16px; line-height: 1; cursor: pointer; flex: none; }
+.pick-close:hover { color: var(--ink); border-color: var(--muted); }
 
 /* AI panel */
 .ai-panel { position: sticky; top: 138px; padding: 20px; max-height: calc(100vh - 158px); overflow: auto; scrollbar-gutter: stable; }   /* room kept for the scrollbar: text never shifts when it appears */
@@ -676,3 +679,32 @@ code.cname { font-family: "JetBrains Mono", Consolas, monospace; font-size: .92e
   .f-record-body { grid-template-columns: 1fr; }
   .f-record-body > div + div { border-left: 0; border-top: 1px solid var(--line); }
 }
+
+/* refactor preview: the short overview, one line per file */
+.ov-files { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.ov-files li { font-size: 13.5px; color: var(--ink-2); }
+.ov-files li b { color: var(--ink); margin-right: 4px; }
+
+/* result page: stage tabs and the next-stage status at the top */
+.g-stages { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.g-stages button { font: inherit; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.g-stages button.is-on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.g-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; margin-bottom: 14px; border-radius: 12px;
+  border: 1px solid var(--brand-line); background: var(--brand-soft); font-size: 14px; color: var(--ink-2); }
+.g-banner > span, .g-banner > div:first-child { flex: 1 1 280px; }
+.g-banner b { color: var(--ink); }
+.g-banner.is-end { border-color: var(--good-line); background: var(--good-soft); }
+.g-banner.is-warn { border-color: var(--warn-line); background: var(--warn-soft); align-items: flex-start; }
+.g-spin { width: 16px; height: 16px; flex: none; border-radius: 50%; border: 2px solid var(--brand-line); border-top-color: var(--brand); animation: g-spin .9s linear infinite; }
+@keyframes g-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .g-spin { animation: pulse 1.6s ease-in-out infinite; } }
+.g-retry { flex: 1 1 100%; }
+.g-retry .g-btns { display: flex; justify-content: flex-end; margin-top: 10px; }
+
+/* finishing page: going back a step, a build the user does, the report window's place list */
+.f-back { margin-bottom: 10px; }
+.f-steps li.is-own i { background: var(--surface-2); color: var(--muted); }
+.g-places { display: flex; flex-wrap: wrap; gap: 6px; max-height: 168px; overflow: auto; padding: 2px; }
+.g-places button { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; text-align: left; }
+.g-places button.is-on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; }
+.f-related { margin: 6px 0 4px 18px; }

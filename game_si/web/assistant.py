@@ -52,6 +52,7 @@ OWNERS = {}                     # AI process -> the task key that started it (fo
 CANCELLED = set()               # task keys cancelled: their AI programs may not start any more
 _TASK = threading.local()
 # What an AI program prints when its plan's usage is used up (e.g. Claude Code "You've hit your session limit").
+ANSI = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
 LIMIT_WORDS = re.compile(r'(usage|session|weekly|rate)[ _-]?limit|hit your .{0,20}limit|quota|resource.?exhausted', re.I)
 
 
@@ -102,6 +103,7 @@ file_reviews에는 review_paths의 모든 파일(선택한 파일과 함께 보�
 change(수정 또는 유지 내용),expected_effect(확인할 기대 효과),impact(다른 파일/호출/상태에 미칠 영향),decision(refactor/keep/needs_context),
 targets(실제 함수명·선언명 문자열 배열),evidence(함수·코드 근거 문자열 배열),checks(확인할 동작 배열)를 작성한다.
 checks의 각 항목은 '게임의 어느 화면이나 상황 | 그곳에서 플레이어가 직접 해 볼 동작' 형식으로 쓴다. 바꾼 코드가 실제로 쓰이는 곳을 고르고, 함수 이름 같은 코드 용어 없이 게임을 하는 사람이 알아듣는 말로 쓴다. 예: '설정 화면 | 음량 막대를 마우스로 끌어 조절하기'.
+화면·상황 이름은 '메뉴·상점', '전투 중', '설정 화면'처럼 두세 단어의 넓은 이름으로 쓰고, 같은 곳은 모든 파일에서 같은 이름을 쓴다(확인 목록이 화면별로 묶인다).
 refactor의 targets는 반드시 하나 이상이며 제공된 methods 목록과 소스에서 확인한 정확한 이름을 사용한다. keep/needs_context는 빈 배열도 허용한다.
 각 파일에서 실제 함수·변수·조건 분기와 그 코드가 맡은 일을 짚고, 해당 구조를 수정하거나 유지하는 이유를 구체적으로 설명한다.
 상위 후보 다섯 파일을 받으면 다섯 파일 모두 같은 깊이로 검토한다. 높은 점수만 반복하거나 '함수를 분리합니다' 같은 일반론으로 대체하지 않는다.
@@ -771,7 +773,10 @@ def cli_failure(result):
         pass
     text = ' '.join(filter(None, [said, result.stderr or '']))
     if LIMIT_WORDS.search(text):
-        detail = ' '.join((said if LIMIT_WORDS.search(said) else result.stderr or '').split())[:160]
+        # Only the line that names the limit, without colour codes: Codex prints a banner first
+        # (version, workdir, model) that says nothing to the user (real case 2026-10-30).
+        lines = [ANSI.sub('', line).strip() for line in (said if LIMIT_WORDS.search(said) else result.stderr or '').splitlines()]
+        detail = ' '.join(next((line for line in lines if LIMIT_WORDS.search(line)), '').split())[:160]
         return LimitReached(f'AI 사용 한도에 도달했습니다({detail}). 한도가 풀린 뒤 다시 만들어 주세요.')
     return None
 

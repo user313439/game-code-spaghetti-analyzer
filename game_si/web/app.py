@@ -249,14 +249,16 @@ def create_app(jobs_root: Path | None = None) -> FastAPI:
 
     @app.get('/')
     def home():
-        return FileResponse(APP_UI / 'index.html', media_type='text/html; charset=utf-8')
+        return FileResponse(APP_UI / 'index.html', media_type='text/html; charset=utf-8', headers={'Cache-Control': 'no-cache'})
 
     @app.get('/ui/{filename}')
     def ui_asset(filename: str):
         if not re.fullmatch(r'[a-z0-9-]+\.(js|css)', filename) or not (APP_UI / filename).is_file():
             raise KeyError(filename)
         media = 'text/javascript' if filename.endswith('.js') else 'text/css'
-        return FileResponse(APP_UI / filename, media_type=f'{media}; charset=utf-8')
+        # Checked again on every load (unchanged files come back as 304): a page left open across an
+        # update otherwise kept old modules even after a hard reload (rehearsal 2026-10-30).
+        return FileResponse(APP_UI / filename, media_type=f'{media}; charset=utf-8', headers={'Cache-Control': 'no-cache'})
 
     @app.get('/api/session')
     def session():
