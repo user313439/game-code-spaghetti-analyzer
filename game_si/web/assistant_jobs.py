@@ -676,6 +676,13 @@ class AssistantJobs:
                 if not self._mine(ident):
                     return None, None, None
                 self._worker_update(ident, key, state='checking')
+                # The AI held this pass back itself ("적용을 보류합니다", decision keep): it stops here,
+                # like an answer with nothing left to move, whatever half-made edits came with it.
+                review = next((r for r in reply.get('file_reviews') or [] if isinstance(r, dict) and r.get('path') == path), {})
+                if review.get('decision') in {'keep', 'needs_context'}:
+                    record('empty', reply)
+                    step -= 1
+                    break
                 self._deep_rules(path, own, reply, prompt, measured + others)
                 if not reply.get('edits'):
                     record('empty', reply)
