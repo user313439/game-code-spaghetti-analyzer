@@ -115,3 +115,11 @@ api_key.json
 .superpowers/
 .claude/
 /tmp/
+
+# Working notes and design drafts kept locally only (removed from the repo 2026-11-05)
+HANDOFF.md
+RUNBOOK.md
+START_HERE.md
+docs/superpowers/
+design/
+tools/deep_probe.py
